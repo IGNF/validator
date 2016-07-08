@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<featureType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<typeName>LIMITE_COMMUNE</typeName>
+    <attributes>
+        <attribute>
+            <name>ID_GEOFLA</name>
+            <type>String</type>
+            <definition>ID_GEOFLA</definition>
+            <nullable>false</nullable>
+        </attribute>
+        <attribute>
+            <name>NATURE</name>
+            <type>String</type>
+            <definition>NATURE</definition>
+            <nullable>false</nullable>
+        </attribute>
+        <attribute>
+            <name>WKT</name>
+            <type>LineString</type>
+            <definition>WKT</definition>
+            <nullable>false</nullable>
+        </attribute>
+    </attributes>
+</featureType>

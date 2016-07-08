@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[353f879824ced4083ff0726b606e3b5b]]></id>
+  <typeName><![CDATA[ZONE_URBA]]></typeName>
+  <description><![CDATA[Table contenant les zones d'un document PLU ou POS]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[48c561dd3880fb1ee722528bd5e9a96a]]></id>
+      <name><![CDATA[DESTDOMI]]></name>
+      <description><![CDATA[Vocation dominante de la zone, concerne l’usage de la zone]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[00]]></value>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[03]]></value>
+        <value><![CDATA[04]]></value>
+        <value><![CDATA[05]]></value>
+        <value><![CDATA[07]]></value>
+        <value><![CDATA[08]]></value>
+        <value><![CDATA[09]]></value>
+        <value><![CDATA[10]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4ea2f72750bdb441eb3ba537302673b8]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune couverte par la zone]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[778abd5f2cc00db7e71c87b4067f443e]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier de règlement de la zone ou à défaut du règlement intégral indexé]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[83d6f8154193665a2d1a1745173cee04]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier du règlement de la zone]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8b3566b1dc53dfe2920966bb62981663]]></id>
+      <name><![CDATA[LIBELONG]]></name>
+      <description><![CDATA[Nom complet littéral de la zone tel qu’il apparaît dans le chapitre du règlement écrit]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a737537117f70442737583f560eddf09]]></id>
+      <name><![CDATA[TYPEZONE]]></name>
+      <description><![CDATA[Type de la zone dans une nomenclature simplifiée]]></description>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[U]]></value>
+        <value><![CDATA[AUc]]></value>
+        <value><![CDATA[AUs]]></value>
+        <value><![CDATA[A]]></value>
+        <value><![CDATA[N]]></value>
+        <value><![CDATA[Nh]]></value>
+        <value><![CDATA[Nd]]></value>
+        <value><![CDATA[Ah]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b0e4bc2b4d3f3c1da7e8e9d850b71fd6]]></id>
+      <name><![CDATA[DATAPPRO]]></name>
+      <description><![CDATA[Date de la dernière approbation de la zone]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b295ea213d1c74dadac7511da195651b]]></id>
+      <name><![CDATA[DATVALID]]></name>
+      <description><![CDATA[Date de la dernière validation de la zone ou de son règlement]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e91ea5c358d4262af96fd5bc0fda3cda]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Nom court de la zone tel qu’il apparaît sur le plan de zonage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>12</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f96a702bafbe4132ff9a8431fb3571bb]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

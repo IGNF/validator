@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <id>788</id>
+  <name><![CDATA[GEOFLA]]></name>
+  <description><![CDATA[Exemple de modèle de document]]></description>
+  <files>
+    <file>
+      <id>8766</id>
+      <type><![CDATA[table]]></type>
+      <name><![CDATA[COMMUNE]]></name>
+      <description><![CDATA[Communes dans les fichiers GEOFLA]]></description>
+      <path><![CDATA[COMMUNE]]></path>
+      <mandatory>OPTIONAL</mandatory>
+    </file>
+    <file>
+      <id>8766</id>
+      <type><![CDATA[table]]></type>
+      <name><![CDATA[LIMITE_COMMUNE]]></name>
+      <description><![CDATA[Limite des communes dans les fichiers GEOFLA]]></description>
+      <path><![CDATA[LIMITE_COMMUNE]]></path>
+      <mandatory>OPTIONAL</mandatory>
+    </file>
+  </files>
+</document>

@@ -1,0 +1,15 @@
+fr.ign.validator.model.type.BooleanType
+fr.ign.validator.model.type.DateType
+fr.ign.validator.model.type.GeometryCollectionType
+fr.ign.validator.model.type.GeometryType
+fr.ign.validator.model.type.IntegerType
+fr.ign.validator.model.type.LineStringType
+fr.ign.validator.model.type.MultiLineStringType
+fr.ign.validator.model.type.MultiPointType
+fr.ign.validator.model.type.MultiPolygonType
+fr.ign.validator.model.type.PointType
+fr.ign.validator.model.type.PolygonType
+fr.ign.validator.model.type.StringType
+fr.ign.validator.model.type.FilenameType
+fr.ign.validator.model.type.PathType
+fr.ign.validator.model.type.UrlType

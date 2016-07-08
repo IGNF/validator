@@ -1,0 +1,9 @@
+/target
+/.classpath
+/.project
+/.settings/
+/dependency-reduced-pom.xml
+
+/release.properties
+
+

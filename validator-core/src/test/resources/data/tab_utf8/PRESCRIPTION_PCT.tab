@@ -1,0 +1,15 @@
+!table
+!version 450
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 8
+    LIBELLE Char (254) ;
+    TXT Char (10) ;
+    TYPEPSC Char (2) ;
+    NOMFIC Char (80) ;
+    URLFIC Char (254) ;
+    INSEE Char (5) ;
+    DATAPPRO Date ;
+    DATVALID Date ;

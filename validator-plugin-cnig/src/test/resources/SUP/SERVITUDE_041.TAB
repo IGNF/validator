@@ -1,0 +1,22 @@
+!table
+!version 300
+!charset Neutral
+
+Definition Table
+  Type NATIVE Charset "Neutral"
+  Fields 15
+    IdSup Integer (10) ;
+    IdGest Integer (10) ;
+    nomSup Char (100) ;
+    nomSupLitt Char (100) ;
+    categorie Char (10) ;
+    idIntGest Char (25) ;
+    descriptio Char (254) ;
+    dateMaj Char (8) ;
+    echNum Integer (10) ;
+    ValideGest Char (1) ;
+    obsValidat Char (254) ;
+    estAbroge Char (1) ;
+    modeProd Char (25) ;
+    quiProd Char (80) ;
+    docSource Char (80) ;

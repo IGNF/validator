@@ -1,0 +1,40 @@
+NAME,CONTEXT,LEVEL,MESSAGE,DOCUMENTATION
+VALIDATOR_EXCEPTION,DIRECTORY,FATAL,La validation a rencontré une erreur grave liée au fonctionnement du validateur.,"Cette erreur correspond à un problème profond dans la validateur (absence d'outil système,  problème dans les configurations,  etc.)"
+DIRECTORY_UNEXPECTED_NAME,DIRECTORY,ERROR,Le nom du dossier contenant le document n'est pas valide.,Cette erreur se produit lorsque le nom du dossier contenant le document ne correspond pas à celui spécifié dans l'expression régulière du DocumentModel
+FILE_MISPLACED,DIRECTORY,WARNING,Le fichier '%1$s' est mal nommé ou mal placé dans l'arborescence du dossier.,"Cette erreur se produit lorsque le nom d'un fichier respecte partiellement le modèle. Le nom du fichier est correct,  mais pas son chemin complet"
+FILE_UNEXPECTED,DIRECTORY,WARNING,Le fichier '%1$s' est mal nommé ou n'est pas prévu dans le standard.,Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un fichier
+FILE_MISSING_MANDATORY,DIRECTORY,ERROR,Le fichier obligatoire '%1$s' est absent du répertoire '%2$s'.,Cette erreur se produit lorsqu'un fichier marqué comme mandatory=ERROR est absent
+FILE_MISSING_MANDATORY_DIRECTORY,DIRECTORY,ERROR,Le répertoire obligatoire '%1$s' est absent du répertoire '%2$s'.,Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=ERROR est absent
+FILE_MISSING_RECOMMANDED,DIRECTORY,WARNING,Le fichier optionnel '%1$s' est absent du répertoire '%2$s'.,Cette erreur se produit lorsqu'un fichier marqué comme mandatory=WARNING est absent
+FILE_MISSING_RECOMMANDED_DIRECTORY,DIRECTORY,WARNING,Le répertoire optionnel '%1$s' est absent du répertoire '%2$s'.,Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=WARNING est absent
+FILE_EMPTY,DIRECTORY,ERROR,La table '%1$s' ne contient pas de données.,"Cette erreur se produit lorsqu'une table (csv,  shp,  etc.) est vide"
+TABLE_MISSING_ATTRIBUTE,HEADER,ERROR,L'attribut obligatoire '%1$s' n'est pas présent dans le fichier '%2$s'.,Cette erreur se produit lorsqu'un champ spécifié dans le modèle n'est pas présent dans la table
+TABLE_MISSING_NULLABLE_ATTRIBUTE,HEADER,WARNING,L'attribut optionnel '%1$s' n'est pas présent dans le fichier '%2$s'.,Cette erreur se produit lorsqu'un champ spécifié comme nullable dans le modèle n'est pas présent dans la table
+TABLE_UNEXPECTED_ATTRIBUTE,HEADER,WARNING,L'attribut '%1$s' n'est pas prévu dans le standard ou est un attribut optionnel.,Cette erreur se produit lorsqu'un champ est présent dans la table mais pas dans le modèle
+TABLE_UNEXPECTED_ENCODING,HEADER,WARNING,L'encodage déclaré dans la balise MD_CharacterSetCode du fichier de métadonnées (%1$s) ne correspond pas à l'encodage des données.,Cette erreur se produit lorsque l'encodage déclaré dans la balise MD_CharacterSetCode de la fiche de métadonnées ne correspond pas à l'encodage détecté des données
+TABLE_MISSING_GEOMETRY,HEADER,WARNING,Le fichier '%1$s' n'a pas d'attribut contenant la géométrie.,
+ATTRIBUTE_UNEXPECTED_NULL,FEATURE,ERROR,La valeur nulle n'est pas autorisée pour ce champ.,Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide
+ATTRIBUTE_INVALID_FORMAT,FEATURE,ERROR,Le type de la valeur (%1$s) ne correspond pas au type attendu (%2$s).,Cette erreur se produit lorsqu'un champ contient une valeur de type non autorisé par le modèle
+ATTRIBUTE_INVALID_REGEXP,FEATURE,ERROR,La valeur (%1$s) ne correspond pas à l'expression régulière (%2$s).,Cette erreur se produit lorsqu'un champ contient une chaine de caractère qui ne correspond pas à la règle d'écriture du modèle.
+ATTRIBUTE_SIZE_EXCEEDED,FEATURE,ERROR,La taille de l'attribut (%1$s) dépasse la taille limite autorisée (%2$s).,Cette erreur se produit lorsqu'un champ contient une valeur dont la longueur dépasse la taille limite autorisée par le modèle
+ATTRIBUTE_GEOMETRY_INVALID,FEATURE,WARNING,"La géométrie de l'objet géographique n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.)",Voir la document de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html
+ATTRIBUTE_URL_NOT_FOUND,FEATURE,WARNING,L'adresse web (%1$s) renseignée pointe vers une ressource non disponible.,Cette erreur se produit lorsqu'un champ contient une URL qui n'est pas accessible
+ATTRIBUTE_PATH_NOT_FOUND,FEATURE,ERROR,Le chemin (%1$s) renseigné renvoie vers un document absent du dossier.,Cette erreur se produit lorsqu'un champ de type « path » référence un fichier non présent dans l'arborescence (ex : pièce écrite)
+ATTRIBUTE_FILE_NOT_FOUND,FEATURE,ERROR,Le fichier (%1$s) renseigné renvoie vers un document absent du dossier. Veuillez vérifier que le nom de fichier indiqué contient bien l’extension (par exemple : « .pdf »),Cette erreur se produit lorsqu'un champ de type « file name » référence un fichier non présent dans l'arborescence (ex : pièce écrite)
+ATTRIBUTE_UNEXPECTED_VALUE,FEATURE,ERROR,La valeur renseignée (%1$s) ne correspond pas à une valeur autorisée (%2$s).,Cette erreur se produit lorsqu'un champ ne respecte pas la liste spécifiée dans le modèle
+METADATA_IGNORED_FILE,DIRECTORY,WARNING,Le fichier XML %1$s n'a pas été reconnu comme une fiche de métadonnée (absence de balise MD_Metadata). Il sera ignoré.,Cette erreur se produit lorsqu'un fichier xml détecté comme métadonnée dans l'arborescence ne contient pas de balise MD_Metadata
+METADATA_MULTIPLE_FILES,DIRECTORY,ERROR,Plusieurs fichiers de métadonnées sont présents dans le document (%1$s).,
+METADATA_INVALID_FILE,DIRECTORY,ERROR,Le fichier de métadonnée %1$s est corrompu.,"Ce cas ne devrait jamais se produire. Il intervient en cas d'erreur dans la lecture de l'XML d'une fiche de métadonnée. Seulement, ces fiches sont filtrées en amont (METADATA_IGNORED_FILE)"
+METADATA_FILEIDENTIFIER_NOT_FOUND,DIRECTORY,ERROR,"Le champ ""FileIdentifier"" de la fiche de métadonnée %1$s n'est pas renseigné.",
+METADATA_MD_IDENTIFIER_NOT_FOUND,DIRECTORY,WARNING,"Le champ ""MD_Identifier"" de la fiche de métadonnée %1$s n'est pas renseigné.",
+FILE_NOT_OPENED,HEADER,ERROR,Le fichier %1$s n'est pas lisible.,"Impossible d'ouvrir un fichier (shp, dbf, tab, etc.) en lecture"
+UNEXPECTED_SUP_NAME,FEATURE,ERROR,"La valeur du champ ""Nom"" [value] ne respecte pas les règles nationales des SUP ([nom_model]).",
+UNEXPECTED_SUP_GENERATEUR,FEATURE,ERROR,Le type de générateur [type] n'est pas autorisé pour la catégorie de SUP [cat_sup] (valeurs autorisées : [liste_type]).,
+UNEXPECTED_SUP_ASSIETTE,FEATURE,ERROR,Le type d'assiette [type] n'est pas autorisé pour la catégorie de SUP [cat_sup] (valeurs autorisées : [liste_type]).,
+INSEE_MALFORMED,FEATURE,ERROR,"La valeur du champ ""INSEE"" (%1$s) ne respecte pas le format ""DDCCC"" où ""DD"" est le numéro du département et ""CCC"" le numéro de la commune.",
+SIREN_MALFORMED,FEATURE,ERROR,"La valeur du champ ""SIREN"" (%1$s) est mal formatée.",
+UNEXPECTED_DATAPPRO,FEATURE,ERROR,La date qui figure dans l'intitulé du lot de données ([date_dossier]) doit être égale à la date d'approbation ([date_appro]).,
+UNEXPECTED_DATVALID,FEATURE,ERROR,La date de validation ([date_validation]) doit être antérieure ou égale à la date d'approbation ([date_appro]).,
+CNIG_DOCUMENT_NO_PDF,DIRECTORY,ERROR,Aucun fichier PDF trouvé dans le document.,
+CNIG_IDURBA_MALFORMED,FEATURE,WARNING,"La valeur du champ ""IDURBA"" (%1$s) ne respecte pas le format [code INSEE ou numéro SIREN][date d'approbation].",
+CNIG_IDURBA_NOT_FOUND,DIRECTORY,WARNING,Aucune ligne correspondant au document n’a été trouvée dans la table DOC_URBA (IDURBA=%1$s),

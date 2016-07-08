@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id>64594</id>
+  <typeName><![CDATA[SIMPLE]]></typeName>
+  <description><![CDATA[TABLE TEST]]></description>
+  <attributes>
+    <attribute>
+      <id>130278</id>
+      <name><![CDATA[ID]]></name>
+      <description><![CDATA[Identifiant]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id>130279</id>
+      <name><![CDATA[NAME]]></name>
+      <description><![CDATA[Nom]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id>130280</id>
+      <name><![CDATA[GEOMETRY]]></name>
+      <type><![CDATA[Geometry]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+  <document_model>
+    <id>786</id>
+    <name><![CDATA[TEST]]></name>
+    <description><![CDATA[TEST]]></description>
+    <featureTypes>
+      <featureType/>
+    </featureTypes>
+  </document_model>
+</featureType>
+

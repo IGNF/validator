@@ -1,0 +1,10 @@
+/.classpath
+/.project
+/.settings/
+
+/bin/
+/target/
+/data/
+
+/pom.xml.releaseBackup
+

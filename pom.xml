@@ -1,0 +1,245 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>fr.ign.validator</groupId>
+	<artifactId>validator</artifactId>
+	<packaging>pom</packaging>
+	<version>2.2-SNAPSHOT</version>
+	<name>Validator</name>
+
+    <scm>
+		<developerConnection>git@github.com:IGNF/validator.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/IGNF/validator</url>
+	</scm>
+
+    <description>
+        This program validates data according to a FeatureCatalogue
+    </description>
+
+    <organization>
+        <name>Service SAI, IGN</name>
+        <url>http://www.ign.fr</url>
+    </organization>
+
+    <developers>
+    	<developer>
+    		<name>Clément Bouché</name>
+    		<email>clement.bouche(at)ign.fr</email>
+    		<organization>IGN</organization>
+    	</developer>
+    	<developer>
+    		<name>Florian Cerizay</name>
+    		<email>florian.cerizay(at)ign.fr</email>
+    		<organization>IGN</organization>
+    	</developer>
+    	<developer>
+    		<name>Mickaël Borne</name>
+    		<email>mickael.borne(at)ign.fr</email>
+    		<organization>IGN</organization>
+    	</developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>CeCILL B License</name>
+            <url>http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html</url>
+        </license>
+    </licenses>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<geotools.version>12.0</geotools.version>
+		<log4j.version>2.0-rc1</log4j.version>
+	</properties>
+
+	<modules>
+		<module>validator-core</module>
+		<module>validator-cli</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>cnig</id>
+			<modules>
+				<module>validator-plugin-cnig</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<!-- Log4J2 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- jdom -->
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<!-- jaxen (XPath) -->
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.1.6</version>
+		</dependency>
+
+		<!-- xerces -->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- Apache common-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<!-- Apache common cli -->
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- Apache common csv -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+        <!--
+		<dependency>
+			<groupId>net.sourceforge.jchardet</groupId>
+			<artifactId>jchardet</artifactId>
+			<version>1.0</version>
+		</dependency> -->
+
+
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- geotools -->
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-shapefile</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+
+		<!-- geotools epsg references -->
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-referencing</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+
+
+		<!-- embedding light database wkt -->
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-wkt</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+
+		<!-- geotools GML3 support -->
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-xml</artifactId>
+			<version>${geotools.version}</version>
+		</dependency>
+
+		<!-- jaxb -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.1</version>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>maven</id>
+			<name>Maven repository 2</name>
+			<url>http://mvnrepository.com/artifact/</url>
+		</repository>
+
+		<repository>
+			<id>maven2</id>
+			<name>Maven repository 2</name>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+
+		<repository>
+			<id>jboss</id>
+			<name>JBoss Repository</name>
+			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+		</repository>
+
+		<repository>
+			<id>osgeo</id>
+			<name>Open Source Geospatial Foundation Repository</name>
+			<url>http://download.osgeo.org/webdav/geotools/</url>
+		</repository>
+
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>boundless</id>
+			<name>Boundless Maven Repository</name>
+			<url>http://repo.boundlessgeo.com/main</url>
+		</repository>
+
+	</repositories>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.2</version>
+					<configuration>
+						<tagNameFormat>v@{project.version}</tagNameFormat>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

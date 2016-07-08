@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <name>GEOFLA</name>
+  <files>
+    <file>
+      <type>table</type>
+      <name>COMMUNE</name>
+      <description>Fichier des communes</description>
+      <path>COMMUNE</path>
+      <mandatory>WARN</mandatory>
+    </file>
+    <file>
+      <type>table</type>
+      <name>LIMITE_COMMUNE</name>
+      <description>Fichier des communes</description>
+      <path>LIMITE_COMMUNE</path>
+      <mandatory>WARN</mandatory>
+    </file>
+  </files>
+</document>
