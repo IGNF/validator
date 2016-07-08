@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+  - openjdk7
+
+install: true
+
+script: 
+- mvn -fn -e clean package -P cnig
+
