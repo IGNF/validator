@@ -1,5 +1,7 @@
 # Validator
 
+[![Build Status](https://travis-ci.org/IGNF/validator.svg?branch=master)](https://travis-ci.org/IGNF/validator)
+
 # Principe de fonctionnement
 
 ![Working principle](doc/principe.jpg)
