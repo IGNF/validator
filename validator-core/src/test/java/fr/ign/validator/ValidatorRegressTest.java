@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.geotools.referencing.CRS;
 
-import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
@@ -61,20 +60,7 @@ public class ValidatorRegressTest extends TestCase {
 		assertEquals("ISO-8859-1", context.getEncoding().toString());
 		
 		List<ValidatorError> errors = reportBuilder.getErrors();
-		assertEquals(11,errors.size());
-
-		//TODO test order insensitive
-//		assertEquals(ErrorCode.FILE_MISPLACED, errors.get(0).getCode());
-//		assertEquals(ErrorCode.DIRECTORY_UNEXPECTED_NAME, errors.get(1).getCode());
-//		assertEquals(ErrorCode.FILE_MISSING_MANDATORY, errors.get(2).getCode());
-//		assertEquals(ErrorCode.FILE_MISSING_MANDATORY, errors.get(3).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_GEOMETRY_INVALID, errors.get(4).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_GEOMETRY_INVALID, errors.get(5).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, errors.get(6).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, errors.get(7).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, errors.get(8).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, errors.get(9).getCode());
-//		assertEquals(ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, errors.get(10).getCode());			
+		assertEquals(10,errors.size());
 	}
 	
 }

@@ -23,7 +23,8 @@ public class DocumentDirectoryNameValidator implements Validator<Document> {
 			return ;
 		}
 
-		if ( ! document.getDocumentPath().toURI().toString().matches(regexp) ){
+		String directoryName = document.getDocumentPath().getName();
+		if ( ! directoryName.matches(regexp) ){
 			context.report(ErrorCode.DIRECTORY_UNEXPECTED_NAME);
 		}
 	}
