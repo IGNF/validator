@@ -80,6 +80,36 @@ public class TableReaderTest extends TestCase {
 		}
 	}
 	
+	@Test
+	public void testReadPrescriptionSurfGML(){
+		File file = new File(getClass().getResource("/gml/PRESCRIPTION_SURF.gml").getPath()) ;
+		assertTrue(file.exists());
+		try {
+			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
+
+			String[] header = reader.getHeader() ;
+			
+			assertTrue( reader.findColumn("TXT") >= 0 ) ;			
+			assertTrue( reader.findColumn("WKT") >= 0 ) ;
+			assertTrue( reader.findColumn("TYPEPSC") >= 0 ) ;
+			assertTrue( reader.findColumn("TYPEPSC2") >= 0 ) ;
+			
+			assertTrue( reader.findColumn("URLFIC") >= 0 ) ; // always empty not removed
+
+			assertTrue(reader.hasNext());
+			String[] row = reader.next() ;
+			assertEquals(header.length, row.length);
+			
+			// check that 05 is not converted to 5
+			assertTrue(Arrays.asList(row).contains("05")) ; // TYPEPSC
+			assertTrue(Arrays.asList(row).contains("20140123"));
+		} catch (IOException e) {
+			fail(e.getMessage());
+		} catch (InvalidCharsetException e) {
+			fail(e.getMessage());
+		}
+	}
+	
 	
 	/**
 	 * Ce test fonctionne en fonction des versions d'ogr2ogr

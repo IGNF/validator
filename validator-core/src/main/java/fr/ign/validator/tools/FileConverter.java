@@ -167,11 +167,16 @@ public class FileConverter {
 	 * @return
 	 */
 	private String[] getArguments(File source, File target, String driver) {
-		/*
-		 * Initialisation de la commande
-		 */
 		List<String> arguments = new ArrayList<String>() ;
 		arguments.add(ogr2ogr) ;
+	
+		// Otherwise, some ogr2ogr versions transforms 01 to 1...
+		if ( FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml") ){
+			arguments.add("--config");
+			arguments.add("GML_FIELDTYPES");
+			arguments.add("ALWAYS_STRING");
+		}
+		
 		arguments.add("-f") ;
 		arguments.add(driver) ;
 		/*
