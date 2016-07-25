@@ -10,11 +10,4 @@
 	<packaging>jar</packaging>
 	<name>validator-core</name>
 
-	<scm>
-		<developerConnection>scm:git:ssh://git@dockerforge.ign.fr:10022/sai/validator-core.git</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://gitlab.dockerforge.ign.fr/sai/validator-core</url>
-	</scm>
-
-
 </project>

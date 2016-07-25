@@ -10,13 +10,6 @@
 	<artifactId>validator-plugin-cnig</artifactId>
 	<packaging>jar</packaging>
 
-
-	<scm>
-		<developerConnection>scm:git:ssh://git@dockerforge.ign.fr:10022/sai/validator-plugin-cnig.git</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://gitlab.dockerforge.ign.fr/sai/validator-plugin-cnig</url>
-	</scm>
-
 	<dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
