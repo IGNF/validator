@@ -28,6 +28,7 @@ import fr.ign.validator.Validator;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.report.FilteredReportBuilder;
 import fr.ign.validator.report.ReportBuilderLegacy;
 
 /**
@@ -87,6 +88,12 @@ public class DocumentValidatorCLI {
 		// mode souple
 		{
 			Option option = new Option("f", "flat", false, "Validation à plat (pas de validation de l'arborescence)");
+			option.setRequired(false);
+			options.addOption(option);
+		}
+		// limitation erreurs
+		{
+			Option option = new Option("e", "maxerror", true, "Limitation du nombre d'erreur du même type");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -215,6 +222,14 @@ public class DocumentValidatorCLI {
 		Context context = new Context();
 		context.setEncoding(charset);
 		context.setReportBuilder(new ReportBuilderLegacy());
+		
+		// si maxerrors définis, 
+		if (commandline.hasOption("maxerror")) {
+			int maxError = Integer.parseInt(commandline.getOptionValue("maxerror"));
+			context.setReportBuilder( new FilteredReportBuilder(context.getReportBuilder(),maxError) );
+		}
+		
+		
 		context.setCoordinateReferenceSystem(coordinateReferenceSystem);
 		context.setFlatValidation(commandline.hasOption("f"));
 
