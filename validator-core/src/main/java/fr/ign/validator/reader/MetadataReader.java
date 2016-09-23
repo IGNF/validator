@@ -94,7 +94,11 @@ public class MetadataReader {
 		 */
 		XPath xpath;
 		try {
+
 			xpath = XPath.newInstance("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString");
+			xpath.addNamespace("gmd", "http://www.isotc211.org/2005/gmd"); 
+			xpath.addNamespace("gco", "http://www.isotc211.org/2005/gco"); 
+			
 			Element element = (Element) xpath.selectSingleNode(document) ;
 			if ( null != element ){
 				return element.getTextTrim() ;

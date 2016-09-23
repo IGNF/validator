@@ -145,4 +145,16 @@ public class MetatadaReaderTest extends TestCase {
 		assertFalse( MetadataReader.isMetadataFile(nokFile) ) ;
 	}
 	
+	public void test000053015plu20140908(){
+		File file = new File(getClass().getResource("/metadata/fr-000053015-plu20140908.xml").getPath()) ;
+		try {
+			MetadataReader reader = new MetadataReader(file);
+			assertEquals( "urn:isogeo:metadata:uuid:66484d70-3f8c-44cf-b0e5-98ac84426a2c", reader.getFileIdentifier() ) ;
+			assertEquals( "66484d70-3f8c-44cf-b0e5-98ac84426a2c", reader.getMDIdentifier() ) ;
+		} catch (JDOMException e) {
+			fail(e.getMessage());
+		} catch (IOException e) {
+			fail(e.getMessage());
+		}
+	}
 }
