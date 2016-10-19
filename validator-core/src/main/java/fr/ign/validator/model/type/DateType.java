@@ -8,6 +8,15 @@ import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 public class DateType extends AttributeType<Date> {
+	
+	private static final String FORMAT_A = "yyyyMMdd";
+	private static final String FORMAT_B = "dd/MM/yyyy";
+	private static final String FORMAT_C = "yyyy-MM-dd";
+	private static final String FORMAT_D = "yyyy/MM/dd";
+	/**
+	 * @deprecated
+	 */
+	private static final String FORMAT_E = "yyyy";
 
 	public DateType() {
 		super(Date.class);
@@ -24,7 +33,7 @@ public class DateType extends AttributeType<Date> {
 			return (Date)value ;
 		}
 		
-		String[] formats = {"yyyyMMdd", "yyyy", "dd/MM/yyyy"} ;
+		String[] formats = {FORMAT_A, FORMAT_B, FORMAT_C, FORMAT_D, FORMAT_E} ;
 		
 		String stringDate = value.toString() ;
 		
@@ -41,6 +50,7 @@ public class DateType extends AttributeType<Date> {
 		
 		throw new IllegalArgumentException("Format de date invalide : '"+stringDate+"'");
 	}
+	
 
 	/**
 	 * Tente une conversion 
@@ -49,9 +59,25 @@ public class DateType extends AttributeType<Date> {
 	 * @return 
 	 */
 	private Date tryParse( String dateValue, String dateFormat ) {
+		/*
+		 * Relative to depreciation of FORMAT_E. 
+		 * Avoid conversion for 20151717 to 01/01/20151717
+		 */
+		if ( dateFormat.equals(FORMAT_E) && dateValue.length() != 4 ){
+			return null;
+		}
+		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat( dateFormat ) ;
+		simpleDateFormat.setLenient(false);
 		try {
-			return simpleDateFormat.parse( dateValue ) ;
+			Date result = simpleDateFormat.parse( dateValue ) ;
+			// ensure strict date parsing
+			String reformatedDate = simpleDateFormat.format(result);
+			if ( reformatedDate.equals(dateValue) ){
+				return result;
+			}else{
+				return null;
+			}			
 		} catch (ParseException e) {
 			return null ;
 		}
