@@ -1,0 +1,2012 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:gp-urba="http://geobretagne.fr/ns/gp-urba" 
+	xmlns:wfs="http://www.opengis.net/wfs/2.0" 
+	xmlns:gml="http://www.opengis.net/gml/3.2" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="unknown" numberReturned="91" timeStamp="2015-07-20T08:53:10.223Z" 
+	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ../xsd/prescription_lin.xsd 
+	http://www.opengis.net/gml/3.2 ../xsd/gml.xsd 
+	http://www.opengis.net/wfs/2.0 ../xsd/wfs.xsd">
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2666">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226546.5441855173 6755336.261699246 226707.57243779878 6755556.9124603765 226751.8238459574 6755621.527646058 226758.59478169255 6755631.414454226 226780.9945382109 6755664.122203851 226790.36674174486 6755677.807336939</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2667">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226900.36277124024 6755820.605623481 226934.58809765964 6755857.424358829 227006.7179094315 6755915.253335564 227016.95666565257 6755920.27375076 227032.89646629908 6755928.089583587 227064.5919191531 6755942.505490065 227102.28879473917 6755959.045738287 227131.75448042434 6755968.306185967 227164.5163182016 6755978.602540741 227211.3649136313 6755992.074752252 227273.63008707104 6756007.558506439 227383.36379389215 6756034.020206372</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2668">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227878.22391275637 6756538.411649278 227878.21144606854 6756493.150823736 227878.20170362177 6756493.020888733 227877.87241632654 6756456.5637771925</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2669">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227661.96996982087 6756292.082390408 227653.85659995425 6756296.533818046 227651.09265382017 6756299.496556619 227648.40797941183 6756302.809222484 227645.84092085238 6756322.821327851 227647.82476801262 6756335.6768619 227650.1548715601 6756350.351891361 227656.24365954607 6756369.62122651 227658.6347059062 6756378.620041225 227664.14481385157 6756392.231911865 227675.65329381818 6756409.852799325 227689.3871501162 6756418.783602668 227715.73427334975 6756432.155938381 227731.50939764827 6756439.751550911 227754.70547213883 6756449.550095199</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2670">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226135.48441633192 6755432.730037087 226180.4246438184 6755384.687477283</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2671">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226498.34386409714 6755155.556444592 226501.32735894463 6755160.073686144 226515.39687351458 6755184.535082597 226522.7542221042 6755197.326640125 226536.42314210732 6755222.748795459 226556.8834623944 6755260.801938401 226576.5361839459 6755297.353062101 226589.32864011568 6755321.145114699 226589.94305384555 6755322.296584424</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2672">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226346.02469457325 6755263.066321436 226331.77999642288 6755279.190349096 226285.24557237967 6755331.723736349 226240.0361873918 6755385.296102934 226200.31448377116 6755430.402124533 226166.64979942067 6755465.572183797 226135.2223774137 6755492.528725371 226100.0436453137 6755514.302838041 226066.37256282935 6755530.747562124 226026.66644355346 6755545.960555255 225954.4226115661 6755575.445051769 225907.13951271056 6755594.499426998 225885.09670444723 6755602.607645042 225867.44062075333 6755608.904759193 225852.64191921317 6755612.033316996</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2673">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226183.69112384453 6755343.430729843 226148.7751694481 6755383.079561541 226118.4941341636 6755414.714654136 226093.7944745944 6755435.90052098 226066.20102213923 6755452.979668717 226038.45416674524 6755466.531037595 226000.9326404687 6755480.907022487 225928.13212835387 6755510.618706748 225881.9849805701 6755529.215306359 225861.27129522373 6755536.834618503 225848.37045027083 6755541.435756438 225834.26874247997 6755544.416963672 225816.4740907426 6755546.021125727 225800.60533751186 6755545.990329733 225785.72630659683 6755544.734115894 225770.76294801832 6755541.771430752 225760.06213007245 6755538.425760199 225759.8376037036 6755538.355560767</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2674">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226421.84940955014 6756190.026106461 226402.40042733605 6756203.526159273 226382.2429872186 6756220.307903033 226351.57373563998 6756236.46852364 226307.6904997027 6756251.402034133 226286.94978028687 6756259.171486922 226256.30148627737 6756264.518752143</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2675">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227383.6029379532 6756574.601303663 227402.9053935241 6756546.236966724 227407.30049479433 6756531.804785739 227417.72993819107 6756518.283698204 227416.85231077083 6756496.685936408 227427.50779672782 6756469.634020876</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2676">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226895.8317831449 6756144.114698614 226891.01296293444 6756145.114714249 226877.3513994884 6756140.161446336 226869.46683999914 6756139.986281151 226843.68229628395 6756150.939228602 226823.00998259132 6756159.033930158 226807.92714203964 6756175.853818882 226794.7363418562 6756190.988464654 226790.29414340056 6756198.764825584 226780.3586721244 6756220.381589179 226778.90483891504 6756228.003842394 226777.3073747137 6756232.387911311 226772.11175218585 6756242.181508508 226762.08308696433 6756251.157313316 226758.0064027158 6756254.806006241 226741.13148870377 6756237.174697357 226724.3683834257 6756218.574232252 226707.0660770001 6756199.742871724 226704.01862127794 6756199.447155556 226696.8285449504 6756191.56831363 226696.98442966578 6756188.480613012 226673.8025240028 6756171.406718149 226652.07588298328 6756166.607702506 226647.88444203895 6756163.591527862 226643.13962197822 6756162.503033217 226635.68371548306 6756157.721671543 226628.22099362744 6756156.458020622 226620.08082246297 6756148.947098039 226606.52582469478 6756145.73289674 226596.61316708743 6756145.253987091 226583.25271462445 6756144.788383318 226573.62266483298 6756148.027614919 226565.30261491548 6756150.829669173 226556.92711688683 6756156.459785855 226542.44144703483 6756159.060014305 226529.055991185 6756161.182684404 226526.9805200292 6756159.5397226615 226511.9033934995 6756168.244852576 226489.95190254092 6756171.1803827435 226464.42254558404 6756174.208911686 226460.15373405372 6756175.020107665 226446.85508048208 6756178.761894151 226435.9551952004 6756182.338439441 226421.84940955014 6756190.026106461</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2677">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226263.73675220984 6755790.558140693 226280.62052264344 6755793.279132399 226297.123805014 6755796.37913904 226323.46837736527 6755805.834114718 226350.40151833504 6755820.9865352865 226374.61934364785 6755829.478006022 226386.11594346777 6755834.905937505 226400.41153643996 6755838.956491575 226421.86099147686 6755841.903454475 226440.85811610887 6755841.716783899 226452.25613103696 6755841.738875138 226467.68130625633 6755839.533857549 226480.20456998283 6755835.535284413 226493.405234684 6755827.962162327</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2678">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226475.98425890028 6755753.087235005 226487.9156970565 6755748.775012246 226500.31621332624 6755742.783228054 226512.42092027707 6755736.541015863 226523.63904907723 6755729.776345994 226547.59650711546 6755715.543232929 226551.35839734104 6755713.271506652 226578.20180419495 6755698.237934995 226582.96158062544 6755665.558085969 226585.46343854564 6755648.54426354 226586.982074307 6755638.423776941 226586.2321451899 6755612.848925177 226583.37703964498 6755585.491152311</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2679">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226627.88736076787 6756155.171205734 226619.81925719714 6756124.05269924 226613.11541193182 6756097.326997869</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2680">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226402.27539409837 6755595.413525557 226406.4294054681 6755597.110480431 226447.9131463687 6755596.761161772 226517.40594025888 6755592.678572819 226520.36499604618 6755592.174637783 226530.27180095488 6755590.504931457 226548.2678569652 6755586.512417593 226576.15725741262 6755582.639006613 226579.65584439435 6755582.196077295 226583.37703964498 6755585.491152311 226588.69995710585 6755582.2036069315 226596.04614482634 6755576.551519473 226599.15823905822 6755574.428931282 226604.07103645918 6755571.340461304 226619.04952298477 6755561.945600475 226628.3754043652 6755555.787678799 226639.58224576205 6755548.504134253 226651.13926458667 6755541.01140404 226664.71767426818 6755532.123497982 226675.09377779468 6755525.497914646 226690.38083705574 6755516.733239563</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2681">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226579.94389080186 6755577.949393337 226586.0729103784 6755576.402280795 226594.55761811748 6755571.132152791 226602.83228832413 6755565.951559236 226623.5640878835 6755552.920213829 226638.21257504128 6755543.634641667 226653.69189380406 6755533.641139259 226663.7581806879 6755527.024949714 226682.6841562814 6755512.441108878</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2682">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226600.29869466316 6755367.485611383 226561.45182216575 6755389.216169352 226535.70052600355 6755403.676840106 226548.1975573983 6755426.806035824 226551.19146642362 6755432.428207919</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2683">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226578.49182991334 6755326.759818616 226572.72246515844 6755328.367587704 226562.58311071573 6755331.4359343145 226546.5441855173 6755336.261699246 226539.37449626665 6755338.506338364 226532.78477632126 6755340.5722180465 226527.97517078376 6755341.981975788 226514.37645038037 6755345.883071429 226509.33614294732 6755347.732095825 226503.53600300738 6755349.749537261 226493.90569397662 6755353.138659615 226485.75317793625 6755357.170229442 226478.29088847182 6755360.853364069 226469.8674832632 6755365.434051094 226465.34596379095 6755367.7337876195 226450.75843047327 6755376.509792637 226446.32917591662 6755377.610487444</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2684">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226041.59626501275 6755540.469404504 226082.57933467824 6755525.168889039 226091.6918747301 6755520.8094070535 226133.66201198508 6755501.533382735 226163.12583818118 6755484.541600039 226166.93763226987 6755482.340427146 226178.5527474751 6755470.66055613 226186.80092947942 6755463.681096929 226243.1021624293 6755469.956256825 226276.9548771918 6755472.680163023 226296.11844741815 6755485.039307908 226312.4948330106 6755491.726730727 226318.50568983023 6755494.426636494 226322.3198821636 6755496.142920159 226332.9034473524 6755501.070248545 226343.00089491857 6755509.314478612 226346.07402116444 6755511.828806078 226362.38241017354 6755522.663400392 226364.32838612748 6755524.0862505715 226370.9246556147 6755528.955881502 226381.91818627826 6755538.9207314765 226382.69076258037 6755539.911586319 226383.46333888883 6755540.902441163 226392.12600922392 6755552.09197487 226394.0559873542 6755556.612781833 226396.33414871333 6755561.953731515 226396.75517081807 6755566.441633338 226397.27393882925 6755572.058991309 226400.59302630712 6755586.885800129 226400.90720975318 6755588.47270558 226401.42434262316 6755591.084685862 226402.27539409837 6755595.413525557 226403.35408730927 6755600.882066811 226409.98175006075 6755620.492188796 226418.35184122995 6755643.423535683 226421.82003975502 6755653.503718889 226426.45108232024 6755672.040668983</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2685">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225987.29888294195 6755366.686976417 226009.78520115966 6755366.20094067 226031.2719793453 6755365.812899054 226055.12350605289 6755367.338200803 226076.38527265424 6755369.607989933</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2686">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225801.00841643696 6755501.4176882 225828.25329933205 6755495.003093962 225829.3874024335 6755494.753323006</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2687">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225113.81620020897 6755660.259017624 225117.60157117154 6755671.658975501 225118.5951110386 6755674.648965915 225119.45939615247 6755677.298925812 225121.3663728292 6755683.358699204 225123.95975278685 6755691.038755481 225127.98304515 6755703.4285347015 225129.7407610219 6755709.158232745</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2688">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226387.8058290591 6755889.786254227 226409.1878187139 6755887.411449973 226415.53983876307 6755887.853949833 226440.5205488297 6755890.758115803 226443.14876418846 6755890.963639069 226445.7849939068 6755890.970615689 226448.41426025768 6755890.779006027 226451.0216250755 6755890.389898703 226453.59227462998 6755889.805504437 226456.11160378729 6755889.029143459 226458.94053638243 6755888.039176763 226476.20398653782 6755881.997943038 226478.35388257488 6755881.165088273 226504.93720787694 6755869.845595098 226507.6896385604 6755868.528925126 226510.31684003933 6755866.97737532 226512.7988177206 6755865.202753925 226515.11668225046 6755863.21856688 226517.25279327994 6755861.039915054 226519.1908937128 6755858.683379321 226520.91623343615 6755856.166894341 226522.41568157438 6755853.509612093 226523.67782642657 6755850.731756107 226524.6930623121 6755847.854467553 226525.45366267907 6755844.899644336 226525.95383890672 6755841.889774454 226526.14072285232 6755839.480307547 226526.18978435884 6755838.847764837 226526.15970335575 6755835.7967670085 226525.76244490378 6755831.33576821</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul "cours d'eau"</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11006</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2689">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225107.91315966973 6754384.447623086 225122.49698993925 6754402.533994043 225126.90146159957 6754407.99626981 225128.60956137563 6754409.960293902 225130.45899688487 6754411.791846209 225132.43952468864 6754413.480782339 225134.54017527064 6754415.017747805 225136.7493137897 6754416.394229844 225137.9331735404 6754417.072065268 225139.43364522216 6754418.899404341 225141.20028033608 6754420.891205278 225145.49632301362 6754425.378463905 225147.44040833518 6754427.409080006 225151.7924089739 6754433.026393811 225155.97814226436 6754438.514473125 225158.633408304 6754442.169080801 225160.1618945276 6754444.12313991 225161.82505583658 6754445.963930954 225166.67375185684 6754450.962081318 225166.9694726331 6754451.241433114 225167.24671740655 6754451.539130602 225181.6718562859 6754465.733172086 225182.2600814787 6754466.2635071715 225182.82553029334 6754466.818062933 225183.3925933721 6754467.284563044 225183.9379572174 6754467.776254968 225184.5701658022 6754468.253304771 225185.1817956296 6754468.756468157 225187.4977933385 6754470.498072991 225188.74998431664 6754471.686180599 225190.66978372692 6754473.665155095 225191.84877439565 6754474.824357411 225193.08123333793 6754475.926543413 225194.22341600707 6754476.900397771 225195.35214639705 6754478.43203936 225196.5624973983 6754479.900034165 225198.51715274574 6754482.143543643 225199.50559896277 6754483.635032662 225198.1260186464 6754486.43304126 225197.00125292345 6754489.342851596 225196.14025061968 6754492.3413127605 225195.54986201494 6754495.404568516 225195.23478434357 6754498.5082471 225195.19752442354 6754501.627655153 225195.43837870914 6754504.737974159 225195.9554309338 6754507.814457915 225196.7445673537 6754510.832629419 225197.7995094802 6754513.768475603 225199.1118640299 6754516.598638395 225200.6711897038 6754519.300600558 225202.4650802592 6754521.852864834 225204.4792632162 6754524.235124987 225206.69771341095 6754526.428427363 225209.10278049525 6754528.415321688 225211.67532936617 6754530.179999895 225214.39489240496 6754531.708421914 225217.2398323242 6754532.988427361 225220.18751431647 6754534.009832302 225223.2144861407 6754534.764510266 225226.29666471144 6754535.246456908 225229.40952770913 6754535.451837782 225232.52830868342 6754535.379018838 225235.62819410034 6754535.028579442 225238.68452076043 6754534.403307739 225241.67297202663 6754533.5081785 225244.56977128866 6754532.350313526 225247.3518711367 6754530.938924978 225249.99713672785 6754529.2852420965 225252.48452189675 6754527.402421861 225254.79423660156 6754525.3054443 225256.90790437732 6754523.0109933205 225258.80870854 6754520.537323948 225263.5621562238 6754513.74441971 225264.89793286414 6754511.68531686 225266.0860063206 6754509.537600592 225267.12052545976 6754507.311848185 225267.996395387 6754505.01902124 225269.45037192717 6754500.771389563 225270.19934588927 6754498.285871569 225270.76190117758 6754495.751647204 225271.13493864692 6754493.182677662 225271.3164032161 6754490.593115544 225271.30529519182 6754487.9972269 225271.21735613112 6754485.8742623255 225271.357907634 6754481.688338853 225271.34762524057 6754479.066807643</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul "cours d'eau"</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11006</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2690">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227664.14481385157 6756392.231911865 227636.46052698162 6756388.180967136 227624.66569296335 6756389.447329167 227612.0432945682 6756394.899386705 227595.19151526346 6756401.442555705 227580.30188624508 6756411.38732415 227570.322043541 6756414.63591575 227568.41906363843 6756416.810829259 227557.17024218716 6756430.290359861 227548.5362196032 6756440.417114849 227542.6346575254 6756448.360566932 227534.520392954 6756458.438359488 227529.90197946416 6756459.15895686 227528.22347671306 6756464.112511343 227522.7356507366 6756480.321429813 227521.76521822263 6756486.035863903 227517.680930786 6756510.282313437 227514.5764696916 6756529.124148373 227510.605355378 6756546.525236876 227513.07447360852 6756571.993586828 227514.91575845 6756591.384643722 227521.48562049452 6756609.935395205 227520.0279623855 6756629.879713978 227518.36674274388 6756656.8990793135 227515.35345843586 6756680.268183692 227511.67779894779 6756710.251745568 227511.78697707958 6756736.475058882 227514.52671276184 6756756.367544661 227517.31257000624 6756778.248840196 227509.77880750317 6756803.36807995 227513.44235322246 6756805.483807672 227505.67624434637 6756826.725097557 227497.37411732046 6756840.919888725 227487.80785625684 6756857.670588004 227475.30629963183 6756867.799869392 227470.04523815785 6756870.098206583 227459.36957626778 6756886.906721954 227448.02355474827 6756898.957003093 227439.20593393513 6756910.992188201 227434.39631869347 6756917.558651717 227432.96360932535 6756919.434670927 227425.61385828938 6756926.915628846 227420.16782698175 6756931.841916051 227410.83748063457 6756940.2884184355 227392.00574046723 6756947.447355524 227374.1337457213 6756954.41827034 227372.6435880459 6756954.995014271 227363.80061069934 6756949.141660754 227357.75899062207 6756946.821456996</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2691">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227585.41003198415 6756451.333949911 227586.60766439198 6756449.76191237 227587.88652501034 6756447.830165134 227595.73912913387 6756435.069680932 227598.1401393002 6756433.214354616 227626.93312830786 6756415.132104537 227642.40061225463 6756405.418386673 227643.17134069616 6756404.886117043 227643.57274232642 6756404.628441522 227644.38624687295 6756405.113013268 227646.4078614951 6756406.145786985 227654.2885370468 6756409.85434076 227659.1963376014 6756412.403027485 227676.65268540906 6756421.468342316 227714.30838447344 6756442.046526618 227750.91574620886 6756462.051805931 227752.9405246463 6756463.158311536 227760.41704564315 6756469.38201128 227766.22048997047 6756474.212987231</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul "cours d'eau"</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11006</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2692">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227670.4949922114 6756330.259620186 227685.8075147777 6756348.151945282 227771.019913189 6756393.052385887</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul "cours d'eau"</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11006</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2693">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227596.45196275285 6756346.118699023 227610.28564522805 6756290.165767973 227610.32539072575 6756290.016671353 227615.5785521287 6756270.483798539 227614.85996638006 6756265.326884589 227614.57065498503 6756262.280900851 227614.54866737645 6756259.221287424 227614.84866833012 6756251.021287571 227615.0872074666 6756248.027678347 227615.581675992 6756245.065567986</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul "cours d'eau"</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11006</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2694">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225178.70159044972 6754182.691058097 225177.0885596063 6754167.248772094 225170.47831739503 6754156.7696302105 225156.85730449331 6754142.912560587</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2695">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225185.31551405933 6754193.62809698 225187.07944177848 6754171.060576981 225207.71218687482 6754188.410055124</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2696">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225190.94723547815 6754210.526233959 225205.81879378267 6754194.950919257</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2697">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225067.22892197338 6754427.898866374 225062.83478820405 6754379.965674023</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2698">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225114.2723950154 6754370.048401217 225132.2535147579 6754370.9336211765 225147.8002911068 6754382.256527194</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2699">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225151.64605609525 6754362.305329956 225192.7628303407 6754321.904194259</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2700">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225165.3799064007 6754390.128498223 225185.63720729132 6754361.000639468 225218.08006280469 6754352.267004725</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2701">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225316.06817405135 6754421.883622426 225276.7717186488 6754446.7002945775 225241.024049338 6754471.488307581</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2702">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225317.69151685823 6754381.915711774 225349.5296294521 6754369.18002842 225356.51639198844 6754369.581582681 225379.43735649984 6754358.406151593</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2703">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225346.7591347883 6754706.4713739725 225367.66295045702 6754629.827558849</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2704">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225427.89655443956 6754603.353616098 225413.92011516844 6754658.876531672</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2705">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225480.4682341207 6754620.445327755 225479.7069904965 6754582.900811159</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2706">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225526.55253538472 6754698.952670186 225548.5884244233 6754705.758317873 225553.16007397027 6754704.80554966 225576.2058932918 6754709.084420652</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2707">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225807.81812211475 6754880.543463332 225725.99615591363 6754884.752846871 225717.43981449585 6754874.289405035 225731.69460811996 6754853.223825811</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2708">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225842.21344517753 6754929.264921159 225841.42339708615 6754901.132355582</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2709">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225678.27554993017 6755043.011092144 225677.81763523218 6755043.014788326 225677.82133441244 6755043.472703029 225690.59428013582 6755079.889932802 225706.47679644177 6755132.76772825</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2710">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225715.537158744 6755205.6207620315 225713.13512296823 6755149.199650034</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2711">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225857.52015192132 6755520.221143788 225889.79287747847 6755490.4238617895 225909.84496426035 6755506.747690939</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2712">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226017.12310880277 6755493.40312744 226019.50471574313 6755476.440294684 226005.2602083882 6755442.095642887 225990.26113172312 6755385.203753805</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2713">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226118.8592390744 6755346.729635018 226175.07580884028 6755304.832771007 226180.98789504304 6755299.747765847</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2714">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226188.38817103708 6755294.650748986 226191.61046907952 6755254.211964478</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2715">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226319.47237142886 6755252.149610393 226302.10267481836 6755270.263773303 226292.24403336662 6755282.822079614</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2716">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226416.01228484744 6755142.496310993 226390.8241906162 6755170.6336695915 226374.96303477103 6755191.254285515 226359.64650971966 6755208.4359887745 226345.7728707061 6755219.996360606 226345.82558898407 6755226.521508783 226343.87323333748 6755239.9318739325</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2717">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226181.57333417522 6755372.211294352 226186.23480590788 6755325.69324633</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2718">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226414.98556450225 6755383.836482337 226399.61170869338 6755393.920661138 226398.7231491409 6755394.868551965 226375.31999703828 6755419.646611907 226349.5631969928 6755448.246491799 226321.31288417883 6755479.957554118 226311.43481742812 6755490.111859785</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2719">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226570.83511483914 6755317.551755227 226552.0899263537 6755278.778558559 226536.28250224027 6755249.36931159 226523.6075601515 6755225.086573585 226520.10851991887 6755217.100937536 226510.46177128504 6755199.204848387 226497.266231712 6755181.337402535 226474.9954127872 6755145.454751834 226462.4333109915 6755135.13812752</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2720">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226437.2351291044 6755417.086180721 226479.83346000174 6755489.210611473</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2721">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226595.65681220812 6755357.420752864 226618.02383207687 6755405.208941531</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2722">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226689.81783071806 6755505.947661516 226658.52831162 6755473.228869487 226583.7524476457 6755499.3623039005 226550.85998488788 6755509.129954606</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2723">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225961.91148860048 6755702.209280942 225979.7594451757 6755686.609923632 226002.9126934153 6755647.498542645</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2724">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226223.6471845192 6755691.167109136 226226.3312192973 6755711.638047953 226230.37601859326 6755730.495230813 226236.08915507968 6755757.467316547 226238.74914371182 6755774.961876894</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2725">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226241.88277071825 6755794.398830653 226244.47431957378 6755803.422136687 226247.14170736453 6755821.832511784 226248.7186864934 6755832.810237018 226268.03080407833 6755814.222467469 226265.43718312884 6755790.774205642 226268.87148145708 6755790.746487631</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2726">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226343.30704386084 6755850.0207769815 226343.5974555104 6755885.966368615 226351.69961318548 6755896.891431405 226355.80340156943 6755908.8791067535 226376.70822216867 6755903.21516403</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2727">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226392.64614116598 6755892.096075145 226387.395523289 6755865.692683131</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2728">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226287.78573336115 6756091.3429386625 226295.64187764406 6756071.81728442 226295.4920493223 6756053.272100215 226287.73199274915 6756013.837803109 226283.05673454842 6756001.969208749 226265.2687778948 6755954.144039355</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2729">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226319.51002072834 6755993.661132894 226301.73050279357 6756017.731755608 226304.52367406985 6756051.710920235 226308.58512359724 6756072.628693084 226308.85148582666 6756105.597894936</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2730">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226527.3562518346 6755816.594313451 226536.91423168994 6755823.500676024 226543.3912968067 6755817.495251071 226562.66641308408 6755794.32841028 226568.668914665 6755786.266098024</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2731">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226536.96502858074 6755886.466405552 226535.1050097635 6755840.458897232 226559.8352231449 6755812.325238832 226573.6395164525 6755792.179142909 226590.91301347403 6755762.159437689</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2732">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226814.88107160717 6755653.423779974 226751.61830329744 6755673.3966629645 226701.49865323643 6755685.336347431 226671.82349254808 6755695.593746284 226654.2757666334 6755702.006554685</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2733">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226722.11389797577 6756045.821885739 226665.84250241914 6756066.768672367 226639.47148064978 6756076.025758747 226621.41655566916 6756080.1784157865 226597.4299079157 6756072.816076437 226581.85439681838 6756057.944397344 226566.02383729996 6756025.6732279435 226560.4235294417 6756012.667270107</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2734">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226702.32446023566 6756062.009359424 226675.84266134526 6756071.725252957</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2735">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226871.43012162967 6756346.968726151 226838.62002124562 6756310.255243612</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2736">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226975.39253836754 6756291.635279588 226948.05134169263 6756308.341640761 226912.19638986554 6756263.180922523 226879.60157029575 6756238.944436041</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2737">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>226912.2730479 6756386.021544749 226921.84766224015 6756394.988502198 227032.63590407796 6756320.137683205</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2738">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227033.09011979465 6756319.67607239 226984.01995993988 6756240.047880533</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2739">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227240.40909975593 6756374.901247458 227261.4896277889 6756447.657368332 227274.75292765046 6756488.077630081 227293.22137618414 6756478.426405182 227323.10140984203 6756464.218189304 227335.95216434513 6756453.58193056 227344.30596484634 6756438.975049076</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2740">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227551.27421872143 6756379.9480272215 227531.2343425458 6756322.638832456 227508.7904778527 6756265.349047394 227501.15986884543 6756241.9414248485 227470.30484563403 6756192.161007144</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2741">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227579.94284446572 6756414.1762867635 227615.23635896185 6756389.849777325 227645.6871391029 6756389.6039882265 227665.7575546268 6756394.021351504</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2742">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227773.78488117649 6756402.537070096 227772.56957655906 6756379.650075686 227771.02495628805 6756372.679015463 227743.83825139492 6756351.833422538 227719.77203077852 6756334.626117947 227665.9839895041 6756294.53296563</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2743">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227778.98211672186 6756436.496856994 227810.09409953613 6756447.2361755045 227862.54475838807 6756449.331449988</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2744">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227877.87051500363 6756546.633617632 227877.62168155116 6756459.1698574815 227789.10601325368 6756385.927694269</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2745">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227193.36378996738 6756730.066750587 227229.4889509197 6756695.31549199 227286.0904090323 6756644.371215898</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2746">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227274.29040328506 6756487.50894856 227299.21666870592 6756540.313827305 227319.40202098724 6756573.122294996 227325.02176805306 6756588.532264422 227334.1745723472 6756601.967501501</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2747">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227318.30508313113 6756621.557855042 227390.43859187677 6756580.104871334</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2748">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227201.94812794862 6757055.704402443 227199.2807205296 6757037.29400339 227205.05960056267 6757015.724371117 227222.3201708296 6756984.101962445</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2749">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227245.10993494833 6757140.875586084 227257.3233197399 6757164.704164934 227269.4305520358 6757189.563960488 227269.0290591467 6757196.550732652</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2750">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227357.13929810515 6756964.58188059 227303.06189104234 6756959.523127398 227274.18808397616 6756970.746625707 227240.8293295371 6756979.487689912</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2751">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227772.97588804952 6756557.440411628 227718.61336017773 6756502.92689863</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2752">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227796.55993578932 6756500.809444742 227766.5550404967 6756499.563349665 227766.21647163248 6756457.664940048</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2753">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>227984.41823797667 6756683.726797358 227963.72432687558 6756658.821836669 227971.08852861164 6756649.260230888 227982.02186331165 6756642.188447973</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Talus ou haie remarquable à préserver</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>07</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>07003</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2754">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225065.79928594618 6754143.924680913 225093.79046566295 6754170.70019888 225143.71977298078 6754218.461053785 225165.08177486132 6754238.174077518 225223.0522376597 6754290.992168122</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2755">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>225506.08329944953 6754638.641915922 225508.1118562292 6754642.010591086 225508.45607783477 6754642.576539975 225513.79667151207 6754651.270457554 225514.53696381516 6754652.47557453 225518.57894960686 6754659.072461967 225520.12064928393 6754661.4840380475 225508.1118562292 6754642.010591086 225508.45607783477 6754642.576539975 225513.79667151207 6754651.270457554 225514.53696381516 6754652.47557453 225518.57894960686 6754659.072461967 225520.12064928393 6754661.4840380475 225525.94984958525 6754670.229648048 225528.9100193822 6754674.360185646 225532.14294571534 6754678.2802002635 225532.14329753222 6754678.280626853 225532.77138775168 6754678.991651928 225535.4911072087 6754682.070491006 225560.53543435188 6754709.95201408</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+  <wfs:member>
+    <gp-urba:PRESCRIPTION_LIN gml:id="PRESCRIPTION_LIN.2756">
+      <gp-urba:the_geom>
+        <gml:MultiCurve srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#2154">
+          <gml:curveMember>
+            <gml:LineString srsDimension="2">
+              <gml:posList>228052.28696724126 6756575.065115429 228121.89185748354 6756682.8255398795 228182.61867799924 6756776.841126857 228220.00082165387 6756834.715107373 228247.86122274195 6756877.847783562 228251.13305321342 6756882.913137309 228293.6158344646 6756948.683744473</gml:posList>
+            </gml:LineString>
+          </gml:curveMember>
+        </gml:MultiCurve>
+      </gp-urba:the_geom>
+      <gp-urba:LIBELLE>Marge de recul</gp-urba:LIBELLE>
+      <gp-urba:TXT/>
+      <gp-urba:TYPEPSC>11</gp-urba:TYPEPSC>
+      <gp-urba:TYPEPSC2>11001</gp-urba:TYPEPSC2>
+      <gp-urba:NOMFIC/>
+      <gp-urba:URLFIC/>
+      <gp-urba:INSEE>56118</gp-urba:INSEE>
+      <gp-urba:DATAPPRO>20140123</gp-urba:DATAPPRO>
+      <gp-urba:DATVALID/>
+    </gp-urba:PRESCRIPTION_LIN>
+  </wfs:member>
+</wfs:FeatureCollection>
