@@ -38,7 +38,7 @@ public class MetadataValidator implements Validator<DocumentFile> {
 			 */
 			{
 				String fileIdentifier = reader.getFileIdentifier() ;
-				if ( null == fileIdentifier ){
+				if ( null == fileIdentifier || "" == fileIdentifier ){
 					context.report(
 						ErrorCode.METADATA_FILEIDENTIFIER_NOT_FOUND,
 						context.relativize(file)
@@ -48,7 +48,7 @@ public class MetadataValidator implements Validator<DocumentFile> {
 			
 			{
 				String mdIdentifier = reader.getMDIdentifier() ;
-				if ( null == mdIdentifier ){
+				if ( null == mdIdentifier || "" == mdIdentifier ){
 					context.report(
 						ErrorCode.METADATA_MD_IDENTIFIER_NOT_FOUND,
 						context.relativize(file)
