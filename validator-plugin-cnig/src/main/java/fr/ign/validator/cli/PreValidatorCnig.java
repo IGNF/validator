@@ -1,18 +1,25 @@
 package fr.ign.validator.cli;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import fr.ign.validator.tools.IdgestExtractor;
+import org.apache.commons.io.FileUtils;
+
+import fr.ign.validator.cnig.utils.IdgestExtractor;
 
 
 /**
  * 
+ * Prevalidateur CNIG pour les SUP (extraction de IDGEST)
+ * 
+ * TODO move to fr.ign.validator.cli.PreValidatorCnig
  * 
  * @author fcerizay
  *
@@ -42,12 +49,7 @@ public class PreValidatorCnig {
 		return options;
 	}
 	
-	/**
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
+	public static int run(String[] args){
 		/*
 		 * Récupération des options de la ligne de commande
 		 */
@@ -60,15 +62,44 @@ public class PreValidatorCnig {
 			commandline = parser.parse(options, args);
 		} catch (ParseException e) {
 			System.err.println(e.getMessage());
-			System.exit(1);
+			return 1;
 		}
 
 		String proxyString = commandline.getOptionValue("proxy", "");
 		configureProxy(proxyString);
 		
+		/*
+		 * extraction idgest à partir du fichier en paramètre
+		 */
 		File servitudeFile = new File(commandline.getOptionValue("input"));
-		IdgestExtractor idgestExtractor = new IdgestExtractor(servitudeFile);
-		idgestExtractor.findIdGest();
+		IdgestExtractor idgestExtractor = new IdgestExtractor();
+		String idGest = idgestExtractor.findIdGest(servitudeFile);
+		if ( idGest == null || idGest.isEmpty() ){
+			System.err.println("fail to read IdGest from "+servitudeFile);
+			return 1;
+		}
+		
+		/*
+		 * écriture du résultat
+		 */
+		File resultFile = new File(servitudeFile.getParent(), "idGest.txt");
+		try {
+			FileUtils.writeStringToFile(resultFile, idGest);
+		} catch (IOException e) {
+			System.err.println("fail to write "+idGest+" to "+resultFile);
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+	
+	/**
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		System.exit(PreValidatorCnig.run(args));
 	}
 	
 	/**

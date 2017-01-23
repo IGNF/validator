@@ -103,7 +103,7 @@ public class Validator {
 	 * @param validationDirectory
 	 * @throws Exception 
 	 */
-	public void validate(DocumentModel documentModel, File documentPath) throws Exception {
+	public Document validate(DocumentModel documentModel, File documentPath) throws Exception {
 		log.info(VALIDATOR, "Validation de {} avec le modèle {}",
 			documentPath,
 			documentModel.getName()
@@ -118,6 +118,7 @@ public class Validator {
 		
 		Document document = new Document(documentModel,documentPath);
 		document.validate(context);
+		return document;
 	}
 
 	

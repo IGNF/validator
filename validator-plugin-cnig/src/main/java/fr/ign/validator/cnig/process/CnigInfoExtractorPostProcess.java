@@ -1,15 +1,17 @@
 package fr.ign.validator.cnig.process;
 
 import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.process.info.InfoExtractor;
-import fr.ign.validator.cnig.process.info.InfoWriter;
-import fr.ign.validator.data.DataDirectory;
+import fr.ign.validator.cnig.info.DocumentInfo;
+import fr.ign.validator.cnig.info.DocumentInfoExtractor;
+import fr.ign.validator.cnig.info.DocumentInfoWriter;
 import fr.ign.validator.model.Document;
 
 /**
@@ -61,14 +63,14 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 		/*
 		 * Extractions des informations CNIG
 		 */
-		InfoExtractor infoExtractor = new InfoExtractor() ;
-		DataDirectory registerRepertory = infoExtractor.parseDocument( context, document ) ;
+		DocumentInfoExtractor infoExtractor = new DocumentInfoExtractor() ;
+		DocumentInfo documentInfo = infoExtractor.parseDocument( context, document ) ;
 		/*
 		 * Ecriture dans le fichier infos-cnig.xml
 		 */
 		File outputInfoCnig = new File( validationDirectory, "infos-cnig.xml" ) ;
-		InfoWriter infowriter = new InfoWriter() ;
-		infowriter.write(registerRepertory,outputInfoCnig ) ;
+		DocumentInfoWriter infowriter = new DocumentInfoWriter() ;
+		infowriter.write(documentInfo,outputInfoCnig ) ;
 	}
 	
 }

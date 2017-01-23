@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[1314efbecbcf4ba12ec0069454dfb756]]></id>
+  <typeName><![CDATA[PM3_ASSIETTE_SUP_S]]></typeName>
+  <description><![CDATA[Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[16cb5914fd03e3537143180e3e38f70a]]></id>
+      <name><![CDATA[TYPEASS]]></name>
+      <description><![CDATA[Nature de l'assiette selon sa vocation principale et la catégorie de SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[56b6d7b14fc3a248e632d83f7a87f704]]></id>
+      <name><![CDATA[IDASS]]></name>
+      <description><![CDATA[Identifiant de l'assiette]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7427ab389841fc55e516b81a481d2939]]></id>
+      <name><![CDATA[IDGEN]]></name>
+      <description><![CDATA[Identifiant du générateur de l'assiette]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[89ecc28e1d7fde0cbd77d0798b496dd9]]></id>
+      <name><![CDATA[DATESRCASS]]></name>
+      <description><![CDATA[Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8b81ee4d2c2a6765894e9e0d0fa9cdda]]></id>
+      <name><![CDATA[MODEGEOASS]]></name>
+      <description><![CDATA[Description de la méthode utilisée pour générer la géométrie de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[Egal au générateur]]></value>
+        <value><![CDATA[Zone tampon]]></value>
+        <value><![CDATA[Digitalisation]]></value>
+        <value><![CDATA[Duplication]]></value>
+        <value><![CDATA[Liste de coordonnées]]></value>
+        <value><![CDATA[Secteur angulaire]]></value>
+        <value><![CDATA[Calculée]]></value>
+        <value><![CDATA[Liste de parcelles]]></value>
+        <value><![CDATA[Fictive]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9647e0dff490bc52af36ef874ce440b6]]></id>
+      <name><![CDATA[PARAMCALC]]></name>
+      <description><![CDATA[Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cf3618713c7ac76f3739f4eaaab392b2]]></id>
+      <name><![CDATA[SRCGEOASS]]></name>
+      <description><![CDATA[Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[efc4d73337d1cabd3e5a8f66d88238f0]]></id>
+      <name><![CDATA[NOMASS]]></name>
+      <description><![CDATA[Nom abrégé de l'assiette, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6418d5e70e8f30ede943a050f044525b]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>
