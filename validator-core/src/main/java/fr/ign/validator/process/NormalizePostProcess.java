@@ -143,7 +143,7 @@ public class NormalizePostProcess implements ValidatorListener {
 			reader = TableReader.createTableReader(srcFile,charset);
 		} catch (InvalidCharsetException e1) {
 			log.error(MARKER,"Détection de la charset pour la normalisation de {}", srcFile);
-			reader = new TableReader(srcFile) ;
+			reader = TableReader.createTableReaderDetectCharset(srcFile) ;
 		}
 		
 		

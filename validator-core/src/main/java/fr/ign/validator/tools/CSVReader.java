@@ -33,7 +33,7 @@ public class CSVReader implements Iterator< String[] >{
 		CSVParser parser = new CSVParser(reader, CSVFormat.RFC4180) ;
 		this.iterator = parser.iterator() ;
 	}
-	
+
 	
 	@Override
 	public boolean hasNext() {

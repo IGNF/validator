@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <name>110068012_PM3_28_20161104</name>
+  <type />
+  <bbox>1.1493747415116693,48.2152330283075,1.7714893948285795,48.49714123390053</bbox>
+  <geometry />
+  <typeref />
+  <metadataFileIdentifier>fr-110068012_SUP_PM3_28.xml</metadataFileIdentifier>
+  <metadataMdIdentifier>fr-110068012-SUP-PM3-28</metadataMdIdentifier>
+  <pdfs>
+    <pdf>
+      <name>PM3_Auneau_Legendre_Delpierre_act.pdf</name>
+    </pdf>
+    <pdf>
+      <name>PM3_Coltainville_Primagaz_act.pdf</name>
+    </pdf>
+    <pdf>
+      <name>PM3_Brou_Vouzelaud_act.pdf</name>
+    </pdf>
+  </pdfs>
+  <layers>
+    <layer>
+      <name>ACTE_SUP.shp</name>
+      <bbox />
+    </layer>
+    <layer>
+      <name>SERVITUDE.shp</name>
+      <bbox />
+    </layer>
+    <layer>
+      <name>PM3_ASSIETTE_SUP_S.shp</name>
+      <bbox>1.1493747415116693,48.2152330283075,1.7714893948285795,48.49714123390053</bbox>
+    </layer>
+    <layer>
+      <name>SERVITUDE_ACTE_SUP.shp</name>
+      <bbox />
+    </layer>
+    <layer>
+      <name>PM3_GENERATEUR_SUP_S.shp</name>
+      <bbox>1.1493747415116693,48.2152330283075,1.7706184186789522,48.4944960429738</bbox>
+    </layer>
+    <layer>
+      <name>GESTIONNAIRE_SUP.shp</name>
+      <bbox />
+    </layer>
+  </layers>
+</document>

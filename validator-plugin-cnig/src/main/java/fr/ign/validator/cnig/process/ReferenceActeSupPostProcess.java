@@ -7,8 +7,8 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
+import fr.ign.validator.cnig.utils.ReferenceActeSupJointureBuilder;
 import fr.ign.validator.model.Document;
-import fr.ign.validator.tools.ReferenceActeSupJointureBuilder;
 
 
 /**

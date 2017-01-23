@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[8bacabfa1aa091b1acb7aa8a02de4885]]></id>
+  <typeName><![CDATA[ACTE_SUP]]></typeName>
+  <description><![CDATA[Table contenant la liste des actes instituant une servitude d'utilité publique]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[372a2ae5a0be525684435b5bf7202dcf]]></id>
+      <name><![CDATA[APLAN]]></name>
+      <description><![CDATA[Existence d'un ou plusieurs plans annexés à l'acte]]></description>
+      <type><![CDATA[String]]></type>
+      <size>1</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[38ef89f7dee63d5d0d0254039d4f02bb]]></id>
+      <name><![CDATA[DECISION]]></name>
+      <description><![CDATA[Nature de la décision prise dans l'acte : l'autorité compétente prend une décision qui crée ou modifie l'état de la servitude]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[Création]]></value>
+        <value><![CDATA[Modification]]></value>
+        <value><![CDATA[Substitution]]></value>
+        <value><![CDATA[Annulation]]></value>
+        <value><![CDATA[Abrogation]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[57967eb687c1300d5cfa308134457467]]></id>
+      <name><![CDATA[TYPEACTE]]></name>
+      <description><![CDATA[Description de la nature de l'acte]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[Texte de loi]]></value>
+        <value><![CDATA[Décret en Conseil d'Etat]]></value>
+        <value><![CDATA[Arrêté ministériel]]></value>
+        <value><![CDATA[Arrêté interministériel]]></value>
+        <value><![CDATA[Arrêté préfectoral]]></value>
+        <value><![CDATA[Arrêté Préfet de Région]]></value>
+        <value><![CDATA[Décret Premier Ministre]]></value>
+        <value><![CDATA[Décret]]></value>
+        <value><![CDATA[Arrêté de SUP]]></value>
+        <value><![CDATA[Convention amiable]]></value>
+        <value><![CDATA[Arrêté municipal]]></value>
+        <value><![CDATA[Autre]]></value>
+        <value><![CDATA[Non renseigné]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a1ed509fa03fb1cb683ad1bc4ee64d04]]></id>
+      <name><![CDATA[DATEPUB]]></name>
+      <description><![CDATA[Date de parution au Journal Officiel ou de publicité dans la presse]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a8833ccb9cc32ac1d6279678de4d6ac0]]></id>
+      <name><![CDATA[NOMACTE]]></name>
+      <description><![CDATA[Nom abrégé de l'acte, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c6d46cb2b78e5800f7822c84ad28132f]]></id>
+      <name><![CDATA[IDACTE]]></name>
+      <description><![CDATA[Identifiant de l'acte]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d463b500b048983f9b000e8dded11951]]></id>
+      <name><![CDATA[DATEDECIS]]></name>
+      <description><![CDATA[Date à laquelle la décision a été prise. Il s'agit de la date de signature de l'acte]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f84224b7dd622513260e6cc8a3bb2e0d]]></id>
+      <name><![CDATA[FICHIER]]></name>
+      <description><![CDATA[Nom ou référence du ficher contenant l'acte instituant la servitude. Ce fichier contient le cas échéant les plans annexés à l'acte]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[fcc4e2f9187897acbf4fd14f43eb42a5]]></id>
+      <name><![CDATA[REFERENCE]]></name>
+      <description><![CDATA[Référence de l'acte ayant créé ou modifié la servitude]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

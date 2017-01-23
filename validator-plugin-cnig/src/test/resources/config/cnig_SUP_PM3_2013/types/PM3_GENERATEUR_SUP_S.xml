@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[fe9da1ca76a78e438901ab9ce5a2f96d]]></id>
+  <typeName><![CDATA[PM3_GENERATEUR_SUP_S]]></typeName>
+  <description><![CDATA[Table contenant les générateurs ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[3410d2ec8cbd5c201be662b4cf6fe79b]]></id>
+      <name><![CDATA[IDGEN]]></name>
+      <description><![CDATA[Identifiant du générateur]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[39c93912ba5bf0afbad95db9ed66e78a]]></id>
+      <name><![CDATA[IDBDEXT]]></name>
+      <description><![CDATA[Identifiant référençant l'objet correspondant au générateur dans le référentiel ou la base de données externe]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[42cd1e3145f31264de0e3bc881ff3655]]></id>
+      <name><![CDATA[DATESRCGEN]]></name>
+      <description><![CDATA[Date d'actualité du référentiel utilisé lors de la digitalisation de l'objet. Il s'agit d'indiquer le millésime des données référentielles source]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[46a1e08c752e490bb51b205d640d4a42]]></id>
+      <name><![CDATA[MODEGENERE]]></name>
+      <description><![CDATA[Description du moyen utilisé pour obtenir la géométrie du générateur]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[Digitalisation]]></value>
+        <value><![CDATA[Duplication]]></value>
+        <value><![CDATA[Liste de coordonnées]]></value>
+        <value><![CDATA[Géométrie fictive]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[91e4e0e9674e7d3aaef322bdd1374c71]]></id>
+      <name><![CDATA[IDSUP]]></name>
+      <description><![CDATA[Identifiant de la SUP]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b6ea4308f6cb543b9b8d197a0a312357]]></id>
+      <name><![CDATA[REFBDEXT]]></name>
+      <description><![CDATA[Nom du référentiel ou de la source de données externes qui contient la géométrie du générateur obtenue par duplication]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ca794cb677257564b31f6828f348dabe]]></id>
+      <name><![CDATA[SRCGEOGEN]]></name>
+      <description><![CDATA[Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[dbff3aecc6bba23c7b9d6ab419537b04]]></id>
+      <name><![CDATA[NOMGEN]]></name>
+      <description><![CDATA[Nom abrégé du générateur, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[eed64726cb2ce133e9edd14563ad109b]]></id>
+      <name><![CDATA[TYPEGEN]]></name>
+      <description><![CDATA[Nature de l'entité génératrice]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[0d1727d9860ab3357649957650d65955]]></id>
+      <name><![CDATA[ID_GASPAR]]></name>
+      <description><![CDATA[Identifiant Gaspar du PPR]]></description>
+      <type><![CDATA[String]]></type>
+      <size>24</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[afaa64f8597d4396419b33e756c1f00c]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e94d88b1a8289c14c6d57792df2cda27]]></id>
+      <name><![CDATA[CODE_ALEA]]></name>
+      <description><![CDATA[Identifiant GASPAR de l'aléa]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[20]]></value>
+        <value><![CDATA[21]]></value>
+        <value><![CDATA[22]]></value>
+        <value><![CDATA[23]]></value>
+        <value><![CDATA[24]]></value>
+        <value><![CDATA[25]]></value>
+      </listOfValues>
+    </attribute>
+  </attributes>
+</featureType>

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.ign.validator</groupId>
@@ -7,51 +8,52 @@
 	<version>2.2.4-SNAPSHOT</version>
 	<name>Validator</name>
 
-    <scm>
+	<scm>
 		<url>https://github.com/IGNF/validator</url>
 		<tag>HEAD</tag>
 		<developerConnection>scm:git:git@github.com:IGNF/validator.git</developerConnection>
 	</scm>
 
-    <description>
+	<description>
         This program validates data according to a FeatureCatalogue
     </description>
 
-    <organization>
-        <name>Service SAI, IGN</name>
-        <url>http://www.ign.fr</url>
-    </organization>
-
-    <developers>
-    	<developer>
-    		<name>Clément Bouché</name>
-    		<email>clement.bouche(at)ign.fr</email>
-    		<organization>IGN</organization>
-    	</developer>
-    	<developer>
-    		<name>Florian Cerizay</name>
-    		<email>florian.cerizay(at)ign.fr</email>
-    		<organization>IGN</organization>
-    	</developer>
-    	<developer>
-    		<name>Mickaël Borne</name>
-    		<email>mickael.borne(at)ign.fr</email>
-    		<organization>IGN</organization>
-    	</developer>
-    </developers>
-
-    <licenses>
-        <license>
-            <name>CeCILL B License</name>
-            <url>http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html</url>
-        </license>
-    </licenses>
-
 	<properties>
+		<jdk.version>1.6</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<geotools.version>12.0</geotools.version>
 		<log4j.version>2.0-rc1</log4j.version>
+		<geotools.version>12.0</geotools.version>
 	</properties>
+
+	<organization>
+		<name>Service SAI, IGN</name>
+		<url>http://www.ign.fr</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Clément Bouché</name>
+			<email>clement.bouche(at)ign.fr</email>
+			<organization>IGN</organization>
+		</developer>
+		<developer>
+			<name>Florian Cerizay</name>
+			<email>florian.cerizay(at)ign.fr</email>
+			<organization>IGN</organization>
+		</developer>
+		<developer>
+			<name>Mickaël Borne</name>
+			<email>mickael.borne(at)ign.fr</email>
+			<organization>IGN</organization>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>CeCILL B License</name>
+			<url>http://www.cecill.info/licences/Licence_CeCILL-B_V1-fr.html</url>
+		</license>
+	</licenses>
 
 	<modules>
 		<module>validator-core</module>
@@ -122,22 +124,6 @@
 			<version>1.0</version>
 		</dependency>
 
-        <!--
-		<dependency>
-			<groupId>net.sourceforge.jchardet</groupId>
-			<artifactId>jchardet</artifactId>
-			<version>1.0</version>
-		</dependency> -->
-
-
-		<!-- junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- geotools -->
 		<dependency>
 			<groupId>org.geotools</groupId>
@@ -153,17 +139,10 @@
 		</dependency>
 
 
-		<!-- embedding light database wkt -->
+		<!-- embedding light database wkt for common CRS -->
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-epsg-wkt</artifactId>
-			<version>${geotools.version}</version>
-		</dependency>
-
-		<!-- geotools GML3 support -->
-		<dependency>
-			<groupId>org.geotools</groupId>
-			<artifactId>gt-xml</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
 
@@ -178,6 +157,16 @@
 			<artifactId>jaxb-impl</artifactId>
 			<version>2.1</version>
 		</dependency>
+
+
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<repositories>
@@ -223,8 +212,8 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
 					</configuration>
 				</plugin>
 

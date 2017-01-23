@@ -3,6 +3,7 @@ package fr.ign.validator.tools;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,79 +41,17 @@ public class VRT {
 		try {
 			transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			
-			//DOMSource source = new DOMSource(createDocument(csvFile,featureType));
-			//File vrtFile = new File(csvFile.getParent(),FilenameUtils.getBaseName(csvFile.getName())+".vrt");
-			//StreamResult result = new StreamResult(vrtFile);
-			//transformer.transform(source, result);
-			
+
 			File vrtFile = createVRTfile( csvFile,featureType);
-			
 			return vrtFile ;
 		} catch (TransformerConfigurationException e) {
 			throw new RuntimeException(e);
-//		} catch (TransformerException e) {
-//			throw new RuntimeException(e);
-		//} catch (ParserConfigurationException e) {
-		//	throw new RuntimeException(e);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 
-//	private static Document createDocument(File csvFile, FeatureType featureType) throws ParserConfigurationException, IOException{
-//		
-//		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-//		
-//		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-//		
-//		Document doc = docBuilder.newDocument();
-//		
-//		// <OGRVRTDataSource>
-//		Element dataSource = doc.createElement("OGRVRTDataSource");
-//		doc.appendChild(dataSource);
-//		
-//		// <OGRVRTLayer name="remapped_layer">
-//		Element layer = doc.createElement("OGRVRTLayer") ;
-//		dataSource.appendChild(layer) ;
-//		layer.setAttribute("name", featureType.getName());
-//		
-//		{
-//			Element srcDataSource = doc.createElement("SrcDataSource") ;
-//			srcDataSource.setTextContent(csvFile.getAbsolutePath()) ;
-//			layer.appendChild(srcDataSource) ;
-//		}
-//		
-//		// <GeometryType>
-//		AttributeType<?> geometryAttribute = featureType.getAttribute("WKT") ;
-//		if ( null != geometryAttribute ){
-//			Element geometryType = doc.createElement("GeometryType") ;
-//			geometryType.setTextContent("wkb"+geometryAttribute.getTypeName()) ;
-//			layer.appendChild(geometryType) ;
-//		}
-//	
-//		
-//		/*
-//		 * Each <Field> except WKT
-//		 * 
-//		 * Note : Cette étape est obligatoire pour que OGR2OGR ne tronquent pas
-//		 *   les champs textes à 80 caractères dans les conversions en shapefile.
-//		 * 
-//		 */
-//		List<String> fieldNames = getFieldNamesFromCSV(csvFile) ;
-//		for (String fieldName : fieldNames) {
-//			Element field = doc.createElement("Field") ;
-//			field.setAttribute("name", fieldName);
-//			field.setAttribute("type", "String");
-//			field.setAttribute("width", "254");
-//			layer.appendChild(field) ;
-//		}
-//		
-//		return doc ;
-//	}
-	
-	
 	/**
 	 * FIx pour generer un Vrt compatible avec ogr2ogr 1.9
 	 * 
@@ -121,7 +60,7 @@ public class VRT {
 	 * @return
 	 * @throws IOException
 	 */
-	public static File createVRTfile(File csvFile, FeatureType featureType) throws IOException {
+	public static File createVRTfile(File csvFile, FeatureType featureType) throws Exception {
 		
 		File vrtFile = new File(csvFile.getParent(),FilenameUtils.getBaseName(csvFile.getName())+".vrt");
 		
@@ -173,9 +112,9 @@ public class VRT {
 	 * @return
 	 * @throws IOException
 	 */
-	private static List<String> getFieldNamesFromCSV(File csvFile) throws IOException{
+	private static List<String> getFieldNamesFromCSV(File csvFile) throws Exception {
 		List<String> result = new ArrayList<String>();
-		TableReader reader = new TableReader(csvFile);
+		TableReader reader = TableReader.createTableReader(csvFile,StandardCharsets.UTF_8);
 		String[] header = reader.getHeader() ;
 		for (String name : header) {
 			if ( name.equals("WKT") ){
