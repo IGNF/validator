@@ -34,11 +34,15 @@ Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](h
 
 # Compilation
 
+## Version standard
+
 ```
-git submodule init
-git submodule update
 mvn package
-# ou pour la version CNIG (GpU)
+```
+
+## Version CNIG (GpU)
+
+```
 mvn package -P cnig
 ```
 
