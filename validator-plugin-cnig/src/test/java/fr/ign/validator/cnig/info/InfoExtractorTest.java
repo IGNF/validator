@@ -5,6 +5,9 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.geotools.referencing.CRS;
 import org.junit.Ignore;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.builder.Input;
+import org.xmlunit.diff.Diff;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.Validator;
@@ -15,13 +18,11 @@ import junit.framework.TestCase;
 
 /**
  * 
- * TODO rendre ces tests moins sensibles et plus facile à diagnostiquer
  * @author MBorne
  *
  */
 public class InfoExtractorTest extends TestCase {
 
-    @Ignore
 	public void testInfoExtractorDU_41175() throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/cnig_PLU_2014/files.xml").getPath());
 		ModelLoader loader = new ModelLoader();
@@ -45,11 +46,14 @@ public class InfoExtractorTest extends TestCase {
 
 		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		//TODO rendre moins sensible
-		//assertEquals(expected, actual);
+		
+		Diff myDiff = DiffBuilder.compare(Input.fromString(expected))
+	              .withTest(Input.fromString(actual))
+	              .build();
+		assertFalse(myDiff.toString(), myDiff.hasDifferences());
 	}
 
-    @Ignore
+
 	public void testInfoExtractorDU_50545() throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/cnig_CC_2014/files.xml").getPath());
 		ModelLoader loader = new ModelLoader();
@@ -73,11 +77,14 @@ public class InfoExtractorTest extends TestCase {
 
 		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		//TODO rendre moins sensible
-		//assertEquals(expected, actual);
+
+		Diff myDiff = DiffBuilder.compare(Input.fromString(expected))
+	              .withTest(Input.fromString(actual))
+	              .build();
+		assertFalse(myDiff.toString(), myDiff.hasDifferences());
 	}
 
-    @Ignore
+
 	public void testInfoExtractorSUP_PM3_28() throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/cnig_SUP_PM3_2013/files.xml").getPath());
 		ModelLoader loader = new ModelLoader();
@@ -102,8 +109,10 @@ public class InfoExtractorTest extends TestCase {
 		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
 		
-		//TODO rendre moins sensible
-		//assertEquals(expected, actual);
+		Diff myDiff = DiffBuilder.compare(Input.fromString(expected))
+	              .withTest(Input.fromString(actual))
+	              .build();
+		assertFalse(myDiff.toString(), myDiff.hasDifferences());
 	}
 
 }

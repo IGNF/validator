@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
@@ -34,7 +36,7 @@ public class DocumentGeometryExtractor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static Geometry extractGeometry(Context context, Document document) {
+	public static MultiPolygon extractGeometry(Context context, Document document) {
 		File dataDirectory = context.getDataDirectory();
 		File geometryFile = findGeometryFile(dataDirectory);
 		if ( null == geometryFile ) {
@@ -42,8 +44,18 @@ public class DocumentGeometryExtractor {
 			return null;
 		}
 
+		Geometry union = computeUnionFromFile(geometryFile);
+		return convertGeomToMultiPolygon(union);
+	}
+	
+	/**
+	 * Calcul de l'union des géométrie d'un fichier
+	 * @param geometryFile
+	 * @return
+	 */
+	private static Geometry computeUnionFromFile(File geometryFile){
 		log.info(MARKER,"reading {}",geometryFile);
-		Geometry union = null;
+		Geometry union = null ;
 		try {
 			TableReader reader = TableReader.createTableReader(geometryFile, StandardCharsets.UTF_8);
 			int indexGeometry = reader.findColumn("WKT");
@@ -61,14 +73,40 @@ public class DocumentGeometryExtractor {
 					union = geom.union(union);
 				}
 			}
-
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-
 		return union;
 	}
 	
+	/**
+	 * 
+	 * @param union
+	 * @return
+	 * @throws Exception
+	 */
+	private static MultiPolygon convertGeomToMultiPolygon(Geometry union) {
+		if ( union == null ){
+			return null;
+		}
+		if ( union instanceof MultiPolygon ){
+			return (MultiPolygon)union;
+		}else if ( union instanceof Polygon ){
+			return union.getFactory().createMultiPolygon(new Polygon[]{(Polygon)union});
+		}else {
+			log.error(
+				MARKER,
+				"L'union des géométries n'est pas une surface : "+union.toText()
+			);
+			return null;
+		}
+	}
+	
+	/**
+	 * Recherche du fichier permettant de calculer une géométrie pour un document
+	 * @param dataDirectory
+	 * @return
+	 */
 	private static File findGeometryFile(File dataDirectory){
 		String[] candidateNames = new String[]{
 			"ZONE_URBA.csv",
