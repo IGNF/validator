@@ -1,4 +1,9 @@
 language: java
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y gdal-bin
+
 jdk:
   - oraclejdk7
   - oraclejdk8
@@ -7,5 +12,5 @@ jdk:
 install: true
 
 script: 
-- mvn -fn -e clean package -P cnig
+- mvn clean package -P cnig
 
