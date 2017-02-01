@@ -58,7 +58,10 @@ public class DocumentInfoExtractor {
 
 		DocumentInfo documentInfo = parseDocument(context, validationDirectory, documentName);
 		parseMetadataFileIdentifier(document, documentInfo);
-		documentInfo.setGeometry(DocumentGeometryExtractor.extractGeometry(context, document));		
+		documentInfo.setGeometry(DocumentGeometryExtractor.extractGeometry(context, document));
+		
+		documentInfo.sortFiles();
+		
 		return documentInfo;
 	}
 
@@ -107,6 +110,7 @@ public class DocumentInfoExtractor {
 
 		return documentInfo;
 	}
+	
 
 	/**
 	 * Récupération du fileIdentifier dans la fiche de métadonnée

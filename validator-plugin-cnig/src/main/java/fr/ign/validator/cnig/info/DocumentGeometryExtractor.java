@@ -36,14 +36,16 @@ public class DocumentGeometryExtractor {
 	 */
 	public static Geometry extractGeometry(Context context, Document document) {
 		File dataDirectory = context.getDataDirectory();
-		File zoneUrbaFile = new File(dataDirectory, "ZONE_URBA.csv");
-		if (!zoneUrbaFile.exists()) {
+		File geometryFile = findGeometryFile(dataDirectory);
+		if ( null == geometryFile ) {
+			log.info(MARKER, "no file found to compute document geometry");
 			return null;
 		}
 
+		log.info(MARKER,"reading {}",geometryFile);
 		Geometry union = null;
 		try {
-			TableReader reader = TableReader.createTableReader(zoneUrbaFile, StandardCharsets.UTF_8);
+			TableReader reader = TableReader.createTableReader(geometryFile, StandardCharsets.UTF_8);
 			int indexGeometry = reader.findColumn("WKT");
 			if (indexGeometry < 0) {
 				return null;
@@ -65,6 +67,20 @@ public class DocumentGeometryExtractor {
 		}
 
 		return union;
+	}
+	
+	private static File findGeometryFile(File dataDirectory){
+		String[] candidateNames = new String[]{
+			"ZONE_URBA.csv",
+			"SECTEUR_CC.csv"
+		};
+		for (String candidateName : candidateNames) {
+			File candidate = new File(dataDirectory,candidateName);
+			if ( candidate.exists() ){
+				return candidate;
+			}
+		}
+		return null;
 	}
 
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[b5dee7459709be4f059c505e416cf2b6]]></id>
+  <typeName><![CDATA[SECTEUR_CC]]></typeName>
+  <description><![CDATA[Table contenant les secteurs de la carte communale]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[17fb98232b3efed0fee008a855f6453f]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune couverte par le secteur]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[34af6cd2ceb2af3ab12360ea70b0ee1d]]></id>
+      <name><![CDATA[DATAPPRO]]></name>
+      <description><![CDATA[Date d'approbation du document d'urbanisme auquel appartient la zone]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[388690a6a37bce19405c283c51c4bbe8]]></id>
+      <name><![CDATA[DESTDOMI]]></name>
+      <description><![CDATA[Vocation dominante de la zone, concerne l’usage de la zone]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[07]]></value>
+        <value><![CDATA[08]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[39fd8959f59d313bc92a8a1ccda1d35b]]></id>
+      <name><![CDATA[DATVALID]]></name>
+      <description><![CDATA[Date de la dernière validation du secteur ou de ses dispositions particulières]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[3a7526e25eed55a46fdd5014db4b1d78]]></id>
+      <name><![CDATA[TYPESECT]]></name>
+      <description><![CDATA[Type du secteur dans une nomenclature simplifiée]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[03]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[49238a7c9bdf9b82dd10bd1cbaaea8c9]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Libellé du secteur tel que le définit la carte communale]]></description>
+      <type><![CDATA[String]]></type>
+      <size>12</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[88f70c36300a814b2b6e8b07e4c5f410]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9eb8455b227ef98f397ee0b60569b7da]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier contenant les dispositions particulières du secteur]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d0345e632d58a2c137876dc44aae91eb]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[Lien URL ou URI d’accès aux dispositions particulières du secteur, contenues dans le rapport de présentation de la carte communale]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d429970d8a10784776cde254b78c42e4]]></id>
+      <name><![CDATA[FERMRECO]]></name>
+      <description><![CDATA[Le secteur est fermé à la reconstruction à l'identique si la carte communale le précise]]></description>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[]]></value>
+        <value><![CDATA[Oui]]></value>
+      </listOfValues>
+    </attribute>
+  </attributes>
+</featureType>
