@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[35a3679e7af27e7317340e0c9b9a6dd1]]></id>
+  <typeName><![CDATA[INFO_PCT]]></typeName>
+  <description><![CDATA[Table contenant les informations ponctuelles à reporter à titre  d'information]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[284dab5cf7e64e5b383ae5a9ac10ba11]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier contenant le texte décrivant l'information reportée]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[3aa474aa1a02b9359d4a6b8dc113d07b]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Nom complet de l’information reportée]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[49da5270571d02ad1d6cf275b74598db]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[Lien URL d’accès au fichier contenant le texte décrivant l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[563509056cbdc09ca4fef1d81dcf72b8]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8e7247c0a97962a194c64b60094de628]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a62cb55e4dfde383ce2afc86999bb568]]></id>
+      <name><![CDATA[TYPEINF]]></name>
+      <description><![CDATA[Type de l’information. Les valeurs mentionnées sont celles qui ont une justification au regard du code de l’urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[16]]></value>
+        <value><![CDATA[19]]></value>
+        <value><![CDATA[27]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c994485d3fddc1f3faabbb09e65c0c2b]]></id>
+      <name><![CDATA[TYPEP]]></name>
+      <description><![CDATA[Type complémentaire qualifiant l’information selon la classification utilisée pour les prescriptions]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[05]]></value>
+        <value><![CDATA[07]]></value>
+        <value><![CDATA[16]]></value>
+        <value><![CDATA[18]]></value>
+        <value><![CDATA[22]]></value>
+        <value><![CDATA[25]]></value>
+        <value><![CDATA[28]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d03ac449768e0c84bcd089875fe82f20]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Nom court servant à faire une étiquette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

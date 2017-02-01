@@ -1,9 +1,12 @@
 package fr.ign.validator.cnig.info;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.vividsolutions.jts.geom.Geometry;
+
+import fr.ign.validator.cnig.info.internal.DataFileComparator;
 
 /** 
  * 
@@ -153,6 +156,18 @@ public class DocumentInfo {
 
 	public void addDataLayer(DataLayer dataLayer) {
 		dataLayers.add(dataLayer) ;
-		
 	}
+	
+	/**
+	 * simplify test
+	 * @deprecated
+	 */
+	public void sortFiles(){
+		Collections.sort(dataFiles, new DataFileComparator());
+		Collections.sort(dataLayers, new DataFileComparator());
+	}
+	
 }
+
+
+
