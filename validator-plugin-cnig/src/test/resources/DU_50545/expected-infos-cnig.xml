@@ -17,15 +17,15 @@
   </pdfs>
   <layers>
     <layer>
-      <name>DOC_URBA.shp</name>
+      <name>DOC_URBA</name>
       <bbox />
     </layer>
     <layer>
-      <name>DOC_URBA_COM.shp</name>
+      <name>DOC_URBA_COM</name>
       <bbox />
     </layer>
     <layer>
-      <name>SECTEUR_CC.shp</name>
+      <name>SECTEUR_CC</name>
       <bbox>-1.1257417881828984,49.021910401612836,-1.0474822705847635,49.05529696281063</bbox>
     </layer>
   </layers>

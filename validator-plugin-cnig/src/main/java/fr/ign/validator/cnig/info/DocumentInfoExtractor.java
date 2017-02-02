@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -26,6 +27,7 @@ import fr.ign.validator.model.Document;
 import fr.ign.validator.model.DocumentFile;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.reader.MetadataReader;
+import fr.ign.validator.tools.CompanionFileUtils;
 
 /**
  * 
@@ -86,9 +88,9 @@ public class DocumentInfoExtractor {
 		File dataDirectory = new File(documentDirectory, "DATA");
 		{
 			@SuppressWarnings("unchecked")
-			Collection<File> files = FileUtils.listFiles(dataDirectory, new String[] { "shp" }, false);
-			for (File file : files) {
-				documentInfo.addDataLayer(createDataLayer(file));
+			Collection<File> dbfFiles = FileUtils.listFiles(dataDirectory, new String[] { "dbf" }, false);
+			for (File dbfFile : dbfFiles) {
+				documentInfo.addDataLayer(createDataLayer(dbfFile));
 			}
 		}
 
@@ -171,19 +173,24 @@ public class DocumentInfoExtractor {
 	/**
 	 * TODO Sortir dans tools et ajouter des tests unitaires
 	 * 
-	 * @param shapefile
+	 * @param dbfFile
 	 * @return
 	 * @throws IOException
 	 * @throws FactoryException
 	 * @throws MismatchedDimensionException
 	 * @throws TransformException
 	 */
-	private DataLayer createDataLayer(File shapefile)
+	private DataLayer createDataLayer(File dbfFile)
 			throws IOException, FactoryException, MismatchedDimensionException, TransformException {
-		log.debug(MARKER, "récupération de la BBOX du fichier {}", shapefile);
-		DataLayer layer = new DataLayer(shapefile.getName());
-		Envelope bbox = EnveloppeUtils.getBoundingBox(shapefile);
-		layer.setLayerBbox(EnveloppeUtils.format(bbox));
+		log.debug(MARKER, "récupération de la BBOX du fichier {}", dbfFile);
+		
+		String layerName = FilenameUtils.getBaseName(dbfFile.getName());
+		DataLayer layer = new DataLayer(layerName);
+		File shpFile = CompanionFileUtils.getCompanionFile(dbfFile, "shp");
+		if ( shpFile.exists() ){
+			Envelope bbox = EnveloppeUtils.getBoundingBox(shpFile);
+			layer.setLayerBbox(EnveloppeUtils.format(bbox));
+		}
 		return layer;
 	}
 

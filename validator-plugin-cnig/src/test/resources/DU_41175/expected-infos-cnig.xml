@@ -47,27 +47,27 @@
   </pdfs>
   <layers>
     <layer>
-      <name>DOC_URBA.shp</name>
+      <name>DOC_URBA</name>
       <bbox />
     </layer>
     <layer>
-      <name>DOC_URBA_COM.shp</name>
+      <name>DOC_URBA_COM</name>
       <bbox />
     </layer>
     <layer>
-      <name>PRESCRIPTION_LIN.shp</name>
+      <name>PRESCRIPTION_LIN</name>
       <bbox>1.1398449979866867,47.862966846491176,1.154754532271626,47.87813369094349</bbox>
     </layer>
     <layer>
-      <name>PRESCRIPTION_PCT.shp</name>
+      <name>PRESCRIPTION_PCT</name>
       <bbox>1.131065116585127,47.84728602207448,1.176124664934531,47.88976232237221</bbox>
     </layer>
     <layer>
-      <name>PRESCRIPTION_SURF.shp</name>
+      <name>PRESCRIPTION_SURF</name>
       <bbox>1.1233703769287526,47.83843678167077,1.1786049031349162,47.900553498776965</bbox>
     </layer>
     <layer>
-      <name>ZONE_URBA.shp</name>
+      <name>ZONE_URBA</name>
       <bbox>1.1126959456542806,47.835744728309635,1.1825749108685757,47.900560914930615</bbox>
     </layer>
   </layers>
