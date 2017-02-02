@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+  <Appenders>
+
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%p][%marker] - %m%n"/>
+    </Console>
+    
+  	<Routing name="ValidatorAppender">
+  		<Routes pattern="${ctx:path}">
+  			<Route>
+  				<File name="XML" fileName="${ctx:path}" append="false">
+  			   	<XMLLayout compact="false" charset="UTF-8" namespacePrefix="validation" complete="true" />
+  			  </File>
+  			</Route>
+  		</Routes>
+  	</Routing>
+    
+  </Appenders>
+
+  <Loggers>  
+    
+    <Root level="debug">
+		  <AppenderRef ref="STDOUT" level="debug" />
+    </Root>
+    
+    <Logger name="fr.ign.validator.report.ReportBuilderLegacy" level="debug">
+    	<AppenderRef ref="ValidatorAppender" level="debug" /> 
+    </Logger>
+
+  </Loggers>
+
+</Configuration>
+

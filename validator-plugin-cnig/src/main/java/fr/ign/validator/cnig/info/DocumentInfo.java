@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.MultiPolygon;
 
 import fr.ign.validator.cnig.info.internal.DataFileComparator;
 
@@ -43,7 +43,7 @@ public class DocumentInfo {
 	/**
 	 * La géométrie du document (ex : union des zones urba)
 	 */
-	private Geometry geometry ;
+	private MultiPolygon geometry ;
 	
 	/**
 	 * List : liste des fichiers du repertoire
@@ -120,11 +120,11 @@ public class DocumentInfo {
 		this.metadataMdIdentifier = metadataMdIdentifier;
 	}
 
-	public Geometry getGeometry() {
+	public MultiPolygon getGeometry() {
 		return geometry;
 	}
 
-	public void setGeometry(Geometry geometry) {
+	public void setGeometry(MultiPolygon geometry) {
 		this.geometry = geometry;
 	}
 

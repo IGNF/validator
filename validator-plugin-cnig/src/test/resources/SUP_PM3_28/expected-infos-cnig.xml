@@ -20,27 +20,27 @@
   </pdfs>
   <layers>
     <layer>
-      <name>ACTE_SUP.shp</name>
+      <name>ACTE_SUP</name>
       <bbox />
     </layer>
     <layer>
-      <name>GESTIONNAIRE_SUP.shp</name>
+      <name>GESTIONNAIRE_SUP</name>
       <bbox />
     </layer>
     <layer>
-      <name>PM3_ASSIETTE_SUP_S.shp</name>
+      <name>PM3_ASSIETTE_SUP_S</name>
       <bbox>1.1493747415116693,48.2152330283075,1.7714893948285795,48.49714123390053</bbox>
     </layer>
     <layer>
-      <name>PM3_GENERATEUR_SUP_S.shp</name>
+      <name>PM3_GENERATEUR_SUP_S</name>
       <bbox>1.1493747415116693,48.2152330283075,1.7706184186789522,48.4944960429738</bbox>
     </layer>
     <layer>
-      <name>SERVITUDE.shp</name>
+      <name>SERVITUDE</name>
       <bbox />
     </layer>
     <layer>
-      <name>SERVITUDE_ACTE_SUP.shp</name>
+      <name>SERVITUDE_ACTE_SUP</name>
       <bbox />
     </layer>
   </layers>

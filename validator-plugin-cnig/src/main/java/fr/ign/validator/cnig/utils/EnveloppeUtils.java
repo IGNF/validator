@@ -22,18 +22,18 @@ public class EnveloppeUtils {
 
 	/**
 	 * Lecture d'une bbox à partir d'un shapefile
-	 * @param shapefile
+	 * @param shpFile
 	 * @return
 	 * @throws Exception
 	 */
-	public static Envelope getBoundingBox(File shapefile) {
+	public static Envelope getBoundingBox(File shpFile) {
 		/*
 		 * ouverture du dataStore
 		 */
 		Envelope bbox = null;
 		Map<String, URL> map = new HashMap<String, URL>();
 		try {
-			map.put("url", shapefile.toURI().toURL());
+			map.put("url", shpFile.toURI().toURL());
 			DataStore dataStore = DataStoreFinder.getDataStore( map );
 			SimpleFeatureSource featureSource = dataStore.getFeatureSource( dataStore.getTypeNames()[0] );    
 			dataStore.dispose();
