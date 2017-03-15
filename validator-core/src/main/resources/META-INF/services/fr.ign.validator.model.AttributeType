@@ -3,6 +3,7 @@ fr.ign.validator.model.type.DateType
 fr.ign.validator.model.type.GeometryCollectionType
 fr.ign.validator.model.type.GeometryType
 fr.ign.validator.model.type.IntegerType
+fr.ign.validator.model.type.DoubleType
 fr.ign.validator.model.type.LineStringType
 fr.ign.validator.model.type.MultiLineStringType
 fr.ign.validator.model.type.MultiPointType
