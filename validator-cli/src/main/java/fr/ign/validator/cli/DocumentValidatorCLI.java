@@ -43,6 +43,12 @@ public class DocumentValidatorCLI {
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentValidatorCLI");
 
+	public static final String VALIDATION_DIRECTORY_NAME = "validation" ;
+
+	/**
+	 * Configuration des options de la ligne de commande
+	 * @return
+	 */
 	public static Options getCommandLineOptions() {
 		Options options = new Options();
 		options.addOption("h", "help", false, "affichage du message d'aide");
@@ -105,15 +111,19 @@ public class DocumentValidatorCLI {
 			option.setRequired(false);
 			options.addOption(option);
 		}
+		
 		return options;
 	}
 
+	/**
+	 * Lecture des options et exécution du validateur
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// -Dlog4j.configurationFile=${project_loc}/log4j2.xml
 		String log4jConfigurationFile = System.getProperty("log4j.configurationFile");
 		if (log4jConfigurationFile == null) {
-			System.err.println(
-					"log4j.configurationFile n'est pas défini (-Dlog4j.configurationFile=${project_loc}/log4j2.xml)");
+			System.err.println("log4j.configurationFile n'est pas défini (-Dlog4j.configurationFile=${project_loc}/log4j2.xml)");
 		} else {
 			log.info(MARKER, "log4j.configurationFile={}", log4jConfigurationFile);
 		}
@@ -122,8 +132,6 @@ public class DocumentValidatorCLI {
 		 * Récupération des options de la ligne de commande
 		 */
 		Options options = getCommandLineOptions();
-
-		// TODO option input and config
 
 		CommandLineParser parser = new GnuParser();
 		CommandLine commandline = null;
@@ -136,55 +144,16 @@ public class DocumentValidatorCLI {
 			System.exit(1);
 		}
 
+		// gestion de l'affichage de l'aide...
 		if (commandline.hasOption("h")) {
 			HelpFormatter formatter = new HelpFormatter();
 			formatter.printHelp("validator", options);
 			System.exit(0);
 		}
+		
 
-		File documentPath = new File(commandline.getOptionValue("input"));
-		File configDir = new File(commandline.getOptionValue("config"));
-		File configPath = new File(configDir, commandline.getOptionValue("version") + "/files.xml");
+		// configuration du proxy...
 		String proxyString = commandline.getOptionValue("proxy", "");
-		String srsString = commandline.getOptionValue("srs");
-
-		// charset
-		Charset charset = StandardCharsets.UTF_8;
-		if (commandline.hasOption("encoding")) {
-			String encoding = commandline.getOptionValue("encoding");
-			charset = Charset.forName(encoding);
-		}
-
-		/*
-		 * check directory exists
-		 */
-		if (!documentPath.exists()) {
-			System.out.println(documentPath + " does not exists");
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
-			System.exit(1);
-		}
-
-		/*
-		 * Spatial reference system check
-		 */
-
-		CoordinateReferenceSystem coordinateReferenceSystem = null;
-		try {
-			coordinateReferenceSystem = CRS.decode(srsString);
-		} catch (NoSuchAuthorityCodeException e1) {
-			System.err.println("bad srs parameter (EPSG:<epsg-code>) - NoSuchAuthorityCodeException");
-			e1.printStackTrace(System.err);
-			System.exit(0);
-		} catch (FactoryException e1) {
-			System.err.println("bad srs parameter (EPSG:<epsg-code>) - FactoryException");
-			e1.printStackTrace(System.err);
-			System.exit(0);
-		}
-
-		/*
-		 * configuration du proxy
-		 */
 		if (!proxyString.isEmpty()) {
 			String[] proxyParts = proxyString.split(":");
 			if (proxyParts.length != 2) {
@@ -198,21 +167,20 @@ public class DocumentValidatorCLI {
 			systemSettings.put("http.proxyHost", proxyParts[0]);
 			systemSettings.put("http.proxyPort", proxyParts[1]);
 		}
+		
 
 		/*
-		 * configPath chemin vers le modèle
+		 * Chargement du document utilisé pour la validation
 		 */
+		File configDir = new File(commandline.getOptionValue("config"));
+		File configPath = new File(configDir, commandline.getOptionValue("version") + "/files.xml");		
 		if (!configPath.exists()) {
 			String message = String.format("Le fichier de configuration '%1s' n'existe pas", configPath);
 			log.error(MARKER, message);
 			System.exit(1);
 		}
-
 		DocumentModel documentModel = null;
 		try {
-			/*
-			 * Chargement de la configuration
-			 */
 			ModelLoader modelLoader = new ModelLoader();
 			String message = String.format("Chargement du modèle '%1s'...", configPath);
 			log.debug(MARKER, message);
@@ -225,12 +193,52 @@ public class DocumentValidatorCLI {
 		}
 
 		/*
-		 * Validation du document
+		 * récupération du chemin vers le document à valider...
+		 */
+		File documentPath = new File(commandline.getOptionValue("input"));
+		if (!documentPath.exists()) {
+			System.out.println(documentPath + " does not exists");
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("validator", options);
+			System.exit(1);
+		}
+		
+		/*
+		 * Préparation du contexte pour la validation
 		 */
 		Context context = new Context();
-		context.setEncoding(charset);
+		
+		// configuration de la projection des données...
+		if ( commandline.hasOption("srs") ) {
+			String srsString = commandline.getOptionValue("srs");
+			try {
+				context.setCoordinateReferenceSystem(CRS.decode(srsString));
+			} catch (NoSuchAuthorityCodeException e1) {
+				System.err.println("bad srs parameter (EPSG:<epsg-code>) - NoSuchAuthorityCodeException");
+				e1.printStackTrace(System.err);
+				System.exit(1);
+			} catch (FactoryException e1) {
+				System.err.println("bad srs parameter (EPSG:<epsg-code>) - FactoryException");
+				e1.printStackTrace(System.err);
+				System.exit(1);
+			}
+		}
+		
+		// configuration de l'encodage des données...
+		if (commandline.hasOption("encoding")) {
+			String encoding = commandline.getOptionValue("encoding");
+			context.setEncoding(Charset.forName(encoding));
+		}else{
+			context.setEncoding(StandardCharsets.UTF_8);
+		}
+		
+		// configuration du répertoire de validation...
+		File validationDirectory = new File( documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME ) ;
+		context.setValidationDirectory( validationDirectory ) ;
+		// configuration de l'écriture du rapport
 		context.setReportBuilder(new ReportBuilderLegacy());
 
+		// configuration de l'emprise limite des données		
 		if ( commandline.hasOption("data-extent") ){
 			String wktExtent = commandline.getOptionValue("data-extent");
 			WKTReader reader = new WKTReader();
@@ -244,14 +252,13 @@ public class DocumentValidatorCLI {
 			}
 		}
 
-		// si maxerrors définis, 
+		// configuration de la limite du nombre d'erreur
 		if (commandline.hasOption("maxerror")) {
 			int maxError = Integer.parseInt(commandline.getOptionValue("maxerror"));
 			context.setReportBuilder( new FilteredReportBuilder(context.getReportBuilder(),maxError) );
 		}
 		
-		
-		context.setCoordinateReferenceSystem(coordinateReferenceSystem);
+		// configuration de la validation à plat
 		context.setFlatValidation(commandline.hasOption("f"));
 
 		Validator validator = new Validator(context);

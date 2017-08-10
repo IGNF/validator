@@ -28,9 +28,6 @@ public class Validator {
 	public static final Logger log = LogManager.getRootLogger() ;
 	public static final Marker VALIDATOR = MarkerManager.getMarker("VALIDATOR") ;
 	
-	public static final String VALIDATION_DIRECTORY_NAME = "validation" ;
-
-	public static final String VALIDATION_REPORT_NAME    = "validation" ;
 
 	/**
 	 * Le contexte de validation
@@ -113,8 +110,6 @@ public class Validator {
 		 * Chargement des parametres generaux
 		 */
 		context.setCurrentDirectory(documentPath) ;
-		File validationDirectory = new File( documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME ) ;
-		context.setValidationDirectory( validationDirectory ) ;
 		
 		Document document = new Document(documentModel,documentPath);
 		document.validate(context);
