@@ -90,10 +90,14 @@ public class ProjectARegressTest extends TestCase {
 	
 	public void testValidate() throws NoSuchAuthorityCodeException, FactoryException{
 		Context context = new Context();
+		context.setCurrentDirectory(documentPath);
 		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
 		Validator validator = new Validator(context);
+		File validationDirectory = new File( documentPath.getParentFile(), "validation" ) ;
+		context.setValidationDirectory( validationDirectory ) ;
 		InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
 		context.setReportBuilder(reportBuilder);
+		
 		try {
 			validator.validate(documentModel, documentPath);
 		} catch (Exception e) {

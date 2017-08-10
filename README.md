@@ -34,19 +34,15 @@ Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](h
 
 # Compilation
 
-## Version standard
-
 ```
 mvn package
 ```
 
-## Version CNIG (GpU)
-
-```
-mvn package -P cnig
-```
+## Exécution en mode validateur CNIG (GpU)
 
 # Exécution
+
+Pour le GPU, il convient de charger le plugin dédié via l'option ```--plugins```
 
 ```
 java -jar validator-cli/target/validator-cli-2.2.2-SNAPSHOT.jar --help
@@ -57,7 +53,7 @@ java -jar validator-cli/target/validator-cli-2.2.2-SNAPSHOT.jar --help
 * [GEOFLA](validator-example/geofla/README.md)
 
 ```
-java -jar validator-cli/target/validator-cli-2.2.2-SNAPSHOT.jar -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1
+java -jar validator-cli/target/validator-cli-2.2.2-SNAPSHOT.jar -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1 --plugins CNIG
 ```
 
 # Mise en garde

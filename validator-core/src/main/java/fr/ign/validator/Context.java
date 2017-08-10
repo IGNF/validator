@@ -15,6 +15,10 @@ import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.Model;
+import fr.ign.validator.process.CharsetPreProcess;
+import fr.ign.validator.process.FilterMetadataPreProcess;
+import fr.ign.validator.process.NormalizePostProcess;
+import fr.ign.validator.process.PrepareValidationDirectory;
 import fr.ign.validator.report.ReportBuilder;
 import fr.ign.validator.report.ReportBuilderLegacy;
 
@@ -88,7 +92,7 @@ public class Context {
 	
 	
 	public Context(){
-		this.errorFactory = ErrorFactory.newFromRessource() ;
+		this(ErrorFactory.newFromRessource());
 	}
 	
 	/**
@@ -97,6 +101,7 @@ public class Context {
 	 */
 	public Context(ErrorFactory errorFactory){
 		this.errorFactory = errorFactory ;
+		registerDefaultListeners();
 	}
 	
 	/**
@@ -115,6 +120,22 @@ public class Context {
 		return this.listeners ;
 	}
 	
+
+	/**
+	 * Chargement des processus par défaut de l'application
+	 * - (re-)création du dossier de validation
+	 * - preparation des donnes en vue de validation (csv)
+	 * - preparation des donnes en vue d'export en base (shp)
+	 * - extraction d'informations sur les fichiers traitées
+	 */
+	private void registerDefaultListeners(){
+		addListener( new PrepareValidationDirectory() );
+		// before CharsetPreProcess
+		addListener( new FilterMetadataPreProcess() );
+		addListener( new CharsetPreProcess() );
+		addListener( new NormalizePostProcess() ); 
+	}
+
 	
 	/**
 	 * @return the encoding

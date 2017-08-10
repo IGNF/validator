@@ -30,6 +30,8 @@ import fr.ign.validator.Validator;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.plugin.Plugin;
+import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.FilteredReportBuilder;
 import fr.ign.validator.report.ReportBuilderLegacy;
 
@@ -111,7 +113,13 @@ public class DocumentValidatorCLI {
 			option.setRequired(false);
 			options.addOption(option);
 		}
-		
+		// plugins
+		{
+			Option option = new Option("pgs", "plugins", true, "Liste des plugins à charger (noms séparés par des virgules)");
+			option.setRequired(false);
+			options.addOption(option);
+		}
+
 		return options;
 	}
 
@@ -202,6 +210,12 @@ public class DocumentValidatorCLI {
 			formatter.printHelp("validator", options);
 			System.exit(1);
 		}
+		if (!documentPath.isDirectory()) {
+			System.out.println(documentPath + " is not a directory");
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("validator", options);
+			System.exit(1);
+		}
 		
 		/*
 		 * Préparation du contexte pour la validation
@@ -235,6 +249,7 @@ public class DocumentValidatorCLI {
 		// configuration du répertoire de validation...
 		File validationDirectory = new File( documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME ) ;
 		context.setValidationDirectory( validationDirectory ) ;
+
 		// configuration de l'écriture du rapport
 		context.setReportBuilder(new ReportBuilderLegacy());
 
@@ -261,6 +276,22 @@ public class DocumentValidatorCLI {
 		// configuration de la validation à plat
 		context.setFlatValidation(commandline.hasOption("f"));
 
+		if ( commandline.hasOption("plugins") ){
+			PluginManager pluginManager = new PluginManager();
+			String[] pluginNames = commandline.getOptionValue("plugins").split(",");
+			for (String pluginName : pluginNames) {
+				Plugin plugin = pluginManager.getPluginByName(pluginName);
+				if ( plugin == null ){
+					String message = String.format("fail to load plugin '%1s'", pluginName);
+					log.error(MARKER, message);
+					System.exit(1);
+				}
+				log.info(MARKER, "setup plugin '%1s'...", pluginName);
+				plugin.setup(context);
+			}
+		}
+		
+		
 		Validator validator = new Validator(context);
 		try {
 			validator.validate(documentModel, documentPath);

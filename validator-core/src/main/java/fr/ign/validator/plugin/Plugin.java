@@ -1,4 +1,6 @@
-package fr.ign.validator;
+package fr.ign.validator.plugin;
+
+import fr.ign.validator.Context;
 
 /**
  * Interface pour la création de plugin du validateur

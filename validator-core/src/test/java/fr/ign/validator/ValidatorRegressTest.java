@@ -52,6 +52,8 @@ public class ValidatorRegressTest extends TestCase {
 
 		
 		Validator validator = new Validator(context);
+		File validationDirectory = new File( documentPath.getParentFile(), "validation" ) ;
+		context.setValidationDirectory( validationDirectory ) ;
 		try {
 			validator.validate(documentModel, documentPath);
 		} catch (Exception e) {

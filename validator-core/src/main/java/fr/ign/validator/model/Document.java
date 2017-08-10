@@ -133,6 +133,13 @@ public class Document implements Validatable {
 
 	@Override
 	public void validate(Context context) throws Exception {
+		log.info(MARKER, "Validation de {} avec le modèle {}",
+			documentPath,
+			documentModel.getName()
+		);
+
+		context.setCurrentDirectory(documentPath) ;
+		
 		context.beginModel( documentModel ) ;
 		context.beginData( documentPath.getName() );
 		

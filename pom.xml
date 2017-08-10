@@ -59,16 +59,9 @@
 	<modules>
 		<module>validator-core</module>
 		<module>validator-cli</module>
+		<module>validator-plugin-cnig</module>
 	</modules>
 
-	<profiles>
-		<profile>
-			<id>cnig</id>
-			<modules>
-				<module>validator-plugin-cnig</module>
-			</modules>
-		</profile>
-	</profiles>
 
 	<dependencies>
 		<!-- Log4J2 -->
