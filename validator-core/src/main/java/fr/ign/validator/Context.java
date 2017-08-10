@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ValidatorError;
@@ -40,6 +42,11 @@ public class Context {
 	 */
 	private CoordinateReferenceSystem coordinateReferenceSystem ;
 	
+	/**
+	 * L'étendue dans laquelle la géométrie est attendue (projection identique à celle des données)
+	 */
+	private Geometry nativeDataExtent ;
+
 	/**
 	 * Le répertoire de base utilisé pour tester l'existance des fichiers
 	 * (<=> documentPath)
@@ -134,6 +141,18 @@ public class Context {
 	 */
 	public void setCoordinateReferenceSystem( CoordinateReferenceSystem coordinateReferenceSystem) {
 		this.coordinateReferenceSystem = coordinateReferenceSystem;
+	}
+
+	public boolean hasNativeDataExtent(){
+		return nativeDataExtent != null ;
+	}
+	
+	public Geometry getNativeDataExtent() {
+		return nativeDataExtent;
+	}
+
+	public void setNativeDataExtent(Geometry extent) {
+		this.nativeDataExtent = extent;
 	}
 
 	/**

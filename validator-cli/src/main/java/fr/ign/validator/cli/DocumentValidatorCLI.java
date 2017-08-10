@@ -23,6 +23,8 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.vividsolutions.jts.io.WKTReader;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.Validator;
 import fr.ign.validator.error.ErrorCode;
@@ -88,6 +90,12 @@ public class DocumentValidatorCLI {
 		// mode souple
 		{
 			Option option = new Option("f", "flat", false, "Validation à plat (pas de validation de l'arborescence)");
+			option.setRequired(false);
+			options.addOption(option);
+		}
+		// étendue dans laquelle la géométrie est attendue
+		{
+			Option option = new Option("de", "data-extent", false, "Domaine dans lequel la géométrie des données est attendue (format : WKT, projection : WGS84)");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -222,7 +230,20 @@ public class DocumentValidatorCLI {
 		Context context = new Context();
 		context.setEncoding(charset);
 		context.setReportBuilder(new ReportBuilderLegacy());
-		
+
+		if ( commandline.hasOption("data-extent") ){
+			String wktExtent = commandline.getOptionValue("data-extent");
+			WKTReader reader = new WKTReader();
+			try {
+				context.setNativeDataExtent(reader.read(wktExtent));
+			} catch (com.vividsolutions.jts.io.ParseException e) {
+				String message = String.format("Problème dans le décodage de 'data-extent' : '%1s' (WKT invalide)", wktExtent);
+				log.error(MARKER, message);
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
+
 		// si maxerrors définis, 
 		if (commandline.hasOption("maxerror")) {
 			int maxError = Integer.parseInt(commandline.getOptionValue("maxerror"));
