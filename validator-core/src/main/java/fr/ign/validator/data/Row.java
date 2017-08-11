@@ -57,7 +57,7 @@ public class Row implements Validatable {
 	@Override
 	public void validate(Context context) {
 		String featureId = ""+line ;
-		context.beginData(featureId);
+		context.beginData(this);
 		
 		/*
 		 * validation des attributs définis au niveau du type
@@ -88,7 +88,7 @@ public class Row implements Validatable {
 			context.endModel(attributeType);
 		}
 		
-		context.endData(featureId);
+		context.endData(this);
 	}
 
 }

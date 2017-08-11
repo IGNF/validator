@@ -56,9 +56,11 @@ public class Attribute<T> implements Validatable {
 
 	@Override
 	public void validate(Context context) {
+		context.beginData(this);
 		for (Validator<Attribute<T>> validator : getType().getValidators()) {
 			validator.validate(context, this);
 		}
+		context.endData(this);
 	}
 
 }

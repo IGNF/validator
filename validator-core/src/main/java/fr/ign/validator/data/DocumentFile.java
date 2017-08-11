@@ -63,11 +63,11 @@ public class DocumentFile implements Validatable {
 		 */
 		log.debug(MARKER, "Validation du fichier {} avec le modèle {}...", path, fileModel.getName()) ;
 		context.beginModel(fileModel);
-		context.beginData( context.relativize(path) );
+		context.beginData( this );
 		for (Validator<DocumentFile> validator : fileModel.getValidators()) {
 			validator.validate(context, this);
 		}
-		context.endData( context.relativize(path) );
+		context.endData( this );
 		context.endModel(fileModel);
 	}
 	

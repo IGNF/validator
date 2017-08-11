@@ -145,7 +145,7 @@ public class Document implements Validatable {
 		context.setCurrentDirectory(documentPath) ;
 		
 		context.beginModel( documentModel ) ;
-		context.beginData( documentPath.getName() );
+		context.beginData( this );
 		
 		/*
 		 * traitements avant matching
@@ -182,7 +182,7 @@ public class Document implements Validatable {
 		triggerAfterValidate(context);
 		
 		context.endModel(documentModel);
-		context.endData( documentPath.getName() );
+		context.endData( this );
 	}
 	
 	/**
