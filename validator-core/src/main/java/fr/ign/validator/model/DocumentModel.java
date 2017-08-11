@@ -15,8 +15,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.validation.DocumentDirectoryNameValidator;
-import fr.ign.validator.validation.DocumentMandatoryFileValidator;
+import fr.ign.validator.data.Document;
+import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.document.DocumentDirectoryNameValidator;
+import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
 /**
  * Décrit un document composé d'une liste de fichiers.

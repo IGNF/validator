@@ -1,6 +1,6 @@
 package fr.ign.validator;
 
-import fr.ign.validator.model.Document;
+import fr.ign.validator.data.Document;
 
 /**
  * Permet d'ajouter des traitements au validateur

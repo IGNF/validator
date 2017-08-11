@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.model.Document;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 
 /**

@@ -14,8 +14,8 @@ import org.xmlunit.diff.Diff;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.Validator;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.loader.ModelLoader;
-import fr.ign.validator.model.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import junit.framework.TestCase;

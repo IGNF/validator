@@ -1,6 +1,9 @@
-package fr.ign.validator.model;
+package fr.ign.validator.data;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.validation.Validatable;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

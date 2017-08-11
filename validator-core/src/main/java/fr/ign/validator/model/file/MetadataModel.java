@@ -1,7 +1,7 @@
 package fr.ign.validator.model.file;
 
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.validation.MetadataValidator;
+import fr.ign.validator.validation.file.MetadataValidator;
 
 public class MetadataModel extends FileModel {
 	public static final String TYPE = "metadata" ;

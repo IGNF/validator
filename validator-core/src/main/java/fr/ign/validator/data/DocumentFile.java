@@ -1,4 +1,4 @@
-package fr.ign.validator.model;
+package fr.ign.validator.data;
 
 import java.io.File;
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +7,9 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.model.FileModel;
+import fr.ign.validator.validation.Validatable;
+import fr.ign.validator.validation.Validator;
 
 /**
  * Représente un fichier associé à un modèle

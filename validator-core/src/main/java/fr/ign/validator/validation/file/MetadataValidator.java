@@ -1,4 +1,4 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,11 +6,11 @@ import java.io.IOException;
 import org.jdom.JDOMException;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.model.DocumentFile;
-import fr.ign.validator.model.Validator;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.reader.MetadataReader;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

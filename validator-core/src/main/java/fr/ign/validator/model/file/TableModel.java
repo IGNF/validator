@@ -1,7 +1,7 @@
 package fr.ign.validator.model.file;
 
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.validation.TableValidator;
+import fr.ign.validator.validation.file.TableValidator;
 
 /**
  * Représente une table associée à une structure (FeatureType)

@@ -1,4 +1,4 @@
-package fr.ign.validator.model;
+package fr.ign.validator.validation;
 
 import fr.ign.validator.Context;
 

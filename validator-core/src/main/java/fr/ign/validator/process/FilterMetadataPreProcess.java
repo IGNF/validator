@@ -10,9 +10,9 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
+import fr.ign.validator.data.Document;
+import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.model.Document;
-import fr.ign.validator.model.DocumentFile;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.reader.MetadataReader;

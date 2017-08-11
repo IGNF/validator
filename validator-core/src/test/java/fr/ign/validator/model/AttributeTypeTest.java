@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.junit.Test;
 
+import fr.ign.validator.data.Attribute;
 import junit.framework.TestCase;
 
 

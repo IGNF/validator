@@ -10,7 +10,7 @@ import org.apache.logging.log4j.ThreadContext;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.model.Document;
+import fr.ign.validator.data.Document;
 
 
 /**

@@ -3,9 +3,10 @@ package fr.ign.validator.validation;
 import java.io.File;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.model.DocumentFile;
+import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.file.MetadataValidator;
 import junit.framework.TestCase;
 
 public class MetadataValidatorTest extends TestCase {

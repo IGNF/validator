@@ -1,4 +1,4 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,17 +9,17 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Feature;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.FeatureTypeMapper;
-import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.DocumentFile;
-import fr.ign.validator.model.Feature;
 import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.Validator;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.reader.InvalidCharsetException;
 import fr.ign.validator.tools.TableReader;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

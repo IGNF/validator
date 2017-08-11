@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import fr.ign.validator.data.Feature;
+
 /**
  * Représente la structure d'une table de données géographiques.
  *  

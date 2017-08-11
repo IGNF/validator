@@ -3,9 +3,10 @@ package fr.ign.validator.validation;
 import java.io.File;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.type.PathType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.file.PathExistsValidator;
 import junit.framework.TestCase;
 
 public class PathExistsValidatorTest extends TestCase {

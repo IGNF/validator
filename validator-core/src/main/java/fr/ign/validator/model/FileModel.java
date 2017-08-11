@@ -15,10 +15,12 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.validation.Validator;
 import fr.ign.validator.xml.FileModelAdapter;
 
 /**

@@ -6,11 +6,12 @@ import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorLevel;
-import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
 import junit.framework.TestCase;
 
 public class GeometryDataExtentValidatorTest extends TestCase {

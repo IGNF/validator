@@ -3,7 +3,7 @@ package fr.ign.validator.model.type;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 /**

@@ -1,10 +1,10 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.attribute;
 
 import java.net.URL;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.Validator;
+import fr.ign.validator.validation.Validator;
 
 /**
  * Validation des URL

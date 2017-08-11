@@ -2,9 +2,9 @@ package fr.ign.validator.model.type;
 
 import java.io.File;
 
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.validation.PathExistsValidator;
+import fr.ign.validator.validation.file.PathExistsValidator;
 
 /**
  * 

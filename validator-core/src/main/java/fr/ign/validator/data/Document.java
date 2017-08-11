@@ -1,4 +1,4 @@
-package fr.ign.validator.model;
+package fr.ign.validator.data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +13,11 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.FileModel;
 import fr.ign.validator.tools.FileUtils;
+import fr.ign.validator.validation.Validatable;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

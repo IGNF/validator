@@ -3,9 +3,10 @@ package fr.ign.validator.validation;
 import java.io.File;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.model.Document;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.document.DocumentDirectoryNameValidator;
 import junit.framework.TestCase;
 
 public class DocumentDirectoryNameValidatorTest extends TestCase {

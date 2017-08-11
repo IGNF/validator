@@ -1,11 +1,11 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.document;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.model.Document;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.Validator;
 import fr.ign.validator.model.file.DirectoryModel;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

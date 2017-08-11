@@ -1,4 +1,6 @@
-package fr.ign.validator.model;
+package fr.ign.validator.data;
+
+import fr.ign.validator.model.FeatureType;
 
 /**
  * 

@@ -4,9 +4,10 @@ import java.io.File;
 
 import junit.framework.TestCase;
 import fr.ign.validator.Context;
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.type.PathType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.attribute.FilenameExistsValidator;
 
 
 public class FilenameExistsValidatorTest extends TestCase {
