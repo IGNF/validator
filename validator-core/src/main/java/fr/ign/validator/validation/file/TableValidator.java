@@ -9,12 +9,11 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Row;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.reader.InvalidCharsetException;
 import fr.ign.validator.tools.TableReader;
@@ -77,13 +76,8 @@ public class TableValidator implements Validator<DocumentFile> {
 			while ( reader.hasNext() ){
 				count++ ;
 				
-				// begin feature
-				String featureId = ""+count ;
-				context.beginData(featureId);
-				String[] row = reader.next() ;
-				validateRow(context, mapping, row,matchingFile);
-				// end feature
-				context.endData(featureId);
+				Row row = new Row(count,reader.next(),mapping);
+				row.validate(context);
 			}
 			
 			/*
@@ -164,47 +158,6 @@ public class TableValidator implements Validator<DocumentFile> {
 		
 		return mapping ;
 	}
-	
-
-	/**
-	 * Validation d'une ligne
-	 * @param context
-	 * @param attributeIndexes
-	 * @param row
-	 * @return
-	 */
-	private void validateRow(Context context, FeatureTypeMapper mapping, String[] row, File matchingFile) {
-		FeatureType featureType = mapping.getFeatureType() ;
-
-		/*
-		 * validation des attributs définis au niveau du type
-		 */
-		for ( int index = 0; index < featureType.getAttributeCount(); index++ ){
-			AttributeType<?> attributeType = featureType.getAttribute(index);
-			context.beginModel(attributeType);
-			
-			// Récupération de la valeur correspondante dans la table
-			String inputValue = null ;
-			if ( mapping.getAttributeIndex(index) >= 0 ){
-				inputValue = row[ mapping.getAttributeIndex(index) ] ; 
-			}
-			
-			// conversion de la valeur de colonne en attribut
-			Attribute<?> attribute = attributeType.newAttribute(null) ;
-			try {
-				attribute.setValue( attributeType.bind(inputValue) );
-				attribute.validate(context);
-			}catch ( IllegalArgumentException e ){
-				context.report(
-					ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-					inputValue.toString(), 
-					attributeType.getTypeName()
-				);
-			}
-			context.endModel(attributeType);
-		}
-	}
-
 	
 	
 }
