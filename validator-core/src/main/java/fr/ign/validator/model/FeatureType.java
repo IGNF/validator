@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import fr.ign.validator.data.Feature;
-
 /**
  * Représente la structure d'une table de données géographiques.
  *  
@@ -245,16 +243,6 @@ public class FeatureType implements Model {
 			return -1 ;
 		}
 	}
-
-	
-	/**
-	 * Construction d'une nouvelle Feature
-	 * @return
-	 */
-	public Feature newFeature() {
-		return new Feature(this);
-	}
-
 
 	
 	

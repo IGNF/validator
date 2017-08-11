@@ -11,7 +11,6 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.data.Feature;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.AttributeType;
@@ -36,7 +35,7 @@ public class TableValidator implements Validator<DocumentFile> {
 	public void validate(Context context, DocumentFile documentFile) {
 		if ( documentFile.getFileModel() instanceof TableModel ){
 			TableModel tableModel = (TableModel)documentFile.getFileModel() ;
-			validateFileContent(context,tableModel,documentFile.getPath()) ;
+			validateTable(context,tableModel,documentFile.getPath()) ;
 		}else{
 			throw new RuntimeException(
 				"Le validateur TableValidator supporte uniquement le type TableModel"
@@ -49,7 +48,7 @@ public class TableValidator implements Validator<DocumentFile> {
 	 * @param context
 	 * @param matchingFile
 	 */
-	protected void validateFileContent(Context context, TableModel tableModel, File matchingFile){
+	protected void validateTable(Context context, TableModel tableModel, File matchingFile){
 		/*
 		 * Validation du fichier CSV
 		 */
@@ -82,8 +81,7 @@ public class TableValidator implements Validator<DocumentFile> {
 				String featureId = ""+count ;
 				context.beginData(featureId);
 				String[] row = reader.next() ;
-				Feature feature = validateFeature(context, mapping, row,matchingFile);
-				log.trace( MARKER, "{}", feature );
+				validateRow(context, mapping, row,matchingFile);
 				// end feature
 				context.endData(featureId);
 			}
@@ -106,45 +104,6 @@ public class TableValidator implements Validator<DocumentFile> {
 			);
 			return ;
 		}
-	}
-	
-
-	/**
-	 * Validation d'une ligne
-	 * @param context
-	 * @param attributeIndexes
-	 * @param row
-	 * @return
-	 */
-	private Feature validateFeature(Context context, FeatureTypeMapper mapping, String[] row, File matchingFile) {
-		FeatureType featureType = mapping.getFeatureType() ;
-		Feature feature = featureType.newFeature() ;
-		
-		for ( int index = 0; index < mapping.getFeatureType().getAttributeCount(); index++ ){
-			/*
-			 * On récupère le type et on valide la valeur en effectuant une conversion
-			 */
-			AttributeType<?> attributeType = mapping.getFeatureType().getAttribute(index);
-			context.beginModel(attributeType);
-			
-			String inputValue = null ;
-			if ( mapping.getAttributeIndex(index) >= 0 ){
-				inputValue = row[ mapping.getAttributeIndex(index) ] ; 
-			}
-			Attribute<?> attribute = feature.getAttribute(index) ;
-			try {
-				attribute.setValue( attributeType.bind(inputValue) );
-				attribute.validate(context);
-			}catch ( IllegalArgumentException e ){
-				context.report(
-					ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-					inputValue.toString(), 
-					attributeType.getTypeName()
-				);
-			}
-			context.endModel(attributeType);
-		}
-		return feature ;
 	}
 
 	/**
@@ -205,6 +164,47 @@ public class TableValidator implements Validator<DocumentFile> {
 		
 		return mapping ;
 	}
+	
+
+	/**
+	 * Validation d'une ligne
+	 * @param context
+	 * @param attributeIndexes
+	 * @param row
+	 * @return
+	 */
+	private void validateRow(Context context, FeatureTypeMapper mapping, String[] row, File matchingFile) {
+		FeatureType featureType = mapping.getFeatureType() ;
+
+		/*
+		 * validation des attributs définis au niveau du type
+		 */
+		for ( int index = 0; index < featureType.getAttributeCount(); index++ ){
+			AttributeType<?> attributeType = featureType.getAttribute(index);
+			context.beginModel(attributeType);
+			
+			// Récupération de la valeur correspondante dans la table
+			String inputValue = null ;
+			if ( mapping.getAttributeIndex(index) >= 0 ){
+				inputValue = row[ mapping.getAttributeIndex(index) ] ; 
+			}
+			
+			// conversion de la valeur de colonne en attribut
+			Attribute<?> attribute = attributeType.newAttribute(null) ;
+			try {
+				attribute.setValue( attributeType.bind(inputValue) );
+				attribute.validate(context);
+			}catch ( IllegalArgumentException e ){
+				context.report(
+					ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
+					inputValue.toString(), 
+					attributeType.getTypeName()
+				);
+			}
+			context.endModel(attributeType);
+		}
+	}
+
 	
 	
 }
