@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.Row;
@@ -56,15 +55,15 @@ public class ReportBuilderLegacy implements ReportBuilder {
 		String logMessage = error.getScope().toString() ;
 		
 		if ( error.getScope().equals(ErrorScope.DIRECTORY) ){
-			
+			// Directory | <code> | <level> | <file> | <message>
 			logMessage = "Directory" ;
 			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+error.getLevel() ;
-			logMessage += " | "+getFile(context);
+			logMessage += " | "+error.getLevel() ;   
+			logMessage += " | "+getFile(context) ;    
 			logMessage += " | "+error.getMessage() ;
 			
 		}else if( error.getScope().equals(ErrorScope.HEADER) ){
-			
+			// Header | <code> | <fileModel> | <level> | <column> | <value> | <modelValue> | <message>
 			logMessage = "Header" ;
 			logMessage += " | "+error.getCode() ;
 			logMessage += " | "+getFileModelName(context);
@@ -75,7 +74,7 @@ public class ReportBuilderLegacy implements ReportBuilder {
 			logMessage += " | "+error.getMessage();
 			
 		}else if( error.getScope().equals(ErrorScope.FEATURE) ){
-
+			// Feature | <code> | <fileModel> | <level> | <column> | <line> | <currentvalue> | <type> | <model> | <message>
 			logMessage = "Feature" ;
 			logMessage += " | "+error.getCode() ;
 			logMessage += " | "+getFileModelName(context);
@@ -127,6 +126,11 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	}
 
 	
+	/**
+	 * TODO clarifier
+	 * @param context
+	 * @return
+	 */
     public String getModel(Context context){
 		
 		String modele ="";
@@ -144,7 +148,7 @@ public class ReportBuilderLegacy implements ReportBuilder {
      * @param context
      * @return
      */
-    public String getAttributeName(Context context){
+    private String getAttributeName(Context context){
     	AttributeType<?> attribute = context.getModelByType(AttributeType.class);
 		if ( attribute != null ){
 			return attribute.getName();
@@ -157,7 +161,7 @@ public class ReportBuilderLegacy implements ReportBuilder {
      * @param context
      * @return
      */
-	public String getFileModelName(Context context){
+    private String getFileModelName(Context context){
 		FileModel fileModel = context.getModelByType(FileModel.class);
 		if ( fileModel != null ){
 			return fileModel.getName();

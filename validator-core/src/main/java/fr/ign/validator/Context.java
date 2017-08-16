@@ -224,7 +224,7 @@ public class Context {
 	 * @return
 	 */
 	public <T extends Model> T getModelByType(Class<T> clazz){
-		for ( int index = modelStack.size() - 1; index >= 0; index++ ) {
+		for ( int index = modelStack.size() - 1; index >= 0; index-- ) {
 			Model model = modelStack.get(index);
 			if ( clazz.isInstance(model) ){
 				return clazz.cast(model);
@@ -273,7 +273,7 @@ public class Context {
 	 * @return
 	 */
 	public <T extends Validatable> T getDataByType(Class<T> clazz){
-		for ( int index = dataStack.size() - 1; index >= 0; index++ ) {
+		for ( int index = dataStack.size() - 1; index >= 0; index-- ) {
 			Validatable model = dataStack.get(index);
 			if ( clazz.isInstance(model) ){
 				return clazz.cast(model);

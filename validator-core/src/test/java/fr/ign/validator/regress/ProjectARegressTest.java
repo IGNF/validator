@@ -10,7 +10,7 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.Validator;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
@@ -92,14 +92,14 @@ public class ProjectARegressTest extends TestCase {
 		Context context = new Context();
 		context.setCurrentDirectory(documentPath);
 		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
-		Validator validator = new Validator(context);
+		Document document = new Document(documentModel,documentPath);
 		File validationDirectory = new File( documentPath.getParentFile(), "validation" ) ;
 		context.setValidationDirectory( validationDirectory ) ;
 		InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
 		context.setReportBuilder(reportBuilder);
 		
 		try {
-			validator.validate(documentModel, documentPath);
+			document.validate(context);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());

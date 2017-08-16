@@ -21,12 +21,11 @@ import org.apache.logging.log4j.MarkerManager;
 import org.geotools.referencing.CRS;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.Validator;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
@@ -115,7 +114,7 @@ public class DocumentValidatorCLI {
 		}
 		// plugins
 		{
-			Option option = new Option("pgs", "plugins", true, "Liste des plugins à charger (noms séparés par des virgules)");
+			Option option = new Option(null, "plugins", true, "Liste des plugins à charger (noms séparés par des virgules)");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -291,13 +290,12 @@ public class DocumentValidatorCLI {
 			}
 		}
 		
-		
-		Validator validator = new Validator(context);
+		Document document = new Document(documentModel,documentPath);
 		try {
-			validator.validate(documentModel, documentPath);
+			document.validate(context);
 		} catch (Exception e) {
 			log.fatal(MARKER, e.getMessage());
-			validator.getContext().report(ErrorCode.VALIDATOR_EXCEPTION);
+			context.report(ErrorCode.VALIDATOR_EXCEPTION);
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}

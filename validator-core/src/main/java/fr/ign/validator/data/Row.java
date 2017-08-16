@@ -56,7 +56,6 @@ public class Row implements Validatable {
 
 	@Override
 	public void validate(Context context) {
-		String featureId = ""+line ;
 		context.beginData(this);
 		
 		/*

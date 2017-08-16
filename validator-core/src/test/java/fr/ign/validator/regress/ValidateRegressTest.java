@@ -1,4 +1,4 @@
-package fr.ign.validator;
+package fr.ign.validator.regress;
 
 import java.io.File;
 import java.util.Collection;
@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.geotools.referencing.CRS;
 
+import fr.ign.validator.Context;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
@@ -20,7 +22,7 @@ import junit.framework.TestCase;
  * @author MBorne
  *
  */
-public class ValidatorRegressTest extends TestCase {
+public class ValidateRegressTest extends TestCase {
 
 	private Context context;
 	private DocumentModel documentModel;
@@ -51,11 +53,11 @@ public class ValidatorRegressTest extends TestCase {
 		}
 
 		
-		Validator validator = new Validator(context);
+		Document document = new Document(documentModel,documentPath);
 		File validationDirectory = new File( documentPath.getParentFile(), "validation" ) ;
 		context.setValidationDirectory( validationDirectory ) ;
 		try {
-			validator.validate(documentModel, documentPath);
+			document.validate(context);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
