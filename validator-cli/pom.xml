@@ -19,22 +19,15 @@
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- cnig -->
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>validator-plugin-cnig</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
-
-	<!-- GPU - CNIG plugin enabled -->
-	<profiles>
-		<profile>
-			<id>cnig</id>
-			<dependencies>
-				<dependency>
-					<groupId>${project.parent.groupId}</groupId>
-					<artifactId>validator-plugin-cnig</artifactId>
-					<version>${project.parent.version}</version>
-					<scope>compile</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 
 	<build>
 		<plugins>
