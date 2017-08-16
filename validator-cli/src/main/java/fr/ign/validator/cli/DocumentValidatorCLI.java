@@ -102,7 +102,7 @@ public class DocumentValidatorCLI {
 		}
 		// étendue dans laquelle la géométrie est attendue
 		{
-			Option option = new Option("de", "data-extent", false, "Domaine dans lequel la géométrie des données est attendue (format : WKT, projection : WGS84)");
+			Option option = new Option("de", "data-extent", true, "Domaine dans lequel la géométrie des données est attendue (format : WKT, projection : WGS84)");
 			option.setRequired(false);
 			options.addOption(option);
 		}
