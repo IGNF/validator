@@ -5,13 +5,13 @@ import java.util.List;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.utils.IdurbaUtils;
+import fr.ign.validator.data.Attribute;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.Document;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.Validator;
 import fr.ign.validator.model.type.StringType;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

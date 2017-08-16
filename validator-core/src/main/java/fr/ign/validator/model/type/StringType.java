@@ -1,10 +1,10 @@
 package fr.ign.validator.model.type;
 
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.validation.ListOfValuesValidator;
-import fr.ign.validator.validation.StringRegexpValidator;
-import fr.ign.validator.validation.StringSizeValidator;
+import fr.ign.validator.validation.attribute.ListOfValuesValidator;
+import fr.ign.validator.validation.attribute.StringRegexpValidator;
+import fr.ign.validator.validation.attribute.StringSizeValidator;
 
 /**
  * Représente un champ de type chaîne de caractère

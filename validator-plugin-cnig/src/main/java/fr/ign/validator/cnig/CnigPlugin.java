@@ -1,13 +1,13 @@
 package fr.ign.validator.cnig;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.Plugin;
 import fr.ign.validator.cnig.process.CnigInfoExtractorPostProcess;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
 import fr.ign.validator.cnig.validation.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.IdurbaValidator;
 import fr.ign.validator.cnig.validation.InseeValidator;
+import fr.ign.validator.plugin.Plugin;
 
 public class CnigPlugin implements Plugin {
 

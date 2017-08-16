@@ -8,13 +8,20 @@ import java.util.List;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.Model;
+import fr.ign.validator.process.CharsetPreProcess;
+import fr.ign.validator.process.FilterMetadataPreProcess;
+import fr.ign.validator.process.NormalizePostProcess;
+import fr.ign.validator.process.PrepareValidationDirectory;
 import fr.ign.validator.report.ReportBuilder;
 import fr.ign.validator.report.ReportBuilderLegacy;
+import fr.ign.validator.validation.Validatable;
 
 /**
  * Le contexte de validation qui porte 
@@ -41,6 +48,11 @@ public class Context {
 	private CoordinateReferenceSystem coordinateReferenceSystem ;
 	
 	/**
+	 * L'étendue dans laquelle la géométrie est attendue (projection identique à celle des données)
+	 */
+	private Geometry nativeDataExtent ;
+
+	/**
 	 * Le répertoire de base utilisé pour tester l'existance des fichiers
 	 * (<=> documentPath)
 	 */
@@ -61,7 +73,7 @@ public class Context {
 	/**
 	 * Pile d'emplacement de validation (fichier, ligne, etc.)
 	 */
-	private List<String> dataStack = new ArrayList<String>();	
+	private List<Validatable> dataStack = new ArrayList<Validatable>();	
 	
 	/**
 	 * Le générateur de rapport d'erreur
@@ -81,7 +93,7 @@ public class Context {
 	
 	
 	public Context(){
-		this.errorFactory = ErrorFactory.newFromRessource() ;
+		this(ErrorFactory.newFromRessource());
 	}
 	
 	/**
@@ -90,6 +102,7 @@ public class Context {
 	 */
 	public Context(ErrorFactory errorFactory){
 		this.errorFactory = errorFactory ;
+		registerDefaultListeners();
 	}
 	
 	/**
@@ -108,6 +121,22 @@ public class Context {
 		return this.listeners ;
 	}
 	
+
+	/**
+	 * Chargement des processus par défaut de l'application
+	 * - (re-)création du dossier de validation
+	 * - preparation des donnes en vue de validation (csv)
+	 * - preparation des donnes en vue d'export en base (shp)
+	 * - extraction d'informations sur les fichiers traitées
+	 */
+	private void registerDefaultListeners(){
+		addListener( new PrepareValidationDirectory() );
+		// before CharsetPreProcess
+		addListener( new FilterMetadataPreProcess() );
+		addListener( new CharsetPreProcess() );
+		addListener( new NormalizePostProcess() ); 
+	}
+
 	
 	/**
 	 * @return the encoding
@@ -134,6 +163,18 @@ public class Context {
 	 */
 	public void setCoordinateReferenceSystem( CoordinateReferenceSystem coordinateReferenceSystem) {
 		this.coordinateReferenceSystem = coordinateReferenceSystem;
+	}
+
+	public boolean hasNativeDataExtent(){
+		return nativeDataExtent != null ;
+	}
+	
+	public Geometry getNativeDataExtent() {
+		return nativeDataExtent;
+	}
+
+	public void setNativeDataExtent(Geometry extent) {
+		this.nativeDataExtent = extent;
 	}
 
 	/**
@@ -178,17 +219,29 @@ public class Context {
 		return this.modelStack ;
 	}
 	/**
+	 * Renvoie le modèle courant pour un type donné
+	 * @param clazz
+	 * @return
+	 */
+	public <T extends Model> T getModelByType(Class<T> clazz){
+		for ( int index = modelStack.size() - 1; index >= 0; index-- ) {
+			Model model = modelStack.get(index);
+			if ( clazz.isInstance(model) ){
+				return clazz.cast(model);
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Renvoie le DocumentModel courant
+	 * @deprecated use getModelByType
 	 * @return
 	 */
 	public DocumentModel getDocumentModel() {
-		for (Model model : modelStack) {
-			if ( model instanceof DocumentModel ){
-				return (DocumentModel)model;
-			}
-		} 
-		return null;
+		return this.getModelByType(DocumentModel.class);
 	}
+
 	/**
 	 * Fin de la validation d'un modèle
 	 */
@@ -204,23 +257,37 @@ public class Context {
 	 * Début de validation d'une donnée
 	 * @param location
 	 */
-	public void beginData(String data){
+	public void beginData(Validatable data){
 		dataStack.add(data);
 	}
 	/**
 	 * Renvoie la pile de position
 	 * @return
 	 */
-	public List<String> getDataStack(){
+	public List<Validatable> getDataStack(){
 		return dataStack ;
+	}
+	/**
+	 * Renvoie la données courante pour un type
+	 * @param clazz
+	 * @return
+	 */
+	public <T extends Validatable> T getDataByType(Class<T> clazz){
+		for ( int index = dataStack.size() - 1; index >= 0; index-- ) {
+			Validatable model = dataStack.get(index);
+			if ( clazz.isInstance(model) ){
+				return clazz.cast(model);
+			}
+		}
+		return null;
 	}
 	/**
 	 * Fin de validation d'une donnée
 	 * @param location
 	 */
-	public void endData(String data){
+	public void endData(Validatable data){
 		int position = dataStack.size() - 1 ;
-		if ( position < 0 ){
+		if ( position < 0 || dataStack.get(position) != data){
 			throw new RuntimeException("gestion inconsistente de beginModel/endModel"); 
 		}
 		dataStack.remove(position) ;

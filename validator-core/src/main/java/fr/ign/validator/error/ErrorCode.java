@@ -66,6 +66,7 @@ public class ErrorCode {
 	public static final ErrorCode ATTRIBUTE_UNEXPECTED_NULL = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_NULL") ; 
 
 	public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID") ;
+	public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT") ;
 	
 	public static final ErrorCode ATTRIBUTE_URL_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_URL_NOT_FOUND") ;
 	public static final ErrorCode ATTRIBUTE_PATH_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_PATH_NOT_FOUND") ;

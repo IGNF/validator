@@ -6,8 +6,10 @@ import java.util.List;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.validation.AttributeNullableValidator;
+import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.attribute.AttributeNullableValidator;
 import fr.ign.validator.xml.AttributeTypeAdapter;
 
 

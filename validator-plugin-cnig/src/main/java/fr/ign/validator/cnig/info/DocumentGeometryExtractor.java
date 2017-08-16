@@ -14,7 +14,7 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.model.Document;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.tools.TableReader;
 
 /**

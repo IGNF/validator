@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 public class DateType extends AttributeType<Date> {

@@ -1,10 +1,11 @@
 package fr.ign.validator.validation;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ValidatorError;
-import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.attribute.StringSizeValidator;
 import junit.framework.TestCase;
 
 public class StringSizeValidatorTest extends TestCase {

@@ -1,4 +1,4 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,17 +9,15 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Row;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.FeatureTypeMapper;
-import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.DocumentFile;
-import fr.ign.validator.model.Feature;
-import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.Validator;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.reader.InvalidCharsetException;
 import fr.ign.validator.tools.TableReader;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 
@@ -36,7 +34,7 @@ public class TableValidator implements Validator<DocumentFile> {
 	public void validate(Context context, DocumentFile documentFile) {
 		if ( documentFile.getFileModel() instanceof TableModel ){
 			TableModel tableModel = (TableModel)documentFile.getFileModel() ;
-			validateFileContent(context,tableModel,documentFile.getPath()) ;
+			validateTable(context,tableModel,documentFile.getPath()) ;
 		}else{
 			throw new RuntimeException(
 				"Le validateur TableValidator supporte uniquement le type TableModel"
@@ -49,7 +47,7 @@ public class TableValidator implements Validator<DocumentFile> {
 	 * @param context
 	 * @param matchingFile
 	 */
-	protected void validateFileContent(Context context, TableModel tableModel, File matchingFile){
+	protected void validateTable(Context context, TableModel tableModel, File matchingFile){
 		/*
 		 * Validation du fichier CSV
 		 */
@@ -78,14 +76,8 @@ public class TableValidator implements Validator<DocumentFile> {
 			while ( reader.hasNext() ){
 				count++ ;
 				
-				// begin feature
-				String featureId = ""+count ;
-				context.beginData(featureId);
-				String[] row = reader.next() ;
-				Feature feature = validateFeature(context, mapping, row,matchingFile);
-				log.trace( MARKER, "{}", feature );
-				// end feature
-				context.endData(featureId);
+				Row row = new Row(count,reader.next(),mapping);
+				row.validate(context);
 			}
 			
 			/*
@@ -106,45 +98,6 @@ public class TableValidator implements Validator<DocumentFile> {
 			);
 			return ;
 		}
-	}
-	
-
-	/**
-	 * Validation d'une ligne
-	 * @param context
-	 * @param attributeIndexes
-	 * @param row
-	 * @return
-	 */
-	private Feature validateFeature(Context context, FeatureTypeMapper mapping, String[] row, File matchingFile) {
-		FeatureType featureType = mapping.getFeatureType() ;
-		Feature feature = featureType.newFeature() ;
-		
-		for ( int index = 0; index < mapping.getFeatureType().getAttributeCount(); index++ ){
-			/*
-			 * On récupère le type et on valide la valeur en effectuant une conversion
-			 */
-			AttributeType<?> attributeType = mapping.getFeatureType().getAttribute(index);
-			context.beginModel(attributeType);
-			
-			String inputValue = null ;
-			if ( mapping.getAttributeIndex(index) >= 0 ){
-				inputValue = row[ mapping.getAttributeIndex(index) ] ; 
-			}
-			Attribute<?> attribute = feature.getAttribute(index) ;
-			try {
-				attribute.setValue( attributeType.bind(inputValue) );
-				attribute.validate(context);
-			}catch ( IllegalArgumentException e ){
-				context.report(
-					ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-					inputValue.toString(), 
-					attributeType.getTypeName()
-				);
-			}
-			context.endModel(attributeType);
-		}
-		return feature ;
 	}
 
 	/**

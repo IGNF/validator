@@ -4,15 +4,17 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.io.WKTReader;
 
-import fr.ign.validator.model.Attribute;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.validation.GeometryIsValidValidator;
+import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
+import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
 
 public class GeometryType extends AttributeType<Geometry> {
 
 	public GeometryType() {
 		super(Geometry.class);
 		addValidator(new GeometryIsValidValidator());
+		addValidator(new GeometryDataExtentValidator());
 	}
 
 	public static WKTReader format = new WKTReader() ;

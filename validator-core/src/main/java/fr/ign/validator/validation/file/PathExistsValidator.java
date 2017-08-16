@@ -1,11 +1,11 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.file;
 
 import java.io.File;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.model.Attribute;
-import fr.ign.validator.model.Validator;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

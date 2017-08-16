@@ -7,10 +7,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Document;
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Row;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
+import fr.ign.validator.validation.Validatable;
 
 
 /**
@@ -49,31 +55,31 @@ public class ReportBuilderLegacy implements ReportBuilder {
 		String logMessage = error.getScope().toString() ;
 		
 		if ( error.getScope().equals(ErrorScope.DIRECTORY) ){
-			
+			// Directory | <code> | <level> | <file> | <message>
 			logMessage = "Directory" ;
 			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+error.getLevel() ;
-			logMessage += " | "+getFile(context);
+			logMessage += " | "+error.getLevel() ;   
+			logMessage += " | "+getFile(context) ;    
 			logMessage += " | "+error.getMessage() ;
 			
 		}else if( error.getScope().equals(ErrorScope.HEADER) ){
-			
+			// Header | <code> | <fileModel> | <level> | <column> | <value> | <modelValue> | <message>
 			logMessage = "Header" ;
 			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+getTable(context);
+			logMessage += " | "+getFileModelName(context);
 			logMessage += " | "+error.getLevel() ;
-			logMessage += " | "+getField(context);
+			logMessage += " | "+getAttributeName(context);
 			logMessage += " | "; //courant
 			logMessage += " | "+getModel(context);
 			logMessage += " | "+error.getMessage();
 			
 		}else if( error.getScope().equals(ErrorScope.FEATURE) ){
-
+			// Feature | <code> | <fileModel> | <level> | <column> | <line> | <currentvalue> | <type> | <model> | <message>
 			logMessage = "Feature" ;
 			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+getTable(context);
+			logMessage += " | "+getFileModelName(context);
 			logMessage += " | "+error.getLevel();
-			logMessage += " | "+getField(context);
+			logMessage += " | "+getAttributeName(context);
 			logMessage += " | "+getLine(context);
 			logMessage += " | "; // valeur
 			logMessage += " | "; // taille/type
@@ -102,23 +108,29 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	}
 	
 
-	
+	/**
+	 * Renvoie le nom du DocumentFile courant s'il existe, le nom du document sinon
+	 * @param context
+	 * @return
+	 */
 	public String getFile(Context context){
-		
-		String file = "";
-		List<Model> model = context.getModelStack();
-		
-		if( model.size() > 1 ){
-			file = model.get(model.size()-1).getName();
-		}else{
-			for (String data : context.getDataStack()){
-				file = data+"/" ;
-			}
+		DocumentFile documentFile = context.getDataByType(DocumentFile.class);
+		if ( documentFile != null ){
+			return context.relativize( documentFile.getPath() ) ;
 		}
-		return file ;
+		Document document = context.getDataByType(Document.class);
+		if ( document != null ){
+			return document.getDocumentName()+"/";
+		}
+		return "";
 	}
+
 	
-	
+	/**
+	 * TODO clarifier
+	 * @param context
+	 * @return
+	 */
     public String getModel(Context context){
 		
 		String modele ="";
@@ -131,40 +143,45 @@ public class ReportBuilderLegacy implements ReportBuilder {
 		return modele;
 	}
     
-    public String getField(Context context){
-		
-		String field ="";
-		
-		List<Model> model = context.getModelStack();
-		
-		if( model.size() > 2 ){
-			field = model.get(2).getName();
+    /**
+     * Renvoie le nom de l'attribut
+     * @param context
+     * @return
+     */
+    private String getAttributeName(Context context){
+    	AttributeType<?> attribute = context.getModelByType(AttributeType.class);
+		if ( attribute != null ){
+			return attribute.getName();
 		}
-		return field;
+		return "";
 	}
 	
-	public String getTable(Context context){
-		
-		String table ="";
-		
-		List<Model> model = context.getModelStack();
-		
-		if( model.size() > 1 ){
-			table = model.get(1).getName();
+    /**
+     * Renvoie le nom du modèle
+     * @param context
+     * @return
+     */
+    private String getFileModelName(Context context){
+		FileModel fileModel = context.getModelByType(FileModel.class);
+		if ( fileModel != null ){
+			return fileModel.getName();
 		}
-		return table;
+		return "";
 	}
 	
+	/**
+	 * Renvoie le numéro de ligne
+	 * @param context
+	 * @return
+	 */
 	public String getLine(Context context){
-		
-		String value ="";
-		
-		List<String> data = context.getDataStack();
-		
-		if( data.size() > 2 ){
-			value = data.get(2);
+		for (Validatable data : context.getDataStack()) {
+			if ( data instanceof Row ){
+				return ""+((Row)data).getLine();
+			}
 		}
-		return value;
+		return "";
 	}
 	
+
 }

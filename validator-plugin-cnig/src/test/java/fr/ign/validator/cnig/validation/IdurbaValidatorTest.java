@@ -1,8 +1,8 @@
 package fr.ign.validator.cnig.validation;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorLevel;
-import fr.ign.validator.model.Attribute;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import junit.framework.TestCase;

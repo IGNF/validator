@@ -245,15 +245,5 @@ public class FeatureType implements Model {
 	}
 
 	
-	/**
-	 * Construction d'une nouvelle Feature
-	 * @return
-	 */
-	public Feature newFeature() {
-		return new Feature(this);
-	}
-
-
-	
 	
 }

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-export VALIDATOR_PATH=$PWD/validator-cli/target/validator-cli-2.2-SNAPSHOT.jar
 export LOG4J_PATH=$PWD/validator-core/log4j2.xml
 
 report_diff(){
@@ -20,6 +19,8 @@ csv_diff(){
 # build
 mvn clean
 mvn package
+
+export VALIDATOR_PATH=$(find ./validator-cli/target -name validator-cli-*-SNAPSHOT.jar)
 
 # run geofla
 rm validator-example/geofla/data/*.csv

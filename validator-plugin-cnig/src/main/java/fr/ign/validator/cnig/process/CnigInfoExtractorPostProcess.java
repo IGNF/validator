@@ -12,7 +12,7 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.info.DocumentInfo;
 import fr.ign.validator.cnig.info.DocumentInfoExtractor;
 import fr.ign.validator.cnig.info.DocumentInfoWriter;
-import fr.ign.validator.model.Document;
+import fr.ign.validator.data.Document;
 
 /**
  * Post Traitement

@@ -1,4 +1,4 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.attribute;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,9 +8,9 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
-import fr.ign.validator.model.Attribute;
-import fr.ign.validator.model.Validator;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 

@@ -1,6 +1,9 @@
-package fr.ign.validator.model;
+package fr.ign.validator.data;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.validation.Validatable;
+import fr.ign.validator.validation.Validator;
 
 /**
  * 
@@ -53,9 +56,11 @@ public class Attribute<T> implements Validatable {
 
 	@Override
 	public void validate(Context context) {
+		context.beginData(this);
 		for (Validator<Attribute<T>> validator : getType().getValidators()) {
 			validator.validate(context, this);
 		}
+		context.endData(this);
 	}
 
 }
