@@ -19,7 +19,7 @@
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		
+
 		<!-- cnig -->
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
@@ -30,6 +30,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -59,9 +60,9 @@
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>fr.ign.validator.cli.DocumentValidatorCLI</mainClass>
 								</transformer>
-								<!-- <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> 
-									<resource>META-INF/services/fr.ign.validator.Plugin</resource> <resource>META-INF/services/fr.ign.validator.model.AttributeType</resource> 
-									<resource>META-INF/services/org.opengis.referencing.crs.CRSAuthorityFactory</resource> 
+								<!-- <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/services/fr.ign.validator.Plugin</resource> <resource>META-INF/services/fr.ign.validator.model.AttributeType</resource>
+									<resource>META-INF/services/org.opengis.referencing.crs.CRSAuthorityFactory</resource>
 									</transformer> -->
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />

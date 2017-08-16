@@ -18,6 +18,8 @@ Le paramétrage s'effectue à l'aide de fichiers XML décrivant :
 * Des modèles de table (FeatureCatalogue : FeatureType/AttributeType)
 * Un mapping de fichiers (chemin d'accès, obligatoire/conseillé/optionel, type: pdf, table, dossier, etc.)
 
+Remarque : Le programme s'appuie sur l'exécutable ```ogr2ogr``` de GDAL pour la lecture des données géographiques. Le format CSV sert de format pivot.
+
 # Licence
 
 Voir [LICENCE.md](LICENCE.md)
@@ -38,24 +40,17 @@ Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](h
 mvn package
 ```
 
-## Exécution en mode validateur CNIG (GpU)
-
 # Exécution
 
+```
+java -jar validator-cli/target/validator-cli.jar --help
+```
+
+## Exemple modèle classique [GEOFLA](validator-example/geofla/README.md)
+
+```
+java -jar validator-cli/target/validator-cli.jar -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1 ```
+
+## Utilisateur en mode validateur CNIG (GpU)
+
 Pour le GPU, il convient de charger le plugin dédié via l'option ```--plugins```
-
-```
-java -jar validator-cli/target/validator-cli-2.2.2-SNAPSHOT.jar --help
-```
-
-# Exemple
-
-* [GEOFLA](validator-example/geofla/README.md)
-
-```
-java -jar validator-cli/target/validator-cli-2.2.2-SNAPSHOT.jar -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1 --plugins CNIG
-```
-
-# Mise en garde
-
-La stabilité est assurée (pour l'instant) uniquement au niveau de l'appel à l'exécutable en ligne de commande. L'organisation des classes peut évoluer.

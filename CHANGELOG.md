@@ -1,5 +1,7 @@
 # 3.0.* (in progress)
 
+* [x] update java to 1.7
+* [x] update dependencies (geotools)
 * [x] add option ```--data-extent``` to check data extent (and projection)
 * [x] add option ```--plugins``` and remove maven profile "cnig"
 * [x] simplify error context management
