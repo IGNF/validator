@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import fr.ign.validator.tools.FileConverter;
 import junit.framework.TestCase;
 
 

@@ -19,13 +19,14 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.xml.sax.SAXException;
 
+import fr.ign.validator.exception.OgrBadVersionException;
+import fr.ign.validator.exception.OgrNotFoundException;
+
 
 
 /**
  * 
  * Outils de conversion de format reposant sur GDAL - ogr2ogr.
- * 
- * TODO contrôler la version de ogr2ogr et banir 1.11.0 (bug WKT 8000 caractères)
  * 
  * @author MBorne
  * @author CBouche
@@ -43,19 +44,41 @@ public class FileConverter {
 	 * @brief path to ogr2ogr executable
 	 */
 	private String ogr2ogr = System.getProperty("ogr2ogr_path", "ogr2ogr") ;
+	
+	/**
+	 * Version de ogr2ogr
+	 */
+	private String version ;
 		
 	/**
 	 * Default constructor
 	 */
 	public FileConverter() {
-		
+		this.version = retrieveVersion();
+		log.info(MARKER, "ogr2ogr version : "+this.version);
+		if ( this.version == null ){
+			throw new OgrNotFoundException();
+		}else if ( this.version.contains("1.11.0") ){
+			throw new OgrBadVersionException("ogr2ogr 1.11.0 is not supported (bug in WKT limited to 8000 characters)");
+		}else if ( this.version.contains("2.2.") || this.version.contains("2.1.*") ){
+			throw new OgrBadVersionException("ogr2ogr 2.1.* and 2.2.* are not yet supported (WKT coordinates are truncated, problems to manage number of decimals with OGR_WKT_PRECISION)");
+		}
 	}
-	
+
 	/**
 	 * Renvoie la version de GDAL
 	 * @return null si la commande ogr2ogr --version échoue
 	 */
 	public String getVersion(){
+		return this.version ;
+	}
+	
+	/**
+	 * Appel ogr2ogr --version pour récupérer la version de GDAL
+	 * @return
+	 */
+	private String retrieveVersion(){
+		log.info(MARKER, "ogr2ogr --version");
 		String[] args = new String[]{ogr2ogr,"--version"};
 		ProcessBuilder builder = new ProcessBuilder(args);
 		try {
@@ -105,6 +128,7 @@ public class FileConverter {
 		log.info(MARKER, "{} => {} (gdal {})", source, target, version );
 		
 		String[] args = getArguments(source, target, "CSV") ;
+		// Remarque : l'encodage est spécifié en UTF-8 pour qu'ogr2ogr n'effectue pas la convertion
 		runCommand(args,ENCODING_UTF8);
 		/*
 		 * Controle que le fichier de sortie est bien crée
@@ -184,6 +208,7 @@ public class FileConverter {
 		 */
 		if ( driver.equals("CSV") ) {
 			if ( hasSpatialColumn(source) ){
+				// unsure conversion to WKT
 				arguments.add("-lco") ;
 				arguments.add("GEOMETRY=AS_WKT") ;
 			}
@@ -248,6 +273,7 @@ public class FileConverter {
 			 */
 			ProcessBuilder builder = new ProcessBuilder(args);
 			builder.environment().put("SHAPE_ENCODING", shapeEncoding);
+
 			process = builder.start();
 			InputStream stderr = process.getErrorStream() ;
 			process.waitFor() ;

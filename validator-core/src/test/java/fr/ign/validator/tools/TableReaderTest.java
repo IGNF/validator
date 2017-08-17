@@ -50,7 +50,8 @@ public class TableReaderTest extends TestCase {
 			String[] header = reader.getHeader() ;
 			assertTrue(header.length >= 4);
 
-			assertTrue(Arrays.asList(header).contains("WKT")) ;
+			int wktIndex = reader.findColumn("WKT");
+			assertTrue("WKT column not found", wktIndex != 1) ;
 			assertTrue(Arrays.asList(header).contains("gml_id")) ;
 			assertTrue(Arrays.asList(header).contains("IDURBA")) ;
 			assertTrue(Arrays.asList(header).contains("INSEE")) ;
@@ -66,7 +67,9 @@ public class TableReaderTest extends TestCase {
 			// assertTrue(Arrays.asList(header).contains("DATECOG")) ;
 			
 			String[] row = reader.next() ;
-			assertTrue(Arrays.asList(row).contains("POINT (225499.742202532826923 6755725.590427031740546)")) ; //WKT
+			//WKT
+			assertEquals( "POINT (225499.742202532826923 6755725.590427031740546)", row[wktIndex]);
+			
 			assertTrue(Arrays.asList(row).contains("DOC_URBA_COM.13")) ; //gml_id
 			assertTrue(Arrays.asList(row).contains("5611820140612")) ; //IDURBA
 			assertTrue(Arrays.asList(row).contains("56118")) ; // INSEE

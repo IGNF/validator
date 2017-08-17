@@ -18,7 +18,6 @@ Le paramétrage s'effectue à l'aide de fichiers XML décrivant :
 * Des modèles de table (FeatureCatalogue : FeatureType/AttributeType)
 * Un mapping de fichiers (chemin d'accès, obligatoire/conseillé/optionel, type: pdf, table, dossier, etc.)
 
-Remarque : Le programme s'appuie sur l'exécutable ```ogr2ogr``` de GDAL pour la lecture des données géographiques. Le format CSV sert de format pivot.
 
 # Licence
 
@@ -34,6 +33,23 @@ Voir [doc/model.md](doc/model.md)
 Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](https://www.geoportail-urbanisme.gouv.fr) pour la validation des [standards CNIG](https://www.geoportail-urbanisme.gouv.fr/standard/).
 
 
+# Installation de ogr2ogr
+
+Le programme s'appuie sur l'exécutable ```ogr2ogr``` de GDAL pour la lecture des données géographiques en utilisant le format CSV comme un pivot.
+
+## Versions testées
+
+* 1.9.1
+* 1.9.3
+* 1.10.1
+* 1.11.3
+
+## Versions bannies
+
+* 1.9.0 : Bug dans la production du WKT (limité à 8000 caractères)
+* 2.1.* et 2.2.* : Régression dans la gestion de la précision des coordonnées WKT et difficultés pour contrôler le nombre de décimales avec OGR_WKT_PRECISION (précision globale)
+
+
 # Compilation
 
 ```
@@ -42,9 +58,37 @@ mvn package
 
 # Exécution
 
+
+## Affichage de l'aide
+
 ```
 java -jar validator-cli/target/validator-cli.jar --help
 ```
+
+## Principales options
+
+```
+ -c,--config <arg>         Dossier contenant les configurations
+ -de,--data-extent <arg>   Domaine dans lequel la géométrie des données
+                           est attendue (format : WKT, projection : WGS84)
+ -e,--maxerror <arg>       Limitation du nombre d'erreur du même type
+ -f,--flat                 Validation à plat (pas de validation de
+                           l'arborescence)
+ -h,--help                 affichage du message d'aide
+ -i,--input <arg>          Dossier contenant les données à valider
+ -p,--proxy <arg>          Adresse du proxy (ex : proxy.ign.fr:3128)
+    --plugins <arg>        Liste des plugins à charger (noms séparés par
+                           des virgules)
+ -s,--srs <arg>            Système de référence des données sources (ex :
+                           EPSG:2154)
+ -v,--version <arg>        Norme et version a prendre en compte
+ -W,--encoding <arg>       Encodage des données (defaut : UTF-8)
+```
+
+## Autres options
+
+* ```-Dogr2ogr_path=/path/to/ogr2ogr```
+
 
 ## Exemple modèle classique [GEOFLA](validator-example/geofla/README.md)
 

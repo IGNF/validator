@@ -35,26 +35,6 @@ public class TableReader implements Iterator< String[] >{
 	
 	/**
 	 * 
-	 * @deprecated difficile de valider les encodages en détectant les encodages
-	 * @param file
-	 * @throws IOException 
-	 */
-	@Deprecated
-	public TableReader(File file) throws IOException{
-		File csvFile = convertToCSV(file);
-		Charset charset = CharsetDetector.detectCharset(csvFile);
-		csvReader = new CSVReader(csvFile, charset);
-		/*
-		 * lecture de l'entête
-		 */
-		if ( ! csvReader.hasNext() ){
-			throw new IOException("Impossible de lire l'entête de "+csvFile);
-		}
-		header = csvReader.next() ;
-	}
-	
-	/**
-	 * 
 	 * Lecture du fichier avec une charset spécifiée. Le système
 	 * valide la charset passée en paramètre
 	 * 
