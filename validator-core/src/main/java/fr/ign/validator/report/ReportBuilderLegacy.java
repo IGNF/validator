@@ -14,6 +14,7 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
 import fr.ign.validator.validation.Validatable;
@@ -53,38 +54,37 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	public void addError(Context context, ValidatorError error) {
 		
 		String logMessage = error.getScope().toString() ;
-		
 		if ( error.getScope().equals(ErrorScope.DIRECTORY) ){
 			// Directory | <code> | <level> | <file> | <message>
 			logMessage = "Directory" ;
-			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+error.getLevel() ;   
-			logMessage += " | "+getFile(context) ;    
-			logMessage += " | "+error.getMessage() ;
+			logMessage += " | "+error.getCode() ;             // Code
+			logMessage += " | "+error.getLevel() ;            // Type 
+			logMessage += " | "+getFileName(context) ;        // Fichier
+			logMessage += " | "+error.getMessage() ;          // Message
 			
 		}else if( error.getScope().equals(ErrorScope.HEADER) ){
 			// Header | <code> | <fileModel> | <level> | <column> | <value> | <modelValue> | <message>
 			logMessage = "Header" ;
-			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+getFileModelName(context);
-			logMessage += " | "+error.getLevel() ;
-			logMessage += " | "+getAttributeName(context);
-			logMessage += " | "; //courant
-			logMessage += " | "+getModel(context);
-			logMessage += " | "+error.getMessage();
+			logMessage += " | "+error.getCode() ;              // Code
+			logMessage += " | "+getFileModelName(context);     // Table
+			logMessage += " | "+error.getLevel() ;             // Type
+			logMessage += " | "+getAttributeName(context);     // Champ (déprécié, présent dans les messages)
+			logMessage += " | ";                               // Courant (déprécié, présent dans les messages)
+			logMessage += " | "+getDocumentModelName(context); // Modèle
+			logMessage += " | "+error.getMessage();            // Message
 			
 		}else if( error.getScope().equals(ErrorScope.FEATURE) ){
 			// Feature | <code> | <fileModel> | <level> | <column> | <line> | <currentvalue> | <type> | <model> | <message>
 			logMessage = "Feature" ;
-			logMessage += " | "+error.getCode() ;
-			logMessage += " | "+getFileModelName(context);
-			logMessage += " | "+error.getLevel();
-			logMessage += " | "+getAttributeName(context);
-			logMessage += " | "+getLine(context);
-			logMessage += " | "; // valeur
-			logMessage += " | "; // taille/type
-			logMessage += " | "+getModel(context);
-			logMessage += " | "+ error.getMessage();
+			logMessage += " | "+error.getCode() ;              // Code
+			logMessage += " | "+getFileModelName(context);     // Table
+			logMessage += " | "+error.getLevel();              // Type
+			logMessage += " | "+getAttributeName(context);     // Champ
+			logMessage += " | "+getLine(context);              // Identifiant
+			logMessage += " | ";                               // valeur (déprécié, présent dans les messages)
+			logMessage += " | ";                               // taille/type (déprécié, présent dans les messages)
+			logMessage += " | "+getDocumentModelName(context); // Modèle
+			logMessage += " | "+ error.getMessage();           // Message
 		}
 		
 		
@@ -113,7 +113,7 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	 * @param context
 	 * @return
 	 */
-	public String getFile(Context context){
+	public String getFileName(Context context){
 		DocumentFile documentFile = context.getDataByType(DocumentFile.class);
 		if ( documentFile != null ){
 			return context.relativize( documentFile.getPath() ) ;
@@ -131,16 +131,12 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	 * @param context
 	 * @return
 	 */
-    public String getModel(Context context){
-		
-		String modele ="";
-		
-		List<Model> model = context.getModelStack();
-		
-		if( model.size() > 0 ){
-			modele = model.get(0).getName();
+    public String getDocumentModelName(Context context){
+    	DocumentModel documentModel = context.getModelByType(DocumentModel.class);
+		if ( documentModel != null ){
+			return documentModel.getName();
 		}
-		return modele;
+		return "";
 	}
     
     /**
@@ -175,10 +171,9 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	 * @return
 	 */
 	public String getLine(Context context){
-		for (Validatable data : context.getDataStack()) {
-			if ( data instanceof Row ){
-				return ""+((Row)data).getLine();
-			}
+		Row row = context.getDataByType(Row.class);
+		if ( row != null ){
+			return ""+row.getLine();
 		}
 		return "";
 	}
