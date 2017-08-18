@@ -60,14 +60,7 @@ public class DocumentValidatorCLI {
 			option.setRequired(true);
 			options.addOption(option);
 		}
-
-		// input EPSG code
-		{
-			Option option = new Option("s", "srs", true, "Système de référence des données sources (ex : EPSG:2154)");
-			option.setRequired(true);
-			options.addOption(option);
-		}
-
+		
 		// config
 		{
 			Option option = new Option("c", "config", true, "Dossier contenant les configurations");
@@ -82,6 +75,15 @@ public class DocumentValidatorCLI {
 			options.addOption(option);
 		}
 
+
+		// input EPSG code
+		{
+			Option option = new Option("s", "srs", true, "Système de référence des données sources (ex : EPSG:2154)");
+			option.setRequired(true);
+			options.addOption(option);
+		}
+
+		
 		// proxy
 		{
 			Option option = new Option("p", "proxy", true, "Adresse du proxy (ex : proxy.ign.fr:3128)");
@@ -96,19 +98,19 @@ public class DocumentValidatorCLI {
 		}
 		// mode souple
 		{
-			Option option = new Option("f", "flat", false, "Validation à plat (pas de validation de l'arborescence)");
+			Option option = new Option(null, "flat", false, "Validation à plat (pas de validation de l'arborescence)");
 			option.setRequired(false);
 			options.addOption(option);
 		}
 		// étendue dans laquelle la géométrie est attendue
 		{
-			Option option = new Option("de", "data-extent", true, "Domaine dans lequel la géométrie des données est attendue (format : WKT, projection : WGS84)");
+			Option option = new Option(null, "data-extent", true, "Domaine dans lequel la géométrie des données est attendue (format : WKT, projection : WGS84)");
 			option.setRequired(false);
 			options.addOption(option);
 		}
 		// limitation erreurs
 		{
-			Option option = new Option("e", "maxerror", true, "Limitation du nombre d'erreur du même type");
+			Option option = new Option(null, "max-errors", true, "Limitation du nombre d'erreur du même type dans le rapport de validation");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -267,11 +269,11 @@ public class DocumentValidatorCLI {
 		}
 
 		// configuration de la limite du nombre d'erreur
-		if (commandline.hasOption("maxerror")) {
-			int maxError = Integer.parseInt(commandline.getOptionValue("maxerror"));
+		if (commandline.hasOption("max-errors")) {
+			int maxError = Integer.parseInt(commandline.getOptionValue("max-errors"));
 			context.setReportBuilder( new FilteredReportBuilder(context.getReportBuilder(),maxError) );
 		}
-		
+
 		// configuration de la validation à plat
 		context.setFlatValidation(commandline.hasOption("f"));
 
