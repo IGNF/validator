@@ -1,4 +1,4 @@
-package fr.ign.validator.validation.file;
+package fr.ign.validator.validation.attribute;
 
 import java.io.File;
 

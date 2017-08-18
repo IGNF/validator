@@ -287,7 +287,7 @@ public class DocumentValidatorCLI {
 					log.error(MARKER, message);
 					System.exit(1);
 				}
-				log.info(MARKER, "setup plugin '%1s'...", pluginName);
+				log.info(MARKER, String.format("setup plugin '%1s'...", pluginName));
 				plugin.setup(context);
 			}
 		}
