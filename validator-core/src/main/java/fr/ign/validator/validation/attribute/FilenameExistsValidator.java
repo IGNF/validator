@@ -39,7 +39,7 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
 		if ( correspondingFiles.isEmpty() ){
 			context.report(
 				ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, 
-				path.toPath().toString()
+				path.toString()
 			);
 		}
 	}

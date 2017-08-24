@@ -44,7 +44,7 @@ public class FilenameType extends AttributeType<File> {
 		if ( null == value ){
 			return null ;
 		}
-		return value.toPath().toString() ;
+		return value.toString() ;
 	}
 	
 	@Override
