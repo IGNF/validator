@@ -1,4 +1,4 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.attribute;
 
 import java.io.File;
 
@@ -64,6 +64,14 @@ public class FilenameExistsValidatorTest extends TestCase {
 	public void testDoesntExists(){
 		PathType type = new PathType();
 		Attribute<File> attribute = new Attribute<File>(type, new File("je-nexiste-pas.txt"));
+		validator.validate(context, attribute);
+		assertEquals(1, report.countErrors() ) ;
+	}
+	
+	public void testDoesntExistsIllegalCharacters(){
+		PathType type = new PathType();
+		String illegal = new String(new int[] { 0x0092 }, 0, 1);
+		Attribute<File> attribute = new Attribute<File>(type, new File("je-nexiste-pas.txt#page=15"+illegal));
 		validator.validate(context, attribute);
 		assertEquals(1, report.countErrors() ) ;
 	}
