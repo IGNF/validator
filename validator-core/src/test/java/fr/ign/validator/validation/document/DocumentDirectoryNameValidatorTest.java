@@ -1,4 +1,4 @@
-package fr.ign.validator.validation;
+package fr.ign.validator.validation.document;
 
 import java.io.File;
 

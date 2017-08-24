@@ -32,7 +32,7 @@ public class PathExistsValidator implements Validator<Attribute<File>> {
 		if ( ! absolutePath.exists() ){
 			context.report(
 				ErrorCode.ATTRIBUTE_PATH_NOT_FOUND, 
-				path.toPath().toString()
+				path.toString()
 			);
 		}
 	}

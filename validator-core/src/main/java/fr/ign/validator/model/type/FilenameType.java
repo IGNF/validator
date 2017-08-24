@@ -36,17 +36,15 @@ public class FilenameType extends AttributeType<File> {
 		if ( value == null || value instanceof File ){
 			return (File)value ;
 		}
-		//context.getRootDirectory()?
 		return new File(value.toString()) ;
 	}
-	
-	
+
 	@Override
 	public String format(File value) {
 		if ( null == value ){
 			return null ;
 		}
-		return value.toPath().toString() ;
+		return value.toString() ;
 	}
 	
 	@Override
