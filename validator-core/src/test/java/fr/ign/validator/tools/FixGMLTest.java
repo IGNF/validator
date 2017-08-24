@@ -21,10 +21,10 @@ public class FixGMLTest extends TestCase {
 		File input = new File(getClass().getResource("/fixgml/ZONE_URBA.gml").getPath()) ;
 		File output = new File(input.getParentFile(), "ZONE_URBA_FIXED.gml");
 		try {
-			String inputContent = org.apache.commons.io.FileUtils.readFileToString(input);
+			String inputContent = org.apache.commons.io.FileUtils.readFileToString(input,"UTF-8");
 			assertTrue( inputContent.contains("<gp-urba:NOMFIC/>") ) ;			
 			FixGML.replaceAutoclosedByEmpty(input,output);
-			String outputContent = org.apache.commons.io.FileUtils.readFileToString(output);
+			String outputContent = org.apache.commons.io.FileUtils.readFileToString(output,"UTF-8");
 			assertTrue( outputContent.contains("<gp-urba:NOMFIC></gp-urba:NOMFIC>") ) ;			
 		} catch (IOException e) {
 			fail(e.getMessage());
@@ -38,10 +38,10 @@ public class FixGMLTest extends TestCase {
 		File input = new File(getClass().getResource("/fixgml/EL10_ASSIETTE_SUP_S_FR.gml").getPath()) ;
 		File output = new File(input.getParentFile(), "EL10_ASSIETTE_SUP_S_FR_FIXED.gml");
 		try {
-			String inputContent = org.apache.commons.io.FileUtils.readFileToString(input);
+			String inputContent = org.apache.commons.io.FileUtils.readFileToString(input,"UTF-8");
 			assertTrue( inputContent.contains("<GPU:MODEGEOASS>Egal au générateur</GPU:MODEGEOASS>") ) ;			
 			FixGML.replaceAutoclosedByEmpty(input,output);
-			String outputContent = org.apache.commons.io.FileUtils.readFileToString(output);
+			String outputContent = org.apache.commons.io.FileUtils.readFileToString(output,"UTF-8");
 			assertTrue( outputContent.contains("<GPU:MODEGEOASS>Egal au générateur</GPU:MODEGEOASS>") ) ;			
 		} catch (IOException e) {
 			fail(e.getMessage());
