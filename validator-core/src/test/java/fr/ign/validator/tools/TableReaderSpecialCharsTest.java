@@ -21,7 +21,7 @@ public class TableReaderSpecialCharsTest extends TestCase {
 	
 	@Test
 	public void testReadFileWithBadChars(){
-		// read file where last character in NOMFIC column is not printable
+		// read file where last character in NOMFIC column is not "printable"
 		File file = new File(getClass().getResource("/dbf/SPECIAL_CHARS.DBF").getPath()) ;
 		assertTrue(file.exists());
 		try {
@@ -41,11 +41,7 @@ public class TableReaderSpecialCharsTest extends TestCase {
 				String nomfic = row[indexNomFic];
 				char lastChar = nomfic.charAt(nomfic.length()-1);
 				assertEquals("\\u0092",toUnicode(lastChar));
-				
-				// could crash with some java version
-				File fileWithBadChar = new File(nomfic);
-				assertEquals(nomfic,fileWithBadChar.toString());
-				
+
 				count++ ;
 			}
 			assertEquals(85, count);			

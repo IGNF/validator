@@ -11,6 +11,7 @@ before_install:
 
 jdk:
   - openjdk7
+  - openjdk8
 
 install: true
 
