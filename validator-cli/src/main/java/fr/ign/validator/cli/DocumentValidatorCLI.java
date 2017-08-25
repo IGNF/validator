@@ -14,6 +14,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -129,14 +130,6 @@ public class DocumentValidatorCLI {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// -Dlog4j.configurationFile=${project_loc}/log4j2.xml
-		String log4jConfigurationFile = System.getProperty("log4j.configurationFile");
-		if (log4jConfigurationFile == null) {
-			System.err.println("log4j.configurationFile n'est pas défini (-Dlog4j.configurationFile=${project_loc}/log4j2.xml)");
-		} else {
-			log.info(MARKER, "log4j.configurationFile={}", log4jConfigurationFile);
-		}
-
 		/*
 		 * Récupération des options de la ligne de commande
 		 */
@@ -249,10 +242,30 @@ public class DocumentValidatorCLI {
 		
 		// configuration du répertoire de validation...
 		File validationDirectory = new File( documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME ) ;
+		if ( validationDirectory.exists() ) {
+			log.info(MARKER,
+				"Suppression du répertoire existant {}", 
+				validationDirectory.getAbsolutePath() 
+			);
+			try {
+				FileUtils.deleteDirectory( validationDirectory );
+			} catch (Exception e) {
+				String message = String.format("Problème dans la suppression du répertoire de validation: '%1s'", validationDirectory);
+				log.error(MARKER, message);
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
+		log.info(MARKER,
+			"Création du répertoire de validation {}", 
+			validationDirectory.getAbsolutePath() 
+		);
+		validationDirectory.mkdirs() ;
 		context.setValidationDirectory( validationDirectory ) ;
 
 		// configuration de l'écriture du rapport
-		context.setReportBuilder(new ReportBuilderLegacy());
+		File validationRapport = new File( validationDirectory, "validation.xml" );
+		context.setReportBuilder(new ReportBuilderLegacy(validationRapport));
 
 		// configuration de l'emprise limite des données		
 		if ( commandline.hasOption("data-extent") ){

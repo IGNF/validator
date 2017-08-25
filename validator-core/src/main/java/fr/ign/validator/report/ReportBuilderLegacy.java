@@ -1,10 +1,11 @@
 package fr.ign.validator.report;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
@@ -16,13 +17,11 @@ import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.Model;
-import fr.ign.validator.validation.Validatable;
 
 
 /**
  * 
- * Report errors in logger
+ * Writes an XML validation report using log4j2
  * 
  * @author FCerizay
  *
@@ -38,8 +37,8 @@ public class ReportBuilderLegacy implements ReportBuilder {
 	 * Constructor
 	 * @throws IOException 
 	 */
-	public ReportBuilderLegacy() {
-		
+	public ReportBuilderLegacy(File validationRapport) {
+		ThreadContext.put("path", validationRapport.getAbsolutePath().toString());
 	}
 	
 	/**

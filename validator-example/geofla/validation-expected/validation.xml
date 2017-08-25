@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Events xmlns="http://logging.apache.org/log4j/2.0/events">
-  <Event logger="fr.ign.validator.report.ReportBuilderLegacy" timestamp="1466087763926" level="ERROR" thread="main">
-    <Message><![CDATA[Feature | ATTRIBUTE_UNEXPECTED_VALUE | COMMUNE | ERROR | STATUT | 146 |  |  | GEOFLA | La valeur renseignée (Mauvaise valeur) ne correspond pas à une valeur autorisée (Capitale d'état, Chef-lieu de canton, Commune simple, Préfecture de département, Préfecture de région, Sous-préfecture).]]></Message>
+
+  <Event xmlns="http://logging.apache.org/log4j/2.0/events" timeMillis="1503649995144" thread="main" level="ERROR" loggerName="fr.ign.validator.report.ReportBuilderLegacy" endOfBatch="false" loggerFqcn="org.apache.logging.log4j.spi.AbstractLogger" threadId="1" threadPriority="5">
+    <Message>Feature | ATTRIBUTE_UNEXPECTED_VALUE | COMMUNE | ERROR | STATUT | 146 |  |  | GEOFLA | La valeur renseignée (Mauvaise valeur) ne correspond pas à une valeur autorisée (Capitale d'état, Chef-lieu de canton, Commune simple, Préfecture de département, Préfecture de région, Sous-préfecture).</Message>
   </Event>
 </Events>

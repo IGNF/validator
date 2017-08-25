@@ -20,12 +20,17 @@ csv_diff(){
 mvn clean
 mvn package
 
-export VALIDATOR_PATH=$(find ./validator-cli/target -name validator-cli-*-SNAPSHOT.jar)
+export VALIDATOR_PATH=$(find ./validator-cli/target -name validator-cli.jar)
+if [ ! -e $VALIDATOR_PATH ];
+then
+	echo "validator-cli.jar not found"
+	exit 1
+fi
 
 # run geofla
 rm validator-example/geofla/data/*.csv
 rm -rf validator-example/geofla/validation
-java -Dlog4j.configurationFile=$LOG4J_PATH -jar $VALIDATOR_PATH -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1
+java -jar $VALIDATOR_PATH -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1
 
 echo "------------------------------------------------"
 echo "-- check no diff"

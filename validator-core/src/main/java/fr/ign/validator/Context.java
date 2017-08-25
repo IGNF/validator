@@ -18,9 +18,8 @@ import fr.ign.validator.model.Model;
 import fr.ign.validator.process.CharsetPreProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
-import fr.ign.validator.process.PrepareValidationDirectory;
+import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.report.ReportBuilderLegacy;
 import fr.ign.validator.validation.Validatable;
 
 /**
@@ -78,7 +77,7 @@ public class Context {
 	/**
 	 * Le générateur de rapport d'erreur
 	 */
-	private ReportBuilder reportBuilder = new ReportBuilderLegacy() ;
+	private ReportBuilder reportBuilder = new InMemoryReportBuilder() ;
 	
 	/**
 	 * Les écouteurs d'événements de validation
@@ -130,9 +129,7 @@ public class Context {
 	 * - extraction d'informations sur les fichiers traitées
 	 */
 	private void registerDefaultListeners(){
-		addListener( new PrepareValidationDirectory() );
-		// before CharsetPreProcess
-		addListener( new FilterMetadataPreProcess() );
+		addListener( new FilterMetadataPreProcess() ); // before CharsetPreProcess
 		addListener( new CharsetPreProcess() );
 		addListener( new NormalizePostProcess() ); 
 	}
