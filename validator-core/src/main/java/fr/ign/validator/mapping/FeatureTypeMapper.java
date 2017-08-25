@@ -15,7 +15,7 @@ public class FeatureTypeMapper {
 	/**
 	 * L'entête de la table en entrée
 	 */
-	private String[] header ;
+	private String[] columns ;
 	/**
 	 * Le modèle de données en sortie
 	 */
@@ -29,20 +29,25 @@ public class FeatureTypeMapper {
 	 */
 	private List<String> unexpectedAttributes = new ArrayList<String>() ;
 	
-	public FeatureTypeMapper(String[] header, FeatureType featureType){
+	/**
+	 * 
+	 * @param columns
+	 * @param featureType
+	 */
+	public FeatureTypeMapper(String[] columns, FeatureType featureType){
 		this.featureType = featureType ;
-		this.header = header ;
+		this.columns = columns ;
 		buildMapping(); 
 	}
 	
 	/**
 	 * Construction d'une instance à partir d'une entête de table et d'un FeatureType
-	 * @param header
+	 * @param columns
 	 * @param featureType
 	 * @return
 	 */
-	public static FeatureTypeMapper createMapper(String[] header, FeatureType featureType){
-		return new FeatureTypeMapper(header, featureType) ;
+	public static FeatureTypeMapper createMapper(String[] columns, FeatureType featureType){
+		return new FeatureTypeMapper(columns, featureType) ;
 	}
 	
 	
@@ -56,8 +61,8 @@ public class FeatureTypeMapper {
 	/**
 	 * @return the header
 	 */
-	public String[] getHeader() {
-		return header;
+	public String[] getColumns() {
+		return columns;
 	}
 	
 	/**
@@ -95,8 +100,8 @@ public class FeatureTypeMapper {
 		for ( int i = 0; i < attributeIndexes.length; i++ ){
 			attributeIndexes[i] = -1 ;
 		}
-		for ( int i = 0; i < header.length; i++ ){
-			String name = header[i] ;
+		for ( int i = 0; i < columns.length; i++ ){
+			String name = columns[i] ;
 			int index = getFeatureType().indexOf(name) ;
 			if ( index < 0 ){
 				// L'attribut est définit dans la source, pas dans la cible

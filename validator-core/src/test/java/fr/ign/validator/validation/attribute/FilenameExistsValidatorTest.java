@@ -76,5 +76,4 @@ public class FilenameExistsValidatorTest extends TestCase {
 		assertEquals(1, report.countErrors() ) ;
 	}
 	
-	
 }

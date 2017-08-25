@@ -10,10 +10,10 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Header;
 import fr.ign.validator.data.Row;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.FeatureTypeMapper;
-import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.reader.InvalidCharsetException;
 import fr.ign.validator.tools.TableReader;
@@ -60,15 +60,20 @@ public class TableValidator implements Validator<DocumentFile> {
 				log.error(MARKER, "Charset invalide détectée pour {}", matchingFile);
 				context.report(
 					ErrorCode.TABLE_UNEXPECTED_ENCODING,
-					context.getEncoding().toString()			
+					context.getEncoding().toString()
 				);
 				log.info(MARKER, "Tentative d'autodétection de la charset pour la validation de {}",matchingFile);
 				reader = TableReader.createTableReaderDetectCharset(matchingFile) ;
 			}
 			
-			String[] header = reader.getHeader() ;
-			FeatureTypeMapper mapping = validateHeader(header, tableModel, context, matchingFile) ;
-			
+			/*
+			 * Validation de l'entête
+			 */
+			String[] columns = reader.getHeader() ;
+			FeatureTypeMapper mapping = new FeatureTypeMapper(columns, tableModel.getFeatureType()) ;
+			Header header = new Header(matchingFile, mapping);
+			header.validate(context);
+
 			/*
 			 * Validation des Feature
 			 */
@@ -98,65 +103,6 @@ public class TableValidator implements Validator<DocumentFile> {
 			);
 			return ;
 		}
-	}
-
-	/**
-	 * Valide l'entête et trouve la position des attributs
-	 * @param header
-	 * @param context
-	 * @return un tableau contenant la position dans l'entête de chacun des attributs 
-	 * 	décrit dans le FeatureType
-	 */
-	private FeatureTypeMapper validateHeader(String[] header, TableModel tableModel, Context context, File matchingFile){
-		/*
-		 * Position des attributs dans la table
-		 */
-		FeatureTypeMapper mapping = new FeatureTypeMapper(header, tableModel.getFeatureType()) ;
-		
-		/*
-		 * L'attribut est présent dans la données mais il n'est pas défini
-		 */
-		for (String name : mapping.getUnexpectedAttributes()) {
-			if ( name.equals("WKT") ){
-				/*
-				 *  On ignore les champs WKT qui sont artificiellement créé
-				 *  par la conversion des dbf en CSV
-				 */
-				continue ;
-			}
-			context.report(ErrorCode.TABLE_UNEXPECTED_ATTRIBUTE, name);
-		}
-		
-		/*
-		 * L'attribut est manquant dans la donnée
-		 */
-		for (String name : mapping.getMissingAttributes()) {
-			AttributeType<?> missingAttribute = tableModel.getFeatureType().getAttribute(name) ;
-			context.beginModel(missingAttribute);
-			
-			if ( missingAttribute.getName().equals("WKT") ){
-				context.report(
-					ErrorCode.TABLE_MISSING_GEOMETRY, 
-					context.relativize(matchingFile)
-				);
-				
-			}else if ( missingAttribute.isNullable() ){
-				context.report(
-					ErrorCode.TABLE_MISSING_NULLABLE_ATTRIBUTE, 
-					missingAttribute.getName(),
-					context.relativize(matchingFile)
-				);
-			}else{
-				context.report(
-					ErrorCode.TABLE_MISSING_ATTRIBUTE, 
-					missingAttribute.getName(),
-					context.relativize(matchingFile)
-				);
-			}
-			context.endModel(missingAttribute);
-		}
-		
-		return mapping ;
 	}
 	
 	

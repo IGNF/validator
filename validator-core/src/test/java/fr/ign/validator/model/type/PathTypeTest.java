@@ -2,12 +2,15 @@ package fr.ign.validator.model.type;
 
 
 import java.io.File;
+import java.lang.Character.UnicodeBlock;
+
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 
 import junit.framework.TestCase;
 
-public class FilenameTypeTest extends TestCase {
+public class PathTypeTest extends TestCase {
 
-	private FilenameType type = new FilenameType() ;
+	private PathType type = new PathType() ;
 	
 	public void testBindWithoutFragment(){
 		String name = new String("a-file.txt");
@@ -46,6 +49,16 @@ public class FilenameTypeTest extends TestCase {
 		assertEquals(name, type.format(binded) );
 	}
 	
+	public void testPrivateChar(){
+
+		for ( int codePoint = 1; codePoint < 2000; codePoint++ ){
+			String s = new String(Character.toChars(codePoint));
+			char c = s.charAt(0);
+			String message = codePoint+" '"+c+"' "+" "+Character.getName(c);
+			System.out.println(message);
+		}
+		
+	}
 
 	
 	
