@@ -3,6 +3,7 @@ package fr.ign.validator.data;
 import fr.ign.validator.Context;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.tools.Characters;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
@@ -92,11 +93,10 @@ public class Attribute<T> implements Validatable {
 		}else{
 			context.report(
 				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-				value.toString(), 
+				Characters.escapeControls(value.toString(),false),
 				type.getTypeName()
 			);
 		}
-
 		context.endData(this);
 	}
 
