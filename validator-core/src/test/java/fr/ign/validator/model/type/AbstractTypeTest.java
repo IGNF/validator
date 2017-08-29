@@ -33,10 +33,9 @@ public class AbstractTypeTest<T> extends TestCase {
 	 */
 	protected T bindValidate(Context context, Object inputValue) {
 		try {
-			T bindedValue = type.bind(inputValue) ;
-			Attribute<T> attribute = new Attribute<T>(type, bindedValue);
+			Attribute<T> attribute = new Attribute<T>(type, inputValue);
 			attribute.validate(context);
-			return attribute.getValue() ;
+			return attribute.getBindedValue() ;
 		}catch ( IllegalArgumentException e ){
 			context.report(
 				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 

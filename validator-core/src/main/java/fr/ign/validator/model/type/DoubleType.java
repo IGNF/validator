@@ -1,6 +1,5 @@
 package fr.ign.validator.model.type;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 /**
@@ -36,11 +35,6 @@ public class DoubleType extends AttributeType<Double> {
 			return null ;
 		}
 		return value.toString() ;
-	}
-
-	@Override
-	public Attribute<Double> newAttribute(Double object) {
-		return new Attribute<Double>(this,object);
 	}
 
 }

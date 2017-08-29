@@ -3,7 +3,6 @@ package fr.ign.validator.model.type;
 import java.io.File;
 import java.net.URI;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.PathExistsValidator;
 
@@ -48,9 +47,5 @@ public class PathType extends AttributeType<File> {
 		}
 		return value.toString() ;
 	}
-	
-	@Override
-	public Attribute<File> newAttribute(File object) {
-		return new Attribute<File>(this,object);
-	}
+
 }

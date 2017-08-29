@@ -18,7 +18,7 @@ public class StringSizeValidator implements Validator<Attribute<String>> {
 
 	@Override
 	public void validate(Context context, Attribute<String> attribute) {
-		String value = attribute.getValue() ;
+		String value = attribute.getBindedValue() ;
 		
 		if ( value == null ){
 			return ;

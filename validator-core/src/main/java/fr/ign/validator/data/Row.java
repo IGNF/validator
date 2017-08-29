@@ -1,7 +1,6 @@
 package fr.ign.validator.data;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -72,18 +71,10 @@ public class Row implements Validatable {
 				inputValue = values[ mapping.getAttributeIndex(index) ] ; 
 			}
 			
-			// conversion de la valeur de colonne en attribut
-			Attribute<?> attribute = attributeType.newAttribute(null) ;
-			try {
-				attribute.setValue( attributeType.bind(inputValue) );
-				attribute.validate(context);
-			}catch ( IllegalArgumentException e ){
-				context.report(
-					ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-					inputValue.toString(), 
-					attributeType.getTypeName()
-				);
-			}
+			// Validation de l'attribut
+			Attribute<?> attribute = attributeType.newAttribute(inputValue) ;
+			attribute.validate(context);
+
 			context.endModel(attributeType);
 		}
 		

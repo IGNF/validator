@@ -1,6 +1,7 @@
 package fr.ign.validator.data;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
@@ -13,23 +14,48 @@ import fr.ign.validator.validation.Validator;
  *
  */
 public class Attribute<T> implements Validatable {
+
+	enum BindingStatus {
+		SUCCESS,
+		FAILURE
+	};
+	
 	/**
 	 * Le modèle décrivant l'attribut
 	 */
 	private AttributeType<T> type ;
+	
 	/**
-	 * La valeur de l'attribut
+	 * La valeur à valider
 	 */
-	private T value ;
+	private Object value ;
+
+	/**
+	 * Résultat de la conversion de la valeur dans le type adéquat
+	 */
+	private BindingStatus bindingStatus ;
+	
+	/**
+	 * La valeur de l'attribut convertie dans le type correspondant
+	 */
+	private T bindedValue ;
+
+
 	
 	/**
 	 * Construction d'un attribut avec un type et une valeur
 	 * @param type
 	 * @param value
 	 */
-	public Attribute(AttributeType<T> type, T value){
+	public Attribute(AttributeType<T> type, Object value){
 		this.type  = type ;
 		this.value = value ;
+		try {
+			this.bindedValue = type.bind(value);
+			this.bindingStatus = BindingStatus.SUCCESS;			
+		}catch (IllegalArgumentException e){
+			this.bindingStatus = BindingStatus.FAILURE;
+		}
 	}
 	
 	/**
@@ -38,28 +64,39 @@ public class Attribute<T> implements Validatable {
 	public AttributeType<T> getType() {
 		return type;
 	}
-
+	
 	/**
-	 * @return the value
+	 * Get original value
+	 * @return
 	 */
-	public T getValue() {
+	public Object getValue(){
 		return value;
 	}
-
+	
 	/**
-	 * @param value the value to set
+	 * @return the binded value
 	 */
-	public void setValue(Object value) {
-		this.value = type.bind(value) ;
+	public T getBindedValue() {
+		return bindedValue;
 	}
 
 
 	@Override
 	public void validate(Context context) {
 		context.beginData(this);
-		for (Validator<Attribute<T>> validator : getType().getValidators()) {
-			validator.validate(context, this);
+
+		if ( bindingStatus.equals(BindingStatus.SUCCESS) ){
+			for (Validator<Attribute<T>> validator : getType().getValidators()) {
+				validator.validate(context, this);
+			}
+		}else{
+			context.report(
+				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
+				value.toString(), 
+				type.getTypeName()
+			);
 		}
+
 		context.endData(this);
 	}
 

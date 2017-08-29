@@ -238,7 +238,9 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * @param object
 	 * @return
 	 */
-	abstract public Attribute<T> newAttribute(T object) ;
+	public Attribute<T> newAttribute(Object value) {
+		return new Attribute<T>(this, value);
+	}
 
 
 }

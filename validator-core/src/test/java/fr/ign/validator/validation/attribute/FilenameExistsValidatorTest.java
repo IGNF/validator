@@ -67,7 +67,7 @@ public class FilenameExistsValidatorTest extends TestCase {
 		validator.validate(context, attribute);
 		assertEquals(1, report.countErrors() ) ;
 	}
-	
+
 	public void testDoesntExistsIllegalCharacters(){
 		PathType type = new PathType();
 		String illegal = new String(new int[] { 0x0092 }, 0, 1);

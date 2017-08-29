@@ -24,10 +24,10 @@ public class IdurbaValidator implements Validator<Attribute<String>>, ValidatorL
 
 	@Override
 	public void validate(Context context, Attribute<String> attribute) {
-		if ( ! IdurbaUtils.isValid(attribute.getValue()) ){
+		if ( ! IdurbaUtils.isValid(attribute.getBindedValue()) ){
 			context.report(
 				ErrorCode.CNIG_IDURBA_MALFORMED, 
-				attribute.getValue()
+				attribute.getBindedValue()
 			);
 		}
 	}
