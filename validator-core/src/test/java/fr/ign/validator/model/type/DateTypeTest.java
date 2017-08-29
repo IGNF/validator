@@ -8,33 +8,21 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import fr.ign.validator.Context;
-import fr.ign.validator.report.InMemoryReportBuilder;
-import junit.framework.TestCase;
-
 /**
  * 
  * @author CBouche
  *
  */
-public class DateTypeTest extends TestCase {
-	private DateType attribute;
-	protected Context context ;
-	protected InMemoryReportBuilder reportBuilder ;
+public class DateTypeTest extends AbstractTypeTest<Date> {
 	
 	public DateTypeTest() {
-		attribute = new DateType() ;
-		attribute.setName("test");
-		
-		context = new Context() ;
-		reportBuilder = new InMemoryReportBuilder() ; 
-		context.setReportBuilder(reportBuilder);
+		super( new DateType() ) ;
 	}
 
 	
 	@Test
-	public void testCheckAttributeValue0() throws ParseException {		
-		attribute.bindValidate(context, "15/12/1990") ;
+	public void testCheckAttributeValue0() {		
+		bindValidate(context, "15/12/1990") ;
 		assertTrue(reportBuilder.isValid()) ;
 	}
 	
@@ -42,19 +30,19 @@ public class DateTypeTest extends TestCase {
 	public void testCheckAttributeValue1() throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "dd/MM/yyyy" ) ;
 		Date date = simpleDateFormat.parse( "15/12/1990" ) ;
-		attribute.bindValidate(context, date) ;
+		bindValidate(context, date) ;
 		assertTrue(reportBuilder.isValid()) ;
 	}
 	
 	@Test
-	public void testCheckAttributeValue2() throws ParseException {
-		attribute.bindValidate(context, "ce n'est pas une date") ;
+	public void testCheckAttributeValue2() {
+		bindValidate(context, "ce n'est pas une date") ;
 		assertFalse(reportBuilder.isValid()) ;
 	}
 	
 	
 	@Test
-	public void testBindRegress() throws ParseException {
+	public void testBindRegress() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "dd/MM/yyyy" ) ;
 		
 		// input => expected dd/MM/yyyy (null for exception)
@@ -90,7 +78,7 @@ public class DateTypeTest extends TestCase {
 			
 			String result = null;
 			try {
-				Date date = attribute.bind(input);
+				Date date = type.bind(input);
 				result = simpleDateFormat.format(date);
 			}catch (IllegalArgumentException e){
 				//ignore
@@ -105,6 +93,6 @@ public class DateTypeTest extends TestCase {
 	public void testFormat() throws ParseException{
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "dd/MM/yyyy" ) ;
 		Date date = simpleDateFormat.parse( "15/12/1990" ) ;
-		assertEquals( "19901215", attribute.format(date)) ;
+		assertEquals( "19901215", type.format(date)) ;
 	}
 }

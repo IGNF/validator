@@ -1,66 +1,48 @@
 package fr.ign.validator.model.type;
 
-
 import java.io.File;
-import java.lang.Character.UnicodeBlock;
 
-import com.fasterxml.jackson.core.io.JsonStringEncoder;
+public class PathTypeTest extends AbstractTypeTest<File> {
 
-import junit.framework.TestCase;
+	public PathTypeTest() {
+		super(new PathType());
+	}
 
-public class PathTypeTest extends TestCase {
-
-	private PathType type = new PathType() ;
-	
-	public void testBindWithoutFragment(){
+	public void testBindWithoutFragment() {
 		String name = new String("a-file.txt");
 		File binded = type.bind(name);
-		assertEquals(name, type.format(binded) );
+		assertEquals(name, type.format(binded));
 	}
-	
-	public void testBindWithoutFragmentAndIllegalChars(){
+
+	public void testBindWithoutFragmentAndIllegalChars() {
 		char c = 0x0092;
-		String name = new String("a-fil"+c+"e.txt");
+		String name = new String("a-fil" + c + "e.txt");
 		boolean thrown = false;
 		try {
 			type.bind(name);
-		}catch(IllegalArgumentException e){
-			thrown = true ;
+		} catch (IllegalArgumentException e) {
+			thrown = true;
 		}
-		assertTrue("bind should throw (illegal characters)",thrown);
+		assertTrue("bind should throw (illegal characters)", thrown);
 	}
-	
-	
-	public void testBindWithIllegalCharsInFragment(){
+
+	public void testBindWithIllegalCharsInFragment() {
 		char c = 0x0092;
-		String name = new String("a-file.txt#page=12"+c);
+		String name = new String("a-file.txt#page=12" + c);
 		boolean thrown = false;
 		try {
 			type.bind(name);
-		}catch(IllegalArgumentException e){
-			thrown = true ;
+		} catch (IllegalArgumentException e) {
+			thrown = true;
 		}
-		assertTrue("bind should throw (illegal characters)",thrown);
+		assertTrue("bind should throw (illegal characters)", thrown);
 	}
-	
-	public void testBindFormatWithFragment(){
+
+	public void testBindFormatWithFragment() {
 		String name = new String("a-file.txt#page=12");
 		File binded = type.bind(name);
-		assertEquals(name, type.format(binded) );
-	}
-	
-	public void testPrivateChar(){
-
-		for ( int codePoint = 1; codePoint < 2000; codePoint++ ){
-			String s = new String(Character.toChars(codePoint));
-			char c = s.charAt(0);
-			String message = codePoint+" '"+c+"' "+" "+Character.getName(c);
-			System.out.println(message);
-		}
-		
+		assertEquals(name, type.format(binded));
 	}
 
-	
-	
+
 }
-

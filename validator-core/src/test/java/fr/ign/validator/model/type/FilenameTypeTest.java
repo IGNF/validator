@@ -1,14 +1,13 @@
 package fr.ign.validator.model.type;
 
-
 import java.io.File;
 
-import junit.framework.TestCase;
+public class FilenameTypeTest extends AbstractTypeTest<File> {
 
-public class FilenameTypeTest extends TestCase {
+	public FilenameTypeTest() {
+		super(new FilenameType());
+	}
 
-	private FilenameType type = new FilenameType() ;
-	
 	public void testBindWithoutFragment(){
 		String name = new String("a-file.txt");
 		File binded = type.bind(name);
