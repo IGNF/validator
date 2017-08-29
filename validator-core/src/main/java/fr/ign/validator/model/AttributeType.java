@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeNullableValidator;
+import fr.ign.validator.validation.attribute.CharactersValidator;
 import fr.ign.validator.xml.AttributeTypeAdapter;
 
 
@@ -63,6 +64,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	protected AttributeType(Class<T> clazz){
 		this.clazz = clazz ;
 		addValidator(new AttributeNullableValidator<T>());
+		addValidator(new CharactersValidator<T>());
 	}
 
 	
