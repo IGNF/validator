@@ -56,7 +56,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 
 	@Override
 	public void validate(Context context, Attribute<String> validatable) {
-		String insee = validatable.getValue() ;
+		String insee = validatable.getBindedValue() ;
 		if ( ! InseeUtils.isValidCommune(insee) ){
 			context.report(ErrorCode.INSEE_MALFORMED, insee);			
 		}

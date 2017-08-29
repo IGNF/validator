@@ -1,6 +1,5 @@
 package fr.ign.validator.model.type;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 public class IntegerType extends AttributeType<Integer> {
@@ -74,8 +73,4 @@ public class IntegerType extends AttributeType<Integer> {
 		return value.toString() ;
 	}
 
-	@Override
-	public Attribute<Integer> newAttribute(Integer object) {
-		return new Attribute<Integer>(this,object);
-	}
 }

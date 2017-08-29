@@ -1,26 +1,52 @@
 package fr.ign.validator.model.type;
 
-
 import java.io.File;
 
-import junit.framework.TestCase;
+public class FilenameTypeTest extends AbstractTypeTest<File> {
 
-public class FilenameTypeTest extends TestCase {
+	public FilenameTypeTest() {
+		super(new FilenameType());
+	}
 
-	private FilenameType filenameType = new FilenameType() ;
+	public void testBindWithoutFragment(){
+		String name = new String("a-file.txt");
+		File binded = type.bind(name);
+		assertEquals(name, type.format(binded) );
+	}
+	
+	public void testBindWithoutFragmentAndIllegalChars(){
+		char c = 0x0092;
+		String name = new String("a-fil"+c+"e.txt");
+		boolean thrown = false;
+		try {
+			type.bind(name);
+		}catch(IllegalArgumentException e){
+			thrown = true ;
+		}
+		assertTrue("bind should throw (illegal characters)",thrown);
+	}
+	
+	
+	public void testBindWithIllegalCharsInFragment(){
+		char c = 0x0092;
+		String name = new String("a-file.txt#page=12"+c);
+		boolean thrown = false;
+		try {
+			type.bind(name);
+		}catch(IllegalArgumentException e){
+			thrown = true ;
+		}
+		assertTrue("bind should throw (illegal characters)",thrown);
+	}
 	
 	public void testBindFormatWithFragment(){
 		String name = new String("a-file.txt#page=12");
-		File binded = filenameType.bind(name);
-		assertEquals(name, filenameType.format(binded) );
+		File binded = type.bind(name);
+		assertEquals(name, type.format(binded) );
 	}
 	
-	public void testBindFormatWithSpecialChars(){
-		char c = 0x0092;
-		String name = new String("a-file.txt#page=12"+c);
-		File binded = filenameType.bind(name);
-		// should reproduce "Malformed input or input contains unmappable chacraters" on some system
-		assertEquals(name, filenameType.format(binded) );
-	}
+
+	
+	
 }
 

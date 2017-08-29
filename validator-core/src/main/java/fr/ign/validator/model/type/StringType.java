@@ -1,6 +1,5 @@
 package fr.ign.validator.model.type;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.ListOfValuesValidator;
 import fr.ign.validator.validation.attribute.StringRegexpValidator;
@@ -38,8 +37,4 @@ public class StringType extends AttributeType<String> {
 		return value ;
 	}
 
-	@Override
-	public Attribute<String> newAttribute(String object) {
-		return new Attribute<String>(this,object);
-	}
 }

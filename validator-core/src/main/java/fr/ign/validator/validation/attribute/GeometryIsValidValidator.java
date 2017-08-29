@@ -18,7 +18,7 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 
 	@Override
 	public void validate(Context context, Attribute<Geometry> attribute) {
-		Geometry geometry = attribute.getValue() ;
+		Geometry geometry = attribute.getBindedValue() ;
 		
 		if ( null == geometry ){
 			return ;

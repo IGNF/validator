@@ -55,7 +55,7 @@ public class AttributeTypeTest extends TestCase {
 			AttributeType<?> type = factory.createAttributeTypeByName(name) ;
 			Attribute<?> attribute = type.newAttribute(null);
 			assertSame(type,attribute.getType());
-			assertNull(attribute.getValue());
+			assertNull(attribute.getBindedValue());
 		}
 	}
 	

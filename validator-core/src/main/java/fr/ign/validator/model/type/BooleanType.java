@@ -1,6 +1,5 @@
 package fr.ign.validator.model.type;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 /**
@@ -45,11 +44,5 @@ public class BooleanType extends AttributeType<Boolean> {
 		}
 		return value.booleanValue() ? "1" : "0" ;
 	}
-	
-	@Override
-	public Attribute<Boolean> newAttribute(Boolean object) {
-		return new Attribute<Boolean>(this,object);
-	}
-
 	
 }

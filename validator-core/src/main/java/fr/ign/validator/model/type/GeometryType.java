@@ -4,7 +4,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.io.WKTReader;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
 import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
@@ -87,8 +86,4 @@ public class GeometryType extends AttributeType<Geometry> {
 		return String.format("Type de géométrie invalide %1s (%2s)", value.getGeometryType(), value.toText());
 	}
 
-	@Override
-	public Attribute<Geometry> newAttribute(Geometry object) {
-		return new Attribute<Geometry>(this,object);
-	}
 }

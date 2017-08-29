@@ -23,14 +23,14 @@ public class IdurbaValidatorTest extends TestCase {
 	
 	public void testNotValid(){
 		StringType type = new StringType();
-		Attribute<String> attribute = type.newAttribute("test");
+		Attribute<String> attribute = new Attribute<String>(type,"test");
 		validator.validate(context, attribute);
 		assertEquals(1,report.countErrors(ErrorLevel.WARNING));
 	}
 	
 	public void testValid(){
 		StringType type = new StringType();
-		Attribute<String> attribute = type.newAttribute("25349_20140101");
+		Attribute<String> attribute = new Attribute<String>(type,"25349_20140101");
 		validator.validate(context, attribute);
 		assertEquals(0,report.countErrors());
 	}

@@ -44,7 +44,6 @@ public class ErrorCode {
 	public static final ErrorCode METADATA_INVALID_FILE    = ErrorCode.valueOf("METADATA_INVALID_FILE") ;
 	public static final ErrorCode METADATA_IGNORED_FILE    = ErrorCode.valueOf("METADATA_IGNORED_FILE") ;
 	
-	
 	public static final ErrorCode METADATA_FILEIDENTIFIER_NOT_FOUND = ErrorCode.valueOf("METADATA_FILEIDENTIFIER_NOT_FOUND") ;
 	public static final ErrorCode METADATA_MD_IDENTIFIER_NOT_FOUND = ErrorCode.valueOf("METADATA_MD_IDENTIFIER_NOT_FOUND") ;
 	
@@ -55,6 +54,7 @@ public class ErrorCode {
 	public static final ErrorCode TABLE_UNEXPECTED_ATTRIBUTE = ErrorCode.valueOf("TABLE_UNEXPECTED_ATTRIBUTE") ;
 	public static final ErrorCode TABLE_UNEXPECTED_ENCODING = ErrorCode.valueOf("TABLE_UNEXPECTED_ENCODING");
 	public static final ErrorCode TABLE_MISSING_GEOMETRY = ErrorCode.valueOf("TABLE_MISSING_GEOMETRY");
+	
 	/*
 	 * Code d'erreurs : niveau FEATURE / Attribute
 	 */
@@ -64,7 +64,9 @@ public class ErrorCode {
 	public static final ErrorCode ATTRIBUTE_INVALID_REGEXP = ErrorCode.valueOf("ATTRIBUTE_INVALID_REGEXP") ;
 	public static final ErrorCode ATTRIBUTE_UNEXPECTED_VALUE = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_VALUE") ;
 	public static final ErrorCode ATTRIBUTE_UNEXPECTED_NULL = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_NULL") ; 
-
+	public static final ErrorCode ATTRIBUTE_CHARACTERS_CONTROL    = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_CONTROL") ;
+	public static final ErrorCode ATTRIBUTE_CHARACTERS_LATIN1 = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_LATIN1") ;	
+	
 	public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID") ;
 	public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT") ;
 	

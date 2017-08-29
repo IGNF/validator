@@ -17,7 +17,7 @@ public class AttributeNullableValidator<T> implements Validator<Attribute<T>> {
 		if ( attribute.getType().isNullable() ){
 			return ;
 		}
-		if ( attribute.getValue() == null ){
+		if ( attribute.getBindedValue() == null ){
 			context.report(ErrorCode.ATTRIBUTE_UNEXPECTED_NULL);
 		}
 	}

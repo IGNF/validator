@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeNullableValidator;
+import fr.ign.validator.validation.attribute.CharactersValidator;
 import fr.ign.validator.xml.AttributeTypeAdapter;
 
 
@@ -65,6 +64,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	protected AttributeType(Class<T> clazz){
 		this.clazz = clazz ;
 		addValidator(new AttributeNullableValidator<T>());
+		addValidator(new CharactersValidator<T>());
 	}
 
 	
@@ -197,22 +197,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public void setListOfValues(List<String> listOfValues) {
 		this.listOfValues = listOfValues;
 	}
-	
 
-	/**
-	 * Valide une valeur convertie en amont via un appel à bind
-	 * 
-	 * @param context
-	 * @param value
-	 * @return
-	 */
-	public void validate(Context context, T value){
-		for (Validator<Attribute<T>> validator : validators) {
-			// Pour la compatibilité avec les tests existants
-			validator.validate(context, new Attribute<T>(this, value));
-		}
-	}
-	
 	/**
 	 * Ajout d'un validateur
 	 * @param validator
@@ -227,30 +212,6 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public List<Validator<Attribute<T>>> getValidators(){
 		return this.validators ;
 	}
-	
-
-	/**
-	 * Valide la valeur en paramètre et renvoie une valeur convertie dans le type (null si la conversion échoue)
-	 * 
-	 * @param inputValue
-	 * @param context
-	 * @return
-	 */
-	public T bindValidate(Context context, Object inputValue) {
-		try {
-			T result = bind(inputValue) ;
-			validate(context,result);
-			return result ;
-		}catch ( IllegalArgumentException e ){
-			context.report(
-				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-				inputValue.toString(), 
-				getTypeName()
-			);
-			return null ;
-		}
-	}
-	
 
 	
 	@Override
@@ -279,7 +240,9 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * @param object
 	 * @return
 	 */
-	abstract public Attribute<T> newAttribute(T object) ;
+	public Attribute<T> newAttribute(Object value) {
+		return new Attribute<T>(this, value);
+	}
 
 
 }

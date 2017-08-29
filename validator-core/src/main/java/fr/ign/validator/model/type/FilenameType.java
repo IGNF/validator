@@ -1,8 +1,8 @@
 package fr.ign.validator.model.type;
 
 import java.io.File;
+import java.net.URI;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.FilenameExistsValidator;
 
@@ -36,7 +36,9 @@ public class FilenameType extends AttributeType<File> {
 		if ( value == null || value instanceof File ){
 			return (File)value ;
 		}
-		return new File(value.toString()) ;
+		File result = new File(value.toString()) ;
+		URI.create(value.toString()); // throws IllegalArgumentException if the given string violates RFC 2396
+		return result ;
 	}
 
 	@Override
@@ -46,9 +48,5 @@ public class FilenameType extends AttributeType<File> {
 		}
 		return value.toString() ;
 	}
-	
-	@Override
-	public Attribute<File> newAttribute(File object) {
-		return new Attribute<File>(this,object);
-	}
+
 }

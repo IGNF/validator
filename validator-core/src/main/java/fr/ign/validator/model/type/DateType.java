@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 public class DateType extends AttributeType<Date> {
@@ -92,9 +91,5 @@ public class DateType extends AttributeType<Date> {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd") ;
 		return format.format(value) ;
 	}
-	
-	@Override
-	public Attribute<Date> newAttribute(Date object) {
-		return new Attribute<Date>(this,object);
-	}
+
 }

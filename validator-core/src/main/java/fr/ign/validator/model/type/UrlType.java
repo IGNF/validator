@@ -3,7 +3,6 @@ package fr.ign.validator.model.type;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.AttributeType;
 
 /**
@@ -48,8 +47,4 @@ public class UrlType extends AttributeType<URL> {
 		return obj.toString() ;
 	}
 
-	@Override
-	public Attribute<URL> newAttribute(URL object) {
-		return new Attribute<URL>(this,object);
-	}
 }

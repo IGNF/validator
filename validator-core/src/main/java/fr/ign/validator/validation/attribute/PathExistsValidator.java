@@ -18,7 +18,7 @@ public class PathExistsValidator implements Validator<Attribute<File>> {
 
 	@Override
 	public void validate(Context context, Attribute<File> attribute) {
-		File path = attribute.getValue() ;
+		File path = attribute.getBindedValue() ;
 		
 		if ( null == path ){
 			return ;
