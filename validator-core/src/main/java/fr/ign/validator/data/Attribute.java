@@ -14,7 +14,7 @@ import fr.ign.validator.validation.Validator;
  *
  */
 public class Attribute<T> implements Validatable {
-
+	
 	enum BindingStatus {
 		SUCCESS,
 		FAILURE
