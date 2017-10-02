@@ -4,6 +4,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.tools.Characters;
+import fr.ign.validator.tools.CharacterValidationOptions;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -29,21 +30,14 @@ public class CharactersValidator<T> implements Validator<Attribute<T>> {
 		
 		String originalString = originalValue.toString();
 		
-		// check control characters...
-		String escaped = Characters.escapeControls(originalValue.toString(),true);
-		if ( ! escaped.equals(originalString) ){
-			context.report(
-				ErrorCode.ATTRIBUTE_CHARACTERS_CONTROL,
-				Characters.escapeControls(originalValue.toString(),false) // highlight standard controls in reports
-			);
-		}
+		CharacterValidationOptions options = context.getCharacterValidationOptions();
+		String normalized = Characters.normalize(originalString, options) ;
 
-		// check latin1...
-		String escapedLatin1 = Characters.escapeNonLatin1(originalValue.toString());
-		if ( ! escapedLatin1.equals(originalString) ){
+		if ( ! normalized.equals(originalString) ){
 			context.report(
-				ErrorCode.ATTRIBUTE_CHARACTERS_LATIN1,
-				Characters.escapeControls(originalValue.toString(),false) // highlight standard controls in reports
+				ErrorCode.ATTRIBUTE_CHARACTERS_ILLEGAL,
+				Characters.escape(originalString.toString(),options), // original string
+				normalized                                            // transformed string
 			);
 		}
 	}

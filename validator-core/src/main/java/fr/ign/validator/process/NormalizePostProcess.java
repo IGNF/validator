@@ -38,6 +38,7 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.reader.InvalidCharsetException;
+import fr.ign.validator.tools.Characters;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -99,7 +100,8 @@ public class NormalizePostProcess implements ValidatorListener {
 						srcFile,
 						csvFile,
 						context.getEncoding(),
-						context.getCoordinateReferenceSystem()
+						context.getCoordinateReferenceSystem(),
+						context
 					);						
 				}
 			}else if ( fileModel instanceof PdfModel ){
@@ -130,7 +132,8 @@ public class NormalizePostProcess implements ValidatorListener {
 		File srcFile, 
 		File destFile, 
 		Charset charset,
-		CoordinateReferenceSystem sourceCRS
+		CoordinateReferenceSystem sourceCRS,
+		Context context
 	) throws IOException, NoSuchAuthorityCodeException, FactoryException, MismatchedDimensionException, TransformException {
 		CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
 		MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS);
@@ -184,7 +187,9 @@ public class NormalizePostProcess implements ValidatorListener {
 					);
 				}
 				// formatage
-				outputRow[position] = attribute.formatObject(bindedValue) ;
+				String outputValue = attribute.formatObject(bindedValue);
+				outputValue = Characters.normalize(outputValue, context.getCharacterValidationOptions());
+				outputRow[position] = outputValue ;
 			}
 			printer.printRecord(outputRow);
 		}
