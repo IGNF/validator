@@ -20,7 +20,7 @@ import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.tools.CharacterValidationOptions;
+import fr.ign.validator.tools.StringFixer;
 import fr.ign.validator.validation.Validatable;
 
 /**
@@ -93,11 +93,17 @@ public class Context {
 	/**
 	 * Option de validation des caractères
 	 */
-	private CharacterValidationOptions characterValidationOptions = new CharacterValidationOptions();
+	private StringFixer stringFixer = new StringFixer();
 
 	
 	public Context(){
 		this(ErrorFactory.newFromRessource());
+		
+		// TODO manage as command line options?
+		stringFixer.setFixDirtyUtf8(true);
+		stringFixer.setFixMisused(true);		
+		stringFixer.setFixControls(true);
+		stringFixer.setFixNonLatin1(true);
 	}
 	
 	/**
@@ -386,13 +392,11 @@ public class Context {
 		this.flatValidation = flatValidation;
 	}
 
-
-	public CharacterValidationOptions getCharacterValidationOptions() {
-		return characterValidationOptions;
-	}
-
-	public void setCharacterValidationOptions(CharacterValidationOptions characterValidationOptions) {
-		this.characterValidationOptions = characterValidationOptions;
+	/**
+	 * @return
+	 */
+	public StringFixer getStringFixer() {
+		return stringFixer;
 	}
 
 	

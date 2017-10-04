@@ -15,59 +15,6 @@ public class Characters {
 	private static CharsetEncoder latin1Encoder = Charset.forName("ISO-8859-1").newEncoder();
 
 	/**
-	 * Escape controls and non latin1 characters
-	 * @param s
-	 * @param options
-	 * @return
-	 */
-	public static String escape(String s, CharacterValidationOptions options){
-		String escaped = Characters.escapeControls(s.toString(),options.standardControlsAllowed);
-		if ( options.ensureLatin1Compatibility ){
-			escaped = Characters.escapeNonLatin1(escaped.toString());
-		}
-		return escaped;
-	}
-	
-	/**
-	 * Escape controls and non latin1 characters
-	 * @param s
-	 * @param options
-	 * @return
-	 */
-	public static String normalize(String s, CharacterValidationOptions options){
-		if ( s == null ){
-			return null;
-		}
-		String normalized = replaceIsoControlsByEquivalents(s);
-		normalized = escape(s, options);
-		return normalized;
-	}
-	
-	/**
-	 * 
-	 * Replace common misused isISOControl characters by LATIN1 supported equivalents
-	 * 
-	 * @param s
-	 * @param standardControlsAllowed
-	 * @return
-	 */
-	public static String replaceIsoControlsByEquivalents(String s){
-		StringBuffer result = new StringBuffer();
-		
-		final int length = s.length();
-		for (int offset = 0; offset < length; ) {
-		   final int codePoint = s.codePointAt(offset);
-		   //TODO replace some codePoints
-		   result.append(new String(Character.toChars(codePoint)));
-		   offset += Character.charCount(codePoint);
-		}
-		
-		return result.toString();
-	}
-	
-	
-	
-	/**
 	 * 
 	 * Escape control characters
 	 * 

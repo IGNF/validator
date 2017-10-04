@@ -38,7 +38,6 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.reader.InvalidCharsetException;
-import fr.ign.validator.tools.Characters;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -188,7 +187,7 @@ public class NormalizePostProcess implements ValidatorListener {
 				}
 				// formatage
 				String outputValue = attribute.formatObject(bindedValue);
-				outputValue = Characters.normalize(outputValue, context.getCharacterValidationOptions());
+				outputValue = context.getStringFixer().fixString(outputValue);
 				outputRow[position] = outputValue ;
 			}
 			printer.printRecord(outputRow);
@@ -198,6 +197,4 @@ public class NormalizePostProcess implements ValidatorListener {
 	}
 
 
-	
-	
 }

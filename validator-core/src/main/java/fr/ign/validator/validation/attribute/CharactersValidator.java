@@ -4,7 +4,6 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.tools.Characters;
-import fr.ign.validator.tools.CharacterValidationOptions;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -29,15 +28,13 @@ public class CharactersValidator<T> implements Validator<Attribute<T>> {
 		}
 		
 		String originalString = originalValue.toString();
-		
-		CharacterValidationOptions options = context.getCharacterValidationOptions();
-		String normalized = Characters.normalize(originalString, options) ;
+		String fixedString    = context.getStringFixer().fixString(originalString) ;
 
-		if ( ! normalized.equals(originalString) ){
+		if ( ! fixedString.equals(originalString) ){
 			context.report(
 				ErrorCode.ATTRIBUTE_CHARACTERS_ILLEGAL,
-				Characters.escape(originalString.toString(),options), // original string
-				normalized                                            // transformed string
+				Characters.escapeControls(originalString,false), // original string
+				fixedString                                      // transformed string
 			);
 		}
 	}
