@@ -25,6 +25,9 @@ public class MisusedCharacterFixer {
 		// RIGHT SINGLE QUOTATION MARK - http://www.fileformat.info/info/unicode/char/2018/index.htm
 		value = value.replaceAll("\u2019", "'");
 
+		// EN DASH http://www.fileformat.info/info/unicode/char/2013/index.htm
+		value = value.replaceAll("\u2013", "'-");
+
 		if ( ensureLatin1Compatibility ){
 			value = value.replaceAll("", "oe");
 			value = value.replaceAll("\u0152", "OE");
