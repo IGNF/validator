@@ -2,6 +2,7 @@ package fr.ign.validator.string.transform;
 
 import java.awt.Point;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,10 +71,6 @@ public class DoubleUtf8Decoder implements StringTransform {
 	 * @return
 	 */
 	public static String utf8DeclaredAsLatin1(String s){
-		try {
-			return new String(s.getBytes("utf-8"), "latin1");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
+		return new String(s.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
 	}
 }

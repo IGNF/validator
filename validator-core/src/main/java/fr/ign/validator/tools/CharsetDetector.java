@@ -43,7 +43,7 @@ public class CharsetDetector {
 	 * @throws FileNotFoundException 
 	 */
 	public static boolean isValidUTF8( File file ) {
-		return isValidCharset(file, Charset.forName("UTF-8")) ;
+		return isValidCharset(file, StandardCharsets.UTF_8) ;
 	}
 	
 	/**
