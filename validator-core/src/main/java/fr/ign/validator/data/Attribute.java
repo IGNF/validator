@@ -3,7 +3,7 @@ package fr.ign.validator.data;
 import fr.ign.validator.Context;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.tools.Characters;
+import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
@@ -91,9 +91,10 @@ public class Attribute<T> implements Validatable {
 				validator.validate(context, this);
 			}
 		}else{
+			IsoControlEscaper transform = new IsoControlEscaper(false);
 			context.report(
 				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
-				Characters.escapeControls(value.toString(),false),
+				transform.transform(value.toString()),
 				type.getTypeName()
 			);
 		}

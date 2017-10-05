@@ -1,9 +1,11 @@
-package fr.ign.validator.tools.internal;
+package fr.ign.validator.string.transform;
 
 import java.awt.Point;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+
+import fr.ign.validator.string.StringTransform;
 
 /**
  * 
@@ -13,7 +15,7 @@ import java.util.Map;
  * @author MBorne
  *
  */
-public class DoubleUtf8Fixer {
+public class DoubleUtf8Decoder implements StringTransform {
 	/**
 	 * codePoint unicode maximum testé
 	 */
@@ -27,10 +29,10 @@ public class DoubleUtf8Fixer {
 	 */
 	private Map<Character, Point> charsOfInterest = new HashMap<>();
 	
-	public DoubleUtf8Fixer(){
+	public DoubleUtf8Decoder(){
 		for ( int codePoint = MAX_CODE_POINT; codePoint >= 128; codePoint-- ){
 			String s = new String(Character.toChars(codePoint));
-			String dirty = DoubleUtf8Fixer.utf8DeclaredAsLatin1(s);
+			String dirty = DoubleUtf8Decoder.utf8DeclaredAsLatin1(s);
 			codePointToBadEncoding.put(codePoint, dirty);
 
 			Character firstChar = dirty.charAt(0);
@@ -43,27 +45,9 @@ public class DoubleUtf8Fixer {
 			}
 		}
 	}
-	
-		
-	/**
-	 * "è" => "Ã¨"
-	 * @param s
-	 * @return
-	 */
-	public static String utf8DeclaredAsLatin1(String s){
-		try {
-			return new String(s.getBytes("utf-8"), "latin1");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	/**
-	 * Try to revert double encoding in UTF-8 string
-	 * @param value
-	 * @return
-	 */
-	public String fixUtf8DeclaredAsLatin1(String value){
+
+	@Override
+	public String transform(String value){
 		String result = value;
 
 		for (Character charOfInterest : charsOfInterest.keySet()) {
@@ -80,4 +64,16 @@ public class DoubleUtf8Fixer {
 	}
 
 	
+	/**
+	 * "è" => "Ã¨"
+	 * @param s
+	 * @return
+	 */
+	public static String utf8DeclaredAsLatin1(String s){
+		try {
+			return new String(s.getBytes("utf-8"), "latin1");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

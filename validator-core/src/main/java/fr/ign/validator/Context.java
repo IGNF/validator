@@ -20,7 +20,11 @@ import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.tools.StringFixer;
+import fr.ign.validator.string.StringFixer;
+import fr.ign.validator.string.transform.DoubleUtf8Decoder;
+import fr.ign.validator.string.transform.IsoControlEscaper;
+import fr.ign.validator.string.transform.EscapeForCharset;
+import fr.ign.validator.string.transform.StringSimplifier;
 import fr.ign.validator.validation.Validatable;
 
 /**
@@ -99,13 +103,19 @@ public class Context {
 	public Context(){
 		this(ErrorFactory.newFromRessource());
 		
-		// TODO manage as command line options?
-		stringFixer.setFixDirtyUtf8(true);
-		stringFixer.setFixMisused(true);		
-		stringFixer.setFixControls(true);
-		stringFixer.setFixNonLatin1(true);
+		// decode double encoded UTF-8...
+		stringFixer.addTransform(new DoubleUtf8Decoder());
+		
+		// replace characters in string...
+		StringSimplifier simplifier = new StringSimplifier();
+		simplifier.loadCommon();
+		simplifier.loadCharset(StandardCharsets.ISO_8859_1);
+		stringFixer.addTransform(simplifier);
+		
+		stringFixer.addTransform(new IsoControlEscaper(true));
+		stringFixer.addTransform(new EscapeForCharset(StandardCharsets.ISO_8859_1));
 	}
-	
+
 	/**
 	 * Construction avec une fabrique d'erreur
 	 * @param errorFactory

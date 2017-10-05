@@ -3,6 +3,7 @@ package fr.ign.validator.validation.attribute;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.tools.Characters;
 import fr.ign.validator.validation.Validator;
 
@@ -28,13 +29,14 @@ public class CharactersValidator<T> implements Validator<Attribute<T>> {
 		}
 		
 		String originalString = originalValue.toString();
-		String fixedString    = context.getStringFixer().fixString(originalString) ;
+		String fixedString    = context.getStringFixer().transform(originalString) ;
 
 		if ( ! fixedString.equals(originalString) ){
+			IsoControlEscaper transform = new IsoControlEscaper(false);
 			context.report(
 				ErrorCode.ATTRIBUTE_CHARACTERS_ILLEGAL,
-				Characters.escapeControls(originalString,false), // original string
-				fixedString                                      // transformed string
+				transform.transform(originalString),    // original string
+				fixedString                             // transformed string
 			);
 		}
 	}

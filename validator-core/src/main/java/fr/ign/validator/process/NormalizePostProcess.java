@@ -187,7 +187,7 @@ public class NormalizePostProcess implements ValidatorListener {
 				}
 				// formatage
 				String outputValue = attribute.formatObject(bindedValue);
-				outputValue = context.getStringFixer().fixString(outputValue);
+				outputValue = context.getStringFixer().transform(outputValue);
 				outputRow[position] = outputValue ;
 			}
 			printer.printRecord(outputRow);
