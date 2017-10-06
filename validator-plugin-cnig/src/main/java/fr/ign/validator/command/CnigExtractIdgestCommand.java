@@ -31,11 +31,8 @@ public class CnigExtractIdgestCommand extends AbstractCommand {
 		return NAME;
 	}
 
-	/**
-	 * Get command line options
-	 * @return
-	 */
-	public static Options getCommandLineOptions() {
+	@Override
+	public Options getCommandLineOptions() {
 		
 		Options options = new Options();
 

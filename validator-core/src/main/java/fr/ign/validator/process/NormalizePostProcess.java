@@ -179,7 +179,7 @@ public class NormalizePostProcess implements ValidatorListener {
 					}
 				}catch (IllegalArgumentException e){
 					log.warn(MARKER,
-						"{}.{} : {} transformé en valeur nulle",
+						"{}.{} : {} transformé en valeur nulle (type non valide)",
 						inputRow[i],
 						featureType.getName(),
 						attribute.getName()

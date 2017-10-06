@@ -3,17 +3,12 @@ package fr.ign.validator.command;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +34,15 @@ import fr.ign.validator.report.ReportBuilderLegacy;
  * 
  * Validate a document directory according to a DocumentModel
  * 
+ * TODO :
+ * 
+ * <ul>
+ * 	<li>Custom parameters as member params + final run(args) && abstract execute()</li>
+ *  <li>Use option.type to specify kind of arguments & commandLine.getParsedOptionValue("input")
+ *  <li>Generate a basic UI according to option.type?</li>
+ * </ul>
+ * 
+ * 
  * @author MBorne
  *
  */
@@ -51,7 +55,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 	public static final String VALIDATION_DIRECTORY_NAME = "validation" ;	
 	
-	
 	@Override
 	public String getName() {
 		return NAME;
@@ -59,52 +62,22 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 	@Override
 	public int run(String[] args) {
-		/*
-		 * Récupération des options de la ligne de commande
-		 */
-		Options options = getCommandLineOptions();
-
-		CommandLineParser parser = new GnuParser();
-		CommandLine commandline = null;
-		try {
-			commandline = parser.parse(options, args);
-		} catch (ParseException e) {
-			System.err.println(e.getMessage());
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(NAME, options);
+		CommandLine commandLine = parseCommandLine(args);
+		if ( commandLine == null ){
 			return 1;
 		}
-
+		
 		// gestion de l'affichage de l'aide...
-		if (commandline.hasOption("help")) {
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(NAME, options);
+		if (commandLine.hasOption("help")) {
+			displayHelp();
 			return 1;
 		}
-		
-
-		// configuration du proxy...
-		String proxyString = commandline.getOptionValue("proxy", "");
-		if (!proxyString.isEmpty()) {
-			String[] proxyParts = proxyString.split(":");
-			if (proxyParts.length != 2) {
-				System.err.println("bad proxy parameter (<proxy-host>:<proxy-port>)");
-				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp(NAME, options);
-				System.exit(1);
-			}
-			Properties systemSettings = System.getProperties();
-			systemSettings.put("proxySet", "true");
-			systemSettings.put("http.proxyHost", proxyParts[0]);
-			systemSettings.put("http.proxyPort", proxyParts[1]);
-		}
-		
 
 		/*
 		 * Chargement du document utilisé pour la validation
 		 */
-		File configDir = new File(commandline.getOptionValue("config"));
-		File configPath = new File(configDir, commandline.getOptionValue("version") + "/files.xml");		
+		File configDir = new File(commandLine.getOptionValue("config"));
+		File configPath = new File(configDir, commandLine.getOptionValue("version") + "/files.xml");		
 		if (!configPath.exists()) {
 			String message = String.format("Le fichier de configuration '%1s' n'existe pas", configPath);
 			log.error(MARKER, message);
@@ -126,17 +99,13 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		/*
 		 * récupération du chemin vers le document à valider...
 		 */
-		File documentPath = new File(commandline.getOptionValue("input"));
+		File documentPath = new File(commandLine.getOptionValue("input"));
 		if (!documentPath.exists()) {
-			System.out.println(documentPath + " does not exists");
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(NAME, options);
+			System.out.println("invalid parameter 'input' : "+documentPath + " does not exists");
 			return 1;
 		}
 		if (!documentPath.isDirectory()) {
-			System.out.println(documentPath + " is not a directory");
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(NAME, options);
+			System.out.println("invalid parameter 'input' : "+documentPath + " is not a directory");
 			return 1;
 		}
 		
@@ -146,8 +115,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		Context context = new Context();
 		
 		// configuration de la projection des données...
-		if ( commandline.hasOption("srs") ) {
-			String srsString = commandline.getOptionValue("srs");
+		if ( commandLine.hasOption("srs") ) {
+			String srsString = commandLine.getOptionValue("srs");
 			try {
 				context.setCoordinateReferenceSystem(CRS.decode(srsString));
 			} catch (NoSuchAuthorityCodeException e1) {
@@ -162,8 +131,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		}
 		
 		// configuration de l'encodage des données...
-		if (commandline.hasOption("encoding")) {
-			String encoding = commandline.getOptionValue("encoding");
+		if (commandLine.hasOption("encoding")) {
+			String encoding = commandLine.getOptionValue("encoding");
 			context.setEncoding(Charset.forName(encoding));
 		}else{
 			context.setEncoding(StandardCharsets.UTF_8);
@@ -197,8 +166,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		context.setReportBuilder(new ReportBuilderLegacy(validationRapport));
 
 		// configuration de l'emprise limite des données		
-		if ( commandline.hasOption("data-extent") ){
-			String wktExtent = commandline.getOptionValue("data-extent");
+		if ( commandLine.hasOption("data-extent") ){
+			String wktExtent = commandLine.getOptionValue("data-extent");
 			WKTReader reader = new WKTReader();
 			try {
 				context.setNativeDataExtent(reader.read(wktExtent));
@@ -211,17 +180,17 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		}
 
 		// configuration de la limite du nombre d'erreur
-		if (commandline.hasOption("max-errors")) {
-			int maxError = Integer.parseInt(commandline.getOptionValue("max-errors"));
+		if (commandLine.hasOption("max-errors")) {
+			int maxError = Integer.parseInt(commandLine.getOptionValue("max-errors"));
 			context.setReportBuilder( new FilteredReportBuilder(context.getReportBuilder(),maxError) );
 		}
 
 		// configuration de la validation à plat
-		context.setFlatValidation(commandline.hasOption("f"));
+		context.setFlatValidation(commandLine.hasOption("f"));
 
-		if ( commandline.hasOption("plugins") ){
+		if ( commandLine.hasOption("plugins") ){
 			PluginManager pluginManager = new PluginManager();
-			String[] pluginNames = commandline.getOptionValue("plugins").split(",");
+			String[] pluginNames = commandLine.getOptionValue("plugins").split(",");
 			for (String pluginName : pluginNames) {
 				Plugin plugin = pluginManager.getPluginByName(pluginName);
 				if ( plugin == null ){
@@ -247,14 +216,10 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	}
 
 
-	/**
-	 * Configuration des options de la ligne de commande
-	 * @return
-	 */
-	public static Options getCommandLineOptions() {
-		Options options = new Options();
-		options.addOption("h", "help", false, "affichage du message d'aide");
-
+	@Override
+	public Options getCommandLineOptions() {
+		Options options = getCommonOptions();
+		
 		// input
 		{
 			Option option = new Option("i", "input", true, "Dossier contenant les données à valider");
@@ -266,6 +231,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		{
 			Option option = new Option("c", "config", true, "Dossier contenant les configurations");
 			option.setRequired(true);
+			option.setType(File.class);
 			options.addOption(option);
 		}
 
@@ -284,7 +250,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			options.addOption(option);
 		}
 
-		
 		// proxy
 		{
 			Option option = new Option("p", "proxy", true, "Adresse du proxy (ex : proxy.ign.fr:3128)");
@@ -324,5 +289,5 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 		return options;
 	}
-	
+
 }

@@ -253,7 +253,6 @@ public class Context {
 	
 	/**
 	 * Renvoie le DocumentModel courant
-	 * @deprecated use getModelByType
 	 * @return
 	 */
 	public DocumentModel getDocumentModel() {

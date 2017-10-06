@@ -27,7 +27,7 @@ import fr.ign.validator.reader.MetadataReader;
 public class FilterMetadataPreProcess implements ValidatorListener {
 	
 	public static final Logger log = LogManager.getRootLogger() ;
-	private static final Marker MARKER = MarkerManager.getMarker("PREPROCESS_FILTER_METADATA");
+	private static final Marker MARKER = MarkerManager.getMarker("FilterMetadataPreProcess");
 	
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
@@ -57,6 +57,7 @@ public class FilterMetadataPreProcess implements ValidatorListener {
 						ErrorCode.METADATA_IGNORED_FILE,
 						context.relativize(xmlFile)
 					);
+					log.info(MARKER, "Suppression du fichier XML {}...", documentFile);
 					document.removeDocumentFile(documentFile);
 				}
 			}

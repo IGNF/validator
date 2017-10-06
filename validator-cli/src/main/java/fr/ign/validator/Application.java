@@ -35,28 +35,28 @@ public class Application {
 		}
 		return null;
 	}
-	
-    private String getCommandNames(){
-        String result = "(";
-        for ( CommandInterface command : commands ){
-            if ( result.length() != 1 ){
-                result += "|";
-            }
-            result += command.getName();
-        }
-        result += ")";
-        return result;
-    }
     
+    private void displayHelp(){
+    	System.out.println("Usage : java -jar validator-cli.jar COMMAND --help");
+    	System.out.println("");
+    	System.out.println("Validate, normalize and extract data according to models");
+    	System.out.println("");
+    	System.out.println("Commands:");
+    	for (CommandInterface command : commands) {
+    		System.out.println("\t"+command.getName());
+		}
+    }
+
 	private int run(String args[]) {
 		if ( args.length == 0 ){
-			System.err.println("dump-validator "+getCommandNames()+" --help");
+			displayHelp();
 			return 1;
 		}
 		String commandName = args[0];
 		CommandInterface command = getCommandByName(commandName);
-		if ( command == null ){
+		if ( command == null || command.equals("--help") || command.equals("-h") ){
 			System.err.println("command '"+commandName+"' not found");
+			displayHelp();
 			return 1;
 		}
 		try {
