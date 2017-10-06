@@ -59,6 +59,7 @@ public class ValidateRegressTest extends TestCase {
 		try {
 			document.validate(context);
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 		assertEquals("ISO-8859-1", context.getEncoding().toString());

@@ -99,7 +99,8 @@ public class NormalizePostProcess implements ValidatorListener {
 						srcFile,
 						csvFile,
 						context.getEncoding(),
-						context.getCoordinateReferenceSystem()
+						context.getCoordinateReferenceSystem(),
+						context
 					);						
 				}
 			}else if ( fileModel instanceof PdfModel ){
@@ -130,7 +131,8 @@ public class NormalizePostProcess implements ValidatorListener {
 		File srcFile, 
 		File destFile, 
 		Charset charset,
-		CoordinateReferenceSystem sourceCRS
+		CoordinateReferenceSystem sourceCRS,
+		Context context
 	) throws IOException, NoSuchAuthorityCodeException, FactoryException, MismatchedDimensionException, TransformException {
 		CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
 		MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS);
@@ -184,7 +186,9 @@ public class NormalizePostProcess implements ValidatorListener {
 					);
 				}
 				// formatage
-				outputRow[position] = attribute.formatObject(bindedValue) ;
+				String outputValue = attribute.formatObject(bindedValue);
+				outputValue = context.getStringFixer().transform(outputValue);
+				outputRow[position] = outputValue ;
 			}
 			printer.printRecord(outputRow);
 		}
@@ -193,6 +197,4 @@ public class NormalizePostProcess implements ValidatorListener {
 	}
 
 
-	
-	
 }

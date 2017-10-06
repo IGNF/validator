@@ -1,4 +1,4 @@
-package fr.ign.validator.cli;
+package fr.ign.validator.command;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -36,16 +36,216 @@ import fr.ign.validator.report.FilteredReportBuilder;
 import fr.ign.validator.report.ReportBuilderLegacy;
 
 /**
- * Validateur de document en ligne de commande
  * 
- * @author CBouche
+ * Validate a document directory according to a DocumentModel
+ * 
  * @author MBorne
+ *
  */
-public class DocumentValidatorCLI {
+public class DocumentValidatorCommand extends AbstractCommand {
+
+	public static final String NAME = "document_validator";
+
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentValidatorCLI");
 
-	public static final String VALIDATION_DIRECTORY_NAME = "validation" ;
+	public static final String VALIDATION_DIRECTORY_NAME = "validation" ;	
+	
+	
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
+	@Override
+	public int run(String[] args) {
+		/*
+		 * Récupération des options de la ligne de commande
+		 */
+		Options options = getCommandLineOptions();
+
+		CommandLineParser parser = new GnuParser();
+		CommandLine commandline = null;
+		try {
+			commandline = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.err.println(e.getMessage());
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp(NAME, options);
+			return 1;
+		}
+
+		// gestion de l'affichage de l'aide...
+		if (commandline.hasOption("help")) {
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp(NAME, options);
+			return 1;
+		}
+		
+
+		// configuration du proxy...
+		String proxyString = commandline.getOptionValue("proxy", "");
+		if (!proxyString.isEmpty()) {
+			String[] proxyParts = proxyString.split(":");
+			if (proxyParts.length != 2) {
+				System.err.println("bad proxy parameter (<proxy-host>:<proxy-port>)");
+				HelpFormatter formatter = new HelpFormatter();
+				formatter.printHelp(NAME, options);
+				System.exit(1);
+			}
+			Properties systemSettings = System.getProperties();
+			systemSettings.put("proxySet", "true");
+			systemSettings.put("http.proxyHost", proxyParts[0]);
+			systemSettings.put("http.proxyPort", proxyParts[1]);
+		}
+		
+
+		/*
+		 * Chargement du document utilisé pour la validation
+		 */
+		File configDir = new File(commandline.getOptionValue("config"));
+		File configPath = new File(configDir, commandline.getOptionValue("version") + "/files.xml");		
+		if (!configPath.exists()) {
+			String message = String.format("Le fichier de configuration '%1s' n'existe pas", configPath);
+			log.error(MARKER, message);
+			return 1;
+		}
+		DocumentModel documentModel = null;
+		try {
+			ModelLoader modelLoader = new ModelLoader();
+			String message = String.format("Chargement du modèle '%1s'...", configPath);
+			log.debug(MARKER, message);
+			documentModel = modelLoader.loadDocumentModel(configPath);
+		} catch (JAXBException e) {
+			String message = String.format("Problème lors du chargement de '%1s' (XML invalide)", configPath);
+			log.error(MARKER, message);
+			e.printStackTrace();
+			return 1;
+		}
+
+		/*
+		 * récupération du chemin vers le document à valider...
+		 */
+		File documentPath = new File(commandline.getOptionValue("input"));
+		if (!documentPath.exists()) {
+			System.out.println(documentPath + " does not exists");
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp(NAME, options);
+			return 1;
+		}
+		if (!documentPath.isDirectory()) {
+			System.out.println(documentPath + " is not a directory");
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp(NAME, options);
+			return 1;
+		}
+		
+		/*
+		 * Préparation du contexte pour la validation
+		 */
+		Context context = new Context();
+		
+		// configuration de la projection des données...
+		if ( commandline.hasOption("srs") ) {
+			String srsString = commandline.getOptionValue("srs");
+			try {
+				context.setCoordinateReferenceSystem(CRS.decode(srsString));
+			} catch (NoSuchAuthorityCodeException e1) {
+				System.err.println("bad srs parameter (EPSG:<epsg-code>) - NoSuchAuthorityCodeException");
+				e1.printStackTrace(System.err);
+				return 1;
+			} catch (FactoryException e1) {
+				System.err.println("bad srs parameter (EPSG:<epsg-code>) - FactoryException");
+				e1.printStackTrace(System.err);
+				return 1;
+			}
+		}
+		
+		// configuration de l'encodage des données...
+		if (commandline.hasOption("encoding")) {
+			String encoding = commandline.getOptionValue("encoding");
+			context.setEncoding(Charset.forName(encoding));
+		}else{
+			context.setEncoding(StandardCharsets.UTF_8);
+		}
+		
+		// configuration du répertoire de validation...
+		File validationDirectory = new File( documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME ) ;
+		if ( validationDirectory.exists() ) {
+			log.info(MARKER,
+				"Suppression du répertoire existant {}", 
+				validationDirectory.getAbsolutePath() 
+			);
+			try {
+				FileUtils.deleteDirectory( validationDirectory );
+			} catch (Exception e) {
+				String message = String.format("Problème dans la suppression du répertoire de validation: '%1s'", validationDirectory);
+				log.error(MARKER, message);
+				e.printStackTrace();
+				return 1;
+			}
+		}
+		log.info(MARKER,
+			"Création du répertoire de validation {}", 
+			validationDirectory.getAbsolutePath() 
+		);
+		validationDirectory.mkdirs() ;
+		context.setValidationDirectory( validationDirectory ) ;
+
+		// configuration de l'écriture du rapport
+		File validationRapport = new File( validationDirectory, "validation.xml" );
+		context.setReportBuilder(new ReportBuilderLegacy(validationRapport));
+
+		// configuration de l'emprise limite des données		
+		if ( commandline.hasOption("data-extent") ){
+			String wktExtent = commandline.getOptionValue("data-extent");
+			WKTReader reader = new WKTReader();
+			try {
+				context.setNativeDataExtent(reader.read(wktExtent));
+			} catch (com.vividsolutions.jts.io.ParseException e) {
+				String message = String.format("Problème dans le décodage de 'data-extent' : '%1s' (WKT invalide)", wktExtent);
+				log.error(MARKER, message);
+				e.printStackTrace();
+				return 1;
+			}
+		}
+
+		// configuration de la limite du nombre d'erreur
+		if (commandline.hasOption("max-errors")) {
+			int maxError = Integer.parseInt(commandline.getOptionValue("max-errors"));
+			context.setReportBuilder( new FilteredReportBuilder(context.getReportBuilder(),maxError) );
+		}
+
+		// configuration de la validation à plat
+		context.setFlatValidation(commandline.hasOption("f"));
+
+		if ( commandline.hasOption("plugins") ){
+			PluginManager pluginManager = new PluginManager();
+			String[] pluginNames = commandline.getOptionValue("plugins").split(",");
+			for (String pluginName : pluginNames) {
+				Plugin plugin = pluginManager.getPluginByName(pluginName);
+				if ( plugin == null ){
+					String message = String.format("fail to load plugin '%1s'", pluginName);
+					log.error(MARKER, message);
+					System.exit(1);
+				}
+				log.info(MARKER, String.format("setup plugin '%1s'...", pluginName));
+				plugin.setup(context);
+			}
+		}
+		
+		Document document = new Document(documentModel,documentPath);
+		try {
+			document.validate(context);
+		} catch (Exception e) {
+			log.fatal(MARKER, e.getMessage());
+			context.report(ErrorCode.VALIDATOR_EXCEPTION);
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
+	}
+
 
 	/**
 	 * Configuration des options de la ligne de commande
@@ -124,196 +324,5 @@ public class DocumentValidatorCLI {
 
 		return options;
 	}
-
-	/**
-	 * Lecture des options et exécution du validateur
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		/*
-		 * Récupération des options de la ligne de commande
-		 */
-		Options options = getCommandLineOptions();
-
-		CommandLineParser parser = new GnuParser();
-		CommandLine commandline = null;
-		try {
-			commandline = parser.parse(options, args);
-		} catch (ParseException e) {
-			System.err.println(e.getMessage());
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
-			System.exit(1);
-		}
-
-		// gestion de l'affichage de l'aide...
-		if (commandline.hasOption("h")) {
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
-			System.exit(0);
-		}
-		
-
-		// configuration du proxy...
-		String proxyString = commandline.getOptionValue("proxy", "");
-		if (!proxyString.isEmpty()) {
-			String[] proxyParts = proxyString.split(":");
-			if (proxyParts.length != 2) {
-				System.err.println("bad proxy parameter (<proxy-host>:<proxy-port>)");
-				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp("validator", options);
-				System.exit(1);
-			}
-			Properties systemSettings = System.getProperties();
-			systemSettings.put("proxySet", "true");
-			systemSettings.put("http.proxyHost", proxyParts[0]);
-			systemSettings.put("http.proxyPort", proxyParts[1]);
-		}
-		
-
-		/*
-		 * Chargement du document utilisé pour la validation
-		 */
-		File configDir = new File(commandline.getOptionValue("config"));
-		File configPath = new File(configDir, commandline.getOptionValue("version") + "/files.xml");		
-		if (!configPath.exists()) {
-			String message = String.format("Le fichier de configuration '%1s' n'existe pas", configPath);
-			log.error(MARKER, message);
-			System.exit(1);
-		}
-		DocumentModel documentModel = null;
-		try {
-			ModelLoader modelLoader = new ModelLoader();
-			String message = String.format("Chargement du modèle '%1s'...", configPath);
-			log.debug(MARKER, message);
-			documentModel = modelLoader.loadDocumentModel(configPath);
-		} catch (JAXBException e) {
-			String message = String.format("Problème lors du chargement de '%1s' (XML invalide)", configPath);
-			log.error(MARKER, message);
-			e.printStackTrace();
-			System.exit(1);
-		}
-
-		/*
-		 * récupération du chemin vers le document à valider...
-		 */
-		File documentPath = new File(commandline.getOptionValue("input"));
-		if (!documentPath.exists()) {
-			System.out.println(documentPath + " does not exists");
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
-			System.exit(1);
-		}
-		if (!documentPath.isDirectory()) {
-			System.out.println(documentPath + " is not a directory");
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
-			System.exit(1);
-		}
-		
-		/*
-		 * Préparation du contexte pour la validation
-		 */
-		Context context = new Context();
-		
-		// configuration de la projection des données...
-		if ( commandline.hasOption("srs") ) {
-			String srsString = commandline.getOptionValue("srs");
-			try {
-				context.setCoordinateReferenceSystem(CRS.decode(srsString));
-			} catch (NoSuchAuthorityCodeException e1) {
-				System.err.println("bad srs parameter (EPSG:<epsg-code>) - NoSuchAuthorityCodeException");
-				e1.printStackTrace(System.err);
-				System.exit(1);
-			} catch (FactoryException e1) {
-				System.err.println("bad srs parameter (EPSG:<epsg-code>) - FactoryException");
-				e1.printStackTrace(System.err);
-				System.exit(1);
-			}
-		}
-		
-		// configuration de l'encodage des données...
-		if (commandline.hasOption("encoding")) {
-			String encoding = commandline.getOptionValue("encoding");
-			context.setEncoding(Charset.forName(encoding));
-		}else{
-			context.setEncoding(StandardCharsets.UTF_8);
-		}
-		
-		// configuration du répertoire de validation...
-		File validationDirectory = new File( documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME ) ;
-		if ( validationDirectory.exists() ) {
-			log.info(MARKER,
-				"Suppression du répertoire existant {}", 
-				validationDirectory.getAbsolutePath() 
-			);
-			try {
-				FileUtils.deleteDirectory( validationDirectory );
-			} catch (Exception e) {
-				String message = String.format("Problème dans la suppression du répertoire de validation: '%1s'", validationDirectory);
-				log.error(MARKER, message);
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
-		log.info(MARKER,
-			"Création du répertoire de validation {}", 
-			validationDirectory.getAbsolutePath() 
-		);
-		validationDirectory.mkdirs() ;
-		context.setValidationDirectory( validationDirectory ) ;
-
-		// configuration de l'écriture du rapport
-		File validationRapport = new File( validationDirectory, "validation.xml" );
-		context.setReportBuilder(new ReportBuilderLegacy(validationRapport));
-
-		// configuration de l'emprise limite des données		
-		if ( commandline.hasOption("data-extent") ){
-			String wktExtent = commandline.getOptionValue("data-extent");
-			WKTReader reader = new WKTReader();
-			try {
-				context.setNativeDataExtent(reader.read(wktExtent));
-			} catch (com.vividsolutions.jts.io.ParseException e) {
-				String message = String.format("Problème dans le décodage de 'data-extent' : '%1s' (WKT invalide)", wktExtent);
-				log.error(MARKER, message);
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
-
-		// configuration de la limite du nombre d'erreur
-		if (commandline.hasOption("max-errors")) {
-			int maxError = Integer.parseInt(commandline.getOptionValue("max-errors"));
-			context.setReportBuilder( new FilteredReportBuilder(context.getReportBuilder(),maxError) );
-		}
-
-		// configuration de la validation à plat
-		context.setFlatValidation(commandline.hasOption("f"));
-
-		if ( commandline.hasOption("plugins") ){
-			PluginManager pluginManager = new PluginManager();
-			String[] pluginNames = commandline.getOptionValue("plugins").split(",");
-			for (String pluginName : pluginNames) {
-				Plugin plugin = pluginManager.getPluginByName(pluginName);
-				if ( plugin == null ){
-					String message = String.format("fail to load plugin '%1s'", pluginName);
-					log.error(MARKER, message);
-					System.exit(1);
-				}
-				log.info(MARKER, String.format("setup plugin '%1s'...", pluginName));
-				plugin.setup(context);
-			}
-		}
-		
-		Document document = new Document(documentModel,documentPath);
-		try {
-			document.validate(context);
-		} catch (Exception e) {
-			log.fatal(MARKER, e.getMessage());
-			context.report(ErrorCode.VALIDATOR_EXCEPTION);
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
+	
 }

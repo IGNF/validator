@@ -64,9 +64,8 @@ public class ErrorCode {
 	public static final ErrorCode ATTRIBUTE_INVALID_REGEXP = ErrorCode.valueOf("ATTRIBUTE_INVALID_REGEXP") ;
 	public static final ErrorCode ATTRIBUTE_UNEXPECTED_VALUE = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_VALUE") ;
 	public static final ErrorCode ATTRIBUTE_UNEXPECTED_NULL = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_NULL") ; 
-	public static final ErrorCode ATTRIBUTE_CHARACTERS_CONTROL    = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_CONTROL") ;
-	public static final ErrorCode ATTRIBUTE_CHARACTERS_LATIN1 = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_LATIN1") ;	
-	
+	public static final ErrorCode ATTRIBUTE_CHARACTERS_ILLEGAL    = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_ILLEGAL") ;
+
 	public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID") ;
 	public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT") ;
 	

@@ -1,0 +1,9 @@
+before,after,comment
+\u0096,-,START OF GUARDED AREA replaced by HYPHEN-MINUS
+\u0085,…,NEXT LINE (NEL) replaced by …
+\u2018,',LEFT SINGLE QUOTATION MARK replaced by SIMPLE QUOTE
+\u2019,',RIGHT SINGLE QUOTATION MARK replaced by SIMPLE QUOTE
+\u2013,-,EN DASH remplaced by HYPHEN-MINUS
+\u009c,œ,STRING TERMINATOR replaced by LATIN SMALL LIGATURE OE
+\u0093,"""",SET TRANSMIT STATE remplaced by double quote
+\u0094,"""",CANCEL CHARACTER remplaced by double quote

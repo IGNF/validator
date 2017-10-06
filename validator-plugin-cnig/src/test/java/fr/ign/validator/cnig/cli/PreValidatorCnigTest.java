@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
-import fr.ign.validator.cli.PreValidatorCnig;
+import fr.ign.validator.command.CnigExtractIdgestCommand;
 import fr.ign.validator.tools.CompanionFileUtils;
 import junit.framework.TestCase;
 
@@ -17,15 +17,18 @@ import junit.framework.TestCase;
 public class PreValidatorCnigTest extends TestCase {
 
 	public void testBadCall(){
+		CnigExtractIdgestCommand command = new CnigExtractIdgestCommand();
 		String[] args = new String[] { "--in", "notValid" };
-		assertEquals(1,PreValidatorCnig.run(args));
+		assertEquals(1,command.run(args));
 	}
 	
 	public void testFindStrictEquals() throws IOException {
+		CnigExtractIdgestCommand command = new CnigExtractIdgestCommand();
+
 		File servitudeFile = new File(getClass().getResource("/SUP/SERVITUDE_041.TAB").getPath());
 
 		String[] args = new String[] { "--input", servitudeFile.getAbsolutePath() };
-		assertEquals(0,PreValidatorCnig.run(args));
+		assertEquals(0,command.run(args));
 
 		File idgestFile = new File(getClass().getResource("/SUP/idGest.txt").getPath());
 		String idgest = FileUtils.readFileToString(idgestFile);
