@@ -71,15 +71,15 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		} catch (ParseException e) {
 			System.err.println(e.getMessage());
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
+			formatter.printHelp(NAME, options);
 			return 1;
 		}
 
 		// gestion de l'affichage de l'aide...
-		if (commandline.hasOption("h")) {
+		if (commandline.hasOption("help")) {
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
-			return 0;
+			formatter.printHelp(NAME, options);
+			return 1;
 		}
 		
 
@@ -90,7 +90,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			if (proxyParts.length != 2) {
 				System.err.println("bad proxy parameter (<proxy-host>:<proxy-port>)");
 				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp("validator", options);
+				formatter.printHelp(NAME, options);
 				System.exit(1);
 			}
 			Properties systemSettings = System.getProperties();
@@ -108,7 +108,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		if (!configPath.exists()) {
 			String message = String.format("Le fichier de configuration '%1s' n'existe pas", configPath);
 			log.error(MARKER, message);
-			System.exit(1);
+			return 1;
 		}
 		DocumentModel documentModel = null;
 		try {
@@ -130,13 +130,13 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		if (!documentPath.exists()) {
 			System.out.println(documentPath + " does not exists");
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
+			formatter.printHelp(NAME, options);
 			return 1;
 		}
 		if (!documentPath.isDirectory()) {
 			System.out.println(documentPath + " is not a directory");
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("validator", options);
+			formatter.printHelp(NAME, options);
 			return 1;
 		}
 		

@@ -48,28 +48,28 @@ public class Application {
         return result;
     }
     
-	private void run(String args[]) {
+	private int run(String args[]) {
 		if ( args.length == 0 ){
 			System.err.println("dump-validator "+getCommandNames()+" --help");
-			System.exit(1);
+			return 1;
 		}
 		String commandName = args[0];
 		CommandInterface command = getCommandByName(commandName);
 		if ( command == null ){
 			System.err.println("command '"+commandName+"' not found");
-			System.exit(1);
+			return 1;
 		}
 		try {
-			command.run( Arrays.copyOfRange(args, 1, args.length));
+			return command.run( Arrays.copyOfRange(args, 1, args.length));
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(1);
+			return 1;
 		}
 	}
 
 	public static void main(String[] args) {
 		Application application = new Application();
-		application.run(args);
+		System.exit(application.run(args));
 	}
 	
 
