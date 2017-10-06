@@ -1,4 +1,4 @@
-package fr.ign.validator.cli;
+package fr.ign.validator.command;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,17 +17,22 @@ import fr.ign.validator.cnig.utils.IdgestExtractor;
 
 /**
  * 
- * Prevalidateur CNIG pour les SUP (extraction de IDGEST)
- * 
- * TODO move to fr.ign.validator.cli.PreValidatorCnig
+ * Extraction de IDGEST pour les SUP (pré-validateur CNIG)
  * 
  * @author fcerizay
  *
  */
-public class PreValidatorCnig {
+public class CnigExtractIdgestCommand extends AbstractCommand {
 	
+	public static final String NAME = "cnig_extract_idgest";
+	
+	@Override
+	public String getName() {
+		return NAME;
+	}
+
 	/**
-	 * 
+	 * Get command line options
 	 * @return
 	 */
 	public static Options getCommandLineOptions() {
@@ -49,7 +54,9 @@ public class PreValidatorCnig {
 		return options;
 	}
 	
-	public static int run(String[] args){
+	
+	@Override
+	public int run(String[] args){
 		/*
 		 * Récupération des options de la ligne de commande
 		 */
@@ -92,22 +99,12 @@ public class PreValidatorCnig {
 		
 		return 0;
 	}
-	
-	
-	/**
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.exit(PreValidatorCnig.run(args));
-	}
-	
+
 	/**
 	 * 
 	 * @param proxyString
 	 */
 	private static void configureProxy( String proxyString ){
-		
 		if (!proxyString.isEmpty()) {
 			String[] proxyParts = proxyString.split(":");
 			if (proxyParts.length != 2) {
