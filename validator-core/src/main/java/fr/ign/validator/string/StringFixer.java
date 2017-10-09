@@ -60,7 +60,7 @@ public class StringFixer implements StringTransform {
 
 		stringFixer.addTransform(new IsoControlEscaper(true));
 		if ( charset != null ){
-			stringFixer.addTransform(new EscapeForCharset(charset)); 
+			stringFixer.addTransform(new EscapeForCharset(charset));
 		}
 
 		return stringFixer;

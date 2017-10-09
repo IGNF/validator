@@ -8,7 +8,6 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
@@ -96,13 +95,15 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			Option option = new Option("c", "config", true, "Dossier contenant les configurations");
 			option.setRequired(true);
 			option.setType(File.class);
+			option.setArgName("CONFIG_DIR");
 			options.addOption(option);
 		}
 
 		// version
 		{
-			Option option = new Option("v", "version", true, "Norme et version a prendre en compte");
+			Option option = new Option("v", "version", true, "Norme et version a prendre en compte (ex : cnig_PLU_2013)");
 			option.setRequired(true);
+			option.setArgName("STANDARD_NAME");
 			options.addOption(option);
 		}
 
@@ -117,15 +118,10 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		{
 			Option option = new Option(null, "data-extent", true, "Domaine dans lequel la géométrie des données est attendue (format : WKT, projection : WGS84)");
 			option.setRequired(false);
+			option.setArgName("WKT");
 			options.addOption(option);
 		}		
 
-		// proxy
-		{
-			Option option = new Option("p", "proxy", true, "Adresse du proxy principalement utilisé pour accéder aux schémas XSD (ex : proxy.ign.fr:3128)");
-			option.setRequired(false);
-			options.addOption(option);
-		}
 		// encoding
 		{
 			Option option = new Option(
@@ -136,6 +132,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			options.addOption(option);
 		}
 		
+		// deep character validation
+		buildStringFixerOptions(options);
 		
 		// mode souple
 		{
@@ -258,25 +256,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		/*
 		 * deep character validation...
 		 */
-		{
-			StringFixer stringFixer = new StringFixer();
-			// TODO string-fix-utf8
-			stringFixer.addTransform(new DoubleUtf8Decoder());
-
-			// TODO string-simplify
-			StringSimplifier simplifier = new StringSimplifier();
-			simplifier.loadCommon();
-			
-			// TODO string-charset-compatility=ISO_8859_1
-			simplifier.loadCharset(StandardCharsets.ISO_8859_1);
-			stringFixer.addTransform(simplifier);
-
-			// TODO string-fix-controls
-			stringFixer.addTransform(new IsoControlEscaper(true));
-			// TODO string-charset-compatility=ISO_8859_1
-			stringFixer.addTransform(new EscapeForCharset(StandardCharsets.ISO_8859_1)); 
-			context.setStringFixer(stringFixer);
-		}
+		context.setStringFixer(parseStringFixerOptions(commandLine));
 
 
 		// data-extent...
@@ -311,6 +291,102 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			}
 		}
 	}
+	
+
+	
+	/**
+	 * Add StringFixer options
+	 * @param options
+	 */
+	private void buildStringFixerOptions(Options options) {
+		{
+			Option option = new Option(null, "string-all", true, 
+				"applique string-fix-utf8, string-simplify-common, string-simplify-charset, pour l'encodage spécifié"
+			);
+			option.setRequired(false);
+			options.addOption(option);
+		}
+		{
+			Option option = new Option(null, "string-fix-utf8", false, 
+				"Correction des doubles encodages UTF-8"
+			);
+			option.setRequired(false);
+			options.addOption(option);
+		}
+		{
+			Option option = new Option(null, "string-simplify-common", false, 
+				"Simplification de caractères unicode par des équivalents pour un meilleur support par les polices"
+			);
+			option.setRequired(false);
+			options.addOption(option);
+		}
+		{
+			Option option = new Option(null, "string-simplify-charset", true, 
+				"Simplification de caractères unicode par des équivalents supportés par l'encodage spécifié (ex : LATIN1)"
+			);
+			option.setRequired(false);
+			option.setArgName("CHARSET");
+			options.addOption(option);
+		}
+		
+		{
+			//TODO liste des contrôles standards
+			Option option = new Option(null, "string-escape-controls", false, 
+				"Echappe en hexadécimal (\\uXXXX) les caractères de contrôles à l'exception des contrôles standards"
+			);
+			option.setRequired(false);
+			options.addOption(option);
+		}
+		{
+			Option option = new Option(null, "string-escape-charset", true, 
+				"Echappe en hexadécimal (\\uXXXX) les caractères non supportés par l'encodage spécifié"
+			);
+			option.setRequired(false);
+			options.addOption(option);
+		}
+	}
+
+	/**
+	 * Create StringFixer from options
+	 * @param commandLine
+	 * @return
+	 */
+	private StringFixer parseStringFixerOptions(CommandLine commandLine){
+		if ( commandLine.hasOption("string-fix-all") ){
+			String charsetName = commandLine.getOptionValue("string-fix-all");
+			Charset charset = Charset.forName(charsetName) ;
+			return StringFixer.createFullStringFixer(charset);
+		}
+		
+		StringFixer stringFixer = new StringFixer();
+		if ( commandLine.hasOption("string-fix-utf8") ){
+			stringFixer.addTransform(new DoubleUtf8Decoder());			
+		}
+
+		if ( commandLine.hasOption("string-simplify-common") || commandLine.hasOption("string-simplify-charset") ){
+			StringSimplifier simplifier = new StringSimplifier();
+			if ( commandLine.hasOption("string-simplify-common") ){
+				simplifier.loadCommon();
+			}
+			if ( commandLine.hasOption("string-simplify-charset") ){
+				String charsetName = commandLine.getOptionValue("string-simplify-charset");
+				Charset charset = Charset.forName(charsetName) ;
+				simplifier.loadCharset(charset);
+			}
+			stringFixer.addTransform(simplifier);
+		}
+
+		if ( commandLine.hasOption("string-escape-controls") ){
+			stringFixer.addTransform(new IsoControlEscaper(true));
+		}
+		if ( commandLine.hasOption("string-escape-charset") ){
+			String charsetName = commandLine.getOptionValue("string-escape-charset");
+			Charset charset = Charset.forName(charsetName) ;
+			stringFixer.addTransform(new EscapeForCharset(charset)); 
+		}
+		return stringFixer;
+	}
+
 	
 	
 	@Override

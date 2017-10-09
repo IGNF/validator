@@ -62,8 +62,7 @@ public abstract class AbstractCommand implements CommandInterface {
 			return this.execute();
 		} catch (ParseException e) {
 			System.err.println(e.getMessage());
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(getName(), options);
+			displayHelp(options);
 			return 1;
 		}
 	}	
@@ -96,6 +95,7 @@ public abstract class AbstractCommand implements CommandInterface {
 	 */
 	private void displayHelp(Options options){
 		HelpFormatter formatter = new HelpFormatter();
+		formatter.setWidth(120);
 		formatter.printHelp(getName(), options);
 	}
 
