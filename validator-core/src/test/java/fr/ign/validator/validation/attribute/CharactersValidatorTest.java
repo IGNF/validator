@@ -1,11 +1,13 @@
 package fr.ign.validator.validation.attribute;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.string.StringFixer;
 import junit.framework.TestCase;
 
 public class CharactersValidatorTest extends TestCase {
@@ -22,6 +24,7 @@ public class CharactersValidatorTest extends TestCase {
 		validator = new CharactersValidator<String>();
 		
 		context = new Context();
+		context.setStringFixer(StringFixer.createFullStringFixer(StandardCharsets.ISO_8859_1));
 		File currentDirectory = new File(getClass().getResource("/geofla").getPath()) ;
 		context.setCurrentDirectory(currentDirectory);
 		
@@ -46,7 +49,7 @@ public class CharactersValidatorTest extends TestCase {
 	
 	public void testForbiddenControl(){
 		StringType type = new StringType();
-		Attribute<String> attribute = type.newAttribute("a borbidden control : \u0001");
+		Attribute<String> attribute = type.newAttribute("a forbidden control : \u0001");
 		validator.validate(context, attribute);
 		assertEquals(1, report.countErrors() ) ;
 	}
