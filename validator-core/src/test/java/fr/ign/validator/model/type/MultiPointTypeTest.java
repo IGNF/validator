@@ -2,7 +2,6 @@ package fr.ign.validator.model.type;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPoint;
-import junit.framework.TestCase;
 
 public class MultiPointTypeTest extends AbstractTypeTest<Geometry> {
 
