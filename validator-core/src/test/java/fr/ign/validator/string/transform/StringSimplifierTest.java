@@ -8,7 +8,7 @@ import java.util.Map;
 import fr.ign.validator.string.transform.StringSimplifier;
 import junit.framework.TestCase;
 
-public class CharacterReplacerTest extends TestCase {
+public class StringSimplifierTest extends TestCase {
 
 	public void testReplace(){
 		StringSimplifier replacer = new StringSimplifier();
@@ -46,5 +46,14 @@ public class CharacterReplacerTest extends TestCase {
 		Map<String, String> replacements = replacer.getReplacements();
 		assertFalse( replacements.isEmpty() );
 		assertTrue( replacements.size() >= 2 );
+	}
+	
+	public void testTransformCommonAndLatin1(){
+		StringSimplifier replacer = new StringSimplifier();
+		// load order is importantn
+		replacer.loadCommon();
+		replacer.loadCharset(StandardCharsets.ISO_8859_1);
+		
+		assertEquals("oe", replacer.transform("\u009c"));
 	}
 }

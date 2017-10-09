@@ -58,7 +58,16 @@ public class Characters {
 		}
 	}
 
-	
+	/**
+	 * Convert character to URI displaying details
+	 * @param codePoint
+	 * @return
+	 */
+	public static String toURI(int codePoint){
+		String id = String.format("%04x",codePoint) ;
+		return "http://www.fileformat.info/info/unicode/char/"+id+"/index.htm";
+	}
+
 	/**
 	 * Converts character to hexa representation
 	 * @param codePoint

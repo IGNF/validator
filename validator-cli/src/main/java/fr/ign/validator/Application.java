@@ -7,6 +7,7 @@ import java.util.List;
 import fr.ign.validator.command.CnigExtractIdgestCommand;
 import fr.ign.validator.command.CommandInterface;
 import fr.ign.validator.command.DocumentValidatorCommand;
+import fr.ign.validator.command.UnicodeTableCommand;
 
 /**
  * 
@@ -21,6 +22,7 @@ public class Application {
 	public Application() {
 		addCommand(new DocumentValidatorCommand());
 		addCommand(new CnigExtractIdgestCommand());
+		addCommand(new UnicodeTableCommand());
 	}
 
 	private void addCommand(CommandInterface command){
