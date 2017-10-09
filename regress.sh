@@ -30,7 +30,7 @@ fi
 # run geofla
 rm validator-example/geofla/data/*.csv
 rm -rf validator-example/geofla/validation
-java -jar $VALIDATOR_PATH -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1
+java -jar $VALIDATOR_PATH document_validator --config validator-example/geofla/config/ --version GEOFLA_2015 --input validator-example/geofla/data --srs EPSG:2154 --encoding LATIN1
 
 echo "------------------------------------------------"
 echo "-- check no diff"

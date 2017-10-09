@@ -33,7 +33,7 @@ import fr.ign.validator.reader.MetadataReader;
  */
 public class CharsetPreProcess implements ValidatorListener {
 	public static final Logger log = LogManager.getRootLogger() ;
-	private static final Marker MARKER = MarkerManager.getMarker("PREPROCESS_METADATA");
+	private static final Marker MARKER = MarkerManager.getMarker("CharsetPreProcess");
 	
 	
 	@Override
@@ -53,8 +53,9 @@ public class CharsetPreProcess implements ValidatorListener {
 			log.warn(MARKER, "La charset n'a pas pu être détectée à partir de la fiche des métadonnées");
 			context.setEncoding(StandardCharsets.UTF_8);
 		}
+		log.info(MARKER, "Charset utilisée pour la lecture des fichiers : {}",context.getEncoding());
 	}
-	
+
 	/**
 	 * Lecture de la charset à partir du fichier de métadonnées
 	 * @param context

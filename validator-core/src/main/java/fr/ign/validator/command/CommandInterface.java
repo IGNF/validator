@@ -1,5 +1,7 @@
 package fr.ign.validator.command;
 
+import org.apache.commons.cli.Options;
+
 /**
  * 
  * Interface for CLI interpreter commands
@@ -16,9 +18,21 @@ public interface CommandInterface {
 	public String getName();
 
 	/**
-	 * Run the command with args (except command name) and returns exit code
+	 * Get command line options for CLI interpreter
+	 * @return
+	 */
+	public Options getCommandLineOptions() ;
+
+	/**
+	 * Run the command with CLI arguments (except command name) and returns exit code
 	 * @param args
 	 */
 	public int run(String[] args);
 	
+	/**
+	 * Run the command with arguments given as member variables
+	 * @return
+	 */
+	public int execute();
+
 }

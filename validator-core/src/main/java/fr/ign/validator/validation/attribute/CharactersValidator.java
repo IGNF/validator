@@ -4,7 +4,6 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.string.transform.IsoControlEscaper;
-import fr.ign.validator.tools.Characters;
 import fr.ign.validator.validation.Validator;
 
 /**

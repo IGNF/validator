@@ -2,11 +2,8 @@ package fr.ign.validator.command;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
@@ -26,59 +23,35 @@ public class CnigExtractIdgestCommand extends AbstractCommand {
 	
 	public static final String NAME = "cnig_extract_idgest";
 	
+	/**
+	 * Input SERVITUDE
+	 */
+	private File servitudeFile ;
+
+	
 	@Override
 	public String getName() {
 		return NAME;
 	}
-
-	/**
-	 * Get command line options
-	 * @return
-	 */
-	public static Options getCommandLineOptions() {
-		
-		Options options = new Options();
-
+	
+	@Override
+	protected void buildCustomOptions(Options options) {
 		// input
 		{
 			Option option = new Option("i", "input", true, "Fichier à convertir");
 			option.setRequired(true);
 			options.addOption(option);
 		}
-		// proxy
-		{
-			Option option = new Option("p", "proxy", true,"Adresse du proxy (ex : proxy.ign.fr:3128)");
-			option.setRequired(false);
-			options.addOption(option);
-		}
-		return options;
 	}
-	
-	
+
 	@Override
-	public int run(String[] args){
-		/*
-		 * Récupération des options de la ligne de commande
-		 */
-		Options options = getCommandLineOptions();
+	protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
+		this.servitudeFile = new File(commandLine.getOptionValue("input"));
+	}
 
-		CommandLineParser parser = new GnuParser();
-		CommandLine commandline = null;
-		
-		try {
-			commandline = parser.parse(options, args);
-		} catch (ParseException e) {
-			System.err.println(e.getMessage());
-			return 1;
-		}
-
-		String proxyString = commandline.getOptionValue("proxy", "");
-		configureProxy(proxyString);
-		
-		/*
-		 * extraction idgest à partir du fichier en paramètre
-		 */
-		File servitudeFile = new File(commandline.getOptionValue("input"));
+	@Override
+	public int execute(){
+		// extract idgest from SERVITUDE file
 		IdgestExtractor idgestExtractor = new IdgestExtractor();
 		String idGest = idgestExtractor.findIdGest(servitudeFile);
 		if ( idGest == null || idGest.isEmpty() ){
@@ -86,9 +59,7 @@ public class CnigExtractIdgestCommand extends AbstractCommand {
 			return 1;
 		}
 		
-		/*
-		 * écriture du résultat
-		 */
+		// write results to file
 		File resultFile = new File(servitudeFile.getParent(), "idGest.txt");
 		try {
 			FileUtils.writeStringToFile(resultFile, idGest);
@@ -100,21 +71,5 @@ public class CnigExtractIdgestCommand extends AbstractCommand {
 		return 0;
 	}
 
-	/**
-	 * 
-	 * @param proxyString
-	 */
-	private static void configureProxy( String proxyString ){
-		if (!proxyString.isEmpty()) {
-			String[] proxyParts = proxyString.split(":");
-			if (proxyParts.length != 2) {
-				System.err.println("bad proxy parameter (<proxy-host>:<proxy-port>)");
-				System.exit(1);
-			}
-			Properties systemSettings = System.getProperties();
-			systemSettings.put("proxySet", "true");
-			systemSettings.put("http.proxyHost", proxyParts[0]);
-			systemSettings.put("http.proxyPort", proxyParts[1]);
-		}
-	}
 }
+

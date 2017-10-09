@@ -1,7 +1,6 @@
 package fr.ign.validator.string.transform;
 
 import java.awt.Point;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;

@@ -56,45 +56,26 @@ Le programme s'appuie sur l'exécutable ```ogr2ogr``` de GDAL pour la lecture de
 mvn package
 ```
 
-# Exécution
-
+# document_validator
 
 ## Affichage de l'aide
 
 ```
-java -jar validator-cli/target/validator-cli.jar --help
+java -jar validator-cli/target/validator-cli.jar document_validator --help
 ```
 
-## Principales options
+## Spécification du chemin vers ogr2ogr
 
 ```
- -c,--config <arg>         Dossier contenant les configurations
- -de,--data-extent <arg>   Domaine dans lequel la géométrie des données
-                           est attendue (format : WKT, projection : WGS84)
- -e,--maxerror <arg>       Limitation du nombre d'erreur du même type
- -f,--flat                 Validation à plat (pas de validation de
-                           l'arborescence)
- -h,--help                 affichage du message d'aide
- -i,--input <arg>          Dossier contenant les données à valider
- -p,--proxy <arg>          Adresse du proxy (ex : proxy.ign.fr:3128)
-    --plugins <arg>        Liste des plugins à charger (noms séparés par
-                           des virgules)
- -s,--srs <arg>            Système de référence des données sources (ex :
-                           EPSG:2154)
- -v,--version <arg>        Norme et version a prendre en compte
- -W,--encoding <arg>       Encodage des données (defaut : UTF-8)
+java -Dogr2ogr_path=/path/to/ogr2ogr -jar validator-cli/target/validator-cli.jar document_validator --help
 ```
-
-## Autres options
-
-* ```-Dogr2ogr_path=/path/to/ogr2ogr```
-
 
 ## Exemple modèle classique [GEOFLA](validator-example/geofla/README.md)
 
 ```
-java -jar validator-cli/target/validator-cli.jar -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1 ```
+java -jar validator-cli/target/validator-cli.jar document_validator -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1
+```
 
-## Utilisateur en mode validateur CNIG (GpU)
+## Utilisation en mode validateur CNIG (GpU)
 
 Pour le GPU, il convient de charger le plugin dédié via l'option ```--plugins```
