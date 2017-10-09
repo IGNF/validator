@@ -28,5 +28,11 @@ public interface CommandInterface {
 	 * @param args
 	 */
 	public int run(String[] args);
+	
+	/**
+	 * Run the command with arguments given as member variables
+	 * @return
+	 */
+	public int execute();
 
 }

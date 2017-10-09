@@ -102,18 +102,6 @@ public class Context {
 	
 	public Context(){
 		this(ErrorFactory.newFromRessource());
-		
-		// decode double encoded UTF-8...
-		stringFixer.addTransform(new DoubleUtf8Decoder());
-		
-		// replace characters in string...
-		StringSimplifier simplifier = new StringSimplifier();
-		simplifier.loadCommon();
-		simplifier.loadCharset(StandardCharsets.ISO_8859_1);
-		stringFixer.addTransform(simplifier);
-		
-		stringFixer.addTransform(new IsoControlEscaper(true));
-		stringFixer.addTransform(new EscapeForCharset(StandardCharsets.ISO_8859_1));
 	}
 
 	/**
@@ -408,5 +396,11 @@ public class Context {
 		return stringFixer;
 	}
 
+	/**
+	 * @param stringFixer
+	 */
+	public void setStringFixer(StringFixer stringFixer) {
+		this.stringFixer = stringFixer;
+	}
 	
 }

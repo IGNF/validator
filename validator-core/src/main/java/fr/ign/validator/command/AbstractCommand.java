@@ -25,10 +25,56 @@ public abstract class AbstractCommand implements CommandInterface {
 	private String proxy = "";
 
 	/**
+	 * Append custom CLI options to default ones
+	 * @param options
+	 */
+	protected abstract void buildCustomOptions(Options options) ;
+	
+	/**
+	 * Parse custom CLI options to member variable
+	 * @param commandLine
+	 * @throws ParseException
+	 */
+	protected abstract void parseCustomOptions(CommandLine commandLine) throws ParseException ;
+	
+
+	@Override
+	public Options getCommandLineOptions() {
+		Options options = this.getCommonOptions();
+		buildCustomOptions(options);
+		return options;
+	}
+	
+	
+	@Override
+	public final int run(String[] args) {
+		Options options = getCommandLineOptions();
+		
+		CommandLineParser parser = new GnuParser();
+		try {
+			CommandLine commandLine = parser.parse(options, args);
+			if ( commandLine.hasOption("help") ){
+				displayHelp(options);
+				return 1;
+			}
+			parseProxyOption(commandLine);
+			parseCustomOptions(commandLine);
+			return this.execute();
+		} catch (ParseException e) {
+			System.err.println(e.getMessage());
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp(getName(), options);
+			return 1;
+		}
+	}	
+	
+
+	
+	/**
 	 * Get common options
 	 * @return
 	 */
-	protected Options getCommonOptions() {
+	private Options getCommonOptions() {
 		Options options = new Options();
 		
 		// help
@@ -44,24 +90,13 @@ public abstract class AbstractCommand implements CommandInterface {
 		return options;
 	}
 
-	protected CommandLine parseCommandLine(String[] args){
-		Options options = getCommandLineOptions();
-		CommandLineParser parser = new GnuParser();
-		try {
-			CommandLine commandLine = parser.parse(options, args);
-			parseProxyOption(commandLine);
-			return commandLine;
-		} catch (ParseException e) {
-			System.err.println(e.getMessage());
-			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp(getName(), options);
-			return null;
-		}
-	}
-	
-	protected void displayHelp(){
+	/**
+	 * Display help
+	 * @param options
+	 */
+	private void displayHelp(Options options){
 		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp(getName(), getCommonOptions());
+		formatter.printHelp(getName(), options);
 	}
 
 	/**
