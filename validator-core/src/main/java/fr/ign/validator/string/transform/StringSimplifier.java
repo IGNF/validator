@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
@@ -26,9 +26,9 @@ import fr.ign.validator.string.StringTransform;
 public class StringSimplifier implements StringTransform {
 
 	/**
-	 * source char associated to replacement
+	 * source char associated to replacement (LinkedHashMap keeps insertion order)
 	 */
-	private Map<String, String> replacements = new HashMap<>();
+	private Map<String, String> replacements = new LinkedHashMap<>();
 	
 	
 	/**
