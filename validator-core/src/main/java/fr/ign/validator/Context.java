@@ -21,10 +21,6 @@ import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
 import fr.ign.validator.string.StringFixer;
-import fr.ign.validator.string.transform.DoubleUtf8Decoder;
-import fr.ign.validator.string.transform.IsoControlEscaper;
-import fr.ign.validator.string.transform.EscapeForCharset;
-import fr.ign.validator.string.transform.StringSimplifier;
 import fr.ign.validator.validation.Validatable;
 
 /**
