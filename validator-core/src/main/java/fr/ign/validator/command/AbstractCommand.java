@@ -85,7 +85,7 @@ public abstract class AbstractCommand implements CommandInterface {
 			option.setRequired(false);
 			options.addOption(option);
 		}
-
+		
 		return options;
 	}
 

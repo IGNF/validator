@@ -41,6 +41,8 @@ public class Application {
     	System.out.println("");
     	System.out.println("Validate, normalize and extract data according to models");
     	System.out.println("");
+    	System.out.println("Version : "+Version.getVersion());
+    	System.out.println("");
     	System.out.println("Commands:");
     	for (CommandInterface command : commands) {
     		System.out.println("\t"+command.getName());
