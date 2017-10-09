@@ -352,12 +352,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @return
 	 */
 	private StringFixer parseStringFixerOptions(CommandLine commandLine){
-		if ( commandLine.hasOption("string-fix-all") ){
-			String charsetName = commandLine.getOptionValue("string-fix-all");
+		if ( commandLine.hasOption("string-all") ){
+			String charsetName = commandLine.getOptionValue("string-all");
 			Charset charset = Charset.forName(charsetName) ;
 			return StringFixer.createFullStringFixer(charset);
 		}
-		
+
 		StringFixer stringFixer = new StringFixer();
 		if ( commandLine.hasOption("string-fix-utf8") ){
 			stringFixer.addTransform(new DoubleUtf8Decoder());			
