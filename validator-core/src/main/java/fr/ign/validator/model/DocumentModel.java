@@ -97,8 +97,8 @@ public class DocumentModel implements Model {
 	public List<FileModel> getFileModels() {
 		return fileModels;
 	}
-	public void setFileModels(List<FileModel> documentFiles) {
-		this.fileModels = documentFiles;
+	public void setFileModels(List<FileModel> fileModels) {
+		this.fileModels = fileModels;
 	}
 	
 	/**
@@ -123,36 +123,35 @@ public class DocumentModel implements Model {
 	 * @param file
 	 * @return
 	 */
-	public FileModel getMatchingFileModelByPath(File documentPath, File file) {
-		/*
-		 * On parcours la mapRule a la recherche
-		 * d'une correspondance avec le fichier
-		 */
+	public FileModel findFileModelByPath(File file) {
+		FileModel result = null;
 		for  (FileModel fileModel : fileModels ) {
 			if ( fileModel.matchPath(file) ){
-				return fileModel ;
+				// keep longuest regexp
+				if ( result == null || fileModel.getRegexp().length() > result.getRegexp().length() ){
+					result = fileModel;
+				}
 			}
 		}
-		return null;
+		return result;
 	}
 	
 	/**
-	 * Trouve la définition de fichier correspondant à file en prenant en compte le path complet
-	 * @param documentPath
+	 * Trouve la définition de fichier correspondant à file en prenant en compte le seul nom de fichier
 	 * @param file
 	 * @return
 	 */
-	public FileModel getMatchingFileModelByName(File documentPath, File file) {
-		/*
-		 * On parcours la mapRule a la recherche
-		 * d'une correspondance avec le fichier
-		 */
+	public FileModel findFileModelByName(File file) {
+		FileModel result = null;
 		for  (FileModel fileModel : fileModels ) {
 			if ( fileModel.matchFilename(file) ){
-				return fileModel ;
+				// keep longuest regexp
+				if ( result == null || fileModel.getRegexp().length() > result.getRegexp().length() ){
+					result = fileModel;
+				}
 			}
 		}
-		return null;
+		return result;
 	}
 
 	

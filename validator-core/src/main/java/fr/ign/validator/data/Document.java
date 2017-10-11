@@ -236,7 +236,7 @@ public class Document implements Validatable {
 		for (File file : files) {
 			log.info(MARKER, "Recherche du FileModel pour le fichier {}...", file);
 			
-			FileModel fileModel = documentModel.getMatchingFileModelByPath( documentPath, file ) ;		
+			FileModel fileModel = documentModel.findFileModelByPath( file ) ;		
 			
 			if ( fileModel != null ){
 				log.info(MARKER, "[MATCH]{} => {}", file, fileModel.getName());
@@ -246,7 +246,7 @@ public class Document implements Validatable {
 			/*
 			 * mal placé?
 			 */ 
-			fileModel = documentModel.getMatchingFileModelByName( documentPath, file ) ;
+			fileModel = documentModel.findFileModelByName( file ) ;
 			if ( fileModel != null ){
 				log.info(MARKER, "[MISPLACED_FILE]{} ~> {} (Mal placé)", file, fileModel.getName());
 				
