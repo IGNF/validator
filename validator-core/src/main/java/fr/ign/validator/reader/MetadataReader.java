@@ -41,6 +41,14 @@ public class MetadataReader {
 			throw new InvalidMetadataException("invalid metadata exception",e);
 		}
 	}
+	
+	/**
+	 * Get XML Document
+	 * @return
+	 */
+	protected Document getDocument(){
+		return this.document;
+	}
 
 	/**
 	 * Renvoie la valeur du fileIdentifier
@@ -177,11 +185,10 @@ public class MetadataReader {
 	 * @return
 	 */
 	public static boolean isMetadataFile( File file ){
-		SAXBuilder saxBuilder = new SAXBuilder();
 		try {
-			Document document = saxBuilder.build( file );
-			Element racine = document.getRootElement();
-			return racine.getName().equals( "MD_Metadata" ) ;
+			MetadataReader reader = new MetadataReader(file);
+			Element rootElement = reader.getDocument().getRootElement();
+			return rootElement.getName().equals( "MD_Metadata" ) ;
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}

@@ -122,10 +122,12 @@ public class MetatadaReaderTest extends TestCase {
 	
 	public void testIsMetadataFile(){
 		File okFile = new File(getClass().getResource("/metadata/missing-charset.xml").getPath()) ;
-		File nokFile = new File(getClass().getResource("/metadata/not-a-metadatafile.xml").getPath()) ;
+		File nokFile1 = new File(getClass().getResource("/metadata/not-a-metadatafile.xml").getPath()) ;
+		File nokFile2 = new File(getClass().getResource("/metadata/not-an-xml-file.xml").getPath()) ;
 		
 		assertTrue( MetadataReader.isMetadataFile(okFile) ) ;
-		assertFalse( MetadataReader.isMetadataFile(nokFile) ) ;
+		assertFalse( MetadataReader.isMetadataFile(nokFile1) ) ;
+		assertFalse( MetadataReader.isMetadataFile(nokFile2) ) ;
 	}
 	
 	public void test000053015plu20140908(){
@@ -138,4 +140,6 @@ public class MetatadaReaderTest extends TestCase {
 			fail(e.getMessage());
 		}
 	}
+	
+	
 }
