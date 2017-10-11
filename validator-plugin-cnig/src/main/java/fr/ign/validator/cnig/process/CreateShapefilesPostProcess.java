@@ -12,10 +12,10 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
+import fr.ign.validator.cnig.utils.VRT;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.tools.FileConverter;
-import fr.ign.validator.tools.VRT;
 
 /**
  * 

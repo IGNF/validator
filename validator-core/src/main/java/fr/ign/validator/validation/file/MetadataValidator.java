@@ -1,17 +1,16 @@
 package fr.ign.validator.validation.file;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.jdom.JDOMException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.reader.MetadataReader;
 import fr.ign.validator.validation.Validator;
@@ -30,12 +29,8 @@ public class MetadataValidator implements Validator<DocumentFile> {
 	
 	@Override
 	public void validate(Context context, DocumentFile documentFile) {
-		if ( ! ( documentFile.getFileModel() instanceof MetadataModel ) ){
-			throw new RuntimeException(
-				"Le validateur MetadataValidator supporte uniquement le type MetadataModel"
-			);
-		}
-		
+		assert ( documentFile.getFileModel() instanceof MetadataModel ) ;
+
 		try {
 			File file = documentFile.getPath() ;
 			MetadataReader reader = new MetadataReader(file);
@@ -65,17 +60,12 @@ public class MetadataValidator implements Validator<DocumentFile> {
 				}
 			}
 			
-		} catch (JDOMException e) {
+		} catch (InvalidMetadataException e) {
 			context.report( 
 				ErrorCode.METADATA_INVALID_FILE,
 				context.relativize(documentFile.getPath())
 			);
-		} catch (IOException e) {
-			context.report( 
-				ErrorCode.METADATA_INVALID_FILE,
-				context.relativize(documentFile.getPath())
-			);
-		}
+		} 
 	}
 
 	

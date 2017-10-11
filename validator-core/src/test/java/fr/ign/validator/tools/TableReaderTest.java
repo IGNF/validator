@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.ign.validator.reader.InvalidCharsetException;
+import fr.ign.validator.exception.InvalidCharsetException;
 
 public class TableReaderTest extends TestCase {
 

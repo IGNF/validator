@@ -13,9 +13,9 @@ import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.Header;
 import fr.ign.validator.data.Row;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.file.TableModel;
-import fr.ign.validator.reader.InvalidCharsetException;
 import fr.ign.validator.tools.TableReader;
 import fr.ign.validator.validation.Validator;
 
@@ -32,14 +32,10 @@ public class TableValidator implements Validator<DocumentFile> {
 	
 	@Override
 	public void validate(Context context, DocumentFile documentFile) {
-		if ( documentFile.getFileModel() instanceof TableModel ){
-			TableModel tableModel = (TableModel)documentFile.getFileModel() ;
-			validateTable(context,tableModel,documentFile.getPath()) ;
-		}else{
-			throw new RuntimeException(
-				"Le validateur TableValidator supporte uniquement le type TableModel"
-			);
-		}
+		assert ( documentFile.getFileModel() instanceof TableModel );
+		
+		TableModel tableModel = (TableModel)documentFile.getFileModel() ;
+		validateTable(context,tableModel,documentFile.getPath()) ;
 	}
 
 	/**

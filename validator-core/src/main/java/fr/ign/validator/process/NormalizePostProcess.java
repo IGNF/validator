@@ -31,13 +31,13 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.model.file.TableModel;
-import fr.ign.validator.reader.InvalidCharsetException;
 import fr.ign.validator.tools.TableReader;
 
 /**

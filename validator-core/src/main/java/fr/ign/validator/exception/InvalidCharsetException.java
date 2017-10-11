@@ -1,4 +1,4 @@
-package fr.ign.validator.reader;
+package fr.ign.validator.exception;
 
 
 public class InvalidCharsetException extends Exception {

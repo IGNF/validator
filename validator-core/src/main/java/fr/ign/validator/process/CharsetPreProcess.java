@@ -1,7 +1,6 @@
 package fr.ign.validator.process;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -10,13 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.jdom.JDOMException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.reader.MetadataReader;
@@ -60,11 +59,9 @@ public class CharsetPreProcess implements ValidatorListener {
 	 * Lecture de la charset à partir du fichier de métadonnées
 	 * @param context
 	 * @param document
-	 * @throws JDOMException
-	 * @throws IOException
+	 * @throws InvalidMetadataException
 	 */
-	private void readCharsetFromMetadata(Context context, Document document)
-			throws JDOMException, IOException {
+	private void readCharsetFromMetadata(Context context, Document document) throws InvalidMetadataException {
 		for ( FileModel fileModel : context.getDocumentModel().getFileModels() ) {
 			if ( fileModel instanceof MetadataModel ){
 				List<DocumentFile> matchingFiles = document.getDocumentFilesByModel(fileModel) ;

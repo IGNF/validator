@@ -41,7 +41,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 			if ( fileModel instanceof TableModel ){
 				FeatureType featureType = fileModel.getFeatureType() ;
 				AttributeType<?> attributeType = featureType.getAttribute("INSEE") ;
-				if ( null != attributeType && attributeType.getClazz().isAssignableFrom(String.class) ){
+				if ( null != attributeType && attributeType instanceof StringType ){
 					log.info(MARKER, "Ajout de InseeValidator à {}",attributeType.getName());
 					((StringType)attributeType).addValidator(new InseeValidator());					
 				}

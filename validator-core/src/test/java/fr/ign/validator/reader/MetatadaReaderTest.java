@@ -1,12 +1,11 @@
 package fr.ign.validator.reader;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import org.jdom.JDOMException;
 import org.junit.Test;
 
+import fr.ign.validator.exception.InvalidMetadataException;
 import junit.framework.TestCase;
 
 public class MetatadaReaderTest extends TestCase {
@@ -19,9 +18,7 @@ public class MetatadaReaderTest extends TestCase {
 			assertEquals( "fr-210800405-08042plu20140213.xml", reader.getFileIdentifier() ) ;
 			assertEquals( "fr-210800405-08042plu20140213", reader.getMDIdentifier() ) ;
 			assertEquals( StandardCharsets.UTF_8, reader.getCharacterSetCode() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -31,9 +28,7 @@ public class MetatadaReaderTest extends TestCase {
 		try {
 			MetadataReader reader = new MetadataReader(file);
 			assertNull( reader.getMDIdentifier() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -46,9 +41,7 @@ public class MetatadaReaderTest extends TestCase {
 			assertEquals( "fr-213500028-35002plu20111215", reader.getFileIdentifier() ) ;
 			assertEquals( "fr-213500028-35002plu20111215", reader.getMDIdentifier() ) ;
 			assertEquals( StandardCharsets.ISO_8859_1, reader.getCharacterSetCode() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -62,9 +55,7 @@ public class MetatadaReaderTest extends TestCase {
 			assertEquals( "fr-210800405-08042plu20140213", reader.getMDIdentifier() ) ;
 			//Note : file encoding = ISO-8859-1, data-encoding=UTF-8
 			assertEquals( StandardCharsets.ISO_8859_1, reader.getCharacterSetCode() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -79,9 +70,7 @@ public class MetatadaReaderTest extends TestCase {
 			assertEquals( "fr-210800405-08042plu20140213", reader.getMDIdentifier() ) ;
 			//Note : file encoding = ISO-8859-1, data-encoding=UTF-8
 			assertEquals( StandardCharsets.ISO_8859_1, reader.getCharacterSetCode() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -96,9 +85,7 @@ public class MetatadaReaderTest extends TestCase {
 			assertEquals( "fr-210800405-08042plu20140213", reader.getMDIdentifier() ) ;
 			//Note : file encoding = ISO-8859-1, data-encoding=UTF-8
 			assertEquals( StandardCharsets.ISO_8859_1, reader.getCharacterSetCode() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -116,9 +103,7 @@ public class MetatadaReaderTest extends TestCase {
 			assertNull( reader.getCharacterSetCode() ) ;
 			assertFalse( null == reader.getFileIdentifier() );
 			
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -129,9 +114,7 @@ public class MetatadaReaderTest extends TestCase {
 		try {
 			MetadataReader reader = new MetadataReader(file);
 			assertNull( reader.getCharacterSetCode() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -151,9 +134,7 @@ public class MetatadaReaderTest extends TestCase {
 			MetadataReader reader = new MetadataReader(file);
 			assertEquals( "urn:isogeo:metadata:uuid:66484d70-3f8c-44cf-b0e5-98ac84426a2c", reader.getFileIdentifier() ) ;
 			assertEquals( "66484d70-3f8c-44cf-b0e5-98ac84426a2c", reader.getMDIdentifier() ) ;
-		} catch (JDOMException e) {
-			fail(e.getMessage());
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			fail(e.getMessage());
 		}
 	}

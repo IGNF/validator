@@ -1,4 +1,4 @@
-package fr.ign.validator.tools;
+package fr.ign.validator.cnig.utils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.tools.TableReader;
 
 /**
  * Classe utilitaire pour la création de fichier VRT pour accompagner les fichiers WKT

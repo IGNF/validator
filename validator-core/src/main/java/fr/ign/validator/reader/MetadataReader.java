@@ -12,6 +12,8 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.xpath.XPath;
 
+import fr.ign.validator.exception.InvalidMetadataException;
+
 /***
  * 
  * Lecteur de fiche de métadonnées
@@ -31,28 +33,15 @@ public class MetadataReader {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public MetadataReader(File file) throws JDOMException, IOException{
+	public MetadataReader(File file) throws InvalidMetadataException {
 		SAXBuilder saxBuilder = new SAXBuilder();
-		this.document = saxBuilder.build(file) ;
+		try {
+			this.document = saxBuilder.build(file) ;
+		} catch (JDOMException | IOException e) {
+			throw new InvalidMetadataException("invalid metadata exception",e);
+		}
 	}
-	
-	/**
-	 * Construction à partir d'un Document XML
-	 * @param document
-	 */
-	public MetadataReader(Document document){
-		this.document = document ;
-	}
-	
-	/**
-	 * Renvoie le document XML
-	 * @return
-	 */
-	public Document getDocument(){
-		return this.document ;
-	}
-	
-	
+
 	/**
 	 * Renvoie la valeur du fileIdentifier
 	 * @return
@@ -108,7 +97,7 @@ public class MetadataReader {
 			return null ;
 		}
 	}
-	
+
 	
 	
 	/**

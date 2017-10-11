@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 
-import fr.ign.validator.reader.InvalidCharsetException;
+import fr.ign.validator.exception.InvalidCharsetException;
 
 /**
  * Lecture des fichiers SHP/TAB 

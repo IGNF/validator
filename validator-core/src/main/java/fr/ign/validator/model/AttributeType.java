@@ -69,15 +69,6 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
 	
 	/**
-	 * Renvoie la classe java correspondante
-	 * @return
-	 */
-	public Class<T> getClazz(){
-		return clazz;
-	}
-	
-	
-	/**
 	 * Renvoie le nom du type
 	 * @return
 	 */

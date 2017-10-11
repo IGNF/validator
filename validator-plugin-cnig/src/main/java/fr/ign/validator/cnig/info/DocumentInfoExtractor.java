@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.jdom.JDOMException;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
@@ -25,6 +24,7 @@ import fr.ign.validator.cnig.utils.TyperefExtractor;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.reader.MetadataReader;
 import fr.ign.validator.tools.CompanionFileUtils;
@@ -134,9 +134,7 @@ public class DocumentInfoExtractor {
 			MetadataReader reader = new MetadataReader(metadataPath);
 			documentDirectory.setMetadataFileIdentifier(reader.getFileIdentifier());
 			documentDirectory.setMetadataMdIdentifier(reader.getMDIdentifier());
-		} catch (JDOMException e) {
-			log.warn(MARKER, "Erreur dans la lecture de la fiche de métadonnée");
-		} catch (IOException e) {
+		} catch (InvalidMetadataException e) {
 			log.warn(MARKER, "Erreur dans la lecture de la fiche de métadonnée");
 		}
 	}

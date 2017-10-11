@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import fr.ign.validator.reader.InvalidCharsetException;
+import fr.ign.validator.exception.InvalidCharsetException;
 import junit.framework.TestCase;
 
 /**
