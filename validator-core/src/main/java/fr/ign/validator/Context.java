@@ -10,10 +10,19 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import fr.ign.validator.data.Attribute;
+import fr.ign.validator.data.Document;
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Row;
+import fr.ign.validator.data.file.MetadataFile;
+import fr.ign.validator.data.file.TableFile;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
 import fr.ign.validator.process.CharsetPreProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
@@ -24,88 +33,81 @@ import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.validation.Validatable;
 
 /**
- * Le contexte de validation qui porte 
  * 
- * <ul>
- * 	<li>DocumentModel : le modèle de document</li>
- *  <li>validationDirectory : le répertoire de travail pour la validation</li>
- *  <li>reportBuilder : le gestionnaire d'erreur</li>
- * </ul>
- * 
+ * Validation context
+ *  
  * @author MBorne
  *
  */
 public class Context {
+
 	/**
-	 * L'encodage des données définit par défaut à UTF_8. Peut être modifié dans une 
-	 * étape de pré-validation (lecture de métadonnées)
+	 * Data charset (overridden by metadata provided charset)
+	 * @see CharsetPreProcess
 	 */
 	private Charset encoding = StandardCharsets.UTF_8 ;
 	
 	/**
-	 * Le système de coordonnées des données
+	 * Data CoordinateReferenceSystem (provided as a command line option)
 	 */
 	private CoordinateReferenceSystem coordinateReferenceSystem ;
 	
 	/**
-	 * L'étendue dans laquelle la géométrie est attendue (projection identique à celle des données)
+	 * Expected data extent (same CoordinateReferenceSystem than data)
 	 */
 	private Geometry nativeDataExtent ;
 
 	/**
-	 * Le répertoire de base utilisé pour tester l'existance des fichiers
-	 * (<=> documentPath)
-	 */
-	private File currentDirectory ;
-	/**
-	 * Le répertoire de validation
-	 */
-	private File validationDirectory ;
-	/**
-	 * La fabrique d'erreur
-	 */
-	private ErrorFactory errorFactory ;
-	
-	/**
-	 * La pile des modèles en cours de validation
-	 */
-	private List<Model> modelStack = new ArrayList<Model>() ;
-	/**
-	 * Pile d'emplacement de validation (fichier, ligne, etc.)
-	 */
-	private List<Validatable> dataStack = new ArrayList<Validatable>();	
-	
-	/**
-	 * Le générateur de rapport d'erreur
-	 */
-	private ReportBuilder reportBuilder = new InMemoryReportBuilder() ;
-	
-	/**
-	 * Les écouteurs d'événements de validation
-	 */
-	private List<ValidatorListener> listeners = new ArrayList<ValidatorListener>() ;
-
-	/**
-	 * mode de validation
+	 * Allows to disable strict file hierarchy validation (find files by name instead of path)
 	 */
 	private boolean flatValidation;
 	
 	/**
-	 * Option de validation des caractères
+	 * Configures deep character validation
 	 */
 	private StringFixer stringFixer = new StringFixer();
+	
+	
+	/**
+	 * Input - Current data directory (equivalent to documentPath)
+	 * 
+	 * TODO remove this variable and rely on documentPath
+	 */
+	private File currentDirectory ;
+	
+	/**
+	 * Output - validation directory containing validation and normalization results
+	 */
+	private File validationDirectory ;
+	
+	/**
+	 * Execution context - modelStack
+	 */
+	private List<Model> modelStack = new ArrayList<Model>() ;
+	/**
+	 * Execution context - dataStack
+	 */
+	private List<Validatable> dataStack = new ArrayList<Validatable>();	
+	
+
+	/**
+	 * Reporting - Create errors according to configuration files (template string and ErrorLevel)
+	 */
+	private ErrorFactory errorFactory = new ErrorFactory();
+	
+	/**
+	 * Reporting - Generates validation report
+	 */
+	private ReportBuilder reportBuilder = new InMemoryReportBuilder() ;
+	
+
+	/**
+	 * Customization - validation listener
+	 */
+	private List<ValidatorListener> listeners = new ArrayList<ValidatorListener>() ;
 
 	
 	public Context(){
-		this(ErrorFactory.newFromRessource());
-	}
-
-	/**
-	 * Construction avec une fabrique d'erreur
-	 * @param errorFactory
-	 */
-	public Context(ErrorFactory errorFactory){
-		this.errorFactory = errorFactory ;
 		registerDefaultListeners();
 	}
 	
@@ -127,11 +129,7 @@ public class Context {
 	
 
 	/**
-	 * Chargement des processus par défaut de l'application
-	 * - (re-)création du dossier de validation
-	 * - preparation des donnes en vue de validation (csv)
-	 * - preparation des donnes en vue d'export en base (shp)
-	 * - extraction d'informations sur les fichiers traitées
+	 * Load defaults validation listeners
 	 */
 	private void registerDefaultListeners(){
 		addListener( new FilterMetadataPreProcess() ); // before CharsetPreProcess
@@ -154,27 +152,34 @@ public class Context {
 	}
 	
 	/**
-	 * @return the coordinateReferenceSystem
+	 * @return
 	 */
 	public CoordinateReferenceSystem getCoordinateReferenceSystem() {
 		return coordinateReferenceSystem;
 	}
 
 	/**
-	 * @param coordinateReferenceSystem the coordinateReferenceSystem to set
+	 * @param coordinateReferenceSystem
 	 */
 	public void setCoordinateReferenceSystem( CoordinateReferenceSystem coordinateReferenceSystem) {
 		this.coordinateReferenceSystem = coordinateReferenceSystem;
 	}
-
+	
+	/**
+	 * @return
+	 */
 	public boolean hasNativeDataExtent(){
 		return nativeDataExtent != null ;
 	}
-	
+	/**
+	 * @return
+	 */
 	public Geometry getNativeDataExtent() {
 		return nativeDataExtent;
 	}
-
+	/**
+	 * @param extent
+	 */
 	public void setNativeDataExtent(Geometry extent) {
 		this.nativeDataExtent = extent;
 	}
@@ -186,6 +191,7 @@ public class Context {
 		return currentDirectory;
 	}
 	/**
+	 * TODO remove and rely on dataStack
 	 * @param currentDirectory the currentDirectory to set
 	 */
 	public void setCurrentDirectory(File currentDirectory) {
@@ -206,22 +212,26 @@ public class Context {
 		this.errorFactory = errorFactory;
 	}
 	
+	
+	
 	/**
-	 * Début de la validation d'un modèle
+	 * Push given model to stack
 	 * @param model
 	 */
 	public void beginModel( Model model ){
 		modelStack.add(model);
 	}
+
 	/**
-	 * Renvoie la pile des modèles
+	 * Get model stack
 	 * @return
 	 */
 	public List<Model> getModelStack(){
 		return this.modelStack ;
 	}
+
 	/**
-	 * Renvoie le modèle courant pour un type donné
+	 * Get current model by type
 	 * @param clazz
 	 * @return
 	 */
@@ -236,7 +246,7 @@ public class Context {
 	}
 	
 	/**
-	 * Renvoie le DocumentModel courant
+	 * Get current document model
 	 * @return
 	 */
 	public DocumentModel getDocumentModel() {
@@ -244,32 +254,72 @@ public class Context {
 	}
 
 	/**
-	 * Fin de la validation d'un modèle
+	 * Get current document model name
+	 * @param context
+	 * @return
+	 */
+	public String getDocumentModelName(){
+    	DocumentModel documentModel = getModelByType(DocumentModel.class);
+		if ( documentModel != null ){
+			return documentModel.getName();
+		}
+		return "";
+	}
+
+    /**
+     * Get current file model name
+     * @param context
+     * @return
+     */
+    public String getFileModelName(){
+		FileModel fileModel = getModelByType(FileModel.class);
+		if ( fileModel != null ){
+			return fileModel.getName();
+		}
+		return "";
+	}
+
+    /**
+     * Get current attribute name
+     * @param context
+     * @return
+     */
+    public String getAttributeName(){
+    	AttributeType<?> attribute = getModelByType(AttributeType.class);
+		if ( attribute != null ){
+			return attribute.getName();
+		}
+		return "";
+	}
+    
+	
+	/**
+	 * Pop given model from stack
 	 */
 	public void endModel( Model model ){
 		int position = modelStack.size() - 1 ;
 		if ( position < 0 ){
-			throw new RuntimeException("gestion inconsistente de beginModel/endModel"); 
+			throw new RuntimeException("inconsistent beginModel/endModel management"); 
 		}
 		modelStack.remove(position) ;
 	}
 	
 	/**
-	 * Début de validation d'une donnée
+	 * Begin data validation (push data on dataStack)
 	 * @param location
 	 */
 	public void beginData(Validatable data){
 		dataStack.add(data);
 	}
 	/**
-	 * Renvoie la pile de position
+	 * Get data stack
 	 * @return
 	 */
 	public List<Validatable> getDataStack(){
 		return dataStack ;
 	}
 	/**
-	 * Renvoie la données courante pour un type
+	 * Get data by type
 	 * @param clazz
 	 * @return
 	 */
@@ -282,8 +332,55 @@ public class Context {
 		}
 		return null;
 	}
+	
 	/**
-	 * Fin de validation d'une donnée
+	 * Get current scope according to data stack
+	 * @return
+	 */
+	public ErrorScope getScope(){
+		if ( getDataByType(Attribute.class) != null ){
+			return ErrorScope.FEATURE;
+		}else if ( getDataByType(TableFile.class) != null ){
+			return ErrorScope.HEADER;
+		}else if ( getDataByType(MetadataFile.class) != null ){
+			return ErrorScope.METADATA;
+		}else{
+			return ErrorScope.DIRECTORY;
+		}
+	}
+	
+	/**
+	 * Get current fileName according to data stack
+	 * @param context
+	 * @return
+	 */
+	public String getFileName(){
+		DocumentFile documentFile = getDataByType(DocumentFile.class);
+		if ( documentFile != null ){
+			return relativize( documentFile.getPath() ) ;
+		}
+		Document document = getDataByType(Document.class);
+		if ( document != null ){
+			return document.getDocumentName()+"/";
+		}
+		return "";
+	}
+	
+	/**
+	 * Get current line number
+	 * @param context
+	 * @return
+	 */
+    public String getLine(){
+		Row row = getDataByType(Row.class);
+		if ( row != null ){
+			return ""+row.getLine();
+		}
+		return "";
+	}
+	
+	/**
+	 * End data validation (pop data from dataStack)
 	 * @param location
 	 */
 	public void endData(Validatable data){
@@ -311,33 +408,32 @@ public class Context {
 	}
 	
 	/**
-	 * Construit un message d'erreur non localisé.
+	 * Create and report an error according to its code
 	 * 
-	 * @param codeError
+	 * @param code
 	 * @param messageParams
 	 */
 	public void report(ErrorCode code, Object... messageParams){
+		/*
+		 * Create error by code
+		 */
 		ValidatorError validatorError = errorFactory.newError(code,messageParams) ;
-		reportBuilder.addError(this, validatorError);
+		validatorError.setScope(getScope());
+		/*
+		 * Add model informations
+		 */
+		validatorError.setDocumentModel(getDocumentModelName());
+		validatorError.setFileModel(getFileModelName());
+		validatorError.setAttribute(getAttributeName());
+		/*
+		 * Add data informations
+		 */
+		validatorError.setFile(getFileName());
+		validatorError.setId(getLine());
+
+		reportBuilder.addError(validatorError);
 	}
-	
-	/**
-	 * Calcul et renvoie le répertoire DATA dans le répertoire validation pour le document courant
-	 * @return
-	 */
-	public File getDataDirectory(){
-		return new File(validationDirectory, getCurrentDirectory().getName()+"/DATA");
-	}
-	
-	/**
-	 * Calcul et renvoie le répertoire METADATA dans le répertoire validation pour le document courant
-	 * @return
-	 */
-	public File getMetadataDirectory() {
-		return new File(validationDirectory, getCurrentDirectory().getName()+"/METADATA");
-	}
-	
-	
+
 	/**
 	 * Get ValidationDirectory
 	 * @return
@@ -345,6 +441,7 @@ public class Context {
 	public File getValidationDirectory() {
 		return validationDirectory;
 	}
+
 	/**
 	 * Set ValidationDirectory
 	 * @return
@@ -352,6 +449,23 @@ public class Context {
 	public void setValidationDirectory(File validationDirectory) {
 		this.validationDirectory = validationDirectory;
 	}
+
+	/**
+	 * Get DATA directory ({validation_dir}/DATA)
+	 * @return
+	 */
+	public File getDataDirectory(){
+		return new File(validationDirectory, getCurrentDirectory().getName()+"/DATA");
+	}
+
+	/**
+	 * Get metadata directory ({validation_dir}/METADATA)
+	 * @return
+	 */
+	public File getMetadataDirectory() {
+		return new File(validationDirectory, getCurrentDirectory().getName()+"/METADATA");
+	}
+
 	
 	/**
 	 * Get report builder

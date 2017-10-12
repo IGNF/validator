@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+    <name>ccccc_CC_dddddddd</name>
+    <regexp>[0-9]{5}_CC_[0-9]{8}</regexp>
+    <files>
+        <file>
+            <name>SIMPLE</name>
+            <type>table</type>
+            <path>(N_)?SIMPLE(_(02A|02B|[0-9]{3}))?</path>
+            <mandatory>WARN</mandatory>
+        </file>
+        <file>
+            <name>Donnees_geographiques</name>
+            <type>directory</type>
+            <path>Donnees_geographiques</path>
+            <mandatory>ERROR</mandatory>
+        </file>
+        <file>
+            <name>COMMUNE</name>
+            <type>table</type>
+            <path>Donnees_geographiques/(N_)?COMMUNE(_[0-9]{5})?(_(02A|02B|[0-9]{3}))?</path>
+            <mandatory>WARN</mandatory>
+        </file>
+    </files>
+</document>

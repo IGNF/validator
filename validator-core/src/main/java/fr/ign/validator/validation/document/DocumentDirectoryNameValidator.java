@@ -1,14 +1,15 @@
 package fr.ign.validator.validation.document;
 
+import org.apache.commons.lang.StringUtils;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation du nom du dossier contenant le document en fonction 
- * de l'éventuelle expression régulière.
+ * Ensure that the name of the document directory correspond the regexp defined in DocumentModel
  * 
  * @author MBorne
  *
@@ -19,13 +20,13 @@ public class DocumentDirectoryNameValidator implements Validator<Document> {
 	public void validate(Context context, Document document) {
 		String regexp = document.getDocumentModel().getRegexp() ;
 		
-		if ( regexp == null || regexp.isEmpty() ){
+		if ( StringUtils.isEmpty(regexp) ){
 			return ;
 		}
 
 		String directoryName = document.getDocumentPath().getName();
 		if ( ! directoryName.matches(regexp) ){
-			context.report(ErrorCode.DIRECTORY_UNEXPECTED_NAME);
+			context.report(CoreErrorCodes.DIRECTORY_UNEXPECTED_NAME);
 		}
 	}
 

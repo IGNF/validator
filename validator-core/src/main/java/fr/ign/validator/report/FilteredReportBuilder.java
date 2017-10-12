@@ -3,39 +3,43 @@ package fr.ign.validator.report;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.ign.validator.Context;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ValidatorError;
-import fr.ign.validator.report.ReportBuilder;
-
-
 
 /**
  * 
- * Build filtered validation report
+ * Decorate a ReportBuilder to limit the maximum number of error reported for each type 
+ * (avoid to handle large file parsing)
  * 
  * @author FCerizay
  *
  */
 public class FilteredReportBuilder implements ReportBuilder {
-	
-	ReportBuilder reportBuilder;
-	int maxError;
-	
-	Map<ErrorCode, Integer> countMap = new HashMap<ErrorCode, Integer>();
-	
 	/**
+	 * Original report builder
 	 */
-	public FilteredReportBuilder( ReportBuilder reportBuilder, int maxError ){
-		this.reportBuilder = reportBuilder;
+	private ReportBuilder original;
+	/**
+	 * Maximum number of error for each type
+	 */
+	private int maxError;
+	/**
+	 * Count map
+	 */
+	private Map<ErrorCode, Integer> countMap = new HashMap<ErrorCode, Integer>();
+
+	/**
+	 * Constructor with an existing reportBuilder
+	 * @param original
+	 * @param maxError
+	 */
+	public FilteredReportBuilder( ReportBuilder original, int maxError ){
+		this.original = original;
 		this.maxError = maxError;
 	}
 	
-	/**
-	 * addError
-	 */
-	public void addError(Context context, ValidatorError error) {
-		
+	@Override
+	public void addError(ValidatorError error) {
 		ErrorCode errorCode = error.getCode();
 		
 		Integer count = countMap.get(errorCode);
@@ -49,7 +53,7 @@ public class FilteredReportBuilder implements ReportBuilder {
 			return;
 		}
 		
-		reportBuilder.addError(context, error);
+		original.addError(error);
 	}
 
 }

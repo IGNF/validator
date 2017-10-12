@@ -50,6 +50,9 @@ public abstract class AbstractCommand implements CommandInterface {
 	public final int run(String[] args) {
 		Options options = getCommandLineOptions();
 		
+		/*
+		 * parse command line options and handle command line options error
+		 */
 		CommandLineParser parser = new GnuParser();
 		try {
 			CommandLine commandLine = parser.parse(options, args);
@@ -59,10 +62,20 @@ public abstract class AbstractCommand implements CommandInterface {
 			}
 			parseProxyOption(commandLine);
 			parseCustomOptions(commandLine);
-			return this.execute();
 		} catch (ParseException e) {
 			System.err.println(e.getMessage());
 			displayHelp(options);
+			return 1;
+		}
+		
+		/*
+		 * run command and handle execution error
+		 */
+		try {
+			this.execute();
+			return 0;
+		}catch (Exception e){
+			e.printStackTrace();
 			return 1;
 		}
 	}	
@@ -77,11 +90,11 @@ public abstract class AbstractCommand implements CommandInterface {
 		Options options = new Options();
 		
 		// help
-		options.addOption("h", "help", false, "affichage du message d'aide");
+		options.addOption("h", "help", false, "display help message");
 
 		// proxy
 		{
-			Option option = new Option("p", "proxy", true, "Adresse du proxy (ex : proxy.ign.fr:3128)");
+			Option option = new Option("p", "proxy", true, "Network proxy (ex : proxy.ign.fr:3128)");
 			option.setRequired(false);
 			options.addOption(option);
 		}

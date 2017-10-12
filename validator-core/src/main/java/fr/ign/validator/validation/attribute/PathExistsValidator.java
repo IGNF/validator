@@ -4,7 +4,7 @@ import java.io.File;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -31,7 +31,7 @@ public class PathExistsValidator implements Validator<Attribute<File>> {
 
 		if ( ! absolutePath.exists() ){
 			context.report(
-				ErrorCode.ATTRIBUTE_PATH_NOT_FOUND, 
+				CoreErrorCodes.ATTRIBUTE_PATH_NOT_FOUND, 
 				path.toString()
 			);
 		}

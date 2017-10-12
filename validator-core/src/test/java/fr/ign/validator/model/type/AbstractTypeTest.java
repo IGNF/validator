@@ -4,7 +4,7 @@ import org.junit.Ignore;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import junit.framework.TestCase;
@@ -38,7 +38,7 @@ public class AbstractTypeTest<T> extends TestCase {
 			return attribute.getBindedValue() ;
 		}catch ( IllegalArgumentException e ){
 			context.report(
-				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
+				CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, 
 				inputValue.toString(), 
 				type.getTypeName()
 			);

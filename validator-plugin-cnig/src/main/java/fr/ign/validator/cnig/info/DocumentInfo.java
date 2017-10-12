@@ -26,6 +26,11 @@ public class DocumentInfo {
 	private String name ;
 	
 	/**
+	 * The standard (documentModelName)
+	 */
+	private String standard ;
+	
+	/**
 	 * La référence de saisie (champ TYPEREF de la table DOC_URBA)
 	 */
 	private String typeref ;
@@ -72,6 +77,20 @@ public class DocumentInfo {
 		return name;
 	}
 	
+	/**
+	 * @return
+	 */
+	public String getStandard() {
+		return standard;
+	}
+	/**
+	 * @param standard
+	 */
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+
+
 	/**
 	 * @return the typeref
 	 */
@@ -160,7 +179,6 @@ public class DocumentInfo {
 	
 	/**
 	 * simplify test
-	 * @deprecated
 	 */
 	public void sortFiles(){
 		Collections.sort(dataFiles, new DataFileComparator());

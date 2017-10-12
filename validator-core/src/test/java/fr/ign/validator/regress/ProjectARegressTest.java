@@ -11,6 +11,7 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
@@ -104,12 +105,11 @@ public class ProjectARegressTest extends TestCase {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
-		
-		for ( ValidatorError error : reportBuilder.getErrors() ){
-			System.out.println(error.getCode()+" : "+error.getMessage());
-		}
-		
-		assertEquals(0,reportBuilder.getErrors().size());
+
+		List<ValidatorError> errors = reportBuilder.getErrors();
+		assertEquals(2,errors.size());
+		assertEquals(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY,errors.get(0).getCode());
+		assertEquals(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY,errors.get(1).getCode());
 
 		File expectedNormalized = new File( context.getDataDirectory(), "COMMUNE.csv");
 		assertTrue(expectedNormalized.exists());		

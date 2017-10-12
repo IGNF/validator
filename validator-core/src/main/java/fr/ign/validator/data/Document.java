@@ -12,7 +12,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.tools.FileUtils;
@@ -20,9 +20,7 @@ import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
- * Représente un document matérialisé par un chemin vers un dossier (documentPath)
- *  et un modèle (documentModel)
+ * Document materialized as a folder (documentPath) associated to a DocumentModel (documentModel)
  * 
  * @author MBorne
  *
@@ -32,17 +30,17 @@ public class Document implements Validatable {
 	public static final Marker MARKER = MarkerManager.getMarker("Document") ;
 	
 	/**
-	 * La liste des extensions de fichier à valider
+	 * Allowed file extensions used to perform file listing
 	 */
 	private String[] allowedExtensions = { "dbf", "DBF", "tab", "TAB", "pdf", "PDF", "xml", "XML" , "gml" , "GML", "csv", "CSV"} ;	
 	
 	/**
-	 * Le modèle de document
+	 * The document model
 	 */
 	private DocumentModel documentModel ;
 	
 	/**
-	 * Validation d'un document
+	 * Document path (root folder for validation)
 	 */
 	private File documentPath ;
 	
@@ -236,7 +234,7 @@ public class Document implements Validatable {
 		for (File file : files) {
 			log.info(MARKER, "Recherche du FileModel pour le fichier {}...", file);
 			
-			FileModel fileModel = documentModel.findFileModelByPath( file ) ;		
+			FileModel fileModel = documentModel.FindFileModelByFilepath( file ) ;		
 			
 			if ( fileModel != null ){
 				log.info(MARKER, "[MATCH]{} => {}", file, fileModel.getName());
@@ -246,7 +244,7 @@ public class Document implements Validatable {
 			/*
 			 * mal placé?
 			 */ 
-			fileModel = documentModel.findFileModelByName( file ) ;
+			fileModel = documentModel.findFileModelByFilename( file ) ;
 			if ( fileModel != null ){
 				log.info(MARKER, "[MISPLACED_FILE]{} ~> {} (Mal placé)", file, fileModel.getName());
 				
@@ -255,7 +253,7 @@ public class Document implements Validatable {
 				}else{
 					context.beginModel(fileModel);
 					context.report(
-						ErrorCode.FILE_MISPLACED, 
+						CoreErrorCodes.FILE_MISPLACED, 
 						context.relativize(file), 
 						fileModel.getName()
 					);
@@ -269,7 +267,7 @@ public class Document implements Validatable {
 			 */
 			log.error(MARKER, "[UNEXPECTED_FILE] {} => null", file);
 			context.report(
-				ErrorCode.FILE_UNEXPECTED, 
+				CoreErrorCodes.FILE_UNEXPECTED, 
 				context.relativize(file)
 			);
 		}
@@ -277,17 +275,15 @@ public class Document implements Validatable {
 	
 	
 	private void addDocumentFile(FileModel fileModel, File path){
-		this.documentFiles.add(new DocumentFile(fileModel, path)) ;
+		this.documentFiles.add(fileModel.createDocumentFile(path)) ;
 	}
-	
+
 	/**
 	 * Supprime la liste des fichiers mis en correspondance avec le modèle
 	 */
 	private void clearFiles() {
 		documentFiles.clear();
 	}
-
-
 
 
 	

@@ -2,7 +2,7 @@ package fr.ign.validator.validation.attribute;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -18,7 +18,7 @@ public class AttributeNullableValidator<T> implements Validator<Attribute<T>> {
 			return ;
 		}
 		if ( attribute.getBindedValue() == null ){
-			context.report(ErrorCode.ATTRIBUTE_UNEXPECTED_NULL);
+			context.report(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL);
 		}
 	}
 

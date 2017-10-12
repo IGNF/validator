@@ -1,10 +1,9 @@
 package fr.ign.validator.model;
 
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
 import fr.ign.validator.model.type.StringType;
+import junit.framework.TestCase;
 
 /**
  * 
@@ -12,17 +11,14 @@ import fr.ign.validator.model.type.StringType;
  *
  */
 public class FeatureTypeTest extends TestCase {
-	private FeatureCatalogue featureCatalogue ;
 	private FeatureType featureType ;
 	private FeatureType featureTypeChild ;
 	
 	@Override
 	protected void setUp() throws Exception {
-		featureCatalogue = new FeatureCatalogue() ;
 
 		featureType = new FeatureType() ;
 		featureType.setTypeName("PARENT");
-		featureCatalogue.addFeatureType(featureType);
 		{
 			StringType attribute = new StringType() ;
 			attribute.setName("A");
@@ -37,7 +33,6 @@ public class FeatureTypeTest extends TestCase {
 		featureTypeChild = new FeatureType() ;
 		featureTypeChild.setTypeName("CHILD");
 		featureTypeChild.setParent(featureType);
-		featureCatalogue.addFeatureType(featureTypeChild);
 		
 		{
 			StringType attribute = new StringType() ;

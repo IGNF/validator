@@ -29,6 +29,7 @@ public class DocumentInfoWriter {
 	 */
 	private static final String ELEMENT_DOCUMENT    = "document";
 	private static final String ELEMENT_NAME        = "name";
+	private static final String ELEMENT_STANDARD    = "standard";
 	private static final String ELEMENT_TYPEREF     = "typeref";
 	private static final String ELEMENT_GEOMETRY    = "geometry";
 	
@@ -99,7 +100,7 @@ public class DocumentInfoWriter {
 		
 		Collection<Element> documentAttributes = new ArrayList<Element>() ;
 		documentAttributes.add( createSimpleElement( ELEMENT_NAME, documentInfo.getName() ) ) ;
-		
+		documentAttributes.add( createSimpleElement( ELEMENT_STANDARD, documentInfo.getStandard() ) ) ;
 		/*
 		 * Ajout du type de la bbox et de la projection
 		 */

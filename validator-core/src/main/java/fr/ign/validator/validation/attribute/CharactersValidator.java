@@ -2,7 +2,7 @@ package fr.ign.validator.validation.attribute;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validator;
 
@@ -33,7 +33,7 @@ public class CharactersValidator<T> implements Validator<Attribute<T>> {
 		if ( ! fixedString.equals(originalString) ){
 			IsoControlEscaper transform = new IsoControlEscaper(false);
 			context.report(
-				ErrorCode.ATTRIBUTE_CHARACTERS_ILLEGAL,
+				CoreErrorCodes.ATTRIBUTE_CHARACTERS_ILLEGAL,
 				transform.transform(originalString),    // original string
 				fixedString                             // transformed string
 			);

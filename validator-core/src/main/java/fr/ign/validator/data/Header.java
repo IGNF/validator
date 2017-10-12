@@ -3,7 +3,7 @@ package fr.ign.validator.data;
 import java.io.File;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -54,7 +54,7 @@ public class Header implements Validatable {
 				 */
 				continue ;
 			}
-			context.report(ErrorCode.TABLE_UNEXPECTED_ATTRIBUTE, name);
+			context.report(CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, name);
 		}
 		
 		/*
@@ -66,19 +66,19 @@ public class Header implements Validatable {
 			
 			if ( missingAttribute.getName().equals("WKT") ){
 				context.report(
-					ErrorCode.TABLE_MISSING_GEOMETRY, 
+					CoreErrorCodes.TABLE_MISSING_GEOMETRY, 
 					context.relativize(matchingFile)
 				);
 				
 			}else if ( missingAttribute.isNullable() ){
 				context.report(
-					ErrorCode.TABLE_MISSING_NULLABLE_ATTRIBUTE, 
+					CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, 
 					missingAttribute.getName(),
 					context.relativize(matchingFile)
 				);
 			}else{
 				context.report(
-					ErrorCode.TABLE_MISSING_ATTRIBUTE, 
+					CoreErrorCodes.TABLE_MISSING_ATTRIBUTE, 
 					missingAttribute.getName(),
 					context.relativize(matchingFile)
 				);

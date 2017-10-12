@@ -1,7 +1,10 @@
 package fr.ign.validator.model.file;
 
+import java.io.File;
+
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.file.TableFile;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.validation.file.TableValidator;
 
 /**
  * Représente une table associée à une structure (FeatureType)
@@ -13,17 +16,21 @@ public class TableModel extends FileModel {
 	
 	public TableModel() {
 		super();
-		addValidator(new TableValidator());
 	}
-	
+
 	@Override
 	public String getType() {
 		return TYPE ;
 	}
 	
-	
 	@Override
 	public String getRegexpSuffix() {
 		return "\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)";
 	}
+	
+	@Override
+	public DocumentFile createDocumentFile(File path) {
+		return new TableFile(this,path);
+	}
+
 }

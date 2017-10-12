@@ -1,5 +1,9 @@
 package fr.ign.validator.model.file;
 
+import java.io.File;
+
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.file.PdfFile;
 import fr.ign.validator.model.FileModel;
 
 /**
@@ -25,6 +29,11 @@ public class PdfModel extends FileModel {
 	@Override
 	public String getRegexpSuffix() {
 		return "\\.(pdf|PDF)";
+	}
+	
+	@Override
+	public DocumentFile createDocumentFile(File path) {
+		return new PdfFile(this,path);
 	}
 
 }

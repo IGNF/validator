@@ -25,7 +25,8 @@ Voir [LICENCE.md](LICENCE.md)
 
 # Documentation technique
 
-Voir [doc/model.md](doc/model.md)
+* [validator-core](doc/model.md)
+* [Metadata validation](doc/metadata.md)
 
 
 # Cas d'utilisation

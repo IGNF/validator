@@ -18,15 +18,16 @@ import org.opengis.referencing.operation.TransformException;
 import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.utils.EnveloppeUtils;
 import fr.ign.validator.cnig.utils.IdurbaUtils;
 import fr.ign.validator.cnig.utils.TyperefExtractor;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.exception.InvalidMetadataException;
+import fr.ign.validator.metadata.Metadata;
+import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.file.MetadataModel;
-import fr.ign.validator.reader.MetadataReader;
 import fr.ign.validator.tools.CompanionFileUtils;
 
 /**
@@ -40,7 +41,7 @@ import fr.ign.validator.tools.CompanionFileUtils;
  */
 public class DocumentInfoExtractor {
 	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("DOCUMENT_INFO_EXTRACTOR");
+	public static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractor");
 
 	/**
 	 * Récupération des informations d'un dossier
@@ -68,8 +69,6 @@ public class DocumentInfoExtractor {
 	}
 
 	/**
-	 * parse repertory TODO test function recursive
-	 * 
 	 * @param directoryName
 	 * @param file
 	 * @throws IOException
@@ -80,7 +79,7 @@ public class DocumentInfoExtractor {
 	private DocumentInfo parseDocument(Context context, File validationDirectory, String documentName)
 			throws IOException, FactoryException, MismatchedDimensionException, TransformException {
 		DocumentInfo documentInfo = new DocumentInfo(documentName);
-
+		documentInfo.setStandard(context.getDocumentModelName());
 		/*
 		 * Récupération des shapefiles avec leurs emprises
 		 */
@@ -131,9 +130,9 @@ public class DocumentInfoExtractor {
 
 		File metadataPath = metadataFiles.get(0).getPath();
 		try {
-			MetadataReader reader = new MetadataReader(metadataPath);
+			Metadata reader = MetadataISO19115.readFile(metadataPath);
 			documentDirectory.setMetadataFileIdentifier(reader.getFileIdentifier());
-			documentDirectory.setMetadataMdIdentifier(reader.getMDIdentifier());
+			documentDirectory.setMetadataMdIdentifier(reader.getIdentifier());
 		} catch (InvalidMetadataException e) {
 			log.warn(MARKER, "Erreur dans la lecture de la fiche de métadonnée");
 		}
@@ -163,7 +162,7 @@ public class DocumentInfoExtractor {
 		TyperefExtractor typerefExtractor = new TyperefExtractor();
 		String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
 		if (null == result) {
-			context.report(ErrorCode.CNIG_IDURBA_NOT_FOUND, IdurbaUtils.getRegexp(documentName));
+			context.report(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, IdurbaUtils.getRegexp(documentName));
 		}
 		return result;
 	}

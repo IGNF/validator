@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<featureType>
+    <typeName>COMMUNE</typeName>
+    <description>La table des communes</description>
+    <attributes>
+        <attribute>
+            <name>INSEE</name>
+            <type>String</type>
+            <regexp>[0-9]{5}</regexp>
+            <nullable>false</nullable>
+        </attribute>
+        <attribute>
+            <name>CODE_DEPT</name>
+            <type>String</type>
+            <nullable>false</nullable>
+            <listOfValues>
+                <value>01</value>
+                <value>02</value>
+            </listOfValues>
+        </attribute>
+        <attribute>
+            <name>DETRUIT</name>
+            <type>Boolean</type>
+            <nullable>true</nullable>
+        </attribute>
+    </attributes>
+</featureType>

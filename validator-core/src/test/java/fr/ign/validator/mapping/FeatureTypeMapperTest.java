@@ -8,7 +8,6 @@ import fr.ign.validator.model.type.BooleanType;
 import junit.framework.TestCase;
 
 /**
- * TODO ajouter des cas de test
  * @author MBorne
  *
  */

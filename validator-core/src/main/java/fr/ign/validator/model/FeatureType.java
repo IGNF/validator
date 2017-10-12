@@ -10,21 +10,19 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Représente la structure d'une table de données géographiques.
+ * Describe the content of a table
+ * 
+ * TODO restore XML mapping for parent as separated file (no more required for GPU, XML models is a flat export of a database)
  *  
  * @author MBorne
  */
 @XmlRootElement
-@XmlType(propOrder = { "typeName", "parentName", "description", "attributes" })
+@XmlType(propOrder = { "typeName", "description", "attributes" })
 public class FeatureType implements Model {
-	/**
-	 * LE Catalogue associé au FeatureType
-	 */
-	private FeatureCatalogue featureCatalogue ;
 	/**
 	 * Parent (optionnel)
 	 */
-	private String parentName ;
+	private FeatureType parent ;
 	/**
 	 * Le nom du type
 	 */
@@ -43,37 +41,12 @@ public class FeatureType implements Model {
 
 	}
 
-	public FeatureCatalogue getFeatureCatalogue() {
-		return featureCatalogue;
-	}
-
-	@XmlTransient
-	protected void setFeatureCatalogue(FeatureCatalogue featureCatalogue) {
-		this.featureCatalogue = featureCatalogue;
-	}
-
-	/**
-	 * Renvoie le type parent
-	 * @return
-	 */
-	public String getParentName(){
-		return this.parentName ;
-	}
-	/**
-	 * Définit le type parent
-	 * @param featureType
-	 */
-	@XmlElement(name="parent")
-	public void setParentName(String parentName){
-		this.parentName = parentName ;
-	}
-
 	/**
 	 * Indique si le type a un parent
 	 * @return
 	 */
 	public boolean hasParent(){
-		return parentName != null ;
+		return parent != null ;
 	}
 	
 	/**
@@ -81,17 +54,6 @@ public class FeatureType implements Model {
 	 * @return
 	 */
 	public FeatureType getParent(){
-		if ( parentName == null ){
-			return null ;
-		}
-		FeatureType parent = featureCatalogue.getFeatureTypeByName(parentName);
-		if ( parent == null ){
-			String message = String.format("Le FeatureType %1s définit comme parent de %2s n'existe pas",
-				parentName,
-				typeName
-			);
-			throw new RuntimeException(message);
-		}
 		return parent ;
 	}
 	/**
@@ -99,12 +61,8 @@ public class FeatureType implements Model {
 	 * @param featureType
 	 */
 	@XmlTransient
-	public void setParent(FeatureType featureType){
-		if ( featureType == null ){
-			parentName = null ;
-		}else{
-			parentName = featureType.getTypeName() ;
-		}
+	public void setParent(FeatureType parent){
+		this.parent = parent ;
 	}
 	
 	@Override

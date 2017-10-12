@@ -160,11 +160,7 @@ public class TableReader implements Iterator< String[] >{
 			file.getParent(),
 			FilenameUtils.getBaseName(file.getName())+".csv"
 		);
-		
-		/*
-		 * TODO : mettre une option pour éviter 
-		 *  plusieurs conversions quand c'est possible
-		 */
+
 		if ( csvFile.exists() ){
 			csvFile.delete();
 		}

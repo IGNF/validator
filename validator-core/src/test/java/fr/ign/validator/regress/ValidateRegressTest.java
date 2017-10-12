@@ -10,15 +10,12 @@ import org.geotools.referencing.CRS;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ValidatorError;
-import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.xml.XmlModelManager;
 import junit.framework.TestCase;
 
 /**
- * 
- * TODO move to validator-garden-test
- * 
  * @author MBorne
  *
  */
@@ -34,7 +31,7 @@ public class ValidateRegressTest extends TestCase {
 		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
 		context.setReportBuilder(reportBuilder);
 		File documentModelPath = new File(getClass().getResource("/config/cnig_PLU_2014/files.xml").getPath()) ;
-		ModelLoader modelLoader = new ModelLoader();
+		XmlModelManager modelLoader = new XmlModelManager();
 		documentModel = modelLoader.loadDocumentModel(documentModelPath);
 	}
 	
@@ -65,7 +62,7 @@ public class ValidateRegressTest extends TestCase {
 		assertEquals("ISO-8859-1", context.getEncoding().toString());
 		
 		List<ValidatorError> errors = reportBuilder.getErrors();
-		assertEquals(10,errors.size());
+		assertEquals(11,errors.size());
 	}
 	
 }

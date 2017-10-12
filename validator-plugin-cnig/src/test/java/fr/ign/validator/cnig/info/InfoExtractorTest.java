@@ -12,9 +12,9 @@ import org.xmlunit.diff.Diff;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.loader.ModelLoader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
+import fr.ign.validator.xml.XmlModelManager;
 import junit.framework.TestCase;
 
 /**
@@ -39,7 +39,7 @@ public class InfoExtractorTest extends TestCase {
 	
 	public void testInfoExtractorDU_41175() throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/cnig_PLU_2014/files.xml").getPath());
-		ModelLoader loader = new ModelLoader();
+		XmlModelManager loader = new XmlModelManager();
 		DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
 
 		File documentPath = new File(getClass().getResource("/DU_41175/41175_PLU_20140603").getPath());
@@ -58,20 +58,13 @@ public class InfoExtractorTest extends TestCase {
 
 		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		
-		Diff myDiff = DiffBuilder.compare(Input.fromString(expected))
-	              .withTest(Input.fromString(actual))
-	              .build();
-		if ( myDiff.hasDifferences() ){
-			log.error(actual);
-		}
-		assertFalse(myDiff.toString(), myDiff.hasDifferences());
+		assertEquals(expected, actual);
 	}
 
 
 	public void testInfoExtractorDU_50545() throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/cnig_CC_2014/files.xml").getPath());
-		ModelLoader loader = new ModelLoader();
+		XmlModelManager loader = new XmlModelManager();
 		DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
 
 		File documentPath = new File(getClass().getResource("/DU_50545/50545_CC_20130902").getPath());
@@ -90,20 +83,13 @@ public class InfoExtractorTest extends TestCase {
 
 		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-
-		Diff myDiff = DiffBuilder.compare(Input.fromString(expected))
-	              .withTest(Input.fromString(actual))
-	              .build();
-		if ( myDiff.hasDifferences() ){
-			log.error(actual);
-		}
-		assertFalse(myDiff.toString(), myDiff.hasDifferences());
+		assertEquals(expected, actual);
 	}
 
 
 	public void testInfoExtractorSUP_PM3_28() throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/cnig_SUP_PM3_2013/files.xml").getPath());
-		ModelLoader loader = new ModelLoader();
+		XmlModelManager loader = new XmlModelManager();
 		DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
 
 		File documentPath = new File(getClass().getResource("/SUP_PM3_28/110068012_PM3_28_20161104").getPath());
@@ -122,14 +108,7 @@ public class InfoExtractorTest extends TestCase {
 
 		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		
-		Diff myDiff = DiffBuilder.compare(Input.fromString(expected))
-	              .withTest(Input.fromString(actual))
-	              .build();
-		if ( myDiff.hasDifferences() ){
-			log.error(actual);
-		}
-		assertFalse(myDiff.toString(), myDiff.hasDifferences());
+		assertEquals(expected, actual);
 	}
 
 }

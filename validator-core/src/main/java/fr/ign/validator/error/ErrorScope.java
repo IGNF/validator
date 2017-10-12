@@ -1,19 +1,28 @@
 package fr.ign.validator.error;
 
 /**
- * Localisation de l'erreur
- * 
- * @warning Passage en majuscule des constantes pour valueOf
- *   (il faudra les remettre en CamelCase dans le rapport pour la compatiblité du GPU)
- * 
+ * Error location, stands as the type of the error
  * @author MBorne
  */
 public enum ErrorScope {
+	/**
+	 * document level (missing files, etc.)
+	 */
 	DIRECTORY("DIRECTORY"),
+	/**
+	 * Metadata file validation
+	 */
+	METADATA("METADATA"),
+	/**
+	 * Table header validation
+	 */
 	HEADER("HEADER"),
+	/**
+	 * Table row validation
+	 */
 	FEATURE("FEATURE")
 	;
-	
+
 	private final String name;
 	
 	/**
@@ -23,9 +32,6 @@ public enum ErrorScope {
         this.name = name;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Enum#toString()
-     */
     @Override
     public String toString() {
         return name;

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.ign.validator.command.CnigExtractIdgestCommand;
+import fr.ign.validator.cnig.command.CnigDocumentValidatorCommand;
+import fr.ign.validator.cnig.command.CnigExtractIdgestCommand;
 import fr.ign.validator.command.CommandInterface;
 import fr.ign.validator.command.DocumentValidatorCommand;
+import fr.ign.validator.command.MetadataToJsonCommand;
 import fr.ign.validator.command.UnicodeTableCommand;
 
 /**
@@ -21,8 +23,12 @@ public class Application {
 	
 	public Application() {
 		addCommand(new DocumentValidatorCommand());
-		addCommand(new CnigExtractIdgestCommand());
+		addCommand(new MetadataToJsonCommand());
+		
 		addCommand(new UnicodeTableCommand());
+		
+		addCommand(new CnigExtractIdgestCommand());
+		addCommand(new CnigDocumentValidatorCommand());
 	}
 
 	private void addCommand(CommandInterface command){

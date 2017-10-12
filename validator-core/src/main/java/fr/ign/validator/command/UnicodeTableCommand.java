@@ -60,14 +60,8 @@ public class UnicodeTableCommand extends AbstractCommand {
 
 
 	@Override
-	public int execute() {
-		try {
-			generateUnicodeTable();
-			return 0;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 1;
-		}
+	public void execute() throws Exception{
+		generateUnicodeTable();
 	}
 	
 	private void generateUnicodeTable() throws Exception{

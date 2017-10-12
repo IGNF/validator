@@ -1,5 +1,9 @@
 package fr.ign.validator.model.file;
 
+import java.io.File;
+
+import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.file.DirectoryFile;
 import fr.ign.validator.model.FileModel;
 
 /**
@@ -25,6 +29,11 @@ public class DirectoryModel extends FileModel {
 	@Override
 	public String getRegexpSuffix() {
 		return "/";
+	}
+
+	@Override
+	public DocumentFile createDocumentFile(File path) {
+		return new DirectoryFile(this,path);
 	}
 
 }
