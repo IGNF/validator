@@ -2,6 +2,7 @@ package fr.ign.validator.validation.document;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.DirectoryModel;
@@ -9,7 +10,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation des fichiers obligatoires dans un document
+ * Ensure that mandatory files are presents
  * 
  * @author MBorne
  *
@@ -59,12 +60,12 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 	 */
 	private ErrorCode getErrorCodeRecommanded(FileModel fileModel){
 		if ( fileModel instanceof DirectoryModel ){
-			return ErrorCode.FILE_MISSING_RECOMMANDED_DIRECTORY ;
+			return CoreErrorCodes.FILE_MISSING_RECOMMANDED_DIRECTORY ;
 		}else{
-			return ErrorCode.FILE_MISSING_RECOMMANDED ;
+			return CoreErrorCodes.FILE_MISSING_RECOMMANDED ;
 		}
 	}
-	
+
 
 	/**
 	 * Code d'erreur fonction du type de fichier
@@ -74,9 +75,9 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 	 */
 	private ErrorCode getErrorCodeMandatory(FileModel fileModel){
 		if ( fileModel instanceof DirectoryModel ){
-			return ErrorCode.FILE_MISSING_MANDATORY_DIRECTORY ;
+			return CoreErrorCodes.FILE_MISSING_MANDATORY_DIRECTORY ;
 		}else{
-			return ErrorCode.FILE_MISSING_MANDATORY ;
+			return CoreErrorCodes.FILE_MISSING_MANDATORY ;
 		}
 	}
 }

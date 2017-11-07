@@ -36,13 +36,10 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -2,7 +2,6 @@ package fr.ign.validator.process;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,11 +13,12 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.InvalidMetadataException;
-import fr.ign.validator.model.FileModel;
+import fr.ign.validator.metadata.Metadata;
+import fr.ign.validator.metadata.code.CharacterSetCode;
+import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.file.MetadataModel;
-import fr.ign.validator.reader.MetadataReader;
 
 /**
  * Pré traitement
@@ -45,51 +45,59 @@ public class CharsetPreProcess implements ValidatorListener {
 	 */
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
-		log.info(MARKER, "Récupération de la charset dans les fichiers de métadonnées...");
-		readCharsetFromMetadata(context, document);
-		
-		if ( null == context.getEncoding() ){
-			log.warn(MARKER, "La charset n'a pas pu être détectée à partir de la fiche des métadonnées");
-			context.setEncoding(StandardCharsets.UTF_8);
+		log.info(MARKER, "Search data charset in metadata files...");
+		Charset charset = readCharsetFromMetadata(context, document);
+		if ( null == charset ){
+			log.warn(MARKER, "Charset not found in metadata files!");
+		}else{
+			context.setEncoding(charset);
 		}
-		log.info(MARKER, "Charset utilisée pour la lecture des fichiers : {}",context.getEncoding());
+		log.info(MARKER, "Charset : {}",context.getEncoding());
 	}
 
 	/**
-	 * Lecture de la charset à partir du fichier de métadonnées
+	 * Read charset from metadata (returns null if not found)
 	 * @param context
 	 * @param document
-	 * @throws InvalidMetadataException
+	 * @return
 	 */
-	private void readCharsetFromMetadata(Context context, Document document) throws InvalidMetadataException {
-		for ( FileModel fileModel : context.getDocumentModel().getFileModels() ) {
-			if ( fileModel instanceof MetadataModel ){
-				List<DocumentFile> matchingFiles = document.getDocumentFilesByModel(fileModel) ;
-				if ( matchingFiles.isEmpty() ){
-					continue ;
-				}
-
-				File metadataFile = matchingFiles.get(0).getPath() ;
-				
-				if ( matchingFiles.size() > 1 ){
-					context.report(
-						ErrorCode.METADATA_MULTIPLE_FILES,
-						formatFiles(context,matchingFiles)
-					);
-				}
-				
-				/*
-				 * Lecture de l'encodage à partir du fichier de métadonnées
-				 */
-				MetadataReader reader = new MetadataReader(metadataFile);
-				Charset dataEncoding = reader.getCharacterSetCode() ;
+	private Charset readCharsetFromMetadata(Context context, Document document) {
+		List<DocumentFile> metadataFiles = document.getDocumentFiles(MetadataModel.class);
+		if ( metadataFiles.isEmpty() ){
+			return null;
+		}
+		if ( metadataFiles.size() > 1 ){
+			context.report(
+				CoreErrorCodes.METADATA_MULTIPLE_FILES,
+				formatFiles(context,metadataFiles)
+			);
+		}
+		
+		File metadataFile = metadataFiles.get(0).getPath() ;
+		try {
+			Metadata reader = MetadataISO19115.readFile(metadataFile);
+			CharacterSetCode characterSet = reader.getCharacterSet();
+			if ( characterSet == null ){
 				log.info(MARKER,
-					"{} détecté (encodage des caractères : {})", 
-					metadataFile,
-					dataEncoding
+					"{} - characterSet is not defined in metadata file ", 
+					metadataFile
 				);
-				context.setEncoding( dataEncoding );
+				return null;
 			}
+			Charset dataEncoding = characterSet.getCharset() ;
+			log.info(MARKER,
+				"{} - characterSet : {} converted to java value {}", 
+				metadataFile,
+				characterSet.getValue(),
+				dataEncoding
+			);
+			return dataEncoding;
+		}catch(InvalidMetadataException e){
+			log.error(MARKER,
+				"fail to read metadata file : {}", 
+				e.getMessage()
+			);
+			return null;
 		}
 	}
 	

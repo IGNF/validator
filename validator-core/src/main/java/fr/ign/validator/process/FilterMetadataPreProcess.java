@@ -12,51 +12,49 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
-import fr.ign.validator.reader.MetadataReader;
 
 /**
  * 
- * Filtrage des fichiers XML ne correspondant pas à des fichiers de métadonnées
+ * Remove XML files which doesn't corresponds to ISO19115 metadata files
+ * 
+ * @see MetadataISO19115.isMetadataFile
  * 
  * @author MBorne
  *
  */
 public class FilterMetadataPreProcess implements ValidatorListener {
-	
-	public static final Logger log = LogManager.getRootLogger() ;
+
+	public static final Logger log = LogManager.getRootLogger();
 	private static final Marker MARKER = MarkerManager.getMarker("FilterMetadataPreProcess");
-	
+
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
-		
+
 	}
 
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
 		log.info(MARKER, "Filtrage des fichiers xml qui ne sont pas des métadonnées...");
-		
-		for ( FileModel fileModel : document.getDocumentModel().getFileModels() ) {
 
-			if ( ! ( fileModel instanceof MetadataModel) ){
+		for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
+			if (!(fileModel instanceof MetadataModel)) {
 				continue;
 			}
-		
-			List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel) ;
-			
-			if ( documentFiles.isEmpty() ){
-				continue ;
+
+			List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
+
+			if (documentFiles.isEmpty()) {
+				continue;
 			}
 
-			for ( DocumentFile documentFile : documentFiles ) {
-				File xmlFile = documentFile.getPath() ;
-				if ( ! MetadataReader.isMetadataFile(xmlFile)){
-					context.report(
-						ErrorCode.METADATA_IGNORED_FILE,
-						context.relativize(xmlFile)
-					);
+			for (DocumentFile documentFile : documentFiles) {
+				File xmlFile = documentFile.getPath();
+				if (!MetadataISO19115.isMetadataFile(xmlFile)) {
+					context.report(CoreErrorCodes.METADATA_IGNORED_FILE, context.relativize(xmlFile));
 					log.info(MARKER, "Suppression du fichier XML {}...", documentFile);
 					document.removeDocumentFile(documentFile);
 				}
@@ -66,8 +64,7 @@ public class FilterMetadataPreProcess implements ValidatorListener {
 
 	@Override
 	public void afterValidate(Context context, Document document) throws Exception {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

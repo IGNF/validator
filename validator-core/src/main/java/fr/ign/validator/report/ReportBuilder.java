@@ -1,6 +1,5 @@
 package fr.ign.validator.report;
 
-import fr.ign.validator.Context;
 import fr.ign.validator.error.ValidatorError;
 
 /**
@@ -16,6 +15,6 @@ public interface ReportBuilder {
 	 * Add error to the report
 	 * @param error
 	 */
-	public void addError(Context context, ValidatorError error);
+	public void addError(ValidatorError error);
 	
 }

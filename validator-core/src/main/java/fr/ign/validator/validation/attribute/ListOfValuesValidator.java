@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -38,7 +38,7 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 		}
 		
 		context.report(
-			ErrorCode.ATTRIBUTE_UNEXPECTED_VALUE, 
+			CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, 
 			value,
 			formatListOfValues( attribute.getType().getListOfValues() )
 		);

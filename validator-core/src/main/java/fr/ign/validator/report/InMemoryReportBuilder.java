@@ -3,13 +3,12 @@ package fr.ign.validator.report;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.ign.validator.Context;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 
 /**
  * 
- * Stockage des erreurs de validation en mémoire
+ * Store ValidatorError in memory (designed for test purpose and UI).
  * 
  * @author MBorne
  *
@@ -17,17 +16,17 @@ import fr.ign.validator.error.ValidatorError;
 public class InMemoryReportBuilder implements ReportBuilder {
 
 	/**
-	 * La liste des erreurs rencontrées
+	 * Reported errors
 	 */
 	private List<ValidatorError> errors = new ArrayList<ValidatorError>();
 	
 	@Override
-	public void addError(Context context, ValidatorError error) {
+	public void addError(ValidatorError error) {
 		errors.add(error);
 	}
 	
 	/**
-	 * Renvoie la liste des erreurs rencontrées
+	 * Get reported errors
 	 * @return
 	 */
 	public List<ValidatorError> getErrors(){
@@ -35,7 +34,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 	}
 	
 	/**
-	 * Comptage du nombre total d'erreur
+	 * Count errors
 	 * @return
 	 */
 	public int countErrors(){
@@ -43,7 +42,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 	}
 	
 	/**
-	 * Comptate des erreurs en fonction d'un niveau de gravité
+	 * Count errors for a given level
 	 * @param level
 	 * @return
 	 */
@@ -57,6 +56,10 @@ public class InMemoryReportBuilder implements ReportBuilder {
 		return result ;
 	}
 
+	/**
+	 * Check that report contains any ValidatorError with level = FATAL or level = ERROR
+	 * @return
+	 */
 	public boolean isValid() {
 		for (ValidatorError validatorError : errors) {
 			if ( validatorError.getLevel().equals(ErrorLevel.FATAL) ){

@@ -19,8 +19,7 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  * 
- * Extraction de la géométrie d'un document (valable uniquement pour les
- * documents d'urbanisme)
+ * Extract document geometry from ZONE_URBA or SECTEUR_CC
  * 
  * @author MBorne
  *

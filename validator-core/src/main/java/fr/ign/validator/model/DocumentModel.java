@@ -7,7 +7,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +20,7 @@ import fr.ign.validator.validation.document.DocumentDirectoryNameValidator;
 import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
 /**
- * Décrit un document composé d'une liste de fichiers.
+ * A DocumentModel defines a list of FileModel
  * 
  * @author MBorne
  */
@@ -32,21 +31,17 @@ public class DocumentModel implements Model {
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentModel") ;
 	
 	/**
-	 * Le nom du fichier
+	 * The name of the DocumentModel (ex : "cnig_PLU_2013")
 	 */
 	private String name ;
 	/**
-	 * Le nom du dossier donné par une expression régulière
+	 * The name of the document provided as a regexp (ex : (ex : "(2A|2B|[0-9]{2})[0-9]{3}_PLU_[0-9]{8}")
 	 */
 	private String regexp ;
 	/**
 	 * La liste des fichiers du document
 	 */
 	private List<FileModel> fileModels = new ArrayList<FileModel>();
-	/**
-	 * La liste des Feature
-	 */
-	private FeatureCatalogue featureCatalogue = new FeatureCatalogue() ;
 
 	/**
 	 * La liste des validateurs sur le document
@@ -97,24 +92,20 @@ public class DocumentModel implements Model {
 	public List<FileModel> getFileModels() {
 		return fileModels;
 	}
+	
+
+	public FileModel getFileModelByName(String typeName) {
+		for (FileModel fileModel : fileModels) {
+			if ( fileModel.getName().equals(typeName) ){
+				return fileModel;
+			}
+		}
+		return null;
+	}
+ 	
+	
 	public void setFileModels(List<FileModel> fileModels) {
 		this.fileModels = fileModels;
-	}
-	
-	/**
-	 * Renvoie le FeatureCatalogue
-	 * @return
-	 */
-	public FeatureCatalogue getFeatureCatalogue(){
-		return this.featureCatalogue ;
-	}
-	/**
-	 * Définit le FeatureCatalogue
-	 * @param featureCatalogue
-	 */
-	@XmlTransient
-	public void setFeatureCatalogue(FeatureCatalogue featureCatalogue){
-		this.featureCatalogue = featureCatalogue ;
 	}
 
 	/**
@@ -123,7 +114,7 @@ public class DocumentModel implements Model {
 	 * @param file
 	 * @return
 	 */
-	public FileModel findFileModelByPath(File file) {
+	public FileModel FindFileModelByFilepath(File file) {
 		FileModel result = null;
 		for  (FileModel fileModel : fileModels ) {
 			if ( fileModel.matchPath(file) ){
@@ -141,7 +132,7 @@ public class DocumentModel implements Model {
 	 * @param file
 	 * @return
 	 */
-	public FileModel findFileModelByName(File file) {
+	public FileModel findFileModelByFilename(File file) {
 		FileModel result = null;
 		for  (FileModel fileModel : fileModels ) {
 			if ( fileModel.matchFilename(file) ){
@@ -170,6 +161,7 @@ public class DocumentModel implements Model {
 	public List<Validator<Document>> getValidators(){
 		return this.validators ;
 	}
- 	
+
+
 }
 

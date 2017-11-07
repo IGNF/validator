@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gp-urba="http://geobretagne.fr/ns/gp-urba" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="unknown" numberReturned="66" timeStamp="2015-07-20T08:53:29.227Z" xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba http://geobretagne.fr/geoserver/gp-urba/wfs?service=WFS&amp;version=1.1.0&amp;request=DescribeFeatureType&amp;typeName=gp-urba%3AZONE_URBA http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd http://www.opengis.net/wfs/2.0 http://schemas.opengis.net/wfs/2.0/wfs.xsd">
+<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gp-urba="http://geobretagne.fr/ns/gp-urba" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="unknown" numberReturned="66" timeStamp="2015-07-20T08:53:29.227Z">
   <wfs:member>
     <gp-urba:ZONE_URBA gml:id="ZONE_URBA.4075">
       <gp-urba:the_geom>

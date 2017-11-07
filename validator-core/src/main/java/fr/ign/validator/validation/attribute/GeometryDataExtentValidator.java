@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -32,7 +32,7 @@ public class GeometryDataExtentValidator implements Validator<Attribute<Geometry
 		
 		if ( ! nativeDataExtent.contains(geometry) ){
 			context.report(
-				ErrorCode.ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT
+				CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT
 			);
 		}
 	}

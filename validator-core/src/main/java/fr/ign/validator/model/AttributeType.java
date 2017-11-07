@@ -9,7 +9,7 @@ import fr.ign.validator.data.Attribute;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeNullableValidator;
 import fr.ign.validator.validation.attribute.CharactersValidator;
-import fr.ign.validator.xml.AttributeTypeAdapter;
+import fr.ign.validator.xml.binding.AttributeTypeAdapter;
 
 
 /**
@@ -128,7 +128,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * @return
 	 */
 	public static AttributeType<?> forName(String name){
-		return AttributeTypeRegistry.getInstance().createAttributeTypeByName(name) ;
+		return AttributeTypeFactory.getInstance().createAttributeTypeByName(name) ;
 	}
 	
 	public String getName() {

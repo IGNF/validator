@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -38,7 +38,7 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
 		List<File> correspondingFiles = findFilesByFilename(root,filename) ;
 		if ( correspondingFiles.isEmpty() ){
 			context.report(
-				ErrorCode.ATTRIBUTE_FILE_NOT_FOUND, 
+				CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND, 
 				path.toString()
 			);
 		}

@@ -1,6 +1,7 @@
 package fr.ign.validator.data;
 
 import java.io.File;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -9,19 +10,14 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.validation.Validatable;
-import fr.ign.validator.validation.Validator;
 
 /**
  * Représente un fichier associé à un modèle
  */
-public class DocumentFile implements Validatable {
+public abstract class DocumentFile implements Validatable {
 	public static final Logger log = LogManager.getRootLogger() ;
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentFile") ;
 
-	/**
-	 * Le modèle de fichier
-	 */
-	private FileModel fileModel ;
 	
 	/**
 	 * Le chemin vers le fichier
@@ -33,8 +29,7 @@ public class DocumentFile implements Validatable {
 	 * @param fileModel
 	 * @param path
 	 */
-	public DocumentFile(FileModel fileModel, File path){
-		this.fileModel = fileModel ;
+	protected DocumentFile(File path){
 		this.path = path ;
 	}
 
@@ -42,9 +37,7 @@ public class DocumentFile implements Validatable {
 	/**
 	 * @return the fileModel
 	 */
-	public FileModel getFileModel() {
-		return fileModel;
-	}
+	abstract public FileModel getFileModel() ;
 
 	/**
 	 * @return the path
@@ -61,14 +54,18 @@ public class DocumentFile implements Validatable {
 		/*
 		 * Validation du fichier
 		 */
-		log.debug(MARKER, "Validation du fichier {} avec le modèle {}...", path, fileModel.getName()) ;
-		context.beginModel(fileModel);
+		log.debug(MARKER, "Validation du fichier {} avec le modèle {}...", path, getFileModel().getName()) ;
+		context.beginModel(getFileModel());
 		context.beginData( this );
-		for (Validator<DocumentFile> validator : fileModel.getValidators()) {
-			validator.validate(context, this);
-		}
+		validateContent(context);
 		context.endData( this );
-		context.endModel(fileModel);
+		context.endModel(getFileModel());
 	}
+
+	/**
+	 * Validate file content
+	 * @param context
+	 */
+	abstract protected void validateContent(Context context) ;
 	
 }

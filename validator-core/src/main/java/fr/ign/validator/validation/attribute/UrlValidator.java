@@ -15,7 +15,6 @@ public class UrlValidator implements Validator<AttributeType<URL>>{
 
 	@Override
 	public void validate(Context context, AttributeType<URL> validatable) {
-		// TODO 
 		// ATTRIBUTE_URL_NOT_FOUND / L'adresse web ([url]) renseignée pointe vers une ressource non disponible
 	}
 

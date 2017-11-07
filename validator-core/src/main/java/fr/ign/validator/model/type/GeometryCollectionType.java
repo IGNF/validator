@@ -15,7 +15,7 @@ public class GeometryCollectionType extends GeometryType {
 		if ( null == geometry || geometry.isEmpty() ){
 			return geometry ;
 		}
-		//TODO adapter automatiquement pour faire une convertion en Multi quand c'est possible
+		//TODO adapt to normalize to Multi when possible
 		if ( ! geometry.getGeometryType().equals(getTypeName()) ){
 			throw new IllegalArgumentException(getMessageInvalidGeometryType(geometry)) ;
 		}

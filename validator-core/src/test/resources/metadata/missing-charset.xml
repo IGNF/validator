@@ -167,7 +167,8 @@
 				<gmd:MD_Keywords>
 					<gmd:keyword>
 						<gco:CharacterString>PLU ; Plan d'occupation du sol ;
-							Balaives-et-Butz ; urbanisme </gco:CharacterString>
+							Balaives-et-Butz ; urbanisme
+						</gco:CharacterString>
 					</gmd:keyword>
 					<gmd:type>
 						<gmd:MD_KeywordTypeCode codeListValue="theme"
@@ -389,7 +390,8 @@
 				<gmd:LI_Lineage>
 					<gmd:statement>
 						<gco:CharacterString>Mise à jour du PLU de Balaives et Butz en
-							2014</gco:CharacterString>
+							2014
+						</gco:CharacterString>
 					</gmd:statement>
 				</gmd:LI_Lineage>
 			</gmd:lineage>

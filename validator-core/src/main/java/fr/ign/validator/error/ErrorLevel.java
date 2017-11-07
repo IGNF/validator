@@ -1,20 +1,35 @@
 package fr.ign.validator.error;
 
 /**
- * Localisation de l'erreur
+ * ErrorLevel corresponding to the gravity of 
  * 
  * @author MBorne
  */
 public enum ErrorLevel {
+	/**
+	 * Validator has crashed
+	 */
 	FATAL("FATAL"),
+	/**
+	 * Data will probably crash integration process (invalid types, etc.)
+	 */
 	ERROR("ERROR"),
+	/**
+	 * Data is not perfect but integration is possible
+	 */
 	WARNING("WARNING"), 
+	/**
+	 * General information (visible by end users)
+	 */
 	INFO("INFO"),
+	/**
+	 * Debug information (hidden to end users)
+	 */
 	DEBUG("DEBUG")
 	;
 	
 	private final String name;
-	
+
 	/**
      * @param name
      */
@@ -22,9 +37,6 @@ public enum ErrorLevel {
         this.name = name;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Enum#toString()
-     */
     @Override
     public String toString() {
         return name;

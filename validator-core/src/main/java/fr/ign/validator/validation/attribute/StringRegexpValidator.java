@@ -2,7 +2,7 @@ package fr.ign.validator.validation.attribute;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -28,7 +28,7 @@ public class StringRegexpValidator implements Validator<Attribute<String>> {
 		
 		if (! value.matches(attribute.getType().getRegexp())) {
 			context.report(
-				ErrorCode.ATTRIBUTE_INVALID_REGEXP,
+				CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP,
 				value,
 				attribute.getType().getRegexp()
 			);

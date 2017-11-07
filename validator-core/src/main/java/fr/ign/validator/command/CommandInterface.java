@@ -33,6 +33,6 @@ public interface CommandInterface {
 	 * Run the command with arguments given as member variables
 	 * @return
 	 */
-	public int execute();
+	public void execute() throws Exception ;
 
 }

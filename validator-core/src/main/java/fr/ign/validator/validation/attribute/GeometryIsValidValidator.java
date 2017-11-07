@@ -4,7 +4,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -26,7 +26,7 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 
 		if ( ! geometry.isValid() ){
 			context.report(
-				ErrorCode.ATTRIBUTE_GEOMETRY_INVALID
+				CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID
 			);
 		}
 	}

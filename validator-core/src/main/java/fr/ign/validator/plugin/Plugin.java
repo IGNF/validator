@@ -3,26 +3,32 @@ package fr.ign.validator.plugin;
 import fr.ign.validator.Context;
 
 /**
- * Interface pour la création de plugin du validateur
  * 
- * Note : les plugins doivent être enregistrés dans le fichier
- *  src/main/resources/META-INF/services/fr.ign.validation.validator.Plugin
+ * Plugin allows to change and extend the default validator behavior
  * 
- * @see fr.ign.validation.plugin.DemoPlugin
+ * Note that 
+ * 
+ * <ul>
+ * 	<li>plugin must be defined in the following file : src/main/resources/META-INF/services/fr.ign.validation.validator.Plugin</li>
+ *  <li>plugin must be explicitely loaded in CLI (--plugins)</li>
+ * <ul>
+ * 
+ * @see validator-cnig-plugin (extension for CNIG profiles relative to www.geoportail-urbanisme.gouv.fr)
+ * 
  * @author MBorne
  *
  */
 public interface Plugin {
 
 	/**
-	 * Renvoie le nom du plugin
+	 * Get plugin name
 	 * @return
 	 */
 	public String getName() ;
 	
 	/**
-	 * Appelé par le validateur lors de l'initialisation du Plugin.
-	 * @param validator
+	 * Invoked when the plugin is loaded (allows the plugin to extend models, to register listeners, etc.)
+	 * @param context
 	 */
 	public void setup( Context context ) ; 
 	

@@ -11,7 +11,6 @@ public class DocumentModelTest extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
 		super.setUp();
 	}
 	
@@ -37,14 +36,14 @@ public class DocumentModelTest extends TestCase {
 	public void testFindFileModelByPathBadName(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("not_found.shp");
-		FileModel fileModel = documentModel.findFileModelByPath(path);
+		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
 		assertNull(fileModel);
 	}
 	
 	public void testFindFileModelByPathGoodNameBadPath(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("ACTE_SUP.shp");
-		FileModel fileModel = documentModel.findFileModelByPath(path);
+		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
 		assertNull(fileModel);
 	}
 	
@@ -52,7 +51,7 @@ public class DocumentModelTest extends TestCase {
 	public void testFindFileModelByPathGoodFilenameGoodPath(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("Donnees_geographiques/ACTE_SUP.dbf");
-		FileModel fileModel = documentModel.findFileModelByPath(path);
+		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
 		assertNotNull(fileModel);
 		assertEquals("ACTE_SUP", fileModel.getName());
 	}
@@ -60,7 +59,7 @@ public class DocumentModelTest extends TestCase {
 	public void testFindFileModelByPathLongerRegexp(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("Donnees_geographiques/SERVITUDE_ACTE_SUP.dbf");
-		FileModel fileModel = documentModel.findFileModelByPath(path);
+		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
 		assertNotNull(fileModel);
 		assertEquals("SERVITUDE_ACTE_SUP", fileModel.getName());
 	}
@@ -71,14 +70,14 @@ public class DocumentModelTest extends TestCase {
 	public void testFindFileModelByNameBadName(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("not_found.shp");
-		FileModel fileModel = documentModel.findFileModelByName(path);
+		FileModel fileModel = documentModel.findFileModelByFilename(path);
 		assertNull(fileModel);
 	}
 	
 	public void testFindFileModelByNameGoodNameBadPath(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("ACTE_SUP.shp");
-		FileModel fileModel = documentModel.findFileModelByName(path);
+		FileModel fileModel = documentModel.findFileModelByFilename(path);
 		assertNull(fileModel);
 	}
 	
@@ -86,7 +85,7 @@ public class DocumentModelTest extends TestCase {
 	public void testFindFileModelByNameGoodFilename(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("bad_folder/ACTE_SUP.dbf");
-		FileModel fileModel = documentModel.findFileModelByName(path);
+		FileModel fileModel = documentModel.findFileModelByFilename(path);
 		assertNotNull(fileModel);
 		assertEquals("ACTE_SUP", fileModel.getName());
 	}
@@ -94,7 +93,7 @@ public class DocumentModelTest extends TestCase {
 	public void testFindFileModelByNameLongerRegexp(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("bad_folder/SERVITUDE_ACTE_SUP.dbf");
-		FileModel fileModel = documentModel.findFileModelByName(path);
+		FileModel fileModel = documentModel.findFileModelByFilename(path);
 		assertNotNull(fileModel);
 		assertEquals("SERVITUDE_ACTE_SUP", fileModel.getName());
 	}

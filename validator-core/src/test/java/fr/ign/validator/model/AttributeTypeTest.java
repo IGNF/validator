@@ -19,7 +19,7 @@ public class AttributeTypeTest extends TestCase {
 	
 	@Test
 	public void testConsistencyForNameGetTypeName(){
-		AttributeTypeRegistry factory = AttributeTypeRegistry.getInstance() ;
+		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
 		assertFalse(names.isEmpty());
 		for (String name : names) {
@@ -34,7 +34,7 @@ public class AttributeTypeTest extends TestCase {
 	 */
 	@Test
 	public void testBindNull(){
-		AttributeTypeRegistry factory = AttributeTypeRegistry.getInstance() ;
+		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
 		assertFalse(names.isEmpty());
 		for (String name : names) {
@@ -48,7 +48,7 @@ public class AttributeTypeTest extends TestCase {
 	 */
 	@Test
 	public void testNewAttributeNull(){
-		AttributeTypeRegistry factory = AttributeTypeRegistry.getInstance() ;
+		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
 		assertFalse(names.isEmpty());
 		for (String name : names) {
@@ -64,7 +64,7 @@ public class AttributeTypeTest extends TestCase {
 	 */
 	@Test
 	public void testFormatNull(){
-		AttributeTypeRegistry factory = AttributeTypeRegistry.getInstance() ;
+		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
 		assertFalse(names.isEmpty());
 		for (String name : names) {

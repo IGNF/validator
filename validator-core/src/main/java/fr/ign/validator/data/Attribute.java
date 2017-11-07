@@ -1,7 +1,7 @@
 package fr.ign.validator.data;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validatable;
@@ -93,7 +93,7 @@ public class Attribute<T> implements Validatable {
 		}else{
 			IsoControlEscaper transform = new IsoControlEscaper(false);
 			context.report(
-				ErrorCode.ATTRIBUTE_INVALID_FORMAT, 
+				CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, 
 				transform.transform(value.toString()),
 				type.getTypeName()
 			);

@@ -7,11 +7,10 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
 import junit.framework.TestCase;
 
 public class GeometryDataExtentValidatorTest extends TestCase {
@@ -61,7 +60,7 @@ public class GeometryDataExtentValidatorTest extends TestCase {
 		Attribute<Geometry> attribute = new Attribute<Geometry>(type, JTS.toGeometry(new Envelope(-0.2,0.8,0.2,0.8)));
 		validator.validate(context, attribute);
 		assertEquals(1, report.countErrors() ) ;
-		assertEquals(ErrorCode.ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT,report.getErrors().get(0).getCode());
+		assertEquals(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT,report.getErrors().get(0).getCode());
 		assertEquals(ErrorLevel.ERROR,report.getErrors().get(0).getLevel());
 	}
 }

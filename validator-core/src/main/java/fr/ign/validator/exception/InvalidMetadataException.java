@@ -1,5 +1,12 @@
 package fr.ign.validator.exception;
 
+/**
+ * 
+ * Fail to read metadata file
+ * 
+ * @author MBorne
+ *
+ */
 public class InvalidMetadataException extends Exception {
 
 	private static final long serialVersionUID = 1L;

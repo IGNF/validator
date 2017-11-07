@@ -1,5 +1,7 @@
 package fr.ign.validator.model.type;
 
+import org.junit.Ignore;
+
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPoint;
 
@@ -28,7 +30,7 @@ public class MultiPointTypeTest extends AbstractTypeTest<Geometry> {
 		assertEquals(2,geometry.getNumGeometries());
 	}
 
-	//TODO improve to allow this
+//	@Ignore("improve collection normalization to support this")
 //	public void testBindFakeGeometryCollection(){
 //		Geometry geometry = type.bind("GEOMETRYCOLLECTION(POINT(3.0 4.0),POINT(5.0 6.0))") ;
 //		assertFalse( geometry.isEmpty() );

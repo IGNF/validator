@@ -1,8 +1,6 @@
 package fr.ign.validator.model;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -16,12 +14,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.model.file.DirectoryModel;
-import fr.ign.validator.model.file.MetadataModel;
-import fr.ign.validator.model.file.PdfModel;
-import fr.ign.validator.model.file.TableModel;
-import fr.ign.validator.validation.Validator;
-import fr.ign.validator.xml.FileModelAdapter;
+import fr.ign.validator.xml.binding.FileModelAdapter;
 
 /**
  * Représente un fichier d'un document
@@ -56,37 +49,10 @@ public abstract class FileModel implements Model {
 	 */
 	private FeatureType featureType = null ;
 	
-	/**
-	 * Les validateurs du modèle de fichier
-	 */
-	private List<Validator<DocumentFile>> validators = new ArrayList<Validator<DocumentFile>>();
-	
-	
 	protected FileModel(){
 		
 	}
-	
-	/**
-	 * Création d'un FileModel par son type
-	 * TODO mettre des const
-	 * 
-	 * @param type
-	 * @return
-	 */
-	public static FileModel newFileModelByType(String type){
-		if ( DirectoryModel.TYPE.equals( type ) ){
-			return new DirectoryModel() ;
-		}else if ( TableModel.TYPE.equals( type ) ){
-			return new TableModel() ;
-		}else if ( PdfModel.TYPE.equals( type ) ){
-			return new PdfModel() ;
-		}else if ( MetadataModel.TYPE.equals( type ) ){
-			return new MetadataModel() ;
-		}else{
-			throw new IllegalArgumentException(String.format("invalid FileModel type : %s",type));
-		}
-	}
-	
+
 	/**
 	 * Get type
 	 * @return
@@ -136,8 +102,6 @@ public abstract class FileModel implements Model {
 	
 	/**
 	 * Renvoie une regexp correspondant au nom du fichier
-	 * 
-	 * TODO voir pour reposer cette expression sur des noms courts
 	 * 
 	 * @return
 	 */
@@ -192,18 +156,9 @@ public abstract class FileModel implements Model {
 	
 
 	/**
-	 * Ajout d'un validateur
-	 * @param validator
+	 * Create a document file for the given file model
+	 * @return
 	 */
-	public void addValidator(Validator<DocumentFile> validator) {
-		this.validators.add(validator);
-	}
-
-	/**
-	 * @return the validators
-	 */
-	public List<Validator<DocumentFile>> getValidators() {
-		return validators;
-	}
+	abstract public DocumentFile createDocumentFile(File path);
 	
 }

@@ -62,8 +62,7 @@ public class TableReaderTest extends TestCase {
 			assertEquals(-1,reader.findColumn("_IdUrBa"));
 			assertEquals(-1,reader.findColumn("IdUrBa_"));			
 			
-			// FIXME DATECOG ignoré car balise autofermante <gp-urba:DATECOG/>
-			// N'apparait pas dans le DescribeFeatureType
+			// Note that DATECOG is ignored (gml is not fixed)
 			// assertTrue(Arrays.asList(header).contains("DATECOG")) ;
 			
 			String[] row = reader.next() ;

@@ -180,6 +180,12 @@
 			<version>2.1</version>
 		</dependency>
 
+		<!-- jackson JTS -->
+		<dependency>
+			<groupId>com.bedatadriven</groupId>
+			<artifactId>jackson-datatype-jts</artifactId>
+			<version>2.4</version>
+		</dependency>
 
 		<!-- junit -->
 		<dependency>
@@ -195,7 +201,16 @@
 			<version>2.2.0</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.11.0</version>
+			<scope>test</scope>
+		</dependency>
 
+    
 	</dependencies>
 
 	<repositories>
