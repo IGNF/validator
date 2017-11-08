@@ -30,6 +30,7 @@ import fr.ign.validator.metadata.SecurityConstraint;
 import fr.ign.validator.metadata.Specification;
 import fr.ign.validator.metadata.code.CharacterSetCode;
 import fr.ign.validator.metadata.code.LanguageCode;
+import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.metadata.code.TopicCategoryCode;
 
@@ -125,10 +126,10 @@ public class MetadataISO19115 implements Metadata {
 	}
 	
 	@Override
-	public String getType(){
+	public ScopeCode getType(){
 		// hierarchyLevel
 		String path = "./gmd:hierarchyLevel/*/@codeListValue";
-		return findValue(path, metadataElement);
+		return ScopeCode.valueOf(findValue(path, metadataElement));
 	}
 	
 

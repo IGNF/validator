@@ -1,5 +1,7 @@
 package fr.ign.validator.metadata;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 
  * Partial implementation of gmd:RS_Identifier
@@ -38,6 +40,7 @@ public class ReferenceSystemIdentifier {
 		this.code = code;
 	}
 
+	@JsonIgnore
 	public String getCodeSpace() {
 		return codeSpace;
 	}

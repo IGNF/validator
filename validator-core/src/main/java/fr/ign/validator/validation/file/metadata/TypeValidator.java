@@ -9,6 +9,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.metadata.Metadata;
+import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -25,11 +26,17 @@ public class TypeValidator implements Validator<Metadata> {
 	
 	@Override
 	public void validate(Context context, Metadata metadata) {
-		String value = metadata.getType() ;
-		log.info(MARKER, "metadata.type : {}", value);
-		if ( StringUtils.isEmpty(value) ){
+		ScopeCode code = metadata.getType() ;
+		log.info(MARKER, "metadata.type : {}", code);
+		if ( code == null ){
 			context.report(
 				CoreErrorCodes.METADATA_TYPE_NOT_FOUND
+			);
+		}else if ( ! code.isAllowedValue() ){
+			context.report(
+				CoreErrorCodes.METADATA_TYPE_INVALID,
+				code,
+				StringUtils.join(code.getCodeList().getAllowedValues(), ',')
 			);
 		}
 	}

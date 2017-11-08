@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import fr.ign.validator.metadata.code.CharacterSetCode;
 import fr.ign.validator.metadata.code.LanguageCode;
+import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.metadata.code.TopicCategoryCode;
 
@@ -72,7 +73,7 @@ public interface Metadata {
 	 * INSPIRE GUIDELINE - 2.2 Identification / 2.2.3 Resource Type (p20)
 	 * @return
 	 */
-	public String getType();
+	public ScopeCode getType();
 	
 	/**
 	 * INSPIRE GUIDELINE - 2.2 Identification / 2.2.4 Resource locator (p21)

@@ -41,7 +41,10 @@ public class CoreErrorCodes {
 	public static final ErrorCode METADATA_IDENTIFIER_NOT_FOUND       = ErrorCode.valueOf("METADATA_IDENTIFIER_NOT_FOUND") ;
 	public static final ErrorCode METADATA_TITLE_NOT_FOUND            = ErrorCode.valueOf("METADATA_TITLE_NOT_FOUND");
 	public static final ErrorCode METADATA_ABSTRACT_NOT_FOUND         = ErrorCode.valueOf("METADATA_ABSTRACT_NOT_FOUND");
+	
 	public static final ErrorCode METADATA_TYPE_NOT_FOUND             = ErrorCode.valueOf("METADATA_TYPE_NOT_FOUND");	
+	public static final ErrorCode METADATA_TYPE_INVALID               = ErrorCode.valueOf("METADATA_TYPE_INVALID");	
+
 	public static final ErrorCode METADATA_LOCATORS_EMPTY             = ErrorCode.valueOf("METADATA_LOCATORS_EMPTY");
 	public static final ErrorCode METADATA_LOCATOR_NAME_NOT_FOUND     = ErrorCode.valueOf("METADATA_LOCATOR_NAME_NOT_FOUND");
 	public static final ErrorCode METADATA_LOCATOR_PROTOCOL_NOT_FOUND = ErrorCode.valueOf("METADATA_LOCATOR_PROTOCOL_NOT_FOUND");

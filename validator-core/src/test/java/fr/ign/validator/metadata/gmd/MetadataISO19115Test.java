@@ -20,6 +20,7 @@ import fr.ign.validator.metadata.ResponsibleParty;
 import fr.ign.validator.metadata.SecurityConstraint;
 import fr.ign.validator.metadata.Specification;
 import fr.ign.validator.metadata.code.LanguageCode;
+import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.metadata.code.TopicCategoryCode;
 import junit.framework.TestCase;
@@ -64,7 +65,7 @@ public class MetadataISO19115Test extends TestCase {
 		);
 		assertEquals("Plan local d'urbanisme de La Baconnière en Mayenne", metadata.getTitle());
 		assertEquals("Un résumé simple pour la fiche 01.xml", metadata.getAbstract());
-		assertEquals("dataset", metadata.getType());
+		assertEquals(ScopeCode.valueOf("dataset"), metadata.getType());
 
 		assertEquals( "urn:isogeo:metadata:uuid:66484d70-3f8c-44cf-b0e5-98ac84426a2c", metadata.getFileIdentifier() ) ;
 		
@@ -286,7 +287,7 @@ public class MetadataISO19115Test extends TestCase {
 		
 		assertEquals("Servitudes - Lot A9 relatives aux zones agricoles protégées de la Loire", metadata.getTitle());
 		assertEquals("Un résumé sur plusieurs lignes pour la ressource 02.xml", metadata.getAbstract()) ;
-		assertEquals("dataset", metadata.getType());
+		assertEquals(ScopeCode.valueOf("dataset"), metadata.getType());
 		
 		//getMetadataContact
 		{
@@ -469,7 +470,7 @@ public class MetadataISO19115Test extends TestCase {
 		
 		assertEquals("Plan local d'urbanisme (PLU) - Balaives-et-Butz - approbation du 13/02/2014", metadata.getTitle());
 		assertEquals("Plan local d'urbanisme (PLU) de la commune de Balaives-et-Butz (code INSEE 08042) approuvé le 13/02/2014", metadata.getAbstract()) ;
-		assertEquals("dataset", metadata.getType());
+		assertEquals(ScopeCode.valueOf("dataset"), metadata.getType());
 		
 		assertEquals(
 			LanguageCode.valueOf("fre"),
@@ -587,7 +588,7 @@ public class MetadataISO19115Test extends TestCase {
 		
 		assertEquals( "Plan local d'urbanisme (PLU) - Balaives-et-Butz - approbation du 13/02/2014", metadata.getTitle());
 		assertEquals("Plan local d'urbanisme (PLU) de la commune de Balaives-et-Butz (code INSEE 08042) approuvé le 13/02/2014", metadata.getAbstract()) ;
-		assertEquals("dataset", metadata.getType());
+		assertEquals(ScopeCode.valueOf("dataset"), metadata.getType());
 		
 		assertEquals(
 			LanguageCode.valueOf("fre"),
@@ -689,7 +690,7 @@ public class MetadataISO19115Test extends TestCase {
 		
 		assertEquals("Servitude d'utilité publique (SUP) - Haute-Garonne", metadata.getTitle());
 		assertEquals("Les Servitudes d’Utilité Publique peuvent-être classées en quatre catégories, selon leurs objectifs :* les servitudes relatives à la conservation du patrimoine ;* les servitudes relatives à l’utilisation de certaines ressources et équipements ;* les servitudes relatives à la Défense Nationale ;* les servitudes relatives à la salubrité et sécurité publique.Ce standard de données offre un cadre technique décrivant en détail la façon de dématérialiser ces servitudes en une base de données géographiques qui soit exploitable par un outil SIG et interopérable pour des territoires distincts.Le périmètre de ce standard de données englobe les notions relatives aux servitudes : les actes juridiques les instituant, les gestionnaires, les générateurs et les assiettes.Simultanément à l’élaboration de ce standard de données COVADIS, s’est tenu un groupe de travail sous l’égide de la DGALN dont l’objectif était la production de fiches méthodologiques décrivant les fondements juridiques et les aspects géomatiques de chaque catégorie de servitude. Ces fiches complètent par une description métier plus détaillée de chaque servitude le présent standard et sont en ligne sur le site du PND Urbanisme.Ce standard COVADIS a été élaboré à partir des catégories de SUP normalisées et du modèle CNIG SUP de 2007. Ce standard fait suite et vient compléter celui sur les PLU validé en 2010.Ce standard de données est dorénavant à utiliser au sein du MEDDTL et du MAAPRAT pour stocker, exploiter et échanger les données issues de la dématérialisation des SUP.", metadata.getAbstract());
-		assertEquals("dataset", metadata.getType());
+		assertEquals(ScopeCode.valueOf("dataset"), metadata.getType());
 		
 		// getMetadataContact
 		{
