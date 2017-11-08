@@ -1,42 +1,50 @@
 # Metadata
 
+Metadata "attributes" with INSPIRE multiplicity for datasets according to INSPIRE_GUIDELINE_2017.
 
 
-| name                      | type                      | title                                | multiplicity | 
-|---------------------------|---------------------------|--------------------------------------|--------------| 
-| fileIdentifier            | String                    | File identifier                      | [1]          | 
-| title                     | String                    | Resource title                       | [1]          | 
-| abstract                  | String                    | Resource abstract                    | [1]          | 
-| type                      | String                    | Resource type                        | [1]          | 
-| locators                  | OnlineResource[]          | Resource locator                     | [0..*]       | 
-| identifier                | String                    | Unique resource identifier           | [1]          | 
-| language                  | LanguageCode              | Resource langage                     | [0..*]       | 
-| topicCategory             | String                    | Topic category                       | [1]          | 
-| keywords                  | Keywords                  | Keywork                              | [1..*]       | 
-| extents                   | Extent[]                  | Extents with geographic bounding box | [1..*]       | 
-| referenceSystemIdentifier | ReferenceSystemIdentifier | Référentiel de Coordonnées           | [1]          | 
-| dateOfPublication         | Date                      | "Date of publication"                | [0..1]       | 
-| dateOfLastRevision        | Date                      | Date of last revision                | [0..1]       | 
-| dateOfCreation            | Date                      | Date of creation                     | [0..1]       | 
-| characterSet              | CharacterSet              | Resource Character Set               | [0..1]       | 
-| contraints                | Contraint[]               | Resource constraints                 | [0..*]       | 
-| distributionFormats       | Format                    | Encodage (nom et version)            | [0..*]       | 
-| spatialRepresentationType | String                    | Type de représentation géographique  | [0..1]       | 
-| lineage                   | String                    | Lineage                              | [1]          | 
-| spatialResolutions        | Resolution                | Spatial resolution                   | [0..*]       | 
-| specifications            | Specification             | Specification title and degree       | [0..*]       | 
-| contact                   | ResponsibleParty          | "Responsible party"                  | [1]          | 
-| metadataContact           | ResponsibleParty          | Metadata point of contact            | [1..*]       | 
-| metadataDate              | Date                      | Metadata date                        | [1]          | 
-| metadataLanguage          | LanguageCode              | Metadata langage                     | [1]          | 
+| name                       | type                          | title                                |    multiplicity      |
+|----------------------------|-------------------------------|--------------------------------------|----------------------|
+| fileIdentifier             | String                        | File identifier                      | [0..1]               |
+| title                      | String                        | Resource title                       | [1]                  |
+| abstract                   | String                        | Resource abstract                    | [1]                  |
+| type                       | ScopeCode                     | Resource type                        | [1]                  |
+| locators                   | OnlineResource[]              | Resource locator                     | [1..*]               |
+| identifier                 | String                        | Unique resource identifier           | [1..*] (1)           |
+| language                   | LanguageCode                  | Resource langage                     | [0..*] (1)           |
+| topicCategory              | TopicCategoryCode             | Topic category                       | [1..*] (1)           |
+| keywords                   | Keywords                      | Keyword                              | [1..*]               |
+| extents                    | Extent[]                      | Extents with geographic bounding box | [1..*]               |
+| referenceSystemIdentifier  | ReferenceSystemIdentifier     | Coordinate Reference System          | [0..*] (1)           |
+| dateOfPublication          | Date                          | Date of publication                  | [0..*] (1)           |
+| dateOfLastRevision         | Date                          | Date of last revision                | [0..1]               |
+| dateOfCreation             | Date                          | Date of creation                     | [0..1]               |
+| characterSet               | CharacterSetCode              | Character Encoding                   | [1..*] (1)           |
+| contraints                 | Contraint[]                   | Resource constraints                 | [0..*]               |
+| distributionFormats        | Format                        | Encoding                             | [0..*]               |
+| spatialRepresentationType  | SpatialRepresentationTypeCode | Spatial representation type          | [1..*] (1)           |
+| lineage                    | String                        | Lineage                              | [1]                  |
+| spatialResolutions         | Resolution                    | Spatial resolution                   | [0..*]               |
+| specifications             | Specification                 | Specification title and degree       | [1..*]               |
+| contact                    | ResponsibleParty              | Responsible party                    | [0..*] (1)           |
+| metadataContact            | ResponsibleParty              | Metadata point of contact            | [1..*] (1)           |
+| metadataDate               | Date                          | Metadata date                        | [1]                  |
+| metadataLanguage           | LanguageCode                  | Metadata langage                     | [1]                  |
 
 
+(1) multiplicity is adapted, only the first element is parsed
 
-## fileIdentifier (String)
+
+## fileIdentifier
 
 ### Description
 
-_File identifier_ is the identifier of the metadata.
+> When regularly harvesting metadata from discovery services of several Member States (as done by
+> the EU INSPIRE geoportal), it is helpful to be able to identify duplicate metadata elements and
+> updates of metadata records. This can be ensured by providing a globally unique and persistent
+> identifier of the metadata record through the fileIdentifier element.
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -50,11 +58,13 @@ fileIdentifier
 * CNIG_MD_DU - 1) Identification des données / fileIdentifier (p5)
 
 
-## title (String)
+## title
 
 ### Description
 
-_Resource title_ is the title of the resource.
+> Name by which the cited resource is known
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -69,11 +79,13 @@ identificationInfo[1]/*/citation/*/title
 * CNIG_MD_DU - 1) Identification des données / Intitulé de la resource (p4)
 
 
-## abstract (String)
+## abstract
 
 ### Description
 
-_Resource abstract_ is the detailed description of the resource.
+> Brief narrative summary of the content of the resource(s)
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -88,11 +100,15 @@ identificationInfo[1]/*/abstract
 * CNIG_MD_DU - 1) Identification des données / Résumé de la resource (p4)
 
 
-## type (String)
+## type
 
 ### Description
 
-_Resource type_ represents... TODO
+> Scope to which metadata applies
+
+Source : INSPIRE_GUIDELINE_2017
+
+Example : dataset
 
 ### XPath
 
@@ -102,20 +118,19 @@ hierarchyLevel
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 3.1.1.1 Resource type (p33)
 * INSPIRE_GUIDELINE_2013 - 2.2 Identification / 2.2.3 Resource Type (p20)
 * CNIG_MD_DU - 1) Identification des données / Type de la resource (p5)
 
 
-## locators (OnlineResource)
+## locators
 
 ### Description
 
-_Resource locators_ provides the locations of the resource according to different services (WMS, WFS, Download, etc.).
+> Location (address) for on-line access using a Uniform Resource
+> Locator address or similar addressing scheme
 
-
-### Constraints
-
-* Multiplicity : [0..*]
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -125,15 +140,18 @@ distributionInfo/*/transferOptions/*/onLine/*/linkage
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 3.1.3.1 Resource locator for data set or series (p42)
 * INSPIRE_GUIDELINE_2013 - 2.2 Identification / 2.2.4 Resource locator (p21)
 * CNIG_MD_DU - 1) Identification des données / Localisateur de la ressource (p5)
 
 
-## identifier (String)
+## identifier
 
 ### Description
 
-The _Unique resource identifier_ is the resource identifier.
+> Value uniquely identifying an object within a namespace
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -143,15 +161,18 @@ dentificationInfo[1]/*/citation/*/identifier/*/code
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 3.1.2.1 Unique resource identifier (p34)
 * INSPIRE_GUIDELINE_2013 - 2.2 Identification / 2.2.5 Unique resource identifier (p24)
 * CNIG_MD_DU - 1) Identification des données / Identificateur de ressource unique (p5)
 
 
-## language (LanguageCode)
+## language
 
 ### Description
 
-_Resource langage_ is the language of the resource (ex : fre). It is defined as a codeList.
+> Language(s) used within the datasets
+
+Source : INSPIRE_GUIDELINE_2017
 
 
 ### XPath
@@ -162,15 +183,18 @@ identificationInfo[1]/*/language
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 3.1.2.4 Resource language (p40)
 * INSPIRE_GUIDELINE_2013 - 2.2 Identification / 2.2.7 Resource langage (p26)
 * CNIG_MD_DU - 1) Identification des données / Langue de la ressource (p6)
 
 
-## topicCategory (String)
+## topicCategory
 
 ### Description
 
-_Topic category_ represents ...
+> Main theme(s) of the dataset
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -184,12 +208,23 @@ identificationInfo[1]/*/topicCategory
 * CNIG_MD_DU - 2) Classification des données et services géographiques / Catégorie thématique (p7)
 
 
-## keywords (Keywords)
+## keywords
 
 ### Description
 
-_Keywork_ represents ...
+#### Keyword values
 
+> Commonly used word(s) or formalised word(s) or phrase(s) used to
+> describe the subject
+
+Source : INSPIRE_GUIDELINE_2017
+
+#### Thesaurus
+
+> Name of the formally registered thesaurus or a similar authoritative
+> source of keywords
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -200,16 +235,19 @@ identificationInfo[1]/*/descriptiveKeywords/*/thesaurusName
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 2.3.5 Using keywords (p20)
 * INSPIRE_GUIDELINE_2013 - 2.3 Classification of spatial data and services / 2.4 Keyword (p31)
 * CNIG_MD_DU - 3) Mots-clés (p8)
 
 
-## extents (Extent)
+## extents
 
 ### Description
 
-_Extents with geographic bounding box_ represents ...
+> Defining the geographic containing boundary of the described resource enables searches for
+> resources using their area or location of interest.
 
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -222,15 +260,19 @@ identificationInfo[1]/*/extent/*/geographicElement/*/northBoundLatiTude
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 2.3.8 Geographic bounding box (p27-28)
 * INSPIRE_GUIDELINE_2013 - 2.5 Geographic location / 2.5.1 Geographic bounding box (p35)
 * CNIG_MD_DU - 4) Situation géographique / Rectangle de délimitation géographique (p9)
 
 
-## referenceSystemIdentifier (ReferenceSystemIdentifier)
+## referenceSystemIdentifier
 
 ### Description
 
-_Reference system identifier_ represents ...
+> Describing the coordinate reference system(s) used in the data set makes discovering data sets with
+> spatial coordinates provided in desired reference systems possible.
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -240,14 +282,17 @@ referenceSystemInfo/*/referenceSystemIdentifier/*/code
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 3.2.1.1 Coordinates reference systems (p48)
 * CNIG_MD_DU - 4) Situation géographique / Référentiel de coordonnées (p9)
 
 
-## dateOfPublication (Date)
+## dateOfPublication
 
 ### Description
 
-_Date of publication_ represents ...
+> Reference date for the cited resource - publication
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -257,14 +302,17 @@ identificationInfo[1]/*/citation/*/date[./*/dateType/*/text()='publication’/*/
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 2.3.4 Temporal references (p17)
 * INSPIRE_GUIDELINE_2013 - 2.6 Temporal reference / 2.6.2 Date of publication (p38)
 
 
-## dateOfLastRevision (Date)
+## dateOfLastRevision
 
 ### Description
 
-_Date of last revision_ represents ...
+> Reference date for the cited resource - revision
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -274,15 +322,18 @@ identificationInfo[1]/*/citation/*/date[./*/dateType/*/text()='revision']/*/date
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 2.3.4 Temporal references (p17)
 * INSPIRE_GUIDELINE_2013 - 2.6 Temporal reference / 2.6.3 Date of last revision (p40)
 * CNIG_MD_DU - 5) Références temporelles / Dates de référence (p10)
 
 
-## dateOfCreation (Date)
+## dateOfCreation
 
 ### Description
 
-_Date of creation_ represents ...
+> Reference date for the cited resource - creation
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -292,14 +343,21 @@ identificationInfo[1]/*/citation/*/date[./*/dateType/*/text()='creation']/*/date
 
 ### References
 
+* INSPIRE_GUIDELINE_2017 - 2.3.4 Temporal references (p17)
 * INSPIRE_GUIDELINE_2013 - 2.6 Temporal reference / 2.6.4 Date of creation (p38)
 
 
-## characterSet (CharacterSet)
+## characterSet
 
 ### Description
 
-_Resource Character Set_ represents ...
+> The character encoding describes the way the characters of the textual information are encoded in the
+> described data set.
+> [...]
+> The multiplicity of this element is zero or more: this element is only required if there are non UTF-8
+> based character encodings used in the data set.
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -312,11 +370,19 @@ identificationInfo[1]/*/characterSet
 * CNIG_MD_DU - Encodage - (p6)
 
 
-## contraints (Contraint)
+## contraints
 
 ### Description
 
-_Resource constraints_ represents ...
+> Conditions applying to access and use
+
+> Conditions applying to use
+
+> Limitations on public access
+
+Source : INSPIRE_GUIDELINE_2017
+
+[details about constraints](resourceConstraints.md)
 
 ### XPath
 
@@ -329,12 +395,15 @@ identificationInfo[1]/*/resourceConstraints/*
 * INSPIRE_GUIDELINE_2013 - 2.9 Constraints related to access and use (p51-55)
 
 
-## distributionFormats (Format)
+## distributionFormats
 
 ### Description
 
-_distribution formats_ represents ...
+> Description of the computer language construct(s) specifying the
+> representation of data objects in a record, file, message, storage device
+> or transmission channel.
 
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -348,11 +417,11 @@ distributionInfo/*/distributionFormat/*/version
 * CNIG_MD_DU - Encodage - (p6)
 
 
-## spatialRepresentationType (String)
+## spatialRepresentationType
 
 ### Description
 
-_spatial representation type_ represents ...
+> The method used to spatially represent geographic information
 
 ### XPath
 
@@ -365,12 +434,14 @@ identificationInfo[1]/*/spatialRepresentationType
 * CNIG_MD_DU - Type de représentation géographique - (p7)
 
 
-## lineage (String)
+## lineage
 
 ### Description
 
-_Lineage_ represents ...
+> General explanation of the data producer’s knowledge about the
+> lineage of a dataset
 
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -384,17 +455,20 @@ dataQualityInfo/*/lineage/*/statement
 * CNIG_MD_DU - 6) Qualité et validité / Généalogie (p10)
 
 
-## spatialResolutions (Resolution)
+## spatialResolutions
 
 ### Description
 
-_Spatial resolution_ represents ...
+> Equivalent scale: level of detail expressed as the scale denominator of a comparable hardcopy map or chart
+>
+> Distance: ground sample distance
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
 ```(xpath)
-identificationInfo[1]/*/spatialResolution/*/equivalentScale/*/den
-ominator (equivalent scale)
+identificationInfo[1]/*/spatialResolution/*/equivalentScale/*/denominator (equivalent scale)
 identificationInfo[1]/*/spatialResolution/*/distance (distance)
 ```
 
@@ -404,11 +478,22 @@ identificationInfo[1]/*/spatialResolution/*/distance (distance)
 * CNIG_MD_DU - 6) Qualité et validité / Résolution spatiale (p10)
 
 
-## specifications (Specification)
+## specifications
 
 ### Description
 
-_Specification title and degree_ represents ...
+#### title
+
+> Citation of the product specification or user requirement against which
+> data is being evaluated
+
+Source : INSPIRE_GUIDELINE_2017
+
+#### degree
+
+> Indication of the conformance result
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -426,11 +511,12 @@ dataQualityInfo/*/report/*/result/*/pass
 * CNIG_MD_DU - 7) Conformité / Degré (p12)
 
 
-## contact (ResponsibleParty)
+## contact
 
 ### Description
 
-_contact_ describe the responsible organisation and point of contact for the described resource.
+> Identification of, and means of communication with, person(s) and
+> organization(s) associated with the resource(s)
 
 ### XPath
 
@@ -448,11 +534,13 @@ identificationInfo[1]/*/pointOfContact/*/role
 * de la maintenance et de la diffusion des séries de données (p15)
 
 
-## metadataContact (ResponsibleParty)
+## metadataContact
 
 ### Description
 
-_Metadata point of contact_ represents ...
+> Party responsible for the metadata information
+
+Source : INSPIRE_GUIDELINE_2017
 
 
 ### XPath
@@ -469,11 +557,13 @@ contact/*/role
 * CNIG_MD_DU - 10) Métadonnées concernant les métadonnées / Point de contact pour la métadonnées (p15)
 
 
-## metadataDate (Date)
+## metadataDate
 
 ### Description
 
-_Metadata date_ represents ...
+> Date that the metadata was created
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
@@ -487,11 +577,13 @@ dateStamp
 * CNIG_MD_DU - 10) Métadonnées concernant les métadonnées / Date des métadonnées (p15)
 
 
-## metadataLanguage (LanguageCode)
+## metadataLanguage
 
 ### Description
 
-_Metadata langage_ represents ...
+> Language used for documenting metadata
+
+Source : INSPIRE_GUIDELINE_2017
 
 ### XPath
 
