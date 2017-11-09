@@ -17,7 +17,7 @@ import org.apache.commons.cli.ParseException;
  * @author MBorne
  *
  */
-public abstract class AbstractCommand implements CommandInterface {
+public abstract class AbstractCommand implements Command {
 	
 	/**
 	 * Command option for network proxy management (required to access remote XSD schemas)

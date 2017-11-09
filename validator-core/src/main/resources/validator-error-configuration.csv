@@ -14,15 +14,16 @@ TABLE_UNEXPECTED_ATTRIBUTE,WARNING,L'attribut '%1$s' n'est pas prévu dans le st
 TABLE_UNEXPECTED_ENCODING,WARNING,L'encodage déclaré dans la balise MD_CharacterSetCode du fichier de métadonnées (%1$s) ne correspond pas à l'encodage des données.,Cette erreur se produit lorsque l'encodage déclaré dans la balise MD_CharacterSetCode de la fiche de métadonnées ne correspond pas à l'encodage détecté des données
 TABLE_MISSING_GEOMETRY,WARNING,Le fichier '%1$s' n'a pas d'attribut contenant la géométrie.,
 ATTRIBUTE_UNEXPECTED_NULL,ERROR,La valeur nulle n'est pas autorisée pour ce champ.,Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide
-ATTRIBUTE_CHARACTERS_ILLEGAL,WARNING,"La valeur (‘%1$s’) contient des caractères interdits, elle sera remplacée par (‘%2$s’) pour l’intégration des données",
+ATTRIBUTE_CHARACTERS_ILLEGAL,ERROR,La valeur (‘%1$s’) contient des caractères interdits qui seront échappés (‘%2$s’).,
+ATTRIBUTE_CHARACTERS_REPLACED,WARNING,La valeur (‘%1$s’) sera remplacée par (‘%2$s’) pour l’intégration des données.,
 ATTRIBUTE_INVALID_FORMAT,ERROR,Le type de la valeur ('%1$s') ne correspond pas au type attendu (%2$s).,Cette erreur se produit lorsqu'un champ contient une valeur de type non autorisé par le modèle
 ATTRIBUTE_INVALID_REGEXP,ERROR,La valeur (%1$s) ne correspond pas à l'expression régulière (%2$s).,Cette erreur se produit lorsqu'un champ contient une chaine de caractère qui ne correspond pas à la règle d'écriture du modèle.
 ATTRIBUTE_SIZE_EXCEEDED,ERROR,La taille de l'attribut (%1$s) dépasse la taille limite autorisée (%2$s).,Cette erreur se produit lorsqu'un champ contient une valeur dont la longueur dépasse la taille limite autorisée par le modèle
-ATTRIBUTE_GEOMETRY_INVALID,WARNING,"La géométrie de l'objet géographique n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.)",Voir la document de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html
+ATTRIBUTE_GEOMETRY_INVALID,WARNING,"La géométrie de l'objet géographique n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.).",Voir la document de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html
 ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT,ERROR,Les coordonnées de la géométrie de l'objet géographique ne correspondent pas à la zone attendue (vérifiez la projection),
 ATTRIBUTE_URL_NOT_FOUND,WARNING,L'adresse web (%1$s) renseignée pointe vers une ressource non disponible.,Cette erreur se produit lorsqu'un champ contient une URL qui n'est pas accessible
 ATTRIBUTE_PATH_NOT_FOUND,ERROR,Le chemin (%1$s) renseigné renvoie vers un document absent du dossier.,Cette erreur se produit lorsqu'un champ de type « path » référence un fichier non présent dans l'arborescence (ex : pièce écrite)
-ATTRIBUTE_FILE_NOT_FOUND,ERROR,Le fichier (%1$s) renseigné renvoie vers un document absent du dossier. Veuillez vérifier que le nom de fichier indiqué contient bien l’extension (par exemple : « .pdf »),Cette erreur se produit lorsqu'un champ de type « file name » référence un fichier non présent dans l'arborescence (ex : pièce écrite)
+ATTRIBUTE_FILE_NOT_FOUND,ERROR,Le fichier (%1$s) renseigné renvoie vers un document absent du dossier. Veuillez vérifier que le nom de fichier indiqué contient bien l’extension (par exemple : « .pdf »).,Cette erreur se produit lorsqu'un champ de type « file name » référence un fichier non présent dans l'arborescence (ex : pièce écrite)
 ATTRIBUTE_UNEXPECTED_VALUE,ERROR,La valeur renseignée (%1$s) ne correspond pas à une valeur autorisée (%2$s).,Cette erreur se produit lorsqu'un champ ne respecte pas la liste spécifiée dans le modèle
 METADATA_IGNORED_FILE,WARNING,Le fichier XML %1$s n'a pas été reconnu comme une fiche de métadonnée (absence de balise MD_Metadata). Il sera ignoré.,Cette erreur se produit lorsqu'un fichier xml détecté comme métadonnée dans l'arborescence ne contient pas de balise MD_Metadata
 METADATA_MULTIPLE_FILES,ERROR,Plusieurs fichiers de métadonnées sont présents dans le document (%1$s).,
@@ -42,7 +43,7 @@ METADATA_LANGUAGE_INVALID,ERROR,"Le champ ""langue de la ressource"" (%1$s) ne c
 METADATA_TOPICCATEGORY_NOT_FOUND,ERROR,"Le champ ""catégorie thématique"" n'est pas renseigné.",
 METADATA_TOPICCATEGORY_INVALID,ERROR,"Le champ ""catégorie thématique"" (%1$s) ne correspond pas à une valeur autorisée (%2$s).",
 METADATA_EXTENTS_EMPTY,ERROR,"Aucun ""rectangle de délimitation géographique"" renseigné.",
-METADATA_EXTENT_INVALID,ERROR,Rectangle de délimitation géographique (%2$s/%3$s) : les coordonnées ne sont pas valides (%1$s),
+METADATA_EXTENT_INVALID,ERROR,Rectangle de délimitation géographique (%2$s/%3$s) : les coordonnées ne sont pas valides (%1$s).,
 METADATA_DATES_NOT_FOUND,ERROR,"Au moins l'un des champs ""date de publication"", ""date de dernière révision"" et ""date de création"" doit être renseigné. ",
 METADATA_DATEOFPUBLICATION_INVALID,ERROR,"La valeur ""date de publication"" (%1$s) n'est pas dans un format valide.",
 METADATA_DATEOFLASTREVISION_INVALID,ERROR,"La valeur ""date de dernière révision"" (%1$s) n'est pas dans un format valide.",

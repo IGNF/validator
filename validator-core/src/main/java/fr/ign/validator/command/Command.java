@@ -9,7 +9,7 @@ import org.apache.commons.cli.Options;
  * @author MBorne
  *
  */
-public interface CommandInterface {
+public interface Command {
 
 	/**
 	 * Get command identifier (ex : document_validator)

@@ -24,6 +24,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.command.options.StringFixerOptions;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.DocumentModel;
@@ -493,51 +494,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @param options
 	 */
 	protected void buildStringFixerOptions(Options options) {
-		{
-			Option option = new Option(null, "string-all", true, 
-				"Apply string-fix-utf8, string-simplify-common and string-simplify-charset for the given charset"
-			);
-			option.setRequired(false);
-			option.setArgName("CHARSET");
-			options.addOption(option);
-		}
-		{
-			Option option = new Option(null, "string-fix-utf8", false, 
-				"Fix double UTF-8 encoding characters (suppose a bad LATIN1 declaration)"
-			);
-			option.setRequired(false);
-			options.addOption(option);
-		}
-		{
-			Option option = new Option(null, "string-simplify-common", false, 
-				"Replace unicode characters by equivalents for a better support by fonts"
-			);
-			option.setRequired(false);
-			options.addOption(option);
-		}
-		{
-			Option option = new Option(null, "string-simplify-charset", true, 
-				"Replace unicode characters by equivalents for a given charset (ex : œ is replaced by oe for LATIN1)"
-			);
-			option.setRequired(false);
-			option.setArgName("CHARSET");
-			options.addOption(option);
-		}
-		
-		{
-			Option option = new Option(null, "string-escape-controls", false, 
-				"Espace control caracters to hexadecimal form (\\uXXXX)"
-			);
-			option.setRequired(false);
-			options.addOption(option);
-		}
-		{
-			Option option = new Option(null, "string-escape-charset", true, 
-				"Espace characters not supported by a given charset to hexadecimal form (\\uXXXX)"
-			);
-			option.setRequired(false);
-			options.addOption(option);
-		}
+		StringFixerOptions.buildOptions(options);
 	}
 	
 	/**
@@ -546,38 +503,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @return
 	 */
 	protected void parseStringFixerOptions(CommandLine commandLine) {
-		if ( commandLine.hasOption("string-all") ){
-			String charsetName = commandLine.getOptionValue("string-all");
-			Charset charset = Charset.forName(charsetName) ;
-			stringFixer = StringFixer.createFullStringFixer(charset);
-		}
-
-		stringFixer = new StringFixer();
-		if ( commandLine.hasOption("string-fix-utf8") ){
-			stringFixer.addTransform(new DoubleUtf8Decoder());			
-		}
-
-		if ( commandLine.hasOption("string-simplify-common") || commandLine.hasOption("string-simplify-charset") ){
-			StringSimplifier simplifier = new StringSimplifier();
-			if ( commandLine.hasOption("string-simplify-common") ){
-				simplifier.loadCommon();
-			}
-			if ( commandLine.hasOption("string-simplify-charset") ){
-				String charsetName = commandLine.getOptionValue("string-simplify-charset");
-				Charset charset = Charset.forName(charsetName) ;
-				simplifier.loadCharset(charset);
-			}
-			stringFixer.addTransform(simplifier);
-		}
-
-		if ( commandLine.hasOption("string-escape-controls") ){
-			stringFixer.addTransform(new IsoControlEscaper(true));
-		}
-		if ( commandLine.hasOption("string-escape-charset") ){
-			String charsetName = commandLine.getOptionValue("string-escape-charset");
-			Charset charset = Charset.forName(charsetName) ;
-			stringFixer.addTransform(new EscapeForCharset(charset)); 
-		}
+		stringFixer = StringFixerOptions.parseCommandLine(commandLine);
 	}
 	
 	

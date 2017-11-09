@@ -81,7 +81,7 @@ public class ExtentsValidatorTest extends MetadataValidatorTestBase {
 		ValidatorError error = report.getErrors().get(0);
 		assertEquals(CoreErrorCodes.METADATA_EXTENT_INVALID, error.getCode());
 		assertEquals(
-			"Rectangle de délimitation géographique (1/1) : les coordonnées ne sont pas valides ( 1.0,-1.0,-1,0, 1.0)", 
+			"Rectangle de délimitation géographique (1/1) : les coordonnées ne sont pas valides ( 1.0,-1.0,-1,0, 1.0).", 
 			error.getMessage()
 		);
 	}
