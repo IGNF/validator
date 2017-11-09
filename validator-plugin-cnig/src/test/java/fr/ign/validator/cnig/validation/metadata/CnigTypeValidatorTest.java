@@ -14,12 +14,26 @@ import fr.ign.validator.metadata.code.ScopeCode;
 public class CnigTypeValidatorTest extends CnigValidatorTestBase {
 
 	/*
-	 * check valid for dataset
+	 * check valid for "dataset"
 	 */
 	@Test
-	public void testValid(){
+	public void testValidDataset(){
 		Metadata metadata = mock(Metadata.class);
 		when(metadata.getType()).thenReturn(ScopeCode.valueOf("dataset"));
+		
+		CnigTypeValidator validator = new CnigTypeValidator();
+		validator.validate(context, metadata);
+		
+		assertEquals(0, report.getErrors().size());
+	}
+
+	/*
+	 * check valid for "serie"
+	 */
+	@Test
+	public void testValidSerie(){
+		Metadata metadata = mock(Metadata.class);
+		when(metadata.getType()).thenReturn(ScopeCode.valueOf("serie"));
 		
 		CnigTypeValidator validator = new CnigTypeValidator();
 		validator.validate(context, metadata);
@@ -33,7 +47,7 @@ public class CnigTypeValidatorTest extends CnigValidatorTestBase {
 	@Test
 	public void testInvalid(){
 		Metadata metadata = mock(Metadata.class);
-		when(metadata.getType()).thenReturn(ScopeCode.valueOf("serie"));
+		when(metadata.getType()).thenReturn(ScopeCode.valueOf("feature"));
 		
 		CnigTypeValidator validator = new CnigTypeValidator();
 		validator.validate(context, metadata);

@@ -78,4 +78,4 @@ CNIG_IDURBA_NOT_FOUND,WARNING,Aucune ligne correspondant au document n’a été
 CNIG_METADATA_IDENTIFIER_INVALID,ERROR,"Le champ ""identificateur de ressource unique"" (%1$s) n'est pas égal à ""https://www.geoportail-urbanisme.gouv.fr/document/%2$s""",
 CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND,ERROR,"Le champ ""date de dernière révision"" (%1$s) est requis pour les documents d'urbanisme et les SUP",
 CNIG_METADATA_SPECIFICATION_NOT_FOUND,ERROR,"Aucune ""spécification"" conforme aux consignes CNIG trouvée (titre attendu : ""CNIG (CC|POS|PLU|PLUi|PSMV|SUP) v<ANNEE>"", type de date : ""publication"")",
-CNIG_METADATA_TYPE_INVALID,ERROR,"Le champ ""type de la ressource"" (%1$s) doit être égal à ""dataset"" pour les PLU, POS, CC, PSMV et les SUP",
+CNIG_METADATA_TYPE_INVALID,ERROR,"Le champ ""type de la ressource"" (%1$s) doit être égal à ""dataset"" ou ""serie"" pour les PLU, POS, CC, PSMV et les SUP",
