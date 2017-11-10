@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
@@ -18,6 +19,7 @@ Constraints related to access and use (p51)</a>
  * @author MBorne
  *
  */
+@JsonPropertyOrder({"type","useLimitations"})
 public class Constraint {
 
 	/**
@@ -26,6 +28,14 @@ public class Constraint {
 	@JsonInclude(Include.NON_EMPTY)
 	private List<String> useLimitations = new ArrayList<>();
 
+	/**
+	 * Get GMD class name to simplify inspection
+	 * @return
+	 */
+	public String getType(){
+		return "MD_Constraints";
+	}
+	
 	public List<String> getUseLimitations() {
 		return useLimitations;
 	}

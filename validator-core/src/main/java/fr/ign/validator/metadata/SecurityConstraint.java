@@ -1,7 +1,7 @@
 package fr.ign.validator.metadata;
 
 /**
- * Implementation of gmd:MD_LegalConstraints
+ * Implementation of gmd:MD_SecurityConstraints
  * 
  * @see <a href="http://www.datypic.com/sc/niem21/e-gmd_MD_SecurityConstraints.html">gmd:MD_SecurityConstraints</a>
  * 
@@ -15,6 +15,11 @@ public class SecurityConstraint extends Constraint {
 	 */
 	private String classification ;
 
+	@Override
+	public String getType(){
+		return "MD_SecurityConstraints";
+	}
+	
 	public String getClassification() {
 		return classification;
 	}

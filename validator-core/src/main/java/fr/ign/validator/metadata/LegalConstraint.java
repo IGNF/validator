@@ -33,6 +33,11 @@ public class LegalConstraint extends Constraint {
 	 */
 	@JsonInclude(Include.NON_EMPTY)
 	private List<String> otherConstraints = new ArrayList<>();
+	
+	@Override
+	public String getType(){
+		return "MD_SecurityConstraints";
+	}
 
 	public List<String> getAccessConstraints() {
 		return accessConstraints;
