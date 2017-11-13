@@ -223,6 +223,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		 * Validate document
 		 */
 		try {
+			context.report(CoreErrorCodes.VALIDATOR_INFO, "Validation avec le modèle : "+documentModel.getName());
 			Document document = new Document(documentModel,documentPath);
 			document.validate(context);
 		} catch (Exception e) {

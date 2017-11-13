@@ -37,7 +37,7 @@
 		</Root>
 
 		<Logger name="fr.ign.validator.report.ReportBuilderLegacy" level="debug">
-			<AppenderRef ref="ValidatorAppender" level="warn" />
+			<AppenderRef ref="ValidatorAppender" level="info" />
 		</Logger>
 
 	</Loggers>

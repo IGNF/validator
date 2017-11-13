@@ -1,4 +1,5 @@
 NAME,LEVEL,MESSAGE,DOCUMENTATION
+VALIDATOR_INFO,INFO,%1$s,Message d'information générique
 VALIDATOR_EXCEPTION,FATAL,La validation a rencontré une erreur grave liée au fonctionnement du validateur.,"Cette erreur correspond à un problème profond dans la validateur (absence d'outil système,  problème dans les configurations,  etc.)"
 DIRECTORY_UNEXPECTED_NAME,ERROR,Le nom du dossier contenant le document n'est pas valide.,Cette erreur se produit lorsque le nom du dossier contenant le document ne correspond pas à celui spécifié dans l'expression régulière du DocumentModel
 FILE_MISPLACED,WARNING,Le fichier '%1$s' est mal nommé ou mal placé dans l'arborescence du dossier.,"Cette erreur se produit lorsque le nom d'un fichier respecte partiellement le modèle. Le nom du fichier est correct,  mais pas son chemin complet"

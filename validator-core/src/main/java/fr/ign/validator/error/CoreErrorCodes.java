@@ -9,8 +9,9 @@ public class CoreErrorCodes {
 	/*
 	 * Code d'erreur : reservé au validateur
 	 */
+	public static final ErrorCode VALIDATOR_INFO      = ErrorCode.valueOf("VALIDATOR_INFO");
 	public static final ErrorCode VALIDATOR_EXCEPTION = ErrorCode.valueOf("VALIDATOR_EXCEPTION") ;
-
+	
 	/*
  	 * Niveau DOCUMENT
  	 */	 
