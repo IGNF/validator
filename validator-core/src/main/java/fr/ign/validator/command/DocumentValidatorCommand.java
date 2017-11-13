@@ -37,10 +37,6 @@ import fr.ign.validator.report.ReportBuilderLegacy;
 import fr.ign.validator.repository.DocumentModelRepository;
 import fr.ign.validator.repository.xml.XmlDocumentModelRepository;
 import fr.ign.validator.string.StringFixer;
-import fr.ign.validator.string.transform.DoubleUtf8Decoder;
-import fr.ign.validator.string.transform.EscapeForCharset;
-import fr.ign.validator.string.transform.IsoControlEscaper;
-import fr.ign.validator.string.transform.StringSimplifier;
 
 /**
  * 

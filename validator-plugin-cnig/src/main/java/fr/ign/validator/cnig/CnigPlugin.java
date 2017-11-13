@@ -13,11 +13,21 @@ import fr.ign.validator.cnig.validation.metadata.CnigSpecificationsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigTypeValidator;
 import fr.ign.validator.plugin.Plugin;
 
+/**
+ * Customize validator for CNIG standard validation
+ * 
+ * @see <a href="http://www.geoportail-urbanisme.gouv.fr/standard">http://www.geoportail-urbanisme.gouv.fr/standard</a>
+ * 
+ * @author MBorne
+ *
+ */
 public class CnigPlugin implements Plugin {
 
+	public static final String NAME = "CNIG";
+	
 	@Override
 	public String getName() {
-		return "CNIG";
+		return NAME;
 	}
 
 	@Override

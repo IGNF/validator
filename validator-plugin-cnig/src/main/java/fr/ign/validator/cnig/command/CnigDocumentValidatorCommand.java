@@ -1,6 +1,7 @@
 package fr.ign.validator.cnig.command;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
@@ -10,9 +11,11 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.cnig.CnigPlugin;
 import fr.ign.validator.cnig.standard.DocumentModelFinder;
 import fr.ign.validator.command.DocumentValidatorCommand;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.repository.DocumentModelRepository;
 import fr.ign.validator.repository.xml.XmlDocumentModelRepository;
 
@@ -40,6 +43,19 @@ public class CnigDocumentValidatorCommand extends DocumentValidatorCommand {
 		return NAME;
 	}
 
+	@Override
+	protected void buildPluginsOption(Options options) {
+	
+	}
+	
+	@Override
+	protected void parsePluginsOption(CommandLine commandLine) {
+		this.plugins = new ArrayList<>();
+		PluginManager pluginManager = new PluginManager();
+		this.plugins.add(pluginManager.getPluginByName(CnigPlugin.NAME));
+	}
+	
+	
 	@Override
 	protected void buildVersionOption(Options options) {
 		// remove option
