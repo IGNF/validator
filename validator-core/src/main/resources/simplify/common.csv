@@ -7,3 +7,4 @@ before,after,comment
 \u009c,œ,STRING TERMINATOR replaced by LATIN SMALL LIGATURE OE
 \u0093,"""",SET TRANSMIT STATE remplaced by double quote
 \u0094,"""",CANCEL CHARACTER remplaced by double quote
+\u0092,',PRIVATE USE TWO
