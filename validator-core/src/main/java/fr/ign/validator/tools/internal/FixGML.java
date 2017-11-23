@@ -1,4 +1,4 @@
-package fr.ign.validator.tools;
+package fr.ign.validator.tools.internal;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,11 +10,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 
+ * Replace autoclosed XML elements by empty elements (otherway, ogr2ogr ignores fields so validator reports missing fields)
+ *  
+ * @author MBorne
+ *
+ */
 public class FixGML {
 	
-	
 	/**
-	 * Remplace les balises autofermante dans un fichier
+	 * Performs replacement in a file
 	 * @param input
 	 * @throws IOException 
 	 */
@@ -44,7 +50,7 @@ public class FixGML {
 	
 	
 	/**
-	 * Remplace les balises autofermante
+	 * Performs replacement in a string
 	 * @param input
 	 * @return 
 	 */

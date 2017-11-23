@@ -6,7 +6,9 @@ import org.apache.commons.io.FilenameUtils;
 
 /**
  * 
- * Utilitaire pour les fichiers accompagnants des fichiers d'extensions différentes (exemple : cpg)
+ * Allows to manipulate file with same name and different extension (my_table.shp, my_table.dbf, my_table.cpg,...)
+ * 
+ * Note that all methods are case sensitive
  * 
  * @author MBorne
  *
@@ -14,11 +16,11 @@ import org.apache.commons.io.FilenameUtils;
 public class CompanionFileUtils {
 
 	/**
-	 * Renvoie un fichier compagnon pour un fichier.
+	 * Find companion file 
 	 * 
-	 * @param file Le fichier de base (exemple : PARCELLE.shp)
-	 * @param extension L'extension du fichier companion (exemple : cpg)
-	 * @return PARCELLE.cpg
+	 * @param source Reference file (ex : PARCELLE.dbf)
+	 * @param extension companion file extension (ex: shp)
+	 * @return companion file (ex : PARCELLE.shp)
 	 */
 	public static File getCompanionFile(File source, String extension){
 		File companionFile = new File( 
@@ -29,11 +31,10 @@ public class CompanionFileUtils {
 	}
 	
 	/**
-	 * 
-	 * 
-	 * @param file Le fichier de base (exemple : PARCELLE.shp)
-	 * @param extension L'extension du fichier companion (exemple : cpg)
-	 * @return boolean
+	 * Test if a companion file exists
+	 * @param source
+	 * @param extension
+	 * @return
 	 */
 	public static boolean hasCompanionFile(File source, String extension){
 		
@@ -46,9 +47,7 @@ public class CompanionFileUtils {
 	}
 	
 	/**
-	 * Supprime un fichier compagnon
-	 * 
-	 * @warning sensible à la casse
+	 * Remove a companion file
 	 * 
 	 * @param source
 	 * @param extension

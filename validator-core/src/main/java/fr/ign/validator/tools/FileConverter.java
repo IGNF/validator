@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 import fr.ign.validator.exception.OgrBadVersionException;
 import fr.ign.validator.exception.OgrNotFoundException;
+import fr.ign.validator.tools.internal.FixGML;
 
 
 

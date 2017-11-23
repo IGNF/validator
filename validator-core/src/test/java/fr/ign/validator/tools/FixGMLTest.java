@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import fr.ign.validator.tools.internal.FixGML;
 import junit.framework.TestCase;
 
 public class FixGMLTest extends TestCase {
