@@ -36,7 +36,7 @@ public class TypeValidator implements Validator<Metadata> {
 			context.report(
 				CoreErrorCodes.METADATA_TYPE_INVALID,
 				code,
-				StringUtils.join(code.getCodeList().getAllowedValues(), ',')
+				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
 			);
 		}
 	}

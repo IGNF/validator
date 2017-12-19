@@ -52,7 +52,7 @@ public class MetadataLanguageValidatorTest extends MetadataValidatorTestBase {
 		ValidatorError error = report.getErrors().get(0);
 		assertEquals(CoreErrorCodes.METADATA_METADATALANGUAGE_INVALID, error.getCode());
 		assertEquals(
-			"Le champ \"langue des métadonnées\" (invalid) ne correspond pas à une valeur autorisée (bul,cze,dan,dut,eng,est,fin,fre,ger,gle,gre,hun,ita,lav,lit,mlt,pol,por,rum,slo,slv,spa,swe).",
+			"Le champ \"langue des métadonnées\" (invalid) ne correspond pas à une valeur autorisée (bul, cze, dan, dut, eng, est, fin, fre, ger, gle, gre, hun, ita, lav, lit, mlt, pol, por, rum, slo, slv, spa, swe).",
 			error.getMessage()
 		);
 	}

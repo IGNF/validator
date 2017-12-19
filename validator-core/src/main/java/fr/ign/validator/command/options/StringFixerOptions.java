@@ -53,6 +53,7 @@ public class StringFixerOptions {
 			Option option = new Option(null, "string-escape-charset", true,
 				"Espace characters not supported by a given charset to hexadecimal form (\\uXXXX)");
 			option.setRequired(false);
+			option.setArgName("CHARSET");
 			options.addOption(option);
 		}
 	}

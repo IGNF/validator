@@ -36,7 +36,7 @@ public class CharacterSetValidator implements Validator<Metadata> {
 			context.report(
 				CoreErrorCodes.METADATA_CHARACTERSET_INVALID,
 				code.getValue(),
-				StringUtils.join(code.getCodeList().getAllowedValues(), ',')
+				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
 			);
 		}
 	}

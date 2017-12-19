@@ -36,7 +36,7 @@ public class TopicCategoryValidator implements Validator<Metadata> {
 			context.report(
 				CoreErrorCodes.METADATA_TOPICCATEGORY_INVALID,
 				code.getValue(),
-				StringUtils.join(code.getCodeList().getAllowedValues(), ',')
+				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
 			);
 		}
 	}

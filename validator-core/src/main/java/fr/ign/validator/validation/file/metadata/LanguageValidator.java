@@ -36,7 +36,7 @@ public class LanguageValidator implements Validator<Metadata> {
 			context.report(
 				CoreErrorCodes.METADATA_LANGUAGE_INVALID,
 				code.getValue(),
-				StringUtils.join(code.getCodeList().getAllowedValues(), ',')
+				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
 			);
 		}
 	}
