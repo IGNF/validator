@@ -9,6 +9,7 @@ import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataIdentifierValidator;
+import fr.ign.validator.cnig.validation.metadata.CnigMetadataReferenceSystemIdentifierValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigSpecificationsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigTypeValidator;
 import fr.ign.validator.plugin.Plugin;
@@ -49,10 +50,11 @@ public class CnigPlugin implements Plugin {
 		/*
 		 * extends metadata validation
 		 */
+		context.addListener( new CnigTypeValidator() );
 		context.addListener( new CnigSpecificationsValidator() );
 		context.addListener( new CnigMetadataIdentifierValidator() );
 		context.addListener( new CnigMetadataDateOfLastRevisionValidator() );
-		context.addListener( new CnigTypeValidator() );
+		context.addListener( new CnigMetadataReferenceSystemIdentifierValidator() );
 	}
 
 }
