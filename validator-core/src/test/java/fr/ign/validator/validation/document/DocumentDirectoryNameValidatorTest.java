@@ -59,6 +59,16 @@ public class DocumentDirectoryNameValidatorTest extends TestCase {
 		assertEquals(0, report.countErrors() ) ;
 	}
 	
+	public void testCaseInsensitive(){
+		DocumentModel documentModel = new DocumentModel();
+		documentModel.setRegexp(".*_SCOT");
+
+		File documentPath = new File("/my/path/to/123456789_scot/");
+		Document document = new Document(documentModel,documentPath);
+		validator.validate(context, document);
+		assertEquals(0, report.countErrors() ) ;
+	}
+	
 	
 	public void testBadRegexp(){
 		DocumentModel documentModel = new DocumentModel();

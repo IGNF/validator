@@ -25,7 +25,7 @@ public class DocumentDirectoryNameValidator implements Validator<Document> {
 		}
 
 		String directoryName = document.getDocumentPath().getName();
-		if ( ! directoryName.matches(regexp) ){
+		if ( ! directoryName.matches("(?i)"+regexp) ){
 			context.report(CoreErrorCodes.DIRECTORY_UNEXPECTED_NAME);
 		}
 	}
