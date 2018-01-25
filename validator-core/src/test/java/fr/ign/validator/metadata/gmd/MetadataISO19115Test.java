@@ -296,6 +296,14 @@ public class MetadataISO19115Test extends TestCase {
 			assertEquals("DDT 42 (Direction départementale des territoires de la Loire)", contact.getOrganisationName());
 			assertEquals("ddddt-gpu-sup@loire.gouv.fr", contact.getElectronicMailAddress());
 			assertEquals("pointOfContact", contact.getRole());
+			
+			assertEquals("0477438000",contact.getPhone());
+			assertEquals("2, avenue Grüner CS 90509",contact.getDeliveryPoint());
+			assertEquals("Saint-Etienne Cedex 1",contact.getCity());
+			assertEquals("42007",contact.getPostalCode());
+			assertEquals("France",contact.getCountry());
+			assertEquals("https://lannuaire.service-public.fr/auvergne-rhone-alpes/loire/ddt-42218-01",contact.getOnlineResourceUrl());
+			assertEquals("Consulter l'annuaire du service public", contact.getHoursOfService());
 		}
 		
 		assertEquals(

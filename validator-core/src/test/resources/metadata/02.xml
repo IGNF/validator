@@ -59,10 +59,13 @@
 					<gmd:onlineResource>
 						<gmd:CI_OnlineResource>
 							<gmd:linkage>
-								<gmd:URL></gmd:URL>
+								<gmd:URL>https://lannuaire.service-public.fr/auvergne-rhone-alpes/loire/ddt-42218-01</gmd:URL>
 							</gmd:linkage>
 						</gmd:CI_OnlineResource>
 					</gmd:onlineResource>
+					<gmd:hoursOfService>
+						<gco:CharacterString>Consulter l'annuaire du service public</gco:CharacterString>
+					</gmd:hoursOfService>
 				</gmd:CI_Contact>
 			</gmd:contactInfo>
 			<gmd:role>

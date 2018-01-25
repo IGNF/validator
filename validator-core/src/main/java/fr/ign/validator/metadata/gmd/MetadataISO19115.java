@@ -710,6 +710,33 @@ public class MetadataISO19115 implements Metadata {
 		contact.setRole(
 			findValue("./*/gmd:role/gmd:CI_RoleCode/@codeListValue",contactElement)
 		);
+
+		contact.setPhone(
+			findValue("./*/gmd:contactInfo/*/gmd:phone/*/gmd:voice/*",contactElement)
+		);
+		
+		contact.setDeliveryPoint(
+			findValue("./*/gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*",contactElement)
+		);
+		contact.setCity(
+			findValue("./*/gmd:contactInfo/*/gmd:address/*/gmd:city/*",contactElement)
+		);
+		contact.setPostalCode(
+			findValue("./*/gmd:contactInfo/*/gmd:address/*/gmd:postalCode/*",contactElement)
+		);
+		contact.setCountry(
+			findValue("./*/gmd:contactInfo/*/gmd:address/*/gmd:country/*",contactElement)
+		);
+
+	
+		contact.setHoursOfService(
+			findValue("./*/gmd:contactInfo/*/gmd:hoursOfService/*",contactElement)
+		);
+		
+		contact.setOnlineResourceUrl(
+			findValue("./*/gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*",contactElement)
+		);
+
 		return contact;
 	}
 	
