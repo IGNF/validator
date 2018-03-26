@@ -1,0 +1,21 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 8
+    LIBELLE Char (12) Index 1 ;
+    LIBELONG Char (254) ;
+    TYPESECT Char (3) ;
+    FERMRECO Char (3) ;
+    NOMFIC Char (80) ;
+    URLFIC Char (254) ;
+    IDURBA Char (30) ;
+    DATVALID Char (8) ;
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\MapInfo" = ""
+"\MapInfo\TableID" = "15d3a13f-e092-4f61-9964-6f50e53ef08e"
+"\MapInfo\ParentTableID" = "98e0c86a-c5ac-4456-be81-918030e70269"
+end_metadata

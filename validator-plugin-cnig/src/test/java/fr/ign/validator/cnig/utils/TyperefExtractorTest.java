@@ -2,6 +2,7 @@ package fr.ign.validator.cnig.utils;
 
 import java.io.File;
 
+import fr.ign.validator.cnig.utils.idurba.IdurbaHelperV1;
 import junit.framework.TestCase;
 
 /**
@@ -15,7 +16,7 @@ public class TyperefExtractorTest extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		extractor = new TyperefExtractor() ;
+		extractor = new TyperefExtractor(new IdurbaHelperV1()) ;
 	}
 	
 	

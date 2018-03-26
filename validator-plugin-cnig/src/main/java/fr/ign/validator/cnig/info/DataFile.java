@@ -1,19 +1,19 @@
 package fr.ign.validator.cnig.info;
 
 /**
- * Représente un fichier non géographique (PDF) de l'arborescence de fichier
+ * Represents a non-geographical file (pdf) in directory
  * 
  * @author CBouche
  *
  */
 public class DataFile {
 	/**
-	 * Le nom du fichier
+	 * file name
 	 */
 	private String name;
 
 	/**
-	 * Constructeur avec un nom
+	 * Constructor with name
 	 * 
 	 * @param name
 	 */
@@ -22,7 +22,7 @@ public class DataFile {
 	}
 
 	/**
-	 * Récupération du nom
+	 * Get name
 	 * 
 	 * @return
 	 */

@@ -15,13 +15,14 @@ import java.nio.charset.StandardCharsets;
 public class CharsetDetector {
 
 	/**
-	 * Détecte l'encodage des caractères d'une source de données parmi UTF-8 et LATIN1.
+	 * Detects character encoding from data source between UTF-8 and LATIN1.
 	 * 
-	 * Attention :
+	 * Warning : 
 	 * <ul>
-	 *   <li>Renvoie prioritairement UTF-8 si les caractères sont valides au sens d'UTF-8</li>
-     *   <li>Peut donc renvoyer UTF_8 pour de l'ISO_8859_1 en l'absence d'accent</li> 
+	 * 		<li>Returns UTF-8 first if characters are valid by UTF-8</li>
+	 * 		<li>Consequently, can return UTF-8 if text is ISO_8859_1 without accent</li>
 	 * </ul>
+	 * 
 	 * 
 	 * @param file
 	 * @return
@@ -36,7 +37,7 @@ public class CharsetDetector {
 	}
 
 	/**
-	 * Test si le fichier est encodé en UTF-8
+	 * Tests if file is encoded in UTF-8
 	 * 
 	 * @param file
 	 * @return
@@ -47,7 +48,7 @@ public class CharsetDetector {
 	}
 	
 	/**
-	 * Test si le fichier est encodé dans la charset en paramètre
+	 * Tests if file is encoded in given charset
 	 * @param file
 	 * @param charset
 	 * @return

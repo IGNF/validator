@@ -32,7 +32,8 @@ public class CodeList {
 	}
 
 	/**
-	 * Get allowed values
+	 * Gets allowed values
+	 * 
 	 * @return
 	 */
 	public Collection<String> getAllowedValues(){
@@ -42,7 +43,8 @@ public class CodeList {
 	}
 
 	/**
-	 * Get translation for a given code
+	 * Gets translation for a given code
+	 * 
 	 * @param code
 	 * @return
 	 */
@@ -55,7 +57,8 @@ public class CodeList {
 	}
 	
 	/**
-	 * Get a code list by a given name
+	 * Gets a code list by a given name
+	 * 
 	 * @param name
 	 * @return
 	 */

@@ -11,7 +11,7 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Ensure that "type" is defined to "dataset" 
+ * Ensures that "type" is defined to "dataset" 
  *  
  * @author MBorne
  *

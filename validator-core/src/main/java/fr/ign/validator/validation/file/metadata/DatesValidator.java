@@ -12,11 +12,11 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validate dateOfPublication, dateOfLastRevision and dateOfCreation :
+ * Validates dateOfPublication, dateOfLastRevision and dateOfCreation :
  * 
  * <ul>
- * 	<li>Ensure that at least one date is defined</li>
- *  <li>Ensure that each defined date is in a valid format</li>
+ * 	<li>Ensures that at least one date is defined</li>
+ *  <li>Ensures that each defined date is in a valid format</li>
  * </ul>
  *  
  * @author MBorne

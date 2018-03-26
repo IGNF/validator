@@ -15,9 +15,10 @@ import fr.ign.validator.cnig.info.DocumentInfoWriter;
 import fr.ign.validator.data.Document;
 
 /**
- * Post Traitement
- * Liste les fichiers présent dans chacun des documents
- * Extrait l'entendue géographiques des données
+ * 
+ * Post process
+ * Lists found files in each document
+ * Extracts geographical data extent
  * 
  * @author CBouche
  *
@@ -27,7 +28,7 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 	public static final Marker POSTPROCESS_INFO_EXTRACTOR = MarkerManager.getMarker("POSTPROCESS_INFO_EXTRACTOR") ;
 	
 	/*
-	 * Constante EPSG de sortie des bbox
+	 * EPSG output for bbox (constant)
 	 */
 	public static final String CRS_PROJECTION_CODE = "EPSG:4326" ;
 	
@@ -49,7 +50,7 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 		File validationDirectory = context.getValidationDirectory() ;
 		
 		/*
-		 * Recuperation des infos
+		 * Getting infos
 		 */
 		log.info(
 			POSTPROCESS_INFO_EXTRACTOR, 
@@ -58,12 +59,12 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 		);
 
 		/*
-		 * Extractions des informations CNIG
+		 * Extracting cnig informations
 		 */
 		DocumentInfoExtractor infoExtractor = new DocumentInfoExtractor() ;
 		DocumentInfo documentInfo = infoExtractor.parseDocument( context, document ) ;
 		/*
-		 * Ecriture dans le fichier infos-cnig.xml
+		 * Writing in infos-cnig.xml file
 		 */
 		File outputInfoCnig = new File( validationDirectory, "infos-cnig.xml" ) ;
 		DocumentInfoWriter infowriter = new DocumentInfoWriter() ;

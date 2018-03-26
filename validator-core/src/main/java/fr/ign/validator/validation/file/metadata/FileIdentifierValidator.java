@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "fileIdentifier" is defined and not empty
+ * Ensures that "fileIdentifier" is defined and not empty
  * 
  * @author MBorne
  *

@@ -50,7 +50,7 @@ public class StringSimplifierTest extends TestCase {
 	
 	public void testTransformCommonAndLatin1(){
 		StringSimplifier replacer = new StringSimplifier();
-		// load order is importantn
+		// load order is important
 		replacer.loadCommon();
 		replacer.loadCharset(StandardCharsets.ISO_8859_1);
 		

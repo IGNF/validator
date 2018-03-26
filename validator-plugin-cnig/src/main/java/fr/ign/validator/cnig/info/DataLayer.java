@@ -2,8 +2,7 @@ package fr.ign.validator.cnig.info;
 
 /**
  * 
- * Représente un fichier géographique de l'arborescence de fichier (couche
- * géographique)
+ * Represents a geographical file in directory (geographical layer)
  * 
  * @author CBouche
  *

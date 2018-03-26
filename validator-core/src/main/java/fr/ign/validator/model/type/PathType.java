@@ -8,7 +8,7 @@ import fr.ign.validator.validation.attribute.PathExistsValidator;
 
 /**
  * 
- * Un chemin vers un fichier, relatif à la racine du document
+ * Path to a file, relative to Document root
  * 
  * @author MBorne
  */
@@ -25,9 +25,10 @@ public class PathType extends AttributeType<File> {
 	}
 	
 	/**
-	 * Convertion dans le type java correspondant
+	 * Conversion in the matching java type
+	 * 
 	 * @param value
-	 * @throws IllegalArgumentException si la conversion échoue
+	 * @throws IllegalArgumentException if conversion fails
 	 * @return
 	 */
 	public File bind( Object value ) {

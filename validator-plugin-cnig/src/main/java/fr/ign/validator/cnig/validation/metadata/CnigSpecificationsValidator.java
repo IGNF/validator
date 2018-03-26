@@ -12,7 +12,7 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Ensure that "specifications" contains an element with the following form : 
+ * Ensures that "specifications" contains an element with the following form : 
  * 
  * ex : "CNIG PLU v2013"
  * 

@@ -8,7 +8,7 @@ import fr.ign.validator.model.FileModel;
 
 /**
  * 
- * Représente un fichier avec une extension .pdf
+ * Represents a file with the extension ".pdf"
  * 
  * @author MBorne
  *

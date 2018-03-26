@@ -11,7 +11,8 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 /**
- * Lecteur de fichier CSV
+ * CSV file reader
+ * 
  * @author MBorne
  *
  */
@@ -19,7 +20,7 @@ public class CSVReader implements Iterator< String[] >{
 	private Iterator<CSVRecord> iterator ;
 	
 	/**
-	 * Lecture du fichier file avec la charset en paramètre
+	 * Reading file with given charset
 	 * @param file
 	 * @param charset
 	 * @throws IOException 
@@ -60,7 +61,7 @@ public class CSVReader implements Iterator< String[] >{
 	}
 
 	/**
-	 * Trim une chaîne de caractère
+	 * Trims a string
 	 * @param value
 	 * @return
 	 */
@@ -73,7 +74,7 @@ public class CSVReader implements Iterator< String[] >{
 	
 	
 	/**
-	 * Convertit à NULL une valeur vide
+	 * Converts to NULL an empty string
 	 * @param value
 	 */
 	private String nullifyEmptyString(String value){

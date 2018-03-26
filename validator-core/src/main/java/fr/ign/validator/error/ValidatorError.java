@@ -45,7 +45,7 @@ public class ValidatorError implements Cloneable {
 	private String attribute ;
 
 	/**
-	 * data - File concerned by the error (either relative path for DocumentFile or folder name for Document)
+	 * data - File concerned by the error (either relative path for DocumentFile or directory name for Document)
 	 */
 	private String file ;
 

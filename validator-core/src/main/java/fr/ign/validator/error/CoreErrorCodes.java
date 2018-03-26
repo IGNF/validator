@@ -6,20 +6,21 @@ package fr.ign.validator.error;
  *
  */
 public class CoreErrorCodes {
+	
 	/*
-	 * Code d'erreur : reservé au validateur
+	 * ErrorCode for error in validator
 	 */
 	public static final ErrorCode VALIDATOR_INFO      = ErrorCode.valueOf("VALIDATOR_INFO");
 	public static final ErrorCode VALIDATOR_EXCEPTION = ErrorCode.valueOf("VALIDATOR_EXCEPTION") ;
 	
 	/*
- 	 * Niveau DOCUMENT
+ 	 * ErrorCode for error in Document
  	 */	 
 	public static final ErrorCode DIRECTORY_UNEXPECTED_NAME = ErrorCode.valueOf("DIRECTORY_UNEXPECTED_NAME") ;
 
 	/*
-	 * Niveau FileModel
-	 */
+ 	 * ErrorCode for error in FileModel
+ 	 */	
 	public static final ErrorCode FILE_MISSING_RECOMMANDED = ErrorCode.valueOf("FILE_MISSING_RECOMMANDED") ;
 	public static final ErrorCode FILE_MISSING_RECOMMANDED_DIRECTORY = ErrorCode.valueOf("FILE_MISSING_RECOMMANDED_DIRECTORY") ;
 	
@@ -32,12 +33,16 @@ public class CoreErrorCodes {
 	public static final ErrorCode FILE_EMPTY = ErrorCode.valueOf("FILE_EMPTY") ;
 
 	
-	// Metadata files
+	/*
+ 	 * ErrorCode for error in Metadata Files 
+ 	 */	
 	public static final ErrorCode METADATA_MULTIPLE_FILES = ErrorCode.valueOf("METADATA_MULTIPLE_FILES");
 	public static final ErrorCode METADATA_INVALID_FILE    = ErrorCode.valueOf("METADATA_INVALID_FILE") ;
 	public static final ErrorCode METADATA_IGNORED_FILE    = ErrorCode.valueOf("METADATA_IGNORED_FILE") ;
 	
-	// Metadata content
+	/*
+ 	 * ErrorCode for error in Metadata Content
+ 	 */	
 	public static final ErrorCode METADATA_FILEIDENTIFIER_NOT_FOUND   = ErrorCode.valueOf("METADATA_FILEIDENTIFIER_NOT_FOUND") ;
 	public static final ErrorCode METADATA_IDENTIFIER_NOT_FOUND       = ErrorCode.valueOf("METADATA_IDENTIFIER_NOT_FOUND") ;
 	public static final ErrorCode METADATA_TITLE_NOT_FOUND            = ErrorCode.valueOf("METADATA_TITLE_NOT_FOUND");
@@ -97,7 +102,9 @@ public class CoreErrorCodes {
 	public static final ErrorCode METADATA_METADATALANGUAGE_NOT_FOUND = ErrorCode.valueOf("METADATA_METADATALANGUAGE_NOT_FOUND");
 	public static final ErrorCode METADATA_METADATALANGUAGE_INVALID   = ErrorCode.valueOf("METADATA_METADATALANGUAGE_INVALID");
 
-	// FileModel / Table
+	/*
+ 	 * ErrorCode for error in Table (FileModel)
+ 	 */	
 	public static final ErrorCode TABLE_MISSING_ATTRIBUTE = ErrorCode.valueOf("TABLE_MISSING_ATTRIBUTE") ;
 	public static final ErrorCode TABLE_MISSING_NULLABLE_ATTRIBUTE = ErrorCode.valueOf("TABLE_MISSING_NULLABLE_ATTRIBUTE") ;
 	public static final ErrorCode TABLE_UNEXPECTED_ATTRIBUTE = ErrorCode.valueOf("TABLE_UNEXPECTED_ATTRIBUTE") ;
@@ -105,8 +112,8 @@ public class CoreErrorCodes {
 	public static final ErrorCode TABLE_MISSING_GEOMETRY = ErrorCode.valueOf("TABLE_MISSING_GEOMETRY");
 	
 	/*
-	 * Code d'erreurs : niveau FEATURE / Attribute
-	 */
+ 	 * ErrorCode for error in Features and Attributes
+ 	 */	
 	public static final ErrorCode ATTRIBUTE_INVALID_FORMAT = ErrorCode.valueOf("ATTRIBUTE_INVALID_FORMAT") ;
 	public static final ErrorCode ATTRIBUTE_SIZE_EXCEEDED = ErrorCode.valueOf("ATTRIBUTE_SIZE_EXCEEDED") ;
 	public static final ErrorCode ATTRIBUTE_INVALID_REGEXP = ErrorCode.valueOf("ATTRIBUTE_INVALID_REGEXP") ;

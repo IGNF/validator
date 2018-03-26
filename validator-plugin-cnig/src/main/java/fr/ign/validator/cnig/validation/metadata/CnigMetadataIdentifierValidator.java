@@ -12,7 +12,7 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Ensure that "identifier" respect the following format : https://www.geoportail-urbanisme.gouv.fr/document/{NomDeDossier}
+ * Ensures that "identifier" respect the following format : https://www.geoportail-urbanisme.gouv.fr/document/{NomDeDossier}
  * @author MBorne
  *
  */

@@ -15,7 +15,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Vérifie qu'il y a au moins une pièce écrite dans le document
+ * Checking the document contains at least one written material ("Pièce écrite")
  * 
  * @author MBorne
  *

@@ -7,7 +7,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation d'un StringType en fonction d'une expression régulière
+ * Validates a StringType Attribute according to a regexp
  * 
  * @author MBorne
  *

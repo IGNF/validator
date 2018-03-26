@@ -12,48 +12,49 @@ import org.apache.commons.io.FilenameUtils;
 import fr.ign.validator.exception.InvalidCharsetException;
 
 /**
- * Lecture des fichiers SHP/TAB 
+ * SHP/TAB file reader 
  * 
  * Note : 
  * <ul>
- * 	<li>S'appuie sur une conversion CSV réalisée à l'aide de ogr2ogr.</li>
- *  <li>Place le fichier CSV à côté de l'original</li>
+ * 		<li>Based on a csv conversion made by ogr2ogr</li>
+ * 		<li>Puts csv file next to the original file</li>
  * </ul>
- *  
  *  
  * @author MBorne
  */
 public class TableReader implements Iterator< String[] >{
 	/**
-	 * Le lecteur pour le fichier CSV
+	 * CSV file reader
 	 */
 	private CSVReader csvReader ;
 	/**
-	 * L'entête du fichier
+	 * File header
 	 */
 	private String[] header ;
 	
 	/**
 	 * 
-	 * Lecture du fichier avec une charset spécifiée. Le système
-	 * valide la charset passée en paramètre
+	 * Reading file with given charset (validated by system).
+	 * 
 	 * 
 	 * @param file
 	 * @param charset
 	 * @throws IOException 
 	 */
 	private TableReader(File csvFile, Charset charset) throws IOException{
-		// ouverture du fichier
+		/*
+		 * opening file
+		 */
 		csvReader = new CSVReader(csvFile, charset);
 		readHeader();
 	}
 
 	/**
-	 * Lecture de l'entête
+	 * Header reading
 	 * 
-	 * Remarque les champs null ou vide sont filtrés en raison de la présence
-	 * d'entête posant problème en sortie de ogr2ogr (IDSUP,) sur des fichiers avec
-	 * une seule colonne...
+	 * 
+	 * Note :
+	 * NULL or empty fields are filtered to avoid problems with files with only one column
 	 * 
 	 * @throws IOException 
 	 */
@@ -103,7 +104,8 @@ public class TableReader implements Iterator< String[] >{
 	}
 	
 	/**
-	 * Trouve la position d'une colonne dans l'entête
+	 * Finds the position of a column by its name in header
+	 * 
 	 * @param string
 	 * @return
 	 */
@@ -118,7 +120,8 @@ public class TableReader implements Iterator< String[] >{
 	}
 	
 	/**
-	 * Création d'un lecteur à partir d'un fichier et d'une charset
+	 * Creates a reader from a file and a charset
+	 * 
 	 * @param file
 	 * @param charset
 	 * @return
@@ -147,7 +150,8 @@ public class TableReader implements Iterator< String[] >{
 	
 	
 	/**
-	 * Effectue une conversion en CSV au besoin
+	 * Converts to csv if needed
+	 * 
 	 * @param file
 	 * @return
 	 * @throws IOException

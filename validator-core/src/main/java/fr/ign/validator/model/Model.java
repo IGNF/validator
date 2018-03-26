@@ -1,14 +1,13 @@
 package fr.ign.validator.model;
 
 /**
- * Interface représentant un modèle
+ * Interface representing a model
  * @author MBorne
  */
 public interface Model {
 
 	/**
-	 * Renvoie le nom du modèle utilisé dans la production
-	 *  de rapport d'erreurs.
+	 * Returns the name of the model used in the production of the error report
 	 * @return
 	 */
 	public String getName() ;

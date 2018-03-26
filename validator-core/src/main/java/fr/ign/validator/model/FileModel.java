@@ -17,7 +17,8 @@ import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.xml.binding.FileModelAdapter;
 
 /**
- * Représente un fichier d'un document
+ * Represents a file of a Document
+ * 
  * @author MBorne
  */
 @XmlJavaTypeAdapter(FileModelAdapter.class)
@@ -33,19 +34,19 @@ public abstract class FileModel implements Model {
 	}
 	
 	/**
-     * Le nom du fichier
+     * file name
      */
 	private String name ;
 	/**
-	 * Le chemin vers le fichier
+	 * file path
 	 */
 	private String regexp ;
 	/**
-	 * L'obligation de présence du fichier
+	 * Mandatory file existence
 	 */
 	private MandatoryMode mandatory = MandatoryMode.WARN ;
 	/**
-	 * Le modèle de données (optionel, pour les tables uniquement)
+	 * Data model (optional, for tables only)
 	 */
 	private FeatureType featureType = null ;
 	
@@ -54,7 +55,7 @@ public abstract class FileModel implements Model {
 	}
 
 	/**
-	 * Get type
+	 * Gets type
 	 * @return
 	 */
 	public abstract String getType()  ;
@@ -90,18 +91,19 @@ public abstract class FileModel implements Model {
 	}
 	
 	/**
-	 * Renvoie la regexp complète
+	 * Returns full regexp
+	 * 
 	 * @return
 	 */
 	public String getFullRegexp(){
 		// (?i) : case insensitive
-		// .* : commence par n'importe quoi
+		// .* : starts by any character
 		String regexp = "(?i).*/"+getRegexp()+getRegexpSuffix() ;
 		return regexp ;
 	}
 	
 	/**
-	 * Renvoie une regexp correspondant au nom du fichier
+	 * Returns a regexp corresponding to the filename
 	 * 
 	 * @return
 	 */
@@ -120,9 +122,9 @@ public abstract class FileModel implements Model {
 	}
 	
 	/**
-	 * Renvoie la regexp correspondant :
-	 * - aux extensions supportées
-	 * - au caractère "/" pour les dossiers
+	 * Returns the corresponding regexp to :
+	 * - the supported extensions
+	 * - the character "/" for folders
 	 * 
 	 * @return
 	 */
@@ -131,7 +133,8 @@ public abstract class FileModel implements Model {
 	}
 	
 	/**
-	 * Test si le fichier correspond à l'expression régulière
+	 * Tests if the file matches the regexp
+	 * 
 	 * @param file
 	 * @return
 	 */
@@ -143,8 +146,9 @@ public abstract class FileModel implements Model {
 	}
 	
 	/**
-	 * Test si le nom de fichier correspond à l'expression régulière (pour détecter les fichiers présents
-	 *  dans un mauvais dossier)
+	 * Tests if filename matches the regexp
+	 * (in order to detect files in wrong directory) 
+	 * 
 	 * @param file
 	 * @return
 	 */
@@ -156,7 +160,8 @@ public abstract class FileModel implements Model {
 	
 
 	/**
-	 * Create a document file for the given file model
+	 * Creates a document file for the given file model
+	 * 
 	 * @return
 	 */
 	abstract public DocumentFile createDocumentFile(File path);

@@ -9,23 +9,24 @@ import fr.ign.validator.string.StringTransform;
 
 /**
  * 
- * Correction des chaînes de caractères doublement encodées en UTF-8. Procède par recherche
- * des séquences mal-encodées (non efficace si on est certain que la chaîne de caractères est mal encodée).
+ * Correction of string in double-encoded utf-8.
+ * Proceeds by finding badly encoded sequences
+ * (unefficient if it is sure that the string is badly encoded)
  * 
  * @author MBorne
  *
  */
 public class DoubleUtf8Decoder implements StringTransform {
 	/**
-	 * codePoint unicode maximum testé
+	 * maximal codePoint unicode tested
 	 */
 	public static final int MAX_CODE_POINT = 10000;
 	
 	private Map<Integer, String> codePointToBadEncoding = new HashMap<>();
 
 	/**
-	 * Les premiers caractères apparaissant en cas de double encodage associé à minCodePoint et maxCodePoint (optimisation
-	 *  pour éviter de rechercher sans raison des remplacements)
+	 *  The first characters appearing if double encoding associated to minCodePoint and maxCodePoint
+	 *  (optimized in order to avoid searching replacements for no reason)
 	 */
 	private Map<Character, Point> charsOfInterest = new HashMap<>();
 	

@@ -33,13 +33,13 @@ public class TableFile extends DocumentFile {
 	}
 
 	/**
-	 * Validation d'un fichier
+	 * File validation
 	 * @param context
 	 * @param matchingFile
 	 */
 	protected void validateTable(Context context, TableModel tableModel, File matchingFile){
 		/*
-		 * Validation du fichier CSV
+		 * csv file validation
 		 */
 		log.debug(MARKER, "Lecture des données de la table {}...", matchingFile) ;
 		try {
@@ -57,7 +57,7 @@ public class TableFile extends DocumentFile {
 			}
 			
 			/*
-			 * Validation de l'entête
+			 * header validation
 			 */
 			String[] columns = reader.getHeader() ;
 			FeatureTypeMapper mapping = new FeatureTypeMapper(columns, tableModel.getFeatureType()) ;
@@ -65,7 +65,7 @@ public class TableFile extends DocumentFile {
 			header.validate(context);
 
 			/*
-			 * Validation des Feature
+			 * feature validation
 			 */
 			int count = 0 ;
 			while ( reader.hasNext() ){
@@ -76,7 +76,7 @@ public class TableFile extends DocumentFile {
 			}
 			
 			/*
-			 * contrôle des fichiers vides
+			 * check for empty file
 			 */
 			if ( count == 0 ){
 				context.report(

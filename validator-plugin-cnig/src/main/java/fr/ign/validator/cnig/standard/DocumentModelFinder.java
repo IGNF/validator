@@ -42,7 +42,7 @@ public class DocumentModelFinder {
 	}
 	
 	/**
-	 * Find DocumentModel's according to DocumentType
+	 * Find DocumentModel according to DocumentType
 	 * @param documentName
 	 * @return
 	 * @throws IOException 

@@ -13,8 +13,7 @@ import fr.ign.validator.data.Document;
 
 /**
  * 
- * Ajoute un champ "fichiers" aux générateurs et assiettes en réalisation une jointure 
- *  sur la table des actes et des servitudes.
+ * Adds a field `Files` to "génératuers" and "assiettes" to join with "actes" and "servitudes"
  * 
  * @author MBorne
  */

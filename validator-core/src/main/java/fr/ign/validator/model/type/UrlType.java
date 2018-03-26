@@ -6,7 +6,7 @@ import java.net.URL;
 import fr.ign.validator.model.AttributeType;
 
 /**
- * Un chemin vers un fichier
+ * Location of a file
  * @author MBorne
  */
 public class UrlType extends AttributeType<URL> {
@@ -21,9 +21,10 @@ public class UrlType extends AttributeType<URL> {
 	}
 	
 	/**
-	 * Convertion dans le type java correspondant
+	 * Conversion in the matching java type
+	 * 
 	 * @param value
-	 * @throws IllegalArgumentException si la conversion échoue
+	 * @throws IllegalArgumentException if conversion fails
 	 * @return
 	 */
 	public URL bind( Object value ) {

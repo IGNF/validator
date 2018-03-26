@@ -25,7 +25,16 @@ import fr.ign.validator.cnig.utils.internal.DatabaseJointureSUP;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * Utilitaire permettant de reporter les fichiers référencés par les ACTE sur les GENERATEUR et les ASSIETTE 
+ * Reports files referenced by "actes" on "générateurs" and "assiettes"
+ * 
+ * TODO :
+ * <ul>
+ * 	<li>Move to cnig.sup.ComputeColumnFile</li>
+ *  <li>Take dataDir as constructor parameter</li>
+ *  <li>Improve and add regress tests</li>
+ *  <li>Cleanup process</li>
+ * </ul>
+ *  
  * @author MBorne
  *
  */
@@ -42,7 +51,7 @@ public class ReferenceActeSupJointureBuilder {
 	
 	
 	/**
-	 * Le contexte de validation
+	 * Validation context
 	 */
 	private Context context ;
 		

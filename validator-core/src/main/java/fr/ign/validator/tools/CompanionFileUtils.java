@@ -16,7 +16,7 @@ import org.apache.commons.io.FilenameUtils;
 public class CompanionFileUtils {
 
 	/**
-	 * Find companion file 
+	 * Finds companion file 
 	 * 
 	 * @param source Reference file (ex : PARCELLE.dbf)
 	 * @param extension companion file extension (ex: shp)
@@ -31,7 +31,7 @@ public class CompanionFileUtils {
 	}
 	
 	/**
-	 * Test if a companion file exists
+	 * Tests if a companion file exists
 	 * @param source
 	 * @param extension
 	 * @return
@@ -47,7 +47,7 @@ public class CompanionFileUtils {
 	}
 	
 	/**
-	 * Remove a companion file
+	 * Removes a companion file
 	 * 
 	 * @param source
 	 * @param extension

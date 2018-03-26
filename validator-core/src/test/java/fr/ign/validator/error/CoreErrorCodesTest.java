@@ -20,7 +20,9 @@ public class CoreErrorCodesTest extends TestCase {
 		Field[] fields = CoreErrorCodes.class.getDeclaredFields() ;
 		assertTrue(fields.length > 20);
 		for (Field field : fields) {
-			// Filtrage sur les champs en majuscules...
+			/*
+			 * Filter on uppercase fields
+			 */
 			if ( ! field.getName().equals( field.getName().toUpperCase() ) ){
 				continue ;
 			}

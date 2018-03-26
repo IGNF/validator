@@ -4,7 +4,7 @@ import fr.ign.validator.Context;
 
 /**
  * 
- * Interface représentant un validateur pour un élément validable
+ * Interface representing a validator for a validatable data
  * 
  * @author MBorne
  *
@@ -13,7 +13,7 @@ import fr.ign.validator.Context;
 public interface Validator<T> {
 	
 	/**
-	 * Validation de l'élément
+	 * Validates the element
 	 * @param context
 	 * @param validatable
 	 */

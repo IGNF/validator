@@ -20,7 +20,7 @@ import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Document materialized as a folder (documentPath) associated to a DocumentModel (documentModel)
+ * Document materialized as a directory (documentPath) associated to a DocumentModel (documentModel)
  * 
  * @author MBorne
  *
@@ -40,12 +40,12 @@ public class Document implements Validatable {
 	private DocumentModel documentModel ;
 	
 	/**
-	 * Document path (root folder for validation)
+	 * Document path (root directory for validation)
 	 */
 	private File documentPath ;
 	
 	/**
-	 * Les fichiers du document (définit après l'étape de matching)
+	 * Files related to Document (defined after matching step)
 	 */
 	private List<DocumentFile> documentFiles = new ArrayList<DocumentFile>();
 
@@ -75,7 +75,7 @@ public class Document implements Validatable {
 	}
 	
 	/**
-	 * Le nom du document calculé à partir du nom de dossier
+	 * documentName calculated from directory name
 	 * @return
 	 */
 	public String getDocumentName() {
@@ -90,9 +90,9 @@ public class Document implements Validatable {
 	}
 	
 	/**
-	 * Recherche des DocumentFile par type de FileModel
+	 * Retrieves documentFiles by FileModel type
 	 * 
-	 * Exemple : document.getDocumentFiles(MetadataFile.class)
+	 * Example : document.getDocumentFiles(MetadataFile.class)
 	 * 
 	 * @param type
 	 * @return
@@ -115,8 +115,8 @@ public class Document implements Validatable {
 	}
 
 	/**
-	 * Fonction utilitaire permettant de récupérer les DocumentFile correspondant
-	 *  à un modèle
+	 * Retrieve documentFiles corresponding to a model
+	 * 
 	 * @param fileModel
 	 * @return
 	 */
@@ -146,36 +146,36 @@ public class Document implements Validatable {
 		context.beginData( this );
 		
 		/*
-		 * traitements avant matching
+		 * calculations before matching step
 		 */
 		triggerBeforeMatching(context);
 		
 		/*
-		 * Matching des fichiers avec les définitions de fichiers
+		 * matching files with model
 		 */
 		findFileModelForFiles( context ) ;
 		
 		/*
-		 * Exécution des traitements beforeValidate
+		 * executing process before validation
 		 */
 		triggerBeforeValidate(context);
 		
-		/**
-		 * Validation au niveau du document
+		/*
+		 * Validation at document level
 		 */
 		for ( Validator<Document> validator : documentModel.getValidators() ) {
 			validator.validate(context, this);
 		}
 		
-		/**
-		 * Validation au niveau des fichiers (traverse)
+		/*
+		 * Validation at file level
 		 */
 		for ( DocumentFile documentFile : documentFiles ){
 			documentFile.validate(context);
 		}
 		
 		/*
-		 * Exécution des post-traitements
+		 * executing process after validation
 		 */
 		triggerAfterValidate(context);
 		
@@ -184,7 +184,8 @@ public class Document implements Validatable {
 	}
 	
 	/**
-	 * Envoi l'événement indiquant que la mise en correspondance des fichiers va commencer
+	 * Generates event indicating file matching is starting
+	 * 
 	 * @param context
 	 * @throws Exception
 	 */
@@ -195,7 +196,8 @@ public class Document implements Validatable {
 	}
 	
 	/**
-	 * Envoi l'événement indiquant que la validation va commencer
+	 * Generates event indicating validation is starting
+	 * 
 	 * @param context
 	 * @throws Exception
 	 */
@@ -206,7 +208,8 @@ public class Document implements Validatable {
 	}
 	
 	/**
-	 * Envoi l'événement indiquant que la validation du document est terminée
+	 * Generates event indicating validation is done
+	 * 
 	 * @param context
 	 * @throws Exception
 	 */
@@ -217,8 +220,8 @@ public class Document implements Validatable {
 	}
 		
 	/**
-	 * Mise en correspondance des fichiers présents dans documentPath avec les FileModel définit
-	 *  dans le modèle de document.
+	 * Matching files in documentPath with FileModel defined in DocumentModel
+	 * 
 	 * @param documentPath
 	 */
 	public void findFileModelForFiles( Context context ){
@@ -229,7 +232,7 @@ public class Document implements Validatable {
 		Collection<File> files = FileUtils.listFilesAndDirs(documentPath, allowedExtensions) ;
 
 		/*
-		 * recherche des correspondances avec les FileModel
+		 * find match with FileModel
 		 */
 		for (File file : files) {
 			log.info(MARKER, "Recherche du FileModel pour le fichier {}...", file);
@@ -242,7 +245,7 @@ public class Document implements Validatable {
 				continue ;
 			}
 			/*
-			 * mal placé?
+			 * move elsewhere ?
 			 */ 
 			fileModel = documentModel.findFileModelByFilename( file ) ;
 			if ( fileModel != null ){
@@ -263,7 +266,7 @@ public class Document implements Validatable {
 				continue ;
 			}
 			/*
-			 * non prévu dans le modèle
+			 * not covered by model
 			 */
 			log.error(MARKER, "[UNEXPECTED_FILE] {} => null", file);
 			context.report(
@@ -279,7 +282,7 @@ public class Document implements Validatable {
 	}
 
 	/**
-	 * Supprime la liste des fichiers mis en correspondance avec le modèle
+	 * Deletes list of files matching with model
 	 */
 	private void clearFiles() {
 		documentFiles.clear();

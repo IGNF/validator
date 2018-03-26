@@ -42,13 +42,12 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  * 
- * Produit un répertoire DATA dans le dossier validation en normalisant les données en
- * fonction du modèle.
+ * Creates a DATA directory in the validation directory normalizing data from the model
  * 
  * <ul>
- * 	<li>Les tables sont normalisées sous forme de CSV en fonction du FeatureType correspondant</li>
- *  <li>Les fichiers classiques (MetadataFile, PDF) sont copiés</li>
- *  <li>Les répertoires sont ignorés</li>
+ * 		<li>Tables are normalized in csv according to corresponding FeatureType</li>
+ * 		<li>Standard files (MetadataFiles, PDF) are copied</li>
+ * 		<li>Directories are ignored</li>
  * </ul>
  * 
  * @author MBorne
@@ -61,23 +60,27 @@ public class NormalizePostProcess implements ValidatorListener {
 
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
-		//RAS
+
 	}
 
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
-		//RAS
+
 	}
 
 	@Override
 	public void afterValidate(Context context, Document document) throws Exception {
-		// Création du répertoire DATA
+		/*
+		 * Creating DATA directory
+		 */
 		File dataDirectory = context.getDataDirectory() ;
 		if ( ! dataDirectory.exists() ){
 			dataDirectory.mkdirs() ;
 		}
 		
-		// Création du répertoire METADATA
+		/*
+		 * Creating METADATA directory
+		 */
 		File metadataDirectory = context.getMetadataDirectory() ;
 		if ( ! metadataDirectory.exists() ){
 			metadataDirectory.mkdirs() ;
@@ -90,7 +93,9 @@ public class NormalizePostProcess implements ValidatorListener {
 			FileModel fileModel = documentFile.getFileModel() ;
 			
 			if ( fileModel instanceof TableModel ){
-				// Création d'un fichier CSV standardisé
+				/*
+				 * Creating standardized csv file
+				 */
 				File csvFile = new File(dataDirectory, fileModel.getName()+".csv" ) ;
 				{
 					log.info(MARKER,"Normalisation de {} en {}...",srcFile, csvFile);
@@ -116,7 +121,8 @@ public class NormalizePostProcess implements ValidatorListener {
 	}
 	
 	/**
-	 * Creation d'un fichier CSV normalisé
+	 * Creates a normalized csv file
+	 * 
 	 * @param featureType
 	 * @param srcFile
 	 * @param destFile
@@ -138,7 +144,7 @@ public class NormalizePostProcess implements ValidatorListener {
 		MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS);
 		
 		/*
-		 * Creation d'un fichier temporaire contenant un CSV normalisé {{destFile}}.csv
+		 * Creating a temp file containing normalized csv {{destFile}}.csv
 		 */
 		TableReader reader = null ;
 		try {
@@ -159,7 +165,7 @@ public class NormalizePostProcess implements ValidatorListener {
 		printer.printRecord(outputHeader);
 			
 		/*
-		 * écriture de chaque Feature
+		 * writing each feature
 		 */
 		while ( reader.hasNext() ){
 			String[] inputRow = reader.next() ;
@@ -185,7 +191,7 @@ public class NormalizePostProcess implements ValidatorListener {
 						attribute.getName()
 					);
 				}
-				// formatage
+				// formatting
 				String outputValue = attribute.formatObject(bindedValue);
 				outputValue = context.getStringFixer().transform(outputValue);
 				outputRow[position] = outputValue ;

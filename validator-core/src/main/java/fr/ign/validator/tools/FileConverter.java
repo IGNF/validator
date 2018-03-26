@@ -27,7 +27,7 @@ import fr.ign.validator.tools.internal.FixGML;
 
 /**
  * 
- * Outils de conversion de format reposant sur GDAL - ogr2ogr.
+ * File converter to different formats based on GDAL - ogr2ogr
  * 
  * @author MBorne
  * @author CBouche
@@ -47,7 +47,7 @@ public class FileConverter {
 	private String ogr2ogr = System.getProperty("ogr2ogr_path", "ogr2ogr") ;
 	
 	/**
-	 * Version de ogr2ogr
+	 * ogr2ogr version
 	 */
 	private String version ;
 		
@@ -67,15 +67,15 @@ public class FileConverter {
 	}
 
 	/**
-	 * Renvoie la version de GDAL
-	 * @return null si la commande ogr2ogr --version échoue
+	 * returns ogr2ogr version
+	 * @return null if command `ogr2ogr --version` fails
 	 */
 	public String getVersion(){
 		return this.version ;
 	}
 	
 	/**
-	 * Appel ogr2ogr --version pour récupérer la version de GDAL
+	 * Call `ogr2ogr --version` to get GDAL version
 	 * @return
 	 */
 	private String retrieveVersion(){
@@ -101,11 +101,12 @@ public class FileConverter {
 
 	/**
 	 * 
-	 * Conversion d'un fichier source en CSV.
+	 * Converts a source file in csv
 	 * 
-	 * Attention : Dans la mesure où GDAL ne fait pas les conversions 
-	 *  de manière uniforme entre SHP et TAB, on veille ici à ce que GDAL ne tente pas 
-	 *  tenter de convertir l'encodage des données (on laisse GDAL croire que les données sont en UTF-8)
+	 * Warning :
+	 * As GDAL doesn't convert SHP and TAB the same way,
+	 * GDAL is used as if data were encoded in utf-8
+	 * so it doesn't convert data encoding
 	 * 
 	 * @param source
 	 * @param destination
@@ -117,11 +118,16 @@ public class FileConverter {
 		if ( target.exists() ){
 			target.delete() ;
 		}
-		// patch sur les fichiers GML
+
+		/*
+		 * patch on GML files
+		 */
 		if ( FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml") ){
 			fixGML(source);
 		}
-		// suppression des cpg
+		/*
+		 * Removing cpg
+		 */
 		CompanionFileUtils.removeCompanionFile(source, "cpg"); 
 		CompanionFileUtils.removeCompanionFile(source, "CPG");
 
@@ -129,10 +135,12 @@ public class FileConverter {
 		log.info(MARKER, "{} => {} (gdal {})", source, target, version );
 		
 		String[] args = getArguments(source, target, "CSV") ;
-		// Remarque : l'encodage est spécifié en UTF-8 pour qu'ogr2ogr n'effectue pas la convertion
+		/*
+		 * Note : encoding is specified in UTF-8 so that ogr2ogr doesn't convert 
+		 */
 		runCommand(args,ENCODING_UTF8);
 		/*
-		 * Controle que le fichier de sortie est bien crée
+		 * Controls that output file is created
 		 */
 		if ( ! target.exists() ) {
 			log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
@@ -142,7 +150,8 @@ public class FileConverter {
 	
 	
 	/**
-	 * Conversion d'un fichier source en shapefile avec pour encodage LATIN1
+	 * Converts a source file in LATIN1 encoded shapefile
+	 * 
 	 * @param files
 	 * @throws IOException 
 	 */
@@ -154,14 +163,14 @@ public class FileConverter {
 		String[] args = getArguments(source, target, "ESRI Shapefile") ;
 		runCommand(args,ENCODING_LATIN1);
 		/*
-		 * Controle que le fichier de sortie est bien crée
+		 * Controls that output file is created
 		 */
 		if ( ! target.exists() ) {
 			log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
 			createFalseCSV(target) ;
 		}
 		/*
-		 * Génération du fichier .cpg
+		 * Generating cgp file
 		 */
 		File cpgFile = CompanionFileUtils.getCompanionFile(target,"cpg") ;
 		FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1);
@@ -169,8 +178,10 @@ public class FileConverter {
 
 	
 	/**
-	 * Tout fichier csv invalide bloque l'usage d'ogr2ogr
-	 * On construit un fichier valide, avec entete, sans enregistrement pour eviter ce souci
+	 * 
+	 * Any invalid csv file blocks ogr2ogr use
+	 * A valid file with header without data is created to avoid this problem
+	 * 
 	 * @param target
 	 * @throws IOException 
 	 */
@@ -185,6 +196,7 @@ public class FileConverter {
 
 	/**
 	 * get params
+	 * 
 	 * @param source
 	 * @param target
 	 * @param driver
@@ -205,7 +217,7 @@ public class FileConverter {
 		arguments.add("-f") ;
 		arguments.add(driver) ;
 		/*
-		 * Recuperation des parametres specifique au format
+		 * Getting format-specific parameters 
 		 */
 		if ( driver.equals("CSV") ) {
 			if ( hasSpatialColumn(source) ){
@@ -218,12 +230,12 @@ public class FileConverter {
 			arguments.add("LINEFORMAT=CRLF") ;
 		}
 		/*
-		 * Recuperation des fichiers d'entree/sortie
+		 * Getting input/output files
 		 */
 		arguments.add(target.getAbsolutePath()) ;
 		arguments.add(source.getAbsolutePath()) ;
 		/*
-		 * Recuperation de l'encodage source
+		 * Getting source encoding
 		 */
 		String []args = new String[arguments.size()];
 		arguments.toArray(args);
@@ -231,10 +243,10 @@ public class FileConverter {
 	}
 	
 	/**
-	 * Indique si le fichier source à une colonne géométrique
+	 * Indicates if a source file has a geometry column
 	 * 
-	 * Remarque : Utilisé pour éviter des variations de comportement
-	 *  sur ogr2ogr dans le cas des DBF.
+	 *  Note : This is used to avoid the different behaviors of ogr2ogr 
+	 *  when treating dbf files
 	 * 
 	 * @param source
 	 * @return
@@ -264,13 +276,13 @@ public class FileConverter {
 		Process process = null;
 		try {
 			/*
-			 * Creation de la commande
+			 * Creating command
 			 */
 			String commandLine = commandToString(args) ;
 			log.info(MARKER, commandLine);
 			
 			/*
-			 * Execution de la commande
+			 * Executing command
 			 */
 			ProcessBuilder builder = new ProcessBuilder(args);
 			builder.environment().put("SHAPE_ENCODING", shapeEncoding);
@@ -280,7 +292,7 @@ public class FileConverter {
 			process.waitFor() ;
 			
 			/*
-			 * Lecture de l'erreur
+			 * Reading error
 			 */
 			BufferedReader errorReader = new BufferedReader (new InputStreamReader(stderr));
 			String line = null ;
@@ -299,7 +311,7 @@ public class FileConverter {
 	}
 	
 	/**
-	 * Log l'exécution d'une commande
+	 * Logs the execution of a command
 	 * @param args
 	 */
 	private String commandToString( String[] args ){
@@ -315,8 +327,9 @@ public class FileConverter {
 	}
 	
 	/**
-	 * OGR2OGR ignore les balises autofermante. On transforme ici
-	 *  les balises autofermantes en balise vide.
+	 *  ogr2ogr ignores self-closing tags.
+	 *  They are changed to empty tags
+	 *  
 	 * @param source
 	 * @throws IOException 
 	 */

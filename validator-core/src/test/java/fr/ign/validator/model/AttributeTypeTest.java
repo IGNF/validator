@@ -30,7 +30,7 @@ public class AttributeTypeTest extends TestCase {
 	
 	
 	/**
-	 * Vérifie que chaque type se comporte correctement pour le binding de la valeur nulle
+	 * Ensures each type behaves properly when binding null value
 	 */
 	@Test
 	public void testBindNull(){
@@ -44,7 +44,7 @@ public class AttributeTypeTest extends TestCase {
 	}
 	
 	/**
-	 * Vérifie que la création d'un nouvel attribut de valeur nulle fonctionne
+	 * Ensures creation of new attribute of null value works
 	 */
 	@Test
 	public void testNewAttributeNull(){
@@ -60,7 +60,7 @@ public class AttributeTypeTest extends TestCase {
 	}
 	
 	/**
-	 * Vérifie que format sur un NULL renvoie bien NULL
+	 * Ensures that format for null is NULL
 	 */
 	@Test
 	public void testFormatNull(){

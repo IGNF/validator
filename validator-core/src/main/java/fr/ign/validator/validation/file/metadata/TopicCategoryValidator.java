@@ -14,7 +14,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "title" is defined and not empty
+ * Ensures that "topicCategory" is defined and valid
  *  
  * @author MBorne
  *

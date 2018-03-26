@@ -22,7 +22,7 @@ public class EscapeForCharset implements StringTransform {
 	}
 
 	/**
-	 * Test if a character is convertible to the given charset
+	 * Tests if a character is convertible to the given charset
 	 * @param codePoint
 	 * @return
 	 */

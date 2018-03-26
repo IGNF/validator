@@ -7,16 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-
-import fr.ign.validator.cnig.utils.InseeUtils;
 
 /**
  * @author FCerizay
@@ -25,7 +21,7 @@ import fr.ign.validator.cnig.utils.InseeUtils;
 public class DocumentInfoWriter {
 
 	/*
-	 * Constante chaine de caractere Les differents nom des balises
+	 * constant strings : tag names
 	 */
 	private static final String ELEMENT_DOCUMENT    = "document";
 	private static final String ELEMENT_NAME        = "name";
@@ -43,17 +39,9 @@ public class DocumentInfoWriter {
 	private static final String ELEMENT_PDF         = "pdf";
 	private static final String ELEMENT_BBOX        = "bbox";
 
-	/*
-	 * Expression reguliere
-	 */
-	public static final String REGEXP_DATE        = "[0-9]{8}" ; 
-	private static final String REGEXP_TYPE        = "(SUP|PLU|POS|CC)" ; 
-	private static final String REGEXP_SUP         = InseeUtils.REGEXP_DEPARTEMENT + "_" + REGEXP_TYPE ; 
-	public  static final String REGEXP_DU          = InseeUtils.REGEXP_COMMUNE + "_" + REGEXP_TYPE + "_" + REGEXP_DATE ;
-	
 	
 	/**
-	 * constructeur
+	 * Constructor
 	 */
 	public DocumentInfoWriter(){
 		
@@ -73,7 +61,8 @@ public class DocumentInfoWriter {
 
 
 	/**
-	 * Création de l'entrée <document>
+	 * Creating <document> element
+	 * 
 	 * @param documentInfo
 	 * @return
 	 */
@@ -82,8 +71,8 @@ public class DocumentInfoWriter {
 		Element documentElement = new Element( ELEMENT_DOCUMENT ) ;
 		
 		/*
-		 * liste recursive de tous les shapes du doc,
-		 * utilisé pour calcul de bbox et proj du doc
+		 * recursive list of all shapes related to document,
+		 * used to compute document bbox and projection
 		 */
 		documentElement.addContent( createAttributeElements( documentInfo ) ) ;
 		documentElement.addContent( createPdfElements( documentInfo ) ) ;
@@ -102,9 +91,9 @@ public class DocumentInfoWriter {
 		documentAttributes.add( createSimpleElement( ELEMENT_NAME, documentInfo.getName() ) ) ;
 		documentAttributes.add( createSimpleElement( ELEMENT_STANDARD, documentInfo.getStandard() ) ) ;
 		/*
-		 * Ajout du type de la bbox et de la projection
+		 * Adding bbox and projection types
 		 */
-		documentAttributes.add( createSimpleElement( ELEMENT_TYPE, getType(documentInfo.getName()) ) ) ;
+		documentAttributes.add( createSimpleElement( ELEMENT_TYPE, documentInfo.getType() ) ) ;
 		documentAttributes.add( createSimpleElement( ELEMENT_BBOX, computeDocumentExtent(documentInfo.getDataLayers()) ) ) ;
 			
 		if ( documentInfo.getGeometry() != null ){
@@ -114,7 +103,7 @@ public class DocumentInfoWriter {
 		}
 		
 		/*
-		 * Ajout de la date, du code insee, du code de département
+		 * Adding date, insee code and departement code
 		 */
 		documentAttributes.add( createSimpleElement( ELEMENT_TYPEREF, documentInfo.getTyperef() ) ) ;
 		
@@ -125,7 +114,7 @@ public class DocumentInfoWriter {
 	}
 
 	/**
-	 * Création de l'élément <pdfs>
+	 * Creating <pdfs> element
 	 * @param documentInfo
 	 * @return
 	 */
@@ -141,7 +130,7 @@ public class DocumentInfoWriter {
 	
 	
 	/**
-	 * Création de l'élément <layers>
+	 * Creating <layers> element
 	 * @param layerList
 	 * @return
 	 */
@@ -171,7 +160,7 @@ public class DocumentInfoWriter {
 	
 	/**
 	 * 
-	 * TODO déplacer dans DocumentInfoExtractor
+	 * TODO move to DocumentInfoExtractor
 	 * 
 	 * @param repertory
 	 * @return
@@ -201,46 +190,17 @@ public class DocumentInfoWriter {
 
 
 	/**
-	 * Crée le fichier info-cnig.xml
+	 * Creates info-cnig.xml file
 	 * 
 	 * @param fichier
 	 * @param racineOut
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private void exportDOM(File fichier, Element racineOut)throws FileNotFoundException, IOException {
+	private void exportDOM(File fichier, Element racineOut) throws FileNotFoundException, IOException {
 		Document documentOut = new Document(racineOut);
 		XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 		sortie.output(documentOut, new FileOutputStream(fichier.getPath()));
-	}
-
-	/**	
-
-	 * Extraction du type de document du nom du dossier
-	 * 
-	 * TODO déplacer dans DocumentInfoExtractor
-	 * 
-	 * @param directoryName
-	 * @return
-	 */
-	private String getType(String directoryName){
-		Pattern pattern = Pattern.compile(REGEXP_DU);
-		Matcher matcher = pattern.matcher(directoryName);
-		
-		if( matcher.matches()){
-			String tstr[]=directoryName.split("_");
-			return tstr[1];
-		}
-		
-		pattern = Pattern.compile(REGEXP_SUP);
-		matcher = pattern.matcher(directoryName);
-		
-		if( matcher.matches()){
-			String tstr[]=directoryName.split("_");
-			return tstr[1];
-		}
-	
-		return "";
 	}
 
 	

@@ -42,10 +42,10 @@ public class LegacyFormat {
 	 */
 	private String writeDirectory(ValidatorError error){
 		String result = "Directory" ;
-		result += " | "+error.getCode() ;             // Code
-		result += " | "+error.getLevel() ;            // Type 
-		result += " | "+error.getFile() ;             // Fichier
-		result += " | "+error.getMessage() ;          // Message
+		result += " | "+error.getCode() ;             // code
+		result += " | "+error.getLevel() ;            // error type 
+		result += " | "+error.getFile() ;             // file
+		result += " | "+error.getMessage() ;          // message
 		return result;
 	}
 
@@ -55,10 +55,10 @@ public class LegacyFormat {
 	 */
 	private String writeMetadata(ValidatorError error){
 		String result = "Metadata" ;
-		result += " | "+error.getCode() ;             // Code
-		result += " | "+error.getLevel() ;            // Type 
-		result += " | "+error.getFile() ;             // Fichier
-		result += " | "+error.getMessage() ;          // Message
+		result += " | "+error.getCode() ;             // code
+		result += " | "+error.getLevel() ;            // error type 
+		result += " | "+error.getFile() ;             // file
+		result += " | "+error.getMessage() ;          // message
 		return result;
 	}
 	
@@ -70,13 +70,13 @@ public class LegacyFormat {
 	 */
 	private String writeHeader(ValidatorError error) {
 		String result = "Header" ;
-		result += " | "+error.getCode() ;              // Code
-		result += " | "+error.getFileModel();          // Table
-		result += " | "+error.getLevel() ;             // Type
-		result += " | "+error.getAttribute();          // Champ (déprécié, présent dans les messages)
-		result += " | ";                               // Courant (déprécié, présent dans les messages)
-		result += " | "+error.getDocumentModel();      // Modèle
-		result += " | "+error.getMessage();            // Message
+		result += " | "+error.getCode() ;              // code
+		result += " | "+error.getFileModel();          // table
+		result += " | "+error.getLevel() ;             // error type
+		result += " | "+error.getAttribute();          // attribute (deprecated, can be found in messages) => Champ (déprécié, présent dans les messages)
+		result += " | ";                               // current (deprecated, can be found in messages) =>Courant (déprécié, présent dans les messages)
+		result += " | "+error.getDocumentModel();      // model
+		result += " | "+error.getMessage();            // message
 		return result;
 	}
 	
@@ -91,15 +91,15 @@ public class LegacyFormat {
 	 */
 	private String writeFeature(ValidatorError error) {
 		String result = "Feature" ;
-		result += " | "+error.getCode() ;              // Code
-		result += " | "+error.getFileModel();          // Table
-		result += " | "+error.getLevel();              // Type
-		result += " | "+error.getAttribute();          // Champ
-		result += " | "+error.getId();                 // Identifiant
-		result += " | ";                               // valeur (déprécié, présent dans les messages)
-		result += " | ";                               // taille/type (déprécié, présent dans les messages)
-		result += " | "+error.getDocumentModel();      // Modèle
-		result += " | "+ error.getMessage();           // Message
+		result += " | "+error.getCode() ;              // code
+		result += " | "+error.getFileModel();          // table
+		result += " | "+error.getLevel();              // error type
+		result += " | "+error.getAttribute();          // attribute
+		result += " | "+error.getId();                 // identifier
+		result += " | ";                               // value (deprecated, can be found in messages) => valeur (déprécié, présent dans les messages)
+		result += " | ";                               // type (deprecated, can be found in messages) => taille/type (déprécié, présent dans les messages)
+		result += " | "+error.getDocumentModel();      // model
+		result += " | "+ error.getMessage();           // message
 		return result;
 	}
 

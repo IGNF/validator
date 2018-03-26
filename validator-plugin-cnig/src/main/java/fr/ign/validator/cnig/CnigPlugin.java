@@ -15,7 +15,7 @@ import fr.ign.validator.cnig.validation.metadata.CnigTypeValidator;
 import fr.ign.validator.plugin.Plugin;
 
 /**
- * Customize validator for CNIG standard validation
+ * Customizes validator for CNIG standard validation
  * 
  * @see <a href="http://www.geoportail-urbanisme.gouv.fr/standard">http://www.geoportail-urbanisme.gouv.fr/standard</a>
  * 
@@ -46,7 +46,7 @@ public class CnigPlugin implements Plugin {
 		context.addListener( new InseeValidator() );
 		context.addListener( new AtLeastOneWritingMaterialValidator() );
 		context.addListener( new IdurbaValidator() );
-		
+
 		/*
 		 * extends metadata validation
 		 */

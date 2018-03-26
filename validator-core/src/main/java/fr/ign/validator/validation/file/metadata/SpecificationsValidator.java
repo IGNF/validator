@@ -16,7 +16,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "specifications" is not empty and that each "specification" is valid
+ * Ensures that "specifications" is not empty and that each "specification" is valid
  *  
  * @author MBorne
  *

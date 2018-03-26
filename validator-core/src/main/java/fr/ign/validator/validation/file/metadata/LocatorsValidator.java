@@ -16,7 +16,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "title" is defined and not empty
+ * Ensures that "locators" is defined and each locator is valid
  *  
  * @author MBorne
  *

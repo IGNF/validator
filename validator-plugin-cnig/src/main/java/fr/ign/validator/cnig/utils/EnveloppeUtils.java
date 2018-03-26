@@ -14,21 +14,23 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import com.vividsolutions.jts.geom.Envelope;
 
 /**
- * Utilitaire pour la manipulation des enveloppes
+ * Manipulates Bounding Boxes (envelope or bbox)
+ * 
  * @author MBorne
  *
  */
 public class EnveloppeUtils {
 
 	/**
-	 * Lecture d'une bbox à partir d'un shapefile
+	 * Reads bbox from a shapefile
+	 * 
 	 * @param shpFile
 	 * @return
 	 * @throws Exception
 	 */
 	public static Envelope getBoundingBox(File shpFile) {
 		/*
-		 * ouverture du dataStore
+		 * DataStore opening
 		 */
 		Envelope bbox = null;
 		Map<String, URL> map = new HashMap<String, URL>();
@@ -52,7 +54,8 @@ public class EnveloppeUtils {
 	}
 	
 	/**
-	 * Formatage xmin,ymin,xmax,ymax
+	 * Formats bbox as string : "xmin,ymin,xmax,ymax"
+	 * 
 	 * @param env
 	 * @return
 	 */
@@ -64,7 +67,8 @@ public class EnveloppeUtils {
 	}
 	
 	/**
-	 * Indique si l'enveloppe est nulle
+	 * Indicates if bbox is null
+	 * 
 	 * @param env
 	 * @return
 	 */

@@ -57,7 +57,8 @@ public class GeometryType extends AttributeType<Geometry> {
 
 	
 	/**
-	 * Extraction d'une géométrie à partir d'une collection
+	 * Extracting a geometry from a collection
+	 * 
 	 * @param geometry
 	 * @param c
 	 * @return
@@ -79,7 +80,8 @@ public class GeometryType extends AttributeType<Geometry> {
 	}
 	
 	/**
-	 * Envoie une IllegalArgumentException indiquant que le type de la géométrie n'est pas correct. 
+	 * Returns an IllegalArgumentException saying the geometry type is not correct
+	 * 
 	 * @param value
 	 */
 	protected String getMessageInvalidGeometryType( Geometry value ) {

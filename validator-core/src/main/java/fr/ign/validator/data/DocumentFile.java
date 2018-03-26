@@ -12,7 +12,7 @@ import fr.ign.validator.model.FileModel;
 import fr.ign.validator.validation.Validatable;
 
 /**
- * Représente un fichier associé à un modèle
+ * Represents a file linked to a model
  */
 public abstract class DocumentFile implements Validatable {
 	public static final Logger log = LogManager.getRootLogger() ;
@@ -20,12 +20,13 @@ public abstract class DocumentFile implements Validatable {
 
 	
 	/**
-	 * Le chemin vers le fichier
+	 * filepath
 	 */
 	private File path ;
 
 	/**
-	 * Construction à partir d'un modèle et d'un chemin
+	 * Construction of a file from model and filepath
+	 * 
 	 * @param fileModel
 	 * @param path
 	 */
@@ -47,12 +48,13 @@ public abstract class DocumentFile implements Validatable {
 	}
 
 	/**
-	 * Validation du FileModel
+	 * Validating FileModel
+	 * 
 	 * @param context
 	 */
 	public final void validate(Context context) {
 		/*
-		 * Validation du fichier
+		 * File validation
 		 */
 		log.debug(MARKER, "Validation du fichier {} avec le modèle {}...", path, getFileModel().getName()) ;
 		context.beginModel(getFileModel());
@@ -64,6 +66,7 @@ public abstract class DocumentFile implements Validatable {
 
 	/**
 	 * Validate file content
+	 * 
 	 * @param context
 	 */
 	abstract protected void validateContent(Context context) ;

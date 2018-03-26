@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "title" is defined and not empty
+ * Ensures that "title" is defined and not empty
  *  
  * @author MBorne
  *

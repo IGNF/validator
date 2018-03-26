@@ -4,7 +4,7 @@ import fr.ign.validator.Context;
 
 /**
  * 
- * Représente une données validable
+ * Represents a validatable data
  * 
  * @author MBorne
  *
@@ -12,7 +12,7 @@ import fr.ign.validator.Context;
 public interface Validatable {
 	
 	/**
-	 * Validation d'une données en fonction d'un contexte
+	 * Validates a data with a context
 	 * @param context
 	 */
 	public void validate(Context context) throws Exception ;

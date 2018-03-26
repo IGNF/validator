@@ -8,8 +8,7 @@ import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
- * Représente un attribut d'une Feature, i.e. une valeur associée à un type
+ * Represents an attribute of a Feature (value associated to a type)
  * 
  * @author MBorne
  *
@@ -22,29 +21,29 @@ public class Attribute<T> implements Validatable {
 	};
 	
 	/**
-	 * Le modèle décrivant l'attribut
+	 * Model describing the attribute
 	 */
 	private AttributeType<T> type ;
 	
 	/**
-	 * La valeur à valider
+	 * value to validate
 	 */
 	private Object value ;
 
 	/**
-	 * Résultat de la conversion de la valeur dans le type adéquat
+	 * Result of the conversion (of in the value in the correct type)
 	 */
 	private BindingStatus bindingStatus ;
 	
 	/**
-	 * La valeur de l'attribut convertie dans le type correspondant
+	 * The value of the attribute converted in the corresponding type
 	 */
 	private T bindedValue ;
 
 
 	
 	/**
-	 * Construction d'un attribut avec un type et une valeur
+	 * Construction of an attribute with type and value
 	 * @param type
 	 * @param value
 	 */

@@ -51,9 +51,10 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 	}
 	
 	/**
-	 * Code d'erreur fonction du type de fichier
+	 * ErrorCode according to FileModel
 	 * 
-	 * Remarque : Refus d'expliquer aux utilisateurs qu'un dossier est un fichier particulier
+	 * Note : Did not want to explain to users that a directory is a particular file
+	 * 
 	 * 
 	 * @param fileModel
 	 * @return
@@ -68,7 +69,7 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 
 
 	/**
-	 * Code d'erreur fonction du type de fichier
+	 * ErrorCode according to FileModel
 	 * 
 	 * @param fileModel
 	 * @return

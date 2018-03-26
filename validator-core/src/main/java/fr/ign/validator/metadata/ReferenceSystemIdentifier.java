@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ReferenceSystemIdentifier {
 
 	/**
-	 * freestyle code... (ex : "2154", "ETRS89 (EPSG:4258)", etc.)
+	 * "free-text" code... (ex : "2154", "ETRS89 (EPSG:4258)", etc.)
 	 */
 	private String code ;
 	

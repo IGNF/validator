@@ -31,8 +31,8 @@ public class CharactersValidator<T> implements Validator<Attribute<T>> {
 		if ( ! fixedString.equals(originalString) ){
 			IsoControlEscaper transform = new IsoControlEscaper(false);
 			/*
-			 * if the string contains escaped controls after transform, it's assumed that 
-			 * string contains illegal ("non displayable") characters 
+			 * if the string contains escaped controls after transform, 
+			 * it's assumed that string contains illegal ("non displayable") characters 
 			 */
 			ErrorCode code = fixedString.contains("\\u") ? 
 					CoreErrorCodes.ATTRIBUTE_CHARACTERS_ILLEGAL 

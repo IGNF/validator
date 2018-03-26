@@ -7,9 +7,9 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation de la taille d'un attribut de type string
+ * Validates the size of a StringType Attribute
  * 
- * TODO valider aussi sur les autres types que String
+ * TODO validate other types than StringType
  * 
  * @author MBorne
  *

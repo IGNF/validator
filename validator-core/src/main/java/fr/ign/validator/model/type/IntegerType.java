@@ -50,7 +50,8 @@ public class IntegerType extends AttributeType<Integer> {
 	}
 
 	/**
-	 * Tentative de parse d'un entier (ex : 4)
+	 * Tries to pars an integer (e.g. 4)
+	 * 
 	 * @param value
 	 * @return
 	 */

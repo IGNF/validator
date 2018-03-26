@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[f963b627c319db8efc519b8f5f6cfb5f]]></id>
+  <typeName><![CDATA[SECTEUR_CC]]></typeName>
+  <description><![CDATA[Table contenant les secteurs de la carte communale]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0890e2ac16a43ae3bcd9d96ad2d7e6c9]]></id>
+      <name><![CDATA[LIBELONG]]></name>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5b45c0789a77d1ffc6531d24595725bd]]></id>
+      <name><![CDATA[TYPESECT]]></name>
+      <description><![CDATA[Type du secteur dans une nomenclature simplifiée]]></description>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[03]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5e0c889292e4514a6f31cd51e44c3a6f]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[79e915fa7f56d3c48994427c8bd5d3ba]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Libellé du secteur tel que le définit la carte communale]]></description>
+      <type><![CDATA[String]]></type>
+      <size>12</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b59b05a7fee4a0acd19c3eb5b91d86da]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier contenant les dispositions particulières du secteur]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c8f765ecf3489734e6a799237de386d2]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cbffea186f2c6674654d25b684abd162]]></id>
+      <name><![CDATA[FERMRECO]]></name>
+      <description><![CDATA[Le secteur est fermé à la reconstruction à l'identique si la carte communale le précise]]></description>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[]]></value>
+        <value><![CDATA[Oui]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d689c039139178c19f9a3e9c8ec42908]]></id>
+      <name><![CDATA[DATVALID]]></name>
+      <description><![CDATA[Date de la dernière validation du secteur ou de ses dispositions particulières]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e9137d86fd96e47847398ccb1aa267e9]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[Lien URL ou URI d’accès aux dispositions particulières du secteur, contenues dans le rapport de présentation de la carte communale]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

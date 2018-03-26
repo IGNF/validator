@@ -13,7 +13,7 @@ import fr.ign.validator.tools.CompanionFileUtils;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * Extraction de IDGEST à partir d'un fichier de servitude
+ * Extracts IdGest from a "servitude" file
  */
 public class IdgestExtractor {
 
@@ -45,7 +45,7 @@ public class IdgestExtractor {
 		}
 		
 		/*
-		 * Lecture du csv
+		 * Reading csv
 		 */
 		int index = reader.findColumn(IDGEST_COLUMN_NAME);
 		if ( index < 0 ) {
@@ -54,7 +54,7 @@ public class IdgestExtractor {
 		}
 
 		/*
-		 * Recherche du premier IDGEST non vide
+		 * Finding first not-empty idGest
 		 */
 		String idGest = null;
 		while (reader.hasNext()) {
@@ -67,7 +67,7 @@ public class IdgestExtractor {
 		}
 		
 		/*
-		 * Suppression du fichier temporaire csv
+		 * Deleting temporary csv file
 		 */
 		if ( ! FilenameUtils.getExtension(servitudeFile.getName()).equals("csv") ){
 			File csvFile = CompanionFileUtils.getCompanionFile(servitudeFile, "csv");

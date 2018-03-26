@@ -9,7 +9,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation de l'existance d'un chemin pour les attributs de type PathAttribute
+ * Validates that the path exists for PathAttribute type attributes
  * 
  * @author MBorne
  *
