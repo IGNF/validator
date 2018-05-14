@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[f8f109ace7412d7607c49d7f9ca64342]]></id>
+  <typeName><![CDATA[DOC_URBA_COM]]></typeName>
+  <description><![CDATA[Table contenant la liste des documents d'Urbanisme PLU ou POS dont la numérisation ou l'élaboration sous fourme numérique est engagée]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0737af491c6b5a043ff408af25e7337c]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e19cec31b77317ff0d4daeb0aba10d47]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par le document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "lineage" is defined and not empty
+ * Ensures that "lineage" is defined and not empty
  * 
  * @author MBorne
  *

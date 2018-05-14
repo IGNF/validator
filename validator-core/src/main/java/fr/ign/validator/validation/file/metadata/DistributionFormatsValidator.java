@@ -16,7 +16,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "distributionFormats" is not empty and that formats are valid
+ * Ensures that "distributionFormats" is not empty and that formats are valid
  *  
  * @author MBorne
  *

@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "metadataDate" is defined and valid
+ * Ensures that "metadataDate" is defined and valid
  * 
  * @author MBorne
  *

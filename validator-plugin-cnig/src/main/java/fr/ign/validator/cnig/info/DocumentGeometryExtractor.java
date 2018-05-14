@@ -48,7 +48,8 @@ public class DocumentGeometryExtractor {
 	}
 	
 	/**
-	 * Calcul de l'union des géométrie d'un fichier
+	 * Computes union of geometries in a file
+	 * 
 	 * @param geometryFile
 	 * @return
 	 */
@@ -102,7 +103,8 @@ public class DocumentGeometryExtractor {
 	}
 	
 	/**
-	 * Recherche du fichier permettant de calculer une géométrie pour un document
+	 * Find file needed to compute a geometry for a document
+	 * 
 	 * @param dataDirectory
 	 * @return
 	 */

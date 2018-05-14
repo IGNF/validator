@@ -10,10 +10,9 @@ import fr.ign.validator.cnig.info.internal.DataFileComparator;
 
 /** 
  * 
- * Représente un répertoire de l'arborescence de fichier. 
- * 
- * Il contient des DataFile et DataLayer.
- * 
+ * Represents a directory.
+ * Contains DataFiles and DataLayers
+ *  
  * 
  * @author CBouche
  *
@@ -21,7 +20,7 @@ import fr.ign.validator.cnig.info.internal.DataFileComparator;
 public class DocumentInfo {
 	
 	/**
-	 * String repertoryName
+	 * String directoryName
 	 */
 	private String name ;
 	
@@ -31,50 +30,61 @@ public class DocumentInfo {
 	private String standard ;
 	
 	/**
-	 * La référence de saisie (champ TYPEREF de la table DOC_URBA)
+	 * Cadastral reference used (reference system id)
 	 */
 	private String typeref ;
 
 	/**
-	 * Le champ fileIdentifier de la fiche de métadonnées
+	 * fileIdentifier field in metadata
 	 */
 	private String metadataFileIdentifier ;
 		
 	/**
-	 * Le champ MD_Identifier de la fiche de métadonnées
+	 * MD_Identifier field in metadata
 	 */
 	private String metadataMdIdentifier ;
 	
 	/**
-	 * La géométrie du document (ex : union des zones urba)
+	 * Document geometry
 	 */
 	private MultiPolygon geometry ;
 	
 	/**
-	 * List : liste des fichiers du repertoire
+	 * List of DataFiles in directory
 	 */
 	private List<DataFile> dataFiles = new ArrayList<DataFile>() ;
 	
 
 	/**
-	 * List : liste des fichiers du repertoire
+	 * List of DataLayers in directory
 	 */
 	private List<DataLayer> dataLayers = new ArrayList<DataLayer>() ;
 
 	/**
 	 * Constructor
 	 */
-	public DocumentInfo(String repertoryName) {
-		this.name = repertoryName ;
+	public DocumentInfo(String documentName) {
+		this.name = documentName ;
 	}
 	
 	
 	/**
-	 * get repertory name
+	 * get directory name
 	 * @return
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Get document type according to standard
+	 * @return
+	 */
+	public String getType(){
+		if ( standard == null ){
+			return null;
+		}
+		return standard.split("_")[1];
 	}
 	
 	/**

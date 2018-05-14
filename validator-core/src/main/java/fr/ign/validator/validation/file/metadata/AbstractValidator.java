@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "abstract" is defined and not empty
+ * Ensures that "abstract" is defined and not empty
  *  
  * @author MBorne
  *

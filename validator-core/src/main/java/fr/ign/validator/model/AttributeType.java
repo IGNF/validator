@@ -14,51 +14,51 @@ import fr.ign.validator.xml.binding.AttributeTypeAdapter;
 
 /**
  * 
- * Décrit un champ d'un table (FeatureType)
+ * Describes an attribute of a table (FeatureType)
  * 
  * @author MBorne
  *
- * @param <T> le type java correspondant
+ * @param <T> the matching java type
  */
 @XmlJavaTypeAdapter(AttributeTypeAdapter.class)
 public abstract class AttributeType<T> implements Model, Cloneable {
 	/**
-	 * Classe Java correspondante
+	 * Matching java class
 	 */
 	private Class<T> clazz ;
 	
 	/**
-	 * Le nom de l'attribut
+	 * Attribute name
 	 */
 	private String name ;
 	/**
-	 * La définition de l'attribut (description)
+	 * Attribute definition (description)
 	 */
 	private String definition ;
 	/**
-	 * L'expression régulière correspondant à la valeur de l'attribut.
+	 * Regexp matching the attribute value
 	 */
 	private String regexp ;
 	/**
-	 * La taille limite de l'attribut
+	 * Limit size of the attribute
 	 */
 	private Integer size ;
 	/**
-	 * Indique si la valeur nulle est autorisée.
+	 * Indicates if the value is nullable
 	 */
 	private boolean nullable = false ;
 	/**
-	 * Restriction sur une liste de valeur
+	 * Restriction on a list of values
 	 */
 	private List<String> listOfValues ;
 
 	/**
-	 * Validateurs sur les attributs
+	 * Validators on attributes
 	 */
 	private List<Validator<Attribute<T>>> validators = new ArrayList<Validator<Attribute<T>>>() ;
 	
 	/**
-	 * Constructeur avec une classe et les validateurs par défaut
+	 * Constructing a class and validators by default
 	 * @param clazz
 	 */
 	protected AttributeType(Class<T> clazz){
@@ -69,13 +69,14 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
 	
 	/**
-	 * Renvoie le nom du type
+	 * Returns type name
+	 * 
 	 * @return
 	 */
 	public abstract String getTypeName() ;
 	
 	/**
-	 * Indique si l'attribut est une géométrie
+	 * Indicates if attribute is a geometry
 	 * @return
 	 */
 	public boolean isGeometry(){
@@ -84,8 +85,8 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	
 	
 	/**
-	 * Convertit une valeur dans le type java correspondant. Valide la possibilité de convertir 
-	 * une valeur dans le type java correspondant à ValueType
+	 * Converts a value in the matching java type.
+	 * Validates the possibility of a conversion of a value in the java type matching the ValueType
 	 * 
 	 * @param value
 	 * @return
@@ -93,21 +94,22 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public abstract T bind(Object value) throws IllegalArgumentException ;
 	
 	/**
-	 * Formatte la valeur en paramètre sous forme d'une chaîne de caractères (ex YYYYMMDD pour les dates)
+	 * Formats the value as a string parameter (e.g. YYYYMMDD for dates)
 	 * 
-	 * Attention : null reste null
+	 * Note : null stays null
 	 * 
 	 * @param value
 	 * @return
-	 * @throws IllegalArgumentException si le type n'est pas correct
+	 * @throws IllegalArgumentException if type is incorrect
 	 */
 	public abstract String format(T value) throws IllegalArgumentException;
 	
 	/**
-	 * Formatte l'objet en paramètre
+	 * Formats object in parameter
+	 * 
 	 * @param value
 	 * @return
-	 * @throws IllegalArgumentException si le type n'est pas correct
+	 * @throws IllegalArgumentException if type is incorrect
 	 */
 	public String formatObject(Object value) throws IllegalArgumentException {
 		if ( value == null ){
@@ -123,7 +125,8 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	}
 	
 	/**
-	 * Get value type for name
+	 * Gets value type for name
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -190,7 +193,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	}
 
 	/**
-	 * Ajout d'un validateur
+	 * adds a validator
 	 * @param validator
 	 */
 	public void addValidator(Validator<Attribute<T>> validator) {
@@ -222,12 +225,13 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	      	throw new RuntimeException(cnse);
 	    }
 
-	    // on renvoie le clone
+	    // returns the clone
 	    return attributeType;
 	}
 
 	/**
-	 * Création d'un attribut
+	 * Creating attribute
+	 * 
 	 * @param object
 	 * @return
 	 */

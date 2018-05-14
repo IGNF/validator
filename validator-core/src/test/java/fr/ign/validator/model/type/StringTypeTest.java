@@ -58,14 +58,14 @@ public class StringTypeTest extends AbstractTypeTest<String> {
 	
 	@Test
 	public void testCheckAttributeValue2() {
-		// trop long 
+		// too long 
 		bindValidate(context,"cccCCC") ;
 		assertTrue(reportBuilder.isValid());
 	}
 	
 	@Test
 	public void testCheckAttributeValue3() {
-		// n'appartient pas a la liste de valeur
+		// doesn't belong to list of values
 		bindValidate(context,"bb") ;
 		assertFalse(reportBuilder.isValid());
 	}
@@ -79,7 +79,7 @@ public class StringTypeTest extends AbstractTypeTest<String> {
 	
 	@Test
 	public void testCheckAttributeValue5() {
-		// ne respecte pas la regexp
+		// doesn't match regexp
 		bindValidate(context,"9Cou") ;
 		assertFalse(reportBuilder.isValid());
 	}

@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "contact" is defined
+ * Ensures that "metadataContact" is defined
  * 
  * @author MBorne
  *

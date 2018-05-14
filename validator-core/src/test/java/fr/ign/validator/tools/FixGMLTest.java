@@ -33,7 +33,7 @@ public class FixGMLTest extends TestCase {
 	}
 	
 	/**
-	 * Vérifie que le fichier reste en UTF-8
+	 * Ensures file stays encoded in UTF-8
 	 */
 	public void testFixFileUtf8(){
 		File input = new File(getClass().getResource("/fixgml/EL10_ASSIETTE_SUP_S_FR.gml").getPath()) ;

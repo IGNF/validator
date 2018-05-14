@@ -38,19 +38,20 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
  * 
  * ISO 19115 parser for INSPIRE profile and CNIG (french) profiles.
  * 
- * Note that elements starting with capital letters are "subtituable" (so gmd:MD_DataIdentification is replaced by a joker "*")
+ * Note that elements starting with capital letters are "substituable" (so gmd:MD_DataIdentification is replaced by a joker "*")
  *  
  * @author MBorne
  *
  */
 public class MetadataISO19115 implements Metadata {
 	/**
-	 * Le document XML
+	 * XML Document
 	 */
 	private Element metadataElement ;
 	
 	/**
 	 * Create reader from file
+	 * 
 	 * @param file
 	 * @throws JDOMException
 	 * @throws IOException
@@ -62,6 +63,7 @@ public class MetadataISO19115 implements Metadata {
 	
 	/**
 	 * Create metadata reader from file
+	 * 
 	 * @param file
 	 * @return
 	 * @throws InvalidMetadataException 
@@ -77,7 +79,8 @@ public class MetadataISO19115 implements Metadata {
 	}
 
 	/**
-	 * Test if the given file is a metadata file (XML file with root element named MD_Metadata)
+	 * Tests if the given file is a metadata file (XML file with root element named MD_Metadata)
+	 * 
 	 * @param file
 	 * @return
 	 */
@@ -95,7 +98,8 @@ public class MetadataISO19115 implements Metadata {
 
 	
 	/**
-	 * Retrieve the underlying XML document
+	 * Retrieves the underlying XML document
+	 * 
 	 * @return
 	 */
 	protected Element getMetadataElement(){
@@ -281,7 +285,8 @@ public class MetadataISO19115 implements Metadata {
 	}
 
 	/**
-	 * Find last resource date for a given type (publication, revision, creation)
+	 * Finds last resource date for a given type (publication, revision, creation)
+	 * 
 	 * @param type
 	 * @return
 	 */
@@ -307,7 +312,8 @@ public class MetadataISO19115 implements Metadata {
 	}
 
 	/**
-	 * Parse Date from dateElement (a gmd:date Element in gmd:citation)
+	 * Parses Date from dateElement (a gmd:date Element in gmd:citation)
+	 * 
 	 * @param dateElement
 	 * @return
 	 */
@@ -585,7 +591,8 @@ public class MetadataISO19115 implements Metadata {
 	}
 
 	/**
-	 * Find text value for a given path (selectSingleNode converted to string)
+	 * Finds text value for a given path (selectSingleNode converted to string)
+	 * 
 	 * @param path
 	 * @param context
 	 * @return
@@ -601,7 +608,8 @@ public class MetadataISO19115 implements Metadata {
 	}
 	
 	/**
-	 * Find a text value according with alternative paths
+	 * Finds a text value according with alternative paths
+	 * 
 	 * @param paths
 	 * @param context
 	 * @return
@@ -618,7 +626,8 @@ public class MetadataISO19115 implements Metadata {
 
 	
 	/**
-	 * Find text values for a given path (selectSingleNodes converted to strings)
+	 * Finds text values for a given path (selectSingleNodes converted to strings)
+	 * 
 	 * @param path
 	 * @param context
 	 * @return
@@ -641,7 +650,7 @@ public class MetadataISO19115 implements Metadata {
 
 	/**
 	 * 
-	 * Extract text value from XML node
+	 * Extracts text value from XML node
 	 * 
 	 * @see {@link XPath.selectSingleNode} for types
 	 * 
@@ -667,7 +676,8 @@ public class MetadataISO19115 implements Metadata {
 	
 	
 	/**
-	 * Find a single node
+	 * Finds a single node
+	 * 
 	 * @param path
 	 * @return
 	 */
@@ -681,7 +691,8 @@ public class MetadataISO19115 implements Metadata {
 	}
 	
 	/**
-	 * Find multiple nodes
+	 * Finds multiple nodes
+	 * 
 	 * @param path
 	 * @return
 	 */

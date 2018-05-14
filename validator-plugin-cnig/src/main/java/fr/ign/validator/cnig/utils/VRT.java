@@ -21,7 +21,7 @@ import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * Classe utilitaire pour la création de fichier VRT pour accompagner les fichiers WKT
+ * Utility class that creates a VRT file to go with WKT files
  * @author MBorne
  *
  */
@@ -31,7 +31,8 @@ public class VRT {
 	public static final Marker VRT = MarkerManager.getMarker("VRT") ;
 
 	/**
-	 * Creation d'un VRT correspondant à sourceFile pour un FeatureType donné
+	 * Creates a vrt corresponding to a sourceFile for a given FeatureType
+	 * 
 	 * @param csvFile
 	 * @param featureType
 	 * @return 
@@ -54,7 +55,7 @@ public class VRT {
 
 
 	/**
-	 * FIx pour generer un Vrt compatible avec ogr2ogr 1.9
+	 * #FIX genetares vrt files compatible with ogr2ogr 1.9
 	 * 
 	 * @param csvFile
 	 * @param featureType
@@ -85,8 +86,9 @@ public class VRT {
 		/*
 		 * Each <Field> except WKT
 		 * 
-		 * Note : Cette étape est obligatoire pour que OGR2OGR ne tronquent pas
-		 *   les champs textes à 80 caractères dans les conversions en shapefile.
+		 * Note : this step is mandatory so that 
+		 * ogr2ogr doesn't truncate the text fields to 80 characters
+		 * when converting in shapefile
 		 * 
 		 */
 		List<String> fieldNames = getFieldNamesFromCSV(csvFile) ;
@@ -108,7 +110,8 @@ public class VRT {
 	
 	
 	/**
-	 * Récupère la liste des champs du CSV à l'exception de la géométrie
+	 * Gets the list of fields in csv file (except for geometry)
+	 * 
 	 * @param csvFile
 	 * @return
 	 * @throws IOException

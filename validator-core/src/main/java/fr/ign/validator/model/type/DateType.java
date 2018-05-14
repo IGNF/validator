@@ -6,6 +6,10 @@ import java.util.Date;
 
 import fr.ign.validator.model.AttributeType;
 
+/**
+ * Represents a date
+ *
+ */
 public class DateType extends AttributeType<Date> {
 	
 	private static final String FORMAT_A = "yyyyMMdd";

@@ -7,7 +7,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Validation des URL
+ * Validates the URL
  * @author MBorne
  *
  */
@@ -15,7 +15,7 @@ public class UrlValidator implements Validator<AttributeType<URL>>{
 
 	@Override
 	public void validate(Context context, AttributeType<URL> validatable) {
-		// ATTRIBUTE_URL_NOT_FOUND / L'adresse web ([url]) renseignée pointe vers une ressource non disponible
+		// ATTRIBUTE_URL_NOT_FOUND / The given web address ([url]) references an unavailable resource
 	}
 
 	

@@ -7,7 +7,8 @@ import fr.ign.validator.data.file.TableFile;
 import fr.ign.validator.model.FileModel;
 
 /**
- * Représente une table associée à une structure (FeatureType)
+ * Represents a table associated to a FeatureType
+ * 
  * @author MBorne
  *
  */

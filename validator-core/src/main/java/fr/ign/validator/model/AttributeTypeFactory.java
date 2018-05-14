@@ -32,7 +32,7 @@ public class AttributeTypeFactory {
 	}
 	
 	/**
-	 * Récupération de la liste des types
+	 * Gets list of types
 	 * @return
 	 */
 	public Collection<String> getTypeNames() {
@@ -40,7 +40,7 @@ public class AttributeTypeFactory {
 	}
 	
 	/**
-	 * Récupération d'un type par son nom
+	 * Gets a type by name
 	 * @param name
 	 * @return
 	 */
@@ -50,7 +50,7 @@ public class AttributeTypeFactory {
 	}
 	
 	/**
-	 * Enregistrement d'un type
+	 * Saving a type
 	 * @param valueType
 	 */
 	private void addPrototype(AttributeType<?> valueType){
@@ -58,7 +58,7 @@ public class AttributeTypeFactory {
 	}
 	
 	/**
-	 * Récupération de l'instance ValueTypeRegistry
+	 * Retrieves ValueTypeRegistry instance
 	 * @return
 	 */
 	public static AttributeTypeFactory getInstance(){

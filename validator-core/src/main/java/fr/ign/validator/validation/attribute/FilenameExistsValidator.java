@@ -14,7 +14,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation de l'existance d'un chemin pour les attributs de type PathAttribute
+ * Validates that the path exists for PathAttribute type attributes
  * 
  * @author MBorne
  *
@@ -30,7 +30,7 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
 		}
 
 		/*
-		 * Recherche du fichier correspondant
+		 * Search of corresponding file
 		 */
 		File root = context.getCurrentDirectory() ;
 		String filename = filterFragment( path.toString() ) ;
@@ -45,7 +45,8 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
 	}
 	
 	/**
-	 * Recherche récursive d'un fichier dans un dossier
+	 * Recursive search of a file in a directory
+	 * 
 	 * @param root
 	 * @param filename
 	 * @return

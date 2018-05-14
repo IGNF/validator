@@ -8,7 +8,7 @@ import fr.ign.validator.validation.Validatable;
 
 /**
  * 
- * Les données d'une ligne d'une table
+ * Data from a line of a table
  * 
  * @author MBorne
  *
@@ -16,17 +16,18 @@ import fr.ign.validator.validation.Validatable;
 public class Row implements Validatable {
 
 	/**
-	 * Le numéro de ligne
+	 * Line number
 	 */
 	private int line;
 
 	/**
-	 * Les valeurs de la ligne
+	 * Line values
 	 */
 	private String[] values;
 
 	/**
-	 * Le mapping avec un type (résultat de la validation de l'entête)
+	 * Mapping with type 
+	 * (Result of header validation)
 	 */
 	private FeatureTypeMapper mapping;
 
@@ -58,20 +59,24 @@ public class Row implements Validatable {
 		context.beginData(this);
 		
 		/*
-		 * validation des attributs définis au niveau du type
+		 * Validating attributes defined by type
 		 */
 		FeatureType featureType = mapping.getFeatureType() ;
 		for ( int index = 0; index < featureType.getAttributeCount(); index++ ){
 			AttributeType<?> attributeType = featureType.getAttribute(index);
 			context.beginModel(attributeType);
 			
-			// Récupération de la valeur correspondante dans la table
+			/*
+			 * Retrieving corresponding value in table
+			 */
 			String inputValue = null ;
 			if ( mapping.getAttributeIndex(index) >= 0 ){
 				inputValue = values[ mapping.getAttributeIndex(index) ] ; 
 			}
-			
-			// Validation de l'attribut
+
+			/*
+			 * Attribute validation
+			 */
 			Attribute<?> attribute = attributeType.newAttribute(inputValue) ;
 			attribute.validate(context);
 

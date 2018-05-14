@@ -46,5 +46,5 @@ public class ReferenceActeSupJointureBuilderTest extends TestCase {
 		File generateurFile = files.get(0);
 		assertEquals("AC2_GENERATEUR_SUP_S.csv", generateurFile.getName());
 	}
-	
+
 }

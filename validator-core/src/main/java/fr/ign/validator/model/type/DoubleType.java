@@ -4,7 +4,7 @@ import fr.ign.validator.model.AttributeType;
 
 /**
  * 
- * Représente un double
+ * Represents a double
  * 
  * @author MBorne
  *

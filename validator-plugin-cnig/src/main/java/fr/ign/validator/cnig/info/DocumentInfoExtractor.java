@@ -20,7 +20,7 @@ import com.vividsolutions.jts.geom.Envelope;
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.utils.EnveloppeUtils;
-import fr.ign.validator.cnig.utils.IdurbaUtils;
+import fr.ign.validator.cnig.utils.IdurbaHelper;
 import fr.ign.validator.cnig.utils.TyperefExtractor;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
@@ -32,8 +32,7 @@ import fr.ign.validator.tools.CompanionFileUtils;
 
 /**
  * 
- * Extraction des informations à partir du répertoire de validation d'un
- * document
+ * Extracts informations from a validation directory of a document
  * 
  * @author CBouche
  * @author MBorne
@@ -44,7 +43,7 @@ public class DocumentInfoExtractor {
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractor");
 
 	/**
-	 * Récupération des informations d'un dossier
+	 * Gets informations on directory
 	 * 
 	 * @param documentName
 	 * @param validationDirectory
@@ -80,8 +79,9 @@ public class DocumentInfoExtractor {
 			throws IOException, FactoryException, MismatchedDimensionException, TransformException {
 		DocumentInfo documentInfo = new DocumentInfo(documentName);
 		documentInfo.setStandard(context.getDocumentModelName());
+
 		/*
-		 * Récupération des shapefiles avec leurs emprises
+		 * Finding shapefiles with extent
 		 */
 		File documentDirectory = new File(validationDirectory, documentName);
 		File dataDirectory = new File(documentDirectory, "DATA");
@@ -94,7 +94,7 @@ public class DocumentInfoExtractor {
 		}
 
 		/*
-		 * Récupération de la liste des PDF
+		 * Finding PDF list
 		 */
 		{
 			@SuppressWarnings("unchecked")
@@ -105,7 +105,7 @@ public class DocumentInfoExtractor {
 		}
 
 		/*
-		 * Extraction du typeref (référence cadastrale)
+		 * Extracting typeref (cadastral reference)
 		 */
 		documentInfo.setTyperef(parseTyperef(context, documentName, validationDirectory));
 
@@ -114,7 +114,7 @@ public class DocumentInfoExtractor {
 	
 
 	/**
-	 * Récupération du fileIdentifier dans la fiche de métadonnée
+	 * Gets fileIdentifier from metadataFiles
 	 * 
 	 * @param document
 	 * @return
@@ -139,14 +139,14 @@ public class DocumentInfoExtractor {
 	}
 
 	/**
-	 * Récupération de la valeur du champ TYPEREF dans le fichier DOC_URBA.csv
+	 * Get typeref value from DOC_URBA.csv file
 	 * 
 	 * @param context
-	 * @return null si non trouvé
+	 * @return null if not found
 	 */
 	private String parseTyperef(Context context, String documentName, File validationDirectory) {
-		String regexpIDURBA = IdurbaUtils.getRegexp(documentName);
-		if (null == regexpIDURBA) {
+		IdurbaHelper helper = IdurbaHelper.getInstance(context.getDocumentModel());
+		if (null == helper) {
 			log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
 			return null;
 		}
@@ -159,16 +159,19 @@ public class DocumentInfoExtractor {
 			log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
 		}
 
-		TyperefExtractor typerefExtractor = new TyperefExtractor();
+		TyperefExtractor typerefExtractor = new TyperefExtractor(helper);
 		String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
 		if (null == result) {
-			context.report(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, IdurbaUtils.getRegexp(documentName));
+			context.report(
+				CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, 
+				helper.getHelpExpected(documentName)
+			);
 		}
 		return result;
 	}
 
 	/**
-	 * TODO Sortir dans tools et ajouter des tests unitaires
+	 * TODO extract to tools and add unit tests
 	 * 
 	 * @param dbfFile
 	 * @return

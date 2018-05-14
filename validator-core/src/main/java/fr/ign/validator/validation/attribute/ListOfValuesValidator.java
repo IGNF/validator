@@ -9,7 +9,8 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation en fonction d'une liste de valeur
+ * Validates according to a list of values
+ * 
  * 
  * @author MBorne
  *
@@ -29,7 +30,7 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 		}
 
 		/*
-		 * recherche de l'existence de la valeur
+		 * search of corresponding value
 		 */
 		for ( String string : attribute.getType().getListOfValues() ) {
 			if ( string.equals(value) ){
@@ -45,7 +46,8 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 	}
 
 	/**
-	 * Mise en forme d'une liste de valeur pour le rapport d'erreur
+	 * Formatting a list of values for error report
+	 * 
 	 * @param listOfValues
 	 * @return
 	 */

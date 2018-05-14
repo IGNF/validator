@@ -15,7 +15,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "title" is defined and not empty
+ * Ensures that "extents" is defined and is valid
  *  
  * @author MBorne
  *

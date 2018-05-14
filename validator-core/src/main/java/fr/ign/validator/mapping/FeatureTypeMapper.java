@@ -7,25 +7,25 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 
 /**
- * Effectue une mise en correspondance entre une entête et les attributs d'un FeatureType
+ * Maps header with attributes of a FeatureType
  * 
  * @author MBorne
  */
 public class FeatureTypeMapper {
 	/**
-	 * L'entête de la table en entrée
+	 * table header (input)
 	 */
 	private String[] columns ;
 	/**
-	 * Le modèle de données en sortie
+	 * data model (output)
 	 */
 	private FeatureType featureType ;
 	/**
-	 * La position dans l'entête de chacun des champs du FeatureType
+	 * Location in header of each FeatureType field
 	 */
 	private int[] attributeIndexes ;
 	/**
-	 * La liste des attributs présent dans l'entête et pas dans la données
+	 * List of attributes existing in header (data) and missing in model (FeatureType)
 	 */
 	private List<String> unexpectedAttributes = new ArrayList<String>() ;
 	
@@ -41,7 +41,8 @@ public class FeatureTypeMapper {
 	}
 	
 	/**
-	 * Construction d'une instance à partir d'une entête de table et d'un FeatureType
+	 * Constructing an instance from header and FeatureType
+	 * 
 	 * @param columns
 	 * @param featureType
 	 * @return
@@ -66,7 +67,8 @@ public class FeatureTypeMapper {
 	}
 	
 	/**
-	 * Renvoie la liste des attributs présents dans la données mais pas dans le modèle
+	 * Returns a list of attributes existing in header and missing in model
+	 * 
 	 * @return
 	 */
 	public List<String> getUnexpectedAttributes(){
@@ -74,7 +76,8 @@ public class FeatureTypeMapper {
 	}
 	
 	/**
-	 * Renvoie la liste des attributs présents dans le modèle (FeatureType) mais pas dans la données (header)
+	 * Returns a list of attributes existing in model and missing in header
+	 * 
 	 * @return
 	 */
 	public List<String> getMissingAttributes(){
@@ -89,12 +92,12 @@ public class FeatureTypeMapper {
 	}
 	
 	/**
-	 * Calcul du mapping
+	 * Creates a mapping
 	 */
 	private void buildMapping(){
 		unexpectedAttributes.clear(); 
 		/*
-		 * Calcul de la position des attributs dans la table
+		 * Finding the position of each attribute in the table
 		 */
 		attributeIndexes = new int[ getFeatureType().getAttributeCount() ];
 		for ( int i = 0; i < attributeIndexes.length; i++ ){
@@ -104,7 +107,7 @@ public class FeatureTypeMapper {
 			String name = columns[i] ;
 			int index = getFeatureType().indexOf(name) ;
 			if ( index < 0 ){
-				// L'attribut est définit dans la source, pas dans la cible
+				// Attribute defined in source, not in target
 				unexpectedAttributes.add(name);
 			}else{
 				attributeIndexes[index] = i ;
@@ -113,7 +116,8 @@ public class FeatureTypeMapper {
 	}
 
 	/**
-	 * Renvoie la position d'un attribut du FeatureType dans l'entête
+	 * Returns the position of an attribute of the FeatureType (in header)
+	 * 
 	 * @param index
 	 * @return -1 si absent
 	 */

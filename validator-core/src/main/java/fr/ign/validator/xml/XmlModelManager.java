@@ -43,7 +43,7 @@ public class XmlModelManager {
 	public DocumentModel loadDocumentModel( File documentModelPath ) throws JAXBException {
 		log.info(MARKER, "Chargement du DocumentModel "+documentModelPath);
 		/*
-		 * chargement du modèle de document
+		 * loading documentModel
 		 */
 		DocumentModel documentModel = (DocumentModel)unmarshaller.unmarshal( documentModelPath ) ;
 		if ( null == documentModel ){

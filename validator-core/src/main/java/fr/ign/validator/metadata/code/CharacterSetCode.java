@@ -28,7 +28,7 @@ public class CharacterSetCode extends CodeListValue {
 	}
 	
 	/**
-	 * Get corresponding java charset
+	 * Gets corresponding java charset
 	 * 
 	 * TODO improve mapping to support check and translate other codes
 	 * 

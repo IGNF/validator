@@ -12,8 +12,8 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  * 
- * Utilitaire pour l'extraction de la référence de saisie (TYPEREF : 01 ou 02)
- * dans la table DOCURBA
+ * Extracts typeref (cadastral reference) from DOC_URBA table
+ * 
  * 
  * @author MBorne
  * 
@@ -23,18 +23,25 @@ public class TyperefExtractor {
 	public static final Marker MARKER = MarkerManager.getMarker("TYPEREF_EXTRACTOR");
 
 	/**
-	 * Recherche d'un
+	 * The document model providing IDURBA naming convention
+	 */
+	private IdurbaHelper idurbaHelper ;
+	
+	/**
+	 * 
+	 * @param idurbaHelper
+	 */
+	public TyperefExtractor(IdurbaHelper idurbaHelper){
+		this.idurbaHelper = idurbaHelper;
+	}
+	
+	/**
+	 * Finds a typeref in docUrbaFile according to documentName
 	 * 
 	 * @param documentName
 	 * @return
 	 */
 	public String findTyperef(File docUrbaFile, String documentName) {
-		String regexpIDURBA = IdurbaUtils.getRegexp(documentName);
-		if (null == regexpIDURBA) {
-			log.info(MARKER, "Le nom du document ne correspond pas à un DU, TYPEREF ne sera pas extrait");
-			return null;
-		}
-
 		if (!docUrbaFile.exists()) {
 			log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
 			return null;
@@ -54,7 +61,9 @@ public class TyperefExtractor {
 				return null;
 			}
 
-			// recherche de la ligne correspondant à documentName
+			/*
+			 * Search of row corresponding to documentName
+			 */
 			while (reader.hasNext()) {
 				String[] row = reader.next();
 				String idurba = row[indexIdurba];
@@ -63,14 +72,15 @@ public class TyperefExtractor {
 					continue;
 				}
 
-				if (!idurba.matches(regexpIDURBA)) {
+				if ( ! idurbaHelper.isValid(idurba,documentName) ){
 					continue;
 				}
 
 				String result = row[indexTyperef];
 
-				// si IDURBA est trouvé mais que TYPEREF est null, on le met par
-				// défaut à 01
+				/*
+				 * if idUrba found an typeref is null, default is 01
+				 */
 				if (null == result) {
 					result = "01";
 				}

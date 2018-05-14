@@ -2,38 +2,74 @@ package fr.ign.validator.cnig.validation.attribute;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.utils.IdurbaUtils;
+import fr.ign.validator.cnig.utils.IdurbaHelper;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation des codes IDURBA dans la table 
+ * Customize attributes named IDURBA validation
+ * 
+ * TODO
+ * <ul>
+ * 	<li>Define IdurbaHelper as a constructor parameter</li>
+ *  <li>Move ValidatorListener implementation to process.CustomizeDocumentModel (do the same for other validators)</li>
+ * </ul>
  * 
  * @author MBorne
  *
  */
 public class IdurbaValidator implements Validator<Attribute<String>>, ValidatorListener {
+	public static final Logger log = LogManager.getRootLogger();
+	public static final Marker MARKER = MarkerManager.getMarker("IDURBA_VALIDATOR");
+
+	/**
+	 * idurbaHelper configured according to document model (see beforeMatching)
+	 */
+	private IdurbaHelper idurbaHelper;
+	
+	public IdurbaValidator(){
+
+	}
+	
+	
+	public IdurbaHelper getIdurbaHelper() {
+		return idurbaHelper;
+	}
+
+	protected void setIdurbaHelper(IdurbaHelper idurbaHelper) {
+		this.idurbaHelper = idurbaHelper;
+	}
+
+
 
 	@Override
 	public void validate(Context context, Attribute<String> attribute) {
-		if ( ! IdurbaUtils.isValid(attribute.getBindedValue()) ){
+		if ( ! idurbaHelper.isValid(attribute.getBindedValue()) ){
 			context.report(
 				CnigErrorCodes.CNIG_IDURBA_INVALID, 
-				attribute.getBindedValue()
+				attribute.getBindedValue(),
+				idurbaHelper.getHelpFormat()
 			);
 		}
 	}
 
 	/**
-	 * Extension de la validation de la table DOC_URBA
+	 * Extends the validation of DOC_URBA table
+	 * 
 	 * @param context
 	 * @param document
 	 * @throws Exception
@@ -41,17 +77,25 @@ public class IdurbaValidator implements Validator<Attribute<String>>, ValidatorL
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
 		/*
-		 * Ajout de ce validateur sur DOC_URBA.IDURBA
+		 * Configure idurbaHelper according to document model
+		 */
+		this.idurbaHelper = IdurbaHelper.getInstance(context.getDocumentModel());
+		/*
+		 * Adding this validator to DOC_URBA table
 		 */
 		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
 		for (FileModel fileModel : fileModels) {
-			if ( fileModel.getName().equals("DOC_URBA") ){
+			if ( fileModel instanceof TableModel ){
 				AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("IDURBA") ;
+				if ( attribute == null ){
+					continue;
+				}
+				/* check attribute type and add custom validator */
 				if ( attribute instanceof StringType ){
 					((StringType)attribute).addValidator(this);
 				}else{
 					throw new RuntimeException("IDURBA de DOC_URBA n'est pas configuré comme étant une chaîne de caractère");
-				}				
+				}
 			}
 		}
 	}

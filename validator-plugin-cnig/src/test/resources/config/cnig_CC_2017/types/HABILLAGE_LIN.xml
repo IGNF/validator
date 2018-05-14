@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[83436cfdbce66ee2a68631aceee4da9f]]></id>
+  <typeName><![CDATA[HABILLAGE_LIN]]></typeName>
+  <description><![CDATA[Table des tracés linéaires indicatifs figurant sur le plan du document d'urbanisme à des fins d'habillage]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[34748ef1389fda5d6835c16bd86cbb86]]></id>
+      <name><![CDATA[NATTRAC]]></name>
+      <description><![CDATA[Nature de la ligne]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[36aad20cb1dfa977ecbc26ec0467b772]]></id>
+      <name><![CDATA[COULEUR]]></name>
+      <type><![CDATA[String]]></type>
+      <size>11</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a504d4910547027d9716e34c78245b44]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiLineString]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[df1370b7057a36b1056b96744fd68106]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

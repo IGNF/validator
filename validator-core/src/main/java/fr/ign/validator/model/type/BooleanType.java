@@ -3,7 +3,8 @@ package fr.ign.validator.model.type;
 import fr.ign.validator.model.AttributeType;
 
 /**
- * Représente un booléen
+ * Represents a boolean
+ * 
  * @author MBorne
  *
  */

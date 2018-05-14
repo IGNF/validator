@@ -15,7 +15,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "spatialResolutions" is not empty and that content (denominator or distance) are valids. 
+ * Ensures that "spatialResolutions" is not empty and that content (denominator or distance) is valid. 
  *  
  * @author MBorne
  *

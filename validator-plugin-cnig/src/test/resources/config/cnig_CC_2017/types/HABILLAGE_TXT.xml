@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[1a823f5e00316d4bb9b490ed0f14deaa]]></id>
+  <typeName><![CDATA[HABILLAGE_TXT]]></typeName>
+  <description><![CDATA[Table des objets textuels (étiquettes) figurant sur le plan du document d'urbanisme à des fins d'habillage]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[1ff1f5a7f4c2741d7ed927759c741e63]]></id>
+      <name><![CDATA[STYLE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[407d66d34369a81119879ed1fe908d0c]]></id>
+      <name><![CDATA[COULEUR]]></name>
+      <type><![CDATA[String]]></type>
+      <size>11</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[45b78ea5e5891675905605fa9230ea6c]]></id>
+      <name><![CDATA[TAILLE]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5fbaf2e649aadc425a6be5978b243b16]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[65f18ae1f71c58639f9989839be24681]]></id>
+      <name><![CDATA[NATECR]]></name>
+      <description><![CDATA[Nature de l'écriture]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7263616126fae17c8cd37d7043319004]]></id>
+      <name><![CDATA[ANGLE]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a193ec24be9b60a48f54d0f285465827]]></id>
+      <name><![CDATA[POLICE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d236ae521684f18aa493bb0e38d3a47d]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Libellé de l'étiquette attachée au point d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d4f9514a5d6b582ff18bcbb6c3c471e1]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

@@ -6,7 +6,9 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Validation de l'aspect nullable sur un attribut
+ * Validates if an attribute is nullable or not
+ * (reports unexpected null attribute)
+ * 
  * @author MBorne
  *
  */

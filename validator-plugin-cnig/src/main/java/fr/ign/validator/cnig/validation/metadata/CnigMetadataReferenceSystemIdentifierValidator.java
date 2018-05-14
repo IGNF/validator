@@ -16,7 +16,7 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Ensure that ReferenceSystemIdentifier is defined according to guidelines :
+ * Ensures that ReferenceSystemIdentifier is defined according to guidelines :
  * 
  * http://cnig.gouv.fr/wp-content/uploads/2017/12/171219_Consignes_saisie_metadonnees_DU_v2017.pdf#page=10
  *  
@@ -28,7 +28,7 @@ public class CnigMetadataReferenceSystemIdentifierValidator implements Validator
 	private Map<String, String> codesToUri = new HashMap<>();
 	
 	public CnigMetadataReferenceSystemIdentifierValidator(){
-		//France métropolitaine 2154 RGF93LAMB93
+		//Metropolitan France 2154 RGF93LAMB93
 		codesToUri.put("EPSG:2154", "http://www.opengis.net/def/crs/EPSG/0/2154");
 		codesToUri.put("IGNF:RGF93LAMB93", "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGF93LAMB93");
 		

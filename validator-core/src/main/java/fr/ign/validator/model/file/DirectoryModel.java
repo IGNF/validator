@@ -8,8 +8,8 @@ import fr.ign.validator.model.FileModel;
 
 /**
  * 
- * Représente un fichier de type "dossier"
- * 
+ * Represents a directory (as a file with the type "directory")
+ *  
  * @author MBorne
  *
  */

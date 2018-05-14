@@ -8,9 +8,9 @@ import fr.ign.validator.validation.attribute.FilenameExistsValidator;
 
 /**
  * 
- * Une référence à un fichier donnée par le nom du fichier
+ * Reference to a file given by filename
  * 
- * Remarque : Contrairement à Path, le chemin n'est pas complet
+ * Note : unlike Path, the filename is not the full filepath
  * 
  * @author MBorne
  */
@@ -27,9 +27,10 @@ public class FilenameType extends AttributeType<File> {
 	}
 	
 	/**
-	 * Convertion dans le type java correspondant
+	 * Conversion in the matching java type
+	 * 
 	 * @param value
-	 * @throws IllegalArgumentException si la conversion échoue
+	 * @throws IllegalArgumentException if conversion fails
 	 * @return
 	 */
 	public File bind( Object value ) {

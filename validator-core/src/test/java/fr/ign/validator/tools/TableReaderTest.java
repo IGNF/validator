@@ -114,7 +114,7 @@ public class TableReaderTest extends TestCase {
 	
 	
 	/**
-	 * Ce test fonctionne en fonction des versions d'ogr2ogr
+	 * This test works with some ogr2ogr versions
 	 */
     @Test
     @Ignore("reprendre avec un jeu test où les FeatureType sont accessibles")
@@ -141,7 +141,7 @@ public class TableReaderTest extends TestCase {
     
     
     /**
-     * La conversion ogr2ogr en CSV produit un résultat étrange :
+     * ogr2ogr csv conversion outputs a strange result :
      *
      *		IDSUP,
      *		75
@@ -153,7 +153,7 @@ public class TableReaderTest extends TestCase {
      *		81
      *		80
      *
-     * Ce test vérifier que les éléments "null" de l'entête sont ignorés...
+     * This test verifies that the null elements from header are ignored
      */
     public void testReadSingleColumn(){
     	File file = new File(getClass().getResource("/dbf/SINGLE_COLUMN_BUG.dbf").getPath()) ;

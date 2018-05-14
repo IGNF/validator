@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 /**
  * 
- * Test de TableReader en présence de caractères spéciaux
+ * Tests TableReader with special characters
  * 
  * @author MBorne
  *

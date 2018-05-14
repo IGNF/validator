@@ -18,7 +18,8 @@ import fr.ign.validator.tools.TableReader;
  * 
  * Utilitaire permettant de parcourir les liens dans les tables de SUP.
  * 
- * @warning travaille sur des fichiers CSV encodés en UTF-8 (dossier validation)
+ * 
+ * @warning works with utf-8 encoded csv files (validation directory) 
  * 
  * @author MBorne
  *
@@ -26,13 +27,13 @@ import fr.ign.validator.tools.TableReader;
 public class DatabaseJointureSUP {
 
 	/**
-	 * La connexion à la base de données
+	 * database connection
 	 */
 	private Connection connection;
 	
 
 	/**
-	 * Construction de la base de données avec un chemin
+	 * Construction of database with path
 	 * 
 	 * @param parentDirectory
 	 * @throws SQLException
@@ -53,7 +54,7 @@ public class DatabaseJointureSUP {
 	}
 
 	/**
-	 * Création du schéma
+	 * Schema creation
 	 * 
 	 * @throws SQLException
 	 */
@@ -79,7 +80,7 @@ public class DatabaseJointureSUP {
 		Statement sth = connection.createStatement();
 		sth.executeUpdate(
 			"  CREATE TABLE servitude ("
-			+ "  id TEXT, " // PRIMARY KEY : impossible, pas unique
+			+ "  id TEXT, " // PRIMARY KEY : impossible, not unique
 			+ "  id_acte TEXT REFERENCES acte(id) "
 			+ ")"
 		);
@@ -110,7 +111,8 @@ public class DatabaseJointureSUP {
 	
 	
 	/**
-	 * Renvoie le nombre d'acte
+	 * Return the number of "actes"
+	 * 
 	 * @return
 	 * @throws SQLException
 	 */
@@ -119,7 +121,8 @@ public class DatabaseJointureSUP {
 	}
 	
 	/**
-	 * Chargement du fichier des actes
+	 * Loading "actes" file
+	 * 
 	 * @param path
 	 * @throws IOException 
 	 * @throws SQLException 
@@ -156,7 +159,8 @@ public class DatabaseJointureSUP {
 	
 	
 	/**
-	 * Renvoie le nombre d'acte
+	 * Return the number of "servitudes"
+	 * 
 	 * @return
 	 * @throws SQLException
 	 */
@@ -166,7 +170,8 @@ public class DatabaseJointureSUP {
 	
 
 	/**
-	 * Chargement du fichier des servitudes
+	 * Loading "servitudes" file
+	 * 
 	 * @param path
 	 * @throws IOException 
 	 * @throws SQLException 
@@ -203,7 +208,8 @@ public class DatabaseJointureSUP {
 	}
 	
 	/**
-	 * Renvoie le nombre de générateurs
+	 * Return the number of "générateurs"
+	 * 
 	 * @return
 	 * @throws SQLException
 	 */
@@ -213,7 +219,8 @@ public class DatabaseJointureSUP {
 	
 
 	/**
-	 * Chargement du fichier des générateurs
+	 * Loading "générateurs" file
+	 * 
 	 * @param path
 	 * @throws IOException 
 	 * @throws SQLException 
@@ -251,7 +258,8 @@ public class DatabaseJointureSUP {
 	
 
 	/**
-	 * Chargement du fichier des assiettes
+	 * Loading "assiettes" file
+	 * 
 	 * @param path
 	 * @throws IOException 
 	 * @throws SQLException 
@@ -287,7 +295,8 @@ public class DatabaseJointureSUP {
 	}
 
 	/**
-	 * Renvoie le nombre des assiettes	
+	 * Return the number of "assiettes
+	 * "
 	 * @return
 	 * @throws SQLException 
 	 */
@@ -297,7 +306,8 @@ public class DatabaseJointureSUP {
 
 	
 	/**
-	 * Recherche des actes pour un generateur
+	 * Finding "actes" for a "générateur"
+	 * 
 	 * @param idGen
 	 * @return 
 	 * @throws SQLException
@@ -318,7 +328,8 @@ public class DatabaseJointureSUP {
 	}
 	
 	/**
-	 * Recherche des actes pour un generateur
+	 * Finding "actes" for a "assiette"
+	 * 
 	 * @param idGen
 	 * @return 
 	 * @throws SQLException
@@ -356,7 +367,8 @@ public class DatabaseJointureSUP {
 	
 	
 	/**
-	 * Effectue un comptage dans une table 
+	 * Counts rows in table
+	 * 
 	 * @param tableName
 	 * @return
 	 * @throws SQLException

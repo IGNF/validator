@@ -11,7 +11,7 @@ import fr.ign.validator.validation.Validatable;
 
 /**
  * 
- * La liste des colonnes des tables associée à un FeatureType
+ * List of columns of a table associated to a FeatureType
  * 
  * @author MBorne
  *
@@ -24,7 +24,7 @@ public class Header implements Validatable {
 	private File matchingFile ;
 
 	/**
-	 * Le mapping colonnes/FeatureType
+	 * mapping columns/FeatureType
 	 */
 	private FeatureTypeMapper mapping ;
 	
@@ -44,13 +44,13 @@ public class Header implements Validatable {
 		FeatureType featureType = mapping.getFeatureType();
 		
 		/*
-		 * L'attribut est présent dans la données mais il n'est pas défini
+		 * Attribute in data but not defined
 		 */
 		for (String name : mapping.getUnexpectedAttributes()) {
 			if ( name.equals("WKT") ){
 				/*
-				 *  On ignore les champs WKT qui sont artificiellement créé
-				 *  par la conversion des dbf en CSV
+				 *  Skipping "WKT" field 
+				 *  (artificially created by conversion from dbf to csv)
 				 */
 				continue ;
 			}
@@ -58,7 +58,7 @@ public class Header implements Validatable {
 		}
 		
 		/*
-		 * L'attribut est manquant dans la donnée
+		 * Attribute missing in data
 		 */
 		for (String name : mapping.getMissingAttributes()) {
 			AttributeType<?> missingAttribute = featureType.getAttribute(name) ;

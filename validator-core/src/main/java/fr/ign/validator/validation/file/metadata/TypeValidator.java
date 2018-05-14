@@ -14,7 +14,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensure that "type" is defined and not empty
+ * Ensures that "type" is defined and allowed
  *  
  * @author MBorne
  *

@@ -17,7 +17,7 @@ import fr.ign.validator.tools.CSVReader;
 
 /**
  * 
- * Create ValidatorError according to prototypes loaded from configuration files
+ * Creates ValidatorError according to prototypes loaded from configuration files
  * 
  * @author MBorne
  * 
@@ -36,7 +36,7 @@ public class ErrorFactory {
 	}
 
 	/**
-	 * Get loaded prototypes
+	 * Gets loaded prototypes
 	 * 
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public class ErrorFactory {
 	}
 
 	/**
-	 * Create a new error with it's code and message parameters
+	 * Creates a new error with its code and message parameters
 	 * 
 	 * @param code
 	 * @return
@@ -61,7 +61,7 @@ public class ErrorFactory {
 			try {
 				result.setMessage(String.format(result.getMessage(), args));
 			} catch (IllegalFormatException e) {
-				// on ignore les paramètres manquants
+				// ignoring missing parameters
 			}
 			return result;
 		} catch (CloneNotSupportedException e) {
@@ -70,7 +70,7 @@ public class ErrorFactory {
 	}
 
 	/**
-	 * Load prototypes from CSV file
+	 * Loads prototypes from CSV file
 	 * 
 	 * @param csvFile
 	 */
@@ -82,14 +82,14 @@ public class ErrorFactory {
 		}
 
 		/*
-		 * Boucle sur les lignes de la table
+		 * Loop on table lines
 		 */
 		while (csvFile.hasNext()) {
 			String[] attributes = csvFile.next();
 			if (attributes.length != 4) {
 				continue;
 			}
-			// on construit la nouvelle erreur
+			// constructing new error
 			log.trace(MARKER, "Chargement de l'erreur {},{},{}", attributes[0], attributes[1], attributes[2]);
 			ErrorCode errorCode = ErrorCode.valueOf(attributes[0]);
 			ErrorLevel errorLevel = ErrorLevel.valueOf(attributes[1]);
@@ -104,7 +104,7 @@ public class ErrorFactory {
 	}
 
 	/**
-	 * Find prototype for the given code
+	 * Finds prototype for the given code
 	 * 
 	 * @param code
 	 * @return
@@ -119,7 +119,7 @@ public class ErrorFactory {
 	}
 
 	/**
-	 * Load default error templates from
+	 * Loads default error templates from
 	 * validator-core/src/main/resources/validator-error-configuration.csv
 	 */
 	private void loadDefaultErrors() {

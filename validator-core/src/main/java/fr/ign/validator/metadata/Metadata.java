@@ -146,7 +146,7 @@ public interface Metadata {
 	 * 
 	 * @see http://cnig.gouv.fr/wp-content/uploads/2014/01/Guide-de-saisie-des-éléments-de-métadonnées-INSPIRE-v1.1-final.pdf#page=103 to support other codes
 	 * 
-	 * @return NULL si non trouvé
+	 * @return NULL if not find
 	 */
 	public CharacterSetCode getCharacterSet();
 
@@ -181,7 +181,7 @@ public interface Metadata {
 	public List<Resolution> getSpatialResolutions();
 
 	/**
-	 * Get specifications
+	 * Gets specifications
 	 * INSPIRE GUIDELINE - 2.8 Conformity / 2.8.2 Specification (p49)
 	 * INSPIRE GUIDELINE - 2.8 Conformity / 2.8.1 Degree (p48)
 	 * @return

@@ -6,7 +6,8 @@ import fr.ign.validator.validation.attribute.StringRegexpValidator;
 import fr.ign.validator.validation.attribute.StringSizeValidator;
 
 /**
- * Représente un champ de type chaîne de caractère
+ * Represents a character string
+ * 
  * @author MBorne
  *
  */

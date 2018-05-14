@@ -21,7 +21,8 @@ import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Extension du validateur pour valider les codes INSEE
+ * Extends validator to validate INSEE codes
+ * 
  * @author MBorne
  *
  */

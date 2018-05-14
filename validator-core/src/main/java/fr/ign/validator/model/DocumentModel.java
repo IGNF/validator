@@ -35,21 +35,21 @@ public class DocumentModel implements Model {
 	 */
 	private String name ;
 	/**
-	 * The name of the document provided as a regexp (ex : (ex : "(2A|2B|[0-9]{2})[0-9]{3}_PLU_[0-9]{8}")
+	 * The name of the document provided as a regexp (e.g. "(2A|2B|[0-9]{2})[0-9]{3}_PLU_[0-9]{8}")
 	 */
 	private String regexp ;
 	/**
-	 * La liste des fichiers du document
+	 * The list of files in Document
 	 */
 	private List<FileModel> fileModels = new ArrayList<FileModel>();
 
 	/**
-	 * La liste des validateurs sur le document
+	 * The list of validators on the Document
 	 */
 	private List< Validator<Document> > validators = new ArrayList<Validator<Document>>();
 	
 	/**
-	 * Construction d'un modèle de document avec les contraintes par défaut
+	 * Constructs a DocumentModel with default constraints
 	 */
 	public DocumentModel(){
 		addValidator(new DocumentDirectoryNameValidator());
@@ -58,28 +58,28 @@ public class DocumentModel implements Model {
 	
 	
 	/**
-	 * Renvoie le nom du document
+	 * Returns the name of the document
 	 * @return
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * Définit le nom du document
+	 * Defines the name of the document
 	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	/**
-	 * Renvoie l'expression régulière correspondant au dossier
+	 * Returns regexp matching the directory
 	 * @return
 	 */
 	public String getRegexp() {
 		return regexp;
 	}
 	/**
-	 * Définit l'expression régulière correspondant au dossier du document
+	 * Defines regexp matching the directory of the document
 	 * @param regexp
 	 */
 	public void setRegexp(String regexp) {
@@ -109,7 +109,8 @@ public class DocumentModel implements Model {
 	}
 
 	/**
-	 * Trouve la définition de fichier correspondant à file en prenant en compte le path complet
+	 * Finds FileModel corresponding to File with (full) filepath
+	 * 
 	 * @param documentPath
 	 * @param file
 	 * @return
@@ -118,7 +119,7 @@ public class DocumentModel implements Model {
 		FileModel result = null;
 		for  (FileModel fileModel : fileModels ) {
 			if ( fileModel.matchPath(file) ){
-				// keep longuest regexp
+				// keep longest regexp
 				if ( result == null || fileModel.getRegexp().length() > result.getRegexp().length() ){
 					result = fileModel;
 				}
@@ -128,7 +129,8 @@ public class DocumentModel implements Model {
 	}
 	
 	/**
-	 * Trouve la définition de fichier correspondant à file en prenant en compte le seul nom de fichier
+	 * Finds FileModel corresponding to File with (only) filename
+	 * 
 	 * @param file
 	 * @return
 	 */
@@ -136,7 +138,7 @@ public class DocumentModel implements Model {
 		FileModel result = null;
 		for  (FileModel fileModel : fileModels ) {
 			if ( fileModel.matchFilename(file) ){
-				// keep longuest regexp
+				// keep longest regexp
 				if ( result == null || fileModel.getRegexp().length() > result.getRegexp().length() ){
 					result = fileModel;
 				}
@@ -147,7 +149,7 @@ public class DocumentModel implements Model {
 
 	
 	/**
-	 * Ajout d'un validateur sur le document
+	 * Adds a validator to the document
 	 * @param validator
 	 */
 	public void addValidator(Validator<Document> validator) {
@@ -155,7 +157,7 @@ public class DocumentModel implements Model {
 	}
 	
 	/**
-	 * Récupération des validateurs sur le document
+	 * Gets validators on document
 	 * @return
 	 */
 	public List<Validator<Document>> getValidators(){

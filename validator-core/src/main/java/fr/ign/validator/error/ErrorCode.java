@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentMap;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Represent an error code
+ * Represents an error code
  * 
  * @author CBouche
  * @author MBorne
@@ -25,7 +25,7 @@ public class ErrorCode {
     }
     
     /**
-     * Create an ErrorCode according to a string
+     * Creates an ErrorCode according to a string
      * @param name
      * @return
      */

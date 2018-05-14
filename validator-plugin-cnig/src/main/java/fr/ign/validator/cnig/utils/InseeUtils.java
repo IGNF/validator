@@ -2,7 +2,7 @@ package fr.ign.validator.cnig.utils;
 
 /**
  * 
- * Utilitaire de validation des codes INSEE
+ * Validates insee codes
  * 
  * @author MBorne
  *
@@ -12,7 +12,8 @@ public class InseeUtils {
 	public static final String REGEXP_COMMUNE     = "(2[AB][0-9]{3}|[0-9]{5})" ; 
 
 	/**
-	 * Validation d'un code de commune
+	 * Validates a municipality code
+	 * 
 	 * @param insee
 	 * @return
 	 */
@@ -24,7 +25,8 @@ public class InseeUtils {
 	}
 	
 	/**
-	 * Validation d'un code de département
+	 * Validates a departement code
+	 * 
 	 * @param insee
 	 * @return
 	 */

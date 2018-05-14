@@ -20,19 +20,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = { "typeName", "description", "attributes" })
 public class FeatureType implements Model {
 	/**
-	 * Parent (optionnel)
+	 * Parent (optional)
 	 */
 	private FeatureType parent ;
 	/**
-	 * Le nom du type
+	 * Type name
 	 */
 	private String typeName ;
 	/**
-	 * La description
+	 * Description 
 	 */
 	private String description ;
 	/**
-	 * La liste des attributs
+	 * Attribute list
 	 */
 	private List<AttributeType<?>> attributes = new ArrayList<AttributeType<?>>();
 
@@ -42,7 +42,7 @@ public class FeatureType implements Model {
 	}
 
 	/**
-	 * Indique si le type a un parent
+	 * Indicates if the FeatureType has a parent
 	 * @return
 	 */
 	public boolean hasParent(){
@@ -50,14 +50,14 @@ public class FeatureType implements Model {
 	}
 	
 	/**
-	 * Renvoie le parent du FeatureType
+	 * Gets parent of the FeatureType
 	 * @return
 	 */
 	public FeatureType getParent(){
 		return parent ;
 	}
 	/**
-	 * Définit le parent du FeatureType
+	 * Defines the parent of the FeatureType
 	 * @param featureType
 	 */
 	@XmlTransient
@@ -80,7 +80,7 @@ public class FeatureType implements Model {
 	}
 	
 	/**
-	 * Indique si la table est spatiale
+	 * Indicates if table is spatial
 	 * @return
 	 */
 	public boolean isSpatial(){
@@ -116,7 +116,7 @@ public class FeatureType implements Model {
 	}
 	
 	/**
-	 * Ajout d'un attribut
+	 * Adds an attribute
 	 * @param attribute
 	 */
 	public void addAttribute( AttributeType<?> attribute ){
@@ -124,7 +124,7 @@ public class FeatureType implements Model {
 	}
 	
 	/**
-	 * Renvoie le nombre d'attributs (gère l'héritage)
+	 * Gets number of attributes (manages inheritance)
 	 * 
 	 * @return
 	 */
@@ -132,7 +132,8 @@ public class FeatureType implements Model {
 		return getParentAttributeCount() + this.attributes.size() ;
 	}
 	/**
-	 * Renvoie le nombre d'attribut du parent (0 si non définit)
+	 * Return number of attributes of parent (0 if parentless)
+	 * 
 	 * @return
 	 */
 	private int getParentAttributeCount(){
@@ -144,7 +145,7 @@ public class FeatureType implements Model {
 	}
 	
 	/**
-	 * Renvoie un attribut par sa position (gère l'héritage)
+	 * Gets an attribute by its position (manages inheritance)
 	 * @param index
 	 * @return
 	 */
@@ -159,7 +160,7 @@ public class FeatureType implements Model {
 		}
 	}
 	/**
-	 * Renvoie un attribut par son nom (gère l'héritage)
+	 * Gets an attribute by its name (manages inheritance)
 	 * @param name
 	 * @return
 	 */
@@ -172,7 +173,7 @@ public class FeatureType implements Model {
 	}
 	
 	/**
-	 * Renvoie les noms des attributs
+	 * Gets names of attributes
 	 * @return
 	 */
 	public String[] getAttributeNames() {
@@ -184,9 +185,9 @@ public class FeatureType implements Model {
 	}
 
 	/**
-	 * Recherche la position d'un attribut par son nom (gère l'héritage)
+	 * Finds the position of an attribute by its name (manages inheritance)
 	 * @param name
-	 * @return -1 si non défini
+	 * @return -1 si undefined
 	 */
 	public int indexOf(String name){
 		String regexp = "(?i)"+name ;

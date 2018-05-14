@@ -9,7 +9,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Validation d'une géométrie
+ * Validates a geometry
  * 
  * @author MBorne
  *

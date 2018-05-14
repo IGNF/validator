@@ -21,11 +21,11 @@ import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.file.MetadataModel;
 
 /**
- * Pré traitement
+ * Pre-process
  * <ul>
- * <li>S'assure de la présence d'un fichier de metadonnées</li>
- * <li>Extrait l'encodage des fichiers depuis ces metadonnées</li>
- * <li>Vérifie la présence de certains attributs</li>
+ * 		<li>Makes sure of the presence of a metadata file</li>
+ * 		<li>Extracts file encoding from these metadata</li>
+ * 		<li>Verify the existence of particular attributes</li>
  * </ul>
  * 
  * @author CBouche
@@ -41,7 +41,7 @@ public class CharsetPreProcess implements ValidatorListener {
 	}
 
 	/**
-	 * Lecture de la charset à partir du premier fichier de métadonnées rencontré
+	 * Reading charset from first metadata file found
 	 */
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
@@ -102,7 +102,7 @@ public class CharsetPreProcess implements ValidatorListener {
 	}
 	
 	/**
-	 * Génération d'une liste concaténée des noms de fichiers
+	 * Generates a concatenated list of filenames
 	 * @param context
 	 * @param matchingFiles
 	 * @return
