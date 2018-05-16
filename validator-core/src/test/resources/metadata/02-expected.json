@@ -1,0 +1,96 @@
+{
+  "fileIdentifier" : "",
+  "title" : "Servitudes - Lot A9 relatives aux zones agricoles protégées de la Loire",
+  "abstract" : "Un résumé sur plusieurs lignes pour la ressource 02.xml",
+  "type" : "dataset",
+  "locators" : [ {
+    "url" : "",
+    "protocol" : null,
+    "name" : "Vue HTML des métadonnées sur internet"
+  }, {
+    "url" : "",
+    "protocol" : null,
+    "name" : "Vue XML des métadonnées"
+  }, {
+    "url" : "http://geostandards.developpement-durable.gouv.fr/afficherPageStandard.do?lot%3DCNIG_ServitudesUtilitePublique",
+    "protocol" : null,
+    "name" : "Standard de données COVADIS : CNIG - Prescription Nationale pour les Servitudes d'Utilité Publique (SUP)"
+  }, {
+    "url" : "",
+    "protocol" : null,
+    "name" : "Accès au service individuel de téléchargement simple du lot et des documents associés"
+  }, {
+    "url" : "",
+    "protocol" : null,
+    "name" : "Téléchargement direct du lot et des documents associés"
+  } ],
+  "identifier" : "",
+  "language" : "fre",
+  "topicCategory" : "planningCadastre",
+  "keywords" : [ {
+    "keywords" : [ "Aménagement Urbanisme/Assiette Servitude" ],
+    "thesaurusName" : "Arborescence thématique de la COVADIS",
+    "thesaurusDate" : "2016-09-30"
+  }, {
+    "keywords" : [ "données ouvertes" ],
+    "thesaurusDate" : null
+  }, {
+    "keywords" : [ "Zones de gestion, de restriction ou de réglementation et unités de déclaration" ],
+    "thesaurusName" : "GEMET - INSPIRE Themes",
+    "thesaurusDate" : "2008-06-01"
+  }, {
+    "keywords" : [ "Parcelles cadastrales" ],
+    "thesaurusName" : "GEMET - INSPIRE Themes",
+    "thesaurusDate" : "2008-06-01"
+  } ],
+  "referenceSystemIdentifier" : null,
+  "dateOfPublication" : "2016-09-30",
+  "dateOfLastRevision" : "2016-09-30",
+  "dateOfCreation" : "2016-09-30",
+  "characterSet" : null,
+  "spatialRepresentationType" : null,
+  "lineage" : "Généalogie non renseignée",
+  "spatialResolutions" : [ {
+    "denominator" : "5000"
+  } ],
+  "specifications" : [ ],
+  "contact" : {
+    "organisationName" : "Organisation propriétaire de la données",
+    "electronicMailAddress" : "ac@exemple.fr",
+    "role" : "owner",
+    "phone" : "",
+    "deliveryPoint" : "",
+    "city" : "",
+    "postalCode" : "00000",
+    "country" : "France",
+    "onlineResourceUrl" : "",
+    "hoursOfService" : null
+  },
+  "metadataContact" : {
+    "organisationName" : "DDT 42 (Direction départementale des territoires de la Loire)",
+    "electronicMailAddress" : "ddddt-gpu-sup@loire.gouv.fr",
+    "role" : "pointOfContact",
+    "phone" : "0477438000",
+    "deliveryPoint" : "2, avenue Grüner CS 90509",
+    "city" : "Saint-Etienne Cedex 1",
+    "postalCode" : "42007",
+    "country" : "France",
+    "onlineResourceUrl" : "https://lannuaire.service-public.fr/auvergne-rhone-alpes/loire/ddt-42218-01",
+    "hoursOfService" : "Consulter l'annuaire du service public"
+  },
+  "metadataDate" : "2016-09-30",
+  "metadataLanguage" : "fre",
+  "extents" : [ {
+    "boundingBox" : [ 3.18713903, 45.02106857, 5.55596375, 46.00650406 ]
+  } ],
+  "constraints" : [ {
+    "type" : "MD_LegalConstraints",
+    "useLimitations" : [ "Licence Ouverte 1.0 http://www.data.gouv.fr/Licence-Ouverte-Open-Licence." ],
+    "accessConstraints" : [ "otherRestrictions" ],
+    "otherConstraints" : [ "Pas de restriction d'accès public selon INSPIRE" ]
+  } ],
+  "distributionFormats" : [ {
+    "name" : "MapInfo TAB",
+    "version" : ""
+  } ]
+}
