@@ -1,0 +1,93 @@
+{
+  "fileIdentifier" : "urn:isogeo:metadata:uuid:66484d70-3f8c-44cf-b0e5-98ac84426a2c",
+  "title" : "Plan local d'urbanisme de La Baconnière en Mayenne",
+  "abstract" : "Un résumé simple pour la fiche 01.xml",
+  "type" : "dataset",
+  "locators" : [ {
+    "url" : "http://wxs-gpu.mongeoportail.ign.fr/externe/vkd1evhid6jdj5h4hkhyzjto/wms/v?",
+    "protocol" : "OGC:WMS",
+    "name" : "Service de visualisation du Géoportail de l'Urbanisme"
+  }, {
+    "url" : "http://wxs-gpu.mongeoportail.ign.fr/externe/vkd1evhid6jdj5h4hkhyzjto/telechargement/prepackage",
+    "protocol" : "WWW:LINK-1.0-http--link",
+    "name" : "Service de téléchargement du Géoportail de l'Urbanisme"
+  }, {
+    "url" : "http://www.labaconniere.fr/",
+    "protocol" : "WWW:LINK-1.0-http--link",
+    "name" : "Site de la mairie de La Baconnière"
+  } ],
+  "identifier" : "66484d70-3f8c-44cf-b0e5-98ac84426a2c",
+  "language" : "fre",
+  "topicCategory" : "planningCadastre",
+  "keywords" : [ {
+    "keywords" : [ "plan local d'urbanisme", "plu", "planification", "urbanisme logement", "la baconnière", "documents d'urbanisme", "cce", "mayenne", "urbanisme" ],
+    "thesaurusDate" : null
+  }, {
+    "keywords" : [ "Usage des sols" ],
+    "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+    "thesaurusDate" : "2008-06-01"
+  } ],
+  "referenceSystemIdentifier" : {
+    "code" : "urn:ogc:def:crs:EPSG:2154",
+    "uri" : null
+  },
+  "dateOfPublication" : "2004-09-03Z",
+  "dateOfLastRevision" : "2014-09-08Z",
+  "dateOfCreation" : "2004-09-03Z",
+  "characterSet" : "8859part1",
+  "spatialRepresentationType" : "vector",
+  "lineage" : "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG, contrôlé par la DDT 53 (Direction départementale des territoires de la Mayenne). Ce lot de données a été numérisé à partir du PCI Vecteur.",
+  "spatialResolutions" : [ {
+    "denominator" : "5000"
+  } ],
+  "specifications" : [ {
+    "title" : "CNIG PLU v2014",
+    "date" : "2014-10-02",
+    "dateType" : "publication",
+    "degree" : "true"
+  }, {
+    "title" : "Guide INSPIRE sur l'usage des sols",
+    "date" : "2013-12-10",
+    "dateType" : "publication",
+    "degree" : "false"
+  } ],
+  "contact" : {
+    "organisationName" : "Mairie de La Baconnière",
+    "electronicMailAddress" : "mairie-de-la-baco@wanadoo.fr",
+    "role" : "pointOfContact",
+    "phone" : null,
+    "deliveryPoint" : "13 place de l'église",
+    "city" : "La Baconnière",
+    "postalCode" : "53240",
+    "country" : "FRA",
+    "onlineResourceUrl" : null,
+    "hoursOfService" : null
+  },
+  "metadataContact" : {
+    "organisationName" : "Partenaire TEST",
+    "electronicMailAddress" : "sig@partenaire.fr",
+    "role" : "pointOfContact",
+    "phone" : null,
+    "deliveryPoint" : null,
+    "city" : null,
+    "postalCode" : null,
+    "country" : "FRA",
+    "onlineResourceUrl" : null,
+    "hoursOfService" : null
+  },
+  "metadataDate" : "2015-08-28T12:48:06.7163297Z",
+  "metadataLanguage" : "fre",
+  "extents" : [ {
+    "boundingBox" : [ -0.954544, 48.150182, -0.847686, 48.202573 ]
+  } ],
+  "constraints" : [ {
+    "type" : "MD_LegalConstraints",
+    "useLimitations" : [ "Pas de restriction d’accès public selon INSPIRE" ],
+    "accessConstraints" : [ "otherRestrictions" ],
+    "otherConstraints" : [ "Informations non opposables au tiers." ]
+  } ],
+  "distributionFormats" : [ {
+    "name" : "Shapefile",
+    "version" : "1.0"
+  } ]
+}

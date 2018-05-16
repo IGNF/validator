@@ -1,0 +1,87 @@
+{
+  "fileIdentifier" : "fr-210800405-08042-plu20140213",
+  "title" : "Plan local d'urbanisme (PLU) - Balaives-et-Butz - approbation du 13/02/2014",
+  "abstract" : "Plan local d'urbanisme (PLU) de la commune de Balaives-et-Butz (code INSEE 08042) approuvé le 13/02/2014",
+  "type" : "dataset",
+  "locators" : [ {
+    "url" : "http://mairie-balaives-et-butz.fr/PLU",
+    "protocol" : "WWW:LINK-1.0-http--link",
+    "name" : "site de la mairie de Belaives-Et-Butz"
+  } ],
+  "identifier" : null,
+  "language" : "fre",
+  "topicCategory" : "planningCadastre",
+  "keywords" : [ {
+    "keywords" : [ "PLU ; Plan d'occupation du sol ; Balaives-et-Butz ; urbanisme" ],
+    "thesaurusDate" : null
+  }, {
+    "keywords" : [ "Usage des sols" ],
+    "thesaurusName" : "GEMET inspire themes - version 1.0",
+    "thesaurusDate" : "2008-06-01"
+  } ],
+  "referenceSystemIdentifier" : {
+    "code" : "Lambert 93",
+    "uri" : null
+  },
+  "dateOfPublication" : null,
+  "dateOfLastRevision" : null,
+  "dateOfCreation" : "2014-02-13",
+  "characterSet" : "8859part1",
+  "spatialRepresentationType" : "vector",
+  "lineage" : "Mise à jour du PLU de Balaives et Butz en 2014",
+  "spatialResolutions" : [ ],
+  "specifications" : [ ],
+  "contact" : {
+    "organisationName" : "mairie de Balaives et Butz",
+    "electronicMailAddress" : "mairie-balaives-et-butz@orange.fr",
+    "role" : "owner",
+    "phone" : null,
+    "deliveryPoint" : "rue de la mairie",
+    "city" : "Balaives et Butz",
+    "postalCode" : "08160",
+    "country" : "France",
+    "onlineResourceUrl" : null,
+    "hoursOfService" : null
+  },
+  "metadataContact" : {
+    "organisationName" : "mairie de Balaives et Butz",
+    "electronicMailAddress" : "mairie-balaives-et-butz@orange.fr",
+    "role" : "pointOfContact",
+    "phone" : null,
+    "deliveryPoint" : "rue de la mairie",
+    "city" : "Balaives et Butz",
+    "postalCode" : "08160",
+    "country" : "France",
+    "onlineResourceUrl" : null,
+    "hoursOfService" : null
+  },
+  "metadataDate" : "2014-09-26",
+  "metadataLanguage" : "fre",
+  "extents" : [ {
+    "boundingBox" : [ 4.5, 49.5, 4.8, 49.8 ]
+  }, {
+    "boundingBox" : [ 4.01898628193261, 49.2429346596619, 5.42439068264001, 50.150576343463 ]
+  }, {
+    "boundingBox" : [ 3.37135982440879, 47.6112466818518, 6.05229292942111, 50.133103958194 ]
+  }, {
+    "boundingBox" : [ 4.68685231029297, 49.6531014698407, 4.75593634037876, 49.693097565905 ]
+  } ],
+  "constraints" : [ {
+    "type" : "MD_Constraints",
+    "useLimitations" : [ "Conditions inconnues." ]
+  }, {
+    "type" : "MD_LegalConstraints",
+    "accessConstraints" : [ "copyright" ]
+  }, {
+    "type" : "MD_LegalConstraints",
+    "accessConstraints" : [ "otherRestrictions" ],
+    "otherConstraints" : [ "Pas de restriction d’accès publique" ]
+  }, {
+    "type" : "MD_SecurityConstraints",
+    "classification" : "unclassified"
+  } ],
+  "distributionFormats" : [ {
+    "name" : "ESRI Shapefile",
+    "version" : ""
+  } ]
+}

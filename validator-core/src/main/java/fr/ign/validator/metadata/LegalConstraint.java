@@ -36,7 +36,7 @@ public class LegalConstraint extends Constraint {
 	
 	@Override
 	public String getType(){
-		return "MD_SecurityConstraints";
+		return "MD_LegalConstraints";
 	}
 
 	public List<String> getAccessConstraints() {
