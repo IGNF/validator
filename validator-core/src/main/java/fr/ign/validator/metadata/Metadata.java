@@ -29,7 +29,6 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
 	"topicCategory",
 	
 	"keywords",
-	"geographicBoundingBoxes",
 	"referenceSystemIdentifier",
 
 	"dateOfPublication",
@@ -37,8 +36,6 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
 	"dateOfCreation",
 
 	"characterSet",
-	"contraints",
-	"distributionFormat",
 	"spatialRepresentationType",
 	"lineage",
 	"spatialResolutions",
@@ -47,7 +44,11 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
 	
 	"metadataContact",
 	"metadataDate",
-	"metadataLanguage"
+	"metadataLanguage",
+	
+	"extents",
+	"constraints",
+	"distributionFormats"
 })
 public interface Metadata {
 

@@ -53,7 +53,7 @@ public class MetadataToJsonCommandRegressTest extends TestCase {
 		
 		assertTrue("json file not produced for "+inputName, outputFile.exists());
 		// uncomment to get expected content
-		System.out.println(FileUtils.readFileToString(outputFile));
+		// System.out.println(FileUtils.readFileToString(outputFile));
 		assertTrue(
 			"Expected file not found : "+expectedFile,
 			expectedFile.exists()
