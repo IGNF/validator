@@ -11,7 +11,7 @@
 		<!-- writes detailed log -->
 		<File name="FILE" fileName="validator-debug.log" append="false">
 			<PatternLayout charset="UTF-8">
-				<Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+				<Pattern>%d %p %c{1.} [%marker] %m%n</Pattern>
 			</PatternLayout>
 		</File>
 

@@ -1,8 +1,4 @@
-package fr.ign.validator.cnig.utils;
-
-import fr.ign.validator.cnig.utils.idurba.IdurbaHelperV1;
-import fr.ign.validator.cnig.utils.idurba.IdurbaHelperV2;
-import fr.ign.validator.model.DocumentModel;
+package fr.ign.validator.cnig.idurba;
 
 /**
  * Decodes idUrba field
@@ -15,22 +11,6 @@ import fr.ign.validator.model.DocumentModel;
  *
  */
 public abstract class IdurbaHelper {
-	
-	/**
-	 * TODO get instance according to DocumentModel version (if year >= 2017, IDURBA = DocumentName)
-	 * @param documentModel
-	 * @return
-	 */
-	public static IdurbaHelper getInstance(DocumentModel documentModel){
-		String documentModelName = documentModel.getName();
-		String version = DocumentModelNameUtils.getVersion(documentModelName);
-		if ( version.equals("2013") || version.equals("2014") ){
-			return new IdurbaHelperV1();
-		}else {
-			return new IdurbaHelperV2();
-		}		
-	}
-	
 	
 	/**
 	 * Validates an idUrba

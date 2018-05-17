@@ -1,7 +1,7 @@
-package fr.ign.validator.cnig.utils.idurba;
+package fr.ign.validator.cnig.idurba.impl;
 
+import fr.ign.validator.cnig.idurba.IdurbaHelper;
 import fr.ign.validator.cnig.utils.DocumentNameHelper;
-import fr.ign.validator.cnig.utils.IdurbaHelper;
 
 /**
  * 

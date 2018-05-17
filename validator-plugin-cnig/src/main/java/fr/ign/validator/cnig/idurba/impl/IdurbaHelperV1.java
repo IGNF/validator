@@ -1,10 +1,10 @@
-package fr.ign.validator.cnig.utils.idurba;
+package fr.ign.validator.cnig.idurba.impl;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.ign.validator.cnig.idurba.IdurbaHelper;
 import fr.ign.validator.cnig.utils.DocumentNameHelper;
-import fr.ign.validator.cnig.utils.IdurbaHelper;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class IdurbaHelperV1 extends IdurbaHelper {
 		// municipality | 
 		String result = DocumentNameHelper.REGEXP_DU_TERRITOIRE;
 		result += "(_?)" ;// optional _
-		result += DocumentNameHelper.REGEXP_DATE ;
+		result += DocumentNameHelper.REGEXP_YYYYMMDD ;
 		return result;
 	}
 

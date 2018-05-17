@@ -19,8 +19,9 @@ import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
+import fr.ign.validator.cnig.idurba.IdurbaHelper;
+import fr.ign.validator.cnig.idurba.IdurbaHelperFactory;
 import fr.ign.validator.cnig.utils.EnveloppeUtils;
-import fr.ign.validator.cnig.utils.IdurbaHelper;
 import fr.ign.validator.cnig.utils.TyperefExtractor;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
@@ -145,7 +146,7 @@ public class DocumentInfoExtractor {
 	 * @return null if not found
 	 */
 	private String parseTyperef(Context context, String documentName, File validationDirectory) {
-		IdurbaHelper helper = IdurbaHelper.getInstance(context.getDocumentModel());
+		IdurbaHelper helper = IdurbaHelperFactory.getInstance(context.getDocumentModel());
 		if (null == helper) {
 			log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
 			return null;

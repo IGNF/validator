@@ -4,7 +4,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.cnig.process.CnigInfoExtractorPostProcess;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
-import fr.ign.validator.cnig.validation.attribute.IdurbaValidator;
+import fr.ign.validator.cnig.validation.attribute.IdurbaValidationCustomizer;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
@@ -45,7 +45,7 @@ public class CnigPlugin implements Plugin {
 		 */
 		context.addListener( new InseeValidator() );
 		context.addListener( new AtLeastOneWritingMaterialValidator() );
-		context.addListener( new IdurbaValidator() );
+		context.addListener( new IdurbaValidationCustomizer() );
 
 		/*
 		 * extends metadata validation
