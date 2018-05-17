@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils.idurba;
+package fr.ign.validator.cnig.idurba.impl;
 
 import junit.framework.TestCase;
 

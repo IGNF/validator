@@ -7,7 +7,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.utils.IdurbaHelper;
+import fr.ign.validator.cnig.idurba.IdurbaHelper;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.validation.Validator;
 

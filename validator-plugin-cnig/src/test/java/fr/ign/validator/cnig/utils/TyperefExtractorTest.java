@@ -2,7 +2,7 @@ package fr.ign.validator.cnig.utils;
 
 import java.io.File;
 
-import fr.ign.validator.cnig.utils.idurba.IdurbaHelperV1;
+import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV1;
 import junit.framework.TestCase;
 
 /**

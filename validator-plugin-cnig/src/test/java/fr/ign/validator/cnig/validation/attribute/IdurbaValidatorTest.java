@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.utils.idurba.IdurbaHelperV1;
-import fr.ign.validator.cnig.utils.idurba.IdurbaHelperV2;
+import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV1;
+import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV2;
 import fr.ign.validator.cnig.validation.CnigValidatorTestBase;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.ErrorLevel;
