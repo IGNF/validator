@@ -37,7 +37,7 @@ METADATA_TYPE_NOT_FOUND,ERROR,"Le champ ""type de la ressource"" n'est pas rense
 METADATA_TYPE_INVALID,ERROR,"Le champ ""catégorie thématique"" (%1$s) ne correspond pas à une valeur autorisée (%2$s).",
 METADATA_LOCATORS_EMPTY,ERROR,"Aucun ""localisateur de la ressource"" renseigné.",
 METADATA_LOCATOR_NAME_NOT_FOUND,WARNING,"Localisateur de ressource (%2$s/%3$s) : le champ ""nom"" n'est pas renseigné.",
-METADATA_LOCATOR_PROTOCOL_NOT_FOUND,WARNING,"Localisateur de ressource (%2$s/%3$s) : le champ ""protocole"" n'est pas renseigné.",
+METADATA_LOCATOR_PROTOCOL_NOT_FOUND,WARNING,"Localisateur de ressource (%2$s/%3$s) : le champ ""protocole"" n'est pas renseigné (ex : ""OGC:WMS"", ""OGC:WFS"", ""ATOM"", etc.)",
 METADATA_LOCATOR_URL_NOT_FOUND,ERROR,"Localisateur de ressource (%2$s/%3$s) : le champ ""url"" n'est pas renseigné.",
 METADATA_LANGUAGE_NOT_FOUND,ERROR,"Le champ ""langue de la ressource"" n'est pas renseigné.",
 METADATA_LANGUAGE_INVALID,ERROR,"Le champ ""langue de la ressource"" (%1$s) ne correspond pas à une valeur autorisée (%2$s).",
