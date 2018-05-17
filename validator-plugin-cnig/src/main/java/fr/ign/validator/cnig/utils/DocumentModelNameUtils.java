@@ -30,7 +30,7 @@ public class DocumentModelNameUtils {
 		if ( parts.length < 2 ){
 			return null;
 		}
-		return parts[2];
+		return parts[1];
 	}
 
 	/**
@@ -39,7 +39,14 @@ public class DocumentModelNameUtils {
 	 * @return
 	 */
 	public static String getVersion(String documentModelName){
+		if ( ! isCnigStandard(documentModelName) ){
+			return null;
+		}
 		String[] parts = documentModelName.split("_");
-		return parts[parts.length - 1];
+		String candidate = parts[parts.length - 1];
+		if ( ! candidate.matches("[0-9]{4}") ){
+			return null;
+		}
+		return candidate;
 	}
 }

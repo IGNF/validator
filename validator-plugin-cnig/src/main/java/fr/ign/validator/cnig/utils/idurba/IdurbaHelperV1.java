@@ -33,7 +33,7 @@ public class IdurbaHelperV1 extends IdurbaHelper {
 		// municipality | 
 		String result = DocumentNameHelper.REGEXP_DU_TERRITOIRE;
 		result += "(_?)" ;// optional _
-		result += DocumentNameHelper.REGEXP_DATE ;
+		result += DocumentNameHelper.REGEXP_YYYYMMDD ;
 		return result;
 	}
 
