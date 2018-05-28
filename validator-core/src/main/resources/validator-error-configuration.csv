@@ -76,7 +76,7 @@ CNIG_SIREN_INVALID,ERROR,"La valeur du champ ""SIREN"" (%1$s) est mal formatée.
 CNIG_DOCUMENT_NO_PDF,ERROR,Aucun fichier PDF respectant les règles de nommage trouvé dans le document.,
 CNIG_IDURBA_INVALID,WARNING,"La valeur du champ ""IDURBA"" (%1$s) ne respecte pas le format attendu (%2$s).",
 CNIG_IDURBA_NOT_FOUND,WARNING,Aucune ligne correspondant au document n’a été trouvée dans la table DOC_URBA (IDURBA=%1$s),
-CNIG_METADATA_IDENTIFIER_INVALID,ERROR,"Le champ ""identificateur de ressource unique"" (%1$s) n'est pas égal à ""https://www.geoportail-urbanisme.gouv.fr/document/%2$s""",
+CNIG_METADATA_IDENTIFIER_INVALID,WARNING,"Le champ ""identificateur de ressource unique"" (%1$s) n'est pas égal à ""https://www.geoportail-urbanisme.gouv.fr/document/%2$s""",
 CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND,ERROR,"Le champ ""date de dernière révision"" (%1$s) est requis pour les documents d'urbanisme et les SUP.",
 CNIG_METADATA_SPECIFICATION_NOT_FOUND,ERROR,"Aucune ""spécification"" conforme aux consignes CNIG trouvée.",
 CNIG_METADATA_TYPE_INVALID,ERROR,"Le champ ""type de la ressource"" (%1$s) doit être égal à ""dataset"" ou ""serie"" pour les PLU, POS, CC, PSMV et les SUP.",

@@ -72,7 +72,7 @@ public class CnigValidatorRegressTest extends TestCase {
 		try {
 			document.validate(context);
 			assertEquals("41175_PLU_20140603",document.getDocumentName());
-			assertEquals(4,report.countErrors(ErrorLevel.ERROR));
+			assertEquals(3,report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -99,7 +99,7 @@ public class CnigValidatorRegressTest extends TestCase {
 		try {
 			document.validate(context);
 			assertEquals("50545_CC_20130902",document.getDocumentName());
-			assertEquals(3,report.countErrors(ErrorLevel.ERROR));
+			assertEquals(2,report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -150,7 +150,7 @@ public class CnigValidatorRegressTest extends TestCase {
 		try {
 			document.validate(context);
 			assertEquals("110068012_PM3_28_20161104",document.getDocumentName());
-			assertEquals(7,report.countErrors(ErrorLevel.ERROR));
+			assertEquals(6,report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
