@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <name>50545_CC_20140101</name>
+  <standard>cnig_CC_2014</standard>
+  <type>CC</type>
+  <bbox />
+  <geometry />
+  <typeref />
+  <metadataFileIdentifier>fr-000050545-cc20130902</metadataFileIdentifier>
+  <metadataMdIdentifier>fr-000050545-cc20130902</metadataMdIdentifier>
+  <pdfs>
+    <pdf>
+      <name>50545_plan_1_20130902.pdf</name>
+    </pdf>
+    <pdf>
+      <name>50545_rapport_20130902.pdf</name>
+    </pdf>
+  </pdfs>
+  <layers>
+    <layer>
+      <name>DOC_URBA</name>
+      <bbox />
+    </layer>
+    <layer>
+      <name>DOC_URBA_COM</name>
+      <bbox />
+    </layer>
+    <layer>
+      <name>SECTEUR_CC</name>
+      <bbox />
+    </layer>
+  </layers>
+</document>

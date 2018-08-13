@@ -95,6 +95,11 @@ public class DocumentInfoExtractor {
 		}
 
 		/*
+		 * Compute document extent
+		 */
+		documentInfo.setDocumentExtent(computeDocumentExtent(context, documentInfo.getDataLayers()));
+
+		/*
 		 * Finding PDF list
 		 */
 		{
@@ -109,7 +114,7 @@ public class DocumentInfoExtractor {
 		 * Extracting typeref (cadastral reference)
 		 */
 		documentInfo.setTyperef(parseTyperef(context, documentName, validationDirectory));
-
+		
 		return documentInfo;
 	}
 	
@@ -189,10 +194,29 @@ public class DocumentInfoExtractor {
 		DataLayer layer = new DataLayer(layerName);
 		File shpFile = CompanionFileUtils.getCompanionFile(dbfFile, "shp");
 		if ( shpFile.exists() ){
-			Envelope bbox = EnveloppeUtils.getBoundingBox(shpFile);
-			layer.setLayerBbox(EnveloppeUtils.format(bbox));
+			layer.setBoundingBox(EnveloppeUtils.getBoundingBox(shpFile));
 		}
 		return layer;
 	}
+	
+	
+	/**
+	 * Compute global extends from 
+	 * 
+	 * @param repertory
+	 * @return
+	 */
+	private Envelope computeDocumentExtent( Context context, List <DataLayer > layerList) {
+		Envelope result = new Envelope();
+		for ( DataLayer dataLayer : layerList ) {
+			result.expandToInclude(dataLayer.getBoundingBox());
+		}
+		if ( result.isNull() ){
+			context.report(CnigErrorCodes.CNIG_NO_SPATIAL_DATA);
+		}		
+		return result;
+	}
+
+
 
 }

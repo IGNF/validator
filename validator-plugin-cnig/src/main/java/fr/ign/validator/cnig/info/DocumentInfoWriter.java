@@ -6,13 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
+import fr.ign.validator.cnig.utils.EnveloppeUtils;
 
 /**
  * @author FCerizay
@@ -94,8 +95,8 @@ public class DocumentInfoWriter {
 		 * Adding bbox and projection types
 		 */
 		documentAttributes.add( createSimpleElement( ELEMENT_TYPE, documentInfo.getType() ) ) ;
-		documentAttributes.add( createSimpleElement( ELEMENT_BBOX, computeDocumentExtent(documentInfo.getDataLayers()) ) ) ;
-			
+		documentAttributes.add( createSimpleElement( ELEMENT_BBOX, EnveloppeUtils.format(documentInfo.getDocumentExtent()) ) ) ;
+
 		if ( documentInfo.getGeometry() != null ){
 			documentAttributes.add( createSimpleElement(ELEMENT_GEOMETRY, documentInfo.getGeometry().toText()));
 		}else{
@@ -139,7 +140,7 @@ public class DocumentInfoWriter {
 		for( DataLayer layer : documentInfo.getDataLayers() ){
 			Element shp = new Element( ELEMENT_LAYER );
 			shp.addContent( createSimpleElement(ELEMENT_NAME, layer.getName() ) ) ;
-			shp.addContent( createSimpleElement(ELEMENT_BBOX, layer.getLayerBbox() ) ) ;
+			shp.addContent( createSimpleElement(ELEMENT_BBOX, EnveloppeUtils.format(layer.getBoundingBox()) ) ) ;
 			shapes.addContent(shp);
 		}
 		return shapes ;
@@ -157,37 +158,6 @@ public class DocumentInfoWriter {
 			element.setText(elementValue) ;
 			return element ;
 	}
-	
-	/**
-	 * 
-	 * TODO move to DocumentInfoExtractor
-	 * 
-	 * @param repertory
-	 * @return
-	 */
-	private String computeDocumentExtent (List <DataLayer > layerList) {
-		
-		if (!layerList.isEmpty()) {
-			double xmin = Double.POSITIVE_INFINITY,	ymin = Double.POSITIVE_INFINITY,
-					xmax = Double.NEGATIVE_INFINITY, ymax = Double.NEGATIVE_INFINITY;
-
-			for (DataLayer layer : layerList) {
-								
-				if(!layer.getLayerBbox().equals("")){
-					String bbox[]= layer.getLayerBbox().split(",");
-					
-					xmin=Math.min(xmin,Double.parseDouble(bbox[0]));
-					ymin=Math.min(ymin,Double.parseDouble(bbox[1]));
-					xmax=Math.max(xmax,Double.parseDouble(bbox[2]));
-					ymax=Math.max(ymax,Double.parseDouble(bbox[3]));
-				}
-			}
-			return xmin+","+ymin+","+xmax+","+ymax;
-		}else{
-			return "";
-		}
-	}
-
 
 	/**
 	 * Creates info-cnig.xml file

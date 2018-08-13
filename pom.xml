@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.ign.validator</groupId>
@@ -79,8 +80,8 @@
 			<groupId>org.codehaus.woodstox</groupId>
 			<artifactId>woodstox-core-asl</artifactId>
 			<version>4.4.1</version>
-		</dependency>		
-	
+		</dependency>
+
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -97,11 +98,11 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-       <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 
 		<!-- jdom -->
 		<dependency>
@@ -138,11 +139,11 @@
 			<version>1.0</version>
 		</dependency>
 
-		<!-- org.apache.commons.lang -->	
+		<!-- org.apache.commons.lang -->
 		<dependency>
-		    <groupId>commons-lang</groupId>
-		    <artifactId>commons-lang</artifactId>
-		    <version>2.6</version>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
 		</dependency>
 
 		<!-- geotools -->
@@ -200,7 +201,7 @@
 			<version>2.2.0</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- mockito -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -209,26 +210,15 @@
 			<scope>test</scope>
 		</dependency>
 
-    
+
 	</dependencies>
 
 	<repositories>
+
 		<repository>
 			<id>maven</id>
 			<name>Maven repository 2</name>
-			<url>http://mvnrepository.com/artifact/</url>
-		</repository>
-
-		<repository>
-			<id>maven2</id>
-			<name>Maven repository 2</name>
-			<url>http://repo1.maven.org/maven2/</url>
-		</repository>
-
-		<repository>
-			<id>jboss</id>
-			<name>JBoss Repository</name>
-			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+			<url>http://central.maven.org/maven2/</url>
 		</repository>
 
 		<repository>
@@ -237,16 +227,8 @@
 			<url>http://download.osgeo.org/webdav/geotools/</url>
 		</repository>
 
-		<repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<id>boundless</id>
-			<name>Boundless Maven Repository</name>
-			<url>http://repo.boundlessgeo.com/main</url>
-		</repository>
-
 	</repositories>
+
 
 	<build>
 		<pluginManagement>

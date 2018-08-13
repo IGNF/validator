@@ -16,11 +16,12 @@ public class CnigErrorCodes {
 	public static final ErrorCode CNIG_IDURBA_INVALID   = ErrorCode.valueOf("CNIG_IDURBA_INVALID") ;
 	public static final ErrorCode CNIG_IDURBA_NOT_FOUND = ErrorCode.valueOf("CNIG_IDURBA_NOT_FOUND") ;
 
+	public static final ErrorCode CNIG_NO_SPATIAL_DATA  = ErrorCode.valueOf("CNIG_NO_SPATIAL_DATA") ;
+	
 	public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND      = ErrorCode.valueOf("CNIG_METADATA_SPECIFICATION_NOT_FOUND");
 	public static final ErrorCode CNIG_METADATA_IDENTIFIER_INVALID           = ErrorCode.valueOf("CNIG_METADATA_IDENTIFIER_INVALID");
 	public static final ErrorCode CNIG_METADATA_TYPE_INVALID                 = ErrorCode.valueOf("CNIG_METADATA_TYPE_INVALID");
 	public static final ErrorCode CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND = ErrorCode.valueOf("CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND");
-
 
 	public static final ErrorCode CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_NOT_FOUND      = ErrorCode.valueOf("CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_NOT_FOUND");
 	public static final ErrorCode CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND = ErrorCode.valueOf("CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND");	

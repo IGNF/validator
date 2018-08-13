@@ -20,7 +20,7 @@ import com.vividsolutions.jts.geom.Envelope;
  *
  */
 public class EnveloppeUtils {
-
+	
 	/**
 	 * Reads bbox from a shapefile
 	 * 
@@ -47,7 +47,7 @@ public class EnveloppeUtils {
 		}
 
 		if ( isNullEnvelope(bbox) ){
-			return null;
+			return new Envelope();
 		}else{
 			return bbox;
 		}
@@ -60,12 +60,12 @@ public class EnveloppeUtils {
 	 * @return
 	 */
 	public static String format(Envelope env){
-		if ( null == env ){
+		if ( null == env || isNullEnvelope(env) ){
 			return "";
 		}
 		return env.getMinX()+","+env.getMinY()+","+env.getMaxX()+","+env.getMaxY();
 	}
-	
+
 	/**
 	 * Indicates if bbox is null
 	 * 

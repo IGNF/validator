@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.MultiPolygon;
 
 import fr.ign.validator.cnig.info.internal.DataFileComparator;
@@ -53,13 +54,17 @@ public class DocumentInfo {
 	 * List of DataFiles in directory
 	 */
 	private List<DataFile> dataFiles = new ArrayList<DataFile>() ;
-	
 
 	/**
 	 * List of DataLayers in directory
 	 */
 	private List<DataLayer> dataLayers = new ArrayList<DataLayer>() ;
 
+	/**
+	 * Enveloppe du document
+	 */
+	private Envelope documentExtent = new Envelope();
+	
 	/**
 	 * Constructor
 	 */
@@ -187,6 +192,17 @@ public class DocumentInfo {
 		dataLayers.add(dataLayer) ;
 	}
 	
+	
+	public Envelope getDocumentExtent() {
+		return documentExtent;
+	}
+
+
+	public void setDocumentExtent(Envelope documentExtent) {
+		this.documentExtent = documentExtent;
+	}
+
+
 	/**
 	 * simplify test
 	 */
