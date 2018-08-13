@@ -3,6 +3,7 @@ package fr.ign.validator.report;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 
@@ -34,6 +35,38 @@ public class InMemoryReportBuilder implements ReportBuilder {
 	}
 	
 	/**
+	 * Get reported errors for a given ErrorLevel
+	 * @param code
+	 * @return
+	 */
+	public List<ValidatorError> getErrorsByLevel(ErrorLevel level) {
+		List<ValidatorError> result = new ArrayList<>();
+		for (ValidatorError error : errors) {
+			if ( error.getLevel().equals(level) ){
+				result.add(error);
+			}
+		}
+		return result;
+	}
+
+
+	/**
+	 * Get reported errors for a given ErrorCode
+	 * @param code
+	 * @return
+	 */
+	public List<ValidatorError> getErrorsByCode(ErrorCode code) {
+		List<ValidatorError> result = new ArrayList<>();
+		for (ValidatorError error : errors) {
+			if ( error.getCode().equals(code) ){
+				result.add(error);
+			}
+		}
+		return result;
+	}
+	
+	
+	/**
 	 * Count errors
 	 * @return
 	 */
@@ -41,19 +74,24 @@ public class InMemoryReportBuilder implements ReportBuilder {
 		return this.errors.size() ;
 	}
 	
+	
+	/**
+	 * Count errors for a given code
+	 * @param code
+	 * @return
+	 */
+	public int countErrors(ErrorCode code){
+		return getErrorsByCode(code).size();
+	}
+
+	
 	/**
 	 * Count errors for a given level
 	 * @param level
 	 * @return
 	 */
 	public int countErrors(ErrorLevel level){
-		int result = 0 ;
-		for (ValidatorError validatorError : errors) {
-			if ( validatorError.getLevel().equals(level) ){
-				result++;
-			}
-		}
-		return result ;
+		return getErrorsByLevel(level).size();
 	}
 
 	/**
@@ -71,5 +109,5 @@ public class InMemoryReportBuilder implements ReportBuilder {
 		}
 		return true;
 	}
-	
+
 }

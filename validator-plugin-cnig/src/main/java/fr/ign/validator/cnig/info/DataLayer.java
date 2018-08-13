@@ -1,5 +1,7 @@
 package fr.ign.validator.cnig.info;
 
+import com.vividsolutions.jts.geom.Envelope;
+
 /**
  * 
  * Represents a geographical file in directory (geographical layer)
@@ -9,12 +11,7 @@ package fr.ign.validator.cnig.info;
  */
 public class DataLayer extends DataFile {
 
-	/**
-	 * String Bbox
-	 * 
-	 * TODO typer en Enveloppe
-	 */
-	private String layerBbox = "";
+	private Envelope boundingBox = new Envelope();
 
 	/**
 	 * @param name
@@ -23,12 +20,12 @@ public class DataLayer extends DataFile {
 		super(name);
 	}
 
-	public String getLayerBbox() {
-		return layerBbox;
+	public Envelope getBoundingBox() {
+		return boundingBox;
 	}
 
-	public void setLayerBbox(String layerBbox) {
-		this.layerBbox = layerBbox;
+	public void setBoundingBox(Envelope boundingBox) {
+		this.boundingBox = boundingBox;
 	}
 
 }
