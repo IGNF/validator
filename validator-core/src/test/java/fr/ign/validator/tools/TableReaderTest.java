@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import junit.framework.TestCase;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
 import fr.ign.validator.exception.InvalidCharsetException;
+import junit.framework.TestCase;
 
 public class TableReaderTest extends TestCase {
 
@@ -66,9 +65,13 @@ public class TableReaderTest extends TestCase {
 			// assertTrue(Arrays.asList(header).contains("DATECOG")) ;
 			
 			String[] row = reader.next() ;
-			//WKT
-			assertEquals( "POINT (225499.742202532826923 6755725.590427031740546)", row[wktIndex]);
-			
+			//WKT (regression in ogr2ogr between 1.x and 2.x)
+			if ( FileConverter.getInstance().getVersion().startsWith("GDAL 2.") ){
+				assertEquals( "POINT (225499.742202533 6755725.59042703)", row[wktIndex]);
+			}else{
+				assertEquals( "POINT (225499.742202532826923 6755725.590427031740546)", row[wktIndex]);
+			}
+
 			assertTrue(Arrays.asList(row).contains("DOC_URBA_COM.13")) ; //gml_id
 			assertTrue(Arrays.asList(row).contains("5611820140612")) ; //IDURBA
 			assertTrue(Arrays.asList(row).contains("56118")) ; // INSEE

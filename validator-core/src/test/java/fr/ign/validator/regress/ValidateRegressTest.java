@@ -44,7 +44,6 @@ public class ValidateRegressTest extends TestCase {
 			@SuppressWarnings("unchecked")
 			Collection<File> csvFiles = FileUtils.listFiles(documentPath, new String[]{"csv"}, true);
 			for (File file : csvFiles) {
-				System.out.println(file);
 				file.delete();
 			}
 		}

@@ -28,7 +28,6 @@ public class DocumentInfoWriter {
 	private static final String ELEMENT_NAME        = "name";
 	private static final String ELEMENT_STANDARD    = "standard";
 	private static final String ELEMENT_TYPEREF     = "typeref";
-	private static final String ELEMENT_GEOMETRY    = "geometry";
 	
 	private static final String ELEMENT_METADATA_FILE_IDENTIFIER = "metadataFileIdentifier";
 	private static final String ELEMENT_METADATA_MD_IDENTIFIER = "metadataMdIdentifier";
@@ -97,12 +96,6 @@ public class DocumentInfoWriter {
 		documentAttributes.add( createSimpleElement( ELEMENT_TYPE, documentInfo.getType() ) ) ;
 		documentAttributes.add( createSimpleElement( ELEMENT_BBOX, EnveloppeUtils.format(documentInfo.getDocumentExtent()) ) ) ;
 
-		if ( documentInfo.getGeometry() != null ){
-			documentAttributes.add( createSimpleElement(ELEMENT_GEOMETRY, documentInfo.getGeometry().toText()));
-		}else{
-			documentAttributes.add( createSimpleElement(ELEMENT_GEOMETRY, ""));
-		}
-		
 		/*
 		 * Adding date, insee code and departement code
 		 */

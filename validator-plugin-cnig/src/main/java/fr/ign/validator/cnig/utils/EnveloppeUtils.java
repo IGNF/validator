@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.geotools.data.DataStore;
@@ -63,7 +64,20 @@ public class EnveloppeUtils {
 		if ( null == env || isNullEnvelope(env) ){
 			return "";
 		}
-		return env.getMinX()+","+env.getMinY()+","+env.getMaxX()+","+env.getMaxY();
+		return formatDouble(env.getMinX())
+			+","+formatDouble(env.getMinY())
+			+","+formatDouble(env.getMaxX())
+			+","+formatDouble(env.getMaxY())
+		;
+	}
+	
+	/**
+	 * Format double
+	 * @param value
+	 * @return
+	 */
+	private static String formatDouble(double value){
+		return String.format(Locale.ROOT, "%.7f",value);
 	}
 
 	/**
