@@ -2,74 +2,168 @@ package fr.ign.validator.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-
-import fr.ign.validator.tools.FileConverter;
-import junit.framework.TestCase;
-
+import org.junit.rules.TemporaryFolder;
 
 /**
- * 
- * @author cbouche
- *
+ * Regress test for format conversions
+ * @author MBorne
  */
-public class FileConverterTest extends TestCase {
+public class FileConverterTest {
+	
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
 
-	FileConverter fileConverter ;
-	
-	@Override
-	protected void setUp() throws Exception {
-		fileConverter = new FileConverter() ;
+	FileConverter fileConverter;
+
+	@Before
+	public void setUp() {
+		fileConverter = FileConverter.getInstance();
 	}
-	
-	@Override
-	protected void tearDown() throws Exception {
-		fileConverter = null ;
-		File target0 = new File("ZONE_URBA.shp") ;
-		if ( target0.exists() ) {
-			target0.delete() ;
-		}
-		File target1 = new File("ZONE_URBA.dbf") ;
-		if ( target1.exists() ) {
-			target1.delete() ;
-		}
-		File target2 = new File("ZONE_URBA.prj") ;
-		if ( target2.exists() ) {
-			target2.delete() ;
-		}
-		File target3 = new File("ZONE_URBA.shx") ;
-		if ( target3.exists() ) {
-			target3.delete() ;
-		}
-		File target4 = new File("ZONE_URBA.csv") ;
-		if ( target4.exists() ) {
-			target4.delete() ;
-		}
-	}
-	
 
 	@Test
-	public void testCreateFile() {
-		File target = new File("ZONE_URBA.shp") ;
-		try {
-			target.createNewFile();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			fail() ;
-		}
-	}
-
-	
-	@Test
-	public void testConvertToCSV() {
-		File source = new File(getClass().getResource("/data/ZONE_URBA_41003.TAB").getPath()) ;
-		File target = new File("ZONE_URBA.csv") ;
+	public void testConvertToCSV() throws IOException {
+		File source = new File(getClass().getResource("/data/ZONE_URBA_41003.TAB").getPath());
+		File target = folder.newFile("ZONE_URBA.csv");
 		try {
 			fileConverter.convertToCSV(source, target);
+			Assert.assertTrue(target.exists());
+			@SuppressWarnings("unchecked")
+			List<String> lines = FileUtils.readLines(target);
+			Assert.assertEquals(37, lines.size());
+			Assert.assertEquals("WKT,LIBELLE,LIBELONG,TYPEZONE,DESTDOMI,NOMFIC,URLFIC,INSEE,DATAPPRO,DATVALID",
+					lines.get(0));
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail() ;
+			Assert.fail();
 		}
 	}
+
+	/**
+	 * Regress test about GDAL coordinate precision while converting to CSV
+	 * 
+	 * @see validator-core/src/test/resources/data/POINT.README.md 
+	 * 
+	 * @throws IOException
+	 */
+	@Test
+	public void testConvertToCSVPoint() throws IOException {
+		File source = new File(getClass().getResource("/data/POINT.shp").getPath());
+		File target = folder.newFile("POINT.csv");
+		
+		String expectedTargetName = getExpectedPointName();
+		Assume.assumeNotNull(expectedTargetName);
+		File expectedTarget = new File(getClass().getResource(expectedTargetName).getPath());
+		@SuppressWarnings("unchecked")
+		List<String> expectedLines = FileUtils.readLines(expectedTarget);
+		try {
+			fileConverter.convertToCSV(source, target);
+			Assert.assertTrue(target.exists());
+			@SuppressWarnings("unchecked")
+			List<String> lines = FileUtils.readLines(target);
+			Assert.assertEquals(11, lines.size());
+			for ( int i = 0; i < lines.size(); i++ ){
+				String expected = expectedLines.get(i);
+				String actual   = lines.get(i);
+				Assert.assertEquals(expected, actual);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	/**
+	 * Find expected CSV POINT file according to the GDAL current version
+	 * @return
+	 */
+	private String getExpectedPointName(){
+		String version = FileConverter.getInstance().getVersion();
+		if ( version.startsWith("GDAL 1.10.") ){
+			return "/data/POINT_EXPECTED_1.10.x.csv";
+		}else if ( version.startsWith("GDAL 1.11.") ){
+			return "/data/POINT_EXPECTED_1.11.x.csv";
+		}else if ( version.startsWith("GDAL 2.1.") ){
+			// supposed to be same as GDAL 2.2.2 output 
+			return "/data/POINT_EXPECTED_2.2.x.csv";
+		}else if ( version.startsWith("GDAL 2.2.") ){
+			return "/data/POINT_EXPECTED_2.2.x.csv";
+		}else{
+			System.err.println("GDAL version is not supported for this test : "+version);
+			return null;
+		}
+	}
+
+	/**
+	 * Test dbf to csv with backslash as last char
+	 */
+	@Test
+	public void testRegressBugBackslash01() throws IOException {
+		File source = new File(getClass().getResource("/bug-backslash/source.dbf").getPath());
+		File target = folder.newFile("output.csv");
+		try {
+			fileConverter.convertToCSV(source, target);
+			Assert.assertTrue(target.exists());
+			@SuppressWarnings("unchecked")
+			List<String> lines = FileUtils.readLines(target);
+			Assert.assertEquals(2, lines.size());
+			Assert.assertEquals("URLFIC,INSEE", lines.get(0));
+			Assert.assertEquals(
+				"\\\\ALPICITE-NAS\\etudes\\ORNON\\ELABORATION DU PLU\\14.GPU\\GPU ORNON\\38285_PLU_20171018\\,38285",
+				lines.get(1)
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+
+	/**
+	 * Test csv to dbf to csv with backslash as last char
+	 */
+	@Test
+	public void testRegressBugBackslash02() throws IOException {
+		Assume.assumeFalse(isOgrVersionKnownToHaveBackslashBug());
+		File source = new File(getClass().getResource("/bug-backslash/source.csv").getPath());
+		File targetDbf = folder.newFile("output.dbf");
+		File targetCsv = folder.newFile("output.csv");
+		try {
+			/* csv -> dbf */
+			fileConverter.convertToCSV(source, targetDbf);
+			Assert.assertTrue(targetDbf.exists());
+			/* dbf -> csv */
+			fileConverter.convertToCSV(targetDbf, targetCsv);
+			Assert.assertTrue(targetCsv.exists());
+			@SuppressWarnings("unchecked")
+			List<String> lines = FileUtils.readLines(targetCsv);
+			Assert.assertEquals(2, lines.size());
+			Assert.assertEquals("URLFIC,INSEE", lines.get(0));
+			Assert.assertEquals(
+				"\\\\ALPICITE-NAS\\etudes\\ORNON\\ELABORATION DU PLU\\14.GPU\\GPU ORNON\\38285_PLU_20171018\\,38285",
+				lines.get(1)
+			);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
+	
+	/**
+	 * Allows to skip backslash test if ogr2ogr is known to have problems with fields ending with backslash
+	 * @return
+	 */
+	public boolean isOgrVersionKnownToHaveBackslashBug(){
+		if ( FileConverter.getInstance().getVersion().startsWith("GDAL 1.10.1") ){
+			return true;
+		}
+		return false;
+	}
+
 }

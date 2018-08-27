@@ -1,19 +1,50 @@
-dist: trusty
 language: java
+
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+    jdk: openjdk7
+    env:
+      - GDAL_VERSION: 1.10.*
+  - os: linux
+    dist: trusty
+    jdk: openjdk7
+    env:
+      - GDAL_VERSION: 2.2.*
+      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
+  - os: linux
+    dist: xenial
+    jdk: openjdk8
+    env:
+      - GDAL_VERSION: 1.11.*
+  - os: linux
+    dist: xenial
+    jdk: openjdk8
+    env:
+      - GDAL_VERSION: 2.1.*
+      - GDAL_PPA: "ppa:ubuntugis/ppa"      
+  - os: linux
+    dist: xenial
+    jdk: openjdk8
+    env:
+      - GDAL_VERSION: 2.2.*
+      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
 notifications:
   email: false
 
 before_install:
+  - if [ ! -z "${GDAL_PPA}" ]; then sudo add-apt-repository ${GDAL_PPA} -y; fi
   - sudo apt-get -qq update
-  - sudo apt-get install -y gdal-bin
-  - ogr2ogr --version
-
-jdk:
-  - openjdk7
-  - openjdk8
+  - sudo apt-get install -y gdal-bin=${GDAL_VERSION}
 
 install: true
 
 script:
-- mvn clean package
+  - ogr2ogr --version
+  - mvn clean package
+
+cache:
+  directories:
+  - $HOME/.m2

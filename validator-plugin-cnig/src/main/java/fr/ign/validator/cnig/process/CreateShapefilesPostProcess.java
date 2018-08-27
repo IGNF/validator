@@ -46,7 +46,7 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
 	public void afterValidate(Context context, Document document) throws Exception {
 		File dataDirectory = context.getDataDirectory() ;
 		
-		FileConverter fileConverter = new FileConverter();
+		FileConverter fileConverter = FileConverter.getInstance();
 		
 		String[] extensions = { "csv" } ;
 		@SuppressWarnings("unchecked")

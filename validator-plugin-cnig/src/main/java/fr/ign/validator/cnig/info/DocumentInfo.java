@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.MultiPolygon;
 
 import fr.ign.validator.cnig.info.internal.DataFileComparator;
 
@@ -44,12 +43,7 @@ public class DocumentInfo {
 	 * MD_Identifier field in metadata
 	 */
 	private String metadataMdIdentifier ;
-	
-	/**
-	 * Document geometry
-	 */
-	private MultiPolygon geometry ;
-	
+
 	/**
 	 * List of DataFiles in directory
 	 */
@@ -152,14 +146,6 @@ public class DocumentInfo {
 	 */
 	public void setMetadataMdIdentifier(String metadataMdIdentifier) {
 		this.metadataMdIdentifier = metadataMdIdentifier;
-	}
-
-	public MultiPolygon getGeometry() {
-		return geometry;
-	}
-
-	public void setGeometry(MultiPolygon geometry) {
-		this.geometry = geometry;
 	}
 
 

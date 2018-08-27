@@ -169,7 +169,7 @@ public class TableReader implements Iterator< String[] >{
 			csvFile.delete();
 		}
 		
-		FileConverter converter = new FileConverter() ;
+		FileConverter converter = FileConverter.getInstance();
 		converter.convertToCSV(file, csvFile);
 		return csvFile ;
 	}

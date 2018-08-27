@@ -39,7 +39,8 @@ public class FileConverter {
 	
 	public static final String ENCODING_UTF8   = "UTF-8" ;
 	public static final String ENCODING_LATIN1 = "ISO-8859-1" ;
-	
+
+	private static FileConverter instance = new FileConverter();
 	
 	/**
 	 * @brief path to ogr2ogr executable
@@ -54,18 +55,24 @@ public class FileConverter {
 	/**
 	 * Default constructor
 	 */
-	public FileConverter() {
+	private FileConverter() {
 		this.version = retrieveVersion();
 		log.info(MARKER, "ogr2ogr version : "+this.version);
 		if ( this.version == null ){
 			throw new OgrNotFoundException();
 		}else if ( this.version.contains("1.11.0") ){
 			throw new OgrBadVersionException("ogr2ogr 1.11.0 is not supported (bug in WKT limited to 8000 characters)");
-		}else if ( this.version.contains("2.2.") || this.version.contains("2.1.*") ){
-			throw new OgrBadVersionException("ogr2ogr 2.1.* and 2.2.* are not yet supported (WKT coordinates are truncated, problems to manage number of decimals with OGR_WKT_PRECISION)");
 		}
 	}
 
+	/**
+	 * Get instance
+	 * @return
+	 */
+	public static FileConverter getInstance(){
+		return instance;
+	}
+	
 	/**
 	 * returns ogr2ogr version
 	 * @return null if command `ogr2ogr --version` fails
