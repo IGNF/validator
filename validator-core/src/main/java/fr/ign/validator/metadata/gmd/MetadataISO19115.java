@@ -232,7 +232,9 @@ public class MetadataISO19115 implements Metadata {
 			String eastBoundLongitude = findValue("./*/gmd:eastBoundLongitude/*", geographicElementNode);
 			String southBoundLatitude = findValue("./*/gmd:southBoundLatitude/*", geographicElementNode);
 			String northBoundLatitude = findValue("./*/gmd:northBoundLatitude/*", geographicElementNode);
-			if ( westBoundLongitude == null || eastBoundLongitude == null || southBoundLatitude == null || northBoundLatitude == null){
+			
+			/* skip extends without any bounding box element */
+			if ( westBoundLongitude == null && eastBoundLongitude == null && southBoundLatitude == null && northBoundLatitude == null){
 				continue;
 			}
 			BoundingBox boundingBox = new BoundingBox();
