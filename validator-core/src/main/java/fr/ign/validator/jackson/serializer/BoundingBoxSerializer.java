@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.metadata.BoundingBox;
 
@@ -21,12 +20,12 @@ public class BoundingBoxSerializer  extends JsonSerializer<BoundingBox> {
 	public void serialize(BoundingBox value, JsonGenerator gen, SerializerProvider serializers)
 			throws IOException, JsonProcessingException {
 
-		Envelope env = value.toEnvelope();
+		double[] env = value.toArray();
 		gen.writeStartArray();
-		gen.writeNumber(env.getMinX());
-		gen.writeNumber(env.getMinY());
-		gen.writeNumber(env.getMaxX());
-		gen.writeNumber(env.getMaxY());		
+		gen.writeNumber(env[0]);
+		gen.writeNumber(env[1]);
+		gen.writeNumber(env[2]);
+		gen.writeNumber(env[3]);		
 		gen.writeEndArray();
 	}
 

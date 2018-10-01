@@ -459,7 +459,7 @@ public class MetadataISO19115Test extends TestCase {
 			List<Extent> extents = metadata.getExtents();
 			assertEquals(4,extents.size());
 			assertEquals( 
-				"4.5,49.5,4.8,49.8", 
+				"177.0,-20.0,-178.0,20.0", 
 				extents.get(0).getBoundingBox().toString()
 			) ;
 			assertEquals( 
