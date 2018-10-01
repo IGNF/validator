@@ -22,15 +22,20 @@ public class Keywords {
 	private List<String> keywords ;
 	
 	/**
-	 * ./gmd:thesaurusName/gmd:CI_Citation/gmd:title
+	 * ./gmd:thesaurusName/gmd:CI_Citation/gmd:title/*
 	 */
 	@JsonInclude(Include.NON_EMPTY)
 	private String thesaurusName ;
 
+	
+	@JsonInclude(Include.NON_EMPTY)
+	private String thesaurusUri ;
+	
 	/**
 	 * ./gmd:thesaurusName/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/*
 	 */
 	private Date thesaurusDate ;
+	
 	
 	public List<String> getKeywords() {
 		return keywords;
@@ -46,6 +51,15 @@ public class Keywords {
 
 	public void setThesaurusName(String thesaurusName) {
 		this.thesaurusName = thesaurusName;
+	}
+
+
+	public String getThesaurusUri() {
+		return thesaurusUri;
+	}
+
+	public void setThesaurusUri(String thesaurusUri) {
+		this.thesaurusUri = thesaurusUri;
 	}
 
 	public Date getThesaurusDate() {

@@ -37,10 +37,12 @@
   }, {
     "keywords" : [ "Zones de gestion, de restriction ou de réglementation et unités de déclaration" ],
     "thesaurusName" : "GEMET - INSPIRE Themes",
+    "thesaurusUri" : "http://www.eionet.europa.eu/gemet/inspire_themes",
     "thesaurusDate" : "2008-06-01"
   }, {
     "keywords" : [ "Parcelles cadastrales" ],
     "thesaurusName" : "GEMET - INSPIRE Themes",
+    "thesaurusUri" : "http://www.eionet.europa.eu/gemet/inspire_themes",
     "thesaurusDate" : "2008-06-01"
   } ],
   "referenceSystemIdentifier" : null,
