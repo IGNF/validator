@@ -265,17 +265,18 @@
 				<gmd:EX_Extent>
 					<gmd:geographicElement>
 						<gmd:EX_GeographicBoundingBox>
+							<!-- bounding box over 180th meridian -->
 							<gmd:westBoundLongitude>
-								<gco:Decimal>4.5</gco:Decimal>
+								<gco:Decimal>177.0</gco:Decimal>
 							</gmd:westBoundLongitude>
 							<gmd:eastBoundLongitude>
-								<gco:Decimal>4.8</gco:Decimal>
+								<gco:Decimal>-178.0</gco:Decimal>
 							</gmd:eastBoundLongitude>
 							<gmd:southBoundLatitude>
-								<gco:Decimal>49.5</gco:Decimal>
+								<gco:Decimal>-20.0</gco:Decimal>
 							</gmd:southBoundLatitude>
 							<gmd:northBoundLatitude>
-								<gco:Decimal>49.8</gco:Decimal>
+								<gco:Decimal>20.0</gco:Decimal>
 							</gmd:northBoundLatitude>
 						</gmd:EX_GeographicBoundingBox>
 					</gmd:geographicElement>

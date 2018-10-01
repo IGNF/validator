@@ -1,7 +1,6 @@
 package fr.ign.validator.metadata;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.jackson.serializer.BoundingBoxSerializer;
 
@@ -78,14 +77,16 @@ public class BoundingBox {
 	}
 
 	/**
-	 * Safe conversion to JTS Envelope
+	 * Converts to double array [westBoundLongitude,southBoundLatitude,eastBoundLongitude,northBoundLatitude]
 	 * @return
 	 */
-	public Envelope toEnvelope(){
-		return new Envelope(
-			safeStringToDouble(westBoundLongitude), safeStringToDouble(eastBoundLongitude), 
-			safeStringToDouble(southBoundLatitude), safeStringToDouble(northBoundLatitude) 
-		);
+	public double[] toArray(){
+		return new double[]{
+			safeStringToDouble(westBoundLongitude), 
+			safeStringToDouble(southBoundLatitude),
+			safeStringToDouble(eastBoundLongitude),
+			safeStringToDouble(northBoundLatitude)
+		};
 	}
 
 	private double safeStringToDouble(String value){
@@ -99,7 +100,5 @@ public class BoundingBox {
 		}
 	}
 
-
-	
 }
 
