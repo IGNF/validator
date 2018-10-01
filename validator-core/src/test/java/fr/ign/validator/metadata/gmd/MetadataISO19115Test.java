@@ -189,6 +189,7 @@ public class MetadataISO19115Test extends TestCase {
 				StringUtils.join(keywords.get(0).getKeywords(),';') 
 			);
 			assertNull( keywords.get(0).getThesaurusName() );
+			assertNull( keywords.get(0).getThesaurusUri() );
 			assertNull( keywords.get(0).getThesaurusDate() );
 			
 			assertEquals( 
@@ -196,6 +197,7 @@ public class MetadataISO19115Test extends TestCase {
 				StringUtils.join(keywords.get(1).getKeywords(),';')  
 			);
 			assertEquals( "GEMET - INSPIRE themes, version 1.0", keywords.get(1).getThesaurusName() );
+			assertNull(keywords.get(1).getThesaurusUri() );
 			assertEquals( "2008-06-01", keywords.get(1).getThesaurusDate().toString() );
 		}
 		
@@ -348,6 +350,7 @@ public class MetadataISO19115Test extends TestCase {
 			
 			assertEquals( "données ouvertes", StringUtils.join(keywords.get(1).getKeywords(),';') );
 			assertNull( keywords.get(1).getThesaurusName() );
+			assertNull( keywords.get(1).getThesaurusUri() );
 			assertNull( keywords.get(1).getThesaurusDate() );
 			
 			assertEquals( 
@@ -355,6 +358,7 @@ public class MetadataISO19115Test extends TestCase {
 				StringUtils.join(keywords.get(2).getKeywords(),';')
 			);
 			assertEquals( "GEMET - INSPIRE Themes", keywords.get(2).getThesaurusName() );
+			assertEquals( "http://www.eionet.europa.eu/gemet/inspire_themes", keywords.get(2).getThesaurusUri() );
 			assertEquals( "2008-06-01", keywords.get(2).getThesaurusDate().toString() );
 			
 			assertEquals( 
@@ -362,6 +366,7 @@ public class MetadataISO19115Test extends TestCase {
 				StringUtils.join(keywords.get(3).getKeywords(),';')
 			);
 			assertEquals( "GEMET - INSPIRE Themes", keywords.get(3).getThesaurusName() );
+			assertEquals( "http://www.eionet.europa.eu/gemet/inspire_themes", keywords.get(3).getThesaurusUri() );
 			assertEquals( "2008-06-01", keywords.get(3).getThesaurusDate().toString() );
 		}
 		

@@ -202,6 +202,9 @@ public class MetadataISO19115 implements Metadata {
 			descriptiveKeyword.setThesaurusName(
 				findValue("./gmd:thesaurusName/*/gmd:title/*", keywordElement)
 			);
+			descriptiveKeyword.setThesaurusUri(
+				findValue("./gmd:thesaurusName/*/gmd:title/*/@xlink:href", keywordElement)
+			);
 			descriptiveKeyword.setThesaurusDate(
 				parseCitationDate(findSingleElement("./gmd:thesaurusName/*/gmd:date", keywordElement))
 			);
