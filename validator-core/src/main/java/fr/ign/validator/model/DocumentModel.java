@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.ign.validator.data.Document;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.document.DocumentDirectoryNameValidator;
@@ -75,6 +77,7 @@ public class DocumentModel implements Model {
 	 * Returns regexp matching the directory
 	 * @return
 	 */
+	@JsonIgnore
 	public String getRegexp() {
 		return regexp;
 	}
@@ -89,6 +92,7 @@ public class DocumentModel implements Model {
 	
 	@XmlElementWrapper(name = "files")
 	@XmlElement(name = "file")
+	@JsonIgnore
 	public List<FileModel> getFileModels() {
 		return fileModels;
 	}
@@ -160,6 +164,7 @@ public class DocumentModel implements Model {
 	 * Gets validators on document
 	 * @return
 	 */
+	@JsonIgnore
 	public List<Validator<Document>> getValidators(){
 		return this.validators ;
 	}

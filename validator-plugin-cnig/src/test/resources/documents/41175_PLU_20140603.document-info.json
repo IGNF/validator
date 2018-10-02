@@ -1,6 +1,8 @@
 {
   "name" : "41175_PLU_20140603",
-  "standard" : "cnig_PLU_2014",
+  "documentModel" : {
+    "name" : "cnig_PLU_2014"
+  },
   "files" : [ {
     "type" : "table",
     "modelName" : "DOC_URBA",

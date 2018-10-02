@@ -1,6 +1,8 @@
 {
   "name" : "19182_CC_20150517",
-  "standard" : "cnig_CC_2017",
+  "documentModel" : {
+    "name" : "cnig_CC_2017"
+  },
   "files" : [ {
     "type" : "table",
     "modelName" : "DOC_URBA",

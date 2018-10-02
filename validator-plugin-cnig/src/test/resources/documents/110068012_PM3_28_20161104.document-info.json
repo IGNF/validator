@@ -1,6 +1,8 @@
 {
   "name" : "110068012_PM3_28_20161104",
-  "standard" : "cnig_SUP_PM3_2013",
+  "documentModel" : {
+    "name" : "cnig_SUP_PM3_2013"
+  },
   "files" : [ {
     "type" : "directory",
     "modelName" : "Actes",

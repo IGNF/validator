@@ -15,6 +15,7 @@ import com.vividsolutions.jts.geom.Envelope;
 import fr.ign.validator.cnig.info.internal.DocumentFileInfoComparator;
 import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
 import fr.ign.validator.metadata.Metadata;
+import fr.ign.validator.model.DocumentModel;
 
 /** 
  * 
@@ -27,7 +28,7 @@ import fr.ign.validator.metadata.Metadata;
  */
 @JsonPropertyOrder({ 
 	"name",
-	"standard",
+	"documentModel",
 	"files",
 	"documentExtent",
 	"tags",
@@ -43,7 +44,7 @@ public class DocumentInfo {
 	/**
 	 * The standard (documentModelName)
 	 */
-	private String standard ;
+	private DocumentModel documentModel ;
 
 	/**
 	 * List of DataFiles in directory
@@ -84,14 +85,14 @@ public class DocumentInfo {
 	/**
 	 * @return
 	 */
-	public String getStandard() {
-		return standard;
+	public DocumentModel getDocumentModel() {
+		return documentModel;
 	}
 	/**
 	 * @param standard
 	 */
-	public void setStandard(String standard) {
-		this.standard = standard;
+	public void setDocumentModel(DocumentModel documentModel) {
+		this.documentModel = documentModel;
 	}
 
 
