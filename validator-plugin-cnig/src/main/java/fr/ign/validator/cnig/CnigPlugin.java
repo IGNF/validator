@@ -4,6 +4,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.cnig.process.CnigInfoExtractorPostProcess;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
+import fr.ign.validator.cnig.process.TyperefExtractorPostProcess;
 import fr.ign.validator.cnig.validation.attribute.IdurbaValidationCustomizer;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
@@ -35,11 +36,13 @@ public class CnigPlugin implements Plugin {
 	public void setup( Context context ) {
 		// Join SUP files to add a column "fichiers" 
 		context.addListener( new ReferenceActeSupPostProcess() );
-		// converts DATA/*.csv to DATA/*.shp
+		// converts DATA/*.csv to DATA/*.shp (must follow ReferenceActeSupPostProcess)
 		context.addListener( new CreateShapefilesPostProcess() );
-		// produce cnig-infos.xml
+		// compute document.tag.typeref
+		context.addListener( new TyperefExtractorPostProcess() );
+		// produce document-info.json (must follow TyperefExtractorPostProcess)
 		context.addListener( new CnigInfoExtractorPostProcess() );
-		
+
 		/*
 		 * extends attribute validation
 		 */

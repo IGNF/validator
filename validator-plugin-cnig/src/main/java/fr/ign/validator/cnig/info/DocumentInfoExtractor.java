@@ -16,11 +16,8 @@ import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.idurba.IdurbaHelper;
-import fr.ign.validator.cnig.idurba.IdurbaHelperFactory;
 import fr.ign.validator.cnig.info.model.DocumentFileInfo;
 import fr.ign.validator.cnig.info.model.DocumentInfo;
-import fr.ign.validator.cnig.utils.TyperefExtractor;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.exception.InvalidMetadataException;
@@ -43,7 +40,6 @@ public class DocumentInfoExtractor {
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractor");
 
-	public static final String TAG_TYPEREF = "typeref";
 
 	/**
 	 * Gets informations on directory
@@ -57,27 +53,12 @@ public class DocumentInfoExtractor {
 	 * @throws TransformException
 	 */
 	public DocumentInfo parseDocument(Context context, Document document) {
-		File validationDirectory = context.getValidationDirectory();
-
 		DocumentInfo documentInfo = new DocumentInfo(document);
 		documentInfo.setDocumentModel(context.getDocumentModel());
 		parseDocumentFiles(context, document, documentInfo);
-		documentInfo.setMetadata(findMetadata(document));
-
 		documentInfo.sortFiles();
-
-		/*
-		 * Compute document extent
-		 */
+		documentInfo.setMetadata(findMetadata(document));
 		documentInfo.setDocumentExtent(computeDocumentExtent(context, documentInfo.getFiles()));
-
-		/* CNIG SPECIFIC */
-		
-		/*
-		 * Extracting typeref (cadastral reference)
-		 */
-		documentInfo.setTag(TAG_TYPEREF, parseTyperef(context, document, validationDirectory));
-
 		return documentInfo;
 	}
 
@@ -155,42 +136,6 @@ public class DocumentInfoExtractor {
 		return result;
 	}
 
-	
-	/**
-	 * Get typeref value from DOC_URBA.csv file
-	 * 
-	 * @param context
-	 * @return null if not found
-	 */
-	private String parseTyperef(Context context, Document document, File validationDirectory) {
-		String documentName = document.getDocumentName();
-
-		IdurbaHelper helper = IdurbaHelperFactory.getInstance(context.getDocumentModel());
-		if (null == helper) {
-			log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
-			return null;
-		}
-
-		File documentDirectory = new File(validationDirectory, documentName);
-		File dataDirectory = new File(documentDirectory, "DATA");
-		File docUrbaFile = new File(dataDirectory, "DOC_URBA.csv");
-
-		if (!docUrbaFile.exists()) {
-			log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
-		}
-
-		TyperefExtractor typerefExtractor = new TyperefExtractor(helper);
-		String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
-		if (null == result) {
-			context.report(
-				CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, 
-				helper.getHelpExpected(documentName)
-			);
-		}
-		return result;
-	}
-
-	
 
 
 }

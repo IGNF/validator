@@ -16,9 +16,11 @@ import fr.ign.validator.data.Document;
 
 /**
  * 
- * Post process
- * Lists found files in each document
- * Extracts geographical data extent
+ * Produce a document-info.json file with various informations about the validated document
+ * 
+ * Note that this feature extends and replaces the previous "cnig-infos.xml" specific to validator-cnig-plugin 
+ * 
+ * @see DocumentInfo
  * 
  * @author CBouche
  *
@@ -31,8 +33,6 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 	 * EPSG output for bbox (constant)
 	 */
 	public static final String CRS_PROJECTION_CODE = "EPSG:4326" ;
-	
-	
 	
 
 	@Override
@@ -70,5 +70,5 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 		DocumentInfoWriter infowriter = new DocumentInfoWriter() ;
 		infowriter.write(documentInfo,outputInfoCnig ) ;
 	}
-	
+
 }

@@ -135,17 +135,6 @@ public class DocumentInfo {
 		return document.getTags();
 	}
 
-	/**
-	 * Insert or update tag
-	 * 
-	 * @deprecated to be removed
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public void setTag(String key, String value){
-		document.setTag(key, value);
-	}
 
 	/**
 	 * simplify test

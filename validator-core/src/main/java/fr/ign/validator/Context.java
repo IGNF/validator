@@ -110,7 +110,7 @@ public class Context {
 	public Context(){
 		registerDefaultListeners();
 	}
-	
+
 	/**
 	 * add listener
 	 * @param listener
@@ -118,7 +118,7 @@ public class Context {
 	public void addListener( ValidatorListener listener ){
 		this.listeners.add(listener);
 	}
-	
+
 	/**
 	 * Get validatorListeners
 	 * @return
