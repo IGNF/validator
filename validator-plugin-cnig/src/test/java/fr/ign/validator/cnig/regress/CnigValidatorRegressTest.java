@@ -3,6 +3,7 @@ package fr.ign.validator.cnig.regress;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +14,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
@@ -94,9 +97,9 @@ public class CnigValidatorRegressTest {
 	 * @param documentPath
 	 * @return
 	 */
-	private File getGeneratedInfosCnig(File documentPath){
+	private File getGeneratedDocumentInfos(File documentPath){
 		File validationDirectory = new File(documentPath.getParentFile(),"validation");
-		return new File(validationDirectory,"infos-cnig.xml");
+		return new File(validationDirectory,"document-info.json");
 	}
 	
 	/**
@@ -125,12 +128,12 @@ public class CnigValidatorRegressTest {
 			Assert.fail(e.getMessage());
 		}
 
-		File producedInfosCnigPath = getGeneratedInfosCnig(documentPath);
-		File expectedInfosCnigPath = new File(getClass().getResource("/documents/41175_PLU_20140603.infos-cnig.xml").getPath());
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		File expectedInfosCnigPath = new File(getClass().getResource("/documents/41175_PLU_20140603.document-info.json").getPath());
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		Assert.assertEquals(expected, actual);
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
 
@@ -158,12 +161,11 @@ public class CnigValidatorRegressTest {
 			Assert.fail(e.getMessage());
 		}
 
-		File producedInfosCnigPath = getGeneratedInfosCnig(documentPath);
-		File expectedInfosCnigPath = new File(getClass().getResource("/documents/50545_CC_20130902.infos-cnig.xml").getPath());
-
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		File expectedInfosCnigPath = new File(getClass().getResource("/documents/50545_CC_20130902.document-info.json").getPath());
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		Assert.assertEquals(expected, actual);
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
 	/**
@@ -191,12 +193,12 @@ public class CnigValidatorRegressTest {
 			Assert.fail(e.getMessage());
 		}
 
-		File producedInfosCnigPath = getGeneratedInfosCnig(documentPath);
-		File expectedInfosCnigPath = new File(getClass().getResource("/documents/50545_CC_20140101.infos-cnig.xml").getPath());
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		File expectedInfosCnigPath = new File(getClass().getResource("/documents/50545_CC_20140101.document-info.json").getPath());
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		Assert.assertEquals(expected, actual);
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
 	/**
@@ -235,15 +237,15 @@ public class CnigValidatorRegressTest {
 			Assert.fail(e.getMessage());
 		}
 
-		File producedInfosCnigPath = getGeneratedInfosCnig(documentPath);
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
 		File expectedInfosCnigPath = new File(
-				getClass().getResource("/documents/19182_CC_20150517.infos-cnig.xml").getPath());
+				getClass().getResource("/documents/19182_CC_20150517.document-info.json").getPath());
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
 		/* skips tests for GDAL 1.11 */
 		if ( ! gdalDestroysCoordinates ){
-			Assert.assertEquals(expected, actual);			
+			JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);		
 		}
 	}
 
@@ -270,12 +272,14 @@ public class CnigValidatorRegressTest {
 			Assert.fail(e.getMessage());
 		}
 
-		File producedInfosCnigPath = getGeneratedInfosCnig(documentPath);
-		File expectedInfosCnigPath = new File(getClass().getResource("/documents/110068012_PM3_28_20161104.infos-cnig.xml").getPath());
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		File expectedInfosCnigPath = new File(getClass().getResource("/documents/110068012_PM3_28_20161104.document-info.json").getPath());
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		Assert.assertEquals(expected, actual);
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
+	
+	
 
 }

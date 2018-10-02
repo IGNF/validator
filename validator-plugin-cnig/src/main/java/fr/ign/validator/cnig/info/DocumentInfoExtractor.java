@@ -2,11 +2,8 @@ package fr.ign.validator.cnig.info;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -21,15 +18,18 @@ import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.idurba.IdurbaHelper;
 import fr.ign.validator.cnig.idurba.IdurbaHelperFactory;
-import fr.ign.validator.cnig.utils.EnveloppeUtils;
+import fr.ign.validator.cnig.info.model.DocumentFileInfo;
+import fr.ign.validator.cnig.info.model.DocumentInfo;
 import fr.ign.validator.cnig.utils.TyperefExtractor;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.gmd.MetadataISO19115;
+import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
-import fr.ign.validator.tools.CompanionFileUtils;
+import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.tools.EnveloppeUtils;
 
 /**
  * 
@@ -43,6 +43,8 @@ public class DocumentInfoExtractor {
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractor");
 
+	public static final String TAG_TYPEREF = "typeref";
+
 	/**
 	 * Gets informations on directory
 	 * 
@@ -54,67 +56,57 @@ public class DocumentInfoExtractor {
 	 * @throws FactoryException
 	 * @throws TransformException
 	 */
-	public DocumentInfo parseDocument(Context context, Document document)
-			throws MismatchedDimensionException, IOException, FactoryException, TransformException {
+	public DocumentInfo parseDocument(Context context, Document document) {
 		File validationDirectory = context.getValidationDirectory();
-		String documentName = document.getDocumentName();
 
-		DocumentInfo documentInfo = parseDocument(context, validationDirectory, documentName);
-		parseMetadataFileIdentifier(document, documentInfo);
-		
-		documentInfo.sortFiles();
-		
-		return documentInfo;
-	}
-
-	/**
-	 * @param directoryName
-	 * @param file
-	 * @throws IOException
-	 * @throws FactoryException
-	 * @throws TransformException
-	 * @throws MismatchedDimensionException
-	 */
-	private DocumentInfo parseDocument(Context context, File validationDirectory, String documentName)
-			throws IOException, FactoryException, MismatchedDimensionException, TransformException {
-		DocumentInfo documentInfo = new DocumentInfo(documentName);
+		DocumentInfo documentInfo = new DocumentInfo(document.getDocumentName());
 		documentInfo.setStandard(context.getDocumentModelName());
+		parseDocumentFiles(context, document, documentInfo);
+		documentInfo.setMetadata(findMetadata(document));
 
-		/*
-		 * Finding shapefiles with extent
-		 */
-		File documentDirectory = new File(validationDirectory, documentName);
-		File dataDirectory = new File(documentDirectory, "DATA");
-		{
-			@SuppressWarnings("unchecked")
-			Collection<File> dbfFiles = FileUtils.listFiles(dataDirectory, new String[] { "dbf" }, false);
-			for (File dbfFile : dbfFiles) {
-				documentInfo.addDataLayer(createDataLayer(dbfFile));
-			}
-		}
+		documentInfo.sortFiles();
 
 		/*
 		 * Compute document extent
 		 */
-		documentInfo.setDocumentExtent(computeDocumentExtent(context, documentInfo.getDataLayers()));
+		documentInfo.setDocumentExtent(computeDocumentExtent(context, documentInfo.getFiles()));
 
-		/*
-		 * Finding PDF list
-		 */
-		{
-			@SuppressWarnings("unchecked")
-			Collection<File> files = FileUtils.listFiles(dataDirectory, new String[] { "pdf" }, false);
-			for (File file : files) {
-				documentInfo.addDataFile(new DataLayer(file.getName()));
-			}
-		}
-
+		/* CNIG SPECIFIC */
+		
 		/*
 		 * Extracting typeref (cadastral reference)
 		 */
-		documentInfo.setTyperef(parseTyperef(context, documentName, validationDirectory));
-		
+		documentInfo.setTag(TAG_TYPEREF, parseTyperef(context, document, validationDirectory));
+
 		return documentInfo;
+	}
+
+	/**
+	 * @param context
+	 * @param document
+	 * @param documentInfo
+	 * @throws IOException
+	 * @throws FactoryException
+	 * @throws MismatchedDimensionException
+	 * @throws TransformException
+	 */
+	private void parseDocumentFiles(Context context, Document document, DocumentInfo documentInfo) {
+		List<DocumentFile> documentFiles = document.getDocumentFiles();
+		for (DocumentFile documentFile : documentFiles) {
+			DocumentFileInfo documentFileInfo = new DocumentFileInfo();
+			
+			FileModel fileModel = documentFile.getFileModel();
+			
+			documentFileInfo.setType(fileModel.getType());
+			documentFileInfo.setModelName(fileModel.getName());
+			documentFileInfo.setName(documentFile.getPath().getName());
+			documentFileInfo.setPath(context.relativize(documentFile.getPath()));
+			if ( fileModel instanceof TableModel ){
+				File csvPath = new File(context.getDataDirectory(),fileModel.getName()+".csv");
+				documentFileInfo.setBoundingBox(EnveloppeUtils.getBoundingBoxFromCSV(csvPath));
+			}
+			documentInfo.addFile(documentFileInfo);
+		}
 	}
 	
 
@@ -124,10 +116,10 @@ public class DocumentInfoExtractor {
 	 * @param document
 	 * @return
 	 */
-	private void parseMetadataFileIdentifier(Document document, DocumentInfo documentDirectory) {
+	private Metadata findMetadata(Document document) {
 		List<DocumentFile> metadataFiles = document.getDocumentFiles(MetadataModel.class);
 		if (metadataFiles.isEmpty()) {
-			return;
+			return null;
 		}
 		if (metadataFiles.size() > 1) {
 			log.warn(MARKER, "Il y a {} fiche de métadonnée, utilisation de la première", metadataFiles.size());
@@ -135,21 +127,44 @@ public class DocumentInfoExtractor {
 
 		File metadataPath = metadataFiles.get(0).getPath();
 		try {
-			Metadata reader = MetadataISO19115.readFile(metadataPath);
-			documentDirectory.setMetadataFileIdentifier(reader.getFileIdentifier());
-			documentDirectory.setMetadataMdIdentifier(reader.getIdentifier());
+			return MetadataISO19115.readFile(metadataPath);
 		} catch (InvalidMetadataException e) {
 			log.warn(MARKER, "Erreur dans la lecture de la fiche de métadonnée");
 		}
+		return null;
 	}
 
+
+	/**
+	 * Compute global extends from 
+	 * 
+	 * @param repertory
+	 * @return
+	 */
+	private Envelope computeDocumentExtent( Context context, List <DocumentFileInfo> documentFiles) {
+		Envelope result = new Envelope();
+		for ( DocumentFileInfo documentFile : documentFiles ) {
+			if ( ! documentFile.hasExtent() )
+				continue;
+
+			result.expandToInclude(documentFile.getBoundingBox());
+		}
+		if ( result.isNull() ){
+			context.report(CnigErrorCodes.CNIG_NO_SPATIAL_DATA);
+		}		
+		return result;
+	}
+
+	
 	/**
 	 * Get typeref value from DOC_URBA.csv file
 	 * 
 	 * @param context
 	 * @return null if not found
 	 */
-	private String parseTyperef(Context context, String documentName, File validationDirectory) {
+	private String parseTyperef(Context context, Document document, File validationDirectory) {
+		String documentName = document.getDocumentName();
+
 		IdurbaHelper helper = IdurbaHelperFactory.getInstance(context.getDocumentModel());
 		if (null == helper) {
 			log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
@@ -175,47 +190,7 @@ public class DocumentInfoExtractor {
 		return result;
 	}
 
-	/**
-	 * TODO extract to tools and add unit tests
-	 * 
-	 * @param dbfFile
-	 * @return
-	 * @throws IOException
-	 * @throws FactoryException
-	 * @throws MismatchedDimensionException
-	 * @throws TransformException
-	 */
-	private DataLayer createDataLayer(File dbfFile)
-			throws IOException, FactoryException, MismatchedDimensionException, TransformException {
-		log.debug(MARKER, "récupération de la BBOX du fichier {}", dbfFile);
-		
-		String layerName = FilenameUtils.getBaseName(dbfFile.getName());
-		DataLayer layer = new DataLayer(layerName);
-		File shpFile = CompanionFileUtils.getCompanionFile(dbfFile, "shp");
-		if ( shpFile.exists() ){
-			layer.setBoundingBox(EnveloppeUtils.getBoundingBox(shpFile));
-		}
-		return layer;
-	}
 	
-	
-	/**
-	 * Compute global extends from 
-	 * 
-	 * @param repertory
-	 * @return
-	 */
-	private Envelope computeDocumentExtent( Context context, List <DataLayer > layerList) {
-		Envelope result = new Envelope();
-		for ( DataLayer dataLayer : layerList ) {
-			result.expandToInclude(dataLayer.getBoundingBox());
-		}
-		if ( result.isNull() ){
-			context.report(CnigErrorCodes.CNIG_NO_SPATIAL_DATA);
-		}		
-		return result;
-	}
-
 
 
 }

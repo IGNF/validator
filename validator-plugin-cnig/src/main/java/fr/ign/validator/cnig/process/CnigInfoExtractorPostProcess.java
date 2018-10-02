@@ -9,9 +9,9 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.info.DocumentInfo;
 import fr.ign.validator.cnig.info.DocumentInfoExtractor;
 import fr.ign.validator.cnig.info.DocumentInfoWriter;
+import fr.ign.validator.cnig.info.model.DocumentInfo;
 import fr.ign.validator.data.Document;
 
 /**
@@ -66,7 +66,7 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 		/*
 		 * Writing in infos-cnig.xml file
 		 */
-		File outputInfoCnig = new File( validationDirectory, "infos-cnig.xml" ) ;
+		File outputInfoCnig = new File( validationDirectory, "document-info.json" ) ;
 		DocumentInfoWriter infowriter = new DocumentInfoWriter() ;
 		infowriter.write(documentInfo,outputInfoCnig ) ;
 	}
