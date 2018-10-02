@@ -3,7 +3,9 @@ package fr.ign.validator.data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,6 +50,11 @@ public class Document implements Validatable {
 	 * Files related to Document (defined after matching step)
 	 */
 	private List<DocumentFile> documentFiles = new ArrayList<DocumentFile>();
+	
+	/**
+	 * Additional informations
+	 */
+	private Map<String,String> tags = new HashMap<>();
 
 	/**
 	 * 
@@ -288,6 +295,21 @@ public class Document implements Validatable {
 		documentFiles.clear();
 	}
 
+	/**
+	 * Get tags
+	 * @return
+	 */
+	public Map<String,String> getTags(){
+		return this.tags;
+	}
 
+	/**
+	 * Insert or update tag
+	 * @param key
+	 * @param value
+	 */
+	public void setTag(String key, String value){
+		this.tags.put(key, value);
+	}
 	
 }

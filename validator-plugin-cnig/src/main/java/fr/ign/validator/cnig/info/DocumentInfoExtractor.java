@@ -59,7 +59,7 @@ public class DocumentInfoExtractor {
 	public DocumentInfo parseDocument(Context context, Document document) {
 		File validationDirectory = context.getValidationDirectory();
 
-		DocumentInfo documentInfo = new DocumentInfo(document.getDocumentName());
+		DocumentInfo documentInfo = new DocumentInfo(document);
 		documentInfo.setDocumentModel(context.getDocumentModel());
 		parseDocumentFiles(context, document, documentInfo);
 		documentInfo.setMetadata(findMetadata(document));

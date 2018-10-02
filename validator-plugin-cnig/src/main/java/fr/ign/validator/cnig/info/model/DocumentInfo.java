@@ -2,17 +2,17 @@ package fr.ign.validator.cnig.info.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.cnig.info.internal.DocumentFileInfoComparator;
+import fr.ign.validator.data.Document;
 import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.model.DocumentModel;
@@ -37,9 +37,9 @@ import fr.ign.validator.model.DocumentModel;
 public class DocumentInfo {
 	
 	/**
-	 * String directoryName
+	 * Wrapped document
 	 */
-	private String name ;
+	private Document document;
 	
 	/**
 	 * The standard (documentModelName)
@@ -51,7 +51,6 @@ public class DocumentInfo {
 	 */
 	private List<DocumentFileInfo> files = new ArrayList<DocumentFileInfo>() ;
 
-
 	/**
 	 * Enveloppe du document
 	 */
@@ -61,17 +60,12 @@ public class DocumentInfo {
 	 * Metadata 
 	 */
 	private Metadata metadata ;
-	
-	/**
-	 * Additional informations
-	 */
-	private Map<String,String> tags = new HashMap<>();
-	
+
 	/**
 	 * Constructor
 	 */
-	public DocumentInfo(String documentName) {
-		this.name = documentName ;
+	public DocumentInfo(Document document) {
+		this.document = document ;
 	}
 
 	/**
@@ -79,7 +73,7 @@ public class DocumentInfo {
 	 * @return
 	 */
 	public String getName() {
-		return name;
+		return document.getDocumentName();
 	}
 
 	/**
@@ -125,7 +119,6 @@ public class DocumentInfo {
 		this.documentExtent = documentExtent;
 	}
 
-
 	public Metadata getMetadata() {
 		return metadata;
 	}
@@ -139,18 +132,21 @@ public class DocumentInfo {
 	 * @return
 	 */
 	public Map<String,String> getTags(){
-		return this.tags;
+		return document.getTags();
 	}
 
 	/**
 	 * Insert or update tag
+	 * 
+	 * @deprecated to be removed
+	 * 
 	 * @param key
 	 * @param value
 	 */
 	public void setTag(String key, String value){
-		this.tags.put(key, value);
+		document.setTag(key, value);
 	}
-	
+
 	/**
 	 * simplify test
 	 */
