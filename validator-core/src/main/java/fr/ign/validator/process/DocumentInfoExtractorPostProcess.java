@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.process;
+package fr.ign.validator.process;
 
 import java.io.File;
 
@@ -9,10 +9,10 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.info.DocumentInfoExtractor;
-import fr.ign.validator.cnig.info.DocumentInfoWriter;
-import fr.ign.validator.cnig.info.model.DocumentInfo;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.info.DocumentInfoExtractor;
+import fr.ign.validator.info.DocumentInfoWriter;
+import fr.ign.validator.info.model.DocumentInfo;
 
 /**
  * 
@@ -25,15 +25,10 @@ import fr.ign.validator.data.Document;
  * @author CBouche
  *
  */
-public class CnigInfoExtractorPostProcess implements ValidatorListener {
+public class DocumentInfoExtractorPostProcess implements ValidatorListener {
 	public static final Logger log = LogManager.getRootLogger() ;
-	public static final Marker POSTPROCESS_INFO_EXTRACTOR = MarkerManager.getMarker("POSTPROCESS_INFO_EXTRACTOR") ;
-	
-	/*
-	 * EPSG output for bbox (constant)
-	 */
-	public static final String CRS_PROJECTION_CODE = "EPSG:4326" ;
-	
+	public static final Marker POSTPROCESS_INFO_EXTRACTOR = MarkerManager.getMarker("DocumentInfoExtractorPostProcess") ;
+
 
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {

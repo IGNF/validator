@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.info;
+package fr.ign.validator.info;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +15,12 @@ import org.opengis.referencing.operation.TransformException;
 import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.info.model.DocumentFileInfo;
-import fr.ign.validator.cnig.info.model.DocumentInfo;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.InvalidMetadataException;
+import fr.ign.validator.info.model.DocumentFileInfo;
+import fr.ign.validator.info.model.DocumentInfo;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.FileModel;
@@ -131,7 +131,7 @@ public class DocumentInfoExtractor {
 			result.expandToInclude(documentFile.getBoundingBox());
 		}
 		if ( result.isNull() ){
-			context.report(CnigErrorCodes.CNIG_NO_SPATIAL_DATA);
+			context.report(CoreErrorCodes.NO_SPATIAL_DATA);
 		}		
 		return result;
 	}

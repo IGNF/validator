@@ -18,6 +18,8 @@ public class CoreErrorCodes {
  	 */	 
 	public static final ErrorCode DIRECTORY_UNEXPECTED_NAME = ErrorCode.valueOf("DIRECTORY_UNEXPECTED_NAME") ;
 
+	public static final ErrorCode NO_SPATIAL_DATA  = ErrorCode.valueOf("NO_SPATIAL_DATA") ;
+
 	/*
  	 * ErrorCode for error in FileModel
  	 */	

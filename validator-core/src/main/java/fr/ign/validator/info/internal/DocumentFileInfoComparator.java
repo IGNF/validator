@@ -1,8 +1,8 @@
-package fr.ign.validator.cnig.info.internal;
+package fr.ign.validator.info.internal;
 
 import java.util.Comparator;
 
-import fr.ign.validator.cnig.info.model.DocumentFileInfo;
+import fr.ign.validator.info.model.DocumentFileInfo;
 
 /**
  * 

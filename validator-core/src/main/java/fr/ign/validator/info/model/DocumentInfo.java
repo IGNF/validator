@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.info.model;
+package fr.ign.validator.info.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Envelope;
 
-import fr.ign.validator.cnig.info.internal.DocumentFileInfoComparator;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.info.internal.DocumentFileInfoComparator;
 import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.model.DocumentModel;

@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.info;
+package fr.ign.validator.info;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import org.jdom.JDOMException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import fr.ign.validator.cnig.info.model.DocumentInfo;
+import fr.ign.validator.info.model.DocumentInfo;
 
 /**
  * DocumentInfo writer
@@ -19,7 +19,7 @@ import fr.ign.validator.cnig.info.model.DocumentInfo;
 public class DocumentInfoWriter {
 
 	/**
-	 * Save documentInfo to JSON file
+	 * Save DocumentInfo to JSON file
 	 * @param documentInfo
 	 * @param output
 	 * @throws JDOMException

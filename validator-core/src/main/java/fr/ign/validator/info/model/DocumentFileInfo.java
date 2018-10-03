@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.info.model;
+package fr.ign.validator.info.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

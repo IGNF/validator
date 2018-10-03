@@ -184,7 +184,7 @@ public class CnigValidatorRegressTest {
 		try {
 			document.validate(context);
 			Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
-			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_NO_SPATIAL_DATA));
+			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.NO_SPATIAL_DATA));
 			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL)); // empty
 																							// WKT
 			Assert.assertEquals(2, report.countErrors(ErrorLevel.ERROR));
