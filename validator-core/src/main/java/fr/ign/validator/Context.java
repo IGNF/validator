@@ -25,6 +25,7 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
 import fr.ign.validator.process.CharsetPreProcess;
+import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -110,15 +111,7 @@ public class Context {
 	public Context(){
 		registerDefaultListeners();
 	}
-	
-	/**
-	 * add listener
-	 * @param listener
-	 */
-	public void addListener( ValidatorListener listener ){
-		this.listeners.add(listener);
-	}
-	
+
 	/**
 	 * Get validatorListeners
 	 * @return
@@ -126,7 +119,41 @@ public class Context {
 	public List<ValidatorListener> getValidatorListeners(){
 		return this.listeners ;
 	}
+
+	/**
+	 * add listener
+	 * @param listener
+	 */
+	public void addListener( ValidatorListener listener ){
+		this.listeners.add(listener);
+	}
+
+	/**
+	 * Add listener before the first listener of a given class
+	 * @param listener
+	 * @param clazz
+	 */
+	public void addListenerBefore(ValidatorListener listener, Class<?> clazz) {
+		int index = findListener(clazz);
+		if ( index < 0 ){
+			index = 0 ;
+		}
+		this.listeners.add(index, listener);
+	}
 	
+	/**
+	 * Find listener for a given class
+	 * @param clazz
+	 * @return
+	 */
+	private int findListener(Class<?> clazz){
+		for ( int i = 0; i < listeners.size(); i++ ) {
+			if ( clazz.isInstance(listeners.get(i)) ){
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	/**
 	 * Load defaults validation listeners
@@ -135,6 +162,9 @@ public class Context {
 		addListener( new FilterMetadataPreProcess() ); // before CharsetPreProcess
 		addListener( new CharsetPreProcess() );
 		addListener( new NormalizePostProcess() ); 
+		
+		// produce document-info.json
+		addListener( new DocumentInfoExtractorPostProcess() );
 	}
 
 	
@@ -512,5 +542,6 @@ public class Context {
 	public void setStringFixer(StringFixer stringFixer) {
 		this.stringFixer = stringFixer;
 	}
+
 	
 }

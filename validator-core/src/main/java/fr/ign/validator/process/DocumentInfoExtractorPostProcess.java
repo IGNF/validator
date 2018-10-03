@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.process;
+package fr.ign.validator.process;
 
 import java.io.File;
 
@@ -9,31 +9,26 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.info.DocumentInfo;
-import fr.ign.validator.cnig.info.DocumentInfoExtractor;
-import fr.ign.validator.cnig.info.DocumentInfoWriter;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.info.DocumentInfoExtractor;
+import fr.ign.validator.info.DocumentInfoWriter;
+import fr.ign.validator.info.model.DocumentInfo;
 
 /**
  * 
- * Post process
- * Lists found files in each document
- * Extracts geographical data extent
+ * Produce a document-info.json file with various informations about the validated document
+ * 
+ * Note that this feature extends and replaces the previous "cnig-infos.xml" specific to validator-cnig-plugin 
+ * 
+ * @see DocumentInfo
  * 
  * @author CBouche
  *
  */
-public class CnigInfoExtractorPostProcess implements ValidatorListener {
+public class DocumentInfoExtractorPostProcess implements ValidatorListener {
 	public static final Logger log = LogManager.getRootLogger() ;
-	public static final Marker POSTPROCESS_INFO_EXTRACTOR = MarkerManager.getMarker("POSTPROCESS_INFO_EXTRACTOR") ;
-	
-	/*
-	 * EPSG output for bbox (constant)
-	 */
-	public static final String CRS_PROJECTION_CODE = "EPSG:4326" ;
-	
-	
-	
+	public static final Marker POSTPROCESS_INFO_EXTRACTOR = MarkerManager.getMarker("DocumentInfoExtractorPostProcess") ;
+
 
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
@@ -66,9 +61,9 @@ public class CnigInfoExtractorPostProcess implements ValidatorListener {
 		/*
 		 * Writing in infos-cnig.xml file
 		 */
-		File outputInfoCnig = new File( validationDirectory, "infos-cnig.xml" ) ;
+		File outputInfoCnig = new File( validationDirectory, "document-info.json" ) ;
 		DocumentInfoWriter infowriter = new DocumentInfoWriter() ;
 		infowriter.write(documentInfo,outputInfoCnig ) ;
 	}
-	
+
 }

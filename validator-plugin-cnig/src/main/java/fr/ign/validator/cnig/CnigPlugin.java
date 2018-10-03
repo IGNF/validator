@@ -1,9 +1,9 @@
 package fr.ign.validator.cnig;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.cnig.process.CnigInfoExtractorPostProcess;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
+import fr.ign.validator.cnig.process.TyperefExtractorPostProcess;
 import fr.ign.validator.cnig.validation.attribute.IdurbaValidationCustomizer;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
@@ -13,6 +13,7 @@ import fr.ign.validator.cnig.validation.metadata.CnigMetadataReferenceSystemIden
 import fr.ign.validator.cnig.validation.metadata.CnigSpecificationsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigTypeValidator;
 import fr.ign.validator.plugin.Plugin;
+import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 
 /**
  * Customizes validator for CNIG standard validation
@@ -33,13 +34,16 @@ public class CnigPlugin implements Plugin {
 
 	@Override
 	public void setup( Context context ) {
-		// Join SUP files to add a column "fichiers" 
+		// Join SUP files to add a column "fichiers" (must be done before CreateShapefilesPostProcess)
 		context.addListener( new ReferenceActeSupPostProcess() );
-		// converts DATA/*.csv to DATA/*.shp
+		// converts DATA/*.csv to DATA/*.shp (must follow ReferenceActeSupPostProcess)
 		context.addListener( new CreateShapefilesPostProcess() );
-		// produce cnig-infos.xml
-		context.addListener( new CnigInfoExtractorPostProcess() );
-		
+		// compute document.tag.typeref (must be done before document-info.json generation)
+		context.addListenerBefore(
+			new TyperefExtractorPostProcess(), 
+			DocumentInfoExtractorPostProcess.class 
+		);
+
 		/*
 		 * extends attribute validation
 		 */

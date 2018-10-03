@@ -1,9 +1,10 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.tools;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -13,6 +14,10 @@ import org.geotools.data.DataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureSource;
 
 import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
+
+import fr.ign.validator.exception.InvalidCharsetException;
 
 /**
  * Manipulates Bounding Boxes (envelope or bbox)
@@ -22,6 +27,45 @@ import com.vividsolutions.jts.geom.Envelope;
  */
 public class EnveloppeUtils {
 	
+	
+	public static Envelope getBoundingBoxFromWKT(String wkt){
+		if ( wkt == null || wkt.isEmpty() ){
+			return new Envelope();
+		}
+		try {
+			WKTReader reader = new WKTReader();
+			com.vividsolutions.jts.geom.Geometry geometry = reader.read(wkt);
+			return geometry.getEnvelopeInternal();
+		} catch (ParseException e) {
+			return new Envelope();
+		}
+	}
+
+	/**
+	 * Reads bbox from an UTF-8 CSV file
+	 * 
+	 * @param csvFile
+	 * @return
+	 */
+	public static Envelope getBoundingBoxFromCSV(File csvFile){
+		Envelope result = new Envelope();
+		try {
+			TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
+			int indexWktColumn = reader.findColumn("WKT");
+			if ( indexWktColumn < 0 ){
+				return null;
+			}
+			while ( reader.hasNext() ){
+				String[] row = reader.next();
+				String wkt = row[indexWktColumn];
+				result.expandToInclude(getBoundingBoxFromWKT(wkt));
+			}
+			return result;
+		} catch (IOException | InvalidCharsetException e) {
+			return null;
+		}
+	}
+
 	/**
 	 * Reads bbox from a shapefile
 	 * 
@@ -29,7 +73,7 @@ public class EnveloppeUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static Envelope getBoundingBox(File shpFile) {
+	public static Envelope getBoundingBoxFromShapefile(File shpFile) {
 		/*
 		 * DataStore opening
 		 */
@@ -76,7 +120,7 @@ public class EnveloppeUtils {
 	 * @param value
 	 * @return
 	 */
-	private static String formatDouble(double value){
+	public static String formatDouble(double value){
 		return String.format(Locale.ROOT, "%.7f",value);
 	}
 
