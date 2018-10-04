@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.data.Attribute;
@@ -47,12 +48,12 @@ public class Context {
 	 * @see CharsetPreProcess
 	 */
 	private Charset encoding = StandardCharsets.UTF_8 ;
-	
+
 	/**
 	 * Data CoordinateReferenceSystem (provided as a command line option)
 	 */
 	private CoordinateReferenceSystem coordinateReferenceSystem ;
-	
+
 	/**
 	 * Expected data extent (same CoordinateReferenceSystem than data)
 	 */
@@ -62,25 +63,25 @@ public class Context {
 	 * Allows to disable strict file hierarchy validation (find files by name instead of path)
 	 */
 	private boolean flatValidation;
-	
+
 	/**
 	 * Configures deep character validation
 	 */
 	private StringFixer stringFixer = new StringFixer();
-	
-	
+
+
 	/**
 	 * Input - Current data directory (equivalent to documentPath)
 	 * 
 	 * TODO remove this variable and rely on documentPath
 	 */
 	private File currentDirectory ;
-	
+
 	/**
 	 * Output - validation directory containing validation and normalization results
 	 */
 	private File validationDirectory ;
-	
+
 	/**
 	 * Execution context - modelStack
 	 */
@@ -89,25 +90,25 @@ public class Context {
 	 * Execution context - dataStack
 	 */
 	private List<Validatable> dataStack = new ArrayList<Validatable>();	
-	
+
 
 	/**
 	 * Reporting - Create errors according to configuration files (template string and ErrorLevel)
 	 */
 	private ErrorFactory errorFactory = new ErrorFactory();
-	
+
 	/**
 	 * Reporting - Generates validation report
 	 */
 	private ReportBuilder reportBuilder = new InMemoryReportBuilder() ;
-	
+
 
 	/**
 	 * Customization - validation listener
 	 */
 	private List<ValidatorListener> listeners = new ArrayList<ValidatorListener>() ;
 
-	
+
 	public Context(){
 		registerDefaultListeners();
 	}
@@ -140,7 +141,7 @@ public class Context {
 		}
 		this.listeners.add(index, listener);
 	}
-	
+
 	/**
 	 * Find listener for a given class
 	 * @param clazz
@@ -162,12 +163,12 @@ public class Context {
 		addListener( new FilterMetadataPreProcess() ); // before CharsetPreProcess
 		addListener( new CharsetPreProcess() );
 		addListener( new NormalizePostProcess() ); 
-		
+
 		// produce document-info.json
 		addListener( new DocumentInfoExtractorPostProcess() );
 	}
 
-	
+
 	/**
 	 * @return the encoding
 	 */
@@ -180,7 +181,7 @@ public class Context {
 	public void setEncoding(Charset encoding) {
 		this.encoding = encoding;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -194,7 +195,7 @@ public class Context {
 	public void setCoordinateReferenceSystem( CoordinateReferenceSystem coordinateReferenceSystem) {
 		this.coordinateReferenceSystem = coordinateReferenceSystem;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -241,9 +242,9 @@ public class Context {
 	public void setErrorFactory(ErrorFactory errorFactory) {
 		this.errorFactory = errorFactory;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Push given model to stack
 	 * @param model
@@ -274,7 +275,7 @@ public class Context {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get current document model
 	 * @return
@@ -289,19 +290,19 @@ public class Context {
 	 * @return
 	 */
 	public String getDocumentModelName(){
-    	DocumentModel documentModel = getModelByType(DocumentModel.class);
+		DocumentModel documentModel = getModelByType(DocumentModel.class);
 		if ( documentModel != null ){
 			return documentModel.getName();
 		}
 		return "";
 	}
 
-    /**
-     * Get current file model name
-     * @param context
-     * @return
-     */
-    public String getFileModelName(){
+	/**
+	 * Get current file model name
+	 * @param context
+	 * @return
+	 */
+	public String getFileModelName(){
 		FileModel fileModel = getModelByType(FileModel.class);
 		if ( fileModel != null ){
 			return fileModel.getName();
@@ -309,20 +310,20 @@ public class Context {
 		return "";
 	}
 
-    /**
-     * Get current attribute name
-     * @param context
-     * @return
-     */
-    public String getAttributeName(){
-    	AttributeType<?> attribute = getModelByType(AttributeType.class);
+	/**
+	 * Get current attribute name
+	 * @param context
+	 * @return
+	 */
+	public String getAttributeName(){
+		AttributeType<?> attribute = getModelByType(AttributeType.class);
 		if ( attribute != null ){
 			return attribute.getName();
 		}
 		return "";
 	}
-    
-	
+
+
 	/**
 	 * Pop given model from stack
 	 */
@@ -333,7 +334,7 @@ public class Context {
 		}
 		modelStack.remove(position) ;
 	}
-	
+
 	/**
 	 * Begin data validation (push data on dataStack)
 	 * @param location
@@ -362,7 +363,7 @@ public class Context {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get current scope according to data stack
 	 * @return
@@ -378,7 +379,7 @@ public class Context {
 			return ErrorScope.DIRECTORY;
 		}
 	}
-	
+
 	/**
 	 * Get current fileName according to data stack
 	 * @param context
@@ -395,20 +396,32 @@ public class Context {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Get current line number
 	 * @param context
 	 * @return
 	 */
-    public String getLine(){
+	public String getLine(){
 		Row row = getDataByType(Row.class);
 		if ( row != null ){
 			return ""+row.getLine();
 		}
 		return "";
 	}
-	
+
+	/**
+	 * Get current feature bouding box
+	 * @return string
+	 */
+	public Envelope getFeatureBBox() {
+		Row row = getDataByType(Row.class);
+		if (row != null) {
+			return row.getFeatureBbox();
+		}
+		return new Envelope();
+	}
+
 	/**
 	 * End data validation (pop data from dataStack)
 	 * @param location
@@ -420,7 +433,7 @@ public class Context {
 		}
 		dataStack.remove(position) ;
 	}
-	
+
 	/**
 	 * Relativize path
 	 * @param path
@@ -430,13 +443,13 @@ public class Context {
 		DocumentModel documentModel = getDocumentModel() ;
 		if ( documentModel != null ){
 			return currentDirectory.toPath().relativize(
-				path.toPath()
-			).toString() ;
+					path.toPath()
+					).toString() ;
 		}else{
 			return path.getName() ;
 		}
 	}
-	
+
 	/**
 	 * Create and report an error according to its code
 	 * 
@@ -447,8 +460,30 @@ public class Context {
 		/*
 		 * Create error by code
 		 */
-		ValidatorError validatorError = errorFactory.newError(code,messageParams) ;
+		ValidatorError validatorError = createError(code, messageParams);
+		/*
+		 * Add error
+		 */
+		reportBuilder.addError(validatorError);
+	}
+
+	/**
+	 * Direct reporting of an existing error
+	 * @param validatorError
+	 */
+	public void report(ValidatorError validatorError) {
+		reportBuilder.addError(validatorError);
+	}
+
+	/**
+	 * Generic method for building errors
+	 * @param code
+	 * @param messageParams
+	 */
+	public ValidatorError createError(ErrorCode code, Object... messageParams) {
+		ValidatorError validatorError = errorFactory.newError(code, messageParams);
 		validatorError.setScope(getScope());
+
 		/*
 		 * Add model informations
 		 */
@@ -460,8 +495,12 @@ public class Context {
 		 */
 		validatorError.setFile(getFileName());
 		validatorError.setId(getLine());
+		/*
+		 * Add data informations (new)
+		 */
+		validatorError.setFeatureBbox(getFeatureBBox());
 
-		reportBuilder.addError(validatorError);
+		return validatorError;
 	}
 
 	/**
@@ -496,7 +535,7 @@ public class Context {
 		return new File(validationDirectory, getCurrentDirectory().getName()+"/METADATA");
 	}
 
-	
+
 	/**
 	 * Get report builder
 	 * @return
@@ -504,7 +543,7 @@ public class Context {
 	public ReportBuilder getReportBuilder() {
 		return reportBuilder;
 	}
-	
+
 	/**
 	 * Set report builder
 	 * @param reportBuilder
@@ -543,5 +582,5 @@ public class Context {
 		this.stringFixer = stringFixer;
 	}
 
-	
+
 }

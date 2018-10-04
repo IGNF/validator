@@ -1,7 +1,11 @@
 package fr.ign.validator.error;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vividsolutions.jts.geom.Envelope;
+
+import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
+
 /**
- * 
  * A validation error with corresponding context informations
  * 
  * @author CBouche
@@ -13,17 +17,17 @@ public class ValidatorError implements Cloneable {
 	 * ErrorCode 
 	 */
 	private ErrorCode code ;
-	
+
 	/**
 	 * ErrorScope
 	 */
 	private ErrorScope scope ;
-	
+
 	/**
 	 * ErrorLevel
 	 */
 	private ErrorLevel level ;
-	
+
 	/**
 	 * Explanation message (init with a template message from configuration)
 	 */
@@ -38,7 +42,7 @@ public class ValidatorError implements Cloneable {
 	 * model - FileModel name
 	 */
 	private String fileModel ;
-	
+
 	/**
 	 * model - Attribute name 
 	 */
@@ -52,7 +56,17 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * data - Identifier of an element in a file (line for table)
 	 */
-	private String id ;
+	private String id;
+
+	/**
+	 * Bounding box of the concerned feature (if context == Feature and a geometry is available)
+	 */
+	private Envelope featureBbox;
+
+	/**
+	 * WKT geometry error
+	 */
+	private String errorGeometry;
 
 	/**
 	 * @param code
@@ -67,14 +81,14 @@ public class ValidatorError implements Cloneable {
 	public ErrorCode getCode() {
 		return code;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	public ErrorScope getScope() {
 		return scope;
 	}
-	
+
 	/**
 	 * @param scope
 	 */
@@ -161,7 +175,7 @@ public class ValidatorError implements Cloneable {
 	public void setFile(String filename) {
 		this.file = filename;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -175,12 +189,40 @@ public class ValidatorError implements Cloneable {
 		this.id = id;
 	}
 
+	public ValidatorError setFeatureBbox(Envelope featureBBox) {
+		this.featureBbox = featureBBox;
+		return this;
+	}
+
+	@JsonSerialize(using = EnvelopeSerializer.class)
+	public Envelope getFeatureBbox() {
+		return this.featureBbox;
+	}
+
+	/**
+	 * WKT geometry error
+	 * @return
+	 */
+	public String getErrorGeometry() {
+		return errorGeometry;
+	}
+
+	/**
+	 * WKT geometry error
+	 * @param errorGeometry
+	 * @return
+	 */
+	public ValidatorError setErrorGeometry(String errorGeometry) {
+		this.errorGeometry = errorGeometry;
+		return this;
+	}
+
 	@Override
-    protected Object clone() throws CloneNotSupportedException {
+	protected Object clone() throws CloneNotSupportedException {
 		ValidatorError cloned = (ValidatorError)super.clone();
 		return cloned ;
-    }
-	
+	}
+
 	@Override
 	public String toString() {
 		return code+"|"+scope+"|"+level+"|"+message ;
