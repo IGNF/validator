@@ -423,6 +423,18 @@ public class Context {
 	}
 
 	/**
+	 * Get current identifiant
+	 * @return
+	 */
+	public String getFeatureId() {
+		Row row = getDataByType(Row.class);
+		if (row != null) {
+			return row.getFeatureId();
+		}
+		return "";
+	}
+
+	/**
 	 * End data validation (pop data from dataStack)
 	 * @param location
 	 */
@@ -499,6 +511,7 @@ public class Context {
 		 * Add data informations (new)
 		 */
 		validatorError.setFeatureBbox(getFeatureBBox());
+	    validatorError.setFeatureId(getFeatureId());
 
 		return validatorError;
 	}

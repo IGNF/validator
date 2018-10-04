@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import fr.ign.validator.model.AttributeType;
 
-@XmlType(propOrder = { "name", "type", "definition", "regexp", "size", "nullable", "listOfValues" })
+@XmlType(propOrder = { "name", "type", "definition", "regexp", "size", "nullable", "listOfValues", "identifiant" })
 public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.AdaptedAttributeType, AttributeType<?>>{
 
 	@Override
@@ -17,7 +17,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		if ( null == attributeType ){
 			return null ;
 		}
-		
+
 		AdaptedAttributeType adaptedAttributeType = new AdaptedAttributeType();
 		adaptedAttributeType.name = attributeType.getName() ;
 		adaptedAttributeType.type = attributeType.getTypeName() ;
@@ -26,16 +26,17 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		adaptedAttributeType.size = attributeType.getSize() ;
 		adaptedAttributeType.nullable = attributeType.isNullable() ;
 		adaptedAttributeType.listOfValues = attributeType.getListOfValues() ;
+		adaptedAttributeType.identifiant = attributeType.isIdentifiant();
 		return adaptedAttributeType ;
 	}
 
-	
+
 	@Override
 	public AttributeType<?> unmarshal(AttributeTypeAdapter.AdaptedAttributeType adaptedValueType) throws Exception {
 		if ( null == adaptedValueType ){
 			return null ;
 		}
-		
+
 		AttributeType<?> attributeType = AttributeType.forName( adaptedValueType.type ) ;
 		attributeType.setName(adaptedValueType.name);
 		attributeType.setDefinition(adaptedValueType.definition);
@@ -43,7 +44,8 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		attributeType.setSize(adaptedValueType.size);
 		attributeType.setNullable(adaptedValueType.nullable) ;
 		attributeType.setListOfValues(adaptedValueType.listOfValues);
-		
+		attributeType.setIdentifiant(adaptedValueType.identifiant);
+
 		return attributeType ;
 	}
 
@@ -54,6 +56,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		public String regexp ;
 		public Integer size ;
 		public boolean nullable ;
+		public boolean identifiant;
 		@XmlElementWrapper(name = "listOfValues")
 		@XmlElement(name = "value")
 		public List<String> listOfValues ;

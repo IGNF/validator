@@ -67,6 +67,11 @@ public class ValidatorError implements Cloneable {
 	 * WKT geometry error
 	 */
 	private String errorGeometry;
+	
+	/**
+	 * Feature identifiant is available
+	 */
+	private String featureId;
 
 	/**
 	 * @param code
@@ -214,6 +219,15 @@ public class ValidatorError implements Cloneable {
 	 */
 	public ValidatorError setErrorGeometry(String errorGeometry) {
 		this.errorGeometry = errorGeometry;
+		return this;
+	}
+
+	public String getFeatureId() {
+		return featureId;
+	}
+
+	public ValidatorError setFeatureId(String featureId) {
+		this.featureId = featureId;
 		return this;
 	}
 

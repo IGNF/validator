@@ -8,11 +8,13 @@
             <type>String</type>
             <regexp>[0-9]{5}</regexp>
             <nullable>false</nullable>
+            <identifiant>false</identifiant>
         </attribute>
         <attribute>
             <name>CODE_DEPT</name>
             <type>String</type>
             <nullable>false</nullable>
+            <identifiant>false</identifiant>
             <listOfValues>
                 <value>01</value>
                 <value>02</value>
@@ -22,6 +24,7 @@
             <name>DETRUIT</name>
             <type>Boolean</type>
             <nullable>true</nullable>
+            <identifiant>false</identifiant>
         </attribute>
     </attributes>
 </featureType>
