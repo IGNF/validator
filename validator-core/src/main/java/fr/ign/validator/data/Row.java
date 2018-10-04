@@ -1,6 +1,10 @@
 package fr.ign.validator.data;
 
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.geom.Geometry;
+
 import fr.ign.validator.Context;
+import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -32,6 +36,11 @@ public class Row implements Validatable {
 	private FeatureTypeMapper mapping;
 
 	/**
+	 * Feature BBOX if a WKT geometry is available
+	 */
+	private Envelope featureBbox;
+
+	/**
 	 * 
 	 * @param line
 	 * @param values
@@ -54,18 +63,49 @@ public class Row implements Validatable {
 		return mapping;
 	}
 
+	public Envelope getFeatureBbox() {
+		return featureBbox;
+	}
+
+	public void setFeatureBbox(Envelope featureBbox) {
+		this.featureBbox = featureBbox;
+	}
+
 	@Override
 	public void validate(Context context) {
 		context.beginData(this);
-		
+		FeatureType featureType = mapping.getFeatureType() ;
+
+		/**
+		 * Looking for geometry if exist
+		 */
+		for (int i = 0; i < featureType.getAttributeCount(); i++) {
+			AttributeType<?> attributeType = featureType.getAttribute(i);
+			if (attributeType.isGeometry()) {
+				String wkt = null;
+				if (mapping.getAttributeIndex(i) >= 0) {
+					wkt = values[mapping.getAttributeIndex(i)];
+				} else {
+					continue;
+				}
+				try {
+					// depends on geometry
+					Geometry geom = new ProjectionTransform(context.getCoordinateReferenceSystem()).transformWKT(wkt);
+					setFeatureBbox(geom.getEnvelopeInternal());
+				} catch (Exception e) {
+					// TODO logger une info ou un avertissement mineur
+					// impossible de lire la bbox
+				}
+			}
+		}
+
 		/*
 		 * Validating attributes defined by type
 		 */
-		FeatureType featureType = mapping.getFeatureType() ;
 		for ( int index = 0; index < featureType.getAttributeCount(); index++ ){
 			AttributeType<?> attributeType = featureType.getAttribute(index);
 			context.beginModel(attributeType);
-			
+
 			/*
 			 * Retrieving corresponding value in table
 			 */
@@ -82,7 +122,7 @@ public class Row implements Validatable {
 
 			context.endModel(attributeType);
 		}
-		
+
 		context.endData(this);
 	}
 
