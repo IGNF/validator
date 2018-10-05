@@ -51,6 +51,10 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * Restriction on a list of values
 	 */
 	private List<String> listOfValues ;
+	/**
+	 * Indicates if the value represent the feature id
+	 */
+	private boolean identifiant;
 
 	/**
 	 * Validators on attributes
@@ -207,6 +211,13 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 		return this.validators ;
 	}
 
+	public boolean isIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(boolean identifiant) {
+		this.identifiant = identifiant;
+	}
 	
 	@Override
 	public String toString() {

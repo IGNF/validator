@@ -62,6 +62,7 @@ public class FeatureTypeTest extends TestCase {
 			assertEquals("String",attributeType.getTypeName());
 			assertEquals(false, attributeType.isNullable());
 			assertEquals("[0-9]{5}", attributeType.getRegexp());
+			assertEquals(false, attributeType.isIdentifiant());
 			assertNull(attributeType.getListOfValues());
 		}
 		{
@@ -70,6 +71,7 @@ public class FeatureTypeTest extends TestCase {
 			assertEquals("String",attributeType.getTypeName());
 			assertEquals(false, attributeType.isNullable());
 			assertNull(attributeType.getRegexp());
+			assertEquals(false, attributeType.isIdentifiant());
 			assertNotNull(attributeType.getListOfValues());
 			assertEquals("01,02", Strings.join(attributeType.getListOfValues(),','));
 		}
@@ -79,6 +81,7 @@ public class FeatureTypeTest extends TestCase {
 			assertEquals("Boolean",attributeType.getTypeName());
 			assertEquals(true, attributeType.isNullable());
 			assertNull(attributeType.getRegexp());
+			assertEquals(false, attributeType.isIdentifiant());
 			assertNull(attributeType.getListOfValues());
 		}
 		
@@ -109,6 +112,7 @@ public class FeatureTypeTest extends TestCase {
 			assertEquals( "Integer", attribute.getTypeName() ) ;
 			assertNull( attribute.getRegexp() ) ;
 			assertFalse(attribute.isNullable()) ;
+			assertEquals(false, attribute.isIdentifiant());
 			assertNull(attribute.getListOfValues());
 		}
 
@@ -118,6 +122,7 @@ public class FeatureTypeTest extends TestCase {
 			assertEquals( "String", attribute.getTypeName() ) ;
 			assertNull( attribute.getRegexp() ) ;
 			assertFalse(attribute.isNullable()) ;
+			assertEquals(false, attribute.isIdentifiant());
 
 			assertNull(attribute.getListOfValues());
 		}
@@ -127,6 +132,7 @@ public class FeatureTypeTest extends TestCase {
 			assertEquals( "GEOMETRY", attribute.getName() ) ;
 			assertEquals( "Geometry", attribute.getTypeName() ) ;
 			assertTrue(attribute.isNullable()) ;
+			assertEquals(false, attribute.isIdentifiant());
 			assertNull(attribute.getListOfValues());
 		}
 		

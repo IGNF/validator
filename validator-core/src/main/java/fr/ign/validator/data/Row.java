@@ -40,6 +40,8 @@ public class Row implements Validatable {
 	 */
 	private Envelope featureBbox;
 
+	private String featureId;
+
 	/**
 	 * 
 	 * @param line
@@ -71,10 +73,32 @@ public class Row implements Validatable {
 		this.featureBbox = featureBbox;
 	}
 
+	public String getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(String featureId) {
+		this.featureId = featureId;
+	}
+
 	@Override
 	public void validate(Context context) {
 		context.beginData(this);
 		FeatureType featureType = mapping.getFeatureType() ;
+
+	    /*
+	     * Looking for featureId if exist
+	     */
+	    for (int i = 0; i < featureType.getAttributeCount(); i++) {
+	      AttributeType<?> attributeType = featureType.getAttribute(i);
+	      if (attributeType.isIdentifiant()) {
+	        // update row feature id
+	        // can be retrieve from context (row in datastack)
+	        if (mapping.getAttributeIndex(i) >= 0) {
+	          this.featureId = values[mapping.getAttributeIndex(i)];
+	        }
+	      }
+	    }
 
 		/**
 		 * Looking for geometry if exist
