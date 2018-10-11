@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -23,9 +25,7 @@ import fr.ign.validator.repository.DocumentModelRepository;
 
 /**
  * 
- * Find DocumentModel according for CNIG documents
- * 
- * TODO improve coverage / split class (findMetadataSpecification => MetadataLocator)
+ * Find DocumentModel for CNIG documents according to document name and metadata specification
  * 
  * @author MBorne
  *
@@ -43,11 +43,14 @@ public class DocumentModelFinder {
 	
 	/**
 	 * Find DocumentModel according to DocumentType
+     * 
+     * Note that candidates are sorted by descendant name so that candidate[0] is the last version
+     * 
 	 * @param documentName
 	 * @return
 	 * @throws IOException 
 	 */
-	public List<DocumentModel> findByDocumentName(String documentName) throws IOException{
+	public List<DocumentModel> findCandidatesByDocumentName(String documentName) throws IOException{
 		log.info(MARKER, "findByDocumentName({})...", documentName);
 		List<DocumentModel> result = new ArrayList<>();
 		List<DocumentModel> candidates = repository.findAll();
@@ -56,12 +59,23 @@ public class DocumentModelFinder {
 			if ( StringUtils.isEmpty(candidate.getRegexp()) ){
 				continue;
 			}
-			if ( ! documentName.matches(candidate.getRegexp() ) ){
+			if ( ! documentName.matches("(?i)"+candidate.getRegexp() ) ){
 				continue;
 			}
 			log.info(MARKER, "findByDocumentName({}) : found candidate {}", documentName, candidate.getName());
 			result.add(candidate);
 		}
+		
+		/*
+		 * Sort by name
+		 */
+		Collections.sort(result, new Comparator<DocumentModel>() {
+			@Override
+			public int compare(DocumentModel a, DocumentModel b) {
+				return b.getName().compareTo(a.getName());
+			}
+		});
+
 		return result;
 	}
 
@@ -72,18 +86,23 @@ public class DocumentModelFinder {
 	 */
 	public DocumentModel findByDocumentPath(File documentPath) throws IOException{
 		log.info(MARKER, "findByDocumentPath({})...", documentPath.getAbsolutePath());
+		
+		/* Find candidates by documentName */
 		String documentName = documentPath.getName();
-		List<DocumentModel> candidates = findByDocumentName(documentName);
+		List<DocumentModel> candidates = findCandidatesByDocumentName(documentName);
 		if ( candidates.isEmpty() ){
-			log.info(MARKER, "findByDocumentPath({}) : no model found",documentPath);
+			log.info(MARKER, "findByDocumentPath({}) : no candidate found according to {}",documentPath,documentName);
 			return null;
 		}
-		// find standard version from metadata
+		
+		/* Find metadata specification (ex : "CNIG PLU 2013") */
 		Specification specification = findMetadataSpecification(documentPath);
 		if ( specification == null ){
-			log.info(MARKER, "findByDocumentPath({}) : no specification found, returning first result", documentPath);
+			log.info(MARKER, "findByDocumentPath({}) : no specification found, returning last standard", documentPath);
 			return candidates.get(0);
 		}
+
+		/* Find version according to specification (ex : "2013") */
 		String version = SpecificationUtils.parseCnigSpecification(specification).version ;
 		log.info(MARKER, "findByDocumentPath({}) : searching DocumentModel for version {}...", documentPath, version);
 		for (DocumentModel candidate : candidates) {
@@ -110,7 +129,7 @@ public class DocumentModelFinder {
 				Specification specification = SpecificationUtils.findCnigSpecification(metadata);
 				return specification;
 			}catch (InvalidMetadataException e){
-				// ignore file (pure XML, not a metadata)
+				/* not a metadata file */
 			}
 		}
 		return null;

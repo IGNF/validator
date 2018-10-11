@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[a4f9d209294be8a98bb1da3512019085]]></id>
+  <typeName><![CDATA[SCOT]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[16c703a7151c97451c514e3355dadda2]]></id>
+      <name><![CDATA[GPU_ID]]></name>
+      <description><![CDATA[Identifiant du document sur le GPU]]></description>
+      <type><![CDATA[String]]></type>
+      <size>32</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[66b36acad1d3290bbc3253cdb5a6e972]]></id>
+      <name><![CDATA[NAME]]></name>
+      <description><![CDATA[Nom du Scot]]></description>
+      <type><![CDATA[String]]></type>
+      <size>32</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8def6e067787f366247007112735b5d2]]></id>
+      <name><![CDATA[TITLE]]></name>
+      <description><![CDATA[Titre du Scot]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b4128d6468427a9e803c06693780922d]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>
