@@ -4,30 +4,25 @@ matrix:
   include:
   - os: linux
     dist: trusty
-    jdk: openjdk7
     env:
+      - JDK: openjdk7
       - GDAL_VERSION: 1.10.*
   - os: linux
     dist: trusty
-    jdk: openjdk7
     env:
+      - JDK: openjdk7
       - GDAL_VERSION: 2.2.*
       - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
   - os: linux
-    dist: xenial
-    jdk: openjdk8
+    dist: trusty
     env:
-      - GDAL_VERSION: 1.11.*
-  - os: linux
-    dist: xenial
-    jdk: openjdk8
-    env:
+      - JDK: openjdk8
       - GDAL_VERSION: 2.1.*
-      - GDAL_PPA: "ppa:ubuntugis/ppa"      
+      - GDAL_PPA: "ppa:ubuntugis/ppa"
   - os: linux
-    dist: xenial
-    jdk: openjdk8
+    dist: trusty
     env:
+      - JDK: openjdk8
       - GDAL_VERSION: 2.2.*
       - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
@@ -42,10 +37,9 @@ before_install:
 install: true
 
 script:
-  - java -version
   - ogr2ogr --version
-  - mvn clean package
+  - ./travis/build-${JDK}.sh
 
-#cache:
-#  directories:
-#  - $HOME/.m2
+cache:
+  directories:
+  - $HOME/.m2
