@@ -1,6 +1,7 @@
 package fr.ign.validator.command;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -156,7 +157,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		parseReportBuilder(commandLine);
 		
 		/*
-		 * config and version 
+		 * Config and version
 		 */
 		parseConfig(commandLine);
 		parseVersion(commandLine);
@@ -208,17 +209,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		for (Plugin plugin : plugins) {
 			plugin.setup(context);
 		}
-		
-		/*
-		 * load model
-		 */
-		DocumentModelRepository repository = new XmlDocumentModelRepository(configDir);
-		DocumentModel documentModel = repository.findOneByName(documentModelName);
-		
+
 		/*
 		 * Validate document
 		 */
 		try {
+			DocumentModel documentModel = loadDocumentModel();
 			context.report(CoreErrorCodes.VALIDATOR_INFO, "Validation avec le modèle : "+documentModel.getName());
 			Document document = new Document(documentModel,documentPath);
 			document.validate(context);
@@ -229,6 +225,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			throw e;
 		}
 	}
+	
+	
 
 	/**
 	 * Add "input" option
@@ -309,10 +307,17 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	protected void parseVersion(CommandLine commandLine) throws ParseException {
 		this.documentModelName   = commandLine.getOptionValue("version");
 	}
-	
-	
-	
-	
+
+	/**
+	 * Load document model according to documentModelName
+	 * @return
+	 * @throws IOException
+	 */
+	protected DocumentModel loadDocumentModel() throws IOException{
+		DocumentModelRepository repository = new XmlDocumentModelRepository(configDir);
+		return repository.findOneByName(documentModelName);
+	}
+
 	/**
 	 * Add option "validation-directory"
 	 * @param options

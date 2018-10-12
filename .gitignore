@@ -1,5 +1,5 @@
-/.project
-/.settings/
+.project
+.settings
 /target/
 *.log
 /validator.launch

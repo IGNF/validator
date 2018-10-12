@@ -42,9 +42,10 @@ before_install:
 install: true
 
 script:
+  - java -version
   - ogr2ogr --version
   - mvn clean package
 
-cache:
-  directories:
-  - $HOME/.m2
+#cache:
+#  directories:
+#  - $HOME/.m2

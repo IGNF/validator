@@ -50,6 +50,12 @@ public class DocumentModelFinderRegressTest extends TestCase {
 		assertEquals("cnig_CC_2017",documentModel.getName());
 	}
 	
-
+	public void test251702833_scot() throws IOException{
+		DocumentModelFinder finder = new DocumentModelFinder(repository);
+		File documentPath = new File(getClass().getResource("/documents/251702833_scot").getPath()) ;
+		DocumentModel documentModel = finder.findByDocumentPath(documentPath);
+		assertNotNull(documentModel);
+		assertEquals("cnig_SCoT_2013",documentModel.getName());
+	}
 
 }
