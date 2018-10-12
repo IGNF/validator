@@ -53,28 +53,9 @@ Voir [LICENCE.md](LICENCE.md)
 
 Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](https://www.geoportail-urbanisme.gouv.fr) pour la validation des [standards CNIG](https://www.geoportail-urbanisme.gouv.fr/standard/).
 
+## Dépendances
 
-## Installation de ogr2ogr
-
-Le programme s'appuie sur l'exécutable `ogr2ogr` de GDAL pour la lecture des données géographiques en utilisant le format CSV comme un pivot. Il convient de souligner qu'il est assez sensible aux changements de comportement de `ogr2ogr`, en particulier au niveau de la gestion de la précision des coordonnées.
-
-### Versions testées
-
-* 1.9.1
-* 1.9.3
-* 1.10.1
-* 1.11.3
-* 2.1.*
-* 2.2.2
-
-### Versions bannies
-
-* 1.9.0 : Bug dans la production du WKT (limité à 8000 caractères)
-
-### Remarques
-
-* Entre 1.x et 2.x : Régression dans la gestion de la précision des coordonnées WKT et difficultés pour contrôler le nombre de décimales avec OGR_WKT_PRECISION (précision globale)
-
+* [ogr2ogr](doc/dependencies/ogr2ogr.md)
 
 
 ## Compilation
