@@ -54,7 +54,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	/**
 	 * Indicates if the value represent the feature id
 	 */
-	private boolean identifiant;
+	private boolean identifier = false;
 
 	/**
 	 * Validators on attributes
@@ -211,12 +211,12 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 		return this.validators ;
 	}
 
-	public boolean isIdentifiant() {
-		return identifiant;
+	public boolean isIdentifier() {
+		return identifier;
 	}
 
-	public void setIdentifiant(boolean identifiant) {
-		this.identifiant = identifiant;
+	public void setIdentifier(boolean identifier) {
+		this.identifier = identifier;
 	}
 	
 	@Override
