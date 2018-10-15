@@ -78,11 +78,9 @@ java -jar validator-cli/target/validator-cli.jar document_validator --help
 java -Dogr2ogr_path=/path/to/ogr2ogr -jar validator-cli/target/validator-cli.jar document_validator --help
 ```
 
-### Exemple modèle classique [GEOFLA](validator-example/geofla/README.md)
+## Exemples d'utilisation
 
-```bash
-java -jar validator-cli/target/validator-cli.jar document_validator -c validator-example/geofla/config/ -v GEOFLA_2015 -i validator-example/geofla/data -s EPSG:2154 -W LATIN1
-```
+Voir [https://github.com/IGNF/validator-example](https://github.com/IGNF/validator-example)
 
 ### Utilisation en mode validateur CNIG (GpU)
 
