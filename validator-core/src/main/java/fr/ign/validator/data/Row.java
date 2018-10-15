@@ -91,7 +91,7 @@ public class Row implements Validatable {
 	     */
 	    for (int i = 0; i < featureType.getAttributeCount(); i++) {
 	      AttributeType<?> attributeType = featureType.getAttribute(i);
-	      if (attributeType.isIdentifiant()) {
+	      if (attributeType.isIdentifier()) {
 	        // update row feature id
 	        // can be retrieve from context (row in datastack)
 	        if (mapping.getAttributeIndex(i) >= 0) {

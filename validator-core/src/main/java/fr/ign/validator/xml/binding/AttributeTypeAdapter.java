@@ -26,7 +26,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		adaptedAttributeType.size = attributeType.getSize() ;
 		adaptedAttributeType.nullable = attributeType.isNullable() ;
 		adaptedAttributeType.listOfValues = attributeType.getListOfValues() ;
-		adaptedAttributeType.identifiant = attributeType.isIdentifiant();
+		adaptedAttributeType.identifier = attributeType.isIdentifier();
 		return adaptedAttributeType ;
 	}
 
@@ -44,7 +44,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		attributeType.setSize(adaptedValueType.size);
 		attributeType.setNullable(adaptedValueType.nullable) ;
 		attributeType.setListOfValues(adaptedValueType.listOfValues);
-		attributeType.setIdentifiant(adaptedValueType.identifiant);
+		attributeType.setIdentifier(adaptedValueType.identifier);
 
 		return attributeType ;
 	}
@@ -56,7 +56,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		public String regexp ;
 		public Integer size ;
 		public boolean nullable ;
-		public boolean identifiant;
+		public boolean identifier;
 		@XmlElementWrapper(name = "listOfValues")
 		@XmlElement(name = "value")
 		public List<String> listOfValues ;
