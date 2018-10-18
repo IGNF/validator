@@ -1,8 +1,5 @@
 package fr.ign.validator.cnig.validation.metadata;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 
 import fr.ign.validator.Context;
@@ -12,7 +9,9 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.ReferenceSystemIdentifier;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.repository.ProjectionRepository;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -25,35 +24,8 @@ import fr.ign.validator.validation.Validator;
  */
 public class CnigMetadataReferenceSystemIdentifierValidator implements Validator<Metadata>, ValidatorListener {
 	
-	private Map<String, String> codesToUri = new HashMap<>();
-	
-	public CnigMetadataReferenceSystemIdentifierValidator(){
-		//Metropolitan France 2154 RGF93LAMB93
-		codesToUri.put("EPSG:2154", "http://www.opengis.net/def/crs/EPSG/0/2154");
-		codesToUri.put("IGNF:RGF93LAMB93", "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGF93LAMB93");
+	private ProjectionRepository projectionRepository = ProjectionRepository.getInstance();
 		
-		//Guadeloupe 32620 WGS84UTM20
-		//Martinique 32620 WGS84UTM20
-		codesToUri.put("EPSG:32620", "http://www.opengis.net/def/crs/EPSG/0/32620");
-		codesToUri.put("IGNF:WGS84UTM20", "http://registre.ign.fr/ign/IGNF/crs/IGNF/WGS84UTM20");
-		
-		//Guyane 2972 RGFG95UTM22
-		codesToUri.put("EPSG:2972", "http://www.opengis.net/def/crs/EPSG/0/2972");
-		codesToUri.put("IGNF:RGFG95UTM22", "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGFG95UTM22");
-
-		//La Réunion 2975 RGR92UTM40S
-		codesToUri.put("EPSG:2975", "http://www.opengis.net/def/crs/EPSG/0/2975");
-		codesToUri.put("IGNF:RGR92UTM40S", "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGR92UTM40S");
-		
-		//Mayotte 4471 RGM04UTM38S
-		codesToUri.put("EPSG:4471", "http://www.opengis.net/def/crs/EPSG/0/4471");
-		codesToUri.put("IGNF:RGM04UTM38S", "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGM04UTM38S");
-				
-		//Saint-Pierre-et-Miquelon 4467 RGSPM06U21
-		codesToUri.put("EPSG:4467", "http://www.opengis.net/def/crs/EPSG/0/4467");
-		codesToUri.put("IGNF:RGSPM06U21", "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGSPM06U21");
-	}
-	
 	@Override
 	public void validate(Context context, Metadata metadata) {
 		ReferenceSystemIdentifier referenceSystemIdentifier = metadata.getReferenceSystemIdentifier();
@@ -63,23 +35,8 @@ public class CnigMetadataReferenceSystemIdentifierValidator implements Validator
 			);
 			return ;
 		}
-		String code = referenceSystemIdentifier.getCode();
-		if ( StringUtils.isEmpty(code) ){
-			context.report(
-				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND
-			);
-			return ;
-		}
-		if ( ! codesToUri.containsKey(code) ){
-			context.report(
-				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID,
-				code,
-				StringUtils.join(codesToUri.keySet(),", ")
-			);
-			return ;
-		}
 		
-
+		/* uri validation */
 		String uri = referenceSystemIdentifier.getUri();
 		if ( StringUtils.isEmpty(uri) ){
 			context.report(
@@ -87,12 +44,31 @@ public class CnigMetadataReferenceSystemIdentifierValidator implements Validator
 			);
 			return ;
 		}
-		String expectedUri = codesToUri.get(code);
-		if ( ! uri.equals(expectedUri) ){
+		Projection projection = projectionRepository.findByUri(uri);
+		if ( projection == null ){
 			context.report(
 				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED,
-				uri,
-				expectedUri
+				uri
+			);
+			return ;
+		}
+		
+		
+		/* code validation */
+		String code = referenceSystemIdentifier.getCode();
+		if ( StringUtils.isEmpty(code) ){
+			context.report(
+				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND
+			);
+			return ;
+		}
+		
+		if ( ! code.equals(projection.getCode()) ){
+			context.report(
+				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID,
+				code,
+				projection.getCode(),
+				projection.getUri()
 			);
 			return ;
 		}
