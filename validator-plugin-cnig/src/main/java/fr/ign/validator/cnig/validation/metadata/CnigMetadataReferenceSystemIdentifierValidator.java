@@ -1,8 +1,5 @@
 package fr.ign.validator.cnig.validation.metadata;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 
 import fr.ign.validator.Context;
@@ -15,7 +12,6 @@ import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.repository.ProjectionRepository;
-import fr.ign.validator.repository.ProjectionRepositoryTest;
 import fr.ign.validator.validation.Validator;
 
 /**
