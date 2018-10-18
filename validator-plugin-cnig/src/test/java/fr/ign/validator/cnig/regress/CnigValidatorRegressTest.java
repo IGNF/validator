@@ -3,7 +3,6 @@ package fr.ign.validator.cnig.regress;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -121,7 +120,7 @@ public class CnigValidatorRegressTest {
 			/* check ERRORS */
 			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_CHARACTERSET_INVALID));
 			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR));
-			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND));
+			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND));
 			Assert.assertEquals(3, report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,7 +153,7 @@ public class CnigValidatorRegressTest {
 			Assert.assertEquals("50545_CC_20130902", document.getDocumentName());
 			/* check errors */
 			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND));
-			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID));
+			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND));
 			Assert.assertEquals(2, report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
