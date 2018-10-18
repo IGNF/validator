@@ -2,10 +2,12 @@ package fr.ign.validator.error;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Envelope;
 
 import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
+import fr.ign.validator.jackson.serializer.ValidatorErrorDeserializer;
 
 /**
  * A validation error with corresponding context informations
@@ -13,6 +15,7 @@ import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
  * @author CBouche
  *
  */
+@JsonDeserialize(using = ValidatorErrorDeserializer.class)
 public class ValidatorError implements Cloneable {
 
 	/**

@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang.StringUtils;
 import org.geotools.referencing.CRS;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Test;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -101,8 +100,9 @@ public class ProjectionTransformTest {
 			String[] row = reader.next();
 			String sourceWKT = row[indexSource];
 			String expectedWKT = row[indexTarget];
-			Assume.assumeFalse(StringUtils.isEmpty(sourceWKT));
-			Assume.assumeFalse(StringUtils.isEmpty(expectedWKT));
+			if ( StringUtils.isEmpty(sourceWKT) || StringUtils.isEmpty(expectedWKT) ){
+				continue;
+			}
 
 			Geometry source = wktReader.read(sourceWKT);
 			Geometry expectedTarget = wktReader.read(expectedWKT);
