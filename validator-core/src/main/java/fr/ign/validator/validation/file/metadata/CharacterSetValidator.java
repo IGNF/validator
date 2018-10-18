@@ -33,10 +33,9 @@ public class CharacterSetValidator implements Validator<Metadata> {
 				CoreErrorCodes.METADATA_CHARACTERSET_NOT_FOUND
 			);
 		}else if ( ! code.isAllowedValue() ){
-			context.report(
-				CoreErrorCodes.METADATA_CHARACTERSET_INVALID,
-				code.getValue(),
-				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
+			context.report(context.createError(CoreErrorCodes.METADATA_CHARACTERSET_INVALID)
+				.setMessageParam("CHARSET_CODE", code.getValue())
+				.setMessageParam("EXPECTED_CHARSETS", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
 			);
 		}
 	}

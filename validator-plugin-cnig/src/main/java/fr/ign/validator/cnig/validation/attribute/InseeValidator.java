@@ -59,7 +59,9 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 	public void validate(Context context, Attribute<String> validatable) {
 		String insee = validatable.getBindedValue() ;
 		if ( ! InseeUtils.isValidCommune(insee) ){
-			context.report(CnigErrorCodes.CNIG_INSEE_INVALID, insee);			
+			context.report(context.createError(CnigErrorCodes.CNIG_INSEE_INVALID)
+				.setMessageParam("VALUE", insee)
+			);
 		}
 	}
 

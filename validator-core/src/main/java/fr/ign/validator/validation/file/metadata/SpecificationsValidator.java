@@ -39,37 +39,33 @@ public class SpecificationsValidator implements Validator<Metadata> {
 		for (Specification specification : specifications) {
 			// specification.title
 			if ( StringUtils.isEmpty(specification.getTitle()) ){
-				context.report(
-					CoreErrorCodes.METADATA_SPECIFICATION_TITLE_NOT_FOUND,
-					count,
-					specifications.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_TITLE_NOT_FOUND)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(specifications.size()))
 				);
 			}
 			
 			// specification.date
 			if ( specification.getDate() == null ){
-				context.report(
-					CoreErrorCodes.METADATA_SPECIFICATION_DATE_NOT_FOUND,
-					count,
-					specifications.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DATE_NOT_FOUND)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(specifications.size()))
 				);
 			}else if ( ! specification.getDate().isValid() ){
-				context.report(
-					CoreErrorCodes.METADATA_SPECIFICATION_DATE_INVALID,
-					count,
-					specifications.size(),
-					specification.getDate()
+				context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DATE_INVALID)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(specifications.size()))
+					.setMessageParam("VALUE", specification.getDate().toString())
 				);
 			}
 			
 			// specification.degree
 			if ( ! StringUtils.isEmpty(specification.getDegree()) ){
 				if ( ! specification.getDegree().equals("true") && ! specification.getDegree().equals("false") ){
-					context.report(
-						CoreErrorCodes.METADATA_SPECIFICATION_DEGREE_INVALID,
-						count,
-						specifications.size(),
-						specification.getDegree()
+					context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DEGREE_INVALID)
+						.setMessageParam("NUMBER", String.valueOf(count))
+						.setMessageParam("COUNT", String.valueOf(specifications.size()))
+						.setMessageParam("VALUE", specification.getDegree())
 					);
 				}
 			}
@@ -77,7 +73,6 @@ public class SpecificationsValidator implements Validator<Metadata> {
 			count++;
 		}
 	}
-
 
 	
 }

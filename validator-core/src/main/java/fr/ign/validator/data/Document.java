@@ -256,33 +256,29 @@ public class Document implements Validatable {
 			 */ 
 			fileModel = documentModel.findFileModelByFilename( file ) ;
 			if ( fileModel != null ){
-				log.info(MARKER, "[MISPLACED_FILE]{} ~> {} (Mal placé)", file, fileModel.getName());
+				log.info(MARKER, "[FILE_MISPLACED]{} ~> {} (Mal placé)", file, fileModel.getName());
 				
 				if( context.isFlatValidation()){
 					addDocumentFile(fileModel,file);
 				}else{
 					context.beginModel(fileModel);
-					context.report(
-						CoreErrorCodes.FILE_MISPLACED, 
-						context.relativize(file), 
-						fileModel.getName()
+					context.report(context.createError(CoreErrorCodes.FILE_MISPLACED)
+						.setMessageParam("FILEPATH",context.relativize(file))
 					);
 					context.endModel(fileModel);
 				}
-				
 				continue ;
 			}
 			/*
 			 * not covered by model
 			 */
-			log.error(MARKER, "[UNEXPECTED_FILE] {} => null", file);
-			context.report(
-				CoreErrorCodes.FILE_UNEXPECTED, 
-				context.relativize(file)
+			log.error(MARKER, "[FILE_UNEXPECTED] {} => null", file);
+			context.report(context.createError(CoreErrorCodes.FILE_UNEXPECTED)
+				.setMessageParam("FILEPATH",context.relativize(file))
 			);
 		}
 	}
-	
+
 	
 	private void addDocumentFile(FileModel fileModel, File path){
 		this.documentFiles.add(fileModel.createDocumentFile(path)) ;

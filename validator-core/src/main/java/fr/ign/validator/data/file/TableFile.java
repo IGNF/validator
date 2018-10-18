@@ -48,9 +48,8 @@ public class TableFile extends DocumentFile {
 				reader = TableReader.createTableReader(matchingFile,context.getEncoding());
 			}  catch (InvalidCharsetException e) {
 				log.error(MARKER, "Charset invalide détectée pour {}", matchingFile);
-				context.report(
-					CoreErrorCodes.TABLE_UNEXPECTED_ENCODING,
-					context.getEncoding().toString()
+				context.report(context.createError(CoreErrorCodes.TABLE_UNEXPECTED_ENCODING)
+					.setMessageParam("ENCODING", context.getEncoding().toString())
 				);
 				log.info(MARKER, "Tentative d'autodétection de la charset pour la validation de {}",matchingFile);
 				reader = TableReader.createTableReaderDetectCharset(matchingFile) ;
@@ -79,17 +78,15 @@ public class TableFile extends DocumentFile {
 			 * check for empty file
 			 */
 			if ( count == 0 ){
-				context.report(
-					CoreErrorCodes.FILE_EMPTY,
-					context.relativize(matchingFile)						
+				context.report(context.createError(CoreErrorCodes.FILE_EMPTY)
+					.setMessageParam("FILEPATH", context.relativize(matchingFile))
 				);
 			}
 			
 			log.info( MARKER, "{} objet validé(s)", count );
 		}  catch (IOException e) {
-			context.report(
-				CoreErrorCodes.FILE_NOT_OPENED,
-				context.relativize(matchingFile)
+			context.report(context.createError(CoreErrorCodes.FILE_NOT_OPENED)
+				.setMessageParam("FILEPATH", context.relativize(matchingFile))
 			);
 			return ;
 		}

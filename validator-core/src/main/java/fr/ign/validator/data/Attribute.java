@@ -91,10 +91,9 @@ public class Attribute<T> implements Validatable {
 			}
 		}else{
 			IsoControlEscaper transform = new IsoControlEscaper(false);
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, 
-				transform.transform(value.toString()),
-				type.getTypeName()
+			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)
+				.setMessageParam("VALUE", transform.transform(value.toString()))
+				.setMessageParam("EXPECTED_TYPE", type.getTypeName())
 			);
 		}
 		context.endData(this);

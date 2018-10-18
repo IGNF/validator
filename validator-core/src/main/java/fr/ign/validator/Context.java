@@ -468,14 +468,8 @@ public class Context {
 	 * @param code
 	 * @param messageParams
 	 */
-	public void report(ErrorCode code, Object... messageParams){
-		/*
-		 * Create error by code
-		 */
-		ValidatorError validatorError = createError(code, messageParams);
-		/*
-		 * Add error
-		 */
+	public void report(ErrorCode code){
+		ValidatorError validatorError = createError(code);
 		reportBuilder.addError(validatorError);
 	}
 
@@ -492,8 +486,9 @@ public class Context {
 	 * @param code
 	 * @param messageParams
 	 */
-	public ValidatorError createError(ErrorCode code, Object... messageParams) {
-		ValidatorError validatorError = errorFactory.newError(code, messageParams);
+	public ValidatorError createError(ErrorCode code) {
+		//TODO remove messageParams
+		ValidatorError validatorError = errorFactory.newError(code);
 		validatorError.setScope(getScope());
 
 		/*

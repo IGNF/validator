@@ -27,10 +27,9 @@ public class StringRegexpValidator implements Validator<Attribute<String>> {
 		}
 		
 		if (! value.matches(attribute.getType().getRegexp())) {
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP,
-				value,
-				attribute.getType().getRegexp()
+			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP)
+				.setMessageParam("VALUE", value)
+				.setMessageParam("REGEXP", attribute.getType().getRegexp())
 			);
 		}
 		

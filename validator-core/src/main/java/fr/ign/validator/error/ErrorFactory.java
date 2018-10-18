@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,7 +49,7 @@ public class ErrorFactory {
 	 * @param code
 	 * @return
 	 */
-	public ValidatorError newError(ErrorCode code, Object... args) {
+	public ValidatorError newError(ErrorCode code) {
 		ValidatorError validatorError = findPrototype(code);
 		if (null == validatorError) {
 			throw new RuntimeException(String.format("L'erreur %1s n'est pas configurée", code.toString()));
@@ -58,11 +57,6 @@ public class ErrorFactory {
 
 		try {
 			ValidatorError result = (ValidatorError) validatorError.clone();
-			try {
-				result.setMessage(String.format(result.getMessage(), args));
-			} catch (IllegalFormatException e) {
-				// ignoring missing parameters
-			}
 			return result;
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e);

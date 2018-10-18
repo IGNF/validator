@@ -26,9 +26,8 @@ public class CnigTypeValidator implements Validator<Metadata>, ValidatorListener
 			return ;
 		}
 		if ( ! code.equals(ScopeCode.valueOf("dataset")) && ! code.equals(ScopeCode.valueOf("serie")) ){
-			context.report(
-				CnigErrorCodes.CNIG_METADATA_TYPE_INVALID,
-				code.getValue()
+			context.report(context.createError(CnigErrorCodes.CNIG_METADATA_TYPE_INVALID)
+				.setMessageParam("VALUE", code.getValue())
 			);
 		}
 	}

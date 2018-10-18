@@ -37,9 +37,8 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
 
 		List<File> correspondingFiles = findFilesByFilename(root,filename) ;
 		if ( correspondingFiles.isEmpty() ){
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND, 
-				path.toString()
+			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND)
+				.setMessageParam("VALUE", path.toString())
 			);
 		}
 	}

@@ -37,11 +37,10 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 				return ; 
 			}
 		}
-		
-		context.report(
-			CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, 
-			value,
-			formatListOfValues( attribute.getType().getListOfValues() )
+
+		context.report(context.createError(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE)
+			.setMessageParam("VALUE", value)
+			.setMessageParam("EXPECTED_VALUES", formatListOfValues( attribute.getType().getListOfValues() ))
 		);
 	}
 
@@ -51,7 +50,7 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 	 * @param listOfValues
 	 * @return
 	 */
-	private Object formatListOfValues(List<String> listOfValues) {
+	private String formatListOfValues(List<String> listOfValues) {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true ;
 		for (String string : listOfValues) {

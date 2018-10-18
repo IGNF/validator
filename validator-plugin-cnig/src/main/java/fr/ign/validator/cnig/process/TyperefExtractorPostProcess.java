@@ -65,9 +65,8 @@ public class TyperefExtractorPostProcess implements ValidatorListener {
 		TyperefExtractor typerefExtractor = new TyperefExtractor(helper);
 		String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
 		if (null == result) {
-			context.report(
-				CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, 
-				helper.getHelpExpected(documentName)
+			context.report(context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
+				.setMessageParam("EXPECTED_IDURBA", helper.getHelpExpected(documentName))
 			);
 		}
 		return result;

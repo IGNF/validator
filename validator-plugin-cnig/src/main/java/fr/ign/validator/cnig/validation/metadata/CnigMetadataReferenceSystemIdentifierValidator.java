@@ -46,9 +46,8 @@ public class CnigMetadataReferenceSystemIdentifierValidator implements Validator
 		}
 		Projection projection = projectionRepository.findByUri(uri);
 		if ( projection == null ){
-			context.report(
-				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED,
-				uri
+			context.report(context.createError(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED)
+				.setMessageParam("URI", uri)
 			);
 			return ;
 		}
@@ -64,11 +63,10 @@ public class CnigMetadataReferenceSystemIdentifierValidator implements Validator
 		}
 		
 		if ( ! code.equals(projection.getCode()) ){
-			context.report(
-				CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID,
-				code,
-				projection.getCode(),
-				projection.getUri()
+			context.report(context.createError(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID)
+				.setMessageParam("CODE", code)
+				.setMessageParam("URI", projection.getUri())
+				.setMessageParam("EXPECTED_CODE", projection.getCode())
 			);
 			return ;
 		}

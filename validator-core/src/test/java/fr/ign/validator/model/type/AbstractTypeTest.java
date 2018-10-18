@@ -37,10 +37,9 @@ public class AbstractTypeTest<T> extends TestCase {
 			attribute.validate(context);
 			return attribute.getBindedValue() ;
 		}catch ( IllegalArgumentException e ){
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, 
-				inputValue.toString(), 
-				type.getTypeName()
+			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)
+				.setMessageParam("VALUE",inputValue.toString())
+				.setMessageParam("EXPECTED_TYPE",type.getTypeName())			
 			);
 			return null ;
 		}

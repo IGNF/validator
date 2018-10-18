@@ -33,10 +33,9 @@ public class LanguageValidator implements Validator<Metadata> {
 				CoreErrorCodes.METADATA_LANGUAGE_NOT_FOUND
 			);
 		}else if ( ! code.isAllowedValue() ){
-			context.report(
-				CoreErrorCodes.METADATA_LANGUAGE_INVALID,
-				code.getValue(),
-				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
+			context.report(context.createError(CoreErrorCodes.METADATA_LANGUAGE_INVALID)
+				.setMessageParam("CODE", code.getValue())
+				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
 			);
 		}
 	}

@@ -1,5 +1,7 @@
 package fr.ign.validator.error;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Envelope;
 
@@ -130,6 +132,17 @@ public class ValidatorError implements Cloneable {
 	}
 
 	/**
+	 * Replace {name} by value in error message (original is the template)
+	 * @param name
+	 * @param value
+	 * @return
+	 */
+	public ValidatorError setMessageParam(String name, String value) {
+		this.message = StringUtils.replace(this.message, "{"+name+"}", value);
+		return this;
+	}
+
+	/**
 	 * @return
 	 */
 	public String getDocumentModel() {
@@ -241,5 +254,6 @@ public class ValidatorError implements Cloneable {
 	public String toString() {
 		return code+"|"+scope+"|"+level+"|"+message ;
 	}
+
 
 }

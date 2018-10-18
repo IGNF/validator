@@ -38,27 +38,21 @@ public class LocatorsValidator implements Validator<Metadata> {
 		int count = 1 ;
 		for (OnlineResource onlineResource : onlineResources) {
 			if ( StringUtils.isEmpty(onlineResource.getName()) ){
-				context.report(
-					CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND,
-					"name",
-					count,
-					onlineResources.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(onlineResources.size()))
 				);
 			}
 			if ( StringUtils.isEmpty(onlineResource.getProtocol()) ){
-				context.report(
-					CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND,
-					"protocol",
-					count,
-					onlineResources.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(onlineResources.size()))
 				);
 			}
 			if ( StringUtils.isEmpty(onlineResource.getUrl()) ){
-				context.report(
-					CoreErrorCodes.METADATA_LOCATOR_URL_NOT_FOUND,
-					"url",
-					count,
-					onlineResources.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_LOCATOR_URL_NOT_FOUND)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(onlineResources.size()))
 				);
 			}
 			count++;
