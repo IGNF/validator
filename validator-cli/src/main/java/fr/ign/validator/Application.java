@@ -1,5 +1,8 @@
 package fr.ign.validator;
 
+
+import org.apache.logging.log4j.LogManager;
+
 import fr.ign.validator.command.CommandApplication;
 
 /**
@@ -11,7 +14,9 @@ public class Application {
 	public static void main(String[] args) {
 		CommandApplication application = new CommandApplication();
 		application.loadRegistredCommands();
-		System.exit(application.run(args));
+		int result = application.run(args);
+		LogManager.shutdown();
+		System.exit(result);
 	}
 	
 	
