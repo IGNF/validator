@@ -30,10 +30,9 @@ public class StringSizeValidator implements Validator<Attribute<String>> {
 		}
 		
 		if ( value.length() > attributeSize ){
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_SIZE_EXCEEDED,
-				value.length(),
-				attributeSize.toString()
+			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_SIZE_EXCEEDED)
+				.setMessageParam("VALUE_LENGTH", String.valueOf(value.length()))
+				.setMessageParam("EXPECTED_LENGTH", attributeSize.toString())
 			);
 		}
 	}

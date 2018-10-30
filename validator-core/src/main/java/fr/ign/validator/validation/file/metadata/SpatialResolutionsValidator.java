@@ -38,21 +38,19 @@ public class SpatialResolutionsValidator implements Validator<Metadata> {
 		for (Resolution resolution : resolutions) {
 			String denominator = resolution.getDenominator();
 			if ( ! isValidInteger(denominator) ){
-				context.report(
-					CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR,
-					denominator,
-					count,
-					resolutions.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR)
+					.setMessageParam("VALUE", denominator)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(resolutions.size()))
 				);
 			}
 			
 			String distance = resolution.getDistance();
 			if ( ! isValidDouble(distance) ){
-				context.report(
-					CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DISTANCE,
-					distance,
-					count,
-					resolutions.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DISTANCE)
+					.setMessageParam("VALUE", distance)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(resolutions.size()))
 				);
 			}
 			count++;

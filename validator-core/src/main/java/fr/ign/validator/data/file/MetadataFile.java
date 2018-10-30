@@ -33,9 +33,8 @@ public class MetadataFile extends DocumentFile {
 				validator.validate(context, metadata);
 			}
 		} catch (InvalidMetadataException e) {
-			context.report( 
-				CoreErrorCodes.METADATA_INVALID_FILE,
-				context.relativize(getPath())
+			context.report(context.createError(CoreErrorCodes.METADATA_INVALID_FILE)
+				.setMessageParam("FILEPATH", context.relativize(getPath()))
 			);
 		}
 	}

@@ -67,9 +67,8 @@ public class CharsetPreProcess implements ValidatorListener {
 			return null;
 		}
 		if ( metadataFiles.size() > 1 ){
-			context.report(
-				CoreErrorCodes.METADATA_MULTIPLE_FILES,
-				formatFiles(context,metadataFiles)
+			context.report(context.createError(CoreErrorCodes.METADATA_MULTIPLE_FILES)
+				.setMessageParam("FILENAME_LIST", formatFiles(context,metadataFiles))
 			);
 		}
 		

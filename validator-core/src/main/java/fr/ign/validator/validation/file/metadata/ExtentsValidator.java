@@ -37,11 +37,10 @@ public class ExtentsValidator implements Validator<Metadata> {
 		int count = 1 ;
 		for (Extent extent : extents) {
 			if ( ! extent.getBoundingBox().isValid() ){
-				context.report(
-					CoreErrorCodes.METADATA_EXTENT_INVALID,
-					extent.getBoundingBox().toString(),
-					count,
-					extents.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_EXTENT_INVALID)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(extents.size()))
+					.setMessageParam("BBOX", extent.getBoundingBox().toString())
 				);
 			}
 			count++;

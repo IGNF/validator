@@ -38,10 +38,9 @@ public class DistributionFormatsValidator implements Validator<Metadata> {
 		int count = 1 ;
 		for (Format format : formats) {
 			if ( StringUtils.isEmpty(format.getName()) ){
-				context.report(
-					CoreErrorCodes.METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND,
-					count,
-					formats.size()
+				context.report(context.createError(CoreErrorCodes.METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND)
+					.setMessageParam("NUMBER", String.valueOf(count))
+					.setMessageParam("COUNT", String.valueOf(formats.size()))					
 				);
 			}
 			count++;

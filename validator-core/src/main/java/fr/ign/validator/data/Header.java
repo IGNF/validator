@@ -54,9 +54,11 @@ public class Header implements Validatable {
 				 */
 				continue ;
 			}
-			context.report(CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, name);
+			context.report(context.createError(CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE)
+				.setMessageParam("ATTRIBUTE_NAME", name)
+			);
 		}
-		
+
 		/*
 		 * Attribute missing in data
 		 */
@@ -65,22 +67,18 @@ public class Header implements Validatable {
 			context.beginModel(missingAttribute);
 			
 			if ( missingAttribute.getName().equals("WKT") ){
-				context.report(
-					CoreErrorCodes.TABLE_MISSING_GEOMETRY, 
-					context.relativize(matchingFile)
+				context.report(context.createError(CoreErrorCodes.TABLE_MISSING_GEOMETRY)
+					.setMessageParam("FILEPATH", context.relativize(matchingFile))
 				);
-				
 			}else if ( missingAttribute.isNullable() ){
-				context.report(
-					CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, 
-					missingAttribute.getName(),
-					context.relativize(matchingFile)
+				context.report(context.createError(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE)
+					.setMessageParam("ATTRIBUTE_NAME",missingAttribute.getName())
+					.setMessageParam("FILEPATH", context.relativize(matchingFile))
 				);
 			}else{
-				context.report(
-					CoreErrorCodes.TABLE_MISSING_ATTRIBUTE, 
-					missingAttribute.getName(),
-					context.relativize(matchingFile)
+				context.report(context.createError(CoreErrorCodes.TABLE_MISSING_ATTRIBUTE)
+					.setMessageParam("ATTRIBUTE_NAME",missingAttribute.getName())
+					.setMessageParam("FILEPATH", context.relativize(matchingFile))
 				);
 			}
 			context.endModel(missingAttribute);

@@ -38,10 +38,9 @@ public class CharactersValidator<T> implements Validator<Attribute<T>> {
 					CoreErrorCodes.ATTRIBUTE_CHARACTERS_ILLEGAL 
 				  : CoreErrorCodes.ATTRIBUTE_CHARACTERS_REPLACED
 			;
-			context.report(
-				code,
-				transform.transform(originalString),    // original string
-				fixedString                             // transformed string
+			context.report(context.createError(code)
+				.setMessageParam("VALUE", transform.transform(originalString)) // original string
+				.setMessageParam("FIXED_VALUE", fixedString) // transformed string
 			);
 		}
 	}

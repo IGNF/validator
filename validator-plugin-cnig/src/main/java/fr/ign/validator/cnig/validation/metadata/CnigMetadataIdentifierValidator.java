@@ -30,10 +30,9 @@ public class CnigMetadataIdentifierValidator implements Validator<Metadata>, Val
 		String documentName = context.getCurrentDirectory().getName();
 		String expectedIdentifier = GPU_PREFIX+documentName;
 		if ( ! identifier.equals(expectedIdentifier) ){
-			context.report(
-				CnigErrorCodes.CNIG_METADATA_IDENTIFIER_INVALID, 
-				identifier,
-				documentName
+			context.report(context.createError(CnigErrorCodes.CNIG_METADATA_IDENTIFIER_INVALID)
+				.setMessageParam("VALUE", identifier)
+				.setMessageParam("DOCUMENT_NAME", documentName)
 			);
 		}
 	}

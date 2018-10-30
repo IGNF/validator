@@ -30,9 +30,9 @@ public class PathExistsValidator implements Validator<Attribute<File>> {
 		) ;
 
 		if ( ! absolutePath.exists() ){
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_PATH_NOT_FOUND, 
-				path.toString()
+
+			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_PATH_NOT_FOUND)
+				.setMessageParam("VALUE", path.toString())
 			);
 		}
 	}

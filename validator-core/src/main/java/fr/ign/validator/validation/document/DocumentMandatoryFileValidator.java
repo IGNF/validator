@@ -34,20 +34,17 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 			
 			context.beginModel(fileModel);
 			if ( fileModel.getMandatory().equals(FileModel.MandatoryMode.WARN) ){
-				context.report( 
-					getErrorCodeRecommanded(fileModel),
-					fileModel.getName(),
-					context.getCurrentDirectory().getName()
+				context.report(context.createError(getErrorCodeRecommanded(fileModel))
+					.setMessageParam("FILEMODEL_NAME", fileModel.getName())
 				);
 			}else{
-				context.report( 
-					getErrorCodeMandatory(fileModel),
-					fileModel.getName(),
-					context.getCurrentDirectory().getName() 
+				context.report(context.createError(getErrorCodeMandatory(fileModel))
+					.setMessageParam("FILEMODEL_NAME", fileModel.getName())
 				);
 			}
 			context.endModel(fileModel);
 		}
+		
 	}
 	
 	/**

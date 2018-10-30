@@ -32,9 +32,8 @@ public class MetadataDateValidator implements Validator<Metadata> {
 				CoreErrorCodes.METADATA_METADATADATE_NOT_FOUND
 			);
 		}else if ( ! value.isValid() ){
-			context.report(
-				CoreErrorCodes.METADATA_METADATADATE_INVALID,
-				value
+			context.report(context.createError(CoreErrorCodes.METADATA_METADATADATE_INVALID)
+				.setMessageParam("VALUE", value.toString())
 			);
 		}
 	}

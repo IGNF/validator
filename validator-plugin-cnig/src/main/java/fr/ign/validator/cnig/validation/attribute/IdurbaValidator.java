@@ -41,10 +41,9 @@ public class IdurbaValidator implements Validator<Attribute<String>> {
 	@Override
 	public void validate(Context context, Attribute<String> attribute) {
 		if ( ! idurbaHelper.isValid(attribute.getBindedValue()) ){
-			context.report(
-				CnigErrorCodes.CNIG_IDURBA_INVALID, 
-				attribute.getBindedValue(),
-				idurbaHelper.getHelpFormat()
+			context.report(context.createError(CnigErrorCodes.CNIG_IDURBA_INVALID)
+				.setMessageParam("VALUE", attribute.getBindedValue())
+				.setMessageParam("IDURBA_FORMAT", idurbaHelper.getHelpFormat())
 			);
 		}
 	}

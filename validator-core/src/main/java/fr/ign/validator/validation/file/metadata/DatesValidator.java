@@ -33,32 +33,26 @@ public class DatesValidator implements Validator<Metadata> {
 		  && metadata.getDateOfLastRevision() == null
 		  && metadata.getDateOfCreation() == null
 		){
-			context.report(
-				CoreErrorCodes.METADATA_DATES_NOT_FOUND,
-				metadata.getDateOfPublication()
-			);
+			context.report(context.createError(CoreErrorCodes.METADATA_DATES_NOT_FOUND));
 			return ;
 		}
 
 		if ( metadata.getDateOfPublication() != null && ! metadata.getDateOfPublication().isValid() ){
 			log.info(MARKER, "metadata.dateOfPublication : {}", metadata.getDateOfPublication());
-			context.report(
-				CoreErrorCodes.METADATA_DATEOFPUBLICATION_INVALID,
-				metadata.getDateOfPublication()
+			context.report(context.createError(CoreErrorCodes.METADATA_DATEOFPUBLICATION_INVALID)
+				.setMessageParam("VALUE", metadata.getDateOfPublication().toString())
 			);
 		}
 		if ( metadata.getDateOfLastRevision() != null && ! metadata.getDateOfLastRevision().isValid() ){
 			log.info(MARKER, "metadata.dateOfLastRevision : {}", metadata.getDateOfLastRevision());
-			context.report(
-				CoreErrorCodes.METADATA_DATEOFLASTREVISION_INVALID,
-				metadata.getDateOfLastRevision()
+			context.report(context.createError(CoreErrorCodes.METADATA_DATEOFLASTREVISION_INVALID)
+				.setMessageParam("VALUE", metadata.getDateOfLastRevision().toString())
 			);
 		}
 		if ( metadata.getDateOfCreation() != null && ! metadata.getDateOfCreation().isValid() ){
 			log.info(MARKER, "metadata.dateOfCreation : {}", metadata.getDateOfCreation());
-			context.report(
-				CoreErrorCodes.METADATA_DATEOFCREATION_INVALID,
-				metadata.getDateOfCreation()
+			context.report(context.createError(CoreErrorCodes.METADATA_DATEOFCREATION_INVALID)
+				.setMessageParam("VALUE", metadata.getDateOfCreation().toString())
 			);
 		}
 	}

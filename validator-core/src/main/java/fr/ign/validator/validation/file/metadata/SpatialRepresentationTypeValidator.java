@@ -33,10 +33,9 @@ public class SpatialRepresentationTypeValidator implements Validator<Metadata> {
 				CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND
 			);
 		}else if ( ! code.isAllowedValue() ){
-			context.report(
-				CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_INVALID,
-				code.getValue(),
-				StringUtils.join(code.getCodeList().getAllowedValues(), ", ")
+			context.report(context.createError(CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_INVALID)
+				.setMessageParam("CODE", code.getValue())
+				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
 			);
 		}
 	}
