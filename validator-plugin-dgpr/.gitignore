@@ -1,0 +1,14 @@
+/.project
+/.settings
+/.classpath
+/bin/
+/target
+/config
+/data
+/test.sh
+
+/pom.xml.releaseBackup
+
+/.apt_generated/
+
+/validator-plugin-*

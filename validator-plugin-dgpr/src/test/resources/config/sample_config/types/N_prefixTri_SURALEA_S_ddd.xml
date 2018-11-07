@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[8df8a800750ace639391d07a7ae0d4f7]]></id>
+  <typeName><![CDATA[N_prefixTri_SURALEA_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[056c1c6f95e430f07ad260abb25ae3c7]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[ZSA_[0-9]+$]]></regexp>
+      <id><![CDATA[2cbb6d13790a8557b0a4a6485a78d1fd]]></id>
+      <name><![CDATA[ID_ZONE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZSA_[numero]]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4dcdda5cd7331ec8f76eb6f255ccdecd]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7ee5c4e4c98368009d248560b40f8e93]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b253d7b60782ff54e7fff93ff44ef8c2]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f5bdcf53d691e7536b2c488890d882ca]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
+    </attribute>
+    <attribute>
+      <id><![CDATA[fa6877208857b971fe7a42b13cf02349]]></id>
+      <name><![CDATA[SCENARIO]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

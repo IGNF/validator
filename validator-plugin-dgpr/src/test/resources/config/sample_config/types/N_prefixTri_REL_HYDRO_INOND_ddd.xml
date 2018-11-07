@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[c564bce04117505fa230f727947a53cb]]></id>
+  <typeName><![CDATA[N_prefixTri_REL_HYDRO_INOND_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[012bf90d68fa15ea34f0a23c052f6f56]]></id>
+      <name><![CDATA[CODE_EH]]></name>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[dd707ce8a91411f09107b8c57d556b6a]]></id>
+      <name><![CDATA[ID_S_INOND]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <reference><![CDATA[N_TRI_JTEST_INONDABLE_S_02720180912100813650.ID_S_INOND]]></reference>
+    </attribute>
+  </attributes>
+</featureType>
