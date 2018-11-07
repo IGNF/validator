@@ -59,6 +59,7 @@
 		<module>validator-core</module>
 		<module>validator-cli</module>
 		<module>validator-plugin-cnig</module>
+		<module>validator-plugin-dgpr</module>
 	</modules>
 
 
@@ -258,6 +259,16 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.1</version>
+        <configuration>
+            <useSystemClassLoader>false</useSystemClassLoader>
+        </configuration>
+      </plugin>
+    </plugins>
 	</build>
 
 </project>

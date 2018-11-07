@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[1b87dbb04eb9a1c0621077bf8d15d812]]></id>
+  <typeName><![CDATA[N_prefixTri_ENJEU_ECO_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0dbca58f7f4ec4bf90c8148ea975bfc4]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[168d5b9cfa1770900d644593a92786f6]]></id>
+      <name><![CDATA[TYPE_ACTIV]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[20c219d485dcc70b9688991b4c94e60a]]></id>
+      <name><![CDATA[VER_SI_EXT]]></name>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[65a94d4c06bdeee7978cbb3e440b6e9c]]></id>
+      <name><![CDATA[ID_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[^[0-9]{4}[a-z]*$]]></regexp>
+      <id><![CDATA[973f9e6baaebf326186cb7354ac75eca]]></id>
+      <name><![CDATA[CODCOVADIS]]></name>
+      <description><![CDATA[Cf. nomenclature COVADIS standard PPRN (annexe D.1)]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a00956eae7e418a33ced8dab4429a361]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d085ee5d6d211baf32eb07b272e67606]]></id>
+      <name><![CDATA[NOM_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f4ec16bb6ef744315971c56342c6c0d2]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

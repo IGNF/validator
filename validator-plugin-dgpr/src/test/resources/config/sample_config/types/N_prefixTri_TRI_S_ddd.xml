@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[d424cb75d6f4bd63c9f2b5907c5c22d4]]></id>
+  <typeName><![CDATA[N_prefixTri_TRI_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[566642d7bdb2ee35f81fdcffd7858b17]]></id>
+      <name><![CDATA[HAB_SAISON]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9457087586224e21021250a1352f821e]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[99ecfb810920fd382fb5e65364fcb148]]></id>
+      <name><![CDATA[HAB_PERM]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[^FR[A-Z0-9]{1,4}_TRI_[A-Z0-9]{1,33}$]]></regexp>
+      <id><![CDATA[9e93d60fe739c904a6f65f41bf875b96]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type [Code EUUOM Bassin DCE]_TRI_[Nom court TRI]. Exemple : "FRD_TRI_LYON"]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b613d7324a6f4cd8e7348f1894d5a662]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[da49a38e8cf06accb33566acaa17c437]]></id>
+      <name><![CDATA[NOM]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ef937eacfec13b6b4643c7f062b0ec74]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f6af4a87435be2b9191ecf1a56cebfc6]]></id>
+      <name><![CDATA[TX_HAB_SAI]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

@@ -514,5 +514,23 @@
         "level": "ERROR",
         "message": "L'URI du \"Référentiel de coordonnées\" ({URI}) n'est pas reconnue par le validateur.",
         "documentation": ""
+    },
+    {
+        "name": "DGPR_DOCUMENT_TEST_ERROR",
+        "level": "ERROR",
+        "message": "(test) Le document {DOCUMENT_NAME} comporte une erreur detecte dans le plugin DGPR.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_DOCUMENT_PREFIX_ERROR",
+        "level": "ERROR",
+        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le prefix.",
+        "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
+    },
+    {
+        "name": "DGPR_FILENAME_PREFIX_ERROR",
+        "level": "ERROR",
+        "message": "Le nom du fichier {FILENAME} ne contient pas le prefix TRI du repertoire {DOCUMENT_NAME}.",
+        "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     }
 ]

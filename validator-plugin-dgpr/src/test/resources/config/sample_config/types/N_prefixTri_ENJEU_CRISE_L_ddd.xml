@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[6388e9464385a5ee515a77233c26754e]]></id>
+  <typeName><![CDATA[N_prefixTri_ENJEU_CRISE_L_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[07fbf3a48fac2b07a3c0b7a8d034d3c4]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiLineString]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[0d405c5344e18e9305ef79a1cf36d0ce]]></id>
+      <name><![CDATA[NOM_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5b3d70afc91e50ab0b3756aff09d97eb]]></id>
+      <name><![CDATA[ID_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[656ad5928e35bc97947e47ca0a7aae48]]></id>
+      <name><![CDATA[CATEGORIE]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[^[0-9]{0,4}[a-z]*$]]></regexp>
+      <id><![CDATA[a18564d8f8117f0b372b77f12c9a78a3]]></id>
+      <name><![CDATA[CODCOVADIS]]></name>
+      <description><![CDATA[Cf. nomenclature COVADIS standard PPRN (annexe D.1)]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b7e021ab6f230e83a2c441fc165e0e83]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d7677c7a3d424f85665052e44e03f32d]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[db3d714a18e8822b643629c361c847b8]]></id>
+      <name><![CDATA[VER_SI_EXT]]></name>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

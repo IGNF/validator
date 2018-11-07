@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[4ebf6eb1e6856d3786ffbbad1c37909c]]></id>
+  <typeName><![CDATA[N_prefixTri_ENJEU_STEU_P_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[131be7cfb9a937b9588320c76b991024]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[2c8d7476d99e7156cafad04c2b786100]]></id>
+      <name><![CDATA[CODE_STEU]]></name>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[637266262e184e472402a8108f47af0e]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[694fa98ba579d704b3ea64903d6952f3]]></id>
+      <name><![CDATA[CAPACITE_N]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[79006db93e9f5e40bfb184d03e958280]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

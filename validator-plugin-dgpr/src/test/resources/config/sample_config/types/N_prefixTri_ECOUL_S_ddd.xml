@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[0d478366425a74cf410f970932a651be]]></id>
+  <typeName><![CDATA[N_prefixTri_ECOUL_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0793957a2a40561c18e5c928a6dc9aef]]></id>
+      <name><![CDATA[ID_S_INOND]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <reference><![CDATA[N_prefixTri_INONDABLE_S_ddd.SCENARIO]]></reference>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4b12aec576e612e9f30d1729921fe617]]></id>
+      <name><![CDATA[VITESSE]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6e0a0d4bab9756935c99e15bd6cc82b8]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a3f9ebf0aead9df8685217f481e079c0]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[ZE_[0-9]+$]]></regexp>
+      <id><![CDATA[a8b0eba991c962640c2b2903d3a57551]]></id>
+      <name><![CDATA[ID_ZONE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZE_[numero]]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d23a7f2a5783ceeab28ec26f08c0e142]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d9afe5e3fe3695d696f05aa74029e8fe]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

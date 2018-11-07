@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[16ecc5020df0b974299dff01c0a1662d]]></id>
+  <typeName><![CDATA[N_prefixTri_SOUST_INOND_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0391ef5fec24a43d9f611979da942298]]></id>
+      <name><![CDATA[ID_ROE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[09cf02e6454a7ccef2216811e9a250e4]]></id>
+      <name><![CDATA[SCENARIO]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[ZSI_[0-9]+$]]></regexp>
+      <id><![CDATA[0a41a09ddbbfe3444e0bb57a27fe9cf4]]></id>
+      <name><![CDATA[ID_ZONE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZSI_[numero]]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[13873c5b7891597ee4c9a9e9006aef03]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6555b206b8963bcba8be094af68b9a40]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9ea8992fea370dad9c5dfaf5feffff71]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a6c2746d22e64c3220da1b07b35fd5ae]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bb431d8ae9a5f756e04cb05f00329c37]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>
