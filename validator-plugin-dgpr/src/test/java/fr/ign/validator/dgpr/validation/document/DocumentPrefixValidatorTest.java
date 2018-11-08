@@ -1,7 +1,6 @@
 package fr.ign.validator.dgpr.validation.document;
 
 import java.io.File;
-import java.io.IOException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
@@ -27,8 +26,7 @@ public class DocumentPrefixValidatorTest extends TestCase {
 		context.setReportBuilder(report);
 	}
 
-	public void testOk() throws IOException {
-
+	public void testDocumentOk() {
 		DocumentModel documentModel = new DocumentModel();
 		File documentPath = new File("N_TRI_GREN2013_SIG_DI");
 
@@ -39,8 +37,7 @@ public class DocumentPrefixValidatorTest extends TestCase {
 		assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
 	}
 
-	public void testError() throws IOException {
-
+	public void testDocumentError() {
 		DocumentModel documentModel = new DocumentModel();
 		File documentPath = new File("N_TRI_GREN2013_mauvais_suffix");
 

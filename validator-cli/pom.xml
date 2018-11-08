@@ -26,6 +26,14 @@
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- dgpr -->
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>validator-plugin-dgpr</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
