@@ -57,14 +57,7 @@ public class DgprApplicationTest {
 		return documentModel;
 	}
 
-	/**
-	 * Get a sample document
-	 * 
-	 * @param documentName
-	 * @return
-	 * @throws IOException 
-	 */
-	private File getSampleDocument(String documentName) throws IOException{
+	private File getSampleDocument(String documentName) throws IOException {
 		URL resource = getClass().getResource("/documents/" + documentName);
 		Assert.assertNotNull(resource);
 		File sourcePath = new File(resource.getPath());
@@ -75,8 +68,6 @@ public class DgprApplicationTest {
 	}
 
 	/**
-	 * Test SUP
-	 * 
 	 * @throws Exception
 	 */
 	@Test
@@ -89,9 +80,8 @@ public class DgprApplicationTest {
 		try {
 			document.validate(context);
 			Assert.assertEquals("sample_document", document.getDocumentName());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_TEST_ERROR).size());
-			// Assert.assertEquals(6, report.countErrors(ErrorLevel.ERROR));
-			// Assert.assertEquals(0, report.countErrors(ErrorLevel.WARNING));
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());

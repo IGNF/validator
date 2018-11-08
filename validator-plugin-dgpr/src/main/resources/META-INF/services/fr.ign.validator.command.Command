@@ -1,1 +1,1 @@
-fr.ign.validator.dgpr.command.SomeActionCommand
+fr.ign.validator.dgpr.command.HelloWorldCommand
