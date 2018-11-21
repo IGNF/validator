@@ -92,7 +92,7 @@
     {
         "name": "ATTRIBUTE_UNEXPECTED_NULL",
         "level": "ERROR",
-        "message": "La valeur nulle n'est pas autorisée pour ce champ.",
+        "message": "Une valeur vide n'est pas autorisée pour ce champ.",
         "documentation": "Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide"
     },
     {
@@ -206,7 +206,7 @@
     {
         "name": "METADATA_TYPE_INVALID",
         "level": "ERROR",
-        "message": "Le champ \"catégorie thématique\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+        "message": "Le champ \"type de la ressource\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
         "documentation": ""
     },
     {
@@ -380,7 +380,7 @@
     {
         "name": "METADATA_SPECIFICATION_DEGREE_INVALID",
         "level": "ERROR",
-        "message": "Spécification ({NUMBER}/{COUNT}) : la degré correspondant ({VALUE}) n'est pas valide (true ou false attendu).",
+        "message": "Spécification ({NUMBER}/{COUNT}) : la degré correspondant ({VALUE}) n'est pas valide (true, false ou valeur vide attendue).",
         "documentation": ""
     },
     {
@@ -440,7 +440,7 @@
     {
         "name": "CNIG_DOCUMENT_NO_PDF",
         "level": "ERROR",
-        "message": "Aucun fichier PDF respectant les règles de nommage trouvé dans le document.",
+        "message": "Aucun fichier PDF respectant les règles de nommage trouvé dans le dossier.",
         "documentation": ""
     },
     {
@@ -482,7 +482,7 @@
     {
         "name": "CNIG_METADATA_TYPE_INVALID",
         "level": "ERROR",
-        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" ou \"serie\" pour les PLU, POS, CC, PSMV et les SUP.",
+        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" pour les PLU, POS, CC, PSMV et les SUP.",
         "documentation": ""
     },
     {
