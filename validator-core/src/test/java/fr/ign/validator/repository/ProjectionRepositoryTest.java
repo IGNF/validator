@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.Projection;
 
 /**
@@ -54,6 +55,7 @@ public class ProjectionRepositoryTest {
 			);
 		}
 	}
+
 	
 }
 
