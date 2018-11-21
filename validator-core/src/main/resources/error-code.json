@@ -482,7 +482,7 @@
     {
         "name": "CNIG_METADATA_TYPE_INVALID",
         "level": "ERROR",
-        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" pour les PLU, POS, CC, PSMV et les SUP.",
+        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" ou \"serie\" pour les PLU, POS, CC, PSMV et les SUP.",
         "documentation": ""
     },
     {
