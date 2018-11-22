@@ -14,6 +14,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.type.DoubleType;
 import fr.ign.validator.model.type.IntegerType;
 
 public class NumericCustomizer implements ValidatorListener {
@@ -26,26 +27,22 @@ public class NumericCustomizer implements ValidatorListener {
 		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
 		// looking for TableModel where to add Validator
 		for (FileModel fileModel : fileModels) {
-			// looking for N_prefixTri_COMMUNE_S_ddd.TX_HAB_SAI
-			if ( fileModel instanceof TableModel
-					&& fileModel.getName().equals("N_prefixTri_COMMUNE_S_ddd")
-			) {
-				AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("TX_HAB_SAI") ;
-				if ( attribute == null ){
-					continue;
-				}
-
-				/* check attribute type and add custom validator */
-				if ( attribute instanceof IntegerType ) {
-					((IntegerType)attribute).addValidator(new TauxHabitantValidator());
-				} else {
-					throw new RuntimeException("TX_HAB_SAI de N_prefixTri_COMMUNE_S_ddd n'est pas configuré comme étant un entier");
-				}
-				// looking for N_prefixTri_COTE_VIT_DEB_P_ddd.
-			} else if(fileModel instanceof TableModel
-					&& fileModel.getName().equals("N_prefixTri_COTE_VIT_DEB_P_ddd")
-			) {
-				// TODO
+			if (!(fileModel instanceof TableModel)) {
+				continue;
+			}
+			switch (fileModel.getName()) {
+				case "N_prefixTri_COMMUNE_S_ddd":
+					addTauxHabValidator(fileModel);
+					break;
+				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
+					// TODO
+					break;
+				case "N_prefixTri_CHAMP_VIT_P_ddd":
+					addVitesseMinValidator(fileModel);
+					break;
+	
+				default:
+					break;
 			}
 		}
 
@@ -53,14 +50,39 @@ public class NumericCustomizer implements ValidatorListener {
 
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void afterValidate(Context context, Document document) throws Exception {
-		// TODO Auto-generated method stub
+	}
 
+	private void addTauxHabValidator(FileModel fileModel) {
+		// looking for N_prefixTri_COMMUNE_S_ddd.TX_HAB_SAI
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("TX_HAB_SAI") ;
+		if ( attribute == null ){
+			return;
+		}
+
+		/* check attribute type and add custom validator */
+		if ( attribute instanceof IntegerType ) {
+			((IntegerType)attribute).addValidator(new TauxHabitantValidator());
+		} else {
+			throw new RuntimeException("TX_HAB_SAI de N_prefixTri_COMMUNE_S_ddd n'est pas configuré comme étant un entier");
+		}
+	}
+
+	private void addVitesseMinValidator(FileModel fileModel) {
+		// looking for N_prefixTri_COTE_VIT_DEB_P_ddd.VITESS_MIN
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("VITESS_MIN");
+		if ( attribute == null ) {
+			return;
+		}
+		/* check attribute type and add custom validator */
+		if ( attribute instanceof DoubleType ) {
+			((DoubleType)attribute).addValidator(new VitesseMinValidator());
+		} else {
+			throw new RuntimeException("ERREUR a la configuration de la table");
+		}
 	}
 
 }
