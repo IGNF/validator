@@ -35,7 +35,7 @@ public class DebLinMaxValidator implements Validator<Attribute<Double>> {
 		}
 		
 		//l'attribut DEBLIN_MAX doit être null ou supérieur à DEBLIN_MIN
-		if (attribute.getBindedValue() == null || attribute.getBindedValue() < deblin_min) {
+		if (attribute.getBindedValue() == null || attribute.getBindedValue() > deblin_min) {
 			return;
 		}
 
