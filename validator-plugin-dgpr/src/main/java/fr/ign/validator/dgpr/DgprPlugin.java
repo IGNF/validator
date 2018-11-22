@@ -4,6 +4,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.dgpr.process.SomeActionPostProcess;
 import fr.ign.validator.dgpr.validation.attribute.NumericCustomizer;
 import fr.ign.validator.dgpr.validation.document.DocumentPrefixValidator;
+import fr.ign.validator.dgpr.validation.document.NumericConstraintsCustomizer;
 import fr.ign.validator.plugin.Plugin;
 
 /**
@@ -28,9 +29,12 @@ public class DgprPlugin implements Plugin {
 		 */
 		// file name contains directory prefix
 		context.addListener(new DocumentPrefixValidator());
-		
+				
 		// taux habitant et autre validation
 		context.addListener(new NumericCustomizer());
+
+		// context c'est celui qui 
+		context.addListener(new NumericConstraintsCustomizer());
 	}
 
 }

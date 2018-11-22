@@ -534,6 +534,12 @@
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     },
     {
+        "name": "DGPR_VITESSE_MIN_ERROR",
+        "level": "ERROR",
+        "message": "La vitesse MIN {VALUE_MIN} est supérieure à la vitesse MAX {VALUE_MAX}.",
+        "documentation": ""
+    },
+    {
         "name": "DGPR_TX_HAB_SAI_ERROR",
         "level": "ERROR",
         "message": "La valeur de TX_HAB_SAI {VALUE} n'est pas comprise entre 0 et 100.",
