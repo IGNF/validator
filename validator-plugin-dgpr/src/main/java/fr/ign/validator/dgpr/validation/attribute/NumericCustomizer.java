@@ -35,7 +35,8 @@ public class NumericCustomizer implements ValidatorListener {
 					addTauxHabValidator(fileModel);
 					break;
 				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
-					addAzimuthValidator(fileModel);
+					addDebLinMinValidator(fileModel, "DEBLIN");
+					addAzimuthValidator(fileModel);					
 					break;
 				case "N_prefixTri_CHAMP_VIT_P_ddd":
 					addVitesseMinValidator(fileModel);
