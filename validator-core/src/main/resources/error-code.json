@@ -532,5 +532,11 @@
         "level": "ERROR",
         "message": "Le nom du fichier {FILENAME} ne contient pas le prefix TRI du repertoire {DOCUMENT_NAME}.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
+    },
+    {
+        "name": "DGPR_TX_HAB_SAI_ERROR",
+        "level": "ERROR",
+        "message": "La valeur de TX_HAB_SAI {VALUE} n'est pas comprise entre 0 et 100.",
+        "documentation": ""
     }
 ]
