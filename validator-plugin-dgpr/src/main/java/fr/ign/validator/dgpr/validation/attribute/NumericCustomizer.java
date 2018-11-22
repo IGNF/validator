@@ -35,7 +35,7 @@ public class NumericCustomizer implements ValidatorListener {
 					addTauxHabValidator(fileModel);
 					break;
 				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
-					// TODO
+					addAzimuthValidator(fileModel);
 					break;
 				case "N_prefixTri_CHAMP_VIT_P_ddd":
 					addVitesseMinValidator(fileModel);
@@ -69,6 +69,20 @@ public class NumericCustomizer implements ValidatorListener {
 		} else {
 			throw new RuntimeException("TX_HAB_SAI de N_prefixTri_COMMUNE_S_ddd n'est pas configuré comme étant un entier");
 		}
+	}
+	
+	private void addAzimuthValidator(FileModel fileModel) {
+		// looking for N_prefixTri_COTE_VIT_DEB_P_ddd
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("AZIMUTH");
+		if ( attribute == null ) {
+			return;
+		}
+		/* check attribute type and add custom validator */
+		if ( attribute instanceof DoubleType ) {
+			((DoubleType)attribute).addValidator(new AzimuthValidator());
+		} else {
+			throw new RuntimeException("AZIMUTH de N_prefixTri_COTE_VIT_DEB_P_ddd n'est pas configuré comme étant un double");
+		}	
 	}
 
 	private void addVitesseMinValidator(FileModel fileModel) {
