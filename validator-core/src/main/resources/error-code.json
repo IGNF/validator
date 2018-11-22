@@ -532,5 +532,11 @@
         "level": "ERROR",
         "message": "Le nom du fichier {FILENAME} ne contient pas le prefix TRI du repertoire {DOCUMENT_NAME}.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
+    },
+    {
+        "name": "DGPR_VITESSE_MIN_ERROR",
+        "level": "ERROR",
+        "message": "La vitesse MIN {VALUE_MIN} est supérieure à la vitesse MAX {VALUE_MAX}.",
+        "documentation": ""
     }
 ]
