@@ -16,6 +16,7 @@ import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -85,9 +86,51 @@ public class DgprApplicationTest {
 			
 			// validation database
 			// TODO à reporter dans test DATABASE
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0).getMessage());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			/*
+			ValidatorError error0 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0);
+			ValidatorError error1 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(1);
+			ValidatorError error2 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(2);
+			*/
+			// Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error0.getMessage());
+			// Assert.assertEquals("", error1.getMessage());
+			// Assert.assertEquals("", error2.getMessage());
+//			Assert.assertEquals("SIN_4", error.getFeatureId());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
 
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	public void testDocumentNotOk() throws Exception {
+		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
+		File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
+
+		Context context = createContext(documentPath);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+			Assert.assertEquals(31, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+			
+			// validation database
+			// TODO à reporter dans test DATABASE
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			
+			ValidatorError error0 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0);
+			ValidatorError error1 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(1);
+
+			Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error0.getMessage());
+			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error1.getMessage());
+			// Assert.assertEquals("", error2.getMessage());
+//			Assert.assertEquals("SIN_4", error.getFeatureId());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
