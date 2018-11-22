@@ -538,5 +538,11 @@
         "level": "ERROR",
         "message": "La vitesse MIN {VALUE_MIN} est supérieure à la vitesse MAX {VALUE_MAX}.",
         "documentation": ""
+    },
+    {
+        "name": "DGPR_DEBLIN_MIN_ERROR",
+        "level": "ERROR",
+        "message": "La valeur DEBLIN_MIN {VALUE_MIN} doit être supérieure à 0.",
+        "documentation": ""
     }
 ]

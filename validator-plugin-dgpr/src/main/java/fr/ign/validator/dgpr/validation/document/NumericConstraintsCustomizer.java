@@ -6,6 +6,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.validation.attribute.VitesseMinValidator;
+import fr.ign.validator.dgpr.validation.attribute.DebLinMinValidator;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
@@ -17,7 +18,7 @@ public class NumericConstraintsCustomizer implements ValidatorListener {
 	public void beforeMatching(Context context, Document document) throws Exception {
 		/*
 		 * adding VitesseMinValidator to N_prefixTri_CHAMP_VIT_P_ddd.VITESS_MIN 
-		 * adding ...Validator to .......
+		 * adding DebLinMinValidator to N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN
 		 * 
 		 * ...
 		 */
@@ -36,6 +37,21 @@ public class NumericConstraintsCustomizer implements ValidatorListener {
 					throw new RuntimeException("ERREUR a la configuration de la table");
 				}
 			}
+			
+			if ( fileModel instanceof TableModel || fileModel.getName().equals("N_prefixTri_ISO_DEB_S_ddd")) {
+				// on a le bon fichier
+				AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MIN");
+				if ( attribute == null ) {
+					continue;
+				}
+				/* check attribute type and add custom validator */
+				if ( attribute instanceof DoubleType ) {
+					((DoubleType)attribute).addValidator(new DebLinMinValidator());
+				} else {
+					throw new RuntimeException("ERREUR a la configuration de la table");
+				}
+			}
+
 		}
 	}
 
