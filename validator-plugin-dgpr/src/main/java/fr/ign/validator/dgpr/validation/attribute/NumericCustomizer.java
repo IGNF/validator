@@ -35,10 +35,15 @@ public class NumericCustomizer implements ValidatorListener {
 					addTauxHabValidator(fileModel);
 					break;
 				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
-					// TODO
+					addDebLinMinValidator(fileModel, "DEBLIN");
 					break;
 				case "N_prefixTri_CHAMP_VIT_P_ddd":
 					addVitesseMinValidator(fileModel);
+					break;
+					
+				case "N_prefixTri_ISO_DEB_S_ddd":
+					addDebLinMinValidator(fileModel, "DEBLIN_MIN");
+					addDebLinMaxValidator(fileModel);
 					break;
 	
 				default:
@@ -56,6 +61,38 @@ public class NumericCustomizer implements ValidatorListener {
 	public void afterValidate(Context context, Document document) throws Exception {
 	}
 
+	private void addDebLinMaxValidator(FileModel fileModel) {
+		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MAX
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MAX") ;
+		if ( attribute == null ){
+			return;
+		}
+
+		/* check attribute type and add custom validator */
+		if ( attribute instanceof DoubleType ) {
+			((DoubleType)attribute).addValidator(new DebLinMaxValidator());
+		} else {
+			throw new RuntimeException("DEBLIN_MAX de N_prefixTri_ISO_DEB_S_ddd n'est pas configuré comme étant un double");
+		}
+	}
+	
+	private void addDebLinMinValidator(FileModel fileModel, String attributeName) {		
+		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
+		
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute(attributeName);
+	
+		if ( attribute == null ){
+			return;
+		}
+
+		/* check attribute type and add custom validator */
+		if ( attribute instanceof DoubleType ) {
+			((DoubleType)attribute).addValidator(new DebLinMinValidator());
+		} else {
+			throw new RuntimeException("L'attribut n'est pas du type attendu");
+		}
+	}
+	
 	private void addTauxHabValidator(FileModel fileModel) {
 		// looking for N_prefixTri_COMMUNE_S_ddd.TX_HAB_SAI
 		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("TX_HAB_SAI") ;

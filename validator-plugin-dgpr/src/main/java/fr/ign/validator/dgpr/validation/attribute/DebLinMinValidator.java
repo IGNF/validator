@@ -10,10 +10,7 @@ public class DebLinMinValidator implements Validator<Attribute<Double>> {
 	@Override
 	public void validate(Context context, Attribute<Double> attribute) {
 
-		//Stocke la vitesse max et la vitesse min en string
-
-		System.out.println(attribute.getBindedValue());
-
+		//l'attribut DEBLIN_MIN doit être supérieur à 0
 		if (attribute.getBindedValue() > 0) {
 			return;
 		}
