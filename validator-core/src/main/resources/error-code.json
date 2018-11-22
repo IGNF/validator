@@ -546,6 +546,12 @@
         "documentation": ""
     },
     {
+        "name": "DGPR_AZIMUTH_ERROR",
+        "level": "ERROR",
+        "message": "La vitesse ({VALUE_VITESSE}) ou le débit linéique ({VALUE_DEBLIN}) est renseigné, mais l’azimuth est null.",
+        "documentation": ""
+    },
+    {
         "name": "DGPR_DEBLIN_MIN_ERROR",
         "level": "ERROR",
         "message": "La valeur du débit {VALUE_MIN} doit être supérieure à 0.",
