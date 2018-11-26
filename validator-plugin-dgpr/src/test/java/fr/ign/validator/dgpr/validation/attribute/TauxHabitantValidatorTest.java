@@ -91,4 +91,21 @@ public class TauxHabitantValidatorTest {
 		Assert.assertEquals(1, report.countErrors());	
 		Assert.assertEquals("La valeur de TX_HAB_SAI 200 n'est pas comprise entre 0 et 100.", report.getErrorsByCode(DgprErrorCodes.DGPR_TX_HAB_SAI_ERROR).get(0).getMessage());	
 	}
+	
+	@Test
+	public void testNullError() throws Exception {
+		File documentPath = getSampleDocument("sample_document");
+		Context context = createContext(documentPath);
+		
+		// le modele
+		IntegerType integerTypeTxhab = new IntegerType();
+		integerTypeTxhab.setName("TX_HAB_SAI");
+		
+		// le test
+		TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
+		Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, null);
+		txHabValidator.validate(context, attribute);
+
+		Assert.assertEquals(0, report.countErrors());	
+	}
 }
