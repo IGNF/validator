@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -30,10 +31,22 @@ public class DocumentDatabase {
 	public static final Logger log    = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
 
+	/**
+	 * Database connection
+	 */
 	private Connection connection;
 
+	/**
+	 * Document: model and data files
+	 */
 	private Document document;
 
+
+	/**
+	 * Document database constructor
+	 * @param document
+	 * @throws SQLException
+	 */
 	public DocumentDatabase(Document document) throws SQLException {
 		this.document = document;
 		try {
@@ -53,22 +66,27 @@ public class DocumentDatabase {
 
 
 	/**
-	 * Schema creation
-	 * 
+	 * Perform a list of TABLE CREATE queries for all TableModel for the current DocumentModel
 	 * @throws SQLException
 	 */
 	private void createSchema() throws SQLException {
 		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
 		for (FileModel fileModel : fileModels) {
 			if (fileModel instanceof TableModel) {
-				createTable(fileModel);
+				TableModel tableModel = (TableModel) fileModel;
+				createTable(tableModel);
 			}
 		}
 	}
 
 
-	private void createTable(FileModel fileModel) throws SQLException {
-		String sql = getCreateTableSql(fileModel);
+	/**
+	 * Perform a list of TABLE CREATE queries for all TableModel for the current DocumentModel
+	 * @param tableModel
+	 * @throws SQLException
+	 */
+	private void createTable(TableModel tableModel) throws SQLException {
+		String sql = getCreateTableSql(tableModel);
 		// debug SQL
 		log.debug(MARKER, sql);
 		Statement sth = connection.createStatement();
@@ -77,11 +95,16 @@ public class DocumentDatabase {
 	}
 
 
-	private String getCreateTableSql(FileModel fileModel) {
-		String tablename = fileModel.getName().toLowerCase();
+	/**
+	 * Return the CREATE TABLE query for a giving TableModel
+	 * @param fileModel
+	 * @return
+	 */
+	private String getCreateTableSql(TableModel tableModel) {
+		String tablename = tableModel.getName();
 		String sql = "CREATE TABLE " + tablename + " (";
 
-		List<AttributeType<?>> attributes = fileModel.getFeatureType().getAttributes();
+		List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
 		for (AttributeType<?> attribute : attributes) {
 			String name = attribute.getName().toLowerCase();
 			if (attribute.isIdentifier()) {
@@ -104,9 +127,40 @@ public class DocumentDatabase {
 	}
 
 
+	private File getCsvFile(File file) {
+		File csvFile = new File(
+			file.getParent(),
+			FilenameUtils.getBaseName(file.getName())+".csv"
+		);
+		return csvFile;
+	}
+
+
+	/**
+	 * Load an entire document to the database (insert mode)
+	 * @throws IOException
+	 * @throws InvalidCharsetException
+	 * @throws SQLException
+	 */
+	public void load() throws IOException, InvalidCharsetException, SQLException {
+		List<DocumentFile> files = document.getDocumentFiles();
+		for (DocumentFile file : files) {
+			loadFile(file.getPath(), file.getFileModel());
+		}
+	}
+
+
+	/**
+	 * Load a given file to the database (insert mode)
+	 * @param file
+	 * @param fileModel
+	 * @throws IOException
+	 * @throws InvalidCharsetException
+	 * @throws SQLException
+	 */
 	public void loadFile(File file, FileModel fileModel) throws IOException, InvalidCharsetException, SQLException {
 		// TableReader reader = TableReader.createTableReader(file, CharsetDetector.detectCharset(file)StandardCharsets.UTF_8);
-		TableReader reader = TableReader.createTableReader(file, CharsetDetector.detectCharset(file));
+		TableReader reader = TableReader.createTableReader(getCsvFile(file), CharsetDetector.detectCharset(file));
 
 		String[] header = reader.getHeader();
 		List<AttributeType<?>> attributes = fileModel.getFeatureType().getAttributes();
@@ -151,18 +205,26 @@ public class DocumentDatabase {
 	}
 
 
-	public int getCount(String tableName) throws SQLException{
-		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName) ;
-		ResultSet rs = sth.executeQuery() ;
-		return rs.getInt(1);
+	/**
+	 * Perform any SQL request to DocumentDatabase
+	 * @param sql
+	 * @return
+	 * @throws SQLException
+	 */
+	public RowIterator query(String sql) throws SQLException {
+		PreparedStatement sth = connection.prepareStatement(sql);
+		ResultSet rs = sth.executeQuery();
+		return new RowIterator(rs);
 	}
 
 
-	public RowIterator selectAll(String tablename) throws SQLException {
-		return query("SELECT * FROM " + tablename);
-	}
-
-
+	/**
+	 * Return an Array of String giving column names for a giving table
+	 * @param tablename
+	 * @return
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public String[] getSchema(String tablename) throws SQLException, IOException {
 		RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1");
 		String[] header = query.getHeader();
@@ -171,18 +233,27 @@ public class DocumentDatabase {
 	}
 
 
-	public RowIterator query(String sql) throws SQLException {
-		PreparedStatement sth = connection.prepareStatement(sql);
-		ResultSet rs = sth.executeQuery();
-		return new RowIterator(rs);
+	/**
+	 * Return the number of features of a giving table
+	 * @param tableName
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getCount(String tableName) throws SQLException{
+		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName) ;
+		ResultSet rs = sth.executeQuery() ;
+		return rs.getInt(1);
 	}
 
 
-	public void load() throws IOException, InvalidCharsetException, SQLException {
-		List<DocumentFile> files = document.getDocumentFiles();
-		for (DocumentFile file : files) {
-			loadFile(file.getPath(), file.getFileModel());
-		}
+	/**
+	 * Return all the feature of a giving table
+	 * @param tablename
+	 * @return
+	 * @throws SQLException
+	 */
+	public RowIterator selectAll(String tablename) throws SQLException {
+		return query("SELECT * FROM " + tablename);
 	}
 
 }

@@ -15,7 +15,7 @@ import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.data.Row;
+import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.database.DocumentDatabase;
 import fr.ign.validator.dgpr.database.RowIterator;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
@@ -31,28 +31,26 @@ public class InclusionValidator {
 	public static WKTReader format = new WKTReader();
 
 	public void validate(Context context, Document document, DocumentDatabase database) throws Exception {
-		// String[] header = database.getSchema("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
-		// System.out.println(ArrayUtils.toString(header));
 
 		RowIterator unionFaibleIterator = database.query(
-				"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-						+ " WHERE scenario LIKE '04Fai'"
-				);
-		Geometry unionFaible = getUnion2(unionFaibleIterator);
+			"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
+			+ " WHERE scenario LIKE '04Fai'"
+		);
+		Geometry unionFaible = DatabaseUtils.getUnion(unionFaibleIterator);
 
 		RowIterator unionMoyIterator = database.query(
-				"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-						+ " WHERE scenario LIKE '02Moy'"
-				);
-		Geometry unionMoy = getUnion2(unionMoyIterator);
+			"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
+			+ " WHERE scenario LIKE '02Moy'"
+		);
+		Geometry unionMoy = DatabaseUtils.getUnion(unionMoyIterator);
 
 
 		// MOY -> FAIBLE ?
 		{
 			RowIterator surfMoyIterator = database.query(
-					"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-							+ " WHERE scenario LIKE '02Moy'"
-					);
+				"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
+						+ " WHERE scenario LIKE '02Moy'"
+			);
 			int wktIndex = surfMoyIterator.getColumn("WKT");
 			int idIndex = surfMoyIterator.getColumn("ID_S_INOND");
 			while (surfMoyIterator.hasNext()) {
@@ -62,9 +60,7 @@ public class InclusionValidator {
 				Geometry geometry = format.read(wkt);
 				if (unionFaible.contains(geometry)) {
 					// all is ok
-					System.out.println(row[idIndex] + " est inclu dans 04Fai");
 				} else {
-					System.out.println(row[idIndex] + " n'est pas inclu dans 04Fai");
 					context.report(context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
 							.setFeatureId(row[idIndex])
 							.setMessageParam("ID_S_INOND", row[idIndex])
@@ -81,9 +77,9 @@ public class InclusionValidator {
 		// FORT -> FAIBLE && FORT -> MOY
 		{
 			RowIterator surfForIterator = database.query(
-					"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-							+ " WHERE scenario LIKE '01For'"
-					);
+				"SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
+						+ " WHERE scenario LIKE '01For'"
+			);
 			int wktIndex = surfForIterator.getColumn("WKT");
 			int idIndex = surfForIterator.getColumn("ID_S_INOND");
 			while (surfForIterator.hasNext()) {
@@ -93,9 +89,7 @@ public class InclusionValidator {
 				Geometry geometry = format.read(wkt);
 				if (unionFaible.contains(geometry)) {
 					// all is ok
-					System.out.println(row[idIndex] + " est inclu dans 04Fai");
 				} else {
-					System.out.println(row[idIndex] + " n'est pas inclu dans 04Fai");
 					context.report(context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
 							.setFeatureId(row[idIndex])
 							.setMessageParam("ID_S_INOND", row[idIndex])
@@ -105,9 +99,7 @@ public class InclusionValidator {
 				}
 				if (unionMoy.contains(geometry)) {
 					// all is ok
-					System.out.println(row[idIndex] + " est inclu dans 02Moy");
 				} else {
-					System.out.println(row[idIndex] + " n'est pas inclu dans 02Moy");
 					context.report(context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
 							.setFeatureId(row[idIndex])
 							.setMessageParam("ID_S_INOND", row[idIndex])
@@ -119,48 +111,6 @@ public class InclusionValidator {
 			surfForIterator.close();
 		}
 
-
 	}
-
-
-	public Geometry getUnion(RowIterator rowIterator) throws Exception {
-		Geometry union = null;
-		int wktIndex = rowIterator.getColumn("WKT");
-		int idIndex = rowIterator.getColumn("ID_S_INOND");
-		while (rowIterator.hasNext()) {
-			String[] row = rowIterator.next();
-			String wkt = row[wktIndex];
-			Geometry geometry = format.read(wkt);
-			if (union == null) {
-				union = geometry;
-				System.out.println("début union de " + row[idIndex]);
-			} else {
-				geometry.union(union);
-				System.out.println("avec " + row[idIndex]);
-			}
-		}
-		rowIterator.close();
-		System.out.println("fin union");
-		return union;
-	}
-	
-	public Geometry getUnion2(RowIterator rowIterator) throws Exception {
-		GeometryFactory geometryFactory = new GeometryFactory();
-	    List<Geometry> geometries = new ArrayList<Geometry>();
-	    
-	    int wktIndex = rowIterator.getColumn("WKT");
-		int idIndex = rowIterator.getColumn("ID_S_INOND");
-		while (rowIterator.hasNext()) {
-			String[] row = rowIterator.next();
-			String wkt = row[wktIndex];
-			Geometry geometry = format.read(wkt);
-			geometries.add(geometry);
-		}
-		rowIterator.close();
-	    GeometryCollection geometryCollection = (GeometryCollection) geometryFactory.buildGeometry(geometries);
-
-		return geometryCollection.union();
-	}
-
 
 }
