@@ -66,6 +66,12 @@ public class RowIterator implements Iterator<String[]>, Closeable {
 		return -1;
 	}
 
+
+	public void remove() {
+	    throw new UnsupportedOperationException();
+	}
+
+
 	private void readOne() throws SQLException {
 		if ( ! rs.next() ) {
 			current = null;
@@ -76,4 +82,5 @@ public class RowIterator implements Iterator<String[]>, Closeable {
 			current[i] = rs.getString(i + 1);
 		}
 	}
+
 }
