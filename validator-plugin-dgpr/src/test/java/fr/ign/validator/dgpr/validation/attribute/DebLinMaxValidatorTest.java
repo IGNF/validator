@@ -87,10 +87,15 @@ public class DebLinMaxValidatorTest {
 		Row row = new Row(0, values, mapping);
 		context.beginData(row);
 
-		// test
-		DebLinMaxValidator minValidator = new DebLinMaxValidator();
+		// test avec DEBLIN_MAX = 1.5
+		DebLinMaxValidator maxValidator = new DebLinMaxValidator();
 		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 1.5);
-		minValidator.validate(context, attribute);
+		maxValidator.validate(context, attribute);
+		
+		// test avec DEBLIN_MAX = null
+		DebLinMaxValidator maxValidator2 = new DebLinMaxValidator();
+		Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMax, null);
+		maxValidator2.validate(context, attribute2);
 
 		context.beginData(row);
 
@@ -133,7 +138,45 @@ public class DebLinMaxValidatorTest {
 		context.beginData(row);
 
 		Assert.assertEquals(1, report.countErrors());
-		Assert.assertEquals("La valeur DEBLIN_MAX 0.9 doit être nulle ou supérieure la valeur DEBLIN_MIN 1.0", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
+		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure la valeur DEBLIN_MIN (1.0)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
+	}
+	
+	@Test
+	public void testNoValueMinError() throws Exception {
+		// TODO partie contexte à revoir
+		File documentPath = getSampleDocument("sample_document");
+		Context context = createContext(documentPath);
+
+		// le csv
+		String[] header = {};
+		String[] values = {};
+
+		// le modele
+		DoubleType doubleTypeDebLinMin = new DoubleType();
+		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+
+		DoubleType doubleTypeDebLinMax = new DoubleType();
+		doubleTypeDebLinMax.setName("DEBLIN_MAX");
+
+		FeatureType featureType = new FeatureType();
+		featureType.addAttribute(doubleTypeDebLinMin);
+		featureType.addAttribute(doubleTypeDebLinMax);
+
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+
+		// la ligne
+		Row row = new Row(0, values, mapping);
+		context.beginData(row);
+
+		// test
+		DebLinMaxValidator minValidator = new DebLinMaxValidator();
+		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 0.9);
+		minValidator.validate(context, attribute);
+
+		context.beginData(row);
+
+		Assert.assertEquals(1, report.countErrors());
+		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure la valeur DEBLIN_MIN (non renseignée)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
 	}
 
 }

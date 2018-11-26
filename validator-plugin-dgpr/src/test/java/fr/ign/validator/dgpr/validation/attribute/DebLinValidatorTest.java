@@ -21,7 +21,7 @@ import fr.ign.validator.model.type.DoubleType;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
-public class DebLinMinValidatorTest {
+public class DebLinValidatorTest {
 
 	public static final Logger log = LogManager.getRootLogger();
 
@@ -64,12 +64,16 @@ public class DebLinMinValidatorTest {
 		Context context = createContext(documentPath);
 
 		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+		doubleTypeDebLinMin.setName("DEBLIN");
 
-		// test
-		DebLinMinValidator minValidator = new DebLinMinValidator();
+		// test avec DEBLIN = 15.0
+		DebLinValidator deblinValidator = new DebLinValidator();
 		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMin, 15.0);
-		minValidator.validate(context, attribute);
+		deblinValidator.validate(context, attribute);
+		
+		// test avec DEBLIN = null
+		Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMin, null);
+		deblinValidator.validate(context, attribute2);
 
 
 		Assert.assertEquals(0, report.countErrors());
@@ -83,15 +87,15 @@ public class DebLinMinValidatorTest {
 		Context context = createContext(documentPath);
 
 		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+		doubleTypeDebLinMin.setName("DEBLIN");
 
 		// test
-		DebLinMinValidator minValidator = new DebLinMinValidator();
+		DebLinValidator minValidator = new DebLinValidator();
 		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMin, -10.0);
 		minValidator.validate(context, attribute);
 
 		Assert.assertEquals(1, report.countErrors());
-		Assert.assertEquals("La valeur DEBLIN_MIN (-10.0) doit être supérieure à 0.", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MIN_ERROR).get(0).getMessage());
+		Assert.assertEquals("La valeur DEBLIN (-10.0) doit être non renseignée ou supérieure à 0.", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_ERROR).get(0).getMessage());
 	}
 
 }

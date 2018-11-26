@@ -35,7 +35,7 @@ public class NumericCustomizer implements ValidatorListener {
 					addTauxHabValidator(fileModel);
 					break;
 				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
-					addDebLinMinValidator(fileModel, "DEBLIN");
+					addDebLinValidator(fileModel);
 					addAzimuthValidator(fileModel);					
 					break;
 				case "N_prefixTri_CHAMP_VIT_P_ddd":
@@ -43,7 +43,7 @@ public class NumericCustomizer implements ValidatorListener {
 					break;
 					
 				case "N_prefixTri_ISO_DEB_S_ddd":
-					addDebLinMinValidator(fileModel, "DEBLIN_MIN");
+					addDebLinMinValidator(fileModel);
 					addDebLinMaxValidator(fileModel);
 					break;
 	
@@ -77,10 +77,10 @@ public class NumericCustomizer implements ValidatorListener {
 		}
 	}
 	
-	private void addDebLinMinValidator(FileModel fileModel, String attributeName) {		
+	private void addDebLinMinValidator(FileModel fileModel) {		
 		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
 		
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute(attributeName);
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MIN");
 	
 		if ( attribute == null ){
 			return;
@@ -89,6 +89,23 @@ public class NumericCustomizer implements ValidatorListener {
 		/* check attribute type and add custom validator */
 		if ( attribute instanceof DoubleType ) {
 			((DoubleType)attribute).addValidator(new DebLinMinValidator());
+		} else {
+			throw new RuntimeException("L'attribut n'est pas du type attendu");
+		}
+	}
+	
+	private void addDebLinValidator(FileModel fileModel) {		
+		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
+		
+		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN");
+	
+		if ( attribute == null ){
+			return;
+		}
+
+		/* check attribute type and add custom validator */
+		if ( attribute instanceof DoubleType ) {
+			((DoubleType)attribute).addValidator(new DebLinValidator());
 		} else {
 			throw new RuntimeException("L'attribut n'est pas du type attendu");
 		}
