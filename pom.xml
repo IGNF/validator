@@ -20,6 +20,11 @@
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- 
+		14.5 is the last supported version for java 7
+		See following page for the required java version
+		http://docs.geotools.org/latest/userguide/build/install/jdk.html#
+		 -->
 		<geotools.version>14.5</geotools.version>
 		<log4j.version>2.8.2</log4j.version>
 		<jackson.version>2.9.7</jackson.version>
@@ -164,7 +169,7 @@
 		<!-- embedding light database wkt for common CRS -->
 		<dependency>
 			<groupId>org.geotools</groupId>
-			<artifactId>gt-epsg-wkt</artifactId>
+			<artifactId>gt-epsg-hsql</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
 
