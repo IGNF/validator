@@ -534,6 +534,42 @@
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     },
     {
+        "name": "DGPR_VITESSE_MIN_ERROR",
+        "level": "ERROR",
+        "message": "La vitesse MIN {VALUE_MIN} est supérieure à la vitesse MAX {VALUE_MAX}.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_TX_HAB_SAI_ERROR",
+        "level": "ERROR",
+        "message": "La valeur de TX_HAB_SAI {VALUE} n'est pas comprise entre 0 et 100.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_AZIMUTH_ERROR",
+        "level": "ERROR",
+        "message": "La vitesse ({VALUE_VITESSE}) et/ou le débit linéique ({VALUE_DEBLIN}) est renseigné, mais l’azimuth est null.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_DEBLIN_ERROR",
+        "level": "ERROR",
+        "message": "La valeur DEBLIN ({VALUE_MIN}) doit être non renseignée ou supérieure à 0.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_DEBLIN_MIN_ERROR",
+        "level": "ERROR",
+        "message": "La valeur DEBLIN_MIN ({VALUE_MIN}) doit être supérieure à 0.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_DEBLIN_MAX_ERROR",
+        "level": "ERROR",
+        "message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure la valeur DEBLIN_MIN ({VALUE_MIN})",
+        "documentation": ""
+    },
+    {
         "name": "DGPR_INOND_INCLUSION_ERROR",
         "level": "ERROR",
         "message": "La surface {ID_S_INOND} du scénario {SCENARIO_VALUE_FORT} n'est pas incluse dans le scénario {SCENARIO_VALUE_FAIBLE}.",
