@@ -23,6 +23,8 @@ public class DebLinMaxValidator implements Validator<Attribute<Double>> {
 		FeatureType featureType = mapping.getFeatureType() ;
 		
 		Double deblin_min = null;
+		String st_deblin_min = "";
+		
 		//on récupère l'attribut DEBLIN_MIN
 		for (int i = 0; i < featureType.getAttributeCount(); i++) {
 			AttributeType<?> attributeType = featureType.getAttribute(i);
@@ -34,14 +36,24 @@ public class DebLinMaxValidator implements Validator<Attribute<Double>> {
 			}
 		}
 		
+		
+		
 		//l'attribut DEBLIN_MAX doit être null ou supérieur à DEBLIN_MIN
-		if (attribute.getBindedValue() == null || attribute.getBindedValue() > deblin_min) {
-			return;
+		if (deblin_min != null) {
+			if(attribute.getBindedValue() == null || attribute.getBindedValue() > deblin_min)
+			{
+				return;
+			}				
+			st_deblin_min = deblin_min.toString();
 		}
-
+		else
+		{
+			st_deblin_min = "non renseignée";
+		}
+			
 		context.report(context.createError(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR)
 				.setMessageParam("VALUE_MAX", attribute.getBindedValue().toString())
-				.setMessageParam("VALUE_MIN", deblin_min.toString())
+				.setMessageParam("VALUE_MIN", st_deblin_min)
 		);
 	}
 

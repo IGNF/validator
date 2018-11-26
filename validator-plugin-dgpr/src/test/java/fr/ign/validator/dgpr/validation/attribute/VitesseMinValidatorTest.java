@@ -19,12 +19,10 @@ import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Row;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.mapping.FeatureTypeMapper;
-import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.type.DoubleType;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import fr.ign.validator.xml.XmlModelManager;
 
 public class VitesseMinValidatorTest {
 
@@ -51,14 +49,6 @@ public class VitesseMinValidatorTest {
 		return context;
 	}
 
-	private DocumentModel getDocumentModel(String documentModelName) throws Exception {
-		File documentModelPath = new File(getClass().getResource("/config/" + documentModelName + "/files.xml").getPath());
-		XmlModelManager loader = new XmlModelManager();
-		DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
-		documentModel.setName(documentModelName);
-		return documentModel;
-	}
-
 	private File getSampleDocument(String documentName) throws IOException {
 		URL resource = getClass().getResource("/documents/" + documentName);
 		Assert.assertNotNull(resource);
@@ -73,7 +63,6 @@ public class VitesseMinValidatorTest {
 	@Test
 	public void testValidate() throws Exception {
 		// TODO partie contexte à revoir
-		DocumentModel documentModel = getDocumentModel("sample_config");
 		File documentPath = getSampleDocument("sample_document");
 		Context context = createContext(documentPath);
 
@@ -107,12 +96,48 @@ public class VitesseMinValidatorTest {
 
 		Assert.assertEquals(0, report.countErrors());
 	}
+	
+	@Test
+	public void testNullValidate() throws Exception {
+		// TODO partie contexte à revoir
+		File documentPath = getSampleDocument("sample_document");
+		Context context = createContext(documentPath);
+
+		// le csv
+		String[] header = {"VITESS_MAX"};
+		String[] values = {null};
+
+		// le modele
+		DoubleType doubleTypeMax = new DoubleType();
+		doubleTypeMax.setName("VITESS_MAX");
+
+		DoubleType doubleTypeMin = new DoubleType();
+		doubleTypeMin.setName("VITESS_MIN");
+
+		FeatureType featureType = new FeatureType();
+		featureType.addAttribute(doubleTypeMax);
+		featureType.addAttribute(doubleTypeMin);
+
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+
+		// la ligne
+		Row row = new Row(0, values, mapping);
+		context.beginData(row);
+
+		// test
+		VitesseMinValidator minValidator = new VitesseMinValidator();
+		Attribute<Double> attribute = new Attribute<>(doubleTypeMin, 15.0);
+		minValidator.validate(context, attribute);
+
+		context.beginData(row);
+
+		Assert.assertEquals(0, report.countErrors());
+	}
 
 	
 	@Test
 	public void testValueMaxError() throws Exception {
 		// TODO partie contexte à revoir
-		DocumentModel documentModel = getDocumentModel("sample_config");
 		File documentPath = getSampleDocument("sample_document");
 		Context context = createContext(documentPath);
 

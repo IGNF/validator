@@ -31,14 +31,14 @@ public class AzimuthValidator implements Validator<Attribute<Double>>{
 			return;
 		}
 		// si je suis null alors je doit verifié que le débit et la vitesse sont null
-		String valueVitesse = "";
-		String valueDeblin = "";
+		String valueVitesse = null;
+		String valueDeblin = null;
 		for (int i = 0; i < featureType.getAttributeCount(); i++) {
 			AttributeType<?> attributeType = featureType.getAttribute(i);
-			if (attributeType.getName().equals("VITESSE")) {
+			if (attributeType.getName().equals("VITESSE") && mapping.getAttributeIndex(i) >= 0) {
 				valueVitesse = values[mapping.getAttributeIndex(i)];
 			}
-			if (attributeType.getName().equals("DEBLIN")) {
+			if (attributeType.getName().equals("DEBLIN") && mapping.getAttributeIndex(i) >= 0) {
 				valueDeblin = values[mapping.getAttributeIndex(i)];
 			}
 		}

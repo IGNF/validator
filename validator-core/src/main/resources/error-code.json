@@ -552,15 +552,21 @@
         "documentation": ""
     },
     {
+        "name": "DGPR_DEBLIN_ERROR",
+        "level": "ERROR",
+        "message": "La valeur DEBLIN ({VALUE_MIN}) doit être non renseignée ou supérieure à 0.",
+        "documentation": ""
+    },
+    {
         "name": "DGPR_DEBLIN_MIN_ERROR",
         "level": "ERROR",
-        "message": "La valeur du débit {VALUE_MIN} doit être supérieure à 0.",
+        "message": "La valeur DEBLIN_MIN ({VALUE_MIN}) doit être supérieure à 0.",
         "documentation": ""
     },
     {
         "name": "DGPR_DEBLIN_MAX_ERROR",
         "level": "ERROR",
-        "message": "La valeur DEBLIN_MAX {VALUE_MAX} doit être nulle ou supérieure la valeur DEBLIN_MIN {VALUE_MIN}",
+        "message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure la valeur DEBLIN_MIN ({VALUE_MIN})",
         "documentation": ""
     }
 ]

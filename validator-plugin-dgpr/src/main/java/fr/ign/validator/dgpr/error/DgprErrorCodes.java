@@ -13,4 +13,5 @@ public class DgprErrorCodes {
 	public static final ErrorCode DGPR_AZIMUTH_ERROR = ErrorCode.valueOf("DGPR_AZIMUTH_ERROR");
 	public static final ErrorCode DGPR_DEBLIN_MIN_ERROR = ErrorCode.valueOf("DGPR_DEBLIN_MIN_ERROR");
 	public static final ErrorCode DGPR_DEBLIN_MAX_ERROR = ErrorCode.valueOf("DGPR_DEBLIN_MAX_ERROR");
+	public static final ErrorCode DGPR_DEBLIN_ERROR = ErrorCode.valueOf("DGPR_DEBLIN_ERROR");
 }
