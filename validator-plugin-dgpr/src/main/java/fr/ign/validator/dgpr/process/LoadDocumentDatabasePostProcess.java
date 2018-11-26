@@ -8,7 +8,8 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.database.DocumentDatabase;
-import fr.ign.validator.dgpr.validation.database.InclusionDatabaseValidator;
+import fr.ign.validator.dgpr.validation.database.InclusionValidator;
+import fr.ign.validator.dgpr.validation.database.MinMaxCoverageValidator;
 import fr.ign.validator.ValidatorListener;
 
 /**
@@ -37,11 +38,11 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 		database.load();
 
 		// validate inclusion
-		InclusionDatabaseValidator validator = new InclusionDatabaseValidator();
-		validator.validate(context, document, database);
+		InclusionValidator inclusionValidator = new InclusionValidator();
+		inclusionValidator.validate(context, document, database);
 
-		// database.addValidator(new InclusionDatabaseValidator());
-		// database.validate();
+		MinMaxCoverageValidator coverageValidator = new MinMaxCoverageValidator();
+		coverageValidator.validate(context, document, database);
 	}
 
 }

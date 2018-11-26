@@ -20,7 +20,7 @@ import fr.ign.validator.dgpr.database.DocumentDatabase;
 import fr.ign.validator.dgpr.database.RowIterator;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 
-public class InclusionDatabaseValidator {
+public class InclusionValidator {
 
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("InclusionDatabaseValidator");
