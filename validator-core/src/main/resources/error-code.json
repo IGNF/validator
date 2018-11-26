@@ -92,7 +92,7 @@
     {
         "name": "ATTRIBUTE_UNEXPECTED_NULL",
         "level": "ERROR",
-        "message": "La valeur nulle n'est pas autorisée pour ce champ.",
+        "message": "Une valeur vide n'est pas autorisée pour ce champ.",
         "documentation": "Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide"
     },
     {
@@ -206,7 +206,7 @@
     {
         "name": "METADATA_TYPE_INVALID",
         "level": "ERROR",
-        "message": "Le champ \"catégorie thématique\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+        "message": "Le champ \"type de la ressource\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
         "documentation": ""
     },
     {
@@ -380,7 +380,7 @@
     {
         "name": "METADATA_SPECIFICATION_DEGREE_INVALID",
         "level": "ERROR",
-        "message": "Spécification ({NUMBER}/{COUNT}) : la degré correspondant ({VALUE}) n'est pas valide (true ou false attendu).",
+        "message": "Spécification ({NUMBER}/{COUNT}) : la degré correspondant ({VALUE}) n'est pas valide (true, false ou valeur vide attendue).",
         "documentation": ""
     },
     {
@@ -440,7 +440,7 @@
     {
         "name": "CNIG_DOCUMENT_NO_PDF",
         "level": "ERROR",
-        "message": "Aucun fichier PDF respectant les règles de nommage trouvé dans le document.",
+        "message": "Aucun fichier PDF respectant les règles de nommage trouvé dans le dossier.",
         "documentation": ""
     },
     {
@@ -523,8 +523,8 @@
     },
     {
         "name": "DGPR_DOCUMENT_PREFIX_ERROR",
-        "level": "ERROR",
-        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le prefix.",
+        "level": "WARNING",
+        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     },
     {
@@ -568,5 +568,17 @@
         "level": "ERROR",
         "message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure la valeur DEBLIN_MIN ({VALUE_MIN})",
         "documentation": ""
+    },
+    {
+        "name": "DGPR_INOND_INCLUSION_ERROR",
+        "level": "ERROR",
+        "message": "La surface {ID_S_INOND} du scénario {SCENARIO_VALUE_FORT} n'est pas incluse dans le scénario {SCENARIO_VALUE_FAIBLE}.",
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
+    },
+    {
+        "name": "DGPR_INOND_INCLUSION_INVALID_GEOM",
+        "level": "ERROR",
+        "message": "Une ou plusieurs géométries sont invalides {LIST_ID_S_INOND}. Il n'est pas possible de tester l'inclusion du scénario {SCENARIO_VALUE_FORT} dans le scénario {SCENARIO_VALUE_FAIBLE}.",
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
     }
 ]

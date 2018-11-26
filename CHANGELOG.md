@@ -1,4 +1,16 @@
-# 3.0.*
+# CHANGELOG
+
+## 3.2.*
+
+* Strict coordinate order for EPSG:4326 (lat,lon)
+
+## 3.1.*
+
+* Add support for GDAL 2.x
+* Add regress tests for `FileConverter` (sensitive to changes in [GDAL's CSV driver](https://www.gdal.org/drv_csv.html)) 
+* Remove LegacyReportBuilder and set JsonReportBuilder as default reporter?
+
+## 3.0.*
 
 * CLI subcommands for validator-cli (```java -jar validator-cli.jar COMMAND --help```)
 * update java to 1.7
@@ -27,11 +39,4 @@
 
     * Simplify report generation (copy Context informations to ValidatorError)
     * Add [JSONL](http://jsonlines.org/) report format (each line is a ValidatorError serialized in JSON)
-
-
-# 3.1.* (in progress)
-
-* [ ] Support for GDAL 2.x
-* [ ] Add regress tests for `FileConverter` (sensitive to changes in [GDAL's CSV driver](https://www.gdal.org/drv_csv.html)) 
-* [ ] Remove LegacyReportBuilder and set JsonReportBuilder as default reporter?
 

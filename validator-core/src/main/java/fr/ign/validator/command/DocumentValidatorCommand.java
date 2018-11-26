@@ -419,7 +419,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @return
 	 */
 	protected void parseCoordinateReferenceSystem(CommandLine commandLine) throws ParseException { 
-		String srsString = commandLine.getOptionValue("srs", "EPSG:4326");
+		String srsString = commandLine.getOptionValue("srs", "CRS:84");
 		try {
 			this.coordinateReferenceSystem = CRS.decode(srsString);
 		} catch (NoSuchAuthorityCodeException e1) {

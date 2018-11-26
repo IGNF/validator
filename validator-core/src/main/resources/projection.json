@@ -1,104 +1,99 @@
 [
-        {
-            "code": "EPSG:4326",
-            "title": "WGS84 (lon,lat)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/4326",
-            "validityDomain": "POLYGON((-180 -90,180 -90,180 90,-180 90,-180 -90))"
-        },
-        {
-            "code": "IGNF:WGS84",
-            "codeGeotool": "EPSG:4326",
-            "title": "WGS84 (lon,lat)",
-            "uri": "https://registre.ign.fr/ign/IGNF/crs/IGNF/WGS84",
-            "validityDomain": "POLYGON((-180 -90,180 -90,180 90,-180 90,-180 -90))"
-        },
-        
-        {
-            "code": "EPSG:2154",
-            "title": "RGF93 / Lambert-93 (EPSG)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/2154",
-            "validityDomain": "POLYGON((60000 6010000,60000 7130000,1270000 7130000,1270000 6010000,60000 6010000))"
-        },
-        {
-            "code": "IGNF:RGF93LAMB93",
-            "codeGeotool": "EPSG:2154",
-            "title": "RGF93 / Lambert-93 (IGNF)",
-            "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGF93LAMB93",
-            "validityDomain": "POLYGON((60000 6010000,60000 7130000,1270000 7130000,1270000 6010000,60000 6010000))"
-        },
-        
-        {
-            "code": "EPSG:32620",
-            "title": "WGS 84 / UTM zone 20N (Guadeloupe et Martinique)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/32620",
-            "validityDomain": "MULTIPOLYGON(((680000 1580000,680000 1660000,750000 1660000,750000 1580000,680000 1580000)),((470000 1730000,470000 2020000,730000 2020000,730000 1730000,470000 1730000)))"
-        },
-        {
-            "code": "IGNF:WGS84UTM20",
-            "codeGeotool": "EPSG:32620",
-            "title": "WGS 84 / UTM zone 20N (Guadeloupe et Martinique)",
-            "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/WGS84UTM20",
-            "validityDomain": "MULTIPOLYGON(((680000 1580000,680000 1660000,750000 1660000,750000 1580000,680000 1580000)),((470000 1730000,470000 2020000,730000 2020000,730000 1730000,470000 1730000)))"
-        },
-
-        
-        {
-            "code": "EPSG:2972",
-            "title": "RGFG95 / UTM zone 22N (Guyane)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/2972",
-            "validityDomain": "POLYGON((-100000 700000,500000 700000,500000 100000,-100000 100000,-100000 700000))"
-        },
-        {
-            "code": "IGNF:RGFG95UTM22",
-            "codeGeotool": "EPSG:2972",
-            "title": "RGFG95 / UTM zone 22N (Guyane)",
-            "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGFG95UTM22",
-            "validityDomain": "POLYGON((-100000 700000,500000 700000,500000 100000,-100000 100000,-100000 700000))"
-        },
-        
-
-        {
-            "code": "EPSG:2975",
-            "title": "RGR92 / UTM zone 40S (Réunion)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/2975",
-            "validityDomain": "POLYGON((300000 7620000,300000 7710000,390000 7710000,390000 7620000,300000 7620000))"
-        },
-        {
-            "code": "IGNF:RGR92UTM40S",
-            "codeGeotool": "EPSG:2975",
-            "title": "RGR92 / UTM zone 40S (Réunion)",
-            "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGR92UTM40S",
-            "validityDomain": "POLYGON((300000 7620000,300000 7710000,390000 7710000,390000 7620000,300000 7620000))"
-        },
-        
-        
-        {
-            "code": "EPSG:4471",
-            "title": "RGM04 / UTM zone 38S (Mayotte)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/4471",
-            "validityDomain": "POLYGON((490000 8550000,490000 8620000,540000 8620000,540000 8550000,490000 8550000))"
-        },
-        {
-        	"code": "IGNF:RGM04UTM38S",
-            "codeGeotool": "EPSG:4471",
-            "title": "RGM04 / UTM zone 38S (Mayotte)",
-            "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGM04UTM38S",
-            "validityDomain": "POLYGON((490000 8550000,490000 8620000,540000 8620000,540000 8550000,490000 8550000))"
-        },
-        
-        {
-            "code": "EPSG:4467",
-            "title": "RGSPM06 / UTM 21N (Saint-Pierre-et-Miquelon)",
-            "uri": "http://www.opengis.net/def/crs/EPSG/0/4467",
-            "validityDomain": null
-        },
-        {
-        	"code": "IGNF:RGSPM06U21",
-            "codeGeotool": "EPSG:4467",
-            "title": "RGSPM06 / UTM 21N (Saint-Pierre-et-Miquelon)",
-            "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGSPM06U21",
-            "validityDomain": null
-        }
-
-    ]
-    
+    {
+        "code": "IGNF:WGS84",
+        "codeGeotool": "CRS:84",
+        "title": "IGNF:WGS84 (lon,lat)",
+        "uri": "https://registre.ign.fr/ign/IGNF/crs/IGNF/WGS84",
+        "validityDomain": "POLYGON((-180 -90,180 -90,180 90,-180 90,-180 -90))"
+    },
+    {
+        "code": "EPSG:4326",
+        "title": "EPSG:4326 (lat,lon)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/4326",
+        "validityDomain": "POLYGON((-90 -180,-90 180,90 180,90 -180,-90 -180))"
+    },
+    {
+        "code": "CRS:84",
+        "title": "CRS:84 (lon,lat)",
+        "uri": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+        "validityDomain": "POLYGON((-180 -90,180 -90,180 90,-180 90,-180 -90))"
+    },
+    {
+        "code": "EPSG:2154",
+        "title": "RGF93 / Lambert-93 (EPSG)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/2154",
+        "validityDomain": "POLYGON((60000 6010000,60000 7130000,1270000 7130000,1270000 6010000,60000 6010000))"
+    },
+    {
+        "code": "IGNF:RGF93LAMB93",
+        "codeGeotool": "EPSG:2154",
+        "title": "RGF93 / Lambert-93 (IGNF)",
+        "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGF93LAMB93",
+        "validityDomain": "POLYGON((60000 6010000,60000 7130000,1270000 7130000,1270000 6010000,60000 6010000))"
+    },
+    {
+        "code": "EPSG:32620",
+        "title": "WGS 84 / UTM zone 20N (Guadeloupe et Martinique)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/32620",
+        "validityDomain": "MULTIPOLYGON(((680000 1580000,680000 1660000,750000 1660000,750000 1580000,680000 1580000)),((470000 1730000,470000 2020000,730000 2020000,730000 1730000,470000 1730000)))"
+    },
+    {
+        "code": "IGNF:WGS84UTM20",
+        "codeGeotool": "EPSG:32620",
+        "title": "WGS 84 / UTM zone 20N (Guadeloupe et Martinique)",
+        "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/WGS84UTM20",
+        "validityDomain": "MULTIPOLYGON(((680000 1580000,680000 1660000,750000 1660000,750000 1580000,680000 1580000)),((470000 1730000,470000 2020000,730000 2020000,730000 1730000,470000 1730000)))"
+    },
+    {
+        "code": "EPSG:2972",
+        "title": "RGFG95 / UTM zone 22N (Guyane)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/2972",
+        "validityDomain": "POLYGON((-100000 700000,500000 700000,500000 100000,-100000 100000,-100000 700000))"
+    },
+    {
+        "code": "IGNF:RGFG95UTM22",
+        "codeGeotool": "EPSG:2972",
+        "title": "RGFG95 / UTM zone 22N (Guyane)",
+        "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGFG95UTM22",
+        "validityDomain": "POLYGON((-100000 700000,500000 700000,500000 100000,-100000 100000,-100000 700000))"
+    },
+    {
+        "code": "EPSG:2975",
+        "title": "RGR92 / UTM zone 40S (Réunion)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/2975",
+        "validityDomain": "POLYGON((300000 7620000,300000 7710000,390000 7710000,390000 7620000,300000 7620000))"
+    },
+    {
+        "code": "IGNF:RGR92UTM40S",
+        "codeGeotool": "EPSG:2975",
+        "title": "RGR92 / UTM zone 40S (Réunion)",
+        "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGR92UTM40S",
+        "validityDomain": "POLYGON((300000 7620000,300000 7710000,390000 7710000,390000 7620000,300000 7620000))"
+    },
+    {
+        "code": "EPSG:4471",
+        "title": "RGM04 / UTM zone 38S (Mayotte)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/4471",
+        "validityDomain": "POLYGON((490000 8550000,490000 8620000,540000 8620000,540000 8550000,490000 8550000))"
+    },
+    {
+        "code": "IGNF:RGM04UTM38S",
+        "codeGeotool": "EPSG:4471",
+        "title": "RGM04 / UTM zone 38S (Mayotte)",
+        "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGM04UTM38S",
+        "validityDomain": "POLYGON((490000 8550000,490000 8620000,540000 8620000,540000 8550000,490000 8550000))"
+    },
+    {
+        "code": "EPSG:4467",
+        "title": "RGSPM06 / UTM 21N (Saint-Pierre-et-Miquelon)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/4467",
+        "validityDomain": null
+    },
+    {
+        "code": "IGNF:RGSPM06U21",
+        "codeGeotool": "EPSG:4467",
+        "title": "RGSPM06 / UTM 21N (Saint-Pierre-et-Miquelon)",
+        "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGSPM06U21",
+        "validityDomain": null
+    }
+]
