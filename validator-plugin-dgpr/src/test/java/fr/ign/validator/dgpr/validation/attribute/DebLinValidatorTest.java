@@ -87,7 +87,7 @@ public class DebLinValidatorTest {
 		Context context = createContext(documentPath);
 
 		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+		doubleTypeDebLinMin.setName("DEBLIN");
 
 		// test
 		DebLinValidator minValidator = new DebLinValidator();
