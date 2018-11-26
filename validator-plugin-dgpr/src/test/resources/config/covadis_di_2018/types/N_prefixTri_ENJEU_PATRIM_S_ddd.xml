@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[8b0a0564f52cafcec2b015d162d3a043]]></id>
+  <typeName><![CDATA[N_prefixTri_ENJEU_PATRIM_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[042d377600e2f37ec2d438fe243a57b2]]></id>
+      <name><![CDATA[ID_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[321659f4ba1a5b600bbe831d97cfbc98]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4d014781eceab4084118561766e2f6e1]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5090545fdcc0f2bfc00a2860684782a2]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[73b7bf695535fe7f216a4928b68d2856]]></id>
+      <name><![CDATA[TYPE_ENJEU]]></name>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b8e0184a43b14d27688810af350e6503]]></id>
+      <name><![CDATA[NOM_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ee76d77776ac37c5288c1682be5512c0]]></id>
+      <name><![CDATA[VER_SI_EXT]]></name>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

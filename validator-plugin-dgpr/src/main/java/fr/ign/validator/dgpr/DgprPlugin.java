@@ -1,7 +1,7 @@
 package fr.ign.validator.dgpr;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.dgpr.process.SomeActionPostProcess;
+import fr.ign.validator.dgpr.process.LoadDocumentDatabasePostProcess;
 import fr.ign.validator.dgpr.validation.document.DocumentPrefixValidator;
 import fr.ign.validator.plugin.Plugin;
 
@@ -19,8 +19,8 @@ public class DgprPlugin implements Plugin {
 
 	@Override
 	public void setup(Context context) {
-		// Post process has to be ordered
-		context.addListener(new SomeActionPostProcess());
+		//
+		context.addListener(new LoadDocumentDatabasePostProcess());
 
 		/*
 		 * extends validation

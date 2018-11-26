@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[0fd44da6bf52852f8aaabdcd3ef00d47]]></id>
+  <typeName><![CDATA[N_prefixTri_TRI_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[16403105c47a99a39db7a9a47656442f]]></id>
+      <name><![CDATA[TX_HAB_SAI]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[58b249999f3aa8e00370c6fb6e2ecc0a]]></id>
+      <name><![CDATA[HAB_PERM]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[^FR[A-Z0-9]{1,4}_TRI_[A-Z0-9]{1,33}$]]></regexp>
+      <id><![CDATA[64f497dabdfa1640043a8edf8c77b3e8]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type [Code EUUOM Bassin DCE]_TRI_[Nom court TRI]. Exemple : "FRD_TRI_LYON"]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8ec5b4a0839e5da04222a642cdc30a15]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8fb5c90ecd494f235d5fc83cb59d1203]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b8468f0af44662f7317be6a806d18a11]]></id>
+      <name><![CDATA[HAB_SAISON]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ca189a8735c0f5e0640018179d1a3c66]]></id>
+      <name><![CDATA[NOM]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e985f9690a5ea91083d12f15488d6840]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

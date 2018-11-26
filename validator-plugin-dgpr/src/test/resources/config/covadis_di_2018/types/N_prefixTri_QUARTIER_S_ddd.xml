@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[28783f205f1a321637a07ceec8e542f4]]></id>
+  <typeName><![CDATA[N_prefixTri_QUARTIER_S_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0a9660ff84a6dc593eb7170e577fdefc]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[181092e9eb198c8ca1717acba92240b6]]></id>
+      <name><![CDATA[VER_SI_EXT]]></name>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[1d4fb6642af519be1fa4fc39ce02d436]]></id>
+      <name><![CDATA[NOM_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[3934590f9620fc382ce53fd3e8ff86fc]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[839a0912b4653b77c13997111402af98]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[91d8b411d126d0851b5019ae1f9f2b2f]]></id>
+      <name><![CDATA[HAB_PERM]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d9a9f64e94a2186cc58d4ed00be11581]]></id>
+      <name><![CDATA[CODE_INSEE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e8c175db3689974460f95f0c09eaea18]]></id>
+      <name><![CDATA[ID_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+  </attributes>
+</featureType>

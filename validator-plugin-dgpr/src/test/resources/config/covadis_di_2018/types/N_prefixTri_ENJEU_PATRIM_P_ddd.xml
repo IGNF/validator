@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[2baffd3669834d2b4304b3269666011e]]></id>
+  <typeName><![CDATA[N_prefixTri_ENJEU_PATRIM_P_ddd]]></typeName>
+  <attributes>
+    <attribute>
+      <id><![CDATA[027fd5b72397b16c6d97d3127af77a50]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[03ab413062ce634526c94c1cd7ad6e7b]]></id>
+      <name><![CDATA[VER_SI_EXT]]></name>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[133cd75f9df120accfa2c49120ede96f]]></id>
+      <name><![CDATA[TYPE_ENJEU]]></name>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[769981a1de9d538b383c835f9bc45366]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b125e5fb2dde057ed87d92e300a6fd94]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bce89f9504c9454827e4ceae9682a139]]></id>
+      <name><![CDATA[NOM_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cbde2c44ae1deb241e0448ed8aa76290]]></id>
+      <name><![CDATA[ID_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+  </attributes>
+</featureType>

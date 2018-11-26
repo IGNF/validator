@@ -523,8 +523,8 @@
     },
     {
         "name": "DGPR_DOCUMENT_PREFIX_ERROR",
-        "level": "ERROR",
-        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le prefix.",
+        "level": "WARNING",
+        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     },
     {
@@ -532,5 +532,17 @@
         "level": "ERROR",
         "message": "Le nom du fichier {FILENAME} ne contient pas le prefix TRI du repertoire {DOCUMENT_NAME}.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
+    },
+    {
+        "name": "DGPR_INOND_INCLUSION_ERROR",
+        "level": "ERROR",
+        "message": "La surface {ID_S_INOND} du scénario {SCENARIO_VALUE_FORT} n'est pas incluse dans le scénario {SCENARIO_VALUE_FAIBLE}.",
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
+    },
+    {
+        "name": "DGPR_INOND_INCLUSION_INVALID_GEOM",
+        "level": "ERROR",
+        "message": "Une ou plusieurs géométries sont invalides {LIST_ID_S_INOND}. Il n'est pas possible de tester l'inclusion du scénario {SCENARIO_VALUE_FORT} dans le scénario {SCENARIO_VALUE_FAIBLE}.",
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
     }
 ]

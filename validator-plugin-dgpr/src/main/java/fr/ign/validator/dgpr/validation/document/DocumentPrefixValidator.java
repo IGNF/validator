@@ -43,7 +43,7 @@ public class DocumentPrefixValidator implements Validator<Document>, ValidatorLi
 		// [prefixTri]_SIG_DI
 		if (!document.getDocumentName().contains("_SIG_DI")) {
 			context.report(context.createError(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR)
-				.setMessageParam("DOCUMENT_NAME", document.getDocumentName())
+					.setMessageParam("DOCUMENT_NAME", document.getDocumentName())
 			);
 			// filename prefix validation is ignored in that case
 			return;
