@@ -53,7 +53,7 @@ public class DocumentDatabase {
 			Class.forName("org.sqlite.JDBC");
 
 			File parentDirectory = document.getDocumentPath().getParentFile();
-			File databasePath = new File(parentDirectory, "jointure_sup.db");
+			File databasePath = new File(parentDirectory, "document_database.db");
 			//File databasePath = parentDirectory ;
 			String databaseUrl = "jdbc:sqlite:"+ databasePath.getAbsolutePath() ;
 			connection = DriverManager.getConnection(databaseUrl);
@@ -212,6 +212,7 @@ public class DocumentDatabase {
 	 * @throws SQLException
 	 */
 	public RowIterator query(String sql) throws SQLException {
+		log.debug(MARKER, sql);
 		PreparedStatement sth = connection.prepareStatement(sql);
 		ResultSet rs = sth.executeQuery();
 		return new RowIterator(rs);
