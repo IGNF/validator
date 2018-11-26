@@ -36,13 +36,13 @@ public class ProjectionTransform {
 	}
 
 	/**
-	 * Projection Transform Use the default "EPGS:4326" CRS as target CRS
+	 * Projection Transform Use the default "CRS:84" CRS as target CRS
 	 * 
 	 * @param sourceCRS
 	 * @throws FactoryException
 	 */
 	public ProjectionTransform(CoordinateReferenceSystem sourceCRS) throws FactoryException {
-		this.defaultTargetCRS = CRS.decode("EPSG:4326");
+		this.defaultTargetCRS = CRS.decode("CRS:84");
 		this.transform = CRS.findMathTransform(sourceCRS, this.defaultTargetCRS);
 	}
 

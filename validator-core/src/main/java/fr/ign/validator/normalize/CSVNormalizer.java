@@ -52,14 +52,14 @@ public class CSVNormalizer {
 		this.context = context;
 		this.featureType = featureType;
 		try {
-			this.targetCRS = CRS.decode("EPSG:4326");
+			this.targetCRS = CRS.decode("CRS:84");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
-	 * Normalize sourceFile with a given sourceCharset and sourceCRS to an UTF-8 encoded targetFile with "EPSG:4326" coordinates
+	 * Normalize sourceFile with a given sourceCharset and sourceCRS to an UTF-8 encoded targetFile with "CRS:84" coordinates
 	 * @param sourceFile
 	 * @param sourceCharset
 	 * @param sourceCRS
