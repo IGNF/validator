@@ -1,4 +1,4 @@
-package fr.ign.validator.dgpr.database;
+package fr.ign.validator.database;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -12,9 +12,22 @@ public class RowIterator implements Iterator<String[]>, Closeable {
 
 	private String[] current ;
 
+	/**
+	 * RowIterator from ResultSet (SELECT query)
+	 * @param rs
+	 * @throws SQLException
+	 */
 	public RowIterator(ResultSet rs) throws SQLException {
 		this.rs = rs;
 		readOne();
+	}
+	
+	/**
+	 * RowIterator 
+	 */
+	public RowIterator() {
+		this.rs = null;
+		this.current = null;
 	}
 
 
