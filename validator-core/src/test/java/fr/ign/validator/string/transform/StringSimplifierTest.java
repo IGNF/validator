@@ -12,6 +12,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
+
 public class StringSimplifierTest {
 
 	@Test
@@ -23,7 +25,7 @@ public class StringSimplifierTest {
 	
 	@Test
 	public void testLoadCSVTestSample(){
-		File file = new File(getClass().getResource("/replacer/sample.csv").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/replacer/sample.csv") ;
 		StringSimplifier replacer = new StringSimplifier();
 		try {
 			replacer.loadCSV(file);

@@ -13,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -26,7 +27,7 @@ public class DocumentModelTest {
 	
 	@Test
 	public void testUnmarshallMarshall() throws JAXBException, IOException{
-		File documentModelPath = new File(getClass().getResource("/xml/sample-document/files.xml").getPath()) ;
+		File documentModelPath = ResourceHelper.getResourcePath("/xml/sample-document/files.xml") ;
 		
 		JAXBContext context = JAXBContext.newInstance( FeatureType.class,DocumentModel.class );
 		Unmarshaller unmarshaller = context.createUnmarshaller() ;

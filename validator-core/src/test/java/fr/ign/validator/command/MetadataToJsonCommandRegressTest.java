@@ -9,6 +9,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.ResourceHelper;
+
 /**
  * Regress test for metadata_to_json command
  * @author FCerizay
@@ -47,7 +49,7 @@ public class MetadataToJsonCommandRegressTest  {
 	
 
 	protected File getSampleMetadataDir(){
-		return new File(getClass().getResource("/metadata/").getPath());
+		return ResourceHelper.getResourcePath("/metadata/");
 	}
 	
 	protected void performRegressTest(String inputName, String expectedName) throws IOException {

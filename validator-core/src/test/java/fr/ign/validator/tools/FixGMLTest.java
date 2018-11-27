@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.tools.internal.FixGML;
 
 public class FixGMLTest {
@@ -22,7 +23,7 @@ public class FixGMLTest {
 		
 	@Test
 	public void testFixFile(){
-		File input = new File(getClass().getResource("/fixgml/ZONE_URBA.gml").getPath()) ;
+		File input = ResourceHelper.getResourcePath("/fixgml/ZONE_URBA.gml") ;
 		File output = new File(input.getParentFile(), "ZONE_URBA_FIXED.gml");
 		try {
 			String inputContent = org.apache.commons.io.FileUtils.readFileToString(input,"UTF-8");
@@ -40,7 +41,7 @@ public class FixGMLTest {
 	 */
 	@Test	
 	public void testFixFileUtf8(){
-		File input = new File(getClass().getResource("/fixgml/EL10_ASSIETTE_SUP_S_FR.gml").getPath()) ;
+		File input = ResourceHelper.getResourcePath("/fixgml/EL10_ASSIETTE_SUP_S_FR.gml") ;
 		File output = new File(input.getParentFile(), "EL10_ASSIETTE_SUP_S_FR_FIXED.gml");
 		try {
 			String inputContent = org.apache.commons.io.FileUtils.readFileToString(input,"UTF-8");

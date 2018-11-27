@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ErrorScope;
@@ -43,7 +44,7 @@ public class JsonReportBuilderTest {
 		
 		report.close();
 		
-		File expectedFile = new File(getClass().getResource("/report/report-01.jsonl").getPath());
+		File expectedFile = ResourceHelper.getResourcePath("/report/report-01.jsonl") ;
 	
 		@SuppressWarnings("unchecked")
 		List<String> lines = FileUtils.readLines(file) ;

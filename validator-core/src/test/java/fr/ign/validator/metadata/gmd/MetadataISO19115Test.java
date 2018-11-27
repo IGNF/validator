@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.metadata.Constraint;
 import fr.ign.validator.metadata.Extent;
@@ -39,7 +40,7 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
 public class MetadataISO19115Test {
 
 	protected Metadata getMetadataFromResource(String path){
-		File file = new File(getClass().getResource(path).getPath()) ;
+		File file = ResourceHelper.getResourcePath(path) ;
 		assertNotNull("ressource "+path+" non trouvée",file);
 		try {
 			Metadata reader = MetadataISO19115.readFile(file);
@@ -57,9 +58,9 @@ public class MetadataISO19115Test {
 	
 	@Test
 	public void testIsMetadataFile(){
-		File okFile = new File(getClass().getResource("/metadata/missing-charset.xml").getPath()) ;
-		File nokFile1 = new File(getClass().getResource("/metadata/not-a-metadatafile.xml").getPath()) ;
-		File nokFile2 = new File(getClass().getResource("/metadata/not-an-xml-file.xml").getPath()) ;
+		File okFile   = ResourceHelper.getResourcePath("/metadata/missing-charset.xml") ;
+		File nokFile1 = ResourceHelper.getResourcePath("/metadata/not-a-metadatafile.xml") ;
+		File nokFile2 = ResourceHelper.getResourcePath("/metadata/not-an-xml-file.xml") ;
 		
 		assertTrue( MetadataISO19115.isMetadataFile(okFile) ) ;
 		assertFalse( MetadataISO19115.isMetadataFile(nokFile1) ) ;

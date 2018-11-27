@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
 /**
  * 
@@ -24,7 +25,7 @@ public class TableReaderSpecialCharsTest {
 	@Test
 	public void testReadFileWithBadChars(){
 		// read file where last character in NOMFIC column is not "printable"
-		File file = new File(getClass().getResource("/dbf/SPECIAL_CHARS.DBF").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/dbf/SPECIAL_CHARS.DBF");
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.ISO_8859_1);

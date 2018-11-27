@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
@@ -32,14 +33,14 @@ public class ValidateRegressTest {
 		this.context = new Context();
 		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
 		context.setReportBuilder(reportBuilder);
-		File documentModelPath = new File(getClass().getResource("/config/cnig_PLU_2014/files.xml").getPath()) ;
+		File documentModelPath = ResourceHelper.getResourcePath("/config/cnig_PLU_2014/files.xml") ;
 		XmlModelManager modelLoader = new XmlModelManager();
 		documentModel = modelLoader.loadDocumentModel(documentModelPath);
 	}
 	
 	@Test	
 	public void testCnigPlu2014(){
-		File documentPath = new File(getClass().getResource("/documents/41003_PLU_20130903").getPath()) ;
+		File documentPath = ResourceHelper.getResourcePath("/documents/41003_PLU_20130903") ;
 		
 		// clear generated CSV
 		{

@@ -12,6 +12,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTReader;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -88,7 +89,7 @@ public class ProjectionTransformTest {
 		CoordinateReferenceSystem targetCRS = CRS.decode(targetSRID);
 		ProjectionTransform transformProjection = new ProjectionTransform(sourceCRS, targetCRS);
 		
-		File reference = new File(getClass().getResource("/projection/reference_postgis.csv").getPath());
+		File reference = ResourceHelper.getResourcePath("/projection/reference_postgis.csv");
 		TableReader reader = TableReader.createTableReader(reference, StandardCharsets.UTF_8);
 		int indexSource = reader.findColumn(sourceSRID);
 		int indexTarget = reader.findColumn(targetSRID);

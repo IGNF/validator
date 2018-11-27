@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 
@@ -26,7 +27,7 @@ public class XmlModelManagerTest {
 	 */
 	@Test
 	public void testLoadDocumentModel() throws JAXBException{
-		File documentModelPath = new File(getClass().getResource("/xml/sample-document/files.xml").getPath()) ;
+		File documentModelPath = ResourceHelper.getResourcePath("/xml/sample-document/files.xml") ;
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 		Assert.assertEquals("ccccc_CC_dddddddd",documentModel.getName());
 		Assert.assertEquals(3, documentModel.getFileModels().size());

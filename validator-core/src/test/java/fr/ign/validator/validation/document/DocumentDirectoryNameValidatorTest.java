@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -23,7 +24,7 @@ public class DocumentDirectoryNameValidatorTest {
 		validator = new DocumentDirectoryNameValidator();
 		
 		context = new Context();
-		File currentDirectory = new File(getClass().getResource("/geofla").getPath()) ;
+		File currentDirectory = ResourceHelper.getResourcePath("/geofla") ;
 		context.setCurrentDirectory(currentDirectory);
 		
 		report = new InMemoryReportBuilder() ;
