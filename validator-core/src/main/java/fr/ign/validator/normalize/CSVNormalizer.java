@@ -80,14 +80,14 @@ public class CSVNormalizer implements Closeable {
 	 * @param documentFile
 	 * @throws Exception
 	 */
-	public void append(DocumentFile documentFile) throws Exception {
+	public void append(File csvFile) throws Exception {
 		ProjectionTransform transform = new ProjectionTransform(
 			context.getCoordinateReferenceSystem(), 
 			targetCRS
 		);
 
 		TableReader reader = TableReader.createTableReaderPreferedCharset(
-			documentFile.getPath(), 
+			csvFile, 
 			context.getEncoding()
 		);
 

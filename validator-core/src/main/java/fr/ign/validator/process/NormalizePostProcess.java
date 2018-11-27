@@ -75,7 +75,7 @@ public class NormalizePostProcess implements ValidatorListener {
 			CSVNormalizer normalizer = new CSVNormalizer(context, featureType, csvFile);
 			List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
 			for (DocumentFile documentFile : documentFiles) {
-				normalizer.append(documentFile);
+				normalizer.append(documentFile.getPath());
 			}
 			normalizer.close();
 		}
