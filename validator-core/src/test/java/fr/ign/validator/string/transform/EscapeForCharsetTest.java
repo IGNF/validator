@@ -1,11 +1,11 @@
 package fr.ign.validator.string.transform;
+import static org.junit.Assert.assertEquals;
 
 import java.nio.charset.StandardCharsets;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class EscapeForCharsetTest extends TestCase {
+public class EscapeForCharsetTest {
 
 	@Test
 	public void testEscapeNonLatin1Characters(){

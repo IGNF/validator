@@ -1,22 +1,25 @@
 package fr.ign.validator.cnig.utils;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.util.List;
 
-import fr.ign.validator.Context;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
-public class ReferenceActeSupJointureBuilderTest extends TestCase {
+import fr.ign.validator.Context;
+
+
+public class ReferenceActeSupJointureBuilderTest {
 
 	private Context context ;
 	
 	private ReferenceActeSupJointureBuilder jointureBuilder  ;
 	
-	@Override
-	protected void setUp() throws Exception {
-//		ErrorFactory errorFactory = ErrorFactory.newEmptyInstance() ;
-//		context = new Context(errorFactory);
-		
+	@Before
+	public void setUp() throws Exception {
 		context = new Context();
 		File currentDirectory = new File(getClass().getResource("/jointure_sup_one2one").getPath()) ;
 		context.setCurrentDirectory(currentDirectory);
@@ -27,19 +30,21 @@ public class ReferenceActeSupJointureBuilderTest extends TestCase {
 		jointureBuilder = new ReferenceActeSupJointureBuilder(context) ;
 	}
 	
-	
+	@Test
 	public void testFindActe(){
 		File file = jointureBuilder.findFile("ACTE_SUP") ;
 		assertNotNull(file);
 		assertEquals("ACTE_SUP.csv", file.getName());
 	} 
 	
+	@Test	
 	public void testFindServiceActeSup(){
 		File file = jointureBuilder.findFile("SERVITUDE_ACTE_SUP") ;
 		assertNotNull(file);
 		assertEquals("SERVITUDE_ACTE_SUP.csv", file.getName());
 	}
 	
+	@Test	
 	public void testFindRegexpFiles(){
 		List<File> files = jointureBuilder.findRegexpFiles("(?i).*_GENERATEUR_SUP_.*") ;
 		assertEquals(1,files.size());

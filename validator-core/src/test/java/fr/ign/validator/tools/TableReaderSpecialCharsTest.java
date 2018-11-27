@@ -1,5 +1,9 @@
 package fr.ign.validator.tools;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -7,8 +11,6 @@ import java.nio.charset.StandardCharsets;
 import org.junit.Test;
 
 import fr.ign.validator.exception.InvalidCharsetException;
-import junit.framework.TestCase;
-
 /**
  * 
  * Tests TableReader with special characters
@@ -16,7 +18,7 @@ import junit.framework.TestCase;
  * @author MBorne
  *
  */
-public class TableReaderSpecialCharsTest extends TestCase {
+public class TableReaderSpecialCharsTest {
 
 	
 	@Test

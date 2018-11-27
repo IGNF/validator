@@ -10,7 +10,7 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 import junit.framework.TestCase;
 
 @Ignore
-public class AbstractTypeTest<T> extends TestCase {
+public class AbstractTypeTest<T> {
 
 	protected AttributeType<T> type;
 	protected Context context ;

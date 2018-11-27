@@ -1,13 +1,13 @@
 package fr.ign.validator.tools;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.util.Collection;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class FileUtilsTest extends TestCase {
+public class FileUtilsTest {
 
 	@Test
 	public void testListFilesAndDirs(){

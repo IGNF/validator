@@ -1,5 +1,11 @@
 package fr.ign.validator.metadata.gmd;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -23,9 +29,14 @@ import fr.ign.validator.metadata.code.LanguageCode;
 import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.metadata.code.TopicCategoryCode;
-import junit.framework.TestCase;
 
-public class MetadataISO19115Test extends TestCase {
+
+/**
+ * Test GMD metadata reader
+ * @author MBorne
+ *
+ */
+public class MetadataISO19115Test {
 
 	protected Metadata getMetadataFromResource(String path){
 		File file = new File(getClass().getResource(path).getPath()) ;

@@ -3,7 +3,7 @@ package fr.ign.validator.model.type;
 import java.net.URL;
 
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 
 /**
  * 

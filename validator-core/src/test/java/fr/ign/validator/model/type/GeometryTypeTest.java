@@ -1,5 +1,7 @@
 package fr.ign.validator.model.type;
 
+import static org.junit.Assert.assertEquals;
+
 import org.geotools.referencing.CRS;
 import org.junit.Test;
 import org.opengis.referencing.FactoryException;

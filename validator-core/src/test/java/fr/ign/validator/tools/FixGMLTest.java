@@ -1,14 +1,17 @@
 package fr.ign.validator.tools;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
 
 import fr.ign.validator.tools.internal.FixGML;
-import junit.framework.TestCase;
 
-public class FixGMLTest extends TestCase {
+public class FixGMLTest {
 	
 	@Test
 	public void testRegexp(){
@@ -17,7 +20,7 @@ public class FixGMLTest extends TestCase {
 		assertEquals("AAAAAA<gp-urba:NOMFIC></gp-urba:NOMFIC>BBBBB",output);
 	}
 		
-	
+	@Test
 	public void testFixFile(){
 		File input = new File(getClass().getResource("/fixgml/ZONE_URBA.gml").getPath()) ;
 		File output = new File(input.getParentFile(), "ZONE_URBA_FIXED.gml");
@@ -35,6 +38,7 @@ public class FixGMLTest extends TestCase {
 	/**
 	 * Ensures file stays encoded in UTF-8
 	 */
+	@Test	
 	public void testFixFileUtf8(){
 		File input = new File(getClass().getResource("/fixgml/EL10_ASSIETTE_SUP_S_FR.gml").getPath()) ;
 		File output = new File(input.getParentFile(), "EL10_ASSIETTE_SUP_S_FR_FIXED.gml");

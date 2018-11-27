@@ -1,27 +1,31 @@
 package fr.ign.validator.cnig.command;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
-import fr.ign.validator.cnig.command.CnigExtractIdgestCommand;
 import fr.ign.validator.tools.CompanionFileUtils;
-import junit.framework.TestCase;
 
 /**
  * 
  * @author FCerizay
  *
  */
-public class CnigExtractIdgestCommandTest extends TestCase {
+public class CnigExtractIdgestCommandTest {
 
+	@Test
 	public void testBadCall(){
 		CnigExtractIdgestCommand command = new CnigExtractIdgestCommand();
 		String[] args = new String[] { "--in", "notValid" };
 		assertEquals(1,command.run(args));
 	}
-	
+
+	@Test
 	public void testFindStrictEquals() throws IOException {
 		CnigExtractIdgestCommand command = new CnigExtractIdgestCommand();
 

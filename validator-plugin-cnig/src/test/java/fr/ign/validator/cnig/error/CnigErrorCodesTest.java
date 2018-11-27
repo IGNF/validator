@@ -1,5 +1,10 @@
 package fr.ign.validator.cnig.error;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.lang.reflect.Field;
 
 import org.junit.Test;
@@ -7,9 +12,9 @@ import org.junit.Test;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ValidatorError;
-import junit.framework.TestCase;
 
-public class CnigErrorCodesTest extends TestCase {
+
+public class CnigErrorCodesTest {
 
 	@Test
 	public void testNewFromResourceFactory(){
@@ -17,6 +22,7 @@ public class CnigErrorCodesTest extends TestCase {
 		assertFalse( factory.getPrototypes().isEmpty() ) ;
 	}
 
+	@Test
 	public void testAllCodeExists(){
 		ErrorFactory factory = new ErrorFactory() ;
 		
