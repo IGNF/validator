@@ -3,9 +3,15 @@ package fr.ign.validator.cnig.utils.internal;
 import java.io.File;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DatabaseJointureMany2ManyTest extends TestCase {
+import junit.framework.TestCase;
+import static org.junit.Assert.*;
+
+
+public class DatabaseJointureMany2ManyTest {
 
 	private File parentDirectory;
 
@@ -21,18 +27,19 @@ public class DatabaseJointureMany2ManyTest extends TestCase {
 	private String assiettesFilename = "/jointure_sup_many2many/validation/jointure_sup_many2many/DATA/AS1_ASSIETTE_SUP_S.csv";
 	File assiettesFile = new File(getClass().getResource(assiettesFilename).getPath());
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		parentDirectory = File.createTempFile("temp", Long.toString(System.nanoTime()));
 		parentDirectory.delete();
 		parentDirectory.mkdir();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		parentDirectory.delete();
 	}
 
+	@Test
 	public void testFindFichiersByGenerateur() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -67,6 +74,7 @@ public class DatabaseJointureMany2ManyTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testFindFichiersByAssiette() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);

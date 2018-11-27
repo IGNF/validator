@@ -1,28 +1,30 @@
 package fr.ign.validator.validation.file;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.file.MetadataFile;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import junit.framework.TestCase;
 
 /**
  * High level regression test
  * @author MBorne
  *
  */
-public class MetadataValidatorRegressTest extends TestCase {
+public class MetadataValidatorRegressTest {
 	
 	private Context context ;
 	private InMemoryReportBuilder report ;
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		context = new Context();
 		File currentDirectory = new File(getClass().getResource("/metadata").getPath()) ;
 		context.setCurrentDirectory(currentDirectory);
@@ -31,6 +33,7 @@ public class MetadataValidatorRegressTest extends TestCase {
 		context.setReportBuilder(report);
 	}
 
+	@Test
 	public void test01(){
 		MetadataModel fileModel = new MetadataModel();
 		File filePath = new File(getClass().getResource("/metadata/01.xml").getPath()) ;
@@ -40,6 +43,7 @@ public class MetadataValidatorRegressTest extends TestCase {
 	}
 	
 
+	@Test
 	public void test02(){
 		MetadataModel fileModel = new MetadataModel() ;
 		File filePath = new File(getClass().getResource("/metadata/02.xml").getPath()) ;
@@ -66,6 +70,7 @@ public class MetadataValidatorRegressTest extends TestCase {
 	}
 
 
+	@Test
 	public void test03(){
 		MetadataModel fileModel = new MetadataModel();
 		File filePath = new File(getClass().getResource("/metadata/03.xml").getPath()) ;
@@ -90,6 +95,7 @@ public class MetadataValidatorRegressTest extends TestCase {
 		) ;
 	}
 
+	@Test
 	public void test04(){
 		MetadataModel fileModel = new MetadataModel() ;
 		File filePath = new File(getClass().getResource("/metadata/04.xml").getPath()) ;
@@ -108,7 +114,8 @@ public class MetadataValidatorRegressTest extends TestCase {
 			report.getErrors().get(i++).getCode() 
 		) ;
 	}
-	
+
+	@Test
 	public void test05(){
 		MetadataModel fileModel = new MetadataModel() ;
 		File filePath = new File(getClass().getResource("/metadata/05.xml").getPath()) ;

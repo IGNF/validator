@@ -1,13 +1,19 @@
 package fr.ign.validator.cnig.utils;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class SirenUtilsTest extends TestCase {
+import org.junit.Test;
 
+
+public class SirenUtilsTest {
+
+	@Test
 	public void testValid(){
 		assertTrue(SirenUtils.isValid("123123123"));
 	}
-	
+
+	@Test	
 	public void testNotValid(){
 		assertFalse(SirenUtils.isValid("a23123123"));
 		assertFalse(SirenUtils.isValid("12312312"));

@@ -1,7 +1,7 @@
 package fr.ign.validator.model.type;
 
 import org.junit.Test;
-
+import static org.junit.Assert.*;
 /**
  * 
  * @author CBouche
