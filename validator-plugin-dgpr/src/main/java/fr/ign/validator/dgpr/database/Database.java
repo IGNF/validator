@@ -2,6 +2,7 @@ package fr.ign.validator.dgpr.database;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,12 +22,24 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.CharsetDetector;
+import fr.ign.validator.tools.CompanionFileUtils;
 import fr.ign.validator.tools.TableReader;
 
-public class DocumentDatabase {
+
+/**
+ * 
+ * Helper to load document data into a SQL database to validate some constraints (unique, reference, etc.)
+ * 
+ * @author CBouche
+ * @author MBorne
+ *
+ */
+public class Database {
 
 	public static final Logger log    = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
@@ -37,40 +50,45 @@ public class DocumentDatabase {
 	private Connection connection;
 
 	/**
-	 * Document: model and data files
+	 * Create or open an sqlite database
+	 * @param sqlitePath
 	 */
-	private Document document;
-
-
-	/**
-	 * Document database constructor
-	 * @param document
-	 * @throws SQLException
-	 */
-	public DocumentDatabase(Document document) throws SQLException {
-		this.document = document;
+	public Database(File sqlitePath){
 		try {
 			Class.forName("org.sqlite.JDBC");
-
-			File parentDirectory = document.getDocumentPath().getParentFile();
-			File databasePath = new File(parentDirectory, "document_database.db");
-			//File databasePath = parentDirectory ;
-			String databaseUrl = "jdbc:sqlite:"+ databasePath.getAbsolutePath() ;
+			String databaseUrl = "jdbc:sqlite:"+ sqlitePath.getAbsolutePath() ;
 			connection = DriverManager.getConnection(databaseUrl);
 			connection.setAutoCommit(false);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
-		createSchema();
+	}
+
+	
+	/**
+	 * Create database with a schema corresponding to the given document
+	 * 
+	 * @param document
+	 * @return
+	 * @throws SQLException 
+	 */
+	public static Database createDatabase(Document document) throws SQLException{
+		File parentDirectory = document.getDocumentPath().getParentFile();
+		File databasePath = new File(parentDirectory, "document_database.db");
+		Database database = new Database(databasePath);
+		database.createTables(document.getDocumentModel());
+		return database;
 	}
 
 
 	/**
-	 * Perform a list of TABLE CREATE queries for all TableModel for the current DocumentModel
+	 * Create tables according to documentModel
 	 * @throws SQLException
 	 */
-	private void createSchema() throws SQLException {
-		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
+	public void createTables(DocumentModel documentModel) throws SQLException {
+		List<FileModel> fileModels = documentModel.getFileModels();
 		for (FileModel fileModel : fileModels) {
 			if (fileModel instanceof TableModel) {
 				TableModel tableModel = (TableModel) fileModel;
@@ -81,11 +99,11 @@ public class DocumentDatabase {
 
 
 	/**
-	 * Perform a list of TABLE CREATE queries for all TableModel for the current DocumentModel
+	 * Create table according to tableModel
 	 * @param tableModel
 	 * @throws SQLException
 	 */
-	private void createTable(TableModel tableModel) throws SQLException {
+	public void createTable(TableModel tableModel) throws SQLException {
 		String sql = getCreateTableSql(tableModel);
 		// debug SQL
 		log.debug(MARKER, sql);
@@ -97,6 +115,9 @@ public class DocumentDatabase {
 
 	/**
 	 * Return the CREATE TABLE query for a giving TableModel
+	 * 
+	 * TODO : create index for identifiers (do not add SQL constraints, it would explode at SQL insertions) 
+	 * 
 	 * @param fileModel
 	 * @return
 	 */
@@ -142,54 +163,85 @@ public class DocumentDatabase {
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void load() throws IOException, InvalidCharsetException, SQLException {
+	public void load(Document document) throws IOException, InvalidCharsetException, SQLException {
 		List<DocumentFile> files = document.getDocumentFiles();
 		for (DocumentFile file : files) {
-			loadFile(file.getPath(), file.getFileModel());
+			load(file);
 		}
 	}
-
-
+	
 	/**
-	 * Load a given file to the database (insert mode)
+	 * Load a given original file to the database (insert mode)
 	 * @param file
 	 * @param fileModel
 	 * @throws IOException
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void loadFile(File file, FileModel fileModel) throws IOException, InvalidCharsetException, SQLException {
-		// TableReader reader = TableReader.createTableReader(file, CharsetDetector.detectCharset(file)StandardCharsets.UTF_8);
-		TableReader reader = TableReader.createTableReader(getCsvFile(file), CharsetDetector.detectCharset(file));
+	public void load(DocumentFile documentFile) throws IOException, InvalidCharsetException, SQLException {
+		FeatureType featureType = documentFile.getFileModel().getFeatureType();
+		
+		/* CSV issu de la conversion brut de ogr2ogr (charset originale) */
+		File csvPath = CompanionFileUtils.getCompanionFile(
+			documentFile.getPath(),
+			"csv"
+		);
+		loadFile(
+			featureType.getName(),
+			csvPath,
+			CharsetDetector.detectCharset(csvPath)
+		);		
+	}
+
+	/**
+	 * Load a given file into an existing table
+	 * @param tableName
+	 * @param path
+	 * @param charset
+	 * @throws IOException
+	 * @throws InvalidCharsetException
+	 * @throws SQLException
+	 */
+	public void loadFile(String tableName,File path, Charset charset) throws IOException, InvalidCharsetException, SQLException{
+		/*
+		 * Create table reader
+		 */
+		TableReader reader = TableReader.createTableReader(
+			path, 
+			charset
+		);
 
 		String[] header = reader.getHeader();
-		List<AttributeType<?>> attributes = fileModel.getFeatureType().getAttributes();
+		
+		String[] columnNames = getSchema(tableName);
 
-		// prepare SQL
+		/* 
+		 * Generate insert into template according to columns 
+		 * INSERT INTO TABLE (att1, att2, ...) VALUES (?, ?, ..);
+		 */
 		String sqlAttPart = "";
 		String sqlValuesPart = "";
 		List<Integer> indexes = new ArrayList<Integer>();
-
 		for (int i = 0; i < header.length; i++) {
 			String att = header[i];
-			for (AttributeType<?> attribute : attributes) {
-				String name = attribute.getName();
-				if (name.toLowerCase().equals(att.toLowerCase())) {
+			for (String columnName : columnNames) {
+				if (columnName.toLowerCase().equals(att.toLowerCase())) {
 					// l'att du fichier csv existe dans le model de document
 					indexes.add(i);
-					sqlAttPart += name.toLowerCase() + ", ";
+					sqlAttPart += columnName.toLowerCase() + ", ";
 					sqlValuesPart += "?, ";
 				}
 			}
 		}
 		sqlAttPart = sqlAttPart.substring(0, sqlAttPart.length() - 2);
 		sqlValuesPart = sqlValuesPart.substring(0, sqlValuesPart.length() - 2);
-		String sql = "INSERT INTO " + fileModel.getName() + " (" + sqlAttPart + ") VALUES (" + sqlValuesPart + ");";
+		String sql = "INSERT INTO " + tableName + " (" + sqlAttPart + ") VALUES (" + sqlValuesPart + ");";
 
+		/* Create prepared statement... */
 		PreparedStatement sth = connection.prepareStatement(sql);
-		// debug SQL
 		log.debug(MARKER, sql);
 
+		/* Batch insertion */
 		while (reader.hasNext()) {
 			String[] row = reader.next();
 			int parameterIndex = 0;
