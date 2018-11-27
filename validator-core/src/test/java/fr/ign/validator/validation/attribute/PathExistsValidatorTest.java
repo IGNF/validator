@@ -2,24 +2,24 @@ package fr.ign.validator.validation.attribute;
 
 import java.io.File;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.type.PathType;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import fr.ign.validator.validation.attribute.PathExistsValidator;
-import junit.framework.TestCase;
 
-public class PathExistsValidatorTest extends TestCase {
+public class PathExistsValidatorTest {
 
 	private Context context ;
 	private InMemoryReportBuilder report ;
 	private PathExistsValidator validator ;
 	
 	
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		
+	@Before
+	public void setUp() throws Exception {
 		validator = new PathExistsValidator();
 		
 		context = new Context();
@@ -30,28 +30,28 @@ public class PathExistsValidatorTest extends TestCase {
 		context.setReportBuilder(report);
 	}
 
-	
+	@Test
 	public void testExisting(){
 		PathType type = new PathType();
 		Attribute<File> attribute = new Attribute<File>(type, new File("jexiste.txt"));
 		validator.validate(context, attribute);
-		assertEquals(0, report.countErrors() ) ;
+		Assert.assertEquals(0, report.countErrors() ) ;
 	}
 	
-	
+	@Test	
 	public void testExistingWithFragment(){
 		PathType type = new PathType();
 		Attribute<File> attribute = new Attribute<File>(type, new File("jexiste.txt#page=12"));
 		validator.validate(context, attribute);
-		assertEquals(0, report.countErrors() ) ;
+		Assert.assertEquals(0, report.countErrors() ) ;
 	}
 	
-
+	@Test
 	public void testDoesntExists(){
 		PathType type = new PathType();
 		Attribute<File> attribute = new Attribute<File>(type, new File("je-nexiste-pas.txt"));
 		validator.validate(context, attribute);
-		assertEquals(1, report.countErrors() ) ;
+		Assert.assertEquals(1, report.countErrors() ) ;
 	}
 	
 	
