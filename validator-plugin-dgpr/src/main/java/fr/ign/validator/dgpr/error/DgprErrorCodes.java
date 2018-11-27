@@ -16,4 +16,5 @@ public class DgprErrorCodes {
 	public static final ErrorCode DGPR_DEBLIN_ERROR = ErrorCode.valueOf("DGPR_DEBLIN_ERROR");
 	public static final ErrorCode DGPR_INOND_INCLUSION_ERROR = ErrorCode.valueOf("DGPR_INOND_INCLUSION_ERROR");
 	public static final ErrorCode DGPR_INOND_INCLUSION_INVALID_GEOM = ErrorCode.valueOf("DGPR_INOND_INCLUSION_INVALID_GEOM");
+	public static final ErrorCode DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED = ErrorCode.valueOf("DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED");
 }
