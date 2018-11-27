@@ -1,9 +1,7 @@
 package fr.ign.validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.util.Strings;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -27,7 +25,7 @@ public class ContextTest {
 		
 		Assert.assertFalse(context.isFlatValidation());
 	}
-
+	
 
 	@Test
 	public void testDefaultListeners(){

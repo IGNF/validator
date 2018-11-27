@@ -9,9 +9,7 @@ import fr.ign.validator.Version;
 
 /**
  * 
- * Application composed of commands
- * 
- * Note that command are 
+ * Provide a system to have a single CLI application with multiple sub-command
  * 
  * @author MBorne
  */
@@ -33,10 +31,19 @@ public class CommandApplication {
 		}
 	}
 	
+	/**
+	 * Add command
+	 * @param command
+	 */
 	public void addCommand(Command command){
 		commands.add(command);
 	}
 	
+	/**
+	 * Get command by name
+	 * @param name
+	 * @return
+	 */
 	private Command getCommandByName(String name){
 		for (Command command : commands) {
 			if ( command.getName().equals(name) ){
@@ -46,6 +53,9 @@ public class CommandApplication {
 		return null;
 	}
     
+	/**
+	 * Display global help
+	 */
     private void displayHelp(){
     	System.out.println("Usage : COMMAND --help");
     	System.out.println("");
@@ -59,6 +69,11 @@ public class CommandApplication {
 		}
     }
 
+    /**
+     * Run command 
+     * @param args
+     * @return
+     */
 	public int run(String args[]) {
 		if ( args.length == 0 ){
 			displayHelp();

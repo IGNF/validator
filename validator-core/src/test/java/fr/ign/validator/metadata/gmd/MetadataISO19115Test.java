@@ -44,7 +44,7 @@ public class MetadataISO19115Test extends TestCase {
 		assertNull( metadata.getCharacterSet() ) ;
 	}
 	
-	
+	@Test
 	public void testIsMetadataFile(){
 		File okFile = new File(getClass().getResource("/metadata/missing-charset.xml").getPath()) ;
 		File nokFile1 = new File(getClass().getResource("/metadata/not-a-metadatafile.xml").getPath()) ;
@@ -55,6 +55,7 @@ public class MetadataISO19115Test extends TestCase {
 		assertFalse( MetadataISO19115.isMetadataFile(nokFile2) ) ;
 	}
 	
+	@Test
 	public void testRegress01(){
 		Metadata metadata = getMetadataFromResource("/metadata/01.xml");
 		
@@ -236,6 +237,7 @@ public class MetadataISO19115Test extends TestCase {
 	/**
 	 * Empty fileIdentifier, empty MD_Identifier, no characterSetCode
 	 */
+	@Test
 	public void testRegress02(){
 		Metadata metadata = getMetadataFromResource("/metadata/02.xml");
 		
@@ -656,7 +658,7 @@ public class MetadataISO19115Test extends TestCase {
 		}		
 	}
 	
-
+	@Test
 	public void testRegress05(){
 		Metadata metadata = getMetadataFromResource("/metadata/05.xml");
 		
