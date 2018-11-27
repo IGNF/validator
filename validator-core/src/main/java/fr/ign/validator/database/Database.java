@@ -19,6 +19,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.file.TableFile;
 import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -52,7 +53,7 @@ public class Database {
 	 * Create or open an sqlite database
 	 * @param sqlitePath
 	 */
-	public Database(File sqlitePath){
+	public Database(File sqlitePath) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			String databaseUrl = "jdbc:sqlite:"+ sqlitePath.getAbsolutePath() ;
@@ -73,9 +74,12 @@ public class Database {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public static Database createDatabase(Document document) throws SQLException{
+	public static Database createDatabase(Document document) throws SQLException {
 		File parentDirectory = document.getDocumentPath().getParentFile();
 		File databasePath = new File(parentDirectory, "document_database.db");
+		if (databasePath.exists()) {
+			databasePath.delete();
+		}
 		Database database = new Database(databasePath);
 		database.createTables(document.getDocumentModel());
 		return database;
@@ -153,10 +157,12 @@ public class Database {
 	public void load(Document document) throws IOException, InvalidCharsetException, SQLException {
 		List<DocumentFile> files = document.getDocumentFiles();
 		for (DocumentFile file : files) {
-			load(file);
+			if (file instanceof TableFile) {
+				load(file);
+			}
 		}
 	}
-	
+
 	/**
 	 * Load a given original file to the database (insert mode)
 	 * @param file
@@ -253,8 +259,11 @@ public class Database {
 	public RowIterator query(String sql) throws SQLException {
 		log.debug(MARKER, sql);
 		PreparedStatement sth = connection.prepareStatement(sql);
-		ResultSet rs = sth.executeQuery();
-		return new RowIterator(rs);
+		boolean hasResultSet = sth.execute();
+		if (hasResultSet) {
+			return new RowIterator(sth.getResultSet());
+		}
+		return new RowIterator();
 	}
 
 
