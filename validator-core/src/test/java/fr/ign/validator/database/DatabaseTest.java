@@ -5,11 +5,13 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.geotools.referencing.CRS;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -22,17 +24,28 @@ public class DatabaseTest {
 
 	InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
 
-
+	Context context ;
+	
+	@Before
+	public void setUp(){
+		context = new Context();
+	}
+	
 	/**
 	 * @throws Exception
 	 */
 	@Test
-	public void testDatabaseFromFile() {
+	public void testEmptyDatabaseFromFile() {
 		try {
 			// test database driver
-			File path = File.createTempFile("document_database", "db");
-			@SuppressWarnings("unused")
+			File path = new File( folder.getRoot(), "document_database.db" );
 			Database database = new Database(path);
+			RowIterator it = database.query("SELECT 'test' as test");
+			Assert.assertTrue(it.hasNext());
+			String[] row = it.next();
+			Assert.assertEquals(1, row.length );			
+			Assert.assertEquals("test", row[0] );
+			Assert.assertFalse(it.hasNext());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -46,7 +59,7 @@ public class DatabaseTest {
 	@Test
 	public void testCreateInsertSelect() {
 		try {
-			File path = File.createTempFile("document_database", "db");
+			File path = new File( folder.getRoot(), "document_database.db" );
 			Database database = new Database(path);
 			database.query("CREATE TABLE TEST(id TEXT, name TEXT);");
 			database.query("INSERT INTO TEST(id, name) VALUES ('1', 'name01');");
@@ -69,15 +82,14 @@ public class DatabaseTest {
 
 
 	protected Document getDocument(boolean validate) throws Exception {
-		Context context = new Context();
 		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
 		context.setReportBuilder(reportBuilder);
 
-		File documentModelPath = new File(getClass().getResource("/config/cnig_PLU_2014/files.xml").getPath()) ;
+		File documentModelPath = ResourceHelper.getResourcePath("/config/cnig_PLU_2014/files.xml") ;
 		XmlModelManager modelLoader = new XmlModelManager();
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
-		File documentPath = new File(getClass().getResource("/documents/41003_PLU_20130903").getPath());
+		File documentPath = ResourceHelper.getResourcePath("/database/41003_PLU_20130903");
 		File copy = folder.newFolder(documentPath.getName());
 		FileUtils.copyDirectory(documentPath, copy);
 
@@ -102,7 +114,7 @@ public class DatabaseTest {
 		try {
 			Document document = getDocument(false);
 			Database database = Database.createDatabase(document);
-			database.load(document);
+			database.load(context,document);
 
 			// no data will be load (because no validation, no csv, no file mapping
 			int count = database.getCount("DOC_URBA");
@@ -126,7 +138,7 @@ public class DatabaseTest {
 			Document document = getDocument(true);
 			
 			Database database = Database.createDatabase(document);
-			database.load(document);
+			database.load(context,document);
 
 			// some feature were load
 			// 0 DOC_URBA (because no DOC_URBA table
@@ -135,7 +147,7 @@ public class DatabaseTest {
 			// 19 PRESCRIPTION_SURF_41003
 			// 19 or 38 ? TODO figure how many...
 			int countPrescription = database.getCount("PRESCRIPTION_SURF");
-			Assert.assertTrue(countPrescription >= 0);
+			Assert.assertEquals(19,countPrescription);
 
 		} catch (Exception e) {
 			e.printStackTrace();

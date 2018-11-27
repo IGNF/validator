@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.file.TableFile;
@@ -154,11 +155,11 @@ public class Database {
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void load(Document document) throws IOException, InvalidCharsetException, SQLException {
+	public void load(Context context, Document document) throws IOException, InvalidCharsetException, SQLException {
 		List<DocumentFile> files = document.getDocumentFiles();
 		for (DocumentFile file : files) {
 			if (file instanceof TableFile) {
-				load(file);
+				load(context,file);
 			}
 		}
 	}
@@ -171,18 +172,13 @@ public class Database {
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void load(DocumentFile documentFile) throws IOException, InvalidCharsetException, SQLException {
+	public void load(Context context, DocumentFile documentFile) throws IOException, InvalidCharsetException, SQLException {
 		FeatureType featureType = documentFile.getFileModel().getFeatureType();
 
-		/* CSV from ogr2ogr (charset originale) */
-		File csvPath = CompanionFileUtils.getCompanionFile(
-			documentFile.getPath(),
-			"csv"
-		);
 		loadFile(
 			featureType.getName(),
-			csvPath,
-			CharsetDetector.detectCharset(csvPath)
+			documentFile.getPath(),
+			context.getEncoding()
 		);		
 	}
 
@@ -195,17 +191,13 @@ public class Database {
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void loadFile(String tableName,File path, Charset charset) throws IOException, InvalidCharsetException, SQLException{
+	public void loadFile(String tableName, File path, Charset charset) throws IOException, InvalidCharsetException, SQLException{
 		/*
 		 * Create table reader
 		 */
-		TableReader reader = TableReader.createTableReader(
-			path, 
-			charset
-		);
+		TableReader reader = TableReader.createTableReaderPreferedCharset(path, charset);
 
 		String[] header = reader.getHeader();
-		
 		String[] columnNames = getSchema(tableName);
 
 		/* 
@@ -248,6 +240,7 @@ public class Database {
 		sth.executeBatch();
 		connection.commit();
 	}
+
 
 
 	/**
