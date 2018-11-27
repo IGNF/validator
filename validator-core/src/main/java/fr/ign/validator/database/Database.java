@@ -1,4 +1,4 @@
-package fr.ign.validator.dgpr.database;
+package fr.ign.validator.database;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -116,7 +115,7 @@ public class Database {
 	/**
 	 * Return the CREATE TABLE query for a giving TableModel
 	 * 
-	 * TODO : create index for identifiers (do not add SQL constraints, it would explode at SQL insertions) 
+	 * 
 	 * 
 	 * @param fileModel
 	 * @return
@@ -129,31 +128,19 @@ public class Database {
 		for (AttributeType<?> attribute : attributes) {
 			String name = attribute.getName().toLowerCase();
 			if (attribute.isIdentifier()) {
-				// sql += name + " TEXT PRIMARY KEY" + ", ";
+				/*
+				 * TODO : create index for identifiers 
+				 * (do not add SQL constraints, it would crash before validation with SQL insertions) 
+				 */
 				sql += name + " TEXT " + ", ";
 				continue;
 			}
-			//			if (attribute.isReference()) {
-			//				String tableReference = ...;
-			//			    String attributeReference = ...;
-			//				sql += " " + name + " TEXT REFERENCES " + tableReference + "("+ attributeReference + ")" + ",";
-			//				continue;
-			//			}
 			sql += name + " TEXT" + ", ";
 		}
 
 		// remove last coma
 		sql = sql.substring(0, sql.length() - 2) + ");";
 		return sql;
-	}
-
-
-	private File getCsvFile(File file) {
-		File csvFile = new File(
-			file.getParent(),
-			FilenameUtils.getBaseName(file.getName())+".csv"
-		);
-		return csvFile;
 	}
 
 
@@ -180,8 +167,8 @@ public class Database {
 	 */
 	public void load(DocumentFile documentFile) throws IOException, InvalidCharsetException, SQLException {
 		FeatureType featureType = documentFile.getFileModel().getFeatureType();
-		
-		/* CSV issu de la conversion brut de ogr2ogr (charset originale) */
+
+		/* CSV from ogr2ogr (charset originale) */
 		File csvPath = CompanionFileUtils.getCompanionFile(
 			documentFile.getPath(),
 			"csv"

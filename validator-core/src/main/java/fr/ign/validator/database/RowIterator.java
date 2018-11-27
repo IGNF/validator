@@ -1,4 +1,4 @@
-package fr.ign.validator.dgpr.database;
+package fr.ign.validator.database;
 
 import java.io.Closeable;
 import java.io.IOException;

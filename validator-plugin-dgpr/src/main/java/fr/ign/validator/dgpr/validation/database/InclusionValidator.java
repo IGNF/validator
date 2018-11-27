@@ -13,9 +13,9 @@ import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.database.Database;
+import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.DatabaseUtils;
-import fr.ign.validator.dgpr.database.Database;
-import fr.ign.validator.dgpr.database.RowIterator;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 
 public class InclusionValidator {

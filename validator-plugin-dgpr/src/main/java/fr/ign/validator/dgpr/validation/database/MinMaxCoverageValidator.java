@@ -2,7 +2,7 @@ package fr.ign.validator.dgpr.validation.database;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.dgpr.database.Database;
+import fr.ign.validator.database.Database;
 
 public class MinMaxCoverageValidator {
 
