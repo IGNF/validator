@@ -5,9 +5,6 @@ import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Test;
 import org.opengis.geometry.DirectPosition;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CRSAuthorityFactory;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 

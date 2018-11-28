@@ -3,6 +3,13 @@ package fr.ign.validator.error;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * 
+ * Test ValidatorError behavior about parameters.
+ *  
+ * @author MBorne
+ *
+ */
 public class ValidatorErrorTest {
 
 	@Test

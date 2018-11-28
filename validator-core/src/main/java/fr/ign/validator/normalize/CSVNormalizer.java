@@ -1,10 +1,11 @@
 package fr.ign.validator.normalize;
 
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.csv.CSVFormat;
@@ -19,6 +20,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.AttributeType;
@@ -32,7 +34,7 @@ import fr.ign.validator.tools.TableReader;
  * @author MBorne
  *
  */
-public class CSVNormalizer {
+public class CSVNormalizer implements Closeable {
 	public static final Logger log = LogManager.getRootLogger() ;
 	public static final Marker MARKER = MarkerManager.getMarker("CSVNormalizer") ;
 
@@ -46,9 +48,18 @@ public class CSVNormalizer {
 	 */
 	private FeatureType featureType;
 
+	/**
+	 * Target CRS
+	 */
 	private CoordinateReferenceSystem targetCRS;
+	
+	/**
+	 * CSV writer
+	 */
+	private CSVPrinter printer;
+	
 
-	public CSVNormalizer(Context context, FeatureType featureType) {
+	public CSVNormalizer(Context context, FeatureType featureType, File targetFile) throws IOException {
 		this.context = context;
 		this.featureType = featureType;
 		try {
@@ -56,46 +67,34 @@ public class CSVNormalizer {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		/* init CSV with a given header */
+		String[] outputHeader = featureType.getAttributeNames();
+		BufferedWriter fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8));
+		printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
+		printer.printRecord(outputHeader);
 	}
+	
 
 	/**
-	 * Normalize sourceFile with a given sourceCharset and sourceCRS to an UTF-8 encoded targetFile with "CRS:84" coordinates
-	 * @param sourceFile
-	 * @param sourceCharset
-	 * @param sourceCRS
-	 * @param targetFile
+	 * Append rows corresponding to a document file
+	 * @param documentFile
 	 * @throws Exception
 	 */
-	public void normalize(
-		File sourceFile, 
-		Charset sourceCharset, 
-		CoordinateReferenceSystem sourceCRS,
-		File targetFile
-	) throws Exception {
-		ProjectionTransform transform = new ProjectionTransform(sourceCRS, targetCRS);
+	public void append(File csvFile) throws Exception {
+		ProjectionTransform transform = new ProjectionTransform(
+			context.getCoordinateReferenceSystem(), 
+			targetCRS
+		);
 
-		/*
-		 * Creating a temp file containing normalized csv {{destFile}}.csv
-		 */
-		TableReader reader = null;
-		try {
-			reader = TableReader.createTableReader(sourceFile, sourceCharset);
-		} catch (InvalidCharsetException e1) {
-			log.error(MARKER, "Détection de la charset pour la normalisation de {}", sourceFile);
-			reader = TableReader.createTableReaderDetectCharset(sourceFile);
-		}
-
-		String[] inputHeader = reader.getHeader();
-
-		String[] outputHeader = featureType.getAttributeNames();
-		BufferedWriter fileWriter = new BufferedWriter(
-				new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8));
-		CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
-		printer.printRecord(outputHeader);
+		TableReader reader = TableReader.createTableReaderPreferedCharset(
+			csvFile, 
+			context.getEncoding()
+		);
 
 		/*
 		 * writing each feature
 		 */
+		String[] inputHeader = reader.getHeader();
 		while (reader.hasNext()) {
 			String[] inputRow = reader.next();
 			String[] outputRow = new String[featureType.getAttributeCount()];
@@ -123,8 +122,14 @@ public class CSVNormalizer {
 			}
 			printer.printRecord(outputRow);
 		}
+	}
 
+	@Override
+	public void close() throws IOException {
 		printer.close();
 	}
+	
+	
+	
 
 }

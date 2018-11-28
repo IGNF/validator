@@ -7,7 +7,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.dgpr.database.DocumentDatabase;
+import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
 import fr.ign.validator.dgpr.validation.database.MinMaxCoverageValidator;
 import fr.ign.validator.ValidatorListener;
@@ -34,8 +34,8 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 				"Load document database"
 		);
 		// load database
-		DocumentDatabase database = new DocumentDatabase(document);
-		database.load();
+		Database database = Database.createDatabase(document);
+		database.load(context,document);
 
 		// validate inclusion
 		InclusionValidator inclusionValidator = new InclusionValidator();

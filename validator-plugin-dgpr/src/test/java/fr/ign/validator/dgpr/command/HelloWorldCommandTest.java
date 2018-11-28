@@ -1,20 +1,25 @@
 package fr.ign.validator.dgpr.command;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 
 /**
- *
+ * Test demo command
  */
-public class HelloWorldCommandTest extends TestCase {
+public class HelloWorldCommandTest {
 
+	@Test
 	public void testBadCall(){
 		HelloWorldCommand command = new HelloWorldCommand();
 		String[] args = new String[] { "--nonoption", "plugin name" };
 		assertEquals(1, command.run(args));
 	}
 
+	@Test
 	public void testHelloWorld() throws IOException {
 		HelloWorldCommand command = new HelloWorldCommand();
 

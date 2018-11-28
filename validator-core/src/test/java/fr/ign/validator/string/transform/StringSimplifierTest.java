@@ -1,24 +1,31 @@
 package fr.ign.validator.string.transform;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import fr.ign.validator.string.transform.StringSimplifier;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class StringSimplifierTest extends TestCase {
+import fr.ign.validator.ResourceHelper;
 
+public class StringSimplifierTest {
+
+	@Test
 	public void testReplace(){
 		StringSimplifier replacer = new StringSimplifier();
 		replacer.addReplacement("ê", "e");
 		assertEquals("bete", replacer.transform("bête"));
 	}
 	
-
+	@Test
 	public void testLoadCSVTestSample(){
-		File file = new File(getClass().getResource("/replacer/sample.csv").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/replacer/sample.csv") ;
 		StringSimplifier replacer = new StringSimplifier();
 		try {
 			replacer.loadCSV(file);
@@ -32,7 +39,7 @@ public class StringSimplifierTest extends TestCase {
 		assertTrue( replacements.containsKey("\u009c") ); // \\u should be evalued
 	}
 	
-
+	@Test
 	public void testLoadCommon(){
 		StringSimplifier replacer = new StringSimplifier();
 		replacer.loadCommon();
@@ -40,6 +47,7 @@ public class StringSimplifierTest extends TestCase {
 		assertTrue( replacements.size() >= 8 );
 	}
 	
+	@Test	
 	public void testLoadLatin1(){
 		StringSimplifier replacer = new StringSimplifier();
 		replacer.loadCharset(StandardCharsets.ISO_8859_1);
@@ -48,6 +56,7 @@ public class StringSimplifierTest extends TestCase {
 		assertTrue( replacements.size() >= 2 );
 	}
 	
+	@Test	
 	public void testTransformCommonAndLatin1(){
 		StringSimplifier replacer = new StringSimplifier();
 		// load order is important

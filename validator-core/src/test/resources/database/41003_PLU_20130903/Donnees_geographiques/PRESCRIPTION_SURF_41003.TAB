@@ -1,0 +1,20 @@
+!table
+!version 450
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 8
+    LIBELLE Char (254) ;
+    TXT Char (10) ;
+    TYPEPSC Char (2) ;
+    NOMFIC Char (80) ;
+    URLFIC Char (254) ;
+    INSEE Char (5) ;
+    DATAPPRO Date ;
+    DATVALID Date ;
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\MapInfo" = ""
+"\MapInfo\TableID" = "edd9f913-1d14-4a09-9a88-5e09eb78b12f"
+end_metadata

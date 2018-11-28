@@ -1,14 +1,17 @@
 package fr.ign.validator.tools;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
-import junit.framework.TestCase;
-
 /**
  * 
  * Tests TableReader with special characters
@@ -16,13 +19,13 @@ import junit.framework.TestCase;
  * @author MBorne
  *
  */
-public class TableReaderSpecialCharsTest extends TestCase {
+public class TableReaderSpecialCharsTest {
 
 	
 	@Test
 	public void testReadFileWithBadChars(){
 		// read file where last character in NOMFIC column is not "printable"
-		File file = new File(getClass().getResource("/dbf/SPECIAL_CHARS.DBF").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/dbf/SPECIAL_CHARS.DBF");
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.ISO_8859_1);

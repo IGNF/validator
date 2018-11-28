@@ -2,29 +2,29 @@ package fr.ign.validator.model;
 
 import java.util.Collection;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import fr.ign.validator.data.Attribute;
-import junit.framework.TestCase;
 
 
-public class AttributeTypeTest extends TestCase {
+public class AttributeTypeTest {
 
 	@Test
 	public void testByNameString(){
 		AttributeType<?> type = AttributeType.forName("String");
-		assertNotNull(type);
-		assertEquals("String",type.getTypeName()) ;
+		Assert.assertNotNull(type);
+		Assert.assertEquals("String",type.getTypeName()) ;
 	}
 	
 	@Test
 	public void testConsistencyForNameGetTypeName(){
 		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
-		assertFalse(names.isEmpty());
+		Assert.assertFalse(names.isEmpty());
 		for (String name : names) {
 			AttributeType<?> type = factory.createAttributeTypeByName(name) ;
-			assertEquals(name,type.getTypeName()) ;
+			Assert.assertEquals(name,type.getTypeName()) ;
 		}
 	}
 	
@@ -36,10 +36,10 @@ public class AttributeTypeTest extends TestCase {
 	public void testBindNull(){
 		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
-		assertFalse(names.isEmpty());
+		Assert.assertFalse(names.isEmpty());
 		for (String name : names) {
 			AttributeType<?> type = factory.createAttributeTypeByName(name) ;
-			assertNull( type.bind(null) ) ;
+			Assert.assertNull( type.bind(null) ) ;
 		}
 	}
 	
@@ -50,12 +50,12 @@ public class AttributeTypeTest extends TestCase {
 	public void testNewAttributeNull(){
 		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
-		assertFalse(names.isEmpty());
+		Assert.assertFalse(names.isEmpty());
 		for (String name : names) {
 			AttributeType<?> type = factory.createAttributeTypeByName(name) ;
 			Attribute<?> attribute = type.newAttribute(null);
-			assertSame(type,attribute.getType());
-			assertNull(attribute.getBindedValue());
+			Assert.assertSame(type,attribute.getType());
+			Assert.assertNull(attribute.getBindedValue());
 		}
 	}
 	
@@ -66,10 +66,10 @@ public class AttributeTypeTest extends TestCase {
 	public void testFormatNull(){
 		AttributeTypeFactory factory = AttributeTypeFactory.getInstance() ;
 		Collection<String> names = factory.getTypeNames() ;
-		assertFalse(names.isEmpty());
+		Assert.assertFalse(names.isEmpty());
 		for (String name : names) {
 			AttributeType<?> type = factory.createAttributeTypeByName(name) ;
-			assertNull( type.format(null) ) ;
+			Assert.assertNull( type.format(null) ) ;
 		}
 	}
 	

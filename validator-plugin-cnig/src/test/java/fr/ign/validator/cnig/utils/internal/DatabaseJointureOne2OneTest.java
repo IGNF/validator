@@ -1,12 +1,18 @@
 package fr.ign.validator.cnig.utils.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class DatabaseJointureOne2OneTest extends TestCase {
+
+public class DatabaseJointureOne2OneTest {
 
 	private File parentDirectory;
 
@@ -22,18 +28,19 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 	private String assiettesFilename = "/jointure_sup_one2one/validation/jointure_sup_one2one/DATA/AC2_ASSIETTE_SUP_S.csv";
 	File assiettesFile = new File(getClass().getResource(assiettesFilename).getPath());
 
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		parentDirectory = File.createTempFile("temp", Long.toString(System.nanoTime()));
 		parentDirectory.delete();
 		parentDirectory.mkdir();
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		parentDirectory.delete();
 	}
 
+	@Test
 	public void testInit() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -43,6 +50,7 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadActe() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -53,6 +61,7 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadServitude() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -63,6 +72,7 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadGenerateur() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -73,6 +83,7 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadAssiette() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -83,6 +94,7 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testFindFichiersByGenerateur() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
@@ -139,6 +151,7 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testFindFichiersByAssiette() {
 		try {
 			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
