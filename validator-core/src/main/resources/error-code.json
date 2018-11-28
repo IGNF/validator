@@ -74,7 +74,7 @@
     {
         "name": "TABLE_UNEXPECTED_ATTRIBUTE",
         "level": "WARNING",
-        "message": "L'attribut '{ATTRIBUTE_NAME}' n'est pas prévu dans le standard ou est un attribut optionnel.",
+        "message": "L'attribut '{ATTRIBUTE_NAME}' n'est pas prévu dans le standard.",
         "documentation": "Cette erreur se produit lorsqu'un champ est présent dans la table mais pas dans le modèle"
     },
     {
@@ -128,13 +128,13 @@
     {
         "name": "ATTRIBUTE_GEOMETRY_INVALID",
         "level": "WARNING",
-        "message": "La géométrie de l'objet géographique n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.).",
+        "message": "La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.).",
         "documentation": "Voir la document de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
     },
     {
         "name": "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",
         "level": "ERROR",
-        "message": "Les coordonnées de la géométrie de l'objet géographique ne correspondent pas à la zone attendue (vérifiez la projection)",
+        "message": "Les coordonnées de la géométrie de l'objet ne correspondent pas à la zone attendue.",
         "documentation": ""
     },
     {
@@ -482,7 +482,7 @@
     {
         "name": "CNIG_METADATA_TYPE_INVALID",
         "level": "ERROR",
-        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" ou \"serie\" pour les PLU, POS, CC, PSMV et les SUP.",
+        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" pour les PLU, POS, CC, PSMV et les SUP.",
         "documentation": ""
     },
     {
