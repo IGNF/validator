@@ -20,6 +20,7 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -81,7 +82,7 @@ public class CnigValidatorRegressTest {
 	 */
 	@Test
 	public void test41175_PLU_20140603() throws Exception {
-		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2014");
+		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2013");
 
 		File documentPath = CnigRegressHelper.getSampleDocument("41175_PLU_20140603",folder);
 		Context context = createContext(documentPath);
@@ -94,7 +95,10 @@ public class CnigValidatorRegressTest {
 			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_CHARACTERSET_INVALID));
 			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR));
 			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND));
-			Assert.assertEquals(3, report.countErrors(ErrorLevel.ERROR));
+			// relative to DOC_URBA.DATEREF
+			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP));
+			
+			Assert.assertEquals(4, report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -110,13 +114,13 @@ public class CnigValidatorRegressTest {
 
 
 	/**
-	 * Test CC en standard 2014
+	 * Test CC en standard 2013
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void test50545_CC_20130902() throws Exception {
-		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2014");
+		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2013");
 
 		File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20130902",folder);
 		Context context = createContext(documentPath);
@@ -157,9 +161,9 @@ public class CnigValidatorRegressTest {
 			document.validate(context);
 			Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
 			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.NO_SPATIAL_DATA));
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL)); // empty
-																							// WKT
-			Assert.assertEquals(2, report.countErrors(ErrorLevel.ERROR));
+			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL));
+			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.FILE_MISSING_MANDATORY));
+			Assert.assertEquals(3, report.countErrors(ErrorLevel.ERROR));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -192,9 +196,11 @@ public class CnigValidatorRegressTest {
 			document.validate(context);
 			Assert.assertEquals("19182_CC_20150517", document.getDocumentName());
 			/* check errors */
-			Assert.assertEquals(0, report.countErrors(ErrorLevel.ERROR));
+			// DOC_URBA.DATEREF = 2010 (bad regexp)
+			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP));
+			Assert.assertEquals(1, report.countErrors(ErrorLevel.ERROR));
+			
 			/* check warnings */
-			Assert.assertEquals(3, report.countErrors(CoreErrorCodes.FILE_MISPLACED));
 			Assert.assertEquals(3, report.countErrors(CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND));
 			if ( gdalDestroysCoordinates ){
 				// GDAL 1.10.1 and 1.11.3 changes coordinates so that it turns invalid geometries to valid geometries...
@@ -202,7 +208,7 @@ public class CnigValidatorRegressTest {
 				Assert.assertEquals(6, report.countErrors(ErrorLevel.WARNING));
 			}else{
 				Assert.assertEquals(2, report.countErrors(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID));				
-				Assert.assertEquals(8, report.countErrors(ErrorLevel.WARNING));
+				Assert.assertEquals(5, report.countErrors(ErrorLevel.WARNING));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

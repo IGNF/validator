@@ -1,7 +1,7 @@
 {
   "name" : "50545_CC_20130902",
   "documentModel" : {
-    "name" : "cnig_CC_2014"
+    "name" : "cnig_CC_2013"
   },
   "files" : [ {
     "type" : "table",
@@ -31,24 +31,24 @@
     "path" : "Pieces_ecrites"
   }, {
     "type" : "directory",
-    "modelName" : "Rapport_de_presentation",
-    "name" : "1_Rapport_de_presentation",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation"
-  }, {
-    "type" : "pdf",
-    "modelName" : "RAPPORT",
-    "name" : "50545_rapport_20130902.pdf",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation/50545_rapport_20130902.pdf"
-  }, {
-    "type" : "directory",
     "modelName" : "Annexes",
-    "name" : "4_Annexes",
-    "path" : "Pieces_ecrites/4_Annexes"
+    "name" : "Annexes",
+    "path" : "Pieces_ecrites/Annexes"
   }, {
     "type" : "pdf",
     "modelName" : "ANNEXE",
     "name" : "50545_plan_1_20130902.pdf",
-    "path" : "Pieces_ecrites/4_Annexes/50545_plan_1_20130902.pdf"
+    "path" : "Pieces_ecrites/Annexes/50545_plan_1_20130902.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "Rapport_de_presentation",
+    "name" : "Rapport_de_presentation",
+    "path" : "Pieces_ecrites/Rapport_de_presentation"
+  }, {
+    "type" : "pdf",
+    "modelName" : "RAPPORT",
+    "name" : "50545_rapport_20130902.pdf",
+    "path" : "Pieces_ecrites/Rapport_de_presentation/50545_rapport_20130902.pdf"
   }, {
     "type" : "metadata",
     "modelName" : "METADONNEES",
@@ -163,3 +163,4 @@
     } ]
   }
 }
+
