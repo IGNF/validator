@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <id><![CDATA[]]></id>
+  <name><![CDATA[sample]]></name>
+  <description><![CDATA[sample configuration for csv validation]]></description>
+  <regexp><![CDATA[+[a-Z]]]></regexp>
+  <files>
+    <file>
+      <id><![CDATA[]]></id>
+      <type><![CDATA[table]]></type>
+      <name><![CDATA[ADRESSE]]></name>
+      <path><![CDATA[ADRESSE(_+[0-9])?]]></path>
+      <mandatory><![CDATA[ERROR]]></mandatory>
+    </file>
+  </files>
+</document>

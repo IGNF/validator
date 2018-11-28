@@ -1,4 +1,8 @@
 package fr.ign.validator.tools;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,15 +12,15 @@ import java.util.Arrays;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
-import junit.framework.TestCase;
 
-public class TableReaderTest extends TestCase {
+public class TableReaderTest {
 
 	
 	@Test
 	public void testReadTAB(){
-		File file = new File(getClass().getResource("/data/ZONE_URBA_41003.TAB").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/data/ZONE_URBA_41003.TAB") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.ISO_8859_1);
@@ -41,7 +45,7 @@ public class TableReaderTest extends TestCase {
 	
 	@Test
 	public void testReadDocUrbaComGML(){
-		File file = new File(getClass().getResource("/gml/DOC_URBA_COM.gml").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/gml/DOC_URBA_COM.gml") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
@@ -87,7 +91,7 @@ public class TableReaderTest extends TestCase {
 	
 	@Test
 	public void testReadPrescriptionSurfGML(){
-		File file = new File(getClass().getResource("/gml/PRESCRIPTION_SURF.gml").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/gml/PRESCRIPTION_SURF.gml") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
@@ -159,7 +163,7 @@ public class TableReaderTest extends TestCase {
      * This test verifies that the null elements from header are ignored
      */
     public void testReadSingleColumn(){
-    	File file = new File(getClass().getResource("/dbf/SINGLE_COLUMN_BUG.dbf").getPath()) ;
+    	File file = ResourceHelper.getResourcePath("/dbf/SINGLE_COLUMN_BUG.dbf") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);
@@ -179,7 +183,7 @@ public class TableReaderTest extends TestCase {
 
 	@Test
 	public void testTrim(){
-		File file = new File(getClass().getResource("/csv/not-trimmed.csv").getPath()) ;
+		File file = ResourceHelper.getResourcePath("/csv/not-trimmed.csv");
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);

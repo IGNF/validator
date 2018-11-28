@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.geotools.referencing.CRS;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
@@ -23,17 +27,23 @@ import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import junit.framework.TestCase;
 
-public class ProjectARegressTest extends TestCase {
+/**
+ * 
+ * Regress test with document /regress/document-a
+ * 
+ * @author MBorne
+ *
+ */
+public class ValidateDocumentARegressTest {
 
 	private File documentPath ;
 	
 	private DocumentModel documentModel;
 	
-	@Override
-	protected void setUp() throws Exception {
-		documentPath = new File(getClass().getResource("/regress/document-a").getPath());
+	@Before
+	public void setUp() throws Exception {
+		documentPath = ResourceHelper.getResourcePath("/regress/document-a");
 		
 		documentModel = new DocumentModel();
 		List<FileModel> fileModels = new ArrayList<FileModel>();
@@ -88,7 +98,7 @@ public class ProjectARegressTest extends TestCase {
 	}
 
 	
-	
+	@Test
 	public void testValidate() throws NoSuchAuthorityCodeException, FactoryException{
 		Context context = new Context();
 		context.setCurrentDirectory(documentPath);
@@ -103,19 +113,19 @@ public class ProjectARegressTest extends TestCase {
 			document.validate(context);
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		List<ValidatorError> errors = reportBuilder.getErrors();
-		assertEquals(2,errors.size());
-		assertEquals(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY,errors.get(0).getCode());
-		assertEquals(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY,errors.get(1).getCode());
+		Assert.assertEquals(2,errors.size());
+		Assert.assertEquals(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY,errors.get(0).getCode());
+		Assert.assertEquals(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY,errors.get(1).getCode());
 
 		File expectedNormalized = new File( context.getDataDirectory(), "COMMUNE.csv");
-		assertTrue(expectedNormalized.exists());		
+		Assert.assertTrue(expectedNormalized.exists());		
 		
 		// from metadata
-		assertEquals( StandardCharsets.ISO_8859_1, context.getEncoding() ) ;
+		Assert.assertEquals( StandardCharsets.ISO_8859_1, context.getEncoding() ) ;
 	}
 	
 	

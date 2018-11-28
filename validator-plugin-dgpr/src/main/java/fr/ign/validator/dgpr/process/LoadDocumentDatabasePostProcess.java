@@ -35,7 +35,7 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 		);
 		// load database
 		Database database = Database.createDatabase(document);
-		database.load(document);
+		database.load(context,document);
 
 		// validate inclusion
 		InclusionValidator inclusionValidator = new InclusionValidator();

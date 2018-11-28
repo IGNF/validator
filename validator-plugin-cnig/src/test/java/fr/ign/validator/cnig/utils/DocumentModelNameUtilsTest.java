@@ -1,20 +1,29 @@
 package fr.ign.validator.cnig.utils;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-public class DocumentModelNameUtilsTest extends TestCase {
+import org.junit.Test;
+
+
+public class DocumentModelNameUtilsTest {
 	
+	@Test
 	public void testIsCnigStandard(){
 		assertFalse(DocumentModelNameUtils.isCnigStandard("test"));
 		assertFalse(DocumentModelNameUtils.isCnigStandard("test_bad"));
 		assertTrue(DocumentModelNameUtils.isCnigStandard("cnig_SCOT_2013"));
 	}
-
+	
+	@Test
 	public void testIsGetStandard(){
 		assertFalse(DocumentModelNameUtils.isCnigStandard("test"));
 		assertFalse(DocumentModelNameUtils.isCnigStandard("test_bad"));		
 	}
 	
+	@Test
 	public void testGetDocumentType(){
 		assertNull(DocumentModelNameUtils.getDocumentType("cnig"));
 		
@@ -23,6 +32,7 @@ public class DocumentModelNameUtilsTest extends TestCase {
 		assertEquals("SUP", DocumentModelNameUtils.getDocumentType("cnig_SUP_AC2_2013"));
 	}
 	
+	@Test
 	public void testGetVersion(){
 		assertNull(DocumentModelNameUtils.getVersion("cnig"));
 		

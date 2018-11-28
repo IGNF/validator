@@ -8,6 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.exception.InvalidCharsetException;
 
@@ -23,6 +27,10 @@ import fr.ign.validator.exception.InvalidCharsetException;
  * @author MBorne
  */
 public class TableReader implements Iterator< String[] >{
+	
+	public static final Logger log = LogManager.getRootLogger() ;
+	public static final Marker MARKER = MarkerManager.getMarker("TableReader") ;	
+
 	/**
 	 * CSV file reader
 	 */
@@ -119,13 +127,16 @@ public class TableReader implements Iterator< String[] >{
 		return -1;
 	}
 	
+	
+	
 	/**
-	 * Creates a reader from a file and a charset
+	 * Creates a reader from a file and a charset (throws exception if charset is invalid)
 	 * 
 	 * @param file
 	 * @param charset
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
+	 * @throws InvalidCharsetException
 	 */
 	public static TableReader createTableReader(File file, Charset charset) throws IOException, InvalidCharsetException{
 		File csvFile = convertToCSV(file);
@@ -140,14 +151,38 @@ public class TableReader implements Iterator< String[] >{
 		return new TableReader(csvFile, charset) ;
 	}
 	
+
+	/**
+	 * Create TableReader with a given charset. If the given charset is invalid,
+	 * redirect to createTableReaderDetectCharset
+	 *  
+	 * @param file
+	 * @param charset
+	 * @return
+	 * @throws IOException
+	 */
+	public static TableReader createTableReaderPreferedCharset(File file, Charset charset) throws IOException {
+		try {
+			return TableReader.createTableReader(file,charset);
+		}  catch (InvalidCharsetException e) {
+			log.info(MARKER, "Charset invalide, tentative d'autodétection de la charset pour la validation de {}",file);
+			return TableReader.createTableReaderDetectCharset(file) ;
+		}
+	}
 	
-	public static TableReader createTableReaderDetectCharset(File file) throws IOException{
+	
+	/**
+	 * Create TableReader with charset autodetection
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public static TableReader createTableReaderDetectCharset(File file) throws IOException {
 		File csvFile = convertToCSV(file);
 		Charset charset = CharsetDetector.detectCharset(csvFile) ;
 		return new TableReader(csvFile, charset) ;
 	}
-	
-	
+
 	
 	/**
 	 * Converts to csv if needed

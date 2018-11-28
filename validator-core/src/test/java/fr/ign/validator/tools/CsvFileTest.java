@@ -9,11 +9,13 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
+
 public class CsvFileTest {
 	
 	@Test
 	public void testEmptyStringConvertedToNull(){
-		File srcFile = new File(getClass().getResource("/csv/sample-with-empty.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/sample-with-empty.csv") ;
 		try {
 			CSVReader csv = new CSVReader(srcFile,StandardCharsets.UTF_8);
 			String[] header = csv.next() ;
@@ -37,7 +39,7 @@ public class CsvFileTest {
 	
 	@Test
 	public void testReadUTF8() {
-		File srcFile = new File(getClass().getResource("/csv/sample-utf8.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/sample-utf8.csv") ;
 		try {
 			checkFileContent( srcFile, StandardCharsets.UTF_8 ) ;
 		} catch (IOException e) {
@@ -49,7 +51,7 @@ public class CsvFileTest {
 	
 	@Test
 	public void testReadLatin1() {
-		File srcFile = new File(getClass().getResource("/csv/sample-latin1.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/sample-latin1.csv") ;
 		try {
 			checkFileContent( srcFile, StandardCharsets.ISO_8859_1 ) ;
 		} catch (IOException e) {

@@ -4,16 +4,20 @@ import java.io.File;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
-import junit.framework.TestCase;
 
-public class XmlModelManagerTest extends TestCase {
+public class XmlModelManagerTest {
 
 	private XmlModelManager modelLoader ;
 	
-	@Override
-	protected void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		modelLoader = new XmlModelManager() ;
 	}
 
@@ -21,29 +25,30 @@ public class XmlModelManagerTest extends TestCase {
 	 * Check that XmlModelManager load required FeatureTypes
 	 * @throws JAXBException
 	 */
+	@Test
 	public void testLoadDocumentModel() throws JAXBException{
-		File documentModelPath = new File(getClass().getResource("/xml/sample-document/files.xml").getPath()) ;
+		File documentModelPath = ResourceHelper.getResourcePath("/xml/sample-document/files.xml") ;
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
-		assertEquals("ccccc_CC_dddddddd",documentModel.getName());
-		assertEquals(3, documentModel.getFileModels().size());
+		Assert.assertEquals("ccccc_CC_dddddddd",documentModel.getName());
+		Assert.assertEquals(3, documentModel.getFileModels().size());
 		
 		int index = 0;
 		{
 			FileModel fileModel = documentModel.getFileModels().get(index++);
-			assertEquals("SIMPLE",fileModel.getName());
-			assertNotNull(fileModel.getFeatureType());
-			assertEquals("SIMPLE",fileModel.getFeatureType().getName());
+			Assert.assertEquals("SIMPLE",fileModel.getName());
+			Assert.assertNotNull(fileModel.getFeatureType());
+			Assert.assertEquals("SIMPLE",fileModel.getFeatureType().getName());
 		}
 		{
 			FileModel fileModel = documentModel.getFileModels().get(index++);
-			assertEquals("Donnees_geographiques",fileModel.getName());
-			assertNull(fileModel.getFeatureType());
+			Assert.assertEquals("Donnees_geographiques",fileModel.getName());
+			Assert.assertNull(fileModel.getFeatureType());
 		}
 		{
 			FileModel fileModel = documentModel.getFileModels().get(index++);
-			assertEquals("COMMUNE",fileModel.getName());
-			assertNotNull(fileModel.getFeatureType());
-			assertEquals("COMMUNE",fileModel.getFeatureType().getName());
+			Assert.assertEquals("COMMUNE",fileModel.getName());
+			Assert.assertNotNull(fileModel.getFeatureType());
+			Assert.assertEquals("COMMUNE",fileModel.getFeatureType().getName());
 		}
 	}
 

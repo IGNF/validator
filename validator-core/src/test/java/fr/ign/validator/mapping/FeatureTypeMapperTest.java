@@ -1,17 +1,19 @@
 package fr.ign.validator.mapping;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.type.BooleanType;
-import junit.framework.TestCase;
 
 /**
+ * Test FeatureTypeMapper
+ * 
  * @author MBorne
  *
  */
-public class FeatureTypeMapperTest extends TestCase {
+public class FeatureTypeMapperTest {
 
 	@Test
 	public void testOneToOne(){
@@ -24,8 +26,8 @@ public class FeatureTypeMapperTest extends TestCase {
 		String[] header = new String[]{"A"};
 		
 		FeatureTypeMapper mapper = FeatureTypeMapper.createMapper(header, featureType) ;
-		assertTrue(mapper.getMissingAttributes().isEmpty());
-		assertTrue(mapper.getUnexpectedAttributes().isEmpty());
+		Assert.assertTrue(mapper.getMissingAttributes().isEmpty());
+		Assert.assertTrue(mapper.getUnexpectedAttributes().isEmpty());
 	}
 	
 	@Test
@@ -45,11 +47,11 @@ public class FeatureTypeMapperTest extends TestCase {
 		
 		FeatureTypeMapper mapper = FeatureTypeMapper.createMapper(header, featureType) ;
 		
-		assertEquals(1,mapper.getMissingAttributes().size());
-		assertEquals("B",mapper.getMissingAttributes().get(0));
+		Assert.assertEquals(1,mapper.getMissingAttributes().size());
+		Assert.assertEquals("B",mapper.getMissingAttributes().get(0));
 		
-		assertEquals(1,mapper.getUnexpectedAttributes().size());
-		assertEquals("C",mapper.getUnexpectedAttributes().get(0));
+		Assert.assertEquals(1,mapper.getUnexpectedAttributes().size());
+		Assert.assertEquals("C",mapper.getUnexpectedAttributes().get(0));
 	}
 	
 	

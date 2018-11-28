@@ -2,10 +2,14 @@ package fr.ign.validator.model.type;
 
 import java.util.ArrayList;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import static org.junit.Assert.*;
+
 
 /**
  * 
@@ -19,7 +23,7 @@ public class StringTypeTest extends AbstractTypeTest<String> {
 	}
 	
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
 		type = new StringType() ;
 		type.setName("test");
@@ -36,12 +40,11 @@ public class StringTypeTest extends AbstractTypeTest<String> {
 		context.setReportBuilder(reportBuilder);
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
 		type = null ;
 	}
-	
-	
+
 	@Test
 	public void testCheckAttributeValue0() {
 		// all is ok
