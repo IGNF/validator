@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[e971cf64c9c50dc91c4658db8f665d99]]></id>
+  <typeName><![CDATA[HABILLAGE_TXT]]></typeName>
+  <description><![CDATA[Table des objets textuels (étiquettes) figurant sur le plan du document d'urbanisme à des fins d'ha]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[245305b2536ab41ab408114d7374e836]]></id>
+      <name><![CDATA[POLICE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5c15f5ce404387c8a849b691e736e497]]></id>
+      <name><![CDATA[TAILLE]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7269cca7e9135a1bfa6e2019cf29e756]]></id>
+      <name><![CDATA[STYLE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9dd820a287e66d1bd18940f6886f0359]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c51d7e7c3b5d1bfbf9d03a5691eb4086]]></id>
+      <name><![CDATA[NATECR]]></name>
+      <description><![CDATA[Nature de l'écriture]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[db5f25ff3d637281da66a971bd9f8d08]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Libellé de l'étiquette attachée au point d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f681a9ab6719593dbc5aef94dab0ffe4]]></id>
+      <name><![CDATA[ANGLE]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f7422d2dcbfec74745ed80b8d48ebc37]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'élément d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

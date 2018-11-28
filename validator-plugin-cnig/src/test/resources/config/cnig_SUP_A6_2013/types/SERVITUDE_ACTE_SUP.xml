@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[38ca707f44376b8afb069dc866110bbe]]></id>
+  <typeName><![CDATA[SERVITUDE_ACTE_SUP]]></typeName>
+  <description><![CDATA[Table exprimant la relation entre les servitudes et les actes instituant ces servitudes]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[89f0aaf24a703a318a3094a72c68bf3b]]></id>
+      <name><![CDATA[IDACTE]]></name>
+      <description><![CDATA[Identifiant de l'acte instituant la SUP]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b8172389de2db4d746b273d07e07eab1]]></id>
+      <name><![CDATA[IDSUP]]></name>
+      <description><![CDATA[Identifiant de la SUP]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

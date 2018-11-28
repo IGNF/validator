@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV1;
+import fr.ign.validator.tools.ResourceHelper;
 
 
 /**
@@ -27,17 +28,13 @@ public class TyperefExtractorTest {
 
 	@Test
 	public void testNotFound(){
-		File docUrbaFile = new File( 
-			getClass().getResource("/csv/DOC_URBA.csv").getPath() 
-		);
+		File docUrbaFile = ResourceHelper.getResourceFile(getClass(), "/csv/DOC_URBA.csv");
 		assertNull( extractor.findTyperef(docUrbaFile,"test") ) ;
 	}
 
 	@Test
 	public void testFindStrictEquals(){
-		File docUrbaFile = new File( 
-			getClass().getResource("/csv/DOC_URBA.csv").getPath() 
-		);
+		File docUrbaFile = ResourceHelper.getResourceFile(getClass(), "/csv/DOC_URBA.csv");
 		assertEquals( "01", extractor.findTyperef(docUrbaFile,"50041_PLU_20130403") ) ;
 		assertEquals( "01", extractor.findTyperef(docUrbaFile,"50648_POS_20030926") ) ;
 	}

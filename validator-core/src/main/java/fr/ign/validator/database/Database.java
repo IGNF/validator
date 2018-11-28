@@ -27,14 +27,12 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
-import fr.ign.validator.tools.CharsetDetector;
-import fr.ign.validator.tools.CompanionFileUtils;
 import fr.ign.validator.tools.TableReader;
-
 
 /**
  * 
- * Helper to load document data into a SQL database to validate some constraints (unique, reference, etc.)
+ * Helper to load document data into a SQL database to validate some constraints
+ * (unique, reference, etc.)
  * 
  * @author CBouche
  * @author MBorne
@@ -42,7 +40,7 @@ import fr.ign.validator.tools.TableReader;
  */
 public class Database {
 
-	public static final Logger log    = LogManager.getRootLogger();
+	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
 
 	/**
@@ -52,12 +50,14 @@ public class Database {
 
 	/**
 	 * Create or open an sqlite database
+	 * 
 	 * @param sqlitePath
 	 */
 	public Database(File sqlitePath) {
+		log.info(MARKER, "Create SQLITE database {}...", sqlitePath);
 		try {
 			Class.forName("org.sqlite.JDBC");
-			String databaseUrl = "jdbc:sqlite:"+ sqlitePath.getAbsolutePath() ;
+			String databaseUrl = "jdbc:sqlite:" + sqlitePath.getAbsolutePath();
 			connection = DriverManager.getConnection(databaseUrl);
 			connection.setAutoCommit(false);
 		} catch (ClassNotFoundException e) {
@@ -67,18 +67,27 @@ public class Database {
 		}
 	}
 
-	
+	/**
+	 * Get database connection
+	 * 
+	 * @return
+	 */
+	public Connection getConnection() {
+		return connection;
+	}
+
 	/**
 	 * Create database with a schema corresponding to the given document
 	 * 
 	 * @param document
 	 * @return
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public static Database createDatabase(Document document) throws SQLException {
 		File parentDirectory = document.getDocumentPath().getParentFile();
 		File databasePath = new File(parentDirectory, "document_database.db");
 		if (databasePath.exists()) {
+			log.info(MARKER, "remove existing database {}...", databasePath);
 			databasePath.delete();
 		}
 		Database database = new Database(databasePath);
@@ -86,9 +95,9 @@ public class Database {
 		return database;
 	}
 
-
 	/**
 	 * Create tables according to documentModel
+	 * 
 	 * @throws SQLException
 	 */
 	public void createTables(DocumentModel documentModel) throws SQLException {
@@ -101,14 +110,48 @@ public class Database {
 		}
 	}
 
-
 	/**
 	 * Create table according to tableModel
+	 * 
 	 * @param tableModel
 	 * @throws SQLException
 	 */
 	public void createTable(TableModel tableModel) throws SQLException {
-		String sql = getCreateTableSql(tableModel);
+		createTable(tableModel.getName(),getColumnNames(tableModel));
+		//TODO create index for identifier
+	}
+
+	/**
+	 * Create table
+	 * 
+	 * @param string
+	 * @param columnNames
+	 */
+	public void createTable(String tableName, List<String> columnNames) throws SQLException {
+		String sql = "CREATE TABLE " + tableName + " (";
+		for ( int i = 0; i < columnNames.size(); i++ ){
+			if ( i != 0 ){
+				sql += ",";
+			}
+			sql += columnNames.get(i) + " TEXT";
+		}
+		sql += ");";
+
+		// debug SQL
+		log.debug(MARKER, sql);
+		Statement sth = connection.createStatement();
+		sth.executeUpdate(sql);
+		connection.commit();
+	}
+	
+	/**
+	 * Create index idx_{tableName}_{columnName} on {tableName}({columnName}
+	 * @param tableName
+	 * @param columnName
+	 */
+	public void createIndex(String tableName, String columnName) throws SQLException {
+		String indexName = "idx_"+tableName+"_"+columnName;
+		String sql = "CREATE INDEX "+indexName+" ON "+tableName+" ("+columnName+")";
 		// debug SQL
 		log.debug(MARKER, sql);
 		Statement sth = connection.createStatement();
@@ -116,41 +159,25 @@ public class Database {
 		connection.commit();
 	}
 
-
 	/**
-	 * Return the CREATE TABLE query for a giving TableModel
-	 * 
-	 * 
+	 * Get column names for a given tableModel
 	 * 
 	 * @param fileModel
 	 * @return
 	 */
-	private String getCreateTableSql(TableModel tableModel) {
-		String tablename = tableModel.getName();
-		String sql = "CREATE TABLE " + tablename + " (";
-
+	private List<String> getColumnNames(TableModel tableModel) {
 		List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
+		
+		List<String> columnNames = new ArrayList<>(attributes.size());
 		for (AttributeType<?> attribute : attributes) {
-			String name = attribute.getName().toLowerCase();
-			if (attribute.isIdentifier()) {
-				/*
-				 * TODO : create index for identifiers 
-				 * (do not add SQL constraints, it would crash before validation with SQL insertions) 
-				 */
-				sql += name + " TEXT " + ", ";
-				continue;
-			}
-			sql += name + " TEXT" + ", ";
+			columnNames.add(attribute.getName());
 		}
-
-		// remove last coma
-		sql = sql.substring(0, sql.length() - 2) + ");";
-		return sql;
+		return columnNames;
 	}
-
 
 	/**
 	 * Load an entire document to the database (insert mode)
+	 * 
 	 * @throws IOException
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
@@ -159,31 +186,30 @@ public class Database {
 		List<DocumentFile> files = document.getDocumentFiles();
 		for (DocumentFile file : files) {
 			if (file instanceof TableFile) {
-				load(context,file);
+				load(context, file);
 			}
 		}
 	}
 
 	/**
 	 * Load a given original file to the database (insert mode)
+	 * 
 	 * @param file
 	 * @param fileModel
 	 * @throws IOException
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void load(Context context, DocumentFile documentFile) throws IOException, InvalidCharsetException, SQLException {
+	public void load(Context context, DocumentFile documentFile)
+			throws IOException, InvalidCharsetException, SQLException {
 		FeatureType featureType = documentFile.getFileModel().getFeatureType();
 
-		loadFile(
-			featureType.getName(),
-			documentFile.getPath(),
-			context.getEncoding()
-		);		
+		loadFile(featureType.getName(), documentFile.getPath(), context.getEncoding());
 	}
 
 	/**
 	 * Load a given file into an existing table
+	 * 
 	 * @param tableName
 	 * @param path
 	 * @param charset
@@ -191,7 +217,8 @@ public class Database {
 	 * @throws InvalidCharsetException
 	 * @throws SQLException
 	 */
-	public void loadFile(String tableName, File path, Charset charset) throws IOException, InvalidCharsetException, SQLException{
+	public void loadFile(String tableName, File path, Charset charset)
+			throws IOException, InvalidCharsetException, SQLException {
 		/*
 		 * Create table reader
 		 */
@@ -200,9 +227,9 @@ public class Database {
 		String[] header = reader.getHeader();
 		String[] columnNames = getSchema(tableName);
 
-		/* 
-		 * Generate insert into template according to columns 
-		 * INSERT INTO TABLE (att1, att2, ...) VALUES (?, ?, ..);
+		/*
+		 * Generate insert into template according to columns INSERT INTO TABLE
+		 * (att1, att2, ...) VALUES (?, ?, ..);
 		 */
 		String sqlAttPart = "";
 		String sqlValuesPart = "";
@@ -241,10 +268,9 @@ public class Database {
 		connection.commit();
 	}
 
-
-
 	/**
 	 * Perform any SQL request to DocumentDatabase
+	 * 
 	 * @param sql
 	 * @return
 	 * @throws SQLException
@@ -259,9 +285,9 @@ public class Database {
 		return new RowIterator();
 	}
 
-
 	/**
 	 * Return an Array of String giving column names for a giving table
+	 * 
 	 * @param tablename
 	 * @return
 	 * @throws SQLException
@@ -274,22 +300,22 @@ public class Database {
 		return header;
 	}
 
-
 	/**
 	 * Return the number of features of a giving table
+	 * 
 	 * @param tableName
 	 * @return
 	 * @throws SQLException
 	 */
-	public int getCount(String tableName) throws SQLException{
-		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName) ;
-		ResultSet rs = sth.executeQuery() ;
+	public int getCount(String tableName) throws SQLException {
+		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName);
+		ResultSet rs = sth.executeQuery();
 		return rs.getInt(1);
 	}
 
-
 	/**
 	 * Return all the feature of a giving table
+	 * 
 	 * @param tablename
 	 * @return
 	 * @throws SQLException

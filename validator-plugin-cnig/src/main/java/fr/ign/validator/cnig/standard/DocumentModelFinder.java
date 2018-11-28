@@ -102,12 +102,15 @@ public class DocumentModelFinder {
 			return candidates.get(0);
 		}
 
+		log.info(MARKER, "Found CNIG specification in metadata : {}", specification.getTitle());
+		
 		/* Find version according to specification (ex : "2013") */
 		String version = SpecificationUtils.parseCnigSpecification(specification).version ;
+		log.info(MARKER, "Version extracted from CNIG specification : {}", version);		
 		log.info(MARKER, "findByDocumentPath({}) : searching DocumentModel for version {}...", documentPath, version);
 		for (DocumentModel candidate : candidates) {
-			log.info(MARKER, "findByDocumentPath({}) : candidate : {}", candidate.getName());
 			if ( candidate.getName().endsWith(version) ){
+				log.info(MARKER, "findByDocumentPath({}) : candidate {} match version {}", documentPath, candidate.getName(), version);
 				return candidate;
 			}
 		}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[518cd494c508f95fd2ccb3b6973ac0b8]]></id>
+  <typeName><![CDATA[INFO_SURF]]></typeName>
+  <description><![CDATA[INFO_SURF]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[6265b0019c821c9061e4d2adaf9855ce]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[83191b94625f3a08fef098883d4af232]]></id>
+      <name><![CDATA[TYPEINF]]></name>
+      <description><![CDATA[Type de périmètre dans une liste prédéfinie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[03]]></value>
+        <value><![CDATA[04]]></value>
+        <value><![CDATA[05]]></value>
+        <value><![CDATA[06]]></value>
+        <value><![CDATA[07]]></value>
+        <value><![CDATA[08]]></value>
+        <value><![CDATA[09]]></value>
+        <value><![CDATA[10]]></value>
+        <value><![CDATA[11]]></value>
+        <value><![CDATA[12]]></value>
+        <value><![CDATA[13]]></value>
+        <value><![CDATA[14]]></value>
+        <value><![CDATA[15]]></value>
+        <value><![CDATA[16]]></value>
+        <value><![CDATA[17]]></value>
+        <value><![CDATA[18]]></value>
+        <value><![CDATA[19]]></value>
+        <value><![CDATA[20]]></value>
+        <value><![CDATA[21]]></value>
+        <value><![CDATA[22]]></value>
+        <value><![CDATA[23]]></value>
+        <value><![CDATA[24]]></value>
+        <value><![CDATA[25]]></value>
+        <value><![CDATA[26]]></value>
+        <value><![CDATA[27]]></value>
+        <value><![CDATA[28]]></value>
+        <value><![CDATA[29]]></value>
+        <value><![CDATA[30]]></value>
+        <value><![CDATA[31]]></value>
+        <value><![CDATA[32]]></value>
+        <value><![CDATA[33]]></value>
+        <value><![CDATA[34]]></value>
+        <value><![CDATA[35]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8cc5f0b5fae22b8a5455d9e5b579467a]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Nom court du périmètre servant à faire une étiquette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b1588275b93688a773769b0057d5ebe3]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c37295a84cd77c37311111335350bd0b]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Nom complet du périmètre]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c4dd8b1956eb4c7fcb0991a4dc23f46e]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier contenant le texte décrivant l'information reportée]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[fec12f355f58f3a2b2224e166506a935]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier de règlement de l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

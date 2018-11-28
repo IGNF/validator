@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[82f35ea660b059e947eac6fbdb5fba92]]></id>
+  <typeName><![CDATA[PM5_GENERATEUR_SUP_S]]></typeName>
+  <description><![CDATA[Table contenant les générateurs ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[202073fb00f6049f7ca061907feeecd8]]></id>
+      <name><![CDATA[IDBDEXT]]></name>
+      <description><![CDATA[Identifiant référençant l'objet correspondant au générateur dans le référentiel ou la base de données externe]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[45f70d6a6b1277b4e57236f160d1f347]]></id>
+      <name><![CDATA[SRCGEOGEN]]></name>
+      <description><![CDATA[Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[53a064decb952b57296d15a4129c84dd]]></id>
+      <name><![CDATA[IDGEN]]></name>
+      <description><![CDATA[Identifiant du générateur]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6df265cfe2e5843c327bcd3c8656c299]]></id>
+      <name><![CDATA[NOMGEN]]></name>
+      <description><![CDATA[Nom abrégé du générateur, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8ab23a945cd9bc31a8cd091e080d28c1]]></id>
+      <name><![CDATA[TYPEGEN]]></name>
+      <description><![CDATA[Nature de l'entité génératrice]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bf6cc359b24ea217a012564d48e5cb77]]></id>
+      <name><![CDATA[REFBDEXT]]></name>
+      <description><![CDATA[Nom du référentiel ou de la source de données externes qui contient la géométrie du générateur obtenue par duplication]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cd6f1e74c85a9107aee7db667ccb297d]]></id>
+      <name><![CDATA[DATESRCGEN]]></name>
+      <description><![CDATA[Date d'actualité du référentiel utilisé lors de la digitalisation de l'objet. Il s'agit d'indiquer le millésime des données référentielles source]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d0347f4b396894b92734634b2971c82b]]></id>
+      <name><![CDATA[MODEGENERE]]></name>
+      <description><![CDATA[Description du moyen utilisé pour obtenir la géométrie du générateur]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[Digitalisation]]></value>
+        <value><![CDATA[Duplication]]></value>
+        <value><![CDATA[Liste de coordonnées]]></value>
+        <value><![CDATA[Géométrie fictive]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ec9419301ce9b53b55bd9e0ce94ca2cb]]></id>
+      <name><![CDATA[IDSUP]]></name>
+      <description><![CDATA[Identifiant de la SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[0575a26e6d7112d44d533566b969cd36]]></id>
+      <name><![CDATA[TYPEGEN]]></name>
+      <description><![CDATA[Nature de l'entité génératrice]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[170b14287759b84da706f7dab536b4b3]]></id>
+      <name><![CDATA[IDGEN]]></name>
+      <description><![CDATA[Identifiant du générateur]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[231d13e449768390b2288e6d35def267]]></id>
+      <name><![CDATA[REFBDEXT]]></name>
+      <description><![CDATA[Nom du référentiel ou de la source de données externes qui contient la géométrie du générateur obtenue par duplication]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[3e84ccf0bc06b15d2f7573a1512073d5]]></id>
+      <name><![CDATA[IDBDEXT]]></name>
+      <description><![CDATA[Identifiant référençant l'objet correspondant au générateur dans le référentiel ou la base de données externe]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6cfc772b0873a75bf0e51c5b8448bd52]]></id>
+      <name><![CDATA[SRCGEOGEN]]></name>
+      <description><![CDATA[Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cb79de37d889f208c3358cb2baf2f10a]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[da4dac2902f0d5fa50219a7003c1f098]]></id>
+      <name><![CDATA[NOMGEN]]></name>
+      <description><![CDATA[Nom abrégé du générateur, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[de06e761999ed4d6e360db3fc863b14b]]></id>
+      <name><![CDATA[IDSUP]]></name>
+      <description><![CDATA[Identifiant de la SUP]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e6104aef0e75251a025136943ce7ce3a]]></id>
+      <name><![CDATA[MODEGENERE]]></name>
+      <description><![CDATA[Description du moyen utilisé pour obtenir la géométrie du générateur]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[Digitalisation]]></value>
+        <value><![CDATA[Duplication]]></value>
+        <value><![CDATA[Liste de coordonnées]]></value>
+        <value><![CDATA[Géométrie fictive]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f7ae969b0e2b54812af24d4ff98b69c2]]></id>
+      <name><![CDATA[DATESRCGEN]]></name>
+      <description><![CDATA[Date d'actualité du référentiel utilisé lors de la digitalisation de l'objet. Il s'agit d'indiquer le millésime des données référentielles source]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

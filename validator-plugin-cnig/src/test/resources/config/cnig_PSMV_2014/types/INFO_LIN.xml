@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[33e6b6a82643433e039a853d5c6222c2]]></id>
+  <typeName><![CDATA[INFO_LIN]]></typeName>
+  <description><![CDATA[Table contenant les informations linéaires à reporter à titre d'information]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[001f293efacd8ec4c7c92d1f2d8c5317]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[46130ba4a3bbf72f9ed8e2f212f103c4]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Nom court de l'information servant à faire une étiquette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7e65d773af1dce1b5379a2a157cf5295]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Nom complet de l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bb40d844d39f9d82f8b2225b61a3895a]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier de règlement de l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c22904a140649471e9ed359be676a804]]></id>
+      <name><![CDATA[TYPEINF]]></name>
+      <description><![CDATA[Type d'information linéaire dans une liste prédéfinie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[08]]></value>
+        <value><![CDATA[14]]></value>
+        <value><![CDATA[19]]></value>
+        <value><![CDATA[27]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c2878f08163dd9833e86d440d34b4249]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiLineString]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cb63ebb6ee2a017f692511cf1f078031]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier contenant le texte décrivant l'information reportée]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

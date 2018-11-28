@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[35461c1a9b4cd9eb4a7640b481506b78]]></id>
+  <typeName><![CDATA[HABILLAGE_LIN]]></typeName>
+  <description><![CDATA[Table des tracés linéaires indicatifs figurant sur le plan du document d'urbanisme à des fins d'ha]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[3e87819be3a0fdd7025a4f176a695b3c]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiLineString]]></type>
+      <size>-1</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[71b4f171aa9360c00763139b10cf2f7c]]></id>
+      <name><![CDATA[NATTRAC]]></name>
+      <description><![CDATA[Nature de la ligne]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f25c6f6f8a5c09b317bdd8f6a3cd7872]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'élément d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

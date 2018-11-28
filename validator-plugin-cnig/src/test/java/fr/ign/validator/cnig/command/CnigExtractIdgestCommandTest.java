@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import fr.ign.validator.tools.CompanionFileUtils;
+import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * 
@@ -27,14 +28,13 @@ public class CnigExtractIdgestCommandTest {
 
 	@Test
 	public void testFindStrictEquals() throws IOException {
+		File servitudeFile = ResourceHelper.getResourceFile(getClass(),"/SUP/SERVITUDE_041.TAB");
+
 		CnigExtractIdgestCommand command = new CnigExtractIdgestCommand();
-
-		File servitudeFile = new File(getClass().getResource("/SUP/SERVITUDE_041.TAB").getPath());
-
 		String[] args = new String[] { "--input", servitudeFile.getAbsolutePath() };
 		assertEquals(0,command.run(args));
 
-		File idgestFile = new File(getClass().getResource("/SUP/idGest.txt").getPath());
+		File idgestFile = ResourceHelper.getResourceFile(getClass(), "/SUP/idGest.txt");
 		String idgest = FileUtils.readFileToString(idgestFile);
 		assertEquals("131000", idgest);
 		

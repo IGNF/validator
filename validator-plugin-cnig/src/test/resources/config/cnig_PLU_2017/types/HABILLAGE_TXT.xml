@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[d15855ea2358a5a090a3ad37cc7223a0]]></id>
+  <typeName><![CDATA[HABILLAGE_TXT]]></typeName>
+  <description><![CDATA[Table des objets textuels (étiquettes) figurant sur le plan du document d'urbanisme à des fins d'ha]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[08616ff7062fa05acbef80a8196fff9a]]></id>
+      <name><![CDATA[ANGLE]]></name>
+      <description><![CDATA[Angle de l'écriture exprimé en degré, par rapport à l'horizontale, dans le sens trigonométrique]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[1359038fb1d22c6b3d2b3d5d4fd7eaad]]></id>
+      <name><![CDATA[TAILLE]]></name>
+      <description><![CDATA[Taille des caractères]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[165bafd9a1f481d678718ef79aacbb16]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Libellé de l'étiquette attachée au point d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[387a8f38c7b266135600e240d92fa9ee]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[40d57a0298fc8bf9b25c4a79dcbe9766]]></id>
+      <name><![CDATA[POLICE]]></name>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5c7b3fd54a3afadbaa877d7847d7f29b]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a75bc15219002f06c90d6decb7a1fc13]]></id>
+      <name><![CDATA[COULEUR]]></name>
+      <type><![CDATA[String]]></type>
+      <size>11</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[aadf706ffc591269b19ee1a04cd10bd2]]></id>
+      <name><![CDATA[NATECR]]></name>
+      <description><![CDATA[Nature de l'écriture]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bb52196d81d5df08b3340e79b82b5a50]]></id>
+      <name><![CDATA[STYLE]]></name>
+      <description><![CDATA[Style d'écriture]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>
