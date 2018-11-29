@@ -1,16 +1,15 @@
 package fr.ign.validator.cnig.idurba;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import fr.ign.validator.cnig.idurba.IdurbaHelperFactory;
 import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV1;
 import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV2;
 import fr.ign.validator.model.DocumentModel;
-import junit.framework.TestCase;
-import static org.junit.Assert.*;
 
 public class IdurbaHelperFactoryTest {
 

@@ -9,25 +9,17 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ign.validator.Context;
+import fr.ign.validator.tools.ResourceHelper;
 
 
 public class ReferenceActeSupJointureBuilderTest {
 
-	private Context context ;
-	
 	private ReferenceActeSupJointureBuilder jointureBuilder  ;
 	
 	@Before
 	public void setUp() throws Exception {
-		context = new Context();
-		File currentDirectory = new File(getClass().getResource("/jointure_sup_one2one").getPath()) ;
-		context.setCurrentDirectory(currentDirectory);
-		
-		File validationDirectory = new File(getClass().getResource("/jointure_sup_one2one/validation").getPath()) ;
-		context.setValidationDirectory(validationDirectory);
-		
-		jointureBuilder = new ReferenceActeSupJointureBuilder(context) ;
+		File dataDirectory = ResourceHelper.getResourceFile(getClass(),"/jointure_sup/one2one/DATA");
+		jointureBuilder = new ReferenceActeSupJointureBuilder(dataDirectory) ;
 	}
 	
 	@Test

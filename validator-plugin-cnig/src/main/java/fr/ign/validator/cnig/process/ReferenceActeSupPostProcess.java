@@ -36,7 +36,7 @@ public class ReferenceActeSupPostProcess implements ValidatorListener {
 
 	@Override
 	public void afterValidate(Context context, Document document) throws Exception {
-		ReferenceActeSupJointureBuilder jointureBuilder = new ReferenceActeSupJointureBuilder(context);
+		ReferenceActeSupJointureBuilder jointureBuilder = new ReferenceActeSupJointureBuilder(context.getDataDirectory());
 		jointureBuilder.run() ;
 	}
 	

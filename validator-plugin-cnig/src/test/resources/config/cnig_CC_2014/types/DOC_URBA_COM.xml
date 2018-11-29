@@ -15,7 +15,7 @@
     <attribute>
       <id><![CDATA[d924e01bf6cd6efc7678f65c45bf2677]]></id>
       <name><![CDATA[IDURBA]]></name>
-      <description><![CDATA[Identifiant unique du document d'urbanisme]]></description>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
       <type><![CDATA[String]]></type>
       <size>20</size>
       <nullable>true</nullable>

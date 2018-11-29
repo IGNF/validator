@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[280f8519bdf75e9acf30a5e1c6a05c4c]]></id>
+  <typeName><![CDATA[INFO_PCT]]></typeName>
+  <description><![CDATA[Table contenant les informations ponctuelle à reporter à titre d'information]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[2cf361939243e4f68a4a0a94c8a333ec]]></id>
+      <name><![CDATA[TYPEINF]]></name>
+      <description><![CDATA[Type d'information ponctuelle dans une liste prédéfinie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[16]]></value>
+        <value><![CDATA[99]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[678b51e2d0344a16e6628422f044e9bd]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9fc3e3c64d9cf129e45dffb947d77e41]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[abdd2716a18fc449f319566c68c45b95]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier contenant le texte décrivant l'information reportée]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b582048feb69fd00d7e4bde713cd6bdf]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier de règlement de l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bc4a538984aa5104e2a64b83f825176c]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Nom complet de l'information]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f413273feca9d4c70daade21c7ef38c7]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Nom court de l'information servant à faire une étiquette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

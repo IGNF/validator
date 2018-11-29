@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[9bb4a6c476e4bb86c42678e6c9713c11]]></id>
+  <typeName><![CDATA[PRESCRIPTION_PCT]]></typeName>
+  <description><![CDATA[Table contenant les prescriptions ponctuelles se superposant au document d'urbanisme et le lien avec le texte qui la décrit]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[106a86c9a5b55fd66e67c11e3d9495e4]]></id>
+      <name><![CDATA[URLFIC]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier de règlement de la prescription]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[11df452efc689ca213b570ff4c1c7a8d]]></id>
+      <name><![CDATA[TYPEPSC]]></name>
+      <description><![CDATA[Type de la prescription dans une liste prédéfinie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[145a07ebaf1a2a8e17fa5252c889791d]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[23627f0a79a73bcef5b3dcc10c33b089]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[38bb97424dcd175c615bad335cc1085c]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Nom court de la prescription servant à faire une étiquette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[70a58c295acae23ebd0fe195e38ddf0b]]></id>
+      <name><![CDATA[NOMFIC]]></name>
+      <description><![CDATA[Nom du fichier PDF décrivant la prescription]]></description>
+      <type><![CDATA[Filename]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a3dbeac2cbadf52f33a01bd369d1d54f]]></id>
+      <name><![CDATA[DATVALID]]></name>
+      <description><![CDATA[Date de la dernière validation de la prescription]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e343a11514df2d79990458e99e7e68d9]]></id>
+      <name><![CDATA[STYPEPSC]]></name>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[00]]></value>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[03]]></value>
+        <value><![CDATA[04]]></value>
+        <value><![CDATA[05]]></value>
+        <value><![CDATA[06]]></value>
+        <value><![CDATA[07]]></value>
+        <value><![CDATA[08]]></value>
+        <value><![CDATA[97]]></value>
+        <value><![CDATA[98]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e3656ae53fed53592ae801d182b6e0e2]]></id>
+      <name><![CDATA[LIBELLE]]></name>
+      <description><![CDATA[Intitulé complet de la prescription]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>

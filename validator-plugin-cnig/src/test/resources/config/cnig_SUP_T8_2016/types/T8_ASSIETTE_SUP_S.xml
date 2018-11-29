@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[2031aae462ab2b050153f834ac07c3e3]]></id>
+  <typeName><![CDATA[T8_ASSIETTE_SUP_S]]></typeName>
+  <description><![CDATA[Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0023559dbbddf1de2ba179594527e8bd]]></id>
+      <name><![CDATA[IDASS]]></name>
+      <description><![CDATA[Identifiant de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[03269ee3b188584738d51d38c542437c]]></id>
+      <name><![CDATA[IDGEN]]></name>
+      <description><![CDATA[Identifiant du générateur de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[103d375653943c30dc6f6c45e4c326d6]]></id>
+      <name><![CDATA[SRCGEOASS]]></name>
+      <description><![CDATA[Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[1b9a55e805706f3155f9f4acd1131438]]></id>
+      <name><![CDATA[DATESRCASS]]></name>
+      <description><![CDATA[Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5ebeb3ba2af08776854483e3a86134dc]]></id>
+      <name><![CDATA[PARAMCALC]]></name>
+      <description><![CDATA[Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[66381d4b3078f4593da029232310f38d]]></id>
+      <name><![CDATA[MODEGEOASS]]></name>
+      <description><![CDATA[Description de la méthode utilisée pour générer la géométrie de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[Egal au générateur]]></value>
+        <value><![CDATA[Zone tampon]]></value>
+        <value><![CDATA[Digitalisation]]></value>
+        <value><![CDATA[Duplication]]></value>
+        <value><![CDATA[Liste de coordonnées]]></value>
+        <value><![CDATA[Secteur angulaire]]></value>
+        <value><![CDATA[Calculée]]></value>
+        <value><![CDATA[Liste de parcelles]]></value>
+        <value><![CDATA[Fictive]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7ce21352d63b22c3cb0857f61aeedda8]]></id>
+      <name><![CDATA[NOMASS]]></name>
+      <description><![CDATA[Nom abrégé de l'assiette, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a13f113c4de5c030496cf873927dc8f8]]></id>
+      <name><![CDATA[TYPEASS]]></name>
+      <description><![CDATA[Nature de l'assiette selon sa vocation principale et la catégorie de SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[00a3c829fa5eec1198e15c080e806483]]></id>
+      <name><![CDATA[ANGLE1]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[0849c706780086a17c24646eb266aa99]]></id>
+      <name><![CDATA[HREF]]></name>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[SOL]]></value>
+        <value><![CDATA[NGF]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4c3db3e3c9e69fd4eb3c7c1f92c806bb]]></id>
+      <name><![CDATA[RAYON]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[56237867a9ea1c33ca346118fb7449c6]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8957e24da8ce92449778131503f7f10b]]></id>
+      <name><![CDATA[YFINAL]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[91eb67783e60f50f13fb3d2827c9ec88]]></id>
+      <name><![CDATA[LARGEUR]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a051cf2e2de5fbbefc523d4ae7570344]]></id>
+      <name><![CDATA[ANGLE2]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[dd0f5750040dd0e7fe3a6853fb89ebda]]></id>
+      <name><![CDATA[H]]></name>
+      <type><![CDATA[Double]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e5871fc9a00619d421e139170209e278]]></id>
+      <name><![CDATA[XFINAL]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f03032a463df9cfdc4261b8e21df1c09]]></id>
+      <name><![CDATA[YDEBUT]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[fb131ff97065f82f6ddd48a96b59a7d8]]></id>
+      <name><![CDATA[XDEBUT]]></name>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

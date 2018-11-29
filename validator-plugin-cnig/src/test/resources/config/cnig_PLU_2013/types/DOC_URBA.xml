@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[9ca85dc91d25e1ce55399734a976fea0]]></id>
+  <typeName><![CDATA[DOC_URBA]]></typeName>
+  <description><![CDATA[Table contenant la liste des documents d'Urbanisme PLU ou POS dont la numérisation ou l'élaboration sous fourme numérique est engagée]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[2ea103e673c7d5ea081a6b8c5f7f3058]]></id>
+      <name><![CDATA[ETAT]]></name>
+      <description><![CDATA[Etat juridique du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>2</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[03]]></value>
+        <value><![CDATA[04]]></value>
+        <value><![CDATA[05]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[[0-9]{8}]]></regexp>
+      <id><![CDATA[3341e3224b64ed03334997662f8b49d7]]></id>
+      <name><![CDATA[DATEREF]]></name>
+      <description><![CDATA[Date d'actualité ou de mise à jour du référentiel cadastral utilisé pour la création ou la numérisation des documents graphiques.]]></description>
+      <type><![CDATA[String]]></type>
+      <size>8</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[403eeb96f613a2f8333e36fb1f0479da]]></id>
+      <name><![CDATA[SIREN]]></name>
+      <description><![CDATA[Indique le numéro SIREN de l'intercommunalité ayant approuvé le PLU. Clé externe permettant de faire le lien avec la table des EPCI]]></description>
+      <type><![CDATA[String]]></type>
+      <size>9</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5ca95597b77f20915b37edca9233e04e]]></id>
+      <name><![CDATA[INTERCO]]></name>
+      <description><![CDATA[Indique si le document d'urbanisme est intercommunal]]></description>
+      <type><![CDATA[String]]></type>
+      <size>1</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[623056670bc6939ca7ce5d3b62b1f9ad]]></id>
+      <name><![CDATA[NOMPLAN]]></name>
+      <description><![CDATA[Nom du fichier contenant le plan origine scanné. Il s'agit du plan sur lequel figure le tampon juridique]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6a854a500cb3b4e4b3961adae3ae2624]]></id>
+      <name><![CDATA[DATAPPRO]]></name>
+      <description><![CDATA[Date de la dernière approbation administrative du document d'urbanisme]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7de184b2143fb376702fd008d15e061d]]></id>
+      <name><![CDATA[URLREG]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier du règlement papier complet scanné]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7ecdc23c7404d4fd79026f5a24ea11f0]]></id>
+      <name><![CDATA[SITEWEB]]></name>
+      <description><![CDATA[Page web du service de consultation du PLU offert par la collectivité locale]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[80abb02f5be1474093c4a0556fad6458]]></id>
+      <name><![CDATA[DATEFIN]]></name>
+      <description><![CDATA[Date de fin de validité du document d'urbanisme]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a00887133f9b3208c83bdf65afe92b4c]]></id>
+      <name><![CDATA[URLPLAN]]></name>
+      <description><![CDATA[URL ou URI qui pointe sur le fichier du plan scanné]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bf9e646ade3e797865e980c0a54d3add]]></id>
+      <name><![CDATA[NOMREG]]></name>
+      <description><![CDATA[Nom du fichier contentant le document complet du règlement]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c06c794b7de40cd8de2552fe171b46cf]]></id>
+      <name><![CDATA[IDURBA]]></name>
+      <description><![CDATA[Identifiant du document d'urbanisme]]></description>
+      <type><![CDATA[String]]></type>
+      <size>20</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c793a1b492e0b093caee1bc28b35cf94]]></id>
+      <name><![CDATA[TYPEREF]]></name>
+      <description><![CDATA[Nom du référentiel cadastral utilisé pour la numérisation]]></description>
+      <type><![CDATA[String]]></type>
+      <size>15</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[01]]></value>
+        <value><![CDATA[02]]></value>
+        <value><![CDATA[PCI]]></value>
+        <value><![CDATA[BD Parcellaire]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[e2bb68298feebed4623e1782c7e429e0]]></id>
+      <name><![CDATA[TYPEDOC]]></name>
+      <description><![CDATA[Type du document]]></description>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[PLU]]></value>
+        <value><![CDATA[POS]]></value>
+        <value><![CDATA[CC]]></value>
+      </listOfValues>
+    </attribute>
+  </attributes>
+</featureType>

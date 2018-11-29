@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[aa1a5447b1c501c77f343efd00737323]]></id>
+  <typeName><![CDATA[SERVITUDE]]></typeName>
+  <description><![CDATA[Table contenant la liste des servitudes d'utilité publique]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[117abb6d4dfbd3dfbbfa4e203aa266fb]]></id>
+      <name><![CDATA[MODEPROD]]></name>
+      <description><![CDATA[Mode d'obtention de la SUP : import de données échangées avec les gestionnaires ; numérisation (digitalisation) de la SUP annexée au document d'urbanisme ; ou reconstitution à partir de l'acte l'instituant]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[import]]></value>
+        <value><![CDATA[numérisation]]></value>
+        <value><![CDATA[reconstitution]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[12ce35e905b8d0930c13b6b734819c77]]></id>
+      <name><![CDATA[IDGEST]]></name>
+      <description><![CDATA[Identifiant du gestionnaire de la SUP]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[153b3786e425d79800557ea9ec1eba5e]]></id>
+      <name><![CDATA[NOMSUPLITT]]></name>
+      <description><![CDATA[Nom littéral de la servitude, figurant dans l'acte l'ayant instaurée]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[247760333ef95b0b3a15b71b30d54d4f]]></id>
+      <name><![CDATA[VALIDEGEST]]></name>
+      <description><![CDATA[Les données numérisées de la servitude ont été validées ou pas par le gestionnaire]]></description>
+      <type><![CDATA[String]]></type>
+      <size>1</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[2ba1e993fe419d951ac5f28ef3de56db]]></id>
+      <name><![CDATA[OBSVALIDAT]]></name>
+      <description><![CDATA[Observation relative à la validation de la servitude formulée soit par le gestionnaire, soit par le service de l'État administrant les données]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[312007f69801fdeef57ed9cf03d9173a]]></id>
+      <name><![CDATA[IDINTGEST]]></name>
+      <description><![CDATA[Identifiant créé et entretenu par l'organisme gestionnaire de la servitude]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[315c5f41febeef3fe93be6ed250f2a14]]></id>
+      <name><![CDATA[DATEMAJ]]></name>
+      <description><![CDATA[Date de la dernière modification apportée à la servitude]]></description>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[726e30853c23e1d077596a81cd55d179]]></id>
+      <name><![CDATA[CATEGORIE]]></name>
+      <description><![CDATA[Catégorie de la servitude dans la nomenclature nationale]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[A1]]></value>
+        <value><![CDATA[A2]]></value>
+        <value><![CDATA[A3]]></value>
+        <value><![CDATA[A4]]></value>
+        <value><![CDATA[A5]]></value>
+        <value><![CDATA[A6]]></value>
+        <value><![CDATA[A7]]></value>
+        <value><![CDATA[A8]]></value>
+        <value><![CDATA[A9]]></value>
+        <value><![CDATA[AC1]]></value>
+        <value><![CDATA[AC2]]></value>
+        <value><![CDATA[AC3]]></value>
+        <value><![CDATA[AC4]]></value>
+        <value><![CDATA[AR1]]></value>
+        <value><![CDATA[AR2]]></value>
+        <value><![CDATA[AR3]]></value>
+        <value><![CDATA[AR4]]></value>
+        <value><![CDATA[AR5]]></value>
+        <value><![CDATA[AR6]]></value>
+        <value><![CDATA[AS1]]></value>
+        <value><![CDATA[AS2]]></value>
+        <value><![CDATA[EL1]]></value>
+        <value><![CDATA[EL2]]></value>
+        <value><![CDATA[EL2bis]]></value>
+        <value><![CDATA[EL3]]></value>
+        <value><![CDATA[EL4]]></value>
+        <value><![CDATA[EL5]]></value>
+        <value><![CDATA[EL6]]></value>
+        <value><![CDATA[EL7]]></value>
+        <value><![CDATA[EL8]]></value>
+        <value><![CDATA[EL9]]></value>
+        <value><![CDATA[EL10]]></value>
+        <value><![CDATA[EL11]]></value>
+        <value><![CDATA[EL12]]></value>
+        <value><![CDATA[I1]]></value>
+        <value><![CDATA[I1bis]]></value>
+        <value><![CDATA[I2]]></value>
+        <value><![CDATA[I3]]></value>
+        <value><![CDATA[I4]]></value>
+        <value><![CDATA[I5]]></value>
+        <value><![CDATA[I6]]></value>
+        <value><![CDATA[I7]]></value>
+        <value><![CDATA[I8]]></value>
+        <value><![CDATA[I9]]></value>
+        <value><![CDATA[Int1]]></value>
+        <value><![CDATA[Js1]]></value>
+        <value><![CDATA[PM1]]></value>
+        <value><![CDATA[PM1bis]]></value>
+        <value><![CDATA[PM2]]></value>
+        <value><![CDATA[PM3]]></value>
+        <value><![CDATA[PM4]]></value>
+        <value><![CDATA[PM5]]></value>
+        <value><![CDATA[PT1]]></value>
+        <value><![CDATA[PT2]]></value>
+        <value><![CDATA[PT3]]></value>
+        <value><![CDATA[PT4]]></value>
+        <value><![CDATA[T1]]></value>
+        <value><![CDATA[T2]]></value>
+        <value><![CDATA[T3]]></value>
+        <value><![CDATA[T4]]></value>
+        <value><![CDATA[T5]]></value>
+        <value><![CDATA[T6]]></value>
+        <value><![CDATA[T7]]></value>
+        <value><![CDATA[T8]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[73ab1c52127904229ee9dff021acbcc5]]></id>
+      <name><![CDATA[IDSUP]]></name>
+      <description><![CDATA[Identifiant de la SUP]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8c23de7b3ab57a82fe4e0df1ca870219]]></id>
+      <name><![CDATA[ESTABROGE]]></name>
+      <description><![CDATA[Attribut dérivé renseignant sur l'état de validité de la servitude : cet attribut prend la valeur 'oui' si un acte ou une décision administrative a abrogé ou annulé la servitude]]></description>
+      <type><![CDATA[String]]></type>
+      <size>1</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a30491be7fff04a4dc4cadc8baa9fb58]]></id>
+      <name><![CDATA[NOMSUP]]></name>
+      <description><![CDATA[Nom abrégé de la servitude, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a72e1e8421ae357ca588bf7ca38bbd2e]]></id>
+      <name><![CDATA[ECHNUM]]></name>
+      <description><![CDATA[Dénominateur de l'échelle à laquelle a été numérisée la servitude]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ac8f1009572ca850c49f8316ac9ff3e3]]></id>
+      <name><![CDATA[QUIPROD]]></name>
+      <description><![CDATA[Organisme ayant numérisé la servitude]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[b71c71c6b344b1d8836438ead7512f24]]></id>
+      <name><![CDATA[DESCRIPTIO]]></name>
+      <description><![CDATA[Description détaillée de la servitude]]></description>
+      <type><![CDATA[String]]></type>
+      <size>150</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[da25bd69e765ef48232da0e3c4a8e3e9]]></id>
+      <name><![CDATA[DOCSOURCE]]></name>
+      <description><![CDATA[Document graphique ayant été numérisé]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

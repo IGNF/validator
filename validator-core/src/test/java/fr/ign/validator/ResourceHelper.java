@@ -2,6 +2,14 @@ package fr.ign.validator;
 
 import java.io.File;
 
+/**
+ * 
+ * TODO Perform massive replace to use fr.ign.validator.tools.ResourceHelper.getResourceFile
+ * 
+ * @author MBorne
+ *
+ */
+@Deprecated
 public class ResourceHelper {
 	
 	/**
@@ -10,13 +18,7 @@ public class ResourceHelper {
 	 * @return
 	 */
 	public static File getResourcePath(String path){
-		try {
-			return new File(ResourceHelper.class.getResource(path).getPath());
-		}catch( NullPointerException e ){
-			throw new RuntimeException(
-				"Resource '"+path+"' not found"
-			);
-		}
+		return fr.ign.validator.tools.ResourceHelper.getResourceFile(ResourceHelper.class, path);
 	}
 
 }

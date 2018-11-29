@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[2af3bf56ce13dc5db3a03e899328f356]]></id>
+  <typeName><![CDATA[HABILLAGE_TXT]]></typeName>
+  <description><![CDATA[Table des objets textuels (étiquettes) figurant sur le plan du document d'urbanisme à des fins d'ha]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[3de8b035cabaed7522649c67fa7d36d2]]></id>
+      <name><![CDATA[TXT]]></name>
+      <description><![CDATA[Libellé de l'étiquette attachée au point d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[791c44f5079afe8770b7fbef1b43805a]]></id>
+      <name><![CDATA[NATECR]]></name>
+      <description><![CDATA[Nature de l'écriture]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7a2713692bfc2e14d80eefcb7c17d529]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'élément d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[bd0ca06520dfd69ec94dd725d7d2547d]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+  </attributes>
+</featureType>
