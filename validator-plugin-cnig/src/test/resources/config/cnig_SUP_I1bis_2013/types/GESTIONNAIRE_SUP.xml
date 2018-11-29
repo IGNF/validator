@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[8f571ed925c3b46df46e54600416a202]]></id>
+  <typeName><![CDATA[GESTIONNAIRE_SUP]]></typeName>
+  <description><![CDATA[Table contenant la liste des gestionnaires de servitude d'utilité publique]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[11705e3cf63b79fc3074e959ce5b9e23]]></id>
+      <name><![CDATA[COURRIEL]]></name>
+      <description><![CDATA[Adresse électronique du point de contact chez le service gestionnaire]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[1410003ae9ad469e68c3b2cd08822420]]></id>
+      <name><![CDATA[ADRESSE]]></name>
+      <description><![CDATA[Adresse de l'organisme servant aux envois postaux]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[894cbf20492a679965e1e6d77ebc96ee]]></id>
+      <name><![CDATA[NOMCORRES]]></name>
+      <description><![CDATA[Correspondant à contacter chez le gestionnaire]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[c6c523a356edc7b8a0b5246ca088802b]]></id>
+      <name><![CDATA[IDGEST]]></name>
+      <description><![CDATA[Identifiant du gestionnaire]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[cfa66833f54d04c2ec5408efbf6351e7]]></id>
+      <name><![CDATA[NOMGEST]]></name>
+      <description><![CDATA[Nom de l'organisme gestionnaire]]></description>
+      <type><![CDATA[String]]></type>
+      <size>80</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[fdf05aad1613a29da12fcd0119c0e298]]></id>
+      <name><![CDATA[NUMTEL]]></name>
+      <description><![CDATA[Numéro de téléphone du point de contact chez le service gestionnaire]]></description>
+      <type><![CDATA[String]]></type>
+      <size>10</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

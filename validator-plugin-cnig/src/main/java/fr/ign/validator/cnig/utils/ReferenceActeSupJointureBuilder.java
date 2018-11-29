@@ -20,21 +20,12 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.Context;
 import fr.ign.validator.cnig.utils.internal.DatabaseJointureSUP;
 import fr.ign.validator.tools.TableReader;
 
 /**
  * Reports files referenced by "actes" on "générateurs" and "assiettes"
  * 
- * TODO :
- * <ul>
- * 	<li>Move to cnig.sup.ComputeColumnFile</li>
- *  <li>Take dataDir as constructor parameter</li>
- *  <li>Improve and add regress tests</li>
- *  <li>Cleanup process</li>
- * </ul>
- *  
  * @author MBorne
  *
  */
@@ -49,72 +40,18 @@ public class ReferenceActeSupJointureBuilder {
 		ASSIETTE
 	} ;
 	
-	
 	/**
-	 * Validation context
+	 * Data directory
 	 */
-	private Context context ;
-		
-	/**
-	 * 
-	 * @param context
-	 */
-	public ReferenceActeSupJointureBuilder(Context context){
-		this.context = context ;		
-	}
-	
-	public File getDataDirectory(){
-		return context.getDataDirectory() ;
-	}
-	
-	/**
-	 * Get temp directory 
-	 */
-	public File getTempDirectory(){
-		return new File(getDataDirectory(),"tmp");
-	}
-	
-	
-	/**
-	 * Recherche d'un fichier par son nom court
-	 * @param name
-	 * @return
-	 */
-	public File findFile(String name){
-		String[] extensions = { "csv", "CSV" } ;
-		@SuppressWarnings("unchecked")
-		Collection<File> files = FileUtils.listFiles(getDataDirectory(), extensions, true) ;
-		for (File file : files) {
-			if ( FilenameUtils.getBaseName( file.getName() ).equals(name) ){
-				return file ;
-			}
-		}
-		return null ;
-	}
+	private File dataDirectory ;
 
-	
 	/**
-	 * Recherche de fichiers par expression régulière
-	 * @param regexp
-	 * @return
+	 * Constructor with DATA directory containing CSV files to update
+	 * @param dataDirectory
 	 */
-	public List<File> findRegexpFiles(String regexp) {
-		List<File> results = new ArrayList<File>() ;
-		
-		String[] extensions = { "csv", "CSV" } ;
-		@SuppressWarnings("unchecked")
-		Collection<File> files = FileUtils.listFiles(getDataDirectory(), extensions, true) ;
-
-		for (File file : files) {
-			if ( ! file.getName().matches(regexp) ) {
-				continue ;
-			}
-			
-			results.add(file) ;
-		}
-		return results ;
+	public ReferenceActeSupJointureBuilder(File dataDirectory){
+		this.dataDirectory = dataDirectory;
 	}
-	
 	
 	/**
 	 * effectue la jointure
@@ -168,6 +105,48 @@ public class ReferenceActeSupJointureBuilder {
 			return ;
 		}	
 	}
+	
+	/**
+	 * Recherche d'un fichier par son nom court
+	 * @param name
+	 * @return
+	 */
+	public File findFile(String name){
+		String[] extensions = { "csv", "CSV" } ;
+		@SuppressWarnings("unchecked")
+		Collection<File> files = FileUtils.listFiles(getDataDirectory(), extensions, true) ;
+		for (File file : files) {
+			if ( FilenameUtils.getBaseName( file.getName() ).equals(name) ){
+				return file ;
+			}
+		}
+		return null ;
+	}
+
+	
+	/**
+	 * Recherche de fichiers par expression régulière
+	 * @param regexp
+	 * @return
+	 */
+	public List<File> findRegexpFiles(String regexp) {
+		List<File> results = new ArrayList<File>() ;
+		
+		String[] extensions = { "csv", "CSV" } ;
+		@SuppressWarnings("unchecked")
+		Collection<File> files = FileUtils.listFiles(getDataDirectory(), extensions, true) ;
+
+		for (File file : files) {
+			if ( ! file.getName().matches(regexp) ) {
+				continue ;
+			}
+			
+			results.add(file) ;
+		}
+		return results ;
+	}
+	
+	
 
 	/**
 	 * Réalisation de la jointure
@@ -347,5 +326,20 @@ public class ReferenceActeSupJointureBuilder {
 		return outputArray ;
 	}
 	
+
+	/**
+	 * Get data directory
+	 * @return
+	 */
+	private File getDataDirectory(){
+		return dataDirectory ;
+	}
+	
+	/**
+	 * Get temp directory 
+	 */
+	private File getTempDirectory(){
+		return new File(getDataDirectory(),"tmp");
+	}
 
 }

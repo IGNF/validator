@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[63e18a45fa7db0a5571066f0a01994d1]]></id>
+  <typeName><![CDATA[HABILLAGE_PCT]]></typeName>
+  <description><![CDATA[Table des tracés ponctuels indicatifs figurant sur le plan du document d'urbanisme à des fins d'ha]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[39c1e66f2b461c1d62d473aac982abc5]]></id>
+      <name><![CDATA[INSEE]]></name>
+      <description><![CDATA[Code INSEE de la commune concernée par l'élément d'habillage]]></description>
+      <type><![CDATA[String]]></type>
+      <size>5</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[aa23e6cba32b49be704108f87595325d]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ad53cd403c9a45b65dd563b2f2413cae]]></id>
+      <name><![CDATA[NATTRAC]]></name>
+      <description><![CDATA[Nature du point]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

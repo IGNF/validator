@@ -5,12 +5,11 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.Projection;
 
 /**
  * 
- * TODO add control about validity domain
+ * TODO add control about validity domain (check WKT validity for example)
  * 
  * @author MBorne
  *

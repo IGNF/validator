@@ -121,6 +121,8 @@ public class DgprApplicationTest {
 
 			Assert.assertEquals(5, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+      
+			Assert.assertEquals(5, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
 
 		} catch (Exception e) {
 			e.printStackTrace();

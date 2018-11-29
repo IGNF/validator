@@ -1,41 +1,48 @@
 package fr.ign.validator.cnig.utils.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
-public class DatabaseJointureMany2ManyTest extends TestCase {
+import fr.ign.validator.tools.ResourceHelper;
 
-	private File parentDirectory;
 
-	private String actesFilename = "/jointure_sup_many2many/validation/jointure_sup_many2many/DATA/ACTE_SUP.csv";
-	private File actesFile = new File(getClass().getResource(actesFilename).getPath());
+public class DatabaseJointureMany2ManyTest {
 
-	private String servitudesFilename = "/jointure_sup_many2many/validation/jointure_sup_many2many/DATA/SERVITUDE_ACTE_SUP.csv";
-	private File servitudeFiles = new File(getClass().getResource(servitudesFilename).getPath());
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
 
-	private String generateursFilename = "/jointure_sup_many2many/validation/jointure_sup_many2many/DATA/AS1_GENERATEUR_SUP_P.csv";
-	File generateursFile = new File(getClass().getResource(generateursFilename).getPath());
+	private File actesFile = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/many2many/DATA/ACTE_SUP.csv"
+	);
 
-	private String assiettesFilename = "/jointure_sup_many2many/validation/jointure_sup_many2many/DATA/AS1_ASSIETTE_SUP_S.csv";
-	File assiettesFile = new File(getClass().getResource(assiettesFilename).getPath());
+	private File servitudeFiles = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/many2many/DATA/SERVITUDE_ACTE_SUP.csv"
+	);
 
-	@Override
-	protected void setUp() throws Exception {
-		parentDirectory = File.createTempFile("temp", Long.toString(System.nanoTime()));
-		parentDirectory.delete();
-		parentDirectory.mkdir();
-	}
+	private File generateursFile = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/many2many/DATA/AS1_GENERATEUR_SUP_P.csv"
+	);
 
-	@Override
-	protected void tearDown() throws Exception {
-		parentDirectory.delete();
-	}
+	private File assiettesFile = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/many2many/DATA/AS1_ASSIETTE_SUP_S.csv"
+	);
 
+	@Test
 	public void testFindFichiersByGenerateur() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileActe(actesFile);
 			db.loadFileServitude(servitudeFiles);
 			db.loadFileGenerateur(generateursFile);
@@ -67,30 +74,26 @@ public class DatabaseJointureMany2ManyTest extends TestCase {
 		}
 	}
 
-	public void testFindFichiersByAssiette() {
-		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
-			db.loadFileActe(actesFile);
-			db.loadFileServitude(servitudeFiles);
-			db.loadFileGenerateur(generateursFile);
-			db.loadFileAssiette(assiettesFile);
+	@Test
+	public void testFindFichiersByAssiette() throws Exception {
+		DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
+		db.loadFileActe(actesFile);
+		db.loadFileServitude(servitudeFiles);
+		db.loadFileGenerateur(generateursFile);
+		db.loadFileAssiette(assiettesFile);
 
-			// dummy
-			{
-				List<String> fichiers = db.findFichiersByAssiette("dummy");
-				assertEquals(0, fichiers.size());
-			}
+		// dummy
+		{
+			List<String> fichiers = db.findFichiersByAssiette("dummy");
+			assertEquals(0, fichiers.size());
+		}
 
-			// 65
-			{
-				List<String> fichiers = db.findFichiersByAssiette("362");
-				assertEquals(2, fichiers.size());
-				assertTrue(fichiers.contains("37273_AS1_LA VILLE-AUX-DAMES_Ile_Rochecorbon_F1_F3_F4_act1.pdf"));
-				assertTrue(fichiers.contains("37273_AS1_LA VILLE-AUX-DAMES_Ile_Rochecorbon_F1_F3_F4_act2.pdf"));
-			}
-
-		} catch (Exception e) {
-			fail(e.getMessage());
+		// 65
+		{
+			List<String> fichiers = db.findFichiersByAssiette("362");
+			assertEquals(2, fichiers.size());
+			assertTrue(fichiers.contains("37273_AS1_LA VILLE-AUX-DAMES_Ile_Rochecorbon_F1_F3_F4_act1.pdf"));
+			assertTrue(fichiers.contains("37273_AS1_LA VILLE-AUX-DAMES_Ile_Rochecorbon_F1_F3_F4_act2.pdf"));
 		}
 	}
 

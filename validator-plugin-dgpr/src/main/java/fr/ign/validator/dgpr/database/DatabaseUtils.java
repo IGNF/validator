@@ -11,6 +11,7 @@ import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.io.WKTReader;
 
+import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.geometry.ProjectionTransform;
 
 public class DatabaseUtils {

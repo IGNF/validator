@@ -1,24 +1,26 @@
 package fr.ign.validator.dgpr.validation.document;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import junit.framework.TestCase;
 
-public class DocumentPrefixValidatorTest extends TestCase {
+public class DocumentPrefixValidatorTest {
 
 	private Context context;
 	private InMemoryReportBuilder report;
 	private DocumentPrefixValidator validator;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-
+	@Before
+	public void setUp() throws Exception {
 		validator = new DocumentPrefixValidator();
 
 		context = new Context();
@@ -26,6 +28,7 @@ public class DocumentPrefixValidatorTest extends TestCase {
 		context.setReportBuilder(report);
 	}
 
+	@Test
 	public void testDocumentOk() {
 		DocumentModel documentModel = new DocumentModel();
 		File documentPath = new File("N_TRI_GREN2013_SIG_DI");
@@ -37,6 +40,7 @@ public class DocumentPrefixValidatorTest extends TestCase {
 		assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
 	}
 
+	@Test
 	public void testDocumentError() {
 		DocumentModel documentModel = new DocumentModel();
 		File documentPath = new File("N_TRI_GREN2013_mauvais_suffix");

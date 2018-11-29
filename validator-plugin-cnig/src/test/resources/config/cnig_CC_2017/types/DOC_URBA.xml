@@ -75,10 +75,12 @@
       <nullable>true</nullable>
     </attribute>
     <attribute>
+      <regexp><![CDATA[[0-9]{8}]]></regexp>
       <id><![CDATA[80dfbb2314ddb682e26187589e9db9b4]]></id>
       <name><![CDATA[DATEREF]]></name>
       <description><![CDATA[Date d'actualité ou de mise à jour du référentiel cadastral utilisé pour la création ou la numérisation des documents graphiques.]]></description>
-      <type><![CDATA[Date]]></type>
+      <type><![CDATA[String]]></type>
+      <size>8</size>
       <nullable>true</nullable>
     </attribute>
     <attribute>
@@ -90,19 +92,13 @@
       <nullable>true</nullable>
     </attribute>
     <attribute>
+      <regexp><![CDATA[(E|MJ|MS|R|A)([0-9]+)?]]></regexp>
       <id><![CDATA[9bb913a3d905c21fee94b2a1e9bc5667]]></id>
       <name><![CDATA[NOMPROC]]></name>
       <description><![CDATA[Nom de la dernière procédure]]></description>
       <type><![CDATA[String]]></type>
       <size>10</size>
       <nullable>true</nullable>
-      <listOfValues>
-        <value><![CDATA[E]]></value>
-        <value><![CDATA[MJ]]></value>
-        <value><![CDATA[MS]]></value>
-        <value><![CDATA[R]]></value>
-        <value><![CDATA[A]]></value>
-      </listOfValues>
     </attribute>
     <attribute>
       <id><![CDATA[b2e824698b9bda6b770025ce6203974d]]></id>

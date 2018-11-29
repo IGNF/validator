@@ -4,20 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ign.validator.database.Database;
 import fr.ign.validator.tools.TableReader;
 
 /**
  * 
- * Utilitaire permettant de parcourir les liens dans les tables de SUP.
+ * Helper class to manipulate relations between ACTE, SERVITUDE, GENERATEUR and ASSIETTE files
  * 
+ * TODO : rebase table insertion on Database.loadTable (requires renaming table columns)
  * 
  * @warning works with utf-8 encoded csv files (validation directory) 
  * 
@@ -26,33 +26,37 @@ import fr.ign.validator.tools.TableReader;
  */
 public class DatabaseJointureSUP {
 
+	public static final String TABLE_ACTE       = "acte" ;
+	public static final String TABLE_SERVITUDE  = "servitude" ;
+	public static final String TABLE_GENERATEUR = "generateur" ;
+	public static final String TABLE_ASSIETTE   = "assiette" ;
+
 	/**
 	 * database connection
 	 */
-	private Connection connection;
+	private Database database;
 	
 
 	/**
 	 * Construction of database with path
 	 * 
-	 * @param parentDirectory
+	 * @param databaseDirectory
 	 * @throws SQLException
 	 */
-	public DatabaseJointureSUP(File parentDirectory) throws SQLException {
-		try {
-			Class.forName("org.sqlite.JDBC");
-
-			File databasePath = new File(parentDirectory, "jointure_sup.db");
-			//File databasePath = parentDirectory ;
-			String databaseUrl = "jdbc:sqlite:"+ databasePath.getAbsolutePath() ;
-			connection = DriverManager.getConnection(databaseUrl);
-			connection.setAutoCommit(false);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+	public DatabaseJointureSUP(File databaseDirectory) throws SQLException {
+		File databasePath = new File(databaseDirectory, "jointure_sup.db");
+		this.database = new Database(databasePath);
 		createSchema();
 	}
 
+	/**
+	 * Get database connection
+	 * @return
+	 */
+	private Connection getConnection(){
+		return database.getConnection();
+	}
+	
 	/**
 	 * Schema creation
 	 * 
@@ -66,47 +70,35 @@ public class DatabaseJointureSUP {
 	}
 
 	private void createTableActe() throws SQLException {
-		Statement sth = connection.createStatement();
-		sth.executeUpdate(
-			"  CREATE TABLE acte ("
-			+ " id TEXT PRIMARY KEY, "
-			+ " fichier TEXT"
-			+ ")"
-		);
-		connection.commit(); 
+		List<String> columns = new ArrayList<>();
+		columns.add("id");
+		columns.add("fichier");
+		database.createTable(TABLE_ACTE, columns);
+		database.createIndex(TABLE_ACTE, "id");
 	}
 
 	private void createTableServitude() throws SQLException {
-		Statement sth = connection.createStatement();
-		sth.executeUpdate(
-			"  CREATE TABLE servitude ("
-			+ "  id TEXT, " // PRIMARY KEY : impossible, not unique
-			+ "  id_acte TEXT REFERENCES acte(id) "
-			+ ")"
-		);
-		connection.commit(); 
+		List<String> columns = new ArrayList<>();
+		columns.add("id");
+		columns.add("id_acte");
+		database.createTable(TABLE_SERVITUDE, columns);
+		database.createIndex(TABLE_SERVITUDE, "id");
 	}
 
 	private void createTableGenerateur() throws SQLException {
-		Statement sth = connection.createStatement();
-		sth.executeUpdate(
-			"  CREATE TABLE generateur ("
-			+ "  id TEXT PRIMARY KEY, "
-			+ "  id_servitude TEXT REFERENCES servitude(id)"
-			+ ")"
-		);
-		connection.commit(); 
+		List<String> columns = new ArrayList<>();
+		columns.add("id");
+		columns.add("id_servitude");
+		database.createTable(TABLE_GENERATEUR, columns);
+		database.createIndex(TABLE_GENERATEUR, "id");
 	}
 
 	private void createTableAssiete() throws SQLException {
-		Statement sth = connection.createStatement();
-		sth.executeUpdate(
-			"  CREATE TABLE assiette ("
-			+ "  id TEXT PRIMARY KEY, "
-			+ "  id_generateur TEXT REFERENCES generateur(id)"
-			+ ")"
-		);
-		connection.commit(); 
+		List<String> columns = new ArrayList<>();
+		columns.add("id");
+		columns.add("id_generateur");
+		database.createTable(TABLE_ASSIETTE, columns);
+		database.createIndex(TABLE_ASSIETTE, "id");
 	}
 	
 	
@@ -117,7 +109,7 @@ public class DatabaseJointureSUP {
 	 * @throws SQLException
 	 */
 	public int getCountActes() throws SQLException {
-		return getCount("acte");
+		return database.getCount(TABLE_ACTE);
 	}
 	
 	/**
@@ -140,7 +132,7 @@ public class DatabaseJointureSUP {
 			throw new IOException("Colonne FICHIER non trouvée");
 		}
 		
-		PreparedStatement sth = connection.prepareStatement("INSERT INTO acte (id,fichier) VALUES (?,?)" );
+		PreparedStatement sth = getConnection().prepareStatement("INSERT INTO acte (id,fichier) VALUES (?,?)" );
 		
 		while ( reader.hasNext() ){
 			String[] row = reader.next() ;
@@ -154,7 +146,7 @@ public class DatabaseJointureSUP {
 			sth.addBatch();
 		}
 		sth.executeBatch();		
-		connection.commit();
+		getConnection().commit();
 	}
 	
 	
@@ -165,7 +157,7 @@ public class DatabaseJointureSUP {
 	 * @throws SQLException
 	 */
 	public int getCountServitude() throws SQLException {
-		return getCount("servitude");
+		return database.getCount(TABLE_SERVITUDE);
 	}
 	
 
@@ -190,7 +182,7 @@ public class DatabaseJointureSUP {
 		}
 		
 		
-		PreparedStatement sth = connection.prepareStatement("INSERT INTO servitude (id,id_acte) VALUES (?,?)" );
+		PreparedStatement sth = getConnection().prepareStatement("INSERT INTO servitude (id,id_acte) VALUES (?,?)" );
 		
 		while ( reader.hasNext() ){
 			String[] row = reader.next() ;
@@ -204,7 +196,7 @@ public class DatabaseJointureSUP {
 			sth.addBatch();
 		}
 		sth.executeBatch();
-		connection.commit();
+		getConnection().commit();
 	}
 	
 	/**
@@ -214,9 +206,9 @@ public class DatabaseJointureSUP {
 	 * @throws SQLException
 	 */
 	public int getCountGenerateur() throws SQLException {
-		return getCount("generateur");
+		return database.getCount(TABLE_GENERATEUR);
 	}
-	
+
 
 	/**
 	 * Loading "générateurs" file
@@ -239,7 +231,7 @@ public class DatabaseJointureSUP {
 		}
 		
 		
-		PreparedStatement sth = connection.prepareStatement("INSERT INTO generateur (id,id_servitude) VALUES (?,?)" );
+		PreparedStatement sth = getConnection().prepareStatement("INSERT INTO generateur (id,id_servitude) VALUES (?,?)" );
 		
 		while ( reader.hasNext() ){
 			String[] row = reader.next() ;
@@ -253,7 +245,7 @@ public class DatabaseJointureSUP {
 			sth.addBatch();
 		}
 		sth.executeBatch();
-		connection.commit();
+		getConnection().commit();
 	}
 	
 
@@ -277,7 +269,7 @@ public class DatabaseJointureSUP {
 			throw new IOException("Colonne IDGEN non trouvée");
 		}
 		
-		PreparedStatement sth = connection.prepareStatement("INSERT INTO assiette (id,id_generateur) VALUES (?,?)" );
+		PreparedStatement sth = getConnection().prepareStatement("INSERT INTO assiette (id,id_generateur) VALUES (?,?)" );
 		
 		while ( reader.hasNext() ){
 			String[] row = reader.next() ;
@@ -291,7 +283,7 @@ public class DatabaseJointureSUP {
 			sth.addBatch();
 		}
 		sth.executeBatch();
-		connection.commit();
+		getConnection().commit();
 	}
 
 	/**
@@ -301,7 +293,7 @@ public class DatabaseJointureSUP {
 	 * @throws SQLException 
 	 */
 	public Object getCountAssiette() throws SQLException {
-		return getCount("assiette");
+		return database.getCount(TABLE_ASSIETTE);
 	}
 
 	
@@ -319,7 +311,7 @@ public class DatabaseJointureSUP {
 				+ " WHERE generateur.id = ?"
 		;
 		try {
-			PreparedStatement sth = connection.prepareStatement(sql);
+			PreparedStatement sth = getConnection().prepareStatement(sql);
 			sth.setString(1, idGen);
 			return getFichiersFromResultSet(sth.executeQuery()) ;
 		} catch (SQLException e) {
@@ -342,7 +334,7 @@ public class DatabaseJointureSUP {
 				+ " WHERE assiette.id = ?"
 		;
 		try {
-			PreparedStatement sth = connection.prepareStatement(sql);
+			PreparedStatement sth = getConnection().prepareStatement(sql);
 			sth.setString(1, idAss);
 			return getFichiersFromResultSet(sth.executeQuery()) ;
 		} catch (SQLException e) {
@@ -363,20 +355,6 @@ public class DatabaseJointureSUP {
 			result.add( rs.getString("fichier") );
         }
 		return result ;
-	}
-	
-	
-	/**
-	 * Counts rows in table
-	 * 
-	 * @param tableName
-	 * @return
-	 * @throws SQLException
-	 */
-	private int getCount(String tableName) throws SQLException{
-		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM "+tableName) ;
-		ResultSet rs = sth.executeQuery() ;
-		return rs.getInt(1);
 	}
 
 	

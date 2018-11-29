@@ -1,51 +1,58 @@
 package fr.ign.validator.cnig.utils.internal;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
-public class DatabaseJointureOne2OneTest extends TestCase {
+import fr.ign.validator.tools.ResourceHelper;
 
-	private File parentDirectory;
 
-	private String actesFilename = "/jointure_sup_one2one/validation/jointure_sup_one2one/DATA/ACTE_SUP.csv";
-	private File actesFile = new File(getClass().getResource(actesFilename).getPath());
+public class DatabaseJointureOne2OneTest {
 
-	private String servitudesFilename = "/jointure_sup_one2one/validation/jointure_sup_one2one/DATA/SERVITUDE_ACTE_SUP.csv";
-	private File servitudeFiles = new File(getClass().getResource(servitudesFilename).getPath());
+	@Rule
+	public TemporaryFolder folder = new TemporaryFolder();
 
-	private String generateursFilename = "/jointure_sup_one2one/validation/jointure_sup_one2one/DATA/AC2_GENERATEUR_SUP_S.csv";
-	File generateursFile = new File(getClass().getResource(generateursFilename).getPath());
+	private File actesFile = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/one2one/DATA/ACTE_SUP.csv"
+	);
 
-	private String assiettesFilename = "/jointure_sup_one2one/validation/jointure_sup_one2one/DATA/AC2_ASSIETTE_SUP_S.csv";
-	File assiettesFile = new File(getClass().getResource(assiettesFilename).getPath());
+	private File servitudeFiles = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/one2one/DATA/SERVITUDE_ACTE_SUP.csv"
+	);
 
-	@Override
-	protected void setUp() throws Exception {
-		parentDirectory = File.createTempFile("temp", Long.toString(System.nanoTime()));
-		parentDirectory.delete();
-		parentDirectory.mkdir();
-	}
+	private File generateursFile = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/one2one/DATA/AC2_GENERATEUR_SUP_S.csv"
+	);
 
-	@Override
-	protected void tearDown() throws Exception {
-		parentDirectory.delete();
-	}
+	private File assiettesFile = ResourceHelper.getResourceFile(
+		DatabaseJointureOne2OneTest.class, 
+		"/jointure_sup/one2one/DATA/AC2_ASSIETTE_SUP_S.csv"
+	);
 
+	@Test
 	public void testInit() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			assertEquals(0, db.getCountActes());
 		} catch (SQLException e) {
 			fail(e.getMessage());
 		}
 	}
 
+	@Test
 	public void testLoadActe() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileActe(actesFile);
 			assertEquals(5, db.getCountActes());
 		} catch (Exception e) {
@@ -53,9 +60,11 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+
+	@Test
 	public void testLoadServitude() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileServitude(servitudeFiles);
 			assertEquals(5, db.getCountServitude());
 		} catch (Exception e) {
@@ -63,9 +72,10 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadGenerateur() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileGenerateur(generateursFile);
 			assertEquals(6, db.getCountGenerateur());
 		} catch (Exception e) {
@@ -73,9 +83,10 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testLoadAssiette() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileAssiette(assiettesFile);
 			assertEquals(6, db.getCountAssiette());
 		} catch (Exception e) {
@@ -83,9 +94,10 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testFindFichiersByGenerateur() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileActe(actesFile);
 			db.loadFileServitude(servitudeFiles);
 			db.loadFileGenerateur(generateursFile);
@@ -139,9 +151,10 @@ public class DatabaseJointureOne2OneTest extends TestCase {
 		}
 	}
 
+	@Test
 	public void testFindFichiersByAssiette() {
 		try {
-			DatabaseJointureSUP db = new DatabaseJointureSUP(parentDirectory);
+			DatabaseJointureSUP db = new DatabaseJointureSUP(folder.getRoot());
 			db.loadFileActe(actesFile);
 			db.loadFileServitude(servitudeFiles);
 			db.loadFileGenerateur(generateursFile);

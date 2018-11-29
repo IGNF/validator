@@ -5,6 +5,13 @@ import java.lang.reflect.Field;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * 
+ * Test ErrorFactory according to error codes
+ * 
+ * @author MBorne
+ *
+ */
 public class ErrorFactoryTest {
 
 	@Test

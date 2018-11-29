@@ -17,11 +17,18 @@ public class IsoHauteur {
 	}
 
 	public IsoHauteur(String id, String idSurface, String htMin, String htMax, String wkt) {
-		this.id = id;
+  	this.id = id;
 		this.idSurfaceInondable = idSurface;
 		this.htMin = htMin;
 		this.htMax = htMax;
 		this.wkt = wkt;
+	}
+  
+	public IsoHauteur(String id, String idSurface, String htMin, String htMax) {
+		this.id = id;
+		this.idSurfaceInondable = idSurface;
+		this.htMin = htMin;
+		this.htMax = htMax;
 	}
 
 	public IsoHauteur(String id, String idSurface, String wkt) {
@@ -62,6 +69,7 @@ public class IsoHauteur {
 		this.htMax = htMax;
 	}
 	
+
 	public String getWkt() {
 		return wkt;
 	}
@@ -74,7 +82,7 @@ public class IsoHauteur {
 	public String toString() {
 		return "[" + this.htMin + ", " + this.htMax + "]";
 	}
-	
+
 	public String idToString() {
 		return "'" + this.id + "'";
 	}

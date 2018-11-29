@@ -9,11 +9,13 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+import fr.ign.validator.ResourceHelper;
+
 public class CharsetDetectorTest {
 	
 	@Test
 	public void testDetectUTF8() throws IOException {
-		File srcFile = new File(getClass().getResource("/csv/sample-utf8.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/sample-utf8.csv") ;
 		Charset charset = CharsetDetector.detectCharset(srcFile) ;
 		assertEquals(StandardCharsets.UTF_8, charset);
 	}
@@ -21,14 +23,14 @@ public class CharsetDetectorTest {
 	
 	@Test
 	public void testDetectLATIN1() throws IOException {
-		File srcFile = new File(getClass().getResource("/csv/sample-latin1.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/sample-latin1.csv") ;
 		Charset charset = CharsetDetector.detectCharset(srcFile) ;
 		assertEquals(StandardCharsets.ISO_8859_1, charset);
 	}
 	
 	@Test
 	public void testBisDetectUTF8() throws IOException {
-		File srcFile = new File(getClass().getResource("/csv/AC2_ASSIETTE_SUP_S_014_utf8.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/AC2_ASSIETTE_SUP_S_014_utf8.csv") ;
 		Charset charset = CharsetDetector.detectCharset(srcFile) ;
 		assertEquals(StandardCharsets.UTF_8, charset);
 	}
@@ -36,14 +38,14 @@ public class CharsetDetectorTest {
 	
 	@Test
 	public void testBisDetectLATIN1() throws IOException {
-		File srcFile = new File(getClass().getResource("/csv/AC2_ASSIETTE_SUP_S_014_latin1.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/AC2_ASSIETTE_SUP_S_014_latin1.csv") ;
 		Charset charset = CharsetDetector.detectCharset(srcFile) ;
 		assertEquals(StandardCharsets.ISO_8859_1, charset);
 	}
 	
 	@Test
 	public void testGenerateurDetectUTF8() throws IOException {
-		File srcFile = new File(getClass().getResource("/csv/AC2_GENERATEUR_SUP_S_014_utf8.csv").getPath()) ;
+		File srcFile = ResourceHelper.getResourcePath("/csv/AC2_GENERATEUR_SUP_S_014_utf8.csv") ;
 		Charset charset = CharsetDetector.detectCharset(srcFile) ;
 		assertEquals(StandardCharsets.UTF_8, charset);
 	}

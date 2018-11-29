@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[]]></id>
+  <typeName><![CDATA[ADRESSE]]></typeName>
+  <description><![CDATA[Table d'identifiant et adresse]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[64ab3e72aff3e5ddb155e943c9093cf2]]></id>
+      <name><![CDATA[ID]]></name>
+      <description><![CDATA[Identifiant unique]]></description>
+      <type><![CDATA[String]]></type>
+      <size>20</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[8e44a0bf8a2c4320e2274d9d565d154f]]></id>
+      <name><![CDATA[ADRESSE]]></name>
+      <description><![CDATA[Une adresse dans une ville]]></description>
+      <type><![CDATA[String]]></type>
+      <size>254</size>
+      <nullable>true</nullable>
+    </attribute>
+  </attributes>
+</featureType>

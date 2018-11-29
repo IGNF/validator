@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<featureType>
+  <id><![CDATA[ed56b966c166e06376ff487dce229a7b]]></id>
+  <typeName><![CDATA[T3_ASSIETTE_SUP_S]]></typeName>
+  <description><![CDATA[Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT]]></description>
+  <attributes>
+    <attribute>
+      <id><![CDATA[0023559dbbddf1de2ba179594527e8bd]]></id>
+      <name><![CDATA[IDASS]]></name>
+      <description><![CDATA[Identifiant de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[03269ee3b188584738d51d38c542437c]]></id>
+      <name><![CDATA[IDGEN]]></name>
+      <description><![CDATA[Identifiant du générateur de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>40</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[103d375653943c30dc6f6c45e4c326d6]]></id>
+      <name><![CDATA[SRCGEOASS]]></name>
+      <description><![CDATA[Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[1b9a55e805706f3155f9f4acd1131438]]></id>
+      <name><![CDATA[DATESRCASS]]></name>
+      <description><![CDATA[Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5ebeb3ba2af08776854483e3a86134dc]]></id>
+      <name><![CDATA[PARAMCALC]]></name>
+      <description><![CDATA[Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon]]></description>
+      <type><![CDATA[Integer]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[66381d4b3078f4593da029232310f38d]]></id>
+      <name><![CDATA[MODEGEOASS]]></name>
+      <description><![CDATA[Description de la méthode utilisée pour générer la géométrie de l'assiette]]></description>
+      <type><![CDATA[String]]></type>
+      <size>25</size>
+      <nullable>false</nullable>
+      <listOfValues>
+        <value><![CDATA[Egal au générateur]]></value>
+        <value><![CDATA[Zone tampon]]></value>
+        <value><![CDATA[Digitalisation]]></value>
+        <value><![CDATA[Duplication]]></value>
+        <value><![CDATA[Liste de coordonnées]]></value>
+        <value><![CDATA[Secteur angulaire]]></value>
+        <value><![CDATA[Calculée]]></value>
+        <value><![CDATA[Liste de parcelles]]></value>
+        <value><![CDATA[Fictive]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[7ce21352d63b22c3cb0857f61aeedda8]]></id>
+      <name><![CDATA[NOMASS]]></name>
+      <description><![CDATA[Nom abrégé de l'assiette, respectant les règles de nommage nationales des SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[a13f113c4de5c030496cf873927dc8f8]]></id>
+      <name><![CDATA[TYPEASS]]></name>
+      <description><![CDATA[Nature de l'assiette selon sa vocation principale et la catégorie de SUP]]></description>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[088d213c0513e560703a7970c75a1159]]></id>
+      <name><![CDATA[H]]></name>
+      <type><![CDATA[Double]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[2abcb91f3c66a082d81426bc02e348fb]]></id>
+      <name><![CDATA[WKT]]></name>
+      <description><![CDATA[Geométrie associée]]></description>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[997e2bc3388d3c69f276b86454790b9f]]></id>
+      <name><![CDATA[HREF]]></name>
+      <type><![CDATA[String]]></type>
+      <size>3</size>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[SOL]]></value>
+        <value><![CDATA[NGF]]></value>
+      </listOfValues>
+    </attribute>
+  </attributes>
+</featureType>
