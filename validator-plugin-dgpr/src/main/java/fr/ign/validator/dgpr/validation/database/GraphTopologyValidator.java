@@ -17,8 +17,8 @@ import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.dgpr.database.DocumentDatabase;
-import fr.ign.validator.dgpr.database.RowIterator;
+import fr.ign.validator.database.Database;
+import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.model.IsoHauteur;
 import fr.ign.validator.dgpr.database.model.SurfaceInondable;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
@@ -36,7 +36,7 @@ public class GraphTopologyValidator {
 	/**
 	 * Document
 	 */
-	private DocumentDatabase database;
+	private Database database;
 
 	/**
 	 * WKT Reader Enable projection transform to WKT Geometries
@@ -50,7 +50,7 @@ public class GraphTopologyValidator {
 	 * @param database
 	 * @throws Exception
 	 */
-	public void validate(Context context, Document document, DocumentDatabase database) throws Exception {
+	public void validate(Context context, Document document, Database database) throws Exception {
 		// context
 		this.context = context;
 		this.database = database;
@@ -58,7 +58,7 @@ public class GraphTopologyValidator {
 		// Récupération de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
 		RowIterator inondTable = database.query(
 				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
-				);
+		);
 
 		// Index du champ "ID_S_INOND"
 		int indexId = inondTable.getColumn("ID_S_INOND");
