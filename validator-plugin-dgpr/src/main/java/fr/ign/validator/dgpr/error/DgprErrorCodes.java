@@ -16,4 +16,6 @@ public class DgprErrorCodes {
 	public static final ErrorCode DGPR_DEBLIN_ERROR = ErrorCode.valueOf("DGPR_DEBLIN_ERROR");
 	public static final ErrorCode DGPR_INOND_INCLUSION_ERROR = ErrorCode.valueOf("DGPR_INOND_INCLUSION_ERROR");
 	public static final ErrorCode DGPR_INOND_INCLUSION_INVALID_GEOM = ErrorCode.valueOf("DGPR_INOND_INCLUSION_INVALID_GEOM");
+	public static final ErrorCode DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND = ErrorCode.valueOf("DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND");
+	public static final ErrorCode DGPR_ISO_HT_INTERSECTS = ErrorCode.valueOf("DGPR_ISO_HT_INTERSECTS");
 }
