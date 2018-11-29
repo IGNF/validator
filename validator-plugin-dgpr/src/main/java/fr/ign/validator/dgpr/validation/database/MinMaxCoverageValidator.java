@@ -10,8 +10,8 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.dgpr.database.DocumentDatabase;
-import fr.ign.validator.dgpr.database.RowIterator;
+import fr.ign.validator.database.Database;
+import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.model.IsoHauteur;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 
@@ -20,7 +20,7 @@ public class MinMaxCoverageValidator {
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("MinMaxCoverageValidator");
 
-	private DocumentDatabase database;
+	private Database database;
 
 	private Context context;
 
@@ -31,7 +31,7 @@ public class MinMaxCoverageValidator {
 	 * @param database
 	 * @throws Exception
 	 */
-	public void validate(Context context, Document document, DocumentDatabase database) throws Exception {
+	public void validate(Context context, Document document, Database database) throws Exception {
 
 		this.database = database;
 		this.context = context;
