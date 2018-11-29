@@ -1,6 +1,9 @@
 package fr.ign.validator.database;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.geotools.referencing.CRS;
@@ -11,10 +14,10 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.xml.XmlModelManager;
 
 public class DatabaseTest {
@@ -85,11 +88,11 @@ public class DatabaseTest {
 		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
 		context.setReportBuilder(reportBuilder);
 
-		File documentModelPath = ResourceHelper.getResourcePath("/config/cnig_PLU_2014/files.xml") ;
+		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config/cnig_PLU_2014/files.xml") ;
 		XmlModelManager modelLoader = new XmlModelManager();
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
-		File documentPath = ResourceHelper.getResourcePath("/database/41003_PLU_20130903");
+		File documentPath = ResourceHelper.getResourceFile(getClass(),"/database/41003_PLU_20130903");
 		File copy = folder.newFolder(documentPath.getName());
 		FileUtils.copyDirectory(documentPath, copy);
 
@@ -155,4 +158,40 @@ public class DatabaseTest {
 		}
 	}
 
+	@Test
+	public void testLoadSimpleFileWithColumnsAandB() throws Exception {
+		Database database = new Database(new File(folder.getRoot(),"test.sqlite"));
+		
+		
+		List<String> columnNames = new ArrayList<>();
+		columnNames.add("A");
+		columnNames.add("B");
+		database.createTable("test", columnNames);
+		
+		File file = ResourceHelper.getResourceFile(getClass(),"/csv/DUMMY.csv");
+		database.loadFile("test", file, StandardCharsets.UTF_8);
+		
+		Assert.assertEquals( 1, database.getCount("test") );
+	}
+
+	
+	/**
+	 * Test insert file
+	 */
+	@Test
+	public void testLoadFileWithNoMatchingColumns() throws Exception {
+		Database database = new Database(new File(folder.getRoot(),"test.sqlite"));
+
+		List<String> columnNames = new ArrayList<>();
+		columnNames.add("C");
+		columnNames.add("D");
+		database.createTable("test", columnNames);
+		
+		File file = ResourceHelper.getResourceFile(getClass(),"/csv/DUMMY.csv");
+		database.loadFile("test", file, StandardCharsets.UTF_8);
+		
+		Assert.assertEquals( 0, database.getCount("test") );
+	}
+
+	
 }

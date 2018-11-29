@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -231,8 +232,10 @@ public class Database {
 		 * Generate insert into template according to columns INSERT INTO TABLE
 		 * (att1, att2, ...) VALUES (?, ?, ..);
 		 */
-		String sqlAttPart = "";
-		String sqlValuesPart = "";
+
+
+		List<String> columnParts = new ArrayList<>();
+		List<String> valueParts = new ArrayList<>();
 		List<Integer> indexes = new ArrayList<Integer>();
 		for (int i = 0; i < header.length; i++) {
 			String att = header[i];
@@ -240,14 +243,28 @@ public class Database {
 				if (columnName.toLowerCase().equals(att.toLowerCase())) {
 					// l'att du fichier csv existe dans le model de document
 					indexes.add(i);
-					sqlAttPart += columnName.toLowerCase() + ", ";
-					sqlValuesPart += "?, ";
+					columnParts.add(columnName.toLowerCase());
+					valueParts.add("?");
 				}
 			}
 		}
-		sqlAttPart = sqlAttPart.substring(0, sqlAttPart.length() - 2);
-		sqlValuesPart = sqlValuesPart.substring(0, sqlValuesPart.length() - 2);
-		String sql = "INSERT INTO " + tableName + " (" + sqlAttPart + ") VALUES (" + sqlValuesPart + ");";
+		
+		/* no matching ? */
+		if ( indexes.isEmpty() ){
+			log.warn(MARKER, "No matching column found in {} for {} with {}", 
+				tableName, 
+				path, 
+				StringUtils.join(header, ",")
+			);
+			return;
+		}
+		
+
+		String sql = "INSERT INTO " + tableName 
+			+ " (" + StringUtils.join(columnParts, ", ") + ") VALUES (" 
+			+ StringUtils.join(valueParts, ", ") 
+			+ ");"
+		;
 
 		/* Create prepared statement... */
 		PreparedStatement sth = connection.prepareStatement(sql);
