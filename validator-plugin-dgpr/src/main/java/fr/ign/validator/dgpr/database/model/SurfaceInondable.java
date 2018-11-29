@@ -1,5 +1,7 @@
 package fr.ign.validator.dgpr.database.model;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 public class SurfaceInondable {
 
 	private String id;
@@ -7,6 +9,8 @@ public class SurfaceInondable {
 	private String scenario;
 
 	private String wkt;
+
+	private Geometry geometry;
 
 
 	public SurfaceInondable() {
@@ -16,6 +20,12 @@ public class SurfaceInondable {
 	public SurfaceInondable(String id, String scenario, String wkt) {
 		this.id = id;
 		this.scenario = scenario;
+		this.wkt = wkt;
+	}
+
+
+	public SurfaceInondable(String id, String wkt) {
+		this.id = id;
 		this.wkt = wkt;
 	}
 
@@ -47,6 +57,14 @@ public class SurfaceInondable {
 
 	public void setWkt(String wkt) {
 		this.wkt = wkt;
+	}
+	
+	public Geometry getGeometry() {
+		return this.geometry;
+	}
+	
+	public void setGeometry(Geometry geometry) {
+		this.geometry = geometry;
 	}
 
 }
