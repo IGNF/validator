@@ -14,6 +14,7 @@ public class IsoHauteur {
 	public IsoHauteur() {
 	}
 
+
 	public IsoHauteur(String id, String idSurface, String htMin, String htMax) {
 		this.id = id;
 		this.idSurfaceInondable = idSurface;
@@ -52,6 +53,10 @@ public class IsoHauteur {
 	public void setHtMax(String htMax) {
 		this.htMax = htMax;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "[" + this.htMin + ", " + this.htMax + "]";
+	}
 
 }

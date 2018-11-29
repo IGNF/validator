@@ -118,7 +118,9 @@ public class DgprApplicationTest {
 
 			Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error0.getMessage());
 			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error1.getMessage());
-			
+
+			Assert.assertEquals(5, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
