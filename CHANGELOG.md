@@ -1,8 +1,20 @@
 # CHANGELOG
 
+## 3.3.*
+
+* Add SQLITE Database utility in validator-core to simplify some checks
+* Upgrade tests to junit 4 syntax
+* Improve validator-dgpr-plugin
+* Improve validator-plugin-cnig
+	* CoordinateReferenceSystem in metadata validation is now based on URI
+	* Avoid fatal error when building SQLITE database in case of duplicated ID (remove index)
+* Update validator-error.json messages
+
 ## 3.2.*
 
 * Strict coordinate order for EPSG:4326 (lat,lon)
+* Add validator-dgpr-plugin
+* Improve template message for ValidatorError (validator-error.json) introducing named parameters
 
 ## 3.1.*
 

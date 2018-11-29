@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>fr.ign.validator</groupId>
 		<artifactId>validator</artifactId>
-		<version>3.2.2-SNAPSHOT</version>
+		<version>3.3.0-SNAPSHOT</version>
 	</parent>
 	<name>validator-plugin-cnig</name>
 	<artifactId>validator-plugin-cnig</artifactId>
