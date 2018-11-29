@@ -205,7 +205,7 @@ public class CnigValidatorRegressTest {
 			if ( gdalDestroysCoordinates ){
 				// GDAL 1.10.1 and 1.11.3 changes coordinates so that it turns invalid geometries to valid geometries...
 				Assert.assertEquals(0, report.countErrors(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID));				
-				Assert.assertEquals(6, report.countErrors(ErrorLevel.WARNING));
+				Assert.assertEquals(3, report.countErrors(ErrorLevel.WARNING));
 			}else{
 				Assert.assertEquals(2, report.countErrors(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID));				
 				Assert.assertEquals(5, report.countErrors(ErrorLevel.WARNING));
