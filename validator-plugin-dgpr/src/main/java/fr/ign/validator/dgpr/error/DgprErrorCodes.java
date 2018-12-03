@@ -19,4 +19,6 @@ public class DgprErrorCodes {
 	public static final ErrorCode DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND = ErrorCode.valueOf("DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND");
 	public static final ErrorCode DGPR_ISO_HT_INTERSECTS = ErrorCode.valueOf("DGPR_ISO_HT_INTERSECTS");
 	public static final ErrorCode DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED = ErrorCode.valueOf("DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED");
+	public static final ErrorCode DGPR_IDENTIFIER_UNICITY = ErrorCode.valueOf("DGPR_IDENTIFIER_UNICITY");
+	public static final ErrorCode DGPR_MULTIPLE_ATTRIBUTES_IDENTIFIER = ErrorCode.valueOf("DGPR_MULTIPLE_ATTRIBUTES_IDENTIFIER");
 }

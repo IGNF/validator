@@ -123,6 +123,27 @@ public class DgprApplicationTest {
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
       
 			Assert.assertEquals(5, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
+			
+			Assert.assertEquals(8, report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
+			
+			ValidatorError idError0 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(0);
+			ValidatorError idError1 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(1);
+			ValidatorError idError2 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(2);
+			ValidatorError idError3 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(3);
+			ValidatorError idError4 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(4);
+			ValidatorError idError5 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(5);
+			ValidatorError idError6 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(6);
+			ValidatorError idError7 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(7);
+			
+			Assert.assertEquals("Problème dans la table N_prefixTri_ECOUL_S_ddd : l'identifiant 'ZE_2' est présent 2 fois.", idError0.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ENJEU_CRISE_L_ddd : l'identifiant 'SIEXT' est présent 2 fois.", idError1.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_INONDABLE_suffixInond_S_ddd : l'identifiant 'SIN_3' est présent 2 fois.", idError2.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_1' est présent 2 fois.", idError3.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_2' est présent 2 fois.", idError4.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_3' est présent 2 fois.", idError5.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_4' est présent 2 fois.", idError6.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_5' est présent 2 fois.", idError7.getMessage());
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

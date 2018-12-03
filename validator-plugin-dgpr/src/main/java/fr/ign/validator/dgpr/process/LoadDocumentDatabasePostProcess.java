@@ -11,6 +11,7 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
 import fr.ign.validator.dgpr.validation.database.MinMaxCoverageValidator;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
+import fr.ign.validator.dgpr.validation.database.IdentifierValidator;
 import fr.ign.validator.ValidatorListener;
 
 /**
@@ -47,6 +48,9 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 		
 		GraphTopologyValidator graphtopologyvalidator = new GraphTopologyValidator();
 		graphtopologyvalidator.validate(context, document, database);
+		
+		IdentifierValidator identifiervalidator = new IdentifierValidator();
+		identifiervalidator.validate(context, document, database);
 	}
 
 }

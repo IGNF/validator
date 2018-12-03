@@ -1,0 +1,107 @@
+package fr.ign.validator.dgpr.validation.database;
+
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
+import fr.ign.validator.Context;
+import fr.ign.validator.data.Document;
+import fr.ign.validator.database.Database;
+import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.TableModel;
+
+public class IdentifierValidator {
+
+	public static final Logger log = LogManager.getRootLogger();
+	public static final Marker MARKER = MarkerManager.getMarker("TopologicalGraphValidator");
+
+	/**
+	 * Context
+	 */
+	private Context context;
+
+	/**
+	 * Document
+	 */
+	private Database database;
+
+	/**
+	 * Check if there every ID is unique in a given table 
+	 * @param context
+	 * @param document
+	 * @param database
+	 * @throws Exception
+	 */
+	public void validate(Context context, Document document, Database database) throws Exception {
+		// context
+		this.context = context;
+		this.database = database;
+		
+		List<FileModel> fileModelsList = document.getDocumentModel().getFileModels();
+		
+		for (FileModel fileModel : fileModelsList) {
+			if (!(fileModel instanceof TableModel)) {
+				continue;
+			}
+			
+			FeatureType featureType = fileModel.getFeatureType();
+			
+			List<AttributeType<?>> attributesList = featureType.getAttributes();
+			
+			String idLabel = null;
+			
+			int IdCount = 0;
+			
+			for(AttributeType<?> attribute : attributesList) {
+				if(attribute.isIdentifier()) {
+					idLabel =attribute.getName();
+					IdCount++;
+				}
+			}
+			
+			if(IdCount > 1)
+			{
+				context.report(context.createError(DgprErrorCodes.DGPR_MULTIPLE_ATTRIBUTES_IDENTIFIER)
+						.setMessageParam("TABLE_NAME", fileModel.getName())
+				);
+			}
+			
+			if(idLabel == null){
+				log.warn(MARKER, "[Error_model] No identifier in the table " + fileModel.getName());
+				return;
+			}
+							
+			RowIterator table = database.query(
+					"SELECT " + idLabel + " AS id, Count(" + idLabel + ") AS count FROM " + fileModel.getName() + " GROUP BY " + idLabel
+			);
+			int indexId = table.getColumn("id");
+			int indexCount =table.getColumn("count");
+
+			while (table.hasNext()) {
+				String[] row = table.next();
+				
+				int compte = Integer.parseInt(row[indexCount]);
+				
+				if(compte > 1)
+				{
+					context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
+							.setMessageParam("TABLE_NAME", fileModel.getName())
+							.setMessageParam("ID_NAME", row[indexId])
+							.setMessageParam("ID_COUNT", row[indexCount])
+					);
+				}
+					
+			}		
+			
+		}	
+		
+	}
+
+}

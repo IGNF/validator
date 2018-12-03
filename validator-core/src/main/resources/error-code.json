@@ -598,5 +598,17 @@
         "level": "ERROR",
         "message": "Les ISO_HT couvrant {ID_SINOND} ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ({LIST_VALUE_MIN_MAX}).",
         "documentation": "Cf. standard DI 2.0. Contrainte B.3.3 Classe d'objets <Zone_iso_classe_hauteur>"
+    },
+    {
+        "name": "DGPR_IDENTIFIER_UNICITY",
+        "level": "ERROR",
+        "message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_MULTIPLE_ATTRIBUTES_IDENTIFIER",
+        "level": "ERROR",
+        "message": "Problème dans la table {TABLE_NAME} : plusieurs attributs ont le statut d'identifiant.",
+        "documentation": ""
     }
 ]
