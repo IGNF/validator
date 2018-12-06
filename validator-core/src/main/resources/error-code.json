@@ -606,9 +606,9 @@
         "documentation": ""
     },
     {
-        "name": "DGPR_MULTIPLE_ATTRIBUTES_IDENTIFIER",
+        "name": "DGPR_RELATION_ERROR",
         "level": "ERROR",
-        "message": "Problème dans la table {TABLE_NAME} : plusieurs attributs ont le statut d'identifiant.",
+        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} fait référence à un objet {ID_REF_VALUE} via l'attribut {ID_REF} qui n'existe pas dans la table {REFERENCE_TABLE}.",
         "documentation": ""
     }
 ]

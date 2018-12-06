@@ -10,6 +10,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
 import fr.ign.validator.dgpr.validation.database.MinMaxCoverageValidator;
+import fr.ign.validator.dgpr.validation.database.RelationValidator;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
 import fr.ign.validator.dgpr.validation.database.IdentifierValidator;
 import fr.ign.validator.ValidatorListener;
@@ -51,6 +52,9 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 		
 		IdentifierValidator identifiervalidator = new IdentifierValidator();
 		identifiervalidator.validate(context, document, database);
+		
+		RelationValidator relationvalidator = new RelationValidator();
+		relationvalidator.validate(context, document, database);
 	}
 
 }
