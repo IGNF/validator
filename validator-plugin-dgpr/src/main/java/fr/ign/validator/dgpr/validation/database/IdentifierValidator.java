@@ -1,5 +1,6 @@
 package fr.ign.validator.dgpr.validation.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -46,59 +47,58 @@ public class IdentifierValidator {
 		
 		List<FileModel> fileModelsList = document.getDocumentModel().getFileModels();
 		
+		//For each table
 		for (FileModel fileModel : fileModelsList) {
 			if (!(fileModel instanceof TableModel)) {
 				continue;
 			}
 			
+			
 			FeatureType featureType = fileModel.getFeatureType();
 			
 			List<AttributeType<?>> attributesList = featureType.getAttributes();
 			
-			String idLabel = null;
+			List<String> idLabel = new ArrayList<String>();
 			
-			int IdCount = 0;
-			
+			//Looking for attributes who are identifiers
 			for(AttributeType<?> attribute : attributesList) {
 				if(attribute.isIdentifier()) {
-					idLabel =attribute.getName();
-					IdCount++;
+					idLabel.add(attribute.getName());
 				}
 			}
 			
-			if(IdCount > 1)
-			{
-				context.report(context.createError(DgprErrorCodes.DGPR_MULTIPLE_ATTRIBUTES_IDENTIFIER)
-						.setMessageParam("TABLE_NAME", fileModel.getName())
-				);
-			}
-			
-			if(idLabel == null){
+			//Log if no identifier is found
+			if(idLabel.size() == 0){
 				log.warn(MARKER, "[Error_model] No identifier in the table " + fileModel.getName());
 				return;
 			}
-							
-			RowIterator table = database.query(
-					"SELECT " + idLabel + " AS id, Count(" + idLabel + ") AS count FROM " + fileModel.getName() + " GROUP BY " + idLabel
-			);
-			int indexId = table.getColumn("id");
-			int indexCount =table.getColumn("count");
+			
+			//for each identifier of a given table, check if each value is unique
+			for(String label : idLabel) {
+				RowIterator table = database.query(
+						"SELECT " + label + " AS id, Count(" + label + ") AS count FROM " + fileModel.getName() + " GROUP BY " + label
+				);
+				int indexId = table.getColumn("id");
+				int indexCount =table.getColumn("count");
 
-			while (table.hasNext()) {
-				String[] row = table.next();
-				
-				int compte = Integer.parseInt(row[indexCount]);
-				
-				if(compte > 1)
-				{
-					context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
-							.setMessageParam("TABLE_NAME", fileModel.getName())
-							.setMessageParam("ID_NAME", row[indexId])
-							.setMessageParam("ID_COUNT", row[indexCount])
-					);
-				}
+				while (table.hasNext()) {
+					String[] row = table.next();
 					
-			}		
+					int compte = Integer.parseInt(row[indexCount]);
+					
+					//if not unique, send error
+					if(compte > 1)
+					{
+						context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
+								.setMessageParam("TABLE_NAME", fileModel.getName())
+								.setMessageParam("ID_NAME", row[indexId])
+								.setMessageParam("ID_COUNT", row[indexCount])
+						);
+					}
+						
+				}
+				
+			}												
 			
 		}	
 		

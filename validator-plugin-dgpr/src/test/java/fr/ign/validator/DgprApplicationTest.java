@@ -144,6 +144,14 @@ public class DgprApplicationTest {
 			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_4' est présent 2 fois.", idError6.getMessage());
 			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_5' est présent 2 fois.", idError7.getMessage());
 			
+			
+			Assert.assertEquals(37, report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
+			
+			ValidatorError refError0 = report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(0);
+			
+			Assert.assertEquals("L'objet CSI_1 de la table N_prefixTri_CARTE_INOND_S_ddd fait référence à un objet TRI_ZOB via l'attribut ID_TRI"
+					+ " qui n'existe pas dans la table N_prefixTri_TRI_S_ddd."
+					, refError0.getMessage());
 
 		} catch (Exception e) {
 			e.printStackTrace();
