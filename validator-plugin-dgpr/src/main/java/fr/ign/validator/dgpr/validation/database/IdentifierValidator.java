@@ -1,5 +1,6 @@
 package fr.ign.validator.dgpr.validation.database;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
@@ -17,8 +17,9 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.validation.Validator;
 
-public class IdentifierValidator {
+public class IdentifierValidator implements Validator<Database> {
 
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("TopologicalGraphValidator");
@@ -40,12 +41,19 @@ public class IdentifierValidator {
 	 * @param database
 	 * @throws Exception
 	 */
-	public void validate(Context context, Document document, Database database) throws Exception {
+	public void validate(Context context, Database database) {
 		// context
 		this.context = context;
 		this.database = database;
-		
-		List<FileModel> fileModelsList = document.getDocumentModel().getFileModels();
+		try {	
+			runValidation();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void runValidation() throws SQLException {
+		List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
 		
 		//For each table
 		for (FileModel fileModel : fileModelsList) {
@@ -101,7 +109,6 @@ public class IdentifierValidator {
 			}												
 			
 		}	
-		
 	}
 
 }
