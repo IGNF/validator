@@ -74,18 +74,17 @@ public class DgprApplicationTest {
 	@Test
 	public void testDocument() throws Exception {
 		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_ok_SIG_DI");
+		File documentPath = getSampleDocument("TRI_JTEST_TOPO_SIG_DI");
 
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_ok_SIG_DI", document.getDocumentName());
+			Assert.assertEquals("TRI_JTEST_TOPO_SIG_DI", document.getDocumentName());
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(31, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
 
 			// validation database
-			// TODO à reporter dans test DATABASE
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,7 +106,7 @@ public class DgprApplicationTest {
 			document.validate(context);
 			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(31, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
 
 			// validation database
 			// TODO à reporter dans test DATABASE
@@ -152,63 +151,14 @@ public class DgprApplicationTest {
 			Assert.assertEquals("L'objet CSI_1 de la table N_prefixTri_CARTE_INOND_S_ddd fait référence à un objet TRI_ZOB via l'attribut ID_TRI"
 					+ " qui n'existe pas dans la table N_prefixTri_TRI_S_ddd."
 					, refError0.getMessage());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-	}
-	
-	/**
-	 * @throws Exception
-	 */
-	@Test
-	public void testDocumentScenarioOk() throws Exception {
-		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_scenario_ok_SIG_DI");
-
-		Context context = createContext(documentPath);
-		Document document = new Document(documentModel, documentPath);
-		try {
-			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_scenario_ok_SIG_DI", document.getDocumentName());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			// TODO à reporter dans test DATABASE
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-	}
-	
-	/**
-	 * @throws Exception
-	 */
-	@Test
-	public void testDocumentScenarioNotOk() throws Exception {
-		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_scenario_error_SIG_DI");
-
-		Context context = createContext(documentPath);
-		Document document = new Document(documentModel, documentPath);
-		try {
-			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_scenario_error_SIG_DI", document.getDocumentName());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(30, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			// TODO à reporter dans test DATABASE
+			
 			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
 
-			ValidatorError error0 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0);
-			ValidatorError error1 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(1);
+			ValidatorError error10 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0);
+			ValidatorError error11 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(1);
 
-			Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error0.getMessage());
-			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error1.getMessage());
+			Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error10.getMessage());
+			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error11.getMessage());
 
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
