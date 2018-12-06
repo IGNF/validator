@@ -44,14 +44,20 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 			"Validate document database"
 		);
 
-		database.addValidator(new InclusionValidator());
-		database.addValidator(new MinMaxCoverageValidator());
-		database.addValidator(new GraphTopologyValidator());
+		/*
+		 * Standard database Validation 
+		 */
 		database.addValidator(new IdentifierValidator());
 		database.addValidator(new RelationValidator());
+
+		/*
+		 * Custom database Validation
+		 */
+		database.addValidator(new ScenarioValidator());
+		database.addValidator(new MinMaxCoverageValidator());
+		database.addValidator(new InclusionValidator());
+		database.addValidator(new GraphTopologyValidator());
 		
-		ScenarioValidator scenarioValidator = new ScenarioValidator();
-		scenarioValidator.validate(context,document,database);
 		database.validate(context);
 	}
 
