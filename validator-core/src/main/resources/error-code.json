@@ -604,5 +604,17 @@
         "level": "ERROR",
         "message": "L'objet {ID} de la classe {TABLE_NAME} a pour scénario {VALUE_SCENARIO} différent de celui de la surface inondable {ID_S_INOND}, de scénario {EXPECTED_SCENARIO}, à laquelle il est rattaché.",
         "documentation": "Cf. standard DI 2.0. B.3.1 Classe d'objets <Carte_surfaces_inondables>" 
+    },
+    {
+        "name": "DGPR_IDENTIFIER_UNICITY",
+        "level": "ERROR",
+        "message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
+        "documentation": ""
+    },
+    {
+        "name": "DGPR_RELATION_ERROR",
+        "level": "ERROR",
+        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} fait référence à un objet {ID_REF_VALUE} via l'attribut {ID_REF} qui n'existe pas dans la table {REFERENCE_TABLE}.",
+        "documentation": ""
     }
 ]
