@@ -36,19 +36,24 @@ public class ScenarioValidator implements Validator<Database> {
 
 
 	public void runValidation() throws SQLException {
+		validateTable("N_prefixTri_ISO_HT_suffixIsoHt_S_ddd", "ID_ZONE");
+		validateTable("N_prefixTri_ISO_COTE_L_ddd", "ID_LIGNE");
+	}
+	
+	private void validateTable(String tablename, String attributeId) throws SQLException {
 		// select / join
 		RowIterator inondTable = database.query(
-				"SELECT iso.ID_ZONE,"
+				"SELECT iso." + attributeId + ","
 				+ " iso.SCENARIO,"
 				+ " iso.ID_S_INOND,"
 				+ " surface.SCENARIO as S_INOND_SCN"
-				+ " FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd as iso "
+				+ " FROM " + tablename + " as iso "
 				+ " JOIN N_prefixTri_INONDABLE_suffixInond_S_ddd as surface "
 				+ " ON surface.ID_S_INOND LIKE iso.ID_S_INOND "
 		);
 
 		// Indexes
-		int indexIsoId = inondTable.getColumn("ID_ZONE");
+		int indexIsoId = inondTable.getColumn(attributeId);
 		int indexIsoScenario = inondTable.getColumn("SCENARIO");
 		int indexIsoSinondScenario = inondTable.getColumn("ID_S_INOND");
 		int indexSurfaceScenario = inondTable.getColumn("S_INOND_SCN");
@@ -66,8 +71,16 @@ public class ScenarioValidator implements Validator<Database> {
 			String[] row = inondTable.next();
 
 			// test de la validité des liens entre les 2 tables
-			validateScenario(row[indexIsoId], row[indexIsoScenario], row[indexIsoSinondScenario], row[indexSurfaceScenario]);
-		}						
+			if (! validateScenario(row[indexIsoScenario], row[indexSurfaceScenario])) {		
+				context.report(context.createError(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO)
+						.setMessageParam("ID", row[indexIsoId])
+						.setMessageParam("TABLE_NAME", tablename)
+						.setMessageParam("VALUE_SCENARIO", row[indexIsoScenario])
+						.setMessageParam("ID_S_INOND", row[indexIsoSinondScenario])
+						.setMessageParam("EXPECTED_SCENARIO", row[indexSurfaceScenario])
+				);
+			}
+		}
 	}
 
 	/**
@@ -76,25 +89,16 @@ public class ScenarioValidator implements Validator<Database> {
 	 * @param isoScn
 	 * @param surfaceId
 	 * @param surfaceScn
+	 * @return 
 	 */
-	private void validateScenario(String isoId, String isoScn, String surfaceId, String surfaceScn) {
+	private boolean validateScenario(String isoScn, String surfaceScn) {
 
-		if(isoId == null || isoScn == null || surfaceId == null|| surfaceScn == null) {
-			log.debug(MARKER, "Attenttion un des éléments des tables N_prefixTri_ISO_HT_suffixIsoHt_S_ddd ou N_prefixTri_INONDABLE_suffixInond_S_ddd est null");
-			return;
+		if(isoScn == null || surfaceScn == null) {
+			log.debug(MARKER, "Attention un des éléments des tables N_prefixTri_ISO_HT_suffixIsoHt_S_ddd ou N_prefixTri_INONDABLE_suffixInond_S_ddd est null");
+			return true;
 		}
 
-		// Si les scénarios ne correspondent pas
-		if(!isoScn.equals(surfaceScn)) {			
-			context.report(context.createError(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO)
-					.setMessageParam("ID", isoId)
-					.setMessageParam("TABLE_NAME", "ISO_HT_S")
-					.setMessageParam("VALUE_SCENARIO", isoScn)
-					.setMessageParam("ID_S_INOND", surfaceId)
-					.setMessageParam("EXPECTED_SCENARIO", surfaceScn)
-			);			
-		}
-
+		return isoScn.equals(surfaceScn);
 	}
 
 }

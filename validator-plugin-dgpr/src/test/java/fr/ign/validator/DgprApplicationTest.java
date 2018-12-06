@@ -107,65 +107,71 @@ public class DgprApplicationTest {
 			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
 			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			// TODO à reporter dans test DATABASE
+			
+			/*
+			 * Scénarios d'inclusion : SIN_5 (Moyen) n'est pas incluse dans SIN_6 (Faible)
+             * Scénarios d'inclusion : SIN_4 (Fort) n'est pas incluse dans SIN_6 (Faible)
+			 */
 			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-
 			ValidatorError error0 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0);
 			ValidatorError error1 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(1);
-
 			Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error0.getMessage());
 			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error1.getMessage());
 
-			Assert.assertEquals(5, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			/*
+			 * Les ISO_HT couvrant SIN_4 ne couvrent pas l'intégralité des hauteurs d'eau (0-4)
+             * Les ISO_HT couvrant SIN_5 ne couvrent pas l'intégralité des hauteurs d'eau (0-2 puis 3-HTMAX)
+             */
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
+			ValidatorError error10 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).get(0);
+			Assert.assertEquals("Les ISO_HT couvrant SIN_5 ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ([0.00, 2.00] [3.00, null]).", error10.getMessage());
+
+			/*
+			 * ZCH_9 et ZCH_10 (scénario Faible) ne constituent pas une partition de SIN_6
+			 */
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
+			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Les périmètres des ISO_HT s'intersectent.", error20.getMessage());
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-      
-			Assert.assertEquals(5, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
+			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
+			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Il y'a un trou ou un dépassement de la surface inondable.", error21.getMessage());
 			
-			Assert.assertEquals(8, report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
-			
-			ValidatorError idError0 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(0);
-			ValidatorError idError1 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(1);
-			ValidatorError idError2 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(2);
-			ValidatorError idError3 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(3);
-			ValidatorError idError4 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(4);
-			ValidatorError idError5 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(5);
-			ValidatorError idError6 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(6);
-			ValidatorError idError7 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(7);
-			
-			Assert.assertEquals("Problème dans la table N_prefixTri_ECOUL_S_ddd : l'identifiant 'ZE_2' est présent 2 fois.", idError0.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_ENJEU_CRISE_L_ddd : l'identifiant 'SIEXT' est présent 2 fois.", idError1.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_INONDABLE_suffixInond_S_ddd : l'identifiant 'SIN_3' est présent 2 fois.", idError2.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_1' est présent 2 fois.", idError3.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_2' est présent 2 fois.", idError4.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_3' est présent 2 fois.", idError5.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_4' est présent 2 fois.", idError6.getMessage());
-			Assert.assertEquals("Problème dans la table N_prefixTri_ISO_HT_suffixIsoHt_S_ddd : l'identifiant 'ZCH_5' est présent 2 fois.", idError7.getMessage());
-			
-			
-			Assert.assertEquals(37, report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
-			
-			ValidatorError refError0 = report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(0);
-			
+			/*
+			 * Zone de suralea ZSA_2 non adjacente à l'ouvrage de protection OUV_2
+             * Zone soustraite à l'inondation ZSI_2 non adjacente à l'ouvrage de protection 0UV_2
+             * Zone inondable SIN_2 non adjacente à l'ouvrage de protection OUV_2
+			 */
+			// TODO AdjacenceValidator
+
+			/*
+			 * Appartenance au même scenario.
+			 * L'objet LIC_2 de la classe ISO_COTE_L a pour scénario 02Moy différent de celui
+			 * de la surface inondable SIN_4, de scénario 01For, à laquelle il est rattaché.
+			 *
+			 * L'objet ZCH_7 de la classe ISO_HT_S a pour scénario 01For différent de celui
+			 * de la surface inondable SIN_5, de scénario 02Moy, à laquelle il est rattaché.
+			 */
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).size());
+			ValidatorError error40 = report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).get(0);
+			ValidatorError error41 = report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).get(1);
+			Assert.assertEquals("L'objet ZCH_7 de la classe N_prefixTri_ISO_HT_suffixIsoHt_S_ddd a pour scénario 01For différent de celui de la surface inondable SIN_5, de scénario 02Moy, à laquelle il est rattaché.", error40.getMessage());
+			Assert.assertEquals("L'objet LIC_2 de la classe N_prefixTri_ISO_COTE_L_ddd a pour scénario 02Moy différent de celui de la surface inondable SIN_4, de scénario 01For, à laquelle il est rattaché.", error41.getMessage());
+
+
+			/*
+			 * Validation unicite et relation
+			 */
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
+			ValidatorError error50 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(0);
+			ValidatorError error51 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(1);
+			Assert.assertEquals("Problème dans la table N_prefixTri_ECOUL_S_ddd : l'identifiant 'ZE_2' est présent 2 fois.", error50.getMessage());
+			Assert.assertEquals("Problème dans la table N_prefixTri_ENJEU_CRISE_L_ddd : l'identifiant 'SIEXT' est présent 2 fois.", error51.getMessage());
+
+			Assert.assertEquals(15, report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
+			ValidatorError error52 = report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(0);
 			Assert.assertEquals("L'objet CSI_1 de la table N_prefixTri_CARTE_INOND_S_ddd fait référence à un objet TRI_ZOB via l'attribut ID_TRI"
 					+ " qui n'existe pas dans la table N_prefixTri_TRI_S_ddd."
-					, refError0.getMessage());
-			
-			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-
-			ValidatorError error10 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(0);
-			ValidatorError error11 = report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).get(1);
-
-			Assert.assertEquals("La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai.", error10.getMessage());
-			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error11.getMessage());
-
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-      
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
-			
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).size());
+					, error52.getMessage());
 
 		} catch (Exception e) {
 			e.printStackTrace();
