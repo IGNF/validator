@@ -7,10 +7,12 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
 import fr.ign.validator.dgpr.validation.database.MinMaxCoverageValidator;
+import fr.ign.validator.dgpr.validation.database.RelationValidator;
+import fr.ign.validator.dgpr.database.ValidatableDatabase;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
+import fr.ign.validator.dgpr.validation.database.IdentifierValidator;
 import fr.ign.validator.ValidatorListener;
 
 /**
@@ -32,21 +34,22 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 	@Override
 	public void afterValidate(Context context, Document document) throws Exception {
 		log.info(MARKER,
-				"Load document database"
+			"Load document database"
 		);
-		// load database
-		Database database = Database.createDatabase(document);
-		database.load(context,document);
 
-		// validate inclusion
-		InclusionValidator inclusionValidator = new InclusionValidator();
-		inclusionValidator.validate(context, document, database);
+		ValidatableDatabase database = new ValidatableDatabase(context, document);
 
-		MinMaxCoverageValidator coverageValidator = new MinMaxCoverageValidator();
-		coverageValidator.validate(context, document, database);
+		log.info(MARKER,
+			"Validate document database"
+		);
+
+		database.addValidator(new InclusionValidator());
+		database.addValidator(new MinMaxCoverageValidator());
+		database.addValidator(new GraphTopologyValidator());
+		database.addValidator(new IdentifierValidator());
+		database.addValidator(new RelationValidator());
 		
-		GraphTopologyValidator graphtopologyvalidator = new GraphTopologyValidator();
-		graphtopologyvalidator.validate(context, document, database);
+		database.validate(context);
 	}
 
 }

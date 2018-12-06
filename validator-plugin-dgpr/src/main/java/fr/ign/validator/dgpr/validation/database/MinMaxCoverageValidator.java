@@ -9,13 +9,13 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.model.IsoHauteur;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.validation.Validator;
 
-public class MinMaxCoverageValidator {
+public class MinMaxCoverageValidator implements Validator<Database> {
 
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("MinMaxCoverageValidator");
@@ -31,29 +31,31 @@ public class MinMaxCoverageValidator {
 	 * @param database
 	 * @throws Exception
 	 */
-	public void validate(Context context, Document document, Database database) throws Exception {
-
-		this.database = database;
+	public void validate(Context context, Database database) {
+		// context
 		this.context = context;
+		this.database = database;
+		try {	
+			runValidation();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-		// Récupération de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
+
+	private void runValidation() throws SQLException {
+		// select all surface
 		RowIterator innondTable = database.query(
-				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
-				);
-		// Index du champ "ID_S_INOND"
+			"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
+		);
+		// id column index
 		int indexId = innondTable.getColumn("ID_S_INOND");
 
-		// Récupération de tous les identifiants des éléments de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
-		ArrayList<String> identifiants = new ArrayList<String>();
 		while (innondTable.hasNext()) {
 			String[] row = innondTable.next();
-			identifiants.add(row[indexId]);
+			// for each id perform MinMaxCoverage validation
+			validateSurfaceInondable(row[indexId]);
 		}
-
-		//Pour chaque surface innondable, on récupère la liste des iso hauteurs
-		for (String surfaceId: identifiants) {
-			validateSurfaceInondable(surfaceId);
-		}			 	 
 	}
 
 
@@ -65,9 +67,9 @@ public class MinMaxCoverageValidator {
 	private void validateSurfaceInondable(String surfaceId) throws SQLException {
 		// select zone iso
 		RowIterator isoHtTable = database.query(
-			" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
-					+ " WHERE ID_S_INOND LIKE '" + surfaceId + "'"
-					+ " ORDER BY ht_min ASC;"
+				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
+				+ " WHERE ID_S_INOND LIKE '" + surfaceId + "'"
+				+ " ORDER BY ht_min ASC;"
 		);
 
 		int indexIdZone = isoHtTable.getColumn("ID_ZONE");
@@ -96,17 +98,17 @@ public class MinMaxCoverageValidator {
 		// initialisation
 		if (!compare(listIsoHauteur.get(0).getHtMin(), "0.00")) {
 			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-				.setMessageParam("ID_SINOND", surfaceId)
-				.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-			);
+					.setMessageParam("ID_SINOND", surfaceId)
+					.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
+					);
 			return;
 		}
 
 		if (!compare(listIsoHauteur.get(listIsoHauteur.size() - 1).getHtMax(), null)) {
 			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-				.setMessageParam("ID_SINOND", surfaceId)
-				.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-			);
+					.setMessageParam("ID_SINOND", surfaceId)
+					.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
+					);
 			return;
 		}
 
@@ -115,8 +117,8 @@ public class MinMaxCoverageValidator {
 			// test htmin different htmax
 			if (compare(isoHauteur.getHtMin(), isoHauteur.getHtMax())) {
 				context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-					.setMessageParam("ID_SINOND", surfaceId)
-					.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
+						.setMessageParam("ID_SINOND", surfaceId)
+						.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
 				);
 				return;
 			}
@@ -127,8 +129,8 @@ public class MinMaxCoverageValidator {
 			IsoHauteur isoHauteurNext = listIsoHauteur.get(i + 1);
 			if (!compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMin())) {
 				context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-					.setMessageParam("ID_SINOND", surfaceId)
-					.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
+						.setMessageParam("ID_SINOND", surfaceId)
+						.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
 				);
 				return;
 			}

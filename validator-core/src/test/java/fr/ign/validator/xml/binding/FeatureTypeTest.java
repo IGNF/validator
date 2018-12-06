@@ -65,6 +65,7 @@ public class FeatureTypeTest {
 			Assert.assertEquals(false, attributeType.isNullable());
 			Assert.assertEquals("[0-9]{5}", attributeType.getRegexp());
 			Assert.assertEquals(true, attributeType.isIdentifier());
+			Assert.assertEquals(false, attributeType.isReference());
 			Assert.assertNull(attributeType.getListOfValues());
 		}
 		{
@@ -74,6 +75,7 @@ public class FeatureTypeTest {
 			Assert.assertEquals(false, attributeType.isNullable());
 			Assert.assertNull(attributeType.getRegexp());
 			Assert.assertEquals(false, attributeType.isIdentifier());
+			Assert.assertEquals(false, attributeType.isReference());
 			Assert.assertNotNull(attributeType.getListOfValues());
 			Assert.assertEquals("01,02", Strings.join(attributeType.getListOfValues(),','));
 		}
@@ -84,6 +86,7 @@ public class FeatureTypeTest {
 			Assert.assertEquals(true, attributeType.isNullable());
 			Assert.assertNull(attributeType.getRegexp());
 			Assert.assertEquals(false, attributeType.isIdentifier());
+			Assert.assertEquals(false, attributeType.isReference());
 			Assert.assertNull(attributeType.getListOfValues());
 		}
 		

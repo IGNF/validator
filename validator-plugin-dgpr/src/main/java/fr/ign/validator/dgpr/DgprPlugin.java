@@ -20,16 +20,21 @@ public class DgprPlugin implements Plugin {
 
 	@Override
 	public void setup(Context context) {
-		//
+		/*
+		 * All database Validation
+		 */
 		context.addListener(new LoadDocumentDatabasePostProcess());
 
 		/*
-		 * extends validation
+		 * Extends document validation
+		 * - file name contains directory prefix
 		 */
-		// file name contains directory prefix
 		context.addListener(new DocumentPrefixValidator());
-		
-		// validations
+
+		/*
+		 * Extends document validation
+		 * - Numeric validation
+		 */
 		context.addListener(new NumericCustomizer());
 	}
 
