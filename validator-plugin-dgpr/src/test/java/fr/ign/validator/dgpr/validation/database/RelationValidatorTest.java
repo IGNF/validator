@@ -55,10 +55,12 @@ public class RelationValidatorTest {
 		attributeTest.setName("id");
 		
 		AttributeType<String> attributeTest2 = new StringType();
+		attributeTest2.setReference("N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND");
 		attributeTest2.setName("ID_S_INOND");
 		
 		//creates attributes for table TEST_B				
 		AttributeType<String> attributeTestB = new StringType();
+		attributeTestB.setReference("N_prefixTri_TRI_S_ddd.ID_TRI");
 		attributeTestB.setName("ID_TRI");
 		
 		//creates attributes for table N_prefixTri_INONDABLE_suffixInond_S_ddd				

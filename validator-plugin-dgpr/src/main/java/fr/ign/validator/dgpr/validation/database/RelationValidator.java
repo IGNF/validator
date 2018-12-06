@@ -45,9 +45,6 @@ public class RelationValidator {
 		// context		
 		this.context = context;
 		this.database = database;
-		
-		//creates a two-dimensional array with the attributes that are referenced to in the model and the table associated with to each one
-		String[][] references = {{"ID_S_INOND", "N_prefixTri_INONDABLE_suffixInond_S_ddd" },{"ID_TRI", "N_prefixTri_TRI_S_ddd"}};
 
 		List<FileModel> fileModelsList = document.getDocumentModel().getFileModels();
 		
@@ -57,106 +54,90 @@ public class RelationValidator {
 				continue;
 			}
 			
-			
-			FeatureType featureType = fileModel.getFeatureType();
-			
-			List<AttributeType<?>> attributesList = featureType.getAttributes();
-			
-			//searching for the identifier attribute
-			String identifierName = "";			
-			for(AttributeType<?> attribute : attributesList) {
-				if(attribute.isIdentifier()) {
-					identifierName = attribute.getName();
-					break;
-				}
-				
-			}
-			
-			//Looking for attributes who are references
-			for(AttributeType<?> attribute : attributesList) {
-				//For each references
-				for(int i=0; i<references.length; i++) {
-					
-					String refId = references[i][0];
-					String refTab = references[i][1];
-
-					//if the attribute name equals the reference name and the actual table is not the reference table, check the relation
-					if(attribute.getName().equals(refId) && !fileModel.getName().equals(refTab)) {
-						
-						//if the table has no identifier, select only attribute.getName()
-						String selection = attribute.getName();					
-						if(!identifierName.equals("")) {
-							selection = attribute.getName() + ", " + identifierName;
-						}
-						
-						//get all the values in the reference table
-						RowIterator table = database.query(
-								"SELECT " + selection + " FROM " + fileModel.getName()
-						);
-						
-						int indexIdRef = table.getColumn(attribute.getName());
-						int indexAttId = table.getColumn(identifierName);
-						
-						//check if the attribute value exists in the reference table
-						while (table.hasNext()) {
-							String[] row = table.next();
-							
-							
-							
-							if(!validateRelation(refId, row[indexIdRef], refTab, fileModel.getName())) {
-								//if the origin table has no identifier, the value of {ID_OBJECT} in the error message will be "sans identifiant"
-								String attId = "sans identifiant";
-								if(indexAttId != -1) {
-									attId = row[indexAttId];
-								}
-								
-								//if the value {row[indexIdRef]} does not exist in the table {refTab}, send error message
-								context.report(context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
-										.setMessageParam("ID_OBJECT", attId)
-										.setMessageParam("ORIGIN_TABLE", fileModel.getName())
-										.setMessageParam("ID_REF_VALUE", row[indexIdRef])
-										.setMessageParam("ID_REF", refId)
-										.setMessageParam("REFERENCE_TABLE", refTab)			
-								);
-							}
-							
-						}
-						
-					}
-					
-				}			
-				
-			}												
+			validateFileModel(fileModel);												
 			
 		}	
 		
 	}
 	
 	/**
-	 * Check if the value {idRefValue} of the attribute {idRef} exists in the table {refTable}
-	 * @param idRef
-	 * @param idRefValue
-	 * @param refTable
-	 * @param originTable
-	 * @return true if the value {idRefValue} of the attribute {idRef} exists in the table {refTable}, false otherwise
+	 * Search for references attributes
+	 * @param fileModel
 	 * @throws SQLException
 	 */
-	public boolean validateRelation(String idRef, String idRefValue, String refTable, String originTable/*, String originId*/) throws SQLException {
-		RowIterator table = database.query(
-				"SELECT " + idRef + " FROM " + refTable
-		);
-
-		int indexIdRef = table.getColumn(idRef);
+	private void validateFileModel(FileModel fileModel) throws SQLException {
 		
-		while (table.hasNext()) {
-			String[] row = table.next();
-			if(row[indexIdRef].equals(idRefValue)) {
-				return true;
+		FeatureType featureType = fileModel.getFeatureType();
+		
+		List<AttributeType<?>> attributesList = featureType.getAttributes();
+		
+		//searching for the identifier attribute
+		String identifierName = "";			
+		for(AttributeType<?> attribute : attributesList) {
+			if(attribute.isIdentifier()) {
+				identifierName = attribute.getName();
+				break;
 			}
 			
 		}
+		
+		//Looking for attributes who are references
+		for(AttributeType<?> attribute : attributesList) {
+			if(!attribute.isReference()) {
+				continue;
+			}
+			
+			validateRelation(fileModel, attribute, identifierName);
+		}
+		
+	}
 
-		return false;
+	/**
+	 * Join a table and a reference table to check if all relations are valid
+	 * @param fileModel
+	 * @param attribute
+	 * @param identifierName
+	 * @throws SQLException
+	 */
+	public void validateRelation(FileModel fileModel ,AttributeType<?> attribute, String identifierName) throws SQLException {
+		String sql = "SELECT ";
+		
+		//if no identifier in the table
+		if(!identifierName.equals("")) {
+			sql +=  identifierName + " AS id, ";
+		}
+		
+		sql +=  fileModel.getName() + "." + attribute.getName() + " AS ref, "
+				+ attribute.getTableReference() + "." + attribute.getAttributeReference() + " AS id_table_ref"
+				+ " FROM " + fileModel.getName() 
+				+ " LEFT JOIN " + attribute.getTableReference() 
+				+ " ON ref LIKE id_table_ref";
+		
+		//request to join the tables
+		RowIterator table = database.query(sql);
+
+		int indexIdTableRef = table.getColumn("id_table_ref");
+		int indexId = table.getColumn("id");
+		int indexRef = table.getColumn("ref");
+		
+		while (table.hasNext()) {
+			String[] row = table.next();
+			if(row[indexIdTableRef] == null || row[indexIdTableRef].equals("") ) {
+				String idObject = "sans identifiant";
+				if(indexId != -1) {
+					idObject = row[indexId];
+				}
+				//if the value {row[indexIdTableRef]} does not exist in the reference table, send error message
+				context.report(context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
+						.setMessageParam("ID_OBJECT", idObject)
+						.setMessageParam("ORIGIN_TABLE", fileModel.getName())
+						.setMessageParam("ID_REF_VALUE", row[indexRef])
+						.setMessageParam("ID_REF", attribute.getAttributeReference())
+						.setMessageParam("REFERENCE_TABLE", attribute.getTableReference())			
+				);
+			}
+			
+		}
 		
 	}
 

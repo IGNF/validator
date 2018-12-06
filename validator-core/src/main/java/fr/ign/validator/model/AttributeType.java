@@ -247,7 +247,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 		if (!this.reference.contains(".")) {
 			return null;
 		}
-		return this.reference.split(".")[0];
+		return this.reference.split("\\.")[0];
 	}
 
 
@@ -258,7 +258,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 		if (!this.reference.contains(".")) {
 			return null;
 		}
-		return this.reference.split(".")[1];
+		return this.reference.split("\\.")[1];
 	}
 
 
