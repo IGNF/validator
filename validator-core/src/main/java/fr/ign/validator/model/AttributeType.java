@@ -26,7 +26,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * Matching java class
 	 */
 	private Class<T> clazz ;
-	
+
 	/**
 	 * Attribute name
 	 */
@@ -60,7 +60,13 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * Validators on attributes
 	 */
 	private List<Validator<Attribute<T>>> validators = new ArrayList<Validator<Attribute<T>>>() ;
-	
+
+	/**
+	 * Reference to another table attribute.
+	 * Format TABLE_NAME.ATTRIBUTE_NAME
+	 */
+	private String reference;
+
 	/**
 	 * Constructing a class and validators by default
 	 * @param clazz
@@ -71,14 +77,14 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 		addValidator(new CharactersValidator<T>());
 	}
 
-	
+
 	/**
 	 * Returns type name
 	 * 
 	 * @return
 	 */
 	public abstract String getTypeName() ;
-	
+
 	/**
 	 * Indicates if attribute is a geometry
 	 * @return
@@ -86,8 +92,8 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public boolean isGeometry(){
 		return false ;
 	}
-	
-	
+
+
 	/**
 	 * Converts a value in the matching java type.
 	 * Validates the possibility of a conversion of a value in the java type matching the ValueType
@@ -96,7 +102,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * @return
 	 */
 	public abstract T bind(Object value) throws IllegalArgumentException ;
-	
+
 	/**
 	 * Formats the value as a string parameter (e.g. YYYYMMDD for dates)
 	 * 
@@ -107,7 +113,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	 * @throws IllegalArgumentException if type is incorrect
 	 */
 	public abstract String format(T value) throws IllegalArgumentException;
-	
+
 	/**
 	 * Formats object in parameter
 	 * 
@@ -123,11 +129,11 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 			return format( this.clazz.cast(value) ) ;
 		}else{
 			throw new IllegalArgumentException(String.format(
-				"Invalid type {} for value"
-			));
+					"Invalid type {} for value"
+					));
 		}
 	}
-	
+
 	/**
 	 * Gets value type for name
 	 * 
@@ -137,18 +143,18 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public static AttributeType<?> forName(String name){
 		return AttributeTypeFactory.getInstance().createAttributeTypeByName(name) ;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public boolean hasRegexp(){
 		return null != regexp ;
 	}
-	
+
 	public String getRegexp() {
 		return regexp;
 	}
@@ -173,8 +179,8 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public void setSize(Integer size) {
 		this.size = size;
 	}
-	
-	
+
+
 	public boolean isNullable() {
 		return nullable;
 	}
@@ -218,7 +224,44 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	public void setIdentifier(boolean identifier) {
 		this.identifier = identifier;
 	}
+
+
+	public String getReference() {
+		return this.reference;
+	}
+
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
 	
+	public boolean isReference() {
+		return this.reference != null;
+	}
+
+	public String getTableReference() {
+		if (this.reference == null) {
+			return null;
+		}
+		if (!this.reference.contains(".")) {
+			return null;
+		}
+		return this.reference.split(".")[0];
+	}
+
+
+	public String getAttributeReference() {
+		if (this.reference == null) {
+			return null;
+		}
+		if (!this.reference.contains(".")) {
+			return null;
+		}
+		return this.reference.split(".")[1];
+	}
+
+
 	@Override
 	public String toString() {
 		String result = name+ " ("+getClass().getSimpleName()+")" ;
@@ -228,16 +271,16 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 	@SuppressWarnings("unchecked")
 	public Object clone() {
 		AttributeType<T> attributeType = null;
-	    try {
-	      	attributeType = (AttributeType<T>) super.clone();
-	      	attributeType.validators = new ArrayList<Validator<Attribute<T>>>(validators.size());
-	      	attributeType.validators.addAll(validators);
-	    } catch(CloneNotSupportedException cnse) {
-	      	throw new RuntimeException(cnse);
-	    }
+		try {
+			attributeType = (AttributeType<T>) super.clone();
+			attributeType.validators = new ArrayList<Validator<Attribute<T>>>(validators.size());
+			attributeType.validators.addAll(validators);
+		} catch(CloneNotSupportedException cnse) {
+			throw new RuntimeException(cnse);
+		}
 
-	    // returns the clone
-	    return attributeType;
+		// returns the clone
+		return attributeType;
 	}
 
 	/**

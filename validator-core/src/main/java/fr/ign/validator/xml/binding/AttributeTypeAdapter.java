@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import fr.ign.validator.model.AttributeType;
 
-@XmlType(propOrder = { "name", "type", "definition", "regexp", "size", "nullable", "listOfValues", "identifiant" })
+@XmlType(propOrder = { "name", "type", "definition", "regexp", "size", "nullable", "listOfValues", "identifiant", "reference" })
 public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.AdaptedAttributeType, AttributeType<?>>{
 
 	@Override
@@ -26,7 +26,8 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		adaptedAttributeType.size = attributeType.getSize() ;
 		adaptedAttributeType.nullable = attributeType.isNullable() ;
 		adaptedAttributeType.listOfValues = attributeType.getListOfValues() ;
-		adaptedAttributeType.identifier = attributeType.isIdentifier();
+		adaptedAttributeType.identifier = attributeType.isIdentifier() ;
+		adaptedAttributeType.reference = attributeType.getReference() ;
 		return adaptedAttributeType ;
 	}
 
@@ -45,6 +46,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		attributeType.setNullable(adaptedValueType.nullable) ;
 		attributeType.setListOfValues(adaptedValueType.listOfValues);
 		attributeType.setIdentifier(adaptedValueType.identifier);
+		attributeType.setReference(adaptedValueType.reference);
 
 		return attributeType ;
 	}
@@ -56,7 +58,8 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		public String regexp ;
 		public Integer size ;
 		public boolean nullable ;
-		public boolean identifier;
+		public boolean identifier ;
+		public String reference  ;
 		@XmlElementWrapper(name = "listOfValues")
 		@XmlElement(name = "value")
 		public List<String> listOfValues ;
