@@ -14,7 +14,7 @@ public class DebLinValidator implements Validator<Attribute<Double>> {
 		if (attribute.getBindedValue() == null) {
 			return;
 		}
-		if (attribute.getBindedValue() > 0) {
+		if (attribute.getBindedValue() >= 0) {
 			return;
 		}
 		

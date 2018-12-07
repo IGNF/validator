@@ -91,7 +91,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 		}
 
 		// Si il n'y a q'une iso hauteur dans la liste, pas besoin de tester, on passe à l'itération suivante de la boucle
-		if (listIsoHauteur.size() < 2) {
+		if (listIsoHauteur.size() == 0) {
 			return;
 		}
 
