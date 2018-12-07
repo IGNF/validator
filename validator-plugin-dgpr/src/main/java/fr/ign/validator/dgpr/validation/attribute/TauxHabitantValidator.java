@@ -18,10 +18,10 @@ public class TauxHabitantValidator implements Validator<Attribute<Integer>> {
 	@Override
 	public void validate(Context context, Attribute<Integer> attribute) {
 		Integer value = attribute.getBindedValue();
-		if(value == null) {
+		if (value == null) {
 			return;
 		}
-		if(value < 0 || value > 100) {
+		if (value < 0 || value > 100) {
 			context.report(context.createError(DgprErrorCodes.DGPR_TX_HAB_SAI_ERROR)
 				.setMessageParam("VALUE", String.valueOf(value))
 			);

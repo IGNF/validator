@@ -1,6 +1,5 @@
 package fr.ign.validator.dgpr.validation.database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +11,16 @@ import org.apache.logging.log4j.MarkerManager;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.database.model.IsoHauteur;
 import fr.ign.validator.dgpr.database.model.SurfaceInondable;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;
 
 public class GraphTopologyValidator implements Validator<Database> {
@@ -63,11 +63,11 @@ public class GraphTopologyValidator implements Validator<Database> {
 	}
 
 
-	private void runValidation() throws SQLException, ParseException {
+	private void runValidation() throws Exception {
 		// Récupération de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
 		RowIterator inondTable = database.query(
 				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
-				);
+		);
 
 		// Index du champ "ID_S_INOND"
 		int indexId = inondTable.getColumn("ID_S_INOND");
@@ -82,10 +82,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		ArrayList<SurfaceInondable> surfInondList = new ArrayList<SurfaceInondable>();
 		while (inondTable.hasNext()) {
 			String[] row = inondTable.next();
-			SurfaceInondable surfInond = new SurfaceInondable(
-					row[indexId],
-					row[indexWkt]
-					);
+			SurfaceInondable surfInond = new SurfaceInondable(row[indexId], row[indexWkt]);
 			surfInondList.add(surfInond);
 		}
 
@@ -100,15 +97,14 @@ public class GraphTopologyValidator implements Validator<Database> {
 	 * Validate zone intersect in a given SurfaceInondable
 	 * @param surfaceId
 	 * @return 
-	 * @throws SQLException 
-	 * @throws ParseException 
+	 * @throws Exception 
 	 */
-	private void validateUnion(SurfaceInondable surface) throws SQLException, ParseException {
+	private void validateUnion(SurfaceInondable surface) throws Exception {
 		// select zone iso
 		RowIterator isoHtTable = database.query(
 				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
-						+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
-				);
+				+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
+		);
 
 		// verifier que la geometrie de la surface inondable est valide
 		Geometry surfaceInondGeom = format.read(surface.getWkt());
@@ -130,11 +126,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		ArrayList<IsoHauteur> listIsoHauteur = new ArrayList<IsoHauteur>();
 		while (isoHtTable.hasNext()) {
 			String[] row = isoHtTable.next();
-			IsoHauteur isoHauteur = new IsoHauteur(
-					row[indexIdZone],
-					row[indexIdSInond],
-					row[indexWkt]
-					);
+			IsoHauteur isoHauteur = new IsoHauteur(row[indexIdZone], row[indexIdSInond], row[indexWkt]);
 			listIsoHauteur.add(isoHauteur);	
 		}
 
@@ -178,9 +170,9 @@ public class GraphTopologyValidator implements Validator<Database> {
 				// Test if two geometries of the same set do not cross each other
 				// intersection must be empty or a border
 				if((prevIso.intersection(currentIso).getGeometryType().equals("Polygon") 
-						&& prevIso.intersection(currentIso).getCoordinate() != null)
-						|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
-						) {
+					&& prevIso.intersection(currentIso).getCoordinate() != null)
+					|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
+				) {
 					atLeastOneError = true;
 				}
 			}
@@ -189,9 +181,14 @@ public class GraphTopologyValidator implements Validator<Database> {
 
 		if (atLeastOneError) {
 			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS)
+					.setScope(ErrorScope.FEATURE)
+					.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+					.setAttribute("WKT")
+					.setFeatureId(surface.getId())
+					.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
 					.setMessageParam("ID_S_INOND", surface.getId())
 					.setMessageParam("LIST_ID_ISO_HT", createErrorMessage(listIsoHauteur))
-					);
+			);
 		}
 
 		// Union de la liste 
@@ -209,8 +206,9 @@ public class GraphTopologyValidator implements Validator<Database> {
 	 * @param zhunion
 	 * @param surfaceInondWkt
 	 * @return 
+	 * @throws Exception  
 	 */
-	private void validateComparaison(Geometry zhunion, SurfaceInondable surface, ArrayList<IsoHauteur> listIsoHauteur) throws SQLException, ParseException{	
+	private void validateComparaison(Geometry zhunion, SurfaceInondable surface, ArrayList<IsoHauteur> listIsoHauteur) throws Exception {	
 
 		if(!surface.getGeometry().getGeometryType().equals("Polygon") && !surface.getGeometry().getGeometryType().equals("MultiPolygon")) {
 			log.debug(MARKER, "S_INOND should be a Polygon or a MultiPolygon.");
@@ -220,9 +218,14 @@ public class GraphTopologyValidator implements Validator<Database> {
 		// Test correspondance entre l'union des isoHT et la S_INOND
 		if(! surface.getGeometry().equalsTopo(zhunion)) {							
 			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
+					.setScope(ErrorScope.FEATURE)
+					.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+					.setAttribute("WKT")
+					.setFeatureId(surface.getId())
+					.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
 					.setMessageParam("ID_S_INOND", surface.getId())
 					.setMessageParam("LIST_ID_ISO_HT", createErrorMessage(listIsoHauteur))
-					);
+			);
 
 			return;
 		}

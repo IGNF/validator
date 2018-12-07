@@ -16,6 +16,7 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;
 
 public class InclusionValidator implements Validator<Database> {
@@ -59,6 +60,14 @@ public class InclusionValidator implements Validator<Database> {
 
 
 	private void runValidation() throws Exception {
+		// check feature(01Forcc_ct) -> union(03Mcc_ct)
+		validInclusion("01Forcc_ct", "03Mcc_ct");
+		// check feature(03Mcc_ct) -> union(04Faicc_ct)
+		validInclusion("03Mcc_ct", "04Faicc_ct");
+
+		// check feature(01Forcc_100) -> union(04Faicc_ct)
+		validInclusion("01Forcc_100", "03Mcc");
+
 		// check feature(moy) -> union(FAIBLE)
 		boolean moyIncludeFaibleError = validInclusion("02Moy", "04Fai");
 	
@@ -106,8 +115,11 @@ public class InclusionValidator implements Validator<Database> {
 			Geometry geometry = format.read(wkt);
 			if (DatabaseUtils.isValid(geometry) && !union.contains(geometry)) {
 				context.report(context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
+						.setScope(ErrorScope.FEATURE)
+						.setFileModel("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD")
 						.setFeatureId(row[idIndex])
 						.setFeatureBbox(DatabaseUtils.getEnveloppe(wkt, context.getCoordinateReferenceSystem()))
+						.setAttribute("WKT")
 						.setMessageParam("ID_S_INOND", row[idIndex])
 						.setMessageParam("SCENARIO_VALUE_FORT", scenarioValueFort)
 						.setMessageParam("SCENARIO_VALUE_FAIBLE", scenarioValueFaible)
@@ -131,6 +143,8 @@ public class InclusionValidator implements Validator<Database> {
 		List<String> list = DatabaseUtils.getInvalidGeometries(rowIterator, "ID_S_INOND");
 
 		context.report(context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_INVALID_GEOM)
+				.setScope(ErrorScope.HEADER)
+				.setFileModel("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD")
 				.setMessageParam("LIST_ID_S_INOND", ArrayUtils.toString(list.toArray()))
 				.setMessageParam("SCENARIO_VALUE_FORT", scenarioValueFort)
 				.setMessageParam("SCENARIO_VALUE_FAIBLE", scenarioValueFaible)

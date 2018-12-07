@@ -54,6 +54,7 @@ public class AzimuthValidator implements Validator<Attribute<Double>>{
 					.setMessageParam("VALUE_DEBLIN", valueDeblin)
 			);
 		}
+		
 
 	}
 

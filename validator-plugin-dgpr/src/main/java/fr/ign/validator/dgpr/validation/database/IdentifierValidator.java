@@ -13,6 +13,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -66,28 +67,30 @@ public class IdentifierValidator implements Validator<Database> {
 			
 			List<AttributeType<?>> attributesList = featureType.getAttributes();
 			
-			List<String> idLabel = new ArrayList<String>();
+			List<String> identifierList = new ArrayList<String>();
 			
 			//Looking for attributes who are identifiers
 			for(AttributeType<?> attribute : attributesList) {
 				if(attribute.isIdentifier()) {
-					idLabel.add(attribute.getName());
+					identifierList.add(attribute.getName());
 				}
 			}
 			
 			//Log if no identifier is found
-			if(idLabel.size() == 0){
+			if (identifierList.size() == 0){
 				log.warn(MARKER, "[Error_model] No identifier in the table " + fileModel.getName());
 				return;
 			}
 			
 			//for each identifier of a given table, check if each value is unique
-			for(String label : idLabel) {
+			for(String identifier : identifierList) {
 				RowIterator table = database.query(
-						"SELECT " + label + " AS id, Count(" + label + ") AS count FROM " + fileModel.getName() + " GROUP BY " + label
+						"SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
+							+ " FROM " + fileModel.getName() 
+							+ " GROUP BY " + identifier
 				);
 				int indexId = table.getColumn("id");
-				int indexCount =table.getColumn("count");
+				int indexCount = table.getColumn("count");
 
 				while (table.hasNext()) {
 					String[] row = table.next();
@@ -98,6 +101,8 @@ public class IdentifierValidator implements Validator<Database> {
 					if(compte > 1)
 					{
 						context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
+								.setScope(ErrorScope.HEADER)
+								.setFileModel(fileModel.getName())
 								.setMessageParam("TABLE_NAME", fileModel.getName())
 								.setMessageParam("ID_NAME", row[indexId])
 								.setMessageParam("ID_COUNT", row[indexCount])
