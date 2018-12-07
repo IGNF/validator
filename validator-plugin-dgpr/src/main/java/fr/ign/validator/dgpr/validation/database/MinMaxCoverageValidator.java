@@ -8,11 +8,15 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import com.vividsolutions.jts.geom.Envelope;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.database.model.IsoHauteur;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;
 
 public class MinMaxCoverageValidator implements Validator<Database> {
@@ -43,18 +47,19 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 	}
 
 
-	private void runValidation() throws SQLException {
+	private void runValidation() throws Exception {
 		// select all surface
 		RowIterator innondTable = database.query(
 			"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
 		);
 		// id column index
 		int indexId = innondTable.getColumn("ID_S_INOND");
+		int indexWkt = innondTable.getColumn("WKT");
 
 		while (innondTable.hasNext()) {
 			String[] row = innondTable.next();
 			// for each id perform MinMaxCoverage validation
-			validateSurfaceInondable(row[indexId]);
+			validateSurfaceInondable(row[indexId], row[indexWkt]);
 		}
 	}
 
@@ -62,9 +67,10 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 	/**
 	 * Validate zone iso ht in a given SurfaceInondable
 	 * @param surfaceId
+	 * @param wkt 
 	 * @throws SQLException 
 	 */
-	private void validateSurfaceInondable(String surfaceId) throws SQLException {
+	private void validateSurfaceInondable(String surfaceId, String wkt) throws Exception {
 		// select zone iso
 		RowIterator isoHtTable = database.query(
 				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
@@ -97,18 +103,14 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 
 		// initialisation
 		if (!compare(listIsoHauteur.get(0).getHtMin(), "0.00")) {
-			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-					.setMessageParam("ID_SINOND", surfaceId)
-					.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-					);
+			reportError(surfaceId, errorMessageListHt, wkt);
 			return;
 		}
 
-		if (!compare(listIsoHauteur.get(listIsoHauteur.size() - 1).getHtMax(), null)) {
-			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-					.setMessageParam("ID_SINOND", surfaceId)
-					.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-					);
+		if (!compare(listIsoHauteur.get(listIsoHauteur.size() - 1).getHtMax(), null)
+			&& !compare(listIsoHauteur.get(listIsoHauteur.size() - 1).getHtMax(), "9999.0")
+		) {
+			reportError(surfaceId, errorMessageListHt, wkt);
 			return;
 		}
 
@@ -116,10 +118,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 			IsoHauteur isoHauteur = listIsoHauteur.get(i);
 			// test htmin different htmax
 			if (compare(isoHauteur.getHtMin(), isoHauteur.getHtMax())) {
-				context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-						.setMessageParam("ID_SINOND", surfaceId)
-						.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-				);
+				reportError(surfaceId, errorMessageListHt, wkt);
 				return;
 			}
 			if (i == listIsoHauteur.size() - 1) {
@@ -128,14 +127,25 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 			// test htmax == htmin[i+1]
 			IsoHauteur isoHauteurNext = listIsoHauteur.get(i + 1);
 			if (!compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMin())) {
-				context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-						.setMessageParam("ID_SINOND", surfaceId)
-						.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-				);
+				reportError(surfaceId, errorMessageListHt, wkt);
 				return;
 			}
 		}
 
+	}
+	
+	
+	private void reportError(String surfaceId, String errorMessageListHt, String wkt) throws Exception {
+		Envelope envelope = DatabaseUtils.getEnveloppe(wkt, context.getCoordinateReferenceSystem());
+		context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
+				.setScope(ErrorScope.FEATURE)
+				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+				.setAttribute("WKT")
+				.setFeatureId(surfaceId)
+				.setFeatureBbox(envelope)
+				.setMessageParam("ID_SINOND", surfaceId)
+				.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
+		);
 	}
 
 

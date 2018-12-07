@@ -1,6 +1,5 @@
 package fr.ign.validator.dgpr.validation.database;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -8,10 +7,14 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import com.vividsolutions.jts.geom.Envelope;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -66,9 +69,9 @@ public class RelationValidator implements Validator<Database> {
 	/**
 	 * Search for references attributes
 	 * @param fileModel
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
-	private void validateFileModel(FileModel fileModel) throws SQLException {
+	private void validateFileModel(FileModel fileModel) throws Exception {
 		FeatureType featureType = fileModel.getFeatureType();
 
 		List<AttributeType<?>> attributesList = featureType.getAttributes();
@@ -98,14 +101,18 @@ public class RelationValidator implements Validator<Database> {
 	 * @param fileModel
 	 * @param attribute
 	 * @param identifierName
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
-	public void validateRelation(FileModel fileModel ,AttributeType<?> attribute, String identifierName) throws SQLException {
+	public void validateRelation(FileModel fileModel, AttributeType<?> attribute, String identifierName) throws Exception {
 		String sql = "SELECT ";
 
 		// if no identifier in the table
-		if(!identifierName.equals("")) {
+		if (!identifierName.equals("")) {
 			sql +=  identifierName + " AS id, ";
+		}
+
+		if (fileModel.getFeatureType().isSpatial()) {
+			sql += fileModel.getName() + ".WKT" + " AS WKT, ";	
 		}
 
 		sql +=  fileModel.getName() + "." + attribute.getName() + " AS ref, "
@@ -120,6 +127,7 @@ public class RelationValidator implements Validator<Database> {
 		int indexIdTableRef = table.getColumn("id_table_ref");
 		int indexId = table.getColumn("id");
 		int indexRef = table.getColumn("ref");
+		int indexWkt = table.getColumn("WKT");
 
 		while (table.hasNext()) {
 			String[] row = table.next();
@@ -128,8 +136,17 @@ public class RelationValidator implements Validator<Database> {
 				if(indexId != -1) {
 					idObject = row[indexId];
 				}
+				Envelope envelope = null;
+				if (indexWkt != -1) {
+					envelope = DatabaseUtils.getEnveloppe(row[indexWkt], context.getCoordinateReferenceSystem());
+				}
 				// if the value {row[indexIdTableRef]} does not exist in the reference table, send error message
 				context.report(context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
+						.setScope(ErrorScope.FEATURE)
+						.setFileModel(fileModel.getName())
+						.setAttribute(attribute.getName())
+						.setFeatureId(idObject)
+						.setFeatureBbox(envelope)
 						.setMessageParam("ID_OBJECT", idObject)
 						.setMessageParam("ORIGIN_TABLE", fileModel.getName())
 						.setMessageParam("ID_REF_VALUE", row[indexRef])

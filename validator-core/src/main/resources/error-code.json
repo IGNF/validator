@@ -516,12 +516,6 @@
         "documentation": ""
     },
     {
-        "name": "DGPR_DOCUMENT_TEST_ERROR",
-        "level": "ERROR",
-        "message": "(test) Le document {DOCUMENT_NAME} comporte une erreur detecte dans le plugin DGPR.",
-        "documentation": ""
-    },
-    {
         "name": "DGPR_DOCUMENT_PREFIX_ERROR",
         "level": "WARNING",
         "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",

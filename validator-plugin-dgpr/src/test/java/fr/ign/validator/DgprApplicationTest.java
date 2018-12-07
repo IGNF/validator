@@ -119,7 +119,7 @@ public class DgprApplicationTest {
 			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error1.getMessage());
 
 			/*
-			 * Les ISO_HT couvrant SIN_4 ne couvrent pas l'intégralité des hauteurs d'eau (0-4)
+			 * Les ISO_HT couvrant SIN_4 ne couvrent pas l'intégralité des hauteurs d'eau (0-4) (pas d'erreur car un seul objet)
              * Les ISO_HT couvrant SIN_5 ne couvrent pas l'intégralité des hauteurs d'eau (0-2 puis 3-HTMAX)
              */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());

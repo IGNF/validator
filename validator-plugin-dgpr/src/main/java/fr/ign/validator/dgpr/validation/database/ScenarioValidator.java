@@ -1,16 +1,18 @@
 package fr.ign.validator.dgpr.validation.database;
 
-import java.sql.SQLException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import com.vividsolutions.jts.geom.Envelope;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;
 
 public class ScenarioValidator implements Validator<Database> {
@@ -35,16 +37,17 @@ public class ScenarioValidator implements Validator<Database> {
 	}
 
 
-	public void runValidation() throws SQLException {
+	public void runValidation() throws Exception {
 		validateTable("N_prefixTri_ISO_HT_suffixIsoHt_S_ddd", "ID_ZONE");
 		validateTable("N_prefixTri_ISO_COTE_L_ddd", "ID_LIGNE");
 	}
 	
-	private void validateTable(String tablename, String attributeId) throws SQLException {
+	private void validateTable(String tablename, String attributeId) throws Exception {
 		// select / join
 		RowIterator inondTable = database.query(
 				"SELECT iso." + attributeId + ","
 				+ " iso.SCENARIO,"
+				+ " iso.WKT,"
 				+ " iso.ID_S_INOND,"
 				+ " surface.SCENARIO as S_INOND_SCN"
 				+ " FROM " + tablename + " as iso "
@@ -57,6 +60,7 @@ public class ScenarioValidator implements Validator<Database> {
 		int indexIsoScenario = inondTable.getColumn("SCENARIO");
 		int indexIsoSinondScenario = inondTable.getColumn("ID_S_INOND");
 		int indexSurfaceScenario = inondTable.getColumn("S_INOND_SCN");
+		int indexWtk = inondTable.getColumn("WKT");
 
 		if (indexIsoId == -1
 			|| indexIsoScenario == -1
@@ -71,15 +75,27 @@ public class ScenarioValidator implements Validator<Database> {
 			String[] row = inondTable.next();
 
 			// test de la validité des liens entre les 2 tables
-			if (! validateScenario(row[indexIsoScenario], row[indexSurfaceScenario])) {		
-				context.report(context.createError(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO)
-						.setMessageParam("ID", row[indexIsoId])
-						.setMessageParam("TABLE_NAME", tablename)
-						.setMessageParam("VALUE_SCENARIO", row[indexIsoScenario])
-						.setMessageParam("ID_S_INOND", row[indexIsoSinondScenario])
-						.setMessageParam("EXPECTED_SCENARIO", row[indexSurfaceScenario])
-				);
+			if (validateScenario(row[indexIsoScenario], row[indexSurfaceScenario])) {
+				continue;
 			}
+			
+			Envelope envelope = null;
+			if (indexWtk != -1) {
+				envelope = DatabaseUtils.getEnveloppe(row[indexWtk], context.getCoordinateReferenceSystem());
+			}
+
+			context.report(context.createError(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO)
+					.setScope(ErrorScope.FEATURE)
+					.setFileModel(tablename)
+					.setAttribute("SCENARIO")
+					.setFeatureId(row[indexIsoId])
+					.setFeatureBbox(envelope)
+					.setMessageParam("ID", row[indexIsoId])
+					.setMessageParam("TABLE_NAME", tablename)
+					.setMessageParam("VALUE_SCENARIO", row[indexIsoScenario])
+					.setMessageParam("ID_S_INOND", row[indexIsoSinondScenario])
+					.setMessageParam("EXPECTED_SCENARIO", row[indexSurfaceScenario])
+			);
 		}
 	}
 

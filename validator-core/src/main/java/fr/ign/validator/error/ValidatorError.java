@@ -102,8 +102,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param scope
 	 */
-	public void setScope(ErrorScope scope) {
+	public ValidatorError setScope(ErrorScope scope) {
 		this.scope = scope;
+		return this;
 	}
 
 	/**
@@ -116,8 +117,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param level
 	 */
-	public void setLevel(ErrorLevel level) {
+	public ValidatorError setLevel(ErrorLevel level) {
 		this.level = level;
+		return this;
 	}
 
 	/**
@@ -130,8 +132,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param message
 	 */
-	public void setMessage(String message) {
+	public ValidatorError setMessage(String message) {
 		this.message = message;
+		return this;
 	}
 
 	/**
@@ -154,8 +157,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param documentModel
 	 */
-	public void setDocumentModel(String documentModel) {
+	public ValidatorError setDocumentModel(String documentModel) {
 		this.documentModel = documentModel;
+		return this;
 	}
 
 	/**
@@ -167,8 +171,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param fileModel
 	 */
-	public void setFileModel(String fileModel) {
+	public ValidatorError setFileModel(String fileModel) {
 		this.fileModel = fileModel;
+		return this;
 	}
 
 	/**
@@ -180,8 +185,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param attribute
 	 */
-	public void setAttribute(String attribute) {
+	public ValidatorError setAttribute(String attribute) {
 		this.attribute = attribute;
+		return this;
 	}
 
 	/**
@@ -193,8 +199,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param filename
 	 */
-	public void setFile(String filename) {
+	public ValidatorError setFile(String filename) {
 		this.file = filename;
+		return this;
 	}
 
 	/**
@@ -206,8 +213,9 @@ public class ValidatorError implements Cloneable {
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	public ValidatorError setId(String id) {
 		this.id = id;
+		return this;
 	}
 
 	public ValidatorError setFeatureBbox(Envelope featureBBox) {
