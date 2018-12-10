@@ -4,7 +4,14 @@
 
 * Add SQLITE Database utility in validator-core to simplify some checks
 * Upgrade tests to junit 4 syntax
+* Change Model
+    * Add Reference property to fr.ign.validator.model.AttributeType
+        * Loading from <reference> tag in XML file model
+        * Follow the convetion TABLE_NAME.ATTRIBUTE_NAME
+        * Used in RelationValidator (validator-plugin-dgpr)
 * Improve validator-dgpr-plugin
+    * DatabasePostProcess perform topologic validation and relation validation
+    * Database validation class must implements Validator<Database>
 * Improve validator-plugin-cnig
 	* CoordinateReferenceSystem in metadata validation is now based on URI
 	* Avoid fatal error when building SQLITE database in case of duplicated ID (remove index)
