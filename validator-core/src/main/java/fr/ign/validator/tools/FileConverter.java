@@ -220,7 +220,7 @@ public class FileConverter {
 			arguments.add("GML_FIELDTYPES");
 			arguments.add("ALWAYS_STRING");
 		}
-		
+
 		arguments.add("-f") ;
 		arguments.add(driver) ;
 		/*
@@ -241,6 +241,10 @@ public class FileConverter {
 		 */
 		arguments.add(target.getAbsolutePath()) ;
 		arguments.add(source.getAbsolutePath()) ;
+		
+		arguments.add("-dim");
+		arguments.add("2");
+
 		/*
 		 * Getting source encoding
 		 */

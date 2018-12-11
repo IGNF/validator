@@ -20,7 +20,6 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
-import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -288,4 +287,35 @@ public class CnigValidatorRegressTest {
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
+
+	/**
+	 * Test PLU avec coordonnées 3D en standard cnig_PLU_2017
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void test30014_PLU_20171013() throws Exception {
+		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
+
+		File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013",folder);
+		Context context = createContext(documentPath);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+			Assert.assertEquals(0,report.getErrorsByLevel(ErrorLevel.ERROR).size());
+			Assert.assertEquals(0,report.getErrorsByLevel(ErrorLevel.WARNING).size());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
+
+		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
+		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
+	}	
+	
 }

@@ -4,6 +4,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -26,6 +27,17 @@ public class PointTypeTest extends AbstractTypeTest<Geometry> {
 		assertTrue(geometry instanceof Point);
 	}
 	
+	/**
+	 * JTS does not support Z notation before 1.15
+	 */
+	@Test
+	@Ignore
+	public void testBindPointZ(){
+		Geometry geometry = type.bind("POINT Z (809848.050930752 6322607.71635569 0)");
+		assertFalse( geometry.isEmpty() );
+		assertTrue(geometry instanceof Point);
+	}
+
 	@Test
 	public void testBindFakeMultiPoint(){
 		Geometry geometry = type.bind("MULTIPOINT((3.0 4.0))") ;
