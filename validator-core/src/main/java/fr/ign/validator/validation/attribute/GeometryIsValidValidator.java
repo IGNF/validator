@@ -36,7 +36,7 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 	public void validate(Context context, Attribute<Geometry> attribute) {
 		Geometry geometry = attribute.getBindedValue() ;
 
-		if ( null == geometry ){
+		if ( null == geometry ) {
 			return ;
 		}
 
@@ -56,8 +56,8 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 			}
 		}
 	}
-	
-	
+
+
 	public String getTopologyMessage(int errorType) {
 		switch (errorType) {
 			case TopologyValidationError.DISCONNECTED_INTERIOR:
