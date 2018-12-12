@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.model.DocumentModel;
 
 
@@ -18,7 +18,7 @@ public class XmlDocumentModelRepositoryTest {
 		
 	@Before
 	public void setUp() {
-		configDir = ResourceHelper.getResourcePath("/config");
+		configDir = ResourceHelper.getResourceFile(getClass(),"/config");
 	}
 
 	@Test

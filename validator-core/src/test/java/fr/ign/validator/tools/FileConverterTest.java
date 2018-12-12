@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Regress test for format conversions
@@ -32,7 +32,7 @@ public class FileConverterTest {
 
 	@Test
 	public void testConvertToCSV() throws IOException {
-		File source = ResourceHelper.getResourcePath("/data/ZONE_URBA_41003.TAB");
+		File source = ResourceHelper.getResourceFile(getClass(),"/data/ZONE_URBA_41003.TAB");
 		File target = folder.newFile("ZONE_URBA.csv");
 		try {
 			fileConverter.convertToCSV(source, target);
@@ -57,12 +57,12 @@ public class FileConverterTest {
 	 */
 	@Test
 	public void testConvertToCSVPoint() throws IOException {
-		File source = ResourceHelper.getResourcePath("/data/POINT.shp");
+		File source = ResourceHelper.getResourceFile(getClass(),"/data/POINT.shp");
 		File target = folder.newFile("POINT.csv");
 		
 		String expectedTargetName = getExpectedPointName();
 		Assume.assumeNotNull(expectedTargetName);
-		File expectedTarget = ResourceHelper.getResourcePath(expectedTargetName);
+		File expectedTarget = ResourceHelper.getResourceFile(getClass(),expectedTargetName);
 		@SuppressWarnings("unchecked")
 		List<String> expectedLines = FileUtils.readLines(expectedTarget);
 		try {
@@ -108,7 +108,7 @@ public class FileConverterTest {
 	 */
 	@Test
 	public void testRegressBugBackslash01() throws IOException {
-		File source = ResourceHelper.getResourcePath("/bug-backslash/source.dbf");
+		File source = ResourceHelper.getResourceFile(getClass(),"/bug-backslash/source.dbf");
 		File target = folder.newFile("output.csv");
 		try {
 			fileConverter.convertToCSV(source, target);
@@ -133,7 +133,7 @@ public class FileConverterTest {
 	@Test
 	public void testRegressBugBackslash02() throws IOException {
 		Assume.assumeFalse(isOgrVersionKnownToHaveBackslashBug());
-		File source = ResourceHelper.getResourcePath("/bug-backslash/source.csv");
+		File source = ResourceHelper.getResourceFile(getClass(),"/bug-backslash/source.csv");
 		File targetDbf = folder.newFile("output.dbf");
 		File targetCsv = folder.newFile("output.csv");
 		try {

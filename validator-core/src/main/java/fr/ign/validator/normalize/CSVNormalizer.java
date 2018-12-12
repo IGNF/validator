@@ -20,8 +20,6 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.vividsolutions.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;

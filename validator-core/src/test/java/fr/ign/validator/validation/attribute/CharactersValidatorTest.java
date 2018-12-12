@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
@@ -28,7 +28,7 @@ public class CharactersValidatorTest {
 		
 		context = new Context();
 		context.setStringFixer(StringFixer.createFullStringFixer(StandardCharsets.ISO_8859_1));
-		File currentDirectory = ResourceHelper.getResourcePath("/geofla") ;
+		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/geofla") ;
 		context.setCurrentDirectory(currentDirectory);
 		
 		report = new InMemoryReportBuilder() ;

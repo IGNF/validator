@@ -19,7 +19,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.type.BooleanType;
@@ -48,7 +48,7 @@ public class FeatureTypeTest {
 	
 	@Test
 	public void testMarshallUnmarshallCommune() throws JAXBException, IOException {
-		File featureTypePath = ResourceHelper.getResourcePath("/xml/sample-document/types/COMMUNE.xml") ;
+		File featureTypePath = ResourceHelper.getResourceFile(getClass(),"/xml/sample-document/types/COMMUNE.xml") ;
 
 		FeatureType featureType = (FeatureType)unmarshaller.unmarshal(featureTypePath);
 		Assert.assertNotNull(featureType);
@@ -102,7 +102,7 @@ public class FeatureTypeTest {
 
 	@Test
 	public void testUnmarshallWithCDATA() throws JAXBException{
-		File srcFile = ResourceHelper.getResourcePath("/xml/sample-document/types/SIMPLE.xml") ;
+		File srcFile = ResourceHelper.getResourceFile(getClass(),"/xml/sample-document/types/SIMPLE.xml") ;
 
 		FeatureType featureType = (FeatureType)unmarshaller.unmarshal(srcFile) ;
 		Assert.assertEquals("SIMPLE", featureType.getName()) ;

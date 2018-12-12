@@ -10,14 +10,14 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
 
 public class TableReaderLatinUtf8Test {
 
 	@Test
 	public void testReadTabLatin1(){
-		File file = ResourceHelper.getResourcePath("/data/tab_latin1/PRESCRIPTION_PCT.TAB") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/data/tab_latin1/PRESCRIPTION_PCT.TAB") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.ISO_8859_1);
@@ -47,7 +47,7 @@ public class TableReaderLatinUtf8Test {
 	
 	@Test
 	public void testReadShpLatin1(){
-		File file = ResourceHelper.getResourcePath("/data/shp_latin1/PRESCRIPTION_PCT.shp") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/data/shp_latin1/PRESCRIPTION_PCT.shp") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.ISO_8859_1);
@@ -76,7 +76,7 @@ public class TableReaderLatinUtf8Test {
 	
 	@Test
 	public void testReadTabUtf8(){
-		File file = ResourceHelper.getResourcePath("/data/tab_utf8/PRESCRIPTION_PCT.tab") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/data/tab_utf8/PRESCRIPTION_PCT.tab") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
@@ -106,7 +106,7 @@ public class TableReaderLatinUtf8Test {
 	
 	@Test
 	public void testReadShpUtf8(){
-		File file = ResourceHelper.getResourcePath("/data/shp_utf8/PRESCRIPTION_PCT.shp") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/data/shp_utf8/PRESCRIPTION_PCT.shp") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
@@ -136,7 +136,7 @@ public class TableReaderLatinUtf8Test {
 	
 	@Test
 	public void testReadDbfLatin1(){
-		File file = ResourceHelper.getResourcePath("/data/dbf_latin1/ACTE_SUP.dbf") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/data/dbf_latin1/ACTE_SUP.dbf") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.ISO_8859_1);

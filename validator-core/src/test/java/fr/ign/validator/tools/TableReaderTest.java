@@ -12,7 +12,7 @@ import java.util.Arrays;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
 
 public class TableReaderTest {
@@ -20,7 +20,7 @@ public class TableReaderTest {
 	
 	@Test
 	public void testReadTAB(){
-		File file = ResourceHelper.getResourcePath("/data/ZONE_URBA_41003.TAB") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/data/ZONE_URBA_41003.TAB") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.ISO_8859_1);
@@ -45,7 +45,7 @@ public class TableReaderTest {
 	
 	@Test
 	public void testReadDocUrbaComGML(){
-		File file = ResourceHelper.getResourcePath("/gml/DOC_URBA_COM.gml") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/gml/DOC_URBA_COM.gml") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
@@ -91,7 +91,7 @@ public class TableReaderTest {
 	
 	@Test
 	public void testReadPrescriptionSurfGML(){
-		File file = ResourceHelper.getResourcePath("/gml/PRESCRIPTION_SURF.gml") ;
+		File file = ResourceHelper.getResourceFile(getClass(),"/gml/PRESCRIPTION_SURF.gml") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
@@ -163,7 +163,7 @@ public class TableReaderTest {
      * This test verifies that the null elements from header are ignored
      */
     public void testReadSingleColumn(){
-    	File file = ResourceHelper.getResourcePath("/dbf/SINGLE_COLUMN_BUG.dbf") ;
+    	File file = ResourceHelper.getResourceFile(getClass(),"/dbf/SINGLE_COLUMN_BUG.dbf") ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);
@@ -183,7 +183,7 @@ public class TableReaderTest {
 
 	@Test
 	public void testTrim(){
-		File file = ResourceHelper.getResourcePath("/csv/not-trimmed.csv");
+		File file = ResourceHelper.getResourceFile(getClass(),"/csv/not-trimmed.csv");
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);
