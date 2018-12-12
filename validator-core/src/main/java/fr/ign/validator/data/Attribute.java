@@ -6,6 +6,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.attribute.GeometryErrorCode;
 import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
 
 /**
@@ -94,7 +95,7 @@ public class Attribute<T> implements Validatable {
 			IsoControlEscaper transform = new IsoControlEscaper(false);
 			if ( type.isGeometry() ){
 				context.report(context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
-					.setMessageParam("TYPE_ERROR", GeometryIsValidValidator.INVALID_WKT)
+					.setMessageParam("TYPE_ERROR", GeometryErrorCode.INVALID_WKT.getMessage())
 				);
 			}else{
 				context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)

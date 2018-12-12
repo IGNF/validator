@@ -21,17 +21,6 @@ import fr.ign.validator.validation.Validator;
  */
 public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> {
 
-	public static String HOLE_OUTSIDE_SHELL = "HOLE_OUTSIDE_SHELL";
-	public static String NESTED_HOLES = "NESTED_HOLES";
-	public static String DISCONNECTED_INTERIOR = "DISCONNECTED_INTERIOR";
-	public static String SELF_INTERSECTION = "SELF_INTERSECTION";
-	public static String RING_SELF_INTERSECTION = "RING_SELF_INTERSECTION";
-	public static String NESTED_SHELLS = "NESTED_SHELLS";
-	public static String DUPLICATE_RINGS = "DUPLICATE_RINGS";
-	public static String TOO_FEW_POINTS = "TOO_FEW_POINTS";
-	public static String INVALID_COORDINATE = "INVALID_COORDINATE";
-	public static String RING_NOT_CLOSED = "RING_NOT_CLOSED";
-	public static String INVALID_WKT = "INVALID_WKT";
 
 	@Override
 	public void validate(Context context, Attribute<Geometry> attribute) {
@@ -48,8 +37,10 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 			Geometry point = new GeometryFactory().createPoint(topologyValidationError.getCoordinate());
 			try {
 				Geometry transformPoint = new ProjectionTransform(context.getCoordinateReferenceSystem()).transform(point);
+				
+				GeometryErrorCode geometryErrorCode = GeometryErrorCode.valueOfJTS(topologyValidationError.getErrorType());
 				ValidatorError validatorError = context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
-						.setMessageParam("TYPE_ERROR", getTopologyMessage(topologyValidationError.getErrorType()))
+						.setMessageParam("TYPE_ERROR", geometryErrorCode.getMessage())
 						.setErrorGeometry(transformPoint.toText());
 				context.report(validatorError);
 			} catch (Exception e) {
@@ -59,42 +50,5 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 	}
 
 
-	public String getTopologyMessage(int errorType) {
-		switch (errorType) {
-			case TopologyValidationError.DISCONNECTED_INTERIOR:
-				return DISCONNECTED_INTERIOR;
-
-			case TopologyValidationError.DUPLICATE_RINGS:
-				return DUPLICATE_RINGS;
-
-			case TopologyValidationError.HOLE_OUTSIDE_SHELL:
-				return HOLE_OUTSIDE_SHELL;
-
-			case TopologyValidationError.INVALID_COORDINATE:
-				return INVALID_COORDINATE;
-
-			case TopologyValidationError.NESTED_HOLES:
-				return NESTED_HOLES;
-
-			case TopologyValidationError.NESTED_SHELLS:
-				return NESTED_SHELLS;
-
-			case TopologyValidationError.RING_NOT_CLOSED:
-				return RING_NOT_CLOSED;
-
-			case TopologyValidationError.RING_SELF_INTERSECTION:
-				return RING_SELF_INTERSECTION;
-
-			case TopologyValidationError.SELF_INTERSECTION:
-				return SELF_INTERSECTION;
-
-			case TopologyValidationError.TOO_FEW_POINTS:
-				return TOO_FEW_POINTS;
-	
-			default:
-				break;
-		}
-		return "Unknown error";
-	}
 
 }
