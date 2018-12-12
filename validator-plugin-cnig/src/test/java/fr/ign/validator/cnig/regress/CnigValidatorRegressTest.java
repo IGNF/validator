@@ -16,6 +16,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.CnigRegressHelper;
+import fr.ign.validator.cnig.ReportAssert;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
@@ -44,7 +45,7 @@ public class CnigValidatorRegressTest {
 	public static final Logger log = LogManager.getRootLogger();
 
 	protected InMemoryReportBuilder report;
-	
+
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
 
@@ -53,6 +54,12 @@ public class CnigValidatorRegressTest {
 		report = new InMemoryReportBuilder();
 	}
 
+	/**
+	 * Create validation context
+	 * @param documentPath
+	 * @return
+	 * @throws Exception
+	 */
 	private Context createContext(File documentPath) throws Exception {
 		Context context = new Context();
 		context.setReportBuilder(report);
@@ -65,15 +72,15 @@ public class CnigValidatorRegressTest {
 	}
 
 	/**
-	 * 
+	 * Get generated document-info.json file
 	 * @param documentPath
 	 * @return
 	 */
-	private File getGeneratedDocumentInfos(File documentPath){
-		File validationDirectory = new File(documentPath.getParentFile(),"validation");
-		return new File(validationDirectory,"document-info.json");
+	private File getGeneratedDocumentInfos(File documentPath) {
+		File validationDirectory = new File(documentPath.getParentFile(), "validation");
+		return new File(validationDirectory, "document-info.json");
 	}
-	
+
 	/**
 	 * Test PLU en standard 2014
 	 * 
@@ -83,21 +90,22 @@ public class CnigValidatorRegressTest {
 	public void test41175_PLU_20140603() throws Exception {
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2013");
 
-		File documentPath = CnigRegressHelper.getSampleDocument("41175_PLU_20140603",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("41175_PLU_20140603", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("41175_PLU_20140603", document.getDocumentName());
 
+			ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
+
 			/* check ERRORS */
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_CHARACTERSET_INVALID));
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR));
-			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND));
+			ReportAssert.assertCount(1, CoreErrorCodes.METADATA_CHARACTERSET_INVALID, report);
+			ReportAssert.assertCount(1, CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR, report);
+			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_IDENTIFIER_INVALID, report);
 			// relative to DOC_URBA.DATEREF
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP));
-			
-			Assert.assertEquals(4, report.countErrors(ErrorLevel.ERROR));
+			ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -111,7 +119,6 @@ public class CnigValidatorRegressTest {
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
-
 	/**
 	 * Test CC en standard 2013
 	 * 
@@ -121,16 +128,18 @@ public class CnigValidatorRegressTest {
 	public void test50545_CC_20130902() throws Exception {
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2013");
 
-		File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20130902",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20130902", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("50545_CC_20130902", document.getDocumentName());
 			/* check errors */
-			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND));
-			Assert.assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND));
-			Assert.assertEquals(2, report.countErrors(ErrorLevel.ERROR));
+			ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
+			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
+
+			ReportAssert.assertCount(8, ErrorLevel.WARNING, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -153,16 +162,19 @@ public class CnigValidatorRegressTest {
 	public void test50545_CC_20140101() throws Exception {
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2014");
 
-		File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20140101",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20140101", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.NO_SPATIAL_DATA));
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL));
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.FILE_MISSING_MANDATORY));
-			Assert.assertEquals(3, report.countErrors(ErrorLevel.ERROR));
+
+			ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
+			ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
+			ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
+			
+			ReportAssert.assertCount(8, ErrorLevel.WARNING, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -188,26 +200,30 @@ public class CnigValidatorRegressTest {
 
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2017");
 
-		File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("19182_CC_20150517", document.getDocumentName());
 			/* check errors */
+			ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
 			// DOC_URBA.DATEREF = 2010 (bad regexp)
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP));
-			Assert.assertEquals(1, report.countErrors(ErrorLevel.ERROR));
-			
+			ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
+
 			/* check warnings */
-			Assert.assertEquals(3, report.countErrors(CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND));
-			if ( gdalDestroysCoordinates ){
-				// GDAL 1.10.1 and 1.11.3 changes coordinates so that it turns invalid geometries to valid geometries...
-				Assert.assertEquals(0, report.countErrors(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID));				
-				Assert.assertEquals(3, report.countErrors(ErrorLevel.WARNING));
-			}else{
-				Assert.assertEquals(2, report.countErrors(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID));				
-				Assert.assertEquals(5, report.countErrors(ErrorLevel.WARNING));
+			if (gdalDestroysCoordinates) {
+				ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
+				ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+				
+				// GDAL 1.10.1 and 1.11.3 changes coordinates so that it turns
+				// invalid geometries to valid geometries...
+				ReportAssert.assertCount(0, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+			} else {
+				ReportAssert.assertCount(5, ErrorLevel.WARNING, report);
+				
+				ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+				ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,12 +236,11 @@ public class CnigValidatorRegressTest {
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
 		/* skips tests for GDAL 1.11 */
-		if ( ! gdalDestroysCoordinates ){
-			JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);		
+		if (!gdalDestroysCoordinates) {
+			JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 		}
 	}
 
-	
 	/**
 	 * Test SUP
 	 * 
@@ -234,14 +249,14 @@ public class CnigValidatorRegressTest {
 	@Test
 	public void testSUP_PM3_28() throws Exception {
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_PM3_2013");
-		File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("110068012_PM3_28_20161104", document.getDocumentName());
-			Assert.assertEquals(0, report.countErrors(ErrorLevel.ERROR));
-			Assert.assertEquals(0, report.countErrors(ErrorLevel.WARNING));
+			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -254,9 +269,10 @@ public class CnigValidatorRegressTest {
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
-	
+
 	/**
-	 * SUP with duplicated values in AC1_ACTE_SUP.dbf (ex : "AC1-172014607-00099077-1", "AC1-172014607-00099077-1")
+	 * SUP with duplicated values in AC1_ACTE_SUP.dbf (ex :
+	 * "AC1-172014607-00099077-1", "AC1-172014607-00099077-1")
 	 * 
 	 * (was previously crashing SQLITE database insertion)
 	 * 
@@ -265,15 +281,15 @@ public class CnigValidatorRegressTest {
 	@Test
 	public void test172014607_AC1_2A_20180130() throws Exception {
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_AC1_2016");
-		File documentPath = CnigRegressHelper.getSampleDocument("172014607_AC1_2A_20180130",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("172014607_AC1_2A_20180130", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("172014607_AC1_2A_20180130", document.getDocumentName());
-			Assert.assertEquals(0, report.countErrors(ErrorLevel.ERROR));
-			Assert.assertEquals(1, report.countErrors(ErrorLevel.WARNING));
-			Assert.assertEquals(1, report.countErrors(CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND));
+			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -287,7 +303,6 @@ public class CnigValidatorRegressTest {
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
-
 	/**
 	 * Test PLU avec coordonnées 3D en standard cnig_PLU_2017
 	 * 
@@ -297,14 +312,14 @@ public class CnigValidatorRegressTest {
 	public void test30014_PLU_20171013() throws Exception {
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
 
-		File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013",folder);
+		File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
 		Context context = createContext(documentPath);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
 			Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
-			Assert.assertEquals(0,report.getErrorsByLevel(ErrorLevel.ERROR).size());
-			Assert.assertEquals(0,report.getErrorsByLevel(ErrorLevel.WARNING).size());
+			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -316,6 +331,6 @@ public class CnigValidatorRegressTest {
 		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
-	}	
-	
+	}
+
 }
