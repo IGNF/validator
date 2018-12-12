@@ -2,6 +2,7 @@ package fr.ign.validator.validation.attribute;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
+import fr.ign.validator.data.file.TableFile;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
@@ -19,6 +20,7 @@ public class AttributeNullableValidator<T> implements Validator<Attribute<T>> {
 		if ( attribute.getType().isNullable() ){
 			return ;
 		}
+		// If TABLE_MISSING_ATTRIBUTE is triggered, no need to report
 		if ( attribute.getBindedValue() == null ){
 			context.report(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL);
 		}
