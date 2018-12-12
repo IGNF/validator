@@ -6,6 +6,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
 
 /**
  * Represents an attribute of a Feature (value associated to a type)
@@ -91,10 +92,16 @@ public class Attribute<T> implements Validatable {
 			}
 		}else{
 			IsoControlEscaper transform = new IsoControlEscaper(false);
-			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)
-				.setMessageParam("VALUE", transform.transform(value.toString()))
-				.setMessageParam("EXPECTED_TYPE", type.getTypeName())
-			);
+			if ( type.isGeometry() ){
+				context.report(context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
+					.setMessageParam("TYPE_ERROR", GeometryIsValidValidator.INVALID_WKT)
+				);
+			}else{
+				context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)
+					.setMessageParam("VALUE", transform.transform(value.toString()))
+					.setMessageParam("EXPECTED_TYPE", type.getTypeName())
+				);
+			}
 		}
 		context.endData(this);
 	}

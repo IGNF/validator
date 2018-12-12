@@ -31,6 +31,7 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 	public static String TOO_FEW_POINTS = "TOO_FEW_POINTS";
 	public static String INVALID_COORDINATE = "INVALID_COORDINATE";
 	public static String RING_NOT_CLOSED = "RING_NOT_CLOSED";
+	public static String INVALID_WKT = "INVALID_WKT";
 
 	@Override
 	public void validate(Context context, Attribute<Geometry> attribute) {
