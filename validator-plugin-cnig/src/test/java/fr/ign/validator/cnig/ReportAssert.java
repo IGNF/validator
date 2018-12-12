@@ -48,7 +48,7 @@ public class ReportAssert {
 		Map<ErrorCode, Integer> counts = new HashMap<>();
 		for (ValidatorError error : errors) {
 			Integer current = counts.get(error.getCode());
-			counts.put(error.getCode(), current != null ? current++ : 1 );
+			counts.put(error.getCode(), current != null ? current+1 : 1 );
 		}
 		return counts.toString();
 	}

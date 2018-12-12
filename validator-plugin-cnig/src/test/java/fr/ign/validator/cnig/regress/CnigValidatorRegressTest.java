@@ -333,4 +333,33 @@ public class CnigValidatorRegressTest {
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
+	/**
+	 * Test case sensitivity for IDURBA and "PLUi" 200011781_PLUi_20180101
+	 */
+	@Test
+	public void test200011781_PLUi_20180101() throws Exception {
+		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLUi_2014");
+
+		File documentPath = CnigRegressHelper.getSampleDocument("200011781_PLUi_20180101", folder);
+		Context context = createContext(documentPath);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
+			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(4, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
+
+		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
+		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
+	}
+	
 }
