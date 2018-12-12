@@ -7,13 +7,13 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 
 public class FileUtilsTest {
 
 	@Test
 	public void testListFilesAndDirs(){
-		File directory = ResourceHelper.getResourcePath("/geofla") ;
+		File directory = ResourceHelper.getResourceFile(getClass(),"/geofla") ;
 		String[] extensions = {"xml"};
 		Collection<File> files = FileUtils.listFilesAndDirs(directory,extensions);
 		assertEquals(4,files.size());		

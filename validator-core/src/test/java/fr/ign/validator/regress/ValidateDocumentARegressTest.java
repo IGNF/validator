@@ -13,7 +13,7 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
@@ -43,7 +43,7 @@ public class ValidateDocumentARegressTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		documentPath = ResourceHelper.getResourcePath("/regress/document-a");
+		documentPath = ResourceHelper.getResourceFile(getClass(),"/regress/document-a");
 		
 		documentModel = new DocumentModel();
 		List<FileModel> fileModels = new ArrayList<FileModel>();

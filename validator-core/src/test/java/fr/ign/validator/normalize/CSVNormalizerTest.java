@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
@@ -36,11 +36,11 @@ public class CSVNormalizerTest {
 		context.setCoordinateReferenceSystem(CRS.decode("CRS:84"));
 		context.setReportBuilder(reportBuilder);
 
-		File documentModelPath = ResourceHelper.getResourcePath("/normalizer/config/sample/files.xml") ;
+		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/normalizer/config/sample/files.xml") ;
 		XmlModelManager modelLoader = new XmlModelManager();
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
-		File documentPath = ResourceHelper.getResourcePath("/normalizer/documents/sample");
+		File documentPath = ResourceHelper.getResourceFile(getClass(),"/normalizer/documents/sample");
 		File copy = folder.newFolder(documentPath.getName());
 		FileUtils.copyDirectory(documentPath, copy);
 
@@ -73,7 +73,7 @@ public class CSVNormalizerTest {
 		csvNormalizer.append(csvFile4);
 		csvNormalizer.close();
 
-		File expectedFile = ResourceHelper.getResourcePath("/normalizer/expected_adresse_normalized.csv");
+		File expectedFile = ResourceHelper.getResourceFile(getClass(),"/normalizer/expected_adresse_normalized.csv");
 		Assert.assertTrue(expectedFile.exists());
 		
 		// should work

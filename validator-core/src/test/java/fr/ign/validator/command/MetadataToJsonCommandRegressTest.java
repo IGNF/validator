@@ -9,7 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Regress test for metadata_to_json command
@@ -49,7 +49,7 @@ public class MetadataToJsonCommandRegressTest  {
 	
 
 	protected File getSampleMetadataDir(){
-		return ResourceHelper.getResourcePath("/metadata/");
+		return ResourceHelper.getResourceFile(getClass(),"/metadata/");
 	}
 	
 	protected void performRegressTest(String inputName, String expectedName) throws IOException {

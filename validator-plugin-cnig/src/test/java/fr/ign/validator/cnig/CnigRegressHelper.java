@@ -87,7 +87,7 @@ public class CnigRegressHelper {
 	public static File getExpectedDocumentInfos(String documentName) {
 		return ResourceHelper.getResourceFile(
 			CnigRegressHelper.class, 
-			"/documents/"+documentName+".document-info.json"
+			"/documents-expected/"+documentName+"/document-info.json"
 		);
 	}
 

@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.file.MetadataFile;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.file.MetadataModel;
@@ -29,7 +29,7 @@ public class MetadataValidatorRegressTest {
 	@Before
 	public void setUp() throws Exception {
 		context = new Context();
-		File currentDirectory = ResourceHelper.getResourcePath("/metadata") ;
+		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/metadata") ;
 		context.setCurrentDirectory(currentDirectory);
 		
 		report = new InMemoryReportBuilder() ;
@@ -39,7 +39,7 @@ public class MetadataValidatorRegressTest {
 	@Test
 	public void test01(){
 		MetadataModel fileModel = new MetadataModel();
-		File filePath = ResourceHelper.getResourcePath("/metadata/01.xml") ;
+		File filePath = ResourceHelper.getResourceFile(getClass(),"/metadata/01.xml") ;
 		MetadataFile documentFile = fileModel.createDocumentFile(filePath);
 		documentFile.validate(context);
 		assertEquals(0, report.countErrors() ) ;
@@ -49,7 +49,7 @@ public class MetadataValidatorRegressTest {
 	@Test
 	public void test02(){
 		MetadataModel fileModel = new MetadataModel() ;
-		File filePath = ResourceHelper.getResourcePath("/metadata/02.xml") ;
+		File filePath = ResourceHelper.getResourceFile(getClass(),"/metadata/02.xml") ;
 
 		MetadataFile documentFile = fileModel.createDocumentFile(filePath);
 		documentFile.validate(context);
@@ -76,7 +76,7 @@ public class MetadataValidatorRegressTest {
 	@Test
 	public void test03(){
 		MetadataModel fileModel = new MetadataModel();
-		File filePath = ResourceHelper.getResourcePath("/metadata/03.xml");
+		File filePath = ResourceHelper.getResourceFile(getClass(),"/metadata/03.xml");
 
 		MetadataFile documentFile = fileModel.createDocumentFile(filePath);
 		documentFile.validate(context);
@@ -101,7 +101,7 @@ public class MetadataValidatorRegressTest {
 	@Test
 	public void test04(){
 		MetadataModel fileModel = new MetadataModel() ;
-		File filePath = ResourceHelper.getResourcePath("/metadata/04.xml") ;
+		File filePath = ResourceHelper.getResourceFile(getClass(),"/metadata/04.xml") ;
 
 		MetadataFile documentFile = fileModel.createDocumentFile(filePath);
 		documentFile.validate(context);
@@ -121,7 +121,7 @@ public class MetadataValidatorRegressTest {
 	@Test
 	public void test05(){
 		MetadataModel fileModel = new MetadataModel() ;
-		File filePath = ResourceHelper.getResourcePath("/metadata/05.xml") ;
+		File filePath = ResourceHelper.getResourceFile(getClass(),"/metadata/05.xml") ;
 
 		MetadataFile documentFile = fileModel.createDocumentFile(filePath);
 		documentFile.validate(context);

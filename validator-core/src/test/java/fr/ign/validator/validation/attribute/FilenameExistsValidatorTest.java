@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ResourceHelper;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.model.type.PathType;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -25,7 +25,7 @@ public class FilenameExistsValidatorTest {
 		validator = new FilenameExistsValidator();
 		
 		context = new Context();
-		File currentDirectory = ResourceHelper.getResourcePath("/geofla") ;
+		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/geofla") ;
 		context.setCurrentDirectory(currentDirectory);
 		
 		report = new InMemoryReportBuilder() ;
