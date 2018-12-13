@@ -21,18 +21,15 @@ import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.file.MetadataModel;
 
 /**
- * Pre-process
- * <ul>
- * 		<li>Makes sure of the presence of a metadata file</li>
- * 		<li>Extracts file encoding from these metadata</li>
- * 		<li>Verify the existence of particular attributes</li>
- * </ul>
+ * Pre-process extracting data charset from metadata file
+ * 
+ * Note that future version may also extract CRS (see https://github.com/IGNF/validator/issues/40)
  * 
  * @author CBouche
  */
-public class CharsetPreProcess implements ValidatorListener {
+public class MetadataPreProcess implements ValidatorListener {
 	public static final Logger log = LogManager.getRootLogger() ;
-	private static final Marker MARKER = MarkerManager.getMarker("CharsetPreProcess");
+	private static final Marker MARKER = MarkerManager.getMarker("MetadataPreProcess");
 	
 	
 	@Override

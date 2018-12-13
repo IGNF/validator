@@ -70,7 +70,7 @@ public class CnigValidatorRegressTest {
 	private Context createContext(File documentPath) throws Exception {
 		Context context = new Context();
 		context.setReportBuilder(report);
-		context.setCoordinateReferenceSystem(CRS.decode("EPSG:2154"));
+		context.setProjection("EPSG:2154");
 		File validationDirectory = new File(documentPath.getParentFile(), "validation");
 		context.setValidationDirectory(validationDirectory);
 		PluginManager pluginManager = new PluginManager();

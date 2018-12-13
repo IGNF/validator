@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -85,7 +84,7 @@ public class DatabaseTest {
 
 
 	protected Document getDocument(boolean validate) throws Exception {
-		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
+		context.setProjection("EPSG:4326");
 		context.setReportBuilder(reportBuilder);
 
 		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config/cnig_PLU_2014/files.xml") ;
@@ -154,7 +153,7 @@ public class DatabaseTest {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Assert.fail();
+			Assert.fail(e.getMessage());
 		}
 	}
 

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,7 +39,7 @@ public class RelationValidatorTest {
 	@Before
 	public void setUp() throws NoSuchAuthorityCodeException, FactoryException, JAXBException{
 		context = new Context();
-		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
+		context.setProjection("EPSG:4326");
 		context.setReportBuilder(reportBuilder);
 
 		//creates attributes for table TEST and TEST_B

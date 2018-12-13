@@ -6,10 +6,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import fr.ign.validator.process.CharsetPreProcess;
+import fr.ign.validator.process.MetadataPreProcess;
 import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
+import fr.ign.validator.process.ProjectionPreProcess;
 
 
 public class ContextTest {
@@ -31,14 +32,18 @@ public class ContextTest {
 	public void testDefaultListeners(){
 		Context context = new Context();
 		List<ValidatorListener> listeners = context.getValidatorListeners();
-		Assert.assertEquals(4,listeners.size());
+		Assert.assertEquals(5,listeners.size());
 		// order is important between FilterMetadataPreProcess and CharsetPreProcess
 		Assert.assertEquals(FilterMetadataPreProcess.class,listeners.get(0).getClass());
-		Assert.assertEquals(CharsetPreProcess.class,listeners.get(1).getClass());
-		Assert.assertEquals(NormalizePostProcess.class,listeners.get(2).getClass());
-		Assert.assertEquals(DocumentInfoExtractorPostProcess.class,listeners.get(3).getClass());
+		Assert.assertEquals(MetadataPreProcess.class,listeners.get(1).getClass());
+		Assert.assertEquals(ProjectionPreProcess.class,listeners.get(2).getClass());
+		Assert.assertEquals(NormalizePostProcess.class,listeners.get(3).getClass());
+		Assert.assertEquals(DocumentInfoExtractorPostProcess.class,listeners.get(4).getClass());
 	}
 	
+	/**
+	 * Test addListenerBefore adding a fakeListener before NormalizePostProcess
+	 */
 	@Test
 	public void testAddListenerBefore(){
 		ValidatorListener fakeListener = Mockito.mock(ValidatorListener.class);
@@ -46,12 +51,13 @@ public class ContextTest {
 		context.addListenerBefore(fakeListener,NormalizePostProcess.class);
 		
 		List<ValidatorListener> listeners = context.getValidatorListeners();
-		Assert.assertEquals(5,listeners.size());
+		Assert.assertEquals(6,listeners.size());
 		// order is important between FilterMetadataPreProcess and CharsetPreProcess
 		Assert.assertEquals(FilterMetadataPreProcess.class,listeners.get(0).getClass());
-		Assert.assertEquals(CharsetPreProcess.class,listeners.get(1).getClass());
-		Assert.assertSame(fakeListener,listeners.get(2));
-		Assert.assertEquals(NormalizePostProcess.class,listeners.get(3).getClass());
-		Assert.assertEquals(DocumentInfoExtractorPostProcess.class,listeners.get(4).getClass());
+		Assert.assertEquals(MetadataPreProcess.class,listeners.get(1).getClass());
+		Assert.assertEquals(ProjectionPreProcess.class,listeners.get(2).getClass());
+		Assert.assertSame(fakeListener,listeners.get(3));
+		Assert.assertEquals(NormalizePostProcess.class,listeners.get(4).getClass());
+		Assert.assertEquals(DocumentInfoExtractorPostProcess.class,listeners.get(5).getClass());
 	}
 }

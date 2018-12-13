@@ -4,7 +4,17 @@
         "level": "INFO",
         "message": "{MESSAGE}",
         "documentation": "Message d'information générique"
-    },
+	},
+	{
+		"name": "VALIDATOR_PROJECTION_INFO",
+		"level": "INFO",
+		"message": "La projection {CODE_PROJECTION} ({URI_PROJECTION}) est utilisée pour la validation"
+	},
+	{
+		"name": "VALIDATOR_PROJECTION_LATLON",
+		"level": "WARNING",
+		"message": "Attention : Les coordonnées sont interprétées dans l'ordre lat,lon pour la projection ESPG:4326 conformément à la norme"
+	},
     {
         "name": "VALIDATOR_EXCEPTION",
         "level": "FATAL",
