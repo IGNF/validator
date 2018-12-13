@@ -134,7 +134,8 @@ public class Row implements Validatable {
 			 * Retrieving corresponding value in table
 			 */
 			String inputValue = null ;
-			if ( mapping.getAttributeIndex(index) >= 0 ){
+			boolean columnIsAvailable = mapping.getAttributeIndex(index) >= 0;
+			if ( columnIsAvailable ){
 				inputValue = values[ mapping.getAttributeIndex(index) ] ; 
 			}
 
@@ -142,8 +143,13 @@ public class Row implements Validatable {
 			 * Attribute validation
 			 */
 			Attribute<?> attribute = attributeType.newAttribute(inputValue) ;
-			attribute.validate(context);
-
+			/* 
+			 * validating null attributes for all rows is useless
+			 * (ogr2ogr might remove columns if all values are null/empty)
+			 */
+			if ( columnIsAvailable ){
+				attribute.validate(context);
+			}
 			context.endModel(attributeType);
 		}
 
