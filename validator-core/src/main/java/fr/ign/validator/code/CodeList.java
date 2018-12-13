@@ -1,4 +1,4 @@
-package fr.ign.validator.metadata.code.internal;
+package fr.ign.validator.code;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,7 @@ public class CodeList {
 	private CodeList(String name){
 		this.name = name;
 		
-		this.bundle = ResourceBundle.getBundle("metadata/codes/"+name);
+		this.bundle = ResourceBundle.getBundle("codes/"+name);
 	}
 
 	public String getName() {

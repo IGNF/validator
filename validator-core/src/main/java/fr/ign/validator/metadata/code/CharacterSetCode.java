@@ -2,8 +2,8 @@ package fr.ign.validator.metadata.code;
 
 import java.nio.charset.Charset;
 
-import fr.ign.validator.metadata.code.internal.CodeList;
-import fr.ign.validator.metadata.code.internal.CodeListValue;
+import fr.ign.validator.code.CodeList;
+import fr.ign.validator.code.CodeListValue;
 
 /**
  * 

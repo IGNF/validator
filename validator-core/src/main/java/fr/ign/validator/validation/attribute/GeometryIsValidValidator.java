@@ -21,11 +21,12 @@ import fr.ign.validator.validation.Validator;
  */
 public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> {
 
+
 	@Override
 	public void validate(Context context, Attribute<Geometry> attribute) {
 		Geometry geometry = attribute.getBindedValue() ;
 
-		if ( null == geometry ){
+		if ( null == geometry ) {
 			return ;
 		}
 
@@ -36,7 +37,10 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 			Geometry point = new GeometryFactory().createPoint(topologyValidationError.getCoordinate());
 			try {
 				Geometry transformPoint = new ProjectionTransform(context.getCoordinateReferenceSystem()).transform(point);
+				
+				GeometryErrorCode geometryErrorCode = GeometryErrorCode.valueOfJTS(topologyValidationError.getErrorType());
 				ValidatorError validatorError = context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
+						.setMessageParam("TYPE_ERROR", geometryErrorCode.getMessage())
 						.setErrorGeometry(transformPoint.toText());
 				context.report(validatorError);
 			} catch (Exception e) {
@@ -44,5 +48,7 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
 			}
 		}
 	}
+
+
 
 }

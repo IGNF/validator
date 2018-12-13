@@ -128,8 +128,8 @@
     {
         "name": "ATTRIBUTE_GEOMETRY_INVALID",
         "level": "WARNING",
-        "message": "La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.).",
-        "documentation": "Voir la document de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
+        "message": "La géométrie de l'objet n'est pas topologiquement correcte. {TYPE_ERROR}",
+        "documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
     },
     {
         "name": "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",

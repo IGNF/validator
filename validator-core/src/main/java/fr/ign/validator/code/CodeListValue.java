@@ -1,4 +1,4 @@
-package fr.ign.validator.metadata.code.internal;
+package fr.ign.validator.code;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
