@@ -85,7 +85,7 @@
     },
     {
         "name": "TABLE_MISSING_GEOMETRY",
-        "level": "WARNING",
+        "level": "ERROR",
         "message": "Le fichier '{FILEPATH}' n'a pas d'attribut contenant la géométrie.",
         "documentation": ""
     },
