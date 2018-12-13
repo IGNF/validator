@@ -86,7 +86,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): HOLE_OUTSIDE_SHELL.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) est en dehors du contour extérieur du polygone.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -96,7 +96,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): NESTED_HOLES.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) est inclus dans un autre contour intérieur du même polygone.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -106,7 +106,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): DISCONNECTED_INTERIOR.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. L'intérieur du polygone est disjoint, à cause d'un ou plusieurs contours intérieurs contigus.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -116,7 +116,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): SELF_INTERSECTION.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur s'auto-intersecte ou intersecte un autre contour du même polygone.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -126,8 +126,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		// should be ring self intersect
-		// Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): SELF_INTERSECTION.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur s'auto-intersecte ou intersecte un autre contour du même polygone.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -137,8 +136,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		// should be ring self intersect
-		// Assert.assertEquals("", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur s'auto-intersecte ou intersecte un autre contour du même polygone.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -148,7 +146,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): NESTED_SHELLS.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un polygone est inclus dans un autre polygone du même multi-polygone.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -158,7 +156,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): DUPLICATE_RINGS.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur est en doublon.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -168,7 +166,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNotNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): DUPLICATE_RINGS.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur est en doublon.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -178,6 +176,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL).", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -187,6 +186,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL).", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -196,6 +196,7 @@ public class GeometryIsValidValidatorTest {
 		Geometry geometry = bindValidate(wkt);
 		Assert.assertNull(geometry);
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL).", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 
@@ -225,7 +226,7 @@ public class GeometryIsValidValidatorTest {
 
 		Assert.assertNotNull(attribute.getBindedValue());
 		Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
-		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte (polygone en papillon, auto-intersection, etc.): RING_NOT_CLOSED.", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
+		Assert.assertEquals("La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL).", report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage());
 	}
 
 	private Coordinate createCoordinate(double x, double y) {
