@@ -48,10 +48,17 @@ public class CnigValidatorRegressTest {
 
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
+	
+	/*
+	 *  allows to skip some tests if GDAL breaks coordinates precision 
+	 */
+	private boolean gdalDestroysCoordinates;
 
 	@Before
 	public void setUp() {
 		report = new InMemoryReportBuilder();
+		
+		gdalDestroysCoordinates = FileConverter.getInstance().isBreakingCoordinatePrecision();		
 	}
 
 	/**
@@ -195,9 +202,6 @@ public class CnigValidatorRegressTest {
 	 */
 	@Test
 	public void test19182_CC_20150517() throws Exception {
-		/* allows to skip some tests if GDAL breaks coordinates precision */
-		boolean gdalDestroysCoordinates = FileConverter.getInstance().getVersion().startsWith("GDAL 1.");
-
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2017");
 
 		File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517", folder);
@@ -333,4 +337,38 @@ public class CnigValidatorRegressTest {
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
 
+	/**
+	 * Test case sensitivity for IDURBA and "PLUi" 200011781_PLUi_20180101
+	 */
+	@Test
+	public void test200011781_PLUi_20180101() throws Exception {
+		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLUi_2014");
+
+		File documentPath = CnigRegressHelper.getSampleDocument("200011781_PLUi_20180101", folder);
+		Context context = createContext(documentPath);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
+			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+			
+			if ( ! gdalDestroysCoordinates ){
+				ReportAssert.assertCount(4, ErrorLevel.WARNING, report);
+				ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+			}else{
+				ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+
+		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+		String actual = FileUtils.readFileToString(producedInfosCnigPath).trim();
+
+		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
+		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
+		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
+	}
+	
 }

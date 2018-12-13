@@ -40,6 +40,9 @@ public class IdurbaHelperFactoryTest {
 			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_PLU_2013")) instanceof IdurbaHelperV1
 		);
 		assertTrue(
+			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_PLUi_2013")) instanceof IdurbaHelperV1
+		);		
+		assertTrue(
 			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_POS_2013")) instanceof IdurbaHelperV1
 		);
 		assertTrue(
@@ -56,6 +59,9 @@ public class IdurbaHelperFactoryTest {
 			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_PLU_2014")) instanceof IdurbaHelperV1
 		);
 		assertTrue(
+			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_PLUi_2014")) instanceof IdurbaHelperV1
+		);
+		assertTrue(
 			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_POS_2014")) instanceof IdurbaHelperV1
 		);
 		assertTrue(
@@ -70,6 +76,9 @@ public class IdurbaHelperFactoryTest {
 	public void testGetInstanceDU2017(){
 		assertTrue(
 			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_PLU_2017")) instanceof IdurbaHelperV2
+		);
+		assertTrue(
+			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_PLUi_2017")) instanceof IdurbaHelperV2
 		);
 		assertTrue(
 			IdurbaHelperFactory.getInstance(createMockDocumentModel("cnig_POS_2017")) instanceof IdurbaHelperV2

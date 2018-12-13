@@ -52,7 +52,7 @@ public class IdurbaHelperV1 extends IdurbaHelper {
 	 * @return
 	 */
 	private String getRegexp(String documentName){
-		Pattern pattern = Pattern.compile(DocumentNameHelper.REGEXP_DU);
+		Pattern pattern = Pattern.compile("(?i)"+DocumentNameHelper.REGEXP_DU);
 		Matcher matcher = pattern.matcher(documentName);
 		
 		if( matcher.matches()){

@@ -1,4 +1,4 @@
-package fr.ign.validator.exception;
+package fr.ign.validator.tools.ogr;
 
 /**
  * 
@@ -11,8 +11,12 @@ public class OgrNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public OgrNotFoundException(){
+	public OgrNotFoundException() {
 		super("ogr2ogr not found in system");
 	}
-	
+
+	public OgrNotFoundException(String fullVersion) {
+		super("fail to read ogr2ogr version ('"+fullVersion+"')");
+	}
+
 }

@@ -1,4 +1,4 @@
-package fr.ign.validator.exception;
+package fr.ign.validator.tools.ogr;
 
 /**
  * 

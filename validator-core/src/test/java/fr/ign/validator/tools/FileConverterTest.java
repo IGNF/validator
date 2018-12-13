@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.tools.ResourceHelper;
+import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
  * Regress test for format conversions
@@ -28,6 +29,12 @@ public class FileConverterTest {
 	@Before
 	public void setUp() {
 		fileConverter = FileConverter.getInstance();
+	}
+	
+	@Test
+	public void testGetVersion(){
+		OgrVersion version = fileConverter.getVersion();
+		System.out.println(version);
 	}
 
 	@Test
@@ -87,15 +94,15 @@ public class FileConverterTest {
 	 * @return
 	 */
 	private String getExpectedPointName(){
-		String version = FileConverter.getInstance().getVersion();
-		if ( version.startsWith("GDAL 1.10.") ){
+		OgrVersion version = FileConverter.getInstance().getVersion();
+		if ( version.getFullVersion().startsWith("GDAL 1.10.") ){
 			return "/data/POINT_EXPECTED_1.10.x.csv";
-		}else if ( version.startsWith("GDAL 1.11.") ){
+		}else if ( version.getFullVersion().startsWith("GDAL 1.11.") ){
 			return "/data/POINT_EXPECTED_1.11.x.csv";
-		}else if ( version.startsWith("GDAL 2.1.") ){
+		}else if ( version.getFullVersion().startsWith("GDAL 2.1.") ){
 			// supposed to be same as GDAL 2.2.2 output 
 			return "/data/POINT_EXPECTED_2.2.x.csv";
-		}else if ( version.startsWith("GDAL 2.2.") ){
+		}else if ( version.getFullVersion().startsWith("GDAL 2.2.") ){
 			return "/data/POINT_EXPECTED_2.2.x.csv";
 		}else{
 			System.err.println("GDAL version is not supported for this test : "+version);
@@ -162,7 +169,7 @@ public class FileConverterTest {
 	 * @return
 	 */
 	public boolean isOgrVersionKnownToHaveBackslashBug(){
-		if ( FileConverter.getInstance().getVersion().startsWith("GDAL 1.10.1") ){
+		if ( FileConverter.getInstance().getVersion().getFullVersion().startsWith("GDAL 1.10.1") ){
 			return true;
 		}
 		return false;

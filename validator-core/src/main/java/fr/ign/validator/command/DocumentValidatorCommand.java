@@ -38,6 +38,7 @@ import fr.ign.validator.report.ReportBuilderLegacy;
 import fr.ign.validator.repository.DocumentModelRepository;
 import fr.ign.validator.repository.xml.XmlDocumentModelRepository;
 import fr.ign.validator.string.StringFixer;
+import fr.ign.validator.tools.FileConverter;
 
 /**
  * 
@@ -218,6 +219,11 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			
 			context.report(context.createError(CoreErrorCodes.VALIDATOR_INFO)
 				.setMessageParam("MESSAGE","Validation avec le modèle : "+documentModel.getName())
+			);
+			
+			String ogrVersion = FileConverter.getInstance().getVersion().toString();
+			context.report(context.createError(CoreErrorCodes.VALIDATOR_INFO)
+				.setMessageParam("MESSAGE","Version GDAL utilisée : "+ogrVersion)
 			);
 
 			Document document = new Document(documentModel,documentPath);
