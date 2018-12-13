@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +12,9 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
-import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -27,6 +25,7 @@ import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * 
@@ -102,7 +101,7 @@ public class ValidateDocumentARegressTest {
 	public void testValidate() throws NoSuchAuthorityCodeException, FactoryException{
 		Context context = new Context();
 		context.setCurrentDirectory(documentPath);
-		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
+		context.setProjection("CRS:84");
 		Document document = new Document(documentModel,documentPath);
 		File validationDirectory = new File( documentPath.getParentFile(), "validation" ) ;
 		context.setValidationDirectory( validationDirectory ) ;
@@ -115,12 +114,14 @@ public class ValidateDocumentARegressTest {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
+		
 
-		List<ValidatorError> errors = reportBuilder.getErrors();
-		Assert.assertEquals(2,errors.size());
-		Assert.assertEquals(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY,errors.get(0).getCode());
-		Assert.assertEquals(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY,errors.get(1).getCode());
-
+		Assert.assertEquals(2,reportBuilder.getErrorsByLevel(ErrorLevel.ERROR).size());
+		Assert.assertEquals(0,reportBuilder.getErrorsByLevel(ErrorLevel.WARNING).size());
+		
+		Assert.assertEquals(1,reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY).size());
+		Assert.assertEquals(1,reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY).size());
+		
 		File expectedNormalized = new File( context.getDataDirectory(), "COMMUNE.csv");
 		Assert.assertTrue(expectedNormalized.exists());		
 		

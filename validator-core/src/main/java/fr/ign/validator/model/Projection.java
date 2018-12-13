@@ -96,7 +96,10 @@ public class Projection {
 				StringUtils.isEmpty(codeGeotool) ? code : codeGeotool
 			);
 		} catch (Exception e) {
-			return null;
+			/*
+			 * codeGeotool is supposed to be valid as it is declared in projection.json
+			 */
+			throw new RuntimeException(e);
 		}
 	}
 

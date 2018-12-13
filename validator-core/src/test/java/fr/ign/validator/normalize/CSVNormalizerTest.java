@@ -33,7 +33,7 @@ public class CSVNormalizerTest {
 	public void setUp() throws Exception {
 		context = new Context();
 		// ATTENTION dépendance à sourceCRS (ne doit pas être nul du point de vu de CSVNormalizer)
-		context.setCoordinateReferenceSystem(CRS.decode("CRS:84"));
+		context.setProjection("CRS:84");
 		context.setReportBuilder(reportBuilder);
 
 		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/normalizer/config/sample/files.xml") ;

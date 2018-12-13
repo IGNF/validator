@@ -25,12 +25,15 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
-import fr.ign.validator.process.CharsetPreProcess;
+import fr.ign.validator.model.Projection;
+import fr.ign.validator.process.MetadataPreProcess;
 import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
+import fr.ign.validator.process.ProjectionPreProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
+import fr.ign.validator.repository.ProjectionRepository;
 import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.validation.Validatable;
 
@@ -45,14 +48,14 @@ public class Context {
 
 	/**
 	 * Data charset (overridden by metadata provided charset)
-	 * @see CharsetPreProcess
+	 * @see MetadataPreProcess
 	 */
 	private Charset encoding = StandardCharsets.UTF_8 ;
 
 	/**
 	 * Data CoordinateReferenceSystem (provided as a command line option)
 	 */
-	private CoordinateReferenceSystem coordinateReferenceSystem ;
+	private Projection projection = ProjectionRepository.getInstance().findByCode("CRS:84");
 
 	/**
 	 * Expected data extent (same CoordinateReferenceSystem than data)
@@ -160,10 +163,15 @@ public class Context {
 	 * Load defaults validation listeners
 	 */
 	private void registerDefaultListeners(){
-		addListener( new FilterMetadataPreProcess() ); // before CharsetPreProcess
-		addListener( new CharsetPreProcess() );
-		addListener( new NormalizePostProcess() ); 
+		// Filter XML files
+		addListener( new FilterMetadataPreProcess() );
+		// Extract informations such as charset from metadata (after FilterMetadataPreProcess)
+		addListener( new MetadataPreProcess() );
+		// Info and warning about CRS
+		addListener( new ProjectionPreProcess() );
 
+		// generate CSV
+		addListener( new NormalizePostProcess() );
 		// produce document-info.json
 		addListener( new DocumentInfoExtractorPostProcess() );
 	}
@@ -185,16 +193,38 @@ public class Context {
 	/**
 	 * @return
 	 */
-	public CoordinateReferenceSystem getCoordinateReferenceSystem() {
-		return coordinateReferenceSystem;
+	public Projection getProjection(){
+		return projection ;
 	}
 
 	/**
+	 * TODO rename to setProjection
 	 * @param coordinateReferenceSystem
 	 */
-	public void setCoordinateReferenceSystem( CoordinateReferenceSystem coordinateReferenceSystem) {
-		this.coordinateReferenceSystem = coordinateReferenceSystem;
+	public void setProjection(Projection projection) {
+		this.projection = projection;
 	}
+
+	/**
+	 * Set projection from CRS code
+	 * @param code
+	 */
+	public void setProjection(String code){
+		Projection projection = ProjectionRepository.getInstance().findByCode(code);
+		if ( projection == null ){
+			throw new RuntimeException("projection "+code+" non reconnue");
+		}
+		this.projection = projection;
+	}
+
+	/**
+	 * Get CRS corresponding to projection
+	 * @return
+	 */
+	public CoordinateReferenceSystem getCoordinateReferenceSystem() {
+		return projection.getCRS();
+	}
+
 
 	/**
 	 * @return

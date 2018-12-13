@@ -3,7 +3,6 @@ package fr.ign.validator.validation.attribute;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +36,6 @@ public class GeometryIsValidValidatorTest {
 		report = new InMemoryReportBuilder();
 		context = new Context();
 		context.setReportBuilder(report);
-		context.setCoordinateReferenceSystem(CRS.decode("EPSG:4326"));
 	}
 
 	/**
