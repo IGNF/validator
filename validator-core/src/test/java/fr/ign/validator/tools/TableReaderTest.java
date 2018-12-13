@@ -70,7 +70,7 @@ public class TableReaderTest {
 			
 			String[] row = reader.next() ;
 			//WKT (regression in ogr2ogr between 1.x and 2.x)
-			if ( FileConverter.getInstance().getVersion().startsWith("GDAL 2.") ){
+			if ( FileConverter.getInstance().getVersion().getFullVersion().startsWith("GDAL 2.") ){
 				assertEquals( "POINT (225499.742202533 6755725.59042703)", row[wktIndex]);
 			}else{
 				assertEquals( "POINT (225499.742202532826923 6755725.590427031740546)", row[wktIndex]);

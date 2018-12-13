@@ -48,10 +48,17 @@ public class CnigValidatorRegressTest {
 
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
+	
+	/*
+	 *  allows to skip some tests if GDAL breaks coordinates precision 
+	 */
+	private boolean gdalDestroysCoordinates;
 
 	@Before
 	public void setUp() {
 		report = new InMemoryReportBuilder();
+		
+		gdalDestroysCoordinates = FileConverter.getInstance().isBreakingCoordinatePrecision();		
 	}
 
 	/**
@@ -195,9 +202,6 @@ public class CnigValidatorRegressTest {
 	 */
 	@Test
 	public void test19182_CC_20150517() throws Exception {
-		/* allows to skip some tests if GDAL breaks coordinates precision */
-		boolean gdalDestroysCoordinates = FileConverter.getInstance().getVersion().startsWith("GDAL 1.");
-
 		DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2017");
 
 		File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517", folder);
@@ -347,8 +351,13 @@ public class CnigValidatorRegressTest {
 			document.validate(context);
 			Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
 			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
-			ReportAssert.assertCount(4, ErrorLevel.WARNING, report);
-			ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+			
+			if ( ! gdalDestroysCoordinates ){
+				ReportAssert.assertCount(4, ErrorLevel.WARNING, report);
+				ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+			}else{
+				ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
