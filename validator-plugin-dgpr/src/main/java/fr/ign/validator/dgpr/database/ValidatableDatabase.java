@@ -1,5 +1,6 @@
 package fr.ign.validator.dgpr.database;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
+import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
@@ -48,7 +52,29 @@ public class ValidatableDatabase implements Validatable {
 	public ValidatableDatabase(Context context, Document document) throws Exception {
 		this.document = document;
 		this.database = Database.createDatabase(document);
+		createIndexes(document);
 		database.load(context, document);
+	}
+
+
+	/**
+	 * create all table indexes on identifier fields
+	 * @param document
+	 * @throws SQLException
+	 */
+	private void createIndexes(Document document) throws SQLException {
+		for (FileModel file : document.getDocumentModel().getFileModels()) {
+			if (!(file instanceof TableModel)) {
+				continue;
+			}
+			List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
+			for (AttributeType<?> attributeType : attributes) {
+				if (!attributeType.isIdentifier()) {
+					continue;
+				}
+				database.createIndex(file.getName(), attributeType.getName());
+			}
+		}
 	}
 
 
