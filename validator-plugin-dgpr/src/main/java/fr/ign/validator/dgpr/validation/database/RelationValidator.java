@@ -140,6 +140,10 @@ public class RelationValidator implements Validator<Database> {
 				if (indexWkt != -1) {
 					envelope = DatabaseUtils.getEnveloppe(row[indexWkt], context.getCoordinateReferenceSystem());
 				}
+				String idRefValue = "NULL";
+				if (indexRef != -1 && row[indexRef] != null) {
+					idRefValue = row[indexRef];
+				}
 				// if the value {row[indexIdTableRef]} does not exist in the reference table, send error message
 				context.report(context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
 						.setScope(ErrorScope.FEATURE)
@@ -149,8 +153,8 @@ public class RelationValidator implements Validator<Database> {
 						.setFeatureBbox(envelope)
 						.setMessageParam("ID_OBJECT", idObject)
 						.setMessageParam("ORIGIN_TABLE", fileModel.getName())
-						.setMessageParam("ID_REF_VALUE", row[indexRef])
-						.setMessageParam("ID_REF", attribute.getAttributeReference())
+						.setMessageParam("REF_VALUE", idRefValue)
+						.setMessageParam("REFERENCE_NAME", attribute.getAttributeReference())
 						.setMessageParam("REFERENCE_TABLE", attribute.getTableReference())			
 				);
 			}

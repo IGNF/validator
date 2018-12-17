@@ -35,7 +35,7 @@ public class RelationValidatorTest {
 	private InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
 
 	private Context context;
-	
+
 	@Before
 	public void setUp() throws NoSuchAuthorityCodeException, FactoryException, JAXBException{
 		context = new Context();
@@ -164,37 +164,37 @@ public class RelationValidatorTest {
 
 		Assert.assertEquals(0, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
 	}
-	
+
 	@Test
 	public void testRelationFail() throws Exception {
 		//creates an empty database
 		File path = new File( folder.getRoot(), "document_database.db" );
 		Database database = new Database(path);
-		
+
 		//add the table TEST into the database
 		database.query("CREATE TABLE TEST(id TEXT, ID_S_INOND TEXT);");
 		database.query("INSERT INTO TEST(id, ID_S_INOND) VALUES ('test_1', 's_inond_1');");
 		database.query("INSERT INTO TEST(id, ID_S_INOND) VALUES ('test_2', 's_inond_2');");
 		database.query("INSERT INTO TEST(id, ID_S_INOND) VALUES ('test_3', 's_inond_1');");
 		database.query("INSERT INTO TEST(id, ID_S_INOND) VALUES ('test_4', 's_inond_3');");
-				
+
 		//add the table TEST into the database
 		database.query("CREATE TABLE TEST_B(id TEXT, ID_S_INOND TEXT, ID_TRI TEXT);");
 		database.query("INSERT INTO TEST_B(id, ID_S_INOND, ID_TRI) VALUES ('test_b1', 's_inond_1', 'tri_1');");
 		database.query("INSERT INTO TEST_B(id, ID_S_INOND, ID_TRI) VALUES ('test_b2', 's_inond_2', 'tri_3');");
 		database.query("INSERT INTO TEST_B(id, ID_S_INOND, ID_TRI) VALUES ('test_b3', 's_inond_2', 'tri_2');");
 		database.query("INSERT INTO TEST_B(id, ID_S_INOND, ID_TRI) VALUES ('test_b4', 's_inond_3', 'tri_1');");
-				
+
 		//add the table RELATION into the database
 		database.query("CREATE TABLE N_prefixTri_INONDABLE_suffixInond_S_ddd(ID_S_INOND TEXT);");
 		database.query("INSERT INTO N_prefixTri_INONDABLE_suffixInond_S_ddd(ID_S_INOND) VALUES ('s_inond_2');");
 		database.query("INSERT INTO N_prefixTri_INONDABLE_suffixInond_S_ddd(ID_S_INOND) VALUES ('s_inond_3');");
-				
+
 		//add the table RELATION into the database
 		database.query("CREATE TABLE N_prefixTri_TRI_S_ddd(ID_TRI TEXT);");
 		database.query("INSERT INTO N_prefixTri_TRI_S_ddd(ID_TRI) VALUES ('tri_2');");
 		database.query("INSERT INTO N_prefixTri_TRI_S_ddd(ID_TRI) VALUES ('tri_3');");
-		
+
 		//check that the relationValidator sends five errors 
 		RelationValidator relationValidator = new RelationValidator();
 		relationValidator.validate(context, database);
@@ -207,24 +207,19 @@ public class RelationValidatorTest {
 		ValidatorError refError3 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(3);
 		ValidatorError refError4 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(4);
 
-		Assert.assertEquals("L'objet test_1 de la table TEST fait référence à un objet s_inond_1 via l'attribut ID_S_INOND"
-				+ " qui n'existe pas dans la table N_prefixTri_INONDABLE_suffixInond_S_ddd."
+		Assert.assertEquals("L'objet test_1 de la table TEST doit faire référence à un objet de la table N_prefixTri_INONDABLE_suffixInond_S_ddd via l'attribut ID_S_INOND. L'attribut n'est pas renseigné (s_inond_1) ou alors la relation n'est pas vérifiée."
 				, refError0.getMessage());
 
-		Assert.assertEquals("L'objet test_3 de la table TEST fait référence à un objet s_inond_1 via l'attribut ID_S_INOND"
-				+ " qui n'existe pas dans la table N_prefixTri_INONDABLE_suffixInond_S_ddd."
+		Assert.assertEquals("L'objet test_3 de la table TEST doit faire référence à un objet de la table N_prefixTri_INONDABLE_suffixInond_S_ddd via l'attribut ID_S_INOND. L'attribut n'est pas renseigné (s_inond_1) ou alors la relation n'est pas vérifiée."
 				, refError1.getMessage());
 
-		Assert.assertEquals("L'objet test_b1 de la table TEST_B fait référence à un objet s_inond_1 via l'attribut ID_S_INOND"
-				+ " qui n'existe pas dans la table N_prefixTri_INONDABLE_suffixInond_S_ddd."
+		Assert.assertEquals("L'objet test_b1 de la table TEST_B doit faire référence à un objet de la table N_prefixTri_INONDABLE_suffixInond_S_ddd via l'attribut ID_S_INOND. L'attribut n'est pas renseigné (s_inond_1) ou alors la relation n'est pas vérifiée."
 				, refError2.getMessage());
 
-		Assert.assertEquals("L'objet test_b1 de la table TEST_B fait référence à un objet tri_1 via l'attribut ID_TRI"
-				+ " qui n'existe pas dans la table N_prefixTri_TRI_S_ddd."
+		Assert.assertEquals("L'objet test_b1 de la table TEST_B doit faire référence à un objet de la table N_prefixTri_TRI_S_ddd via l'attribut ID_TRI. L'attribut n'est pas renseigné (tri_1) ou alors la relation n'est pas vérifiée."
 				, refError3.getMessage());
 
-		Assert.assertEquals("L'objet test_b4 de la table TEST_B fait référence à un objet tri_1 via l'attribut ID_TRI"
-				+ " qui n'existe pas dans la table N_prefixTri_TRI_S_ddd."
+		Assert.assertEquals("L'objet test_b4 de la table TEST_B doit faire référence à un objet de la table N_prefixTri_TRI_S_ddd via l'attribut ID_TRI. L'attribut n'est pas renseigné (tri_1) ou alors la relation n'est pas vérifiée."
 				, refError4.getMessage());
 	}
 

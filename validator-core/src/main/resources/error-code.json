@@ -618,7 +618,7 @@
     {
         "name": "DGPR_RELATION_ERROR",
         "level": "ERROR",
-        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} fait référence à un objet {ID_REF_VALUE} via l'attribut {ID_REF} qui n'existe pas dans la table {REFERENCE_TABLE}.",
+        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
         "documentation": ""
     }
 ]

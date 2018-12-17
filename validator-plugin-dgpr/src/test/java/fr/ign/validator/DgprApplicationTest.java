@@ -206,8 +206,7 @@ public class DgprApplicationTest {
 
 			Assert.assertEquals(15, report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
 			ValidatorError error52 = report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(0);
-			Assert.assertEquals("L'objet CSI_1 de la table N_prefixTri_CARTE_INOND_S_ddd fait référence à un objet TRI_ZOB via l'attribut ID_TRI"
-					+ " qui n'existe pas dans la table N_prefixTri_TRI_S_ddd."
+			Assert.assertEquals("L'objet CSI_1 de la table N_prefixTri_CARTE_INOND_S_ddd doit faire référence à un objet de la table N_prefixTri_TRI_S_ddd via l'attribut ID_TRI. L'attribut n'est pas renseigné (TRI_ZOB) ou alors la relation n'est pas vérifiée."
 					, error52.getMessage());
 
 		} catch (Exception e) {
