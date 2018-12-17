@@ -473,9 +473,9 @@
     },
     {
         "name": "CNIG_METADATA_IDENTIFIER_INVALID",
-        "level": "WARNING",
+        "level": "INFO",
         "message": "Le champ \"identificateur de ressource unique\" ({VALUE}) n'est pas égal à \"https://www.geoportail-urbanisme.gouv.fr/document/{DOCUMENT_NAME}\"",
-        "documentation": ""
+        "documentation": "Contrainte supprimée des CSMD PLU et SUP"
     },
     {
         "name": "CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND",
