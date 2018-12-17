@@ -11,6 +11,7 @@ import org.apache.logging.log4j.MarkerManager;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
@@ -61,13 +62,18 @@ public class GraphTopologyValidator implements Validator<Database> {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
+	public double getTolerance() {
+		return 1;
+	}
 
 
 	private void runValidation() throws Exception {
 		// Récupération de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
 		RowIterator inondTable = database.query(
 				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
-		);
+				);
 
 		// Index du champ "ID_S_INOND"
 		int indexId = inondTable.getColumn("ID_S_INOND");
@@ -103,8 +109,8 @@ public class GraphTopologyValidator implements Validator<Database> {
 		// select zone iso
 		RowIterator isoHtTable = database.query(
 				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
-				+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
-		);
+						+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
+				);
 
 		// verifier que la geometrie de la surface inondable est valide
 		Geometry surfaceInondGeom = format.read(surface.getWkt());
@@ -170,9 +176,9 @@ public class GraphTopologyValidator implements Validator<Database> {
 				// Test if two geometries of the same set do not cross each other
 				// intersection must be empty or a border
 				if((prevIso.intersection(currentIso).getGeometryType().equals("Polygon") 
-					&& prevIso.intersection(currentIso).getCoordinate() != null)
-					|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
-				) {
+						&& prevIso.intersection(currentIso).getCoordinate() != null)
+						|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
+						) {
 					atLeastOneError = true;
 				}
 			}
@@ -216,7 +222,8 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 
 		// Test correspondance entre l'union des isoHT et la S_INOND
-		if(! surface.getGeometry().equalsTopo(zhunion)) {							
+		// tolerance to 1 meters
+		if(! topologyEqualsWithTolerance(surface.getGeometry(), zhunion, getTolerance())) {							
 			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
 					.setScope(ErrorScope.FEATURE)
 					.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
@@ -225,11 +232,12 @@ public class GraphTopologyValidator implements Validator<Database> {
 					.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
 					.setMessageParam("ID_S_INOND", surface.getId())
 					.setMessageParam("LIST_ID_ISO_HT", createErrorMessage(listIsoHauteur))
-			);
+					);
 
 			return;
 		}
 	}
+
 
 	/**
 	 * Create message HT list error
@@ -244,6 +252,31 @@ public class GraphTopologyValidator implements Validator<Database> {
 		errorMessageListHt = errorMessageListHt.trim();
 
 		return errorMessageListHt;
+	}
+
+
+	public static boolean topologyEqualsWithTolerance(Geometry a, Geometry b, double tolerance) {
+		// same topological geometries
+		if (a.equalsTopo(b)) {
+			return true;
+		}
+		System.err.println(a.getCoordinate().x);
+		System.err.println(a.getCoordinate().y);
+		System.err.println(b.getCoordinate().x);
+		System.err.println(b.getCoordinate().y);
+		// buffer comparison
+		Geometry aBuffer = a.buffer(tolerance);
+		Geometry bBuffer = b.buffer(tolerance);
+		if (! aBuffer.contains(b) || ! bBuffer.contains(a)) {
+			return false;
+		}
+		if (!(aBuffer instanceof Polygon) || !(bBuffer instanceof Polygon)) {
+			return false;
+		}
+		if (((Polygon)aBuffer).getNumInteriorRing() != 0 || ((Polygon)bBuffer).getNumInteriorRing() != 0) {
+			return false;
+		}
+		return true;
 	}
 
 }

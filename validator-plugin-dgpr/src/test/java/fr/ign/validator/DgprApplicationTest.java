@@ -42,6 +42,7 @@ public class DgprApplicationTest {
 		Context context = new Context();
 		context.setReportBuilder(report);
 		context.setProjection("EPSG:2154");
+		context.setTolerance(1.0);
 		File validationDirectory = new File(documentPath.getParentFile(), "validation");
 		context.setValidationDirectory(validationDirectory);
 		PluginManager pluginManager = new PluginManager();
@@ -85,6 +86,8 @@ public class DgprApplicationTest {
 
 			// validation database
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -134,10 +137,10 @@ public class DgprApplicationTest {
 			 */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
 			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
-			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Les périmètres des ISO_HT s'intersectent.", error20.getMessage());
+			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue(nt) pas une partition de SIN_6. Les périmètres des ISO_HT s'intersectent.", error20.getMessage());
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Il y'a un trou ou un dépassement de la surface inondable.", error21.getMessage());
+			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue(nt) pas une partition de SIN_6. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
 			
 			/*
 			 * Zone de suralea ZSA_2 non adjacente à l'ouvrage de protection OUV_2
