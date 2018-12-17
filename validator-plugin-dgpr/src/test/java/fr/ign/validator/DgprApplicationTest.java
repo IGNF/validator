@@ -33,10 +33,12 @@ public class DgprApplicationTest {
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
 
+
 	@Before
 	public void setUp() {
 		report = new InMemoryReportBuilder();
 	}
+
 
 	private Context createContext(File documentPath) throws Exception {
 		Context context = new Context();
@@ -50,6 +52,7 @@ public class DgprApplicationTest {
 		return context;
 	}
 
+
 	private DocumentModel getDocumentModel(String documentModelName) throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/" + documentModelName + "/files.xml").getPath());
 		XmlModelManager loader = new XmlModelManager();
@@ -57,6 +60,7 @@ public class DgprApplicationTest {
 		documentModel.setName(documentModelName);
 		return documentModel;
 	}
+
 
 	private File getSampleDocument(String documentName) throws IOException {
 		URL resource = getClass().getResource("/documents/" + documentName);
@@ -67,6 +71,7 @@ public class DgprApplicationTest {
 		FileUtils.copyDirectory(sourcePath, documentPath);
 		return documentPath;
 	}
+
 
 	/**
 	 * @throws Exception
@@ -93,6 +98,32 @@ public class DgprApplicationTest {
 			Assert.fail(e.getMessage());
 		}
 	}
+
+
+	@Test
+	public void testDocumentOkWithNoTolerance() throws Exception {
+		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
+		File documentPath = getSampleDocument("TRI_JTEST_TOPO_SIG_DI");
+
+		Context context = createContext(documentPath);
+		context.setTolerance(0.0);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("TRI_JTEST_TOPO_SIG_DI", document.getDocumentName());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+
+			// validation database
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+
 
 	/**
 	 * @throws Exception

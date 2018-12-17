@@ -73,7 +73,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		// Récupération de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
 		RowIterator inondTable = database.query(
 				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
-				);
+		);
 
 		// Index du champ "ID_S_INOND"
 		int indexId = inondTable.getColumn("ID_S_INOND");
@@ -109,8 +109,8 @@ public class GraphTopologyValidator implements Validator<Database> {
 		// select zone iso
 		RowIterator isoHtTable = database.query(
 				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
-						+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
-				);
+				+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
+		);
 
 		// verifier que la geometrie de la surface inondable est valide
 		Geometry surfaceInondGeom = format.read(surface.getWkt());
@@ -176,9 +176,9 @@ public class GraphTopologyValidator implements Validator<Database> {
 				// Test if two geometries of the same set do not cross each other
 				// intersection must be empty or a border
 				if((prevIso.intersection(currentIso).getGeometryType().equals("Polygon") 
-						&& prevIso.intersection(currentIso).getCoordinate() != null)
-						|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
-						) {
+					&& prevIso.intersection(currentIso).getCoordinate() != null)
+					|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
+				) {
 					atLeastOneError = true;
 				}
 			}
@@ -232,7 +232,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 					.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
 					.setMessageParam("ID_S_INOND", surface.getId())
 					.setMessageParam("LIST_ID_ISO_HT", createErrorMessage(listIsoHauteur))
-					);
+			);
 
 			return;
 		}
@@ -260,10 +260,6 @@ public class GraphTopologyValidator implements Validator<Database> {
 		if (a.equalsTopo(b)) {
 			return true;
 		}
-		System.err.println(a.getCoordinate().x);
-		System.err.println(a.getCoordinate().y);
-		System.err.println(b.getCoordinate().x);
-		System.err.println(b.getCoordinate().y);
 		// buffer comparison
 		Geometry aBuffer = a.buffer(tolerance);
 		Geometry bBuffer = b.buffer(tolerance);
