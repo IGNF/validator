@@ -57,7 +57,7 @@ public class GeometryIsValidValidatorTest {
 			);
 			return null ;
 		}
-	}
+	}	
 
 
 	@Test

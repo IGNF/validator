@@ -588,13 +588,13 @@
     {
         "name": "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND",
         "level": "ERROR",
-        "message": "{LIST_ID_ISO_HT} ne constitue(nt) pas une partition de {ID_S_INOND}. Il y a un trou ou un dépassement de la surface inondable.",
+        "message": "{LIST_ID_ISO_HT} ne constitue pas une partition de {ID_S_INOND}. Il y'a un trou ou un dépassement de la surface inondable.",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
     },
     {
         "name": "DGPR_ISO_HT_INTERSECTS",
         "level": "ERROR",
-        "message": "{LIST_ID_ISO_HT} ne constitue(nt) pas une partition de {ID_S_INOND}. Les périmètres des ISO_HT s'intersectent.",
+        "message": "{LIST_ID_ISO_HT} ne constitue pas une partition de {ID_S_INOND}. Les périmètres des ISO_HT s'intersectent.",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
     },
     {

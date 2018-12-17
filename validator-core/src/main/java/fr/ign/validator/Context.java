@@ -26,9 +26,9 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
 import fr.ign.validator.model.Projection;
+import fr.ign.validator.process.MetadataPreProcess;
 import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
-import fr.ign.validator.process.MetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.process.ProjectionPreProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -110,8 +110,6 @@ public class Context {
 	 * Customization - validation listener
 	 */
 	private List<ValidatorListener> listeners = new ArrayList<ValidatorListener>() ;
-
-	private double tolerance;
 
 
 	public Context(){
@@ -386,10 +384,10 @@ public class Context {
 	 * @param clazz
 	 * @return
 	 */
-	public <T extends Validatable> T getDataByType(Class<T> clazz) {
+	public <T extends Validatable> T getDataByType(Class<T> clazz){
 		for ( int index = dataStack.size() - 1; index >= 0; index-- ) {
 			Validatable model = dataStack.get(index);
-			if ( clazz.isInstance(model) ) {
+			if ( clazz.isInstance(model) ){
 				return clazz.cast(model);
 			}
 		}
@@ -401,13 +399,13 @@ public class Context {
 	 * @return
 	 */
 	public ErrorScope getScope(){
-		if ( getDataByType(Attribute.class) != null ) {
+		if ( getDataByType(Attribute.class) != null ){
 			return ErrorScope.FEATURE;
-		} else if ( getDataByType(TableFile.class) != null ) {
+		}else if ( getDataByType(TableFile.class) != null ){
 			return ErrorScope.HEADER;
-		} else if ( getDataByType(MetadataFile.class) != null ) {
+		}else if ( getDataByType(MetadataFile.class) != null ){
 			return ErrorScope.METADATA;
-		} else {
+		}else{
 			return ErrorScope.DIRECTORY;
 		}
 	}
@@ -538,7 +536,7 @@ public class Context {
 		 * Add data informations (new)
 		 */
 		validatorError.setFeatureBbox(getFeatureBBox());
-		validatorError.setFeatureId(getFeatureId());
+	    validatorError.setFeatureId(getFeatureId());
 
 		return validatorError;
 	}
@@ -620,26 +618,6 @@ public class Context {
 	 */
 	public void setStringFixer(StringFixer stringFixer) {
 		this.stringFixer = stringFixer;
-	}
-
-
-	/**
-	 * tolerance option
-	 * used in geometric operation (dgpr plugin)
-	 * @return
-	 */
-	public double getTolerance() {
-		return this.tolerance;
-	}
-
-
-	/**
-	 * tolerance option
-	 * used in geometric operation (dgpr plugin)
-	 * @param topologicalTolerance
-	 */
-	public void setTolerance(double topologicalTolerance) {
-		this.tolerance = topologicalTolerance;
 	}
 
 

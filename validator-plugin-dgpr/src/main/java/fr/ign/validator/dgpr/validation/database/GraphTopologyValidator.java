@@ -11,7 +11,6 @@ import org.apache.logging.log4j.MarkerManager;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
@@ -61,11 +60,6 @@ public class GraphTopologyValidator implements Validator<Database> {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-	
-	
-	public double getTolerance() {
-		return 1;
 	}
 
 
@@ -222,8 +216,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 
 		// Test correspondance entre l'union des isoHT et la S_INOND
-		// tolerance to 1 meters
-		if(! topologyEqualsWithTolerance(surface.getGeometry(), zhunion, getTolerance())) {							
+		if(! surface.getGeometry().equalsTopo(zhunion)) {							
 			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
 					.setScope(ErrorScope.FEATURE)
 					.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
@@ -238,7 +231,6 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 	}
 
-
 	/**
 	 * Create message HT list error
 	 * @param listIsoHauteur
@@ -252,27 +244,6 @@ public class GraphTopologyValidator implements Validator<Database> {
 		errorMessageListHt = errorMessageListHt.trim();
 
 		return errorMessageListHt;
-	}
-
-
-	public static boolean topologyEqualsWithTolerance(Geometry a, Geometry b, double tolerance) {
-		// same topological geometries
-		if (a.equalsTopo(b)) {
-			return true;
-		}
-		// buffer comparison
-		Geometry aBuffer = a.buffer(tolerance);
-		Geometry bBuffer = b.buffer(tolerance);
-		if (! aBuffer.contains(b) || ! bBuffer.contains(a)) {
-			return false;
-		}
-		if (!(aBuffer instanceof Polygon) || !(bBuffer instanceof Polygon)) {
-			return false;
-		}
-		if (((Polygon)aBuffer).getNumInteriorRing() != 0 || ((Polygon)bBuffer).getNumInteriorRing() != 0) {
-			return false;
-		}
-		return true;
 	}
 
 }
