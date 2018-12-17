@@ -140,7 +140,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 		context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
 				.setScope(ErrorScope.FEATURE)
 				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
-				.setAttribute("WKT")
+				.setAttribute("--")
 				.setFeatureId(surfaceId)
 				.setFeatureBbox(envelope)
 				.setMessageParam("ID_SINOND", surfaceId)
