@@ -33,21 +33,25 @@ public class DgprApplicationTest {
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
 
+
 	@Before
 	public void setUp() {
 		report = new InMemoryReportBuilder();
 	}
 
+
 	private Context createContext(File documentPath) throws Exception {
 		Context context = new Context();
 		context.setReportBuilder(report);
 		context.setProjection("EPSG:2154");
+		context.setTolerance(1.0);
 		File validationDirectory = new File(documentPath.getParentFile(), "validation");
 		context.setValidationDirectory(validationDirectory);
 		PluginManager pluginManager = new PluginManager();
 		pluginManager.getPluginByName("DGPR").setup(context);
 		return context;
 	}
+
 
 	private DocumentModel getDocumentModel(String documentModelName) throws Exception {
 		File documentModelPath = new File(getClass().getResource("/config/" + documentModelName + "/files.xml").getPath());
@@ -56,6 +60,7 @@ public class DgprApplicationTest {
 		documentModel.setName(documentModelName);
 		return documentModel;
 	}
+
 
 	private File getSampleDocument(String documentName) throws IOException {
 		URL resource = getClass().getResource("/documents/" + documentName);
@@ -66,6 +71,7 @@ public class DgprApplicationTest {
 		FileUtils.copyDirectory(sourcePath, documentPath);
 		return documentPath;
 	}
+
 
 	/**
 	 * @throws Exception
@@ -85,11 +91,39 @@ public class DgprApplicationTest {
 
 			// validation database
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
 	}
+
+
+	@Test
+	public void testDocumentOkWithNoTolerance() throws Exception {
+		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
+		File documentPath = getSampleDocument("TRI_JTEST_TOPO_SIG_DI");
+
+		Context context = createContext(documentPath);
+		context.setTolerance(0.0);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("TRI_JTEST_TOPO_SIG_DI", document.getDocumentName());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+
+			// validation database
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+
 
 	/**
 	 * @throws Exception
@@ -134,10 +168,10 @@ public class DgprApplicationTest {
 			 */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
 			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
-			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Les périmètres des ISO_HT s'intersectent.", error20.getMessage());
+			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue(nt) pas une partition de SIN_6. Les périmètres des ISO_HT s'intersectent.", error20.getMessage());
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Il y'a un trou ou un dépassement de la surface inondable.", error21.getMessage());
+			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue(nt) pas une partition de SIN_6. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
 			
 			/*
 			 * Zone de suralea ZSA_2 non adjacente à l'ouvrage de protection OUV_2

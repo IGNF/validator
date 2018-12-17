@@ -16,10 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.geotools.referencing.CRS;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTReader;
@@ -114,6 +110,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 */
 	protected List<Plugin> plugins = new ArrayList<>();
 
+	/**
+	 * option - distance (double) express in the input projection system.
+	 * Default value is a meter express in the default CRS (EPSG:4326): 0.0001
+	 */
+	protected double topologicalTolerance;
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -143,6 +145,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		buildStringFixerOptions(options);
 		buildFlatOption(options);
 		buildPluginsOption(options);
+		buildTopologicalTolerance(options);
 	}
 
 	@Override
@@ -172,6 +175,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		parseStringFixerOptions(commandLine);
 		parseDataExtent(commandLine);
 		parseFlatOption(commandLine);
+		parseTopologicalToleranceOption(commandLine);
 
 		// plugins...
 		parsePluginsOption(commandLine);
@@ -203,6 +207,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		context.setStringFixer(stringFixer);
 		context.setNativeDataExtent(nativeDataExtent);
 		context.setFlatValidation(flat);
+		context.setTolerance(topologicalTolerance);
 
 		/*
 		 * load plugins
@@ -433,6 +438,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			String message = String.format("Paramètre invalide 'srs' : '%1s' non supporté", srsString);
 			throw new ParseException(message);
 		}
+		this.projection = projection;
 	}
 
 	/**
@@ -575,6 +581,38 @@ public class DocumentValidatorCommand extends AbstractCommand {
 				log.info(MARKER, String.format("setup plugin '%1s'...", pluginName));
 				plugins.add(plugin);
 			}
+		}
+	}
+
+
+	/**
+	 * Add option "--tolerance"
+	 * @param options
+	 */
+	protected void buildTopologicalTolerance(Options options) {
+		{
+			Option option = new Option(null, "tolerance", true, "Tolerance express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
+			option.setRequired(false);
+			options.addOption(option);
+		}
+	}
+
+
+	/**
+	 * Parse tolerance option
+	 *
+	 * @param commandLine
+	 * @throws ParseException 
+	 */
+	protected void parseTopologicalToleranceOption(CommandLine commandLine) throws ParseException {
+		String toleranceString = commandLine.getOptionValue("tolerance", "0.0000001");
+
+		try {
+			Double tolerance = Double.valueOf(toleranceString);
+			this.topologicalTolerance = tolerance;	
+		} catch (NumberFormatException e) {
+			String message = String.format("Paramètre invalide 'tolerance' : '%1s' n'est pas un double", toleranceString);
+			throw new ParseException(message);
 		}
 	}
 
