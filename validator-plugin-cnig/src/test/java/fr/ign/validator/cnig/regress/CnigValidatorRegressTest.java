@@ -48,21 +48,22 @@ public class CnigValidatorRegressTest {
 
 	@Rule
 	public TemporaryFolder folder = new TemporaryFolder();
-	
+
 	/*
-	 *  allows to skip some tests if GDAL breaks coordinates precision 
+	 * allows to skip some tests if GDAL breaks coordinates precision
 	 */
 	private boolean gdalDestroysCoordinates;
 
 	@Before
 	public void setUp() {
 		report = new InMemoryReportBuilder();
-		
-		gdalDestroysCoordinates = FileConverter.getInstance().isBreakingCoordinatePrecision();		
+
+		gdalDestroysCoordinates = FileConverter.getInstance().isBreakingCoordinatePrecision();
 	}
 
 	/**
 	 * Create validation context
+	 * 
 	 * @param documentPath
 	 * @return
 	 * @throws Exception
@@ -80,6 +81,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Get generated document-info.json file
+	 * 
 	 * @param documentPath
 	 * @return
 	 */
@@ -146,7 +148,10 @@ public class CnigValidatorRegressTest {
 			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
 			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
 
-			ReportAssert.assertCount(8, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(7, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
+			ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+			ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -176,12 +181,15 @@ public class CnigValidatorRegressTest {
 			document.validate(context);
 			Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
 
-			ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+			ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
 			ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
 			ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
 			ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
-			
-			ReportAssert.assertCount(8, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
+
+			ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+			ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -219,13 +227,13 @@ public class CnigValidatorRegressTest {
 			if (gdalDestroysCoordinates) {
 				ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
 				ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-				
+
 				// GDAL 1.10.1 and 1.11.3 changes coordinates so that it turns
 				// invalid geometries to valid geometries...
 				ReportAssert.assertCount(0, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 			} else {
 				ReportAssert.assertCount(5, ErrorLevel.WARNING, report);
-				
+
 				ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 				ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 			}
@@ -351,11 +359,11 @@ public class CnigValidatorRegressTest {
 			document.validate(context);
 			Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
 			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
-			
-			if ( ! gdalDestroysCoordinates ){
+
+			if (!gdalDestroysCoordinates) {
 				ReportAssert.assertCount(4, ErrorLevel.WARNING, report);
 				ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
-			}else{
+			} else {
 				ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
 			}
 		} catch (Exception e) {
@@ -370,5 +378,5 @@ public class CnigValidatorRegressTest {
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
 	}
-	
+
 }
