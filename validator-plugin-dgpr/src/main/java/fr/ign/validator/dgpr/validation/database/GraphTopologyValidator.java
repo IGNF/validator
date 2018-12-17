@@ -65,7 +65,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 	
 	
 	public double getTolerance() {
-		return 1;
+		return context.getTolerance();
 	}
 
 
