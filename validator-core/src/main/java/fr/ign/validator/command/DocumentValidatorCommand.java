@@ -605,7 +605,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @throws ParseException 
 	 */
 	protected void parseTopologicalToleranceOption(CommandLine commandLine) throws ParseException {
-		String toleranceString = commandLine.getOptionValue("tolerance", "0.00000001");
+		String toleranceString = commandLine.getOptionValue("tolerance", "0.0000001");
 
 		try {
 			Double tolerance = Double.valueOf(toleranceString);
