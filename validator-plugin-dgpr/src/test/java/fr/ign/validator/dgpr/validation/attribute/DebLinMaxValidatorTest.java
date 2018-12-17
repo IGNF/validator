@@ -107,7 +107,7 @@ public class DebLinMaxValidatorTest {
 		context.beginData(row);
 
 		Assert.assertEquals(1, report.countErrors());
-		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure la valeur DEBLIN_MIN (1.0)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
+		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure à la valeur DEBLIN_MIN (1.0)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
 	}
 
 
@@ -142,7 +142,7 @@ public class DebLinMaxValidatorTest {
 		context.beginData(row);
 
 		Assert.assertEquals(1, report.countErrors());
-		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure la valeur DEBLIN_MIN (non renseignée)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
+		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure à la valeur DEBLIN_MIN (non renseignée)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
 	}
 
 
