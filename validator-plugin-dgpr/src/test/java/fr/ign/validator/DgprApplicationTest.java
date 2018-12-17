@@ -134,10 +134,10 @@ public class DgprApplicationTest {
 			 */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
 			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
-			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Les périmètres des ISO_HT s'intersectent.", error20.getMessage());
+			Assert.assertEquals("Les ISO_HT 'ZCH_9' 'ZCH_10' ne constituent pas une partition de SIN_6. Leurs périmètres s'intersectent.", error20.getMessage());
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-			Assert.assertEquals("'ZCH_9' 'ZCH_10' ne constitue pas une partition de SIN_6. Il y'a un trou ou un dépassement de la surface inondable.", error21.getMessage());
+			Assert.assertEquals("Les ISO_HT 'ZCH_9' 'ZCH_10' ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
 			
 			/*
 			 * Zone de suralea ZSA_2 non adjacente à l'ouvrage de protection OUV_2
@@ -157,8 +157,8 @@ public class DgprApplicationTest {
 			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).size());
 			ValidatorError error40 = report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).get(0);
 			ValidatorError error41 = report.getErrorsByCode(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO).get(1);
-			Assert.assertEquals("L'objet ZCH_7 de la classe N_prefixTri_ISO_HT_suffixIsoHt_S_ddd a pour scénario 01For différent de celui de la surface inondable SIN_5, de scénario 02Moy, à laquelle il est rattaché.", error40.getMessage());
-			Assert.assertEquals("L'objet LIC_2 de la classe N_prefixTri_ISO_COTE_L_ddd a pour scénario 02Moy différent de celui de la surface inondable SIN_4, de scénario 01For, à laquelle il est rattaché.", error41.getMessage());
+			Assert.assertEquals("L'objet ZCH_7 de la classe N_prefixTri_ISO_HT_suffixIsoHt_S_ddd a un scénario (01For) différent de celui de la surface inondable SIN_5 (02Moy) à laquelle il est rattaché.", error40.getMessage());
+			Assert.assertEquals("L'objet LIC_2 de la classe N_prefixTri_ISO_COTE_L_ddd a un scénario (02Moy) différent de celui de la surface inondable SIN_4 (01For) à laquelle il est rattaché.", error41.getMessage());
 
 
 			/*
