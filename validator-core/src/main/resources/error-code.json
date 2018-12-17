@@ -528,13 +528,13 @@
     {
         "name": "DGPR_DOCUMENT_PREFIX_ERROR",
         "level": "WARNING",
-        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffix _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
+        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     },
     {
         "name": "DGPR_FILENAME_PREFIX_ERROR",
         "level": "ERROR",
-        "message": "Le nom du fichier {FILENAME} ne contient pas le prefix TRI du repertoire {DOCUMENT_NAME}.",
+        "message": "Le nom du fichier {FILENAME} ne contient pas le prefixe TRI du répertoire {DOCUMENT_NAME}.",
         "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
     },
     {
@@ -553,7 +553,7 @@
         "name": "DGPR_AZIMUTH_ERROR",
         "level": "ERROR",
         "message": "La vitesse ({VALUE_VITESSE}) et/ou le débit linéique ({VALUE_DEBLIN}) est renseigné, mais l’azimuth est null.",
-        "documentation": ""
+        "documentation": "Standard DI v2 - B.3.8. Classe d'objets <Point_remarquable_cote_vitesse_debit> : Si la vitesse ou le débit linéique est renseigné, alors l’azimuth doit aussi être renseigné."
     },
     {
         "name": "DGPR_DEBLIN_ERROR",
@@ -570,7 +570,7 @@
     {
         "name": "DGPR_DEBLIN_MAX_ERROR",
         "level": "ERROR",
-        "message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure la valeur DEBLIN_MIN ({VALUE_MIN})",
+        "message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure à la valeur DEBLIN_MIN ({VALUE_MIN})",
         "documentation": ""
     },
     {
@@ -588,25 +588,25 @@
     {
         "name": "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND",
         "level": "ERROR",
-        "message": "{LIST_ID_ISO_HT} ne constitue pas une partition de {ID_S_INOND}. Il y'a un trou ou un dépassement de la surface inondable.",
+        "message": "Les ISO_HT {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND} à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
     },
     {
         "name": "DGPR_ISO_HT_INTERSECTS",
         "level": "ERROR",
-        "message": "{LIST_ID_ISO_HT} ne constitue pas une partition de {ID_S_INOND}. Les périmètres des ISO_HT s'intersectent.",
+        "message": "Les ISO_HT {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND}. Leurs périmètres s'intersectent.",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
     },
     {
         "name": "DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED",
         "level": "ERROR",
-        "message": "Les ISO_HT couvrant {ID_SINOND} ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ({LIST_VALUE_MIN_MAX}).",
+        "message": "Les ISO_HT se rapportant {ID_SINOND} ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ({LIST_VALUE_MIN_MAX}).",
         "documentation": "Cf. standard DI 2.0. Contrainte B.3.3 Classe d'objets <Zone_iso_classe_hauteur>"
     },
     {
         "name": "DGPR_UNMATCHED_SCENARIO",
         "level": "ERROR",
-        "message": "L'objet {ID} de la classe {TABLE_NAME} a pour scénario {VALUE_SCENARIO} différent de celui de la surface inondable {ID_S_INOND}, de scénario {EXPECTED_SCENARIO}, à laquelle il est rattaché.",
+        "message": "L'objet {ID} de la classe {TABLE_NAME} a un scénario ({VALUE_SCENARIO}) différent de celui de la surface inondable {ID_S_INOND} ({EXPECTED_SCENARIO}) à laquelle il est rattaché.",
         "documentation": "Cf. standard DI 2.0. B.3.1 Classe d'objets <Carte_surfaces_inondables>" 
     },
     {
