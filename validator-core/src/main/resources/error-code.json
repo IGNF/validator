@@ -461,7 +461,7 @@
     },
     {
         "name": "CNIG_IDURBA_NOT_FOUND",
-        "level": "WARNING",
+        "level": "ERROR",
         "message": "Aucune ligne correspondant au document n’a été trouvée dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
         "documentation": ""
     },
