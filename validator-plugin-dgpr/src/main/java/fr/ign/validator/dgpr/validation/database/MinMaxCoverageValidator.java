@@ -59,7 +59,11 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 		while (innondTable.hasNext()) {
 			String[] row = innondTable.next();
 			// for each id perform MinMaxCoverage validation
-			validateSurfaceInondable(row[indexId], row[indexWkt]);
+			try {
+				validateSurfaceInondable(row[indexId], row[indexWkt]);
+			} catch (NumberFormatException e) {
+				log.error(MARKER, "NumberFormatException, impossible de valider les plages de valeurs");
+			}
 		}
 	}
 
@@ -149,7 +153,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 	}
 
 
-	private boolean compare(String doubleStrA, String doubleStrB) {
+	public boolean compare(String doubleStrA, String doubleStrB) throws NumberFormatException {
 		if (doubleStrA == null || doubleStrB == null) {
 			return (doubleStrA == null && doubleStrB == null);
 		}

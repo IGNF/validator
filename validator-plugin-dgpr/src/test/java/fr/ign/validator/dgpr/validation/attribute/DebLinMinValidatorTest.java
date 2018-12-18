@@ -62,4 +62,32 @@ public class DebLinMinValidatorTest {
 		Assert.assertEquals("La valeur DEBLIN_MIN (-10.0) doit être supérieure à 0.", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MIN_ERROR).get(0).getMessage());
 	}
 
+
+	@Test
+	public void testBindString() throws Exception {
+		DoubleType doubleTypeDebLinMin = new DoubleType();
+		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+
+		// test
+		DebLinMinValidator minValidator = new DebLinMinValidator();
+		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMin, "1.5");
+		minValidator.validate(context, attribute);
+
+		Assert.assertEquals(0, report.countErrors());
+	}
+
+
+	@Test
+	public void testBindIllegalString() throws Exception {
+		DoubleType doubleTypeDebLinMin = new DoubleType();
+		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+
+		// test
+		DebLinMinValidator minValidator = new DebLinMinValidator();
+		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMin, "1,5");
+		minValidator.validate(context, attribute);
+
+		Assert.assertEquals(0, report.countErrors());
+	}
+
 }

@@ -28,115 +28,165 @@ public class VitesseMinValidatorTest {
 
 	protected InMemoryReportBuilder report;
 
+	protected FeatureType featureType;
+
+	protected DoubleType doubleTypeMin;
+
+	private VitesseMinValidator minValidator;
+
 
 	@Before
 	public void setUp() {
 		report = new InMemoryReportBuilder();
 		context = new Context();
 		context.setReportBuilder(report);
+
+		// model setup
+		DoubleType doubleTypeMax = new DoubleType();
+		doubleTypeMax.setName("VITESS_MAX");
+
+		doubleTypeMin = new DoubleType();
+		doubleTypeMin.setName("VITESS_MIN");
+
+		featureType = new FeatureType();
+		featureType.addAttribute(doubleTypeMax);
+		featureType.addAttribute(doubleTypeMin);
+
+		minValidator = new VitesseMinValidator();
 	}
 
 
 	@Test
 	public void testValidate() throws Exception {
-		// le csv
+		// data
 		String[] header = {"VITESS_MAX"};
 		String[] values = {"30.0"};
-
-		// le modele
-		DoubleType doubleTypeMax = new DoubleType();
-		doubleTypeMax.setName("VITESS_MAX");
-
-		DoubleType doubleTypeMin = new DoubleType();
-		doubleTypeMin.setName("VITESS_MIN");
-
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeMax);
-		featureType.addAttribute(doubleTypeMin);
-
 		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
-
-		// la ligne
 		Row row = new Row(0, values, mapping);
+
+		// validate
 		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute(15.0);
+		minValidator.validate(context, attribute);
+		context.endData(row);
 
 		// test
-		VitesseMinValidator minValidator = new VitesseMinValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeMin, 15.0);
-		minValidator.validate(context, attribute);
+		Assert.assertEquals(0, report.countErrors());
+	}
 
+
+	@Test
+	public void testLegalString() throws Exception {
+		// data
+		String[] header = {"VITESS_MAX"};
+		String[] values = {"30.0"};
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+		Row row = new Row(0, values, mapping);
+
+		// validate
 		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute("15.0");
+		minValidator.validate(context, attribute);
+		context.endData(row);
 
+		// test
+		Assert.assertEquals(0, report.countErrors());
+	}
+
+
+	@Test
+	public void testNullMinValue() throws Exception {
+		// data
+		String[] header = {"VITESS_MAX"};
+		String[] values = {"30.0"};
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+		Row row = new Row(0, values, mapping);
+
+		// validate
+		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute(null);
+		minValidator.validate(context, attribute);
+		context.endData(row);
+
+		// test
 		Assert.assertEquals(0, report.countErrors());
 	}
 
 
 	@Test
 	public void testNullValidate() throws Exception {
-		// le csv
+		// data
 		String[] header = {"VITESS_MAX"};
 		String[] values = {null};
-
-		// le modele
-		DoubleType doubleTypeMax = new DoubleType();
-		doubleTypeMax.setName("VITESS_MAX");
-
-		DoubleType doubleTypeMin = new DoubleType();
-		doubleTypeMin.setName("VITESS_MIN");
-
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeMax);
-		featureType.addAttribute(doubleTypeMin);
-
 		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
-
-		// la ligne
 		Row row = new Row(0, values, mapping);
+
+		// validate
+		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute(15.0);
+		minValidator.validate(context, attribute);
 		context.beginData(row);
 
 		// test
-		VitesseMinValidator minValidator = new VitesseMinValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeMin, 15.0);
-		minValidator.validate(context, attribute);
-
-		context.beginData(row);
-
 		Assert.assertEquals(0, report.countErrors());
 	}
 
 
 	@Test
 	public void testValueMaxError() throws Exception {
-		// le csv
+		// data
 		String[] header = {"VITESS_MAX"};
 		String[] values = {"30.0"};
-
-		// le modele
-		DoubleType doubleTypeMax = new DoubleType();
-		doubleTypeMax.setName("VITESS_MAX");
-
-		DoubleType doubleTypeMin = new DoubleType();
-		doubleTypeMin.setName("VITESS_MIN");
-
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeMax);
-		featureType.addAttribute(doubleTypeMin);
-
 		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
-
-		// la ligne
 		Row row = new Row(0, values, mapping);
+
+		// validate
+		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute(31.0);
+		minValidator.validate(context, attribute);
 		context.beginData(row);
 
 		// test
-		VitesseMinValidator minValidator = new VitesseMinValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeMin, 31.0);
-		minValidator.validate(context, attribute);
-
-		context.beginData(row);
-
 		Assert.assertEquals(1, report.countErrors());
 		Assert.assertEquals("La vitesse MIN 31.0 est supérieure à la vitesse MAX 30.0.", report.getErrorsByCode(DgprErrorCodes.DGPR_VITESSE_MIN_ERROR).get(0).getMessage());
+	}
+
+
+	@Test
+	public void testIllegalDoubleFormat() throws Exception {
+		// data
+		String[] header = {"VITESS_MAX"};
+		String[] values = {"30,0"};
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+		Row row = new Row(0, values, mapping);
+
+		// validate
+		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute("15.0");
+		minValidator.validate(context, attribute);
+		context.beginData(row);
+
+		// test
+		Assert.assertEquals(0, report.countErrors());
+	}
+
+
+	@Test
+	public void testIllegalDoubleFormat_2() throws Exception {
+		// data
+		String[] header = {"VITESS_MAX"};
+		String[] values = {"30.0"};
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+		Row row = new Row(0, values, mapping);
+
+		// validate
+		context.beginData(row);
+		Attribute<Double> attribute = doubleTypeMin.newAttribute("15,0");
+		minValidator.validate(context, attribute);
+		context.beginData(row);
+
+		// test
+		Assert.assertEquals(0, report.countErrors());
 	}
 
 }

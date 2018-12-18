@@ -146,4 +146,45 @@ public class DebLinMaxValidatorTest {
 	}
 
 
+	@Test
+	public void testIllegalDouble() throws Exception {
+		// le csv
+		String[] header = {"DEBLIN_MIN"};
+		String[] values = {"1,5"};
+
+		// le modele
+		DoubleType doubleTypeDebLinMin = new DoubleType();
+		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+
+		DoubleType doubleTypeDebLinMax = new DoubleType();
+		doubleTypeDebLinMax.setName("DEBLIN_MAX");
+
+		FeatureType featureType = new FeatureType();
+		featureType.addAttribute(doubleTypeDebLinMin);
+		featureType.addAttribute(doubleTypeDebLinMax);
+
+		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+
+		// la ligne
+		Row row = new Row(0, values, mapping);
+		context.beginData(row);
+
+		// test avec DEBLIN_MAX = 2.0
+		// error no value for deblinmin
+		DebLinMaxValidator maxValidator = new DebLinMaxValidator();
+		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 2.0);
+		maxValidator.validate(context, attribute);
+
+		// test avec DEBLIN_MAX = null
+		// no error
+		DebLinMaxValidator maxValidator2 = new DebLinMaxValidator();
+		Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMax, null);
+		maxValidator2.validate(context, attribute2);
+
+		context.beginData(row);
+
+		Assert.assertEquals(1, report.countErrors());
+	}
+
+
 }
