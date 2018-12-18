@@ -9,9 +9,14 @@ public class DebLinMinValidator implements Validator<Attribute<Double>> {
 
 	@Override
 	public void validate(Context context, Attribute<Double> attribute) {
+		
+		if (attribute.getBindedValue() == null) {
+			// nothing to validate
+			return;
+		}
 
-		//l'attribut DEBLIN_MIN doit être supérieur à 0
-		if (attribute.getBindedValue() != null && attribute.getBindedValue() >= 0) {
+		if (attribute.getBindedValue() >= 0) {
+			// all is ok
 			return;
 		}
 
