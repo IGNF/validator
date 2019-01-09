@@ -1,6 +1,9 @@
 package fr.ign.validator.cnig.regress;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -80,11 +83,10 @@ public class CnigValidatorRegressTest extends TestCase {
 
 		File producedInfosCnigPath = new File(getClass().getResource("/documents/validation/infos-cnig.xml").getPath());
 		File expectedInfosCnigPath = new File(getClass().getResource("/documents/41175_PLU_20140603.infos-cnig.xml").getPath());
-
-		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
-		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		assertEquals(expected, actual);
+		assertSameInfosCnig(producedInfosCnigPath, expectedInfosCnigPath);
 	}
+
+
 
 	/**
 	 * Test CC en standard 2014
@@ -107,10 +109,7 @@ public class CnigValidatorRegressTest extends TestCase {
 
 		File producedInfosCnigPath = new File(getClass().getResource("/documents/validation/infos-cnig.xml").getPath());
 		File expectedInfosCnigPath = new File(getClass().getResource("/documents/50545_CC_20130902.infos-cnig.xml").getPath());
-
-		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
-		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		assertEquals(expected, actual);
+		assertSameInfosCnig(producedInfosCnigPath, expectedInfosCnigPath);
 	}
 	
 	/**
@@ -134,10 +133,7 @@ public class CnigValidatorRegressTest extends TestCase {
 
 		File producedInfosCnigPath = new File(getClass().getResource("/documents/validation/infos-cnig.xml").getPath());
 		File expectedInfosCnigPath = new File(getClass().getResource("/documents/19182_CC_20150517.infos-cnig.xml").getPath());
-
-		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
-		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		assertEquals(expected, actual);
+		assertSameInfosCnig(producedInfosCnigPath, expectedInfosCnigPath);
 	}
 
 
@@ -158,10 +154,48 @@ public class CnigValidatorRegressTest extends TestCase {
 
 		File producedInfosCnigPath = new File(getClass().getResource("/documents/validation/infos-cnig.xml").getPath());
 		File expectedInfosCnigPath = new File(getClass().getResource("/documents/110068012_PM3_28_20161104.infos-cnig.xml").getPath());
-
-		String actual   = FileUtils.readFileToString(producedInfosCnigPath).trim();
-		String expected = FileUtils.readFileToString(expectedInfosCnigPath).trim();
-		assertEquals(expected, actual);
+		assertSameInfosCnig(producedInfosCnigPath, expectedInfosCnigPath);
 	}
 
+	/**
+	 * Compare files
+	 * @param producedInfosCnigPath
+	 * @param expectedInfosCnigPath
+	 * @throws IOException
+	 */
+	private void assertSameInfosCnig(File producedInfosCnigPath, File expectedInfosCnigPath) throws IOException {
+		List<String> actualLines   = readNonEmptyLines(producedInfosCnigPath);
+		List<String> expectedLines = readNonEmptyLines(expectedInfosCnigPath);
+		
+		assertEquals("Number of lines differs", expectedLines.size(), actualLines.size());
+		for ( int i = 0; i < expectedLines.size(); i++ ){
+			String expected = expectedLines.get(i) ;
+			String actual   = actualLines.get(i);
+			if ( expected.contains("<geometry>") || expected.contains("<bbox>") ){
+				// skip due to gdal 2.x backport
+				continue;
+			}
+			assertEquals(expected, actual);
+		}
+	}
+
+	/**
+	 * Read file as line filtering empty lines
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	private List<String> readNonEmptyLines(File file) throws IOException {
+		List<String> result = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<String> lines = FileUtils.readLines(file);
+		for ( String line : lines ){
+			if ( line.isEmpty() ){
+				continue;
+			}
+			result.add(line);
+		}
+		return result;
+	}
+	
 }
