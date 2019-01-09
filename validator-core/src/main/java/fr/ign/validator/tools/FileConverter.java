@@ -61,9 +61,9 @@ public class FileConverter {
 			throw new OgrNotFoundException();
 		}else if ( this.version.contains("1.11.0") ){
 			throw new OgrBadVersionException("ogr2ogr 1.11.0 is not supported (bug in WKT limited to 8000 characters)");
-		}else if ( this.version.contains("2.2.") || this.version.contains("2.1.*") ){
+		}/*else if ( this.version.contains("2.2.") || this.version.contains("2.1.*") ){
 			throw new OgrBadVersionException("ogr2ogr 2.1.* and 2.2.* are not yet supported (WKT coordinates are truncated, problems to manage number of decimals with OGR_WKT_PRECISION)");
-		}
+		}*/
 	}
 
 	/**

@@ -67,12 +67,13 @@ public class TableReaderTest extends TestCase {
 			
 			String[] row = reader.next() ;
 			//WKT
-			assertEquals( "POINT (225499.742202532826923 6755725.590427031740546)", row[wktIndex]);
 			
 			assertTrue(Arrays.asList(row).contains("DOC_URBA_COM.13")) ; //gml_id
 			assertTrue(Arrays.asList(row).contains("5611820140612")) ; //IDURBA
 			assertTrue(Arrays.asList(row).contains("56118")) ; // INSEE
-						
+			
+			assertTrue( row[wktIndex].contains("POINT (225499.742") );
+			
 			assertFalse(reader.hasNext());
 			
 		} catch (IOException e) {
