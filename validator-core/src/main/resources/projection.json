@@ -45,6 +45,12 @@
         "validityDomain": "MULTIPOLYGON(((680000 1580000,680000 1660000,750000 1660000,750000 1580000,680000 1580000)),((470000 1730000,470000 2020000,730000 2020000,730000 1730000,470000 1730000)))"
     },
     {
+        "code": "EPSG:4559",
+        "title": "RRAF 1991 / UTM zone 20N (Guadeloupe et Martinique)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/4559",
+        "validityDomain": null
+    },
+    {
         "code": "EPSG:2972",
         "title": "RGFG95 / UTM zone 22N (Guyane)",
         "uri": "http://www.opengis.net/def/crs/EPSG/0/2972",
