@@ -51,6 +51,12 @@
         "validityDomain": null
     },
     {
+        "code": "EPSG:5490",
+        "title": "RGAF09 / UTM zone 20N (Guadeloupe et Martinique)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/5490",
+        "validityDomain": null
+    },
+    {
         "code": "EPSG:2972",
         "title": "RGFG95 / UTM zone 22N (Guyane)",
         "uri": "http://www.opengis.net/def/crs/EPSG/0/2972",
