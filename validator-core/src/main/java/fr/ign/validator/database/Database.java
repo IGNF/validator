@@ -43,6 +43,8 @@ public class Database {
 
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
+	
+	private static final int batchSize = 500;
 
 	/**
 	 * Database connection
@@ -271,6 +273,7 @@ public class Database {
 		log.debug(MARKER, sql);
 
 		/* Batch insertion */
+		int count = 0;
 		while (reader.hasNext()) {
 			String[] row = reader.next();
 			int parameterIndex = 0;
@@ -280,6 +283,11 @@ public class Database {
 				parameterIndex++;
 			}
 			sth.addBatch();
+
+			if (++count % batchSize == 0) {
+				sth.executeBatch();
+				sth.clearBatch();
+			}
 		}
 		sth.executeBatch();
 		connection.commit();
