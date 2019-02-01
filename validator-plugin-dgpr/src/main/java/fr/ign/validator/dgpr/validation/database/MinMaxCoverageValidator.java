@@ -65,6 +65,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 				log.error(MARKER, "NumberFormatException, impossible de valider les plages de valeurs");
 			}
 		}
+		innondTable.close();
 	}
 
 
@@ -93,6 +94,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 			IsoHauteur isoHauteur = new IsoHauteur(row[indexIdZone], row[indexIdSInnond], row[indexHtMin], row[indexHtMax]);
 			listIsoHauteur.add(isoHauteur);					 
 		}
+		isoHtTable.close();
 
 		// Si il n'y a q'une iso hauteur dans la liste, pas besoin de tester, on passe à l'itération suivante de la boucle
 		if (listIsoHauteur.size() == 0) {

@@ -43,8 +43,8 @@ public class Database {
 
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
-	
-	private static final int batchSize = 500;
+
+	private static final int batchSize = 100;
 
 	/**
 	 * Database connection
@@ -121,7 +121,6 @@ public class Database {
 	 */
 	public void createTable(TableModel tableModel) throws SQLException {
 		createTable(tableModel.getName(),getColumnNames(tableModel));
-		//TODO create index for identifier
 	}
 
 	/**

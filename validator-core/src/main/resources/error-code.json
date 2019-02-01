@@ -588,13 +588,19 @@
     {
         "name": "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND",
         "level": "ERROR",
-        "message": "Les ISO_HT {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND} à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.",
+        "message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND} à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
+    },
+    {
+        "name": "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY",
+        "level": "WARNING",
+        "message": "Le validateur n'a pas déterminé si les ISO_HT ou ISO_DEB constituent une partition de {ID_S_INOND}.",
+        "documentation": "" 
     },
     {
         "name": "DGPR_ISO_HT_INTERSECTS",
         "level": "ERROR",
-        "message": "Les ISO_HT {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND}. Leurs périmètres s'intersectent.",
+        "message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND}. Leurs périmètres s'intersectent.",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
     },
     {

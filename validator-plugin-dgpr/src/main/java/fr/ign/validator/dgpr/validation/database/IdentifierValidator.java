@@ -1,7 +1,7 @@
 package fr.ign.validator.dgpr.validation.database;
 
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +23,7 @@ import fr.ign.validator.validation.Validator;
 public class IdentifierValidator implements Validator<Database> {
 
 	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("TopologicalGraphValidator");
+	public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
 
 	/**
 	 * Context
@@ -53,67 +53,61 @@ public class IdentifierValidator implements Validator<Database> {
 		}
 	}
 
-	private void runValidation() throws SQLException {
+
+	private void runValidation() throws SQLException, IOException {
 		List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
-		
+
 		//For each table
 		for (FileModel fileModel : fileModelsList) {
 			if (!(fileModel instanceof TableModel)) {
 				continue;
 			}
-			
-			
+
+
 			FeatureType featureType = fileModel.getFeatureType();
-			
+
 			List<AttributeType<?>> attributesList = featureType.getAttributes();
-			
-			List<String> identifierList = new ArrayList<String>();
-			
+
 			//Looking for attributes who are identifiers
 			for(AttributeType<?> attribute : attributesList) {
-				if(attribute.isIdentifier()) {
-					identifierList.add(attribute.getName());
+				if(!attribute.isIdentifier()) {
+					continue;
 				}
+				validateOneIdentifier(attribute.getName(), fileModel);
 			}
-			
-			//Log if no identifier is found
-			if (identifierList.size() == 0){
-				log.warn(MARKER, "[Error_model] No identifier in the table " + fileModel.getName());
-				return;
-			}
-			
-			//for each identifier of a given table, check if each value is unique
-			for(String identifier : identifierList) {
-				RowIterator table = database.query(
-						"SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
-							+ " FROM " + fileModel.getName() 
-							+ " GROUP BY " + identifier
-				);
-				int indexId = table.getColumn("id");
-				int indexCount = table.getColumn("count");
-
-				while (table.hasNext()) {
-					String[] row = table.next();
-					
-					int compte = Integer.parseInt(row[indexCount]);
-					
-					//if not unique, send error
-					if(compte > 1)
-					{
-						context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
-								.setScope(ErrorScope.HEADER)
-								.setFileModel(fileModel.getName())
-								.setMessageParam("TABLE_NAME", fileModel.getName())
-								.setMessageParam("ID_NAME", row[indexId])
-								.setMessageParam("ID_COUNT", row[indexCount])
-						);
-					}
-						
-				}
-				
-			}												
-			
 		}	
+	}
+
+
+	private void validateOneIdentifier(String identifier, FileModel fileModel) throws SQLException, IOException {
+		RowIterator table = database.query(
+				"SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
+						+ " FROM " + fileModel.getName() 
+						+ " GROUP BY " + identifier
+		);
+		int indexId = table.getColumn("id");
+		int indexCount = table.getColumn("count");
+
+		while (table.hasNext()) {
+			String[] row = table.next();
+
+			int compte = Integer.parseInt(row[indexCount]);
+
+			//if not unique, send error
+			if(compte > 1)
+			{
+				context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
+						.setScope(ErrorScope.HEADER)
+						.setFileModel(fileModel.getName())
+						.setMessageParam("TABLE_NAME", fileModel.getName())
+						.setMessageParam("ID_NAME", row[indexId])
+						.setMessageParam("ID_COUNT", row[indexCount])
+				);
+			}
+
+		}
+		table.close();
+
 	}
 
 }

@@ -92,7 +92,7 @@ public class DgprApplicationTest {
 			// validation database
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -117,7 +117,7 @@ public class DgprApplicationTest {
 			// validation database
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
 			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -168,11 +168,13 @@ public class DgprApplicationTest {
 			 */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
 			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
-			Assert.assertEquals("Les ISO_HT 'ZCH_9' 'ZCH_10' ne constituent pas une partition de SIN_6. Leurs périmètres s'intersectent.", error20.getMessage());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6. Leurs périmètres s'intersectent.", error20.getMessage());
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
 			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-			Assert.assertEquals("Les ISO_HT 'ZCH_9' 'ZCH_10' ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
-			
+			Assert.assertEquals("Les ISO_DEB ZCD_1, ZCD_2 ne constituent pas une partition de SIN_1 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
+			ValidatorError error22 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(1);
+			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error22.getMessage());
+
 			/*
 			 * Zone de suralea ZSA_2 non adjacente à l'ouvrage de protection OUV_2
              * Zone soustraite à l'inondation ZSI_2 non adjacente à l'ouvrage de protection 0UV_2

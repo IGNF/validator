@@ -24,7 +24,7 @@ import fr.ign.validator.validation.Validator;
 public class RelationValidator implements Validator<Database> {
 
 	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("TopologicalGraphValidator");
+	public static final Marker MARKER = MarkerManager.getMarker("RelationValidator");
 
 	/**
 	 * Context
@@ -78,16 +78,16 @@ public class RelationValidator implements Validator<Database> {
 
 		// searching for the identifier attribute
 		String identifierName = "";			
-		for(AttributeType<?> attribute : attributesList) {
-			if(attribute.isIdentifier()) {
+		for (AttributeType<?> attribute : attributesList) {
+			if (attribute.isIdentifier()) {
 				identifierName = attribute.getName();
 				break;
 			}
 		}
 
-		//Looking for attributes who are references
-		for(AttributeType<?> attribute : attributesList) {
-			if(!attribute.isReference()) {
+		// Looking for attributes who are references
+		for (AttributeType<?> attribute : attributesList) {
+			if (!attribute.isReference()) {
 				continue;
 			}
 			validateRelation(fileModel, attribute, identifierName);

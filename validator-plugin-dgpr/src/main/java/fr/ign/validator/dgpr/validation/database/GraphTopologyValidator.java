@@ -1,7 +1,6 @@
 package fr.ign.validator.dgpr.validation.database;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,16 +8,13 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.DatabaseUtils;
-import fr.ign.validator.dgpr.database.model.IsoHauteur;
 import fr.ign.validator.dgpr.database.model.SurfaceInondable;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.ErrorScope;
@@ -42,7 +38,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 	/**
 	 * WKT Reader Enable projection transform to WKT Geometries
 	 */
-	private static WKTReader format = new WKTReader();
+	// private static WKTReader format = new WKTReader();
 
 
 	/**
@@ -62,217 +58,226 @@ public class GraphTopologyValidator implements Validator<Database> {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
+
 	public double getTolerance() {
 		return context.getTolerance();
 	}
 
 
 	private void runValidation() throws Exception {
-		// Récupération de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
-		RowIterator inondTable = database.query(
+		RowIterator surfaceIterator = database.query(
 				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
 		);
 
-		// Index du champ "ID_S_INOND"
-		int indexId = inondTable.getColumn("ID_S_INOND");
-		int indexWkt = inondTable.getColumn("WKT");
+		int indexId = surfaceIterator.getColumn("ID_S_INOND");
+		int indexWkt = surfaceIterator.getColumn("WKT");
 
-		if(indexId == -1 || indexWkt == -1) {		
-			log.warn(MARKER, "[Error_model] WKT or/and ID_S_INOND column is/are missing.");
+		if (indexId == -1 || indexWkt == -1) {		
+			log.warn(MARKER, "N_prefixTri_INONDABLE_suffixInond_S_ddd - Model ERROR - WKT or/and ID_S_INOND column is/are missing.");
 			return;
 		}
 
-		// Récupération de tous les identifiants + wkt des éléments de la table N_prefixTri_INONDABLE_suffixInond_S_ddd
-		ArrayList<SurfaceInondable> surfInondList = new ArrayList<SurfaceInondable>();
-		while (inondTable.hasNext()) {
-			String[] row = inondTable.next();
-			SurfaceInondable surfInond = new SurfaceInondable(row[indexId], row[indexWkt]);
-			surfInondList.add(surfInond);
-		}
-
-		//Pour chaque surface inondable, on valide son union avec l'union des zones
-		for (SurfaceInondable surface: surfInondList) {
-			validateUnion(surface);	
-		}
-	}
-
-
-	/**
-	 * Validate zone intersect in a given SurfaceInondable
-	 * @param surfaceId
-	 * @return 
-	 * @throws Exception 
-	 */
-	private void validateUnion(SurfaceInondable surface) throws Exception {
-		// select zone iso
-		RowIterator isoHtTable = database.query(
-				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
-				+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "'"
-		);
-
-		// verifier que la geometrie de la surface inondable est valide
-		Geometry surfaceInondGeom = format.read(surface.getWkt());
-		if(!surfaceInondGeom.isValid()) {
-			log.error(MARKER, "Geometry not valid for surfaceInond {}", surface.getId());
-			return;
-		}
-		surface.setGeometry(surfaceInondGeom);
-
-		int indexIdZone = isoHtTable.getColumn("ID_ZONE");
-		int indexIdSInond = isoHtTable.getColumn("ID_S_INOND");
-		int indexWkt = isoHtTable.getColumn("WKT");
-
-		if(indexIdZone == -1 || indexIdSInond == -1 || indexWkt == -1) {		
-			log.warn(MARKER, "[Error_model] WKT, ID_ZONE or/and ID_S_INOND column is/are missing.");
-			return;
-		}
-
-		ArrayList<IsoHauteur> listIsoHauteur = new ArrayList<IsoHauteur>();
-		while (isoHtTable.hasNext()) {
-			String[] row = isoHtTable.next();
-			IsoHauteur isoHauteur = new IsoHauteur(row[indexIdZone], row[indexIdSInond], row[indexWkt]);
-			listIsoHauteur.add(isoHauteur);	
-		}
-
-		if (listIsoHauteur.size() == 0) {
-			log.warn(MARKER, "There is no isoHt feature for {} surfaceInond", surface.getId());
-			return;
-		}
-		if (listIsoHauteur.size() == 1) {
-			Geometry zhunion = format.read( listIsoHauteur.get(0).getWkt() );	
-			// Test union between zhunion and surfaceWkt
-			validateComparaison(zhunion, surface, listIsoHauteur);
-			return;
-		}
-
-		List<Geometry> geometries = new ArrayList<Geometry>();	
-
-		boolean atLeastOneError = false;
-		// Tests intersect	
-		for (int i = 0; i < listIsoHauteur.size(); i++) {
-			IsoHauteur isoHauteur = listIsoHauteur.get(i);
-			Geometry prevIso = format.read(isoHauteur.getWkt());
-			// all geometries must be valid to create a valid union
-			if (!prevIso.isValid()) {
-				log.error(MARKER, "Geometry not valid for zoneIso {}", isoHauteur.getId());
-				return;
-			}
-			geometries.add(prevIso);
-
-			if (i == listIsoHauteur.size() - 1) {
+		while (surfaceIterator.hasNext()) {
+			String[] row = surfaceIterator.next();
+			if (!DatabaseUtils.isValidWKT(row[indexWkt])) {
+				log.error(MARKER, "Geometry not valid for surface {}", row[indexId]);
 				continue;
 			}
 
-			for (int j = i + 1; j < listIsoHauteur.size(); j++) {
-				IsoHauteur currentIsoHauteur = listIsoHauteur.get(j);
-				Geometry currentIso = format.read(currentIsoHauteur.getWkt());
-				// all geometries must be valid to create a valid union
-				if (!currentIso.isValid()) {
-					log.error(MARKER, "Geometry not valid for zoneIso {}", currentIsoHauteur.getId());
-					return;
-				}
-				// Test if two geometries of the same set do not cross each other
-				// intersection must be empty or a border
-				if((prevIso.intersection(currentIso).getGeometryType().equals("Polygon") 
-					&& prevIso.intersection(currentIso).getCoordinate() != null)
-					|| prevIso.intersection(currentIso).getGeometryType().equals("MultiPolygon")
-				) {
-					atLeastOneError = true;
-				}
+			SurfaceInondable surface = new SurfaceInondable(row[indexId], row[indexWkt]);
+			try {
+				validSurfaceTopology(surface, "N_prefixTri_ISO_HT_suffixIsoHt_S_ddd");
+				validSurfaceTopology(surface, "N_prefixTri_ISO_DEB_S_ddd");
+			} catch (OutOfMemoryError error) {
+				reportMemoryError(surface);
+			}
+		}
+		surfaceIterator.close();
+	}
+
+
+	private void validSurfaceTopology(SurfaceInondable surface, String tablename) throws Exception {
+		RowIterator hauteurIterator = database.query(
+				"SELECT ID_ZONE, ID_S_INOND, WKT "
+				+ " FROM " + tablename
+				+ " WHERE ID_S_INOND LIKE '" + surface.getId() + "' "
+		);
+
+		int indexId = hauteurIterator.getColumn("ID_ZONE");
+		int indexIdSurface = hauteurIterator.getColumn("ID_S_INOND");
+		int indexWkt = hauteurIterator.getColumn("WKT");
+
+		if (indexId == -1 || indexIdSurface == -1 || indexWkt == -1) {		
+			log.warn(MARKER, "{} - Model ERROR - WKT or/and ID_S_INOND column is/are missing.", tablename);
+			return;
+		}
+
+		Geometry union = null;
+		while (hauteurIterator.hasNext()) {
+			String[] row = hauteurIterator.next();
+
+			// validate geometry or die
+			if (!DatabaseUtils.isValidWKT(row[indexWkt])) {
+				log.error(MARKER, "Geometry not valid for object {}", row[indexId]);
+				report(surface, tablename);
+				hauteurIterator.close();
+				return;
+			}
+
+			// validate no intersection and continue
+			Geometry geometry = DatabaseUtils.getGeometryFromWkt(row[indexWkt]);
+			if (!noIntersection(union, geometry)) {
+				reportIntersection(surface, tablename);
+			}
+
+			// save new union
+			if (union == null) {
+				union = geometry;
+			} else {
+				union = union(union, geometry);
 			}
 
 		}
+		hauteurIterator.close();
 
-		if (atLeastOneError) {
-			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS)
-					.setScope(ErrorScope.FEATURE)
-					.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
-					.setAttribute("WKT")
-					.setFeatureId(surface.getId())
-					.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
-					.setMessageParam("ID_S_INOND", surface.getId())
-					.setMessageParam("LIST_ID_ISO_HT", createErrorMessage(listIsoHauteur))
-			);
-		}
-
-		// Union de la liste 
-		GeometryFactory geometryFactory = new GeometryFactory();
-		GeometryCollection geometryCollection = (GeometryCollection) geometryFactory.buildGeometry(geometries);
-		Geometry zhunion = geometryCollection.union();
-
-		// Test union between zhunion and surfaceWkt
-		validateComparaison(zhunion, surface,listIsoHauteur);
-
-	}
-
-	/**
-	 * Validate zone intersect in a given SurfaceInondable
-	 * @param zhunion
-	 * @param surfaceInondWkt
-	 * @return 
-	 * @throws Exception  
-	 */
-	private void validateComparaison(Geometry zhunion, SurfaceInondable surface, ArrayList<IsoHauteur> listIsoHauteur) throws Exception {	
-
-		if(!surface.getGeometry().getGeometryType().equals("Polygon") && !surface.getGeometry().getGeometryType().equals("MultiPolygon")) {
-			log.debug(MARKER, "S_INOND should be a Polygon or a MultiPolygon.");
+		if (union == null) {
+			// nothing to validate
 			return;
 		}
 
-		// Test correspondance entre l'union des isoHT et la S_INOND
+		// we already know that surfaceGeometry is Valid
+		Geometry surfaceGeometry = DatabaseUtils.getGeometryFromWkt(surface.getWkt());
+		// validate union equalsTopo surface or die
 		// tolerance to 1 meters
-		if(! topologyEqualsWithTolerance(surface.getGeometry(), zhunion, getTolerance())) {							
-			context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
-					.setScope(ErrorScope.FEATURE)
-					.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
-					.setAttribute("WKT")
-					.setFeatureId(surface.getId())
-					.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
-					.setMessageParam("ID_S_INOND", surface.getId())
-					.setMessageParam("LIST_ID_ISO_HT", createErrorMessage(listIsoHauteur))
-			);
-
-			return;
+		if (!topologyEqualsWithTolerance(union, surfaceGeometry, getTolerance())) {
+			report(surface, tablename);
 		}
 	}
 
 
-	/**
-	 * Create message HT list error
-	 * @param listIsoHauteur
-	 * @return
-	 */
-	private String createErrorMessage(ArrayList<IsoHauteur> listIsoHauteur) {
-		String errorMessageListHt = "";
-		for (IsoHauteur isoHauteur : listIsoHauteur) {
-			errorMessageListHt += isoHauteur.idToString() + " ";
+	private boolean noIntersection(Geometry a, Geometry b) {
+		if (a == null || b == null) {
+			return true;
 		}
-		errorMessageListHt = errorMessageListHt.trim();
+		if (a.intersection(b).getGeometryType().equals("Polygon") 
+			&& a.intersection(b).getCoordinate() != null
+			|| a.intersection(b).getGeometryType().equals("MultiPolygon")
+		) {
+			return false;
+		}
+		return true;
+	}
 
-		return errorMessageListHt;
+
+	private Geometry union(Geometry a, Geometry b) {
+		return DatabaseUtils.getUnion(a, b);
+	}
+
+
+	private String findAllHauteur(SurfaceInondable surface, String tablename) throws SQLException {
+		RowIterator iterator = database.query(
+				" SELECT GROUP_CONCAT(ID_ZONE, ', ') as result" +
+				" FROM " + tablename +
+				" WHERE ID_S_INOND LIKE '" + surface.getId() + "' "
+		);
+
+		int index = iterator.getColumn("result");
+		if (index == -1) {
+			log.warn(MARKER, "N_prefixTri_ISO_HT_suffixIsoHt_S_ddd - group concat request ERROR");
+			return null;
+		}
+
+		String result = iterator.next()[0];
+		return result;
+	}
+
+
+	private String getShortName(String tablename) {
+		if (tablename.equals("N_prefixTri_ISO_HT_suffixIsoHt_S_ddd")) {
+			return "ISO_HT";
+		}
+		if (tablename.equals("N_prefixTri_ISO_DEB_S_ddd")) {
+			return "ISO_DEB";
+		}
+		return "NULL";
+	}
+
+
+	private void report(SurfaceInondable surface, String tablename) throws Exception {
+		context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
+				.setScope(ErrorScope.FEATURE)
+				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+				.setAttribute("WKT")
+				.setFeatureId(surface.getId())
+				.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
+				.setMessageParam("TABLE_NAME", getShortName(tablename))
+				.setMessageParam("ID_S_INOND", surface.getId())
+				.setMessageParam("LIST_ID_ISO_HT", findAllHauteur(surface, tablename))
+		);
+	}
+
+
+	private void reportIntersection(SurfaceInondable surface, String tablename) throws Exception {
+		context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS)
+				.setScope(ErrorScope.FEATURE)
+				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+				.setAttribute("WKT")
+				.setFeatureId(surface.getId())
+				.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
+				.setMessageParam("TABLE_NAME", getShortName(tablename))
+				.setMessageParam("ID_S_INOND", surface.getId())
+				.setMessageParam("LIST_ID_ISO_HT", findAllHauteur(surface, tablename))
+		);
+	}
+
+
+	private void reportMemoryError(SurfaceInondable surface) throws Exception {
+		context.report(context.createError(DgprErrorCodes.DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY)
+				.setScope(ErrorScope.FEATURE)
+				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+				.setAttribute("WKT")
+				.setFeatureId(surface.getId())
+				.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
+				.setMessageParam("ID_S_INOND", surface.getId())
+		);
 	}
 
 
 	public static boolean topologyEqualsWithTolerance(Geometry a, Geometry b, double tolerance) {
 		// same topological geometries
+		/* equalsTopo performance issue (for complex geometry may throw a "out of memory exception"
 		if (a.equalsTopo(b)) {
 			return true;
 		}
+		*/
 		// buffer comparison
 		Geometry aBuffer = a.buffer(tolerance);
 		Geometry bBuffer = b.buffer(tolerance);
 		if (! aBuffer.contains(b) || ! bBuffer.contains(a)) {
 			return false;
 		}
-		if (!(aBuffer instanceof Polygon) || !(bBuffer instanceof Polygon)) {
-			return false;
-		}
-		if (((Polygon)aBuffer).getNumInteriorRing() != 0 || ((Polygon)bBuffer).getNumInteriorRing() != 0) {
+		if (geometryHasInteriorPoint(aBuffer) || geometryHasInteriorPoint(bBuffer)) {
 			return false;
 		}
 		return true;
+	}
+	
+	public static boolean geometryHasInteriorPoint(Geometry geometry) {
+		if (geometry instanceof Polygon) {
+			if (((Polygon)geometry).getNumInteriorRing() != 0) {
+				return true;
+			}
+		}
+		if (geometry instanceof MultiPolygon) {
+			for (int i = 0; i < geometry.getNumGeometries(); i++) {
+				Geometry polygon = ((MultiPolygon)geometry).getGeometryN(i);
+				if (geometryHasInteriorPoint(polygon)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

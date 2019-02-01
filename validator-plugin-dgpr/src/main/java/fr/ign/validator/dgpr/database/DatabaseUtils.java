@@ -9,6 +9,7 @@ import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 
 import fr.ign.validator.database.RowIterator;
@@ -20,6 +21,8 @@ public class DatabaseUtils {
 	 * WKT Reader Enable projection transform to WKT Geometries
 	 */
 	public static WKTReader format = new WKTReader();
+	
+	public static GeometryFactory factory = new GeometryFactory();
 
 
 	// NOT WORKING (multipolygon ?)
@@ -44,6 +47,22 @@ public class DatabaseUtils {
 
 
 	/**
+	 * Perform unions of Geometry from two geometries
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static Geometry getUnion(Geometry a, Geometry b) {
+		List<Geometry> geometries = new ArrayList<Geometry>();
+		geometries.add(a);
+		geometries.add(b);
+
+		GeometryCollection geometryCollection = (GeometryCollection) factory.buildGeometry(geometries);
+		return geometryCollection.union();
+	}
+
+
+	/**
 	 * Perform unions of Geometry from a database result set
 	 * Feature must contains 'WKT' columns
 	 * @param rowIterator
@@ -51,7 +70,6 @@ public class DatabaseUtils {
 	 * @throws Exception
 	 */
 	public static Geometry getUnion(RowIterator rowIterator) throws Exception {
-		GeometryFactory geometryFactory = new GeometryFactory();
 		List<Geometry> geometries = new ArrayList<Geometry>();
 
 		int wktIndex = rowIterator.getColumn("WKT");
@@ -70,8 +88,7 @@ public class DatabaseUtils {
 		}
 		rowIterator.close();
 		
-		GeometryCollection geometryCollection = (GeometryCollection) geometryFactory.buildGeometry(geometries);
-
+		GeometryCollection geometryCollection = (GeometryCollection) factory.buildGeometry(geometries);
 		return geometryCollection.union();
 	}
 
@@ -119,6 +136,33 @@ public class DatabaseUtils {
 	 */
 	public static boolean isValid(Geometry geometry) {
 		return geometry.isValid();
+	}
+
+	
+	/**
+	 * Identify invalid geometry on which union and intersect operation will failed
+	 * @param geometry
+	 * @return
+	 */
+	public static boolean isValidWKT(String wkt) {
+		try {
+			Geometry geometry = format.read(wkt);
+			// Valid geometry ?
+			return geometry.isValid();
+		} catch (ParseException e) {
+			// Invalid WKT format
+			return false;
+		}
+	}
+	
+	public static Geometry getGeometryFromWkt(String wkt) {
+		try {
+			Geometry geometry = format.read(wkt);
+			return geometry;
+		} catch (ParseException e) {
+			// Invalid WKT format
+			return null;
+		}
 	}
 
 }

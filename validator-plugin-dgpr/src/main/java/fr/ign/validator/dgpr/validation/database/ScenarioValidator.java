@@ -41,7 +41,8 @@ public class ScenarioValidator implements Validator<Database> {
 		validateTable("N_prefixTri_ISO_HT_suffixIsoHt_S_ddd", "ID_ZONE");
 		validateTable("N_prefixTri_ISO_COTE_L_ddd", "ID_LIGNE");
 	}
-	
+
+
 	private void validateTable(String tablename, String attributeId) throws Exception {
 		// select / join
 		RowIterator inondTable = database.query(
@@ -50,9 +51,12 @@ public class ScenarioValidator implements Validator<Database> {
 				+ " iso.WKT,"
 				+ " iso.ID_S_INOND,"
 				+ " surface.SCENARIO as S_INOND_SCN"
-				+ " FROM " + tablename + " as iso "
-				+ " JOIN N_prefixTri_INONDABLE_suffixInond_S_ddd as surface "
-				+ " ON surface.ID_S_INOND LIKE iso.ID_S_INOND "
+					+ " FROM " + tablename + " as iso "
+					+ " JOIN N_prefixTri_INONDABLE_suffixInond_S_ddd as surface "
+						+ " ON surface.ID_S_INOND LIKE iso.ID_S_INOND "
+						+ " AND surface.SCENARIO NOT LIKE iso.SCENARIO "
+					+ " WHERE iso.SCENARIO NOT LIKE '' "
+					+ " AND surface.SCENARIO NOT LIKE '' "
 		);
 
 		// Indexes
@@ -78,7 +82,7 @@ public class ScenarioValidator implements Validator<Database> {
 			if (validateScenario(row[indexIsoScenario], row[indexSurfaceScenario])) {
 				continue;
 			}
-			
+
 			Envelope envelope = null;
 			if (indexWtk != -1) {
 				envelope = DatabaseUtils.getEnveloppe(row[indexWtk], context.getCoordinateReferenceSystem());
@@ -97,10 +101,11 @@ public class ScenarioValidator implements Validator<Database> {
 					.setMessageParam("EXPECTED_SCENARIO", row[indexSurfaceScenario])
 			);
 		}
+		inondTable.close();
 	}
 
 	/**
-	 *  Test de l'ppartenance d'une surfaces et de la zone au même scénario
+	 *  Test de l'appartenance d'une surfaces et de la zone au même scénario
 	 * @param isoId
 	 * @param isoScn
 	 * @param surfaceId
