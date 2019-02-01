@@ -35,11 +35,6 @@ public class GraphTopologyValidator implements Validator<Database> {
 	 */
 	private Database database;
 
-	/**
-	 * WKT Reader Enable projection transform to WKT Geometries
-	 */
-	// private static WKTReader format = new WKTReader();
-
 
 	/**
 	 * Iso classe de hauteur et débit respectent une topologie de graphe 
