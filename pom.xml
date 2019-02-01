@@ -4,12 +4,12 @@
 	<groupId>fr.ign.validator</groupId>
 	<artifactId>validator</artifactId>
 	<packaging>pom</packaging>
-	<version>3.3.7-SNAPSHOT</version>
+	<version>3.3.7</version>
 	<name>Validator</name>
 
 	<scm>
 		<url>https://github.com/IGNF/validator</url>
-		<tag>HEAD</tag>
+		<tag>v3.3.7</tag>
 		<developerConnection>scm:git:git@github.com:IGNF/validator.git</developerConnection>
 	</scm>
 
