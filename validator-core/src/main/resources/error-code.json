@@ -594,8 +594,8 @@
     {
         "name": "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY",
         "level": "WARNING",
-        "message": "Le validateur n'a pas déterminé si les ISO_HT ou ISO_DEB constituent une partition de {ID_S_INOND}.",
-        "documentation": "" 
+        "message": "Le validateur n'a pas déterminé si les {TABLE_NAME} constituent une partition de {ID_S_INOND}. Les géométries sont trop volumineuses ou complexes.",
+        "documentation": "Ce message intervient lorsque le validateur n’a pas assez de ressource mémoire pour effectuer les tests des partitionnement des surfaces inondables. Il faut voir si la géométrie des surfaces incriminées ne peuvent pas être simplifiées."
     },
     {
         "name": "DGPR_ISO_HT_INTERSECTS",

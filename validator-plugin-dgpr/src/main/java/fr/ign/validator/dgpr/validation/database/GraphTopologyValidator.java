@@ -83,9 +83,13 @@ public class GraphTopologyValidator implements Validator<Database> {
 			SurfaceInondable surface = new SurfaceInondable(row[indexId], row[indexWkt]);
 			try {
 				validSurfaceTopology(surface, "N_prefixTri_ISO_HT_suffixIsoHt_S_ddd");
+			} catch (OutOfMemoryError error) {
+				reportMemoryError(surface, "N_prefixTri_ISO_HT_suffixIsoHt_S_ddd");
+			}
+			try {
 				validSurfaceTopology(surface, "N_prefixTri_ISO_DEB_S_ddd");
 			} catch (OutOfMemoryError error) {
-				reportMemoryError(surface);
+				reportMemoryError(surface, "N_prefixTri_ISO_DEB_S_ddd");
 			}
 		}
 		surfaceIterator.close();
@@ -227,13 +231,14 @@ public class GraphTopologyValidator implements Validator<Database> {
 	}
 
 
-	private void reportMemoryError(SurfaceInondable surface) throws Exception {
+	private void reportMemoryError(SurfaceInondable surface, String tablename) throws Exception {
 		context.report(context.createError(DgprErrorCodes.DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY)
 				.setScope(ErrorScope.FEATURE)
 				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
 				.setAttribute("WKT")
 				.setFeatureId(surface.getId())
 				.setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
+				.setMessageParam("TABLE_NAME", getShortName(tablename))
 				.setMessageParam("ID_S_INOND", surface.getId())
 		);
 	}
