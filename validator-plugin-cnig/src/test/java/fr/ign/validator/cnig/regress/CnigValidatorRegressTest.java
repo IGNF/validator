@@ -5,7 +5,6 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -218,13 +217,12 @@ public class CnigValidatorRegressTest {
 		try {
 			document.validate(context);
 			Assert.assertEquals("19182_CC_20150517", document.getDocumentName());
-			/* check errors */
-			ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
-			// DOC_URBA.DATEREF = 2010 (bad regexp)
-			ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-
-			/* check warnings */
 			if (gdalDestroysCoordinates) {
+				/* check errors */
+				ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
+				// DOC_URBA.DATEREF = 2010 (bad regexp)
+				ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
+
 				ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
 				ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 
@@ -232,7 +230,12 @@ public class CnigValidatorRegressTest {
 				// invalid geometries to valid geometries...
 				ReportAssert.assertCount(0, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 			} else {
-				ReportAssert.assertCount(5, ErrorLevel.WARNING, report);
+				/* check errors */
+				ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+				// DOC_URBA.DATEREF = 2010 (bad regexp)
+				ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
+
+				ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
 
 				ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 				ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
@@ -358,13 +361,12 @@ public class CnigValidatorRegressTest {
 		try {
 			document.validate(context);
 			Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
-			ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
 
 			if (!gdalDestroysCoordinates) {
-				ReportAssert.assertCount(4, ErrorLevel.WARNING, report);
+				ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
 				ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 			} else {
-				ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+				ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
