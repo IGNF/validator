@@ -4,17 +4,17 @@
         "level": "INFO",
         "message": "{MESSAGE}",
         "documentation": "Message d'information générique"
-	},
-	{
-		"name": "VALIDATOR_PROJECTION_INFO",
-		"level": "INFO",
-		"message": "La projection {CODE_PROJECTION} ({URI_PROJECTION}) est utilisée pour la validation"
-	},
-	{
-		"name": "VALIDATOR_PROJECTION_LATLON",
-		"level": "WARNING",
-		"message": "Attention : Les coordonnées sont interprétées dans l'ordre lat,lon pour la projection ESPG:4326 conformément à la norme"
-	},
+    },
+    {
+        "name": "VALIDATOR_PROJECTION_INFO",
+        "level": "INFO",
+        "message": "La projection {CODE_PROJECTION} ({URI_PROJECTION}) est utilisée pour la validation"
+    },
+    {
+        "name": "VALIDATOR_PROJECTION_LATLON",
+        "level": "WARNING",
+        "message": "Attention : Les coordonnées sont interprétées dans l'ordre lat,lon pour la projection ESPG:4326 conformément à la norme"
+    },
     {
         "name": "VALIDATOR_EXCEPTION",
         "level": "FATAL",
@@ -137,7 +137,7 @@
     },
     {
         "name": "ATTRIBUTE_GEOMETRY_INVALID",
-        "level": "WARNING",
+        "level": "ERROR",
         "message": "La géométrie de l'objet n'est pas topologiquement correcte. {TYPE_ERROR}",
         "documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
     },
@@ -589,7 +589,7 @@
         "name": "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND",
         "level": "ERROR",
         "message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND} à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
     },
     {
         "name": "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY",
@@ -601,7 +601,7 @@
         "name": "DGPR_ISO_HT_INTERSECTS",
         "level": "ERROR",
         "message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND}. Leurs périmètres s'intersectent.",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe." 
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
     },
     {
         "name": "DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED",
@@ -613,7 +613,7 @@
         "name": "DGPR_UNMATCHED_SCENARIO",
         "level": "ERROR",
         "message": "L'objet {ID} de la classe {TABLE_NAME} a un scénario ({VALUE_SCENARIO}) différent de celui de la surface inondable {ID_S_INOND} ({EXPECTED_SCENARIO}) à laquelle il est rattaché.",
-        "documentation": "Cf. standard DI 2.0. B.3.1 Classe d'objets <Carte_surfaces_inondables>" 
+        "documentation": "Cf. standard DI 2.0. B.3.1 Classe d'objets <Carte_surfaces_inondables>"
     },
     {
         "name": "DGPR_IDENTIFIER_UNICITY",
