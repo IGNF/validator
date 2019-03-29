@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>fr.ign.validator</groupId>
 		<artifactId>validator</artifactId>
-		<version>3.3.9</version>
+		<version>3.3.10-SNAPSHOT</version>
 	</parent>
 	<artifactId>validator-core</artifactId>
 	<packaging>jar</packaging>
