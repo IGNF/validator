@@ -55,14 +55,22 @@ public class GraphTopologyValidator implements Validator<Database> {
 	}
 
 
-	public double getTolerance() {
+	private double getDistanceBuffer() {
 		return context.getTolerance();
+	}
+
+
+	private double getSimplifyTolerance() {
+		if (context.getTolerance() > 0) {
+			return context.getTolerance() / 2;
+		}
+		return 0;
 	}
 
 
 	private void runValidation() throws Exception {
 		RowIterator surfaceIterator = database.query(
-				"SELECT * FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
+				"SELECT ID_S_INOND, WKT FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
 		);
 
 		int indexId = surfaceIterator.getColumn("ID_S_INOND");
@@ -125,7 +133,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 			}
 
 			// validate no intersection and continue
-			Geometry geometry = DatabaseUtils.getGeometryFromWkt(row[indexWkt]);
+			Geometry geometry = DatabaseUtils.getGeometryFromWkt(row[indexWkt], getSimplifyTolerance());
 			if (!noIntersection(union, geometry)) {
 				reportIntersection(surface, tablename);
 			}
@@ -134,7 +142,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 			if (union == null) {
 				union = geometry;
 			} else {
-				union = union(union, geometry);
+				union = DatabaseUtils.getUnion(union, geometry);
 			}
 
 		}
@@ -146,10 +154,10 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 
 		// we already know that surfaceGeometry is Valid
-		Geometry surfaceGeometry = DatabaseUtils.getGeometryFromWkt(surface.getWkt());
+		Geometry surfaceGeometry = DatabaseUtils.getGeometryFromWkt(surface.getWkt(), getSimplifyTolerance());
 		// validate union equalsTopo surface or die
 		// tolerance to 1 meters
-		if (!topologyEqualsWithTolerance(union, surfaceGeometry, getTolerance())) {
+		if (!topologyEqualsWithTolerance(union, surfaceGeometry, getDistanceBuffer())) {
 			report(surface, tablename);
 		}
 	}
@@ -166,11 +174,6 @@ public class GraphTopologyValidator implements Validator<Database> {
 			return false;
 		}
 		return true;
-	}
-
-
-	private Geometry union(Geometry a, Geometry b) {
-		return DatabaseUtils.getUnion(a, b);
 	}
 
 
@@ -244,16 +247,15 @@ public class GraphTopologyValidator implements Validator<Database> {
 	}
 
 
-	public static boolean topologyEqualsWithTolerance(Geometry a, Geometry b, double tolerance) {
+	public static boolean topologyEqualsWithTolerance(Geometry a, Geometry b, double distanceBuffer) {
 		// same topological geometries
 		/* equalsTopo performance issue (for complex geometry may throw a "out of memory exception"
 		if (a.equalsTopo(b)) {
 			return true;
 		}
 		*/
-		// buffer comparison
-		Geometry aBuffer = a.buffer(tolerance);
-		Geometry bBuffer = b.buffer(tolerance);
+		Geometry aBuffer = a.buffer(distanceBuffer);
+		Geometry bBuffer = b.buffer(distanceBuffer);
 		if (! aBuffer.contains(b) || ! bBuffer.contains(a)) {
 			return false;
 		}
@@ -262,6 +264,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 		return true;
 	}
+	
 	
 	public static boolean geometryHasInteriorPoint(Geometry geometry) {
 		if (geometry instanceof Polygon) {

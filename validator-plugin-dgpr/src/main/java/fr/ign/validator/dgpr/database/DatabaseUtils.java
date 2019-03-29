@@ -11,6 +11,8 @@ import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
+import com.vividsolutions.jts.io.WKTWriter;
+import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
 
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.geometry.ProjectionTransform;
@@ -21,6 +23,11 @@ public class DatabaseUtils {
 	 * WKT Reader Enable projection transform to WKT Geometries
 	 */
 	public static WKTReader format = new WKTReader();
+
+	/**
+	 * WKT writer
+	 */
+	public static WKTWriter formatWriter = new WKTWriter();
 	
 	public static GeometryFactory factory = new GeometryFactory();
 
@@ -154,7 +161,8 @@ public class DatabaseUtils {
 			return false;
 		}
 	}
-	
+
+
 	public static Geometry getGeometryFromWkt(String wkt) {
 		try {
 			Geometry geometry = format.read(wkt);
@@ -163,6 +171,23 @@ public class DatabaseUtils {
 			// Invalid WKT format
 			return null;
 		}
+	}
+
+
+	public static Geometry getGeometryFromWkt(String wkt, double tolerance) {
+		try {
+			Geometry simpleGeom = DouglasPeuckerSimplifier.simplify(format.read(wkt), tolerance);
+			return simpleGeom;
+		} catch (ParseException e) {
+			// Invalid WKT format
+			return null;
+		}
+	}
+
+
+	public static String getWktFromGeometry(Geometry geom) {
+		String wkt = formatWriter.write(geom);
+		return wkt;
 	}
 
 }
