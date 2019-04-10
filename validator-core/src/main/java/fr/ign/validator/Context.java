@@ -111,7 +111,23 @@ public class Context {
 	 */
 	private List<ValidatorListener> listeners = new ArrayList<ValidatorListener>() ;
 
-	private double tolerance;
+	
+	/**
+	 * Tolerance for geometric operation such as intersection
+	 */
+	private Double tolerance;
+
+	
+	/**
+	 * Simplification distance
+	 */
+	private Double distanceSimplification;
+	
+	
+	/**
+	 * Allow using faster simplification against topologicaly safe simplification
+	 */
+	private Boolean safeSimplification;
 
 
 	public Context(){
@@ -628,7 +644,7 @@ public class Context {
 	 * used in geometric operation (dgpr plugin)
 	 * @return
 	 */
-	public double getTolerance() {
+	public Double getTolerance() {
 		return this.tolerance;
 	}
 
@@ -642,5 +658,36 @@ public class Context {
 		this.tolerance = topologicalTolerance;
 	}
 
+	/**
+	 * simplification distance option
+	 * @return distance
+	 */
+	public Double getDistanceSimplification() {
+		return distanceSimplification;
+	}
+	
+	/**
+	 * simplification distance option
+	 * @param distanceSimplification
+	 */
+	public void setDistanceSimplification(double distanceSimplification) {
+		this.distanceSimplification = distanceSimplification;
+	}
+	
+	/**
+	 * safe simplification option
+	 * @return safe simplication allowed
+	 */
+	public Boolean isSafeSimplification() {
+		return safeSimplification;
+	}
+	
+	/**
+	 * safe simplification option
+	 * @param safeSimplification
+	 */
+	public void setSafeSimplification(boolean safeSimplification) {
+		this.safeSimplification = safeSimplification;
+	}
 
 }

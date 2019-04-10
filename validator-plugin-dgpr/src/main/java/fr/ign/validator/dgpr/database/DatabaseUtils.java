@@ -13,6 +13,7 @@ import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.io.WKTWriter;
 import com.vividsolutions.jts.simplify.DouglasPeuckerSimplifier;
+import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.geometry.ProjectionTransform;
@@ -173,18 +174,42 @@ public class DatabaseUtils {
 		}
 	}
 
-
-	public static Geometry getGeometryFromWkt(String wkt, double tolerance) {
+	/**
+	 * @see JTS documentation: DouglasPeuckerSimplifier
+	 *   Simplifies a Geometry using the Douglas-Peucker algorithm. Ensures that any polygonal geometries returned are valid. Simple lines are not guaranteed to remain simple after simplification. All geometry types are handled. Empty and point geometries are returned unchanged. Empty geometry components are deleted.
+     *   Note that in general D-P does not preserve topology - e.g. polygons can be split, collapse to lines or disappear holes can be created or disappear, and lines can cross. To simplify geometry while preserving topology use TopologyPreservingSimplifier. (However, using D-P is significantly faster).
+     * KNOWN BUGS
+     *   In some cases the approach used to clean invalid simplified polygons can distort the output geometry severely. 
+	 * @param wkt
+	 * @param tolerance
+	 * @return
+	 */
+	public static Geometry getGeometryFromWkt(String wkt, double tolerance, boolean keepTopology) {
 		try {
-			Geometry simpleGeom = DouglasPeuckerSimplifier.simplify(format.read(wkt), tolerance);
-			return simpleGeom;
+			if (keepTopology) {
+				return TopologyPreservingSimplifier.simplify(format.read(wkt), tolerance);
+			}
+			return DouglasPeuckerSimplifier.simplify(format.read(wkt), tolerance);
 		} catch (ParseException e) {
 			// Invalid WKT format
 			return null;
 		}
 	}
+	
+	/**
+	 * 
+	 * @param geom
+	 * @param tolerance
+	 * @return
+	 */
+	public static Geometry simplify(Geometry geom, double tolerance, boolean keepTopology) {
+		if (keepTopology) {
+			return TopologyPreservingSimplifier.simplify(geom, tolerance);
+		}
+		return DouglasPeuckerSimplifier.simplify(geom, tolerance);
+	}
 
-
+	
 	public static String getWktFromGeometry(Geometry geom) {
 		String wkt = formatWriter.write(geom);
 		return wkt;

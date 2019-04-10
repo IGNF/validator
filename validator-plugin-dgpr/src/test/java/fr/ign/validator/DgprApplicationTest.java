@@ -158,6 +158,71 @@ public class DgprApplicationTest {
 	}
 
 
+
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	public void testDocumentNotOkTolerance10noSafe() throws Exception {
+		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
+		File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
+
+		Context context = createContext(documentPath);
+		context.setTolerance(10.0);
+		context.setDistanceSimplification(5.0);
+		context.setSafeSimplification(false);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+
+			// validation database
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+			ValidatorError error = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
+			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+
+
+
+	/**
+	 * @throws Exception
+	 */
+	@Test
+	public void testDocumentNotOkTolerance10safe() throws Exception {
+		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
+		File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
+
+		Context context = createContext(documentPath);
+		context.setTolerance(10.0);
+		context.setDistanceSimplification(5.0);
+		context.setSafeSimplification(true);
+		Document document = new Document(documentModel, documentPath);
+		try {
+			document.validate(context);
+			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
+			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
+
+			// validation database
+			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+			ValidatorError error = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
+			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Assert.fail(e.getMessage());
+		}
+	}
+	
 	@Test
 	public void testDocumentOkWithNoTolerance() throws Exception {
 		DocumentModel documentModel = getDocumentModel("covadis_di_2018");

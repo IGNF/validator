@@ -47,27 +47,38 @@ public class GraphTopologyValidator implements Validator<Database> {
 		// context
 		this.context = context;
 		this.database = database;
-		try {	
+		try {
 			runValidation();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-
+	
 	private double getDistanceBuffer() {
+		if (context.getTolerance() == null) {
+			return 0.0;
+		}
 		return context.getTolerance();
 	}
 
-
-	private double getSimplifyTolerance() {
-		if (context.getTolerance() > 0) {
-			return context.getTolerance() / 2;
+	
+	private double getDistanceSimplification() {
+		if (context.getDistanceSimplification() == null) {
+			return 0.0;
 		}
-		return 0;
+		return context.getDistanceSimplification();
+	}
+	
+	
+	private boolean isSafeSimplification() {
+		if (context.isSafeSimplification() == null) {
+			return false;
+		}
+		return context.isSafeSimplification();
 	}
 
-
+	
 	private void runValidation() throws Exception {
 		RowIterator surfaceIterator = database.query(
 				"SELECT ID_S_INOND, WKT FROM N_prefixTri_INONDABLE_suffixInond_S_ddd "
@@ -105,6 +116,10 @@ public class GraphTopologyValidator implements Validator<Database> {
 
 
 	private void validSurfaceTopology(SurfaceInondable surface, String tablename) throws Exception {
+		if (surface.getId() == null || surface.getId().equals("null")) {		
+			log.error(MARKER, "{} - Impossible de valider la topology, identifiant 'null' détecté ", tablename);
+			return;
+		}
 		RowIterator hauteurIterator = database.query(
 				"SELECT ID_ZONE, ID_S_INOND, WKT "
 				+ " FROM " + tablename
@@ -121,6 +136,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 
 		Geometry union = null;
+		boolean intersected = false;
 		while (hauteurIterator.hasNext()) {
 			String[] row = hauteurIterator.next();
 
@@ -133,9 +149,10 @@ public class GraphTopologyValidator implements Validator<Database> {
 			}
 
 			// validate no intersection and continue
-			Geometry geometry = DatabaseUtils.getGeometryFromWkt(row[indexWkt], getSimplifyTolerance());
-			if (!noIntersection(union, geometry)) {
+			Geometry geometry = DatabaseUtils.getGeometryFromWkt(row[indexWkt], getDistanceSimplification(), isSafeSimplification());
+			if (!intersected && !noIntersection(union, geometry)) {
 				reportIntersection(surface, tablename);
+				intersected = true;
 			}
 
 			// save new union
@@ -154,7 +171,7 @@ public class GraphTopologyValidator implements Validator<Database> {
 		}
 
 		// we already know that surfaceGeometry is Valid
-		Geometry surfaceGeometry = DatabaseUtils.getGeometryFromWkt(surface.getWkt(), getSimplifyTolerance());
+		Geometry surfaceGeometry = DatabaseUtils.getGeometryFromWkt(surface.getWkt(), getDistanceSimplification(), isSafeSimplification());
 		// validate union equalsTopo surface or die
 		// tolerance to 1 meters
 		if (!topologyEqualsWithTolerance(union, surfaceGeometry, getDistanceBuffer())) {
@@ -167,9 +184,12 @@ public class GraphTopologyValidator implements Validator<Database> {
 		if (a == null || b == null) {
 			return true;
 		}
-		if (a.intersection(b).getGeometryType().equals("Polygon") 
-			&& a.intersection(b).getCoordinate() != null
-			|| a.intersection(b).getGeometryType().equals("MultiPolygon")
+		Geometry unbufferA = a.buffer(-1 * getDistanceBuffer());
+		Geometry unbufferB = b.buffer(-1 * getDistanceBuffer());
+		Geometry intersection = unbufferA.intersection(unbufferB);
+		if (intersection.getGeometryType().equals("Polygon") 
+			&& intersection.getCoordinate() != null
+			|| intersection.getGeometryType().equals("MultiPolygon")
 		) {
 			return false;
 		}

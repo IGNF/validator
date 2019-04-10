@@ -76,11 +76,15 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 	 * @throws SQLException 
 	 */
 	private void validateSurfaceInondable(String surfaceId, String wkt) throws Exception {
+		if (surfaceId == null || surfaceId.equals("null")) {		
+			log.error(MARKER, "{} - Impossible de valider la couverture de hauteur, identifiant 'null' détecté ");
+			return;
+		}
 		// select zone iso
 		RowIterator isoHtTable = database.query(
 				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
 				+ " WHERE ID_S_INOND LIKE '" + surfaceId + "'"
-				+ " ORDER BY ht_min ASC;"
+				+ " ORDER BY ht_min ASC ;"
 		);
 
 		int indexIdZone = isoHtTable.getColumn("ID_ZONE");
