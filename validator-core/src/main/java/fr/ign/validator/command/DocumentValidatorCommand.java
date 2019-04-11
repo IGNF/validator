@@ -190,6 +190,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		parseDataExtent(commandLine);
 		parseFlatOption(commandLine);
 		parseTopologicalToleranceOption(commandLine);
+		parseDistanceSimplificationOption(commandLine);
+		parseSafeSimplificationOption(commandLine);
 
 		// plugins...
 		parsePluginsOption(commandLine);
@@ -633,7 +635,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 */
 	protected void buildSimplifySafe(Options options) {
 		{
-			Option option = new Option(null, "safe-simplify", true, "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier");
+			Option option = new Option(null, "safe-simplify", false, "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -677,22 +679,18 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		}
 	}
 
-
 	/**
-	 * Parse tolerance option
-	 *
+	 * Parse flat option
+	 * 
 	 * @param commandLine
-	 * @throws ParseException 
+	 * @return
 	 */
-	protected void parseSafeSimplificationOption(CommandLine commandLine) throws ParseException {
-		String strValue = commandLine.getOptionValue("safe-simplify", "false");
-
-		try {
-			Boolean safe = Boolean.valueOf(strValue);
-			this.safeSimplification = safe;	
-		} catch (NumberFormatException e) {
-			String message = String.format("Paramètre invalide 'safe-simplify' : '%1s' n'est pas un boolean", strValue);
-			throw new ParseException(message);
+	protected void parseSafeSimplificationOption(CommandLine commandLine) {
+		this.safeSimplification = commandLine.hasOption("safe-simplify");
+		if (this.safeSimplification) {
+			log.info(MARKER, "validator command running whith Safe Simplifier");
+		} else {
+			log.info(MARKER, "validator command running whith unsafe Simplifier");
 		}
 	}
 
