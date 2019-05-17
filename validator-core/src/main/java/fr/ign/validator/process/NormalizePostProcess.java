@@ -3,6 +3,7 @@ package fr.ign.validator.process;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -14,15 +15,19 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.model.file.PdfModel;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.normalize.CSVNormalizer;
 
 /**
  * 
- * Creates a DATA directory in the validation directory normalizing data from the model
+ * Creates DATA and METADATA directories in the validation directory :
  * 
  * <ul>
- * 		<li>Tables are normalized in csv according to corresponding FeatureType</li>
- * 		<li>Standard files (MetadataFiles, PDF) are copied</li>
+ * 		<li>Tables are normalized as csv files according to corresponding FeatureType in DATA directory</li>
+ * 		<li>PDF are copied to DATA directory</li>
+ * 		<li>Metadata are copied to METADATA directory</li> 
  * 		<li>Directories are ignored</li>
  * </ul>
  * 
@@ -31,7 +36,7 @@ import fr.ign.validator.normalize.CSVNormalizer;
  */
 public class NormalizePostProcess implements ValidatorListener {
 	public static final Logger log = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("CreateNormalizedCsvPostProcess") ;
+	public static final Marker MARKER = MarkerManager.getMarker("NormalizePostProcess") ;
 	
 
 	@Override
@@ -62,22 +67,41 @@ public class NormalizePostProcess implements ValidatorListener {
 			metadataDirectory.mkdirs() ;
 		}
 		
-		log.info(MARKER,"Création des fichiers normalisés dans {}",dataDirectory);
+		log.info(MARKER,"Create normalized files in {}",dataDirectory);
 		
 		/* Pour chaque fileModel, on aggrège les données dans un CSV normalisé */
 		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
 		for (FileModel fileModel : fileModels) {
-			FeatureType featureType = fileModel.getFeatureType();
-			if ( featureType == null ){
-				continue;
+			if ( fileModel instanceof TableModel ){
+				FeatureType featureType = fileModel.getFeatureType();
+				if ( featureType == null ){
+					continue;
+				}
+				File csvFile = new File(dataDirectory, fileModel.getName()+".csv" ) ;
+				CSVNormalizer normalizer = new CSVNormalizer(context, featureType, csvFile);
+				List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
+				for (DocumentFile documentFile : documentFiles) {
+					log.info(MARKER,"Append {} to CSV file {}...",documentFile.getPath(), csvFile);
+					normalizer.append(documentFile.getPath());
+				}
+				normalizer.close();
+			}else if ( fileModel instanceof PdfModel ){
+				List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
+				for (DocumentFile documentFile : documentFiles) {
+					File srcFile = documentFile.getPath();
+					File destFile = new File(dataDirectory, srcFile.getName()) ;
+					log.info(MARKER,"Copy {} to {}...",srcFile, destFile);
+					FileUtils.copyFile(srcFile, destFile);
+				}
+			}else if ( fileModel instanceof MetadataModel ){
+				List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
+				for (DocumentFile documentFile : documentFiles) {
+					File srcFile = documentFile.getPath();
+					File destFile = new File(metadataDirectory, srcFile.getName()) ;
+					log.info(MARKER,"Copy {} to {}...",srcFile, destFile);
+					FileUtils.copyFile(srcFile, destFile);
+				}
 			}
-			File csvFile = new File(dataDirectory, fileModel.getName()+".csv" ) ;
-			CSVNormalizer normalizer = new CSVNormalizer(context, featureType, csvFile);
-			List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
-			for (DocumentFile documentFile : documentFiles) {
-				normalizer.append(documentFile.getPath());
-			}
-			normalizer.close();
 		}
 
 	}
