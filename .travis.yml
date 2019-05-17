@@ -7,24 +7,24 @@ matrix:
     env:
       - JDK: openjdk7
       - GDAL_VERSION: 1.10.*
-  - os: linux
-    dist: trusty
-    env:
-      - JDK: openjdk7
-      - GDAL_VERSION: 2.2.*
-      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
+  # - os: linux
+  #   dist: trusty
+  #   env:
+  #     - JDK: openjdk7
+  #     - GDAL_VERSION: 2.3.*
+  #     - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
   - os: linux
     dist: trusty
     env:
       - JDK: openjdk8
-      - GDAL_VERSION: 2.1.*
+      - GDAL_VERSION: 2.2.*
       - GDAL_PPA: "ppa:ubuntugis/ppa"
-  - os: linux
-    dist: trusty
-    env:
-      - JDK: openjdk8
-      - GDAL_VERSION: 2.2.*
-      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
+  # - os: linux
+  #   dist: trusty
+  #   env:
+  #     - JDK: openjdk8
+  #     - GDAL_VERSION: 2.3.*
+  #     - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
 notifications:
   email: false
