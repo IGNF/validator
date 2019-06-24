@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[1cbf929b43612b70d27dd6b896ef378c]]></id>
+  <id><![CDATA[e502311aa7e29e608e45785913a03db8]]></id>
   <typeName><![CDATA[N_prefixTri_ENJEU_STEU_P_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[1359eb0488c862d7de3b10c60586d048]]></id>
-      <name><![CDATA[EST_REF]]></name>
-      <type><![CDATA[String]]></type>
+      <id><![CDATA[5ea076eab7075fa9aacf9886bfcb6e9f]]></id>
+      <name><![CDATA[CAPACITE_N]]></name>
+      <type><![CDATA[Integer]]></type>
       <nullable>true</nullable>
-      <listOfValues>
-        <value><![CDATA[T]]></value>
-        <value><![CDATA[F]]></value>
-      </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[13691ae6de18e143310b2bf3abf9274a]]></id>
+      <id><![CDATA[65078ff8e38e02cc71071271bf363c6e]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPoint]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[95a6da80f2ee07cd5614990f6e0ce761]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[aecb38daf24cf74a3abb29bf932b6dc2]]></id>
       <name><![CDATA[CODE_STEU]]></name>
       <type><![CDATA[String]]></type>
       <size>30</size>
@@ -22,22 +30,14 @@
       <identifier>true</identifier>
     </attribute>
     <attribute>
-      <id><![CDATA[28dc01fb6e2ce68729de44a707e641d9]]></id>
-      <name><![CDATA[WKT]]></name>
-      <type><![CDATA[MultiPoint]]></type>
-      <nullable>false</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[9360118962c5d80c3c49fc0b0917c06e]]></id>
-      <name><![CDATA[DATIMPORT]]></name>
-      <type><![CDATA[Date]]></type>
+      <id><![CDATA[aee279fa6c1f4b14fa9bc89af63a3c30]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
       <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[c18350cfa5d23fb5b87c3e125f111a79]]></id>
-      <name><![CDATA[CAPACITE_N]]></name>
-      <type><![CDATA[Integer]]></type>
-      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
     </attribute>
   </attributes>
 </featureType>

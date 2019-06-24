@@ -1,38 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[b5d36e93ad24fbadddad7b4bbe9e3925]]></id>
+  <id><![CDATA[042d11ff521181b8f8d4b4d3961975f3]]></id>
   <typeName><![CDATA[N_prefixTri_ENJEU_IPPC_P_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[08a60a792a39a175bc3039cb5d2bb405]]></id>
-      <name><![CDATA[CODE_ACTIV]]></name>
-      <type><![CDATA[String]]></type>
-      <size>6</size>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[1d28c2b7db684f82c5570d917df48c35]]></id>
-      <name><![CDATA[NOM]]></name>
-      <type><![CDATA[String]]></type>
-      <size>100</size>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[3db8887242d98105b48228e8a010cb98]]></id>
+      <id><![CDATA[17201571032cfc375e697a32254e61ef]]></id>
       <name><![CDATA[WKT]]></name>
       <type><![CDATA[MultiPoint]]></type>
       <nullable>false</nullable>
     </attribute>
     <attribute>
-      <id><![CDATA[428547ac7c6163f435b9177c4def6f18]]></id>
-      <name><![CDATA[CODE_IPPC]]></name>
-      <type><![CDATA[String]]></type>
-      <size>30</size>
-      <nullable>true</nullable>
-      <identifier>true</identifier>
-    </attribute>
-    <attribute>
-      <id><![CDATA[8a9ac9e9fa44b2230065fc6aaeb1a178]]></id>
+      <id><![CDATA[53011e146daedda79a54201523b6b55f]]></id>
       <name><![CDATA[EST_REF]]></name>
       <type><![CDATA[String]]></type>
       <nullable>true</nullable>
@@ -42,10 +20,32 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[a97228736b6bb24bbdcb8bd2b86612fc]]></id>
+      <id><![CDATA[5bb11aa9a8f50f9a5224cff75f9ff68a]]></id>
+      <name><![CDATA[CODE_ACTIV]]></name>
+      <type><![CDATA[String]]></type>
+      <size>6</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[861640f6163ec803cdc7dffe2652d02f]]></id>
       <name><![CDATA[DATIMPORT]]></name>
       <type><![CDATA[Date]]></type>
       <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d62cc0b9e9e12fdd2c5fa4bf09fd7bb8]]></id>
+      <name><![CDATA[NOM]]></name>
+      <type><![CDATA[String]]></type>
+      <size>100</size>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[d8593d6add0dc0e11fba1ed00e790a71]]></id>
+      <name><![CDATA[CODE_IPPC]]></name>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>true</nullable>
+      <identifier>true</identifier>
     </attribute>
   </attributes>
 </featureType>

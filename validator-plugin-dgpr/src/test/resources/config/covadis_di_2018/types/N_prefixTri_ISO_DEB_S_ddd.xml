@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[c018e68b54d722665239edd291b12d3f]]></id>
+  <id><![CDATA[02a920fa0b8350c5fb6e4f99913eb07d]]></id>
   <typeName><![CDATA[N_prefixTri_ISO_DEB_S_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[12ef456205d5b30d53444dc98e53853c]]></id>
+      <regexp><![CDATA[ZCD_[0-9]+$]]></regexp>
+      <id><![CDATA[2b8efaa022a54209168ee125ce084f34]]></id>
+      <name><![CDATA[ID_ZONE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZCD_'[numero]']]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4407bd14a5890c529cb7ba63fdca7d43]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4582ec97138c1097cf787a5054f8316e]]></id>
       <name><![CDATA[DEBLIN_MIN]]></name>
-      <description><![CDATA[Valeur vide interdite- Exprimé en m²/s
-- Ne peut pas être négative]]></description>
+      <description><![CDATA[Valeur vide interdite- Exprimé en m²/s- Ne peut pas être négative]]></description>
       <type><![CDATA[Double]]></type>
       <nullable>false</nullable>
       <constraint><![CDATA[DEBLIN_MIN >= 0]]></constraint>
     </attribute>
     <attribute>
-      <id><![CDATA[1dd278761cdb45438e3e25bb5099cd96]]></id>
+      <id><![CDATA[462869d774d4c90dbd999760cc56cf95]]></id>
+      <name><![CDATA[DEBLIN_MAX]]></name>
+      <description><![CDATA[Exprimé en m²/s - DEBLIN_MAX >= DEBLIN_MIN]]></description>
+      <type><![CDATA[Double]]></type>
+      <nullable>true</nullable>
+      <constraint><![CDATA[ DEBLIN_MAX= NULL  OR   DEBLIN_MAX >=  DEBLIN_MIN]]></constraint>
+    </attribute>
+    <attribute>
+      <id><![CDATA[656c50aaf6355d45dde0f49ffcb67d91]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6b28ce22a10fcf990ad337e2ad4852d4]]></id>
       <name><![CDATA[EST_REF]]></name>
       <type><![CDATA[String]]></type>
       <nullable>true</nullable>
@@ -23,19 +54,7 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[41e461921b295372ecbfb14d74cac93e]]></id>
-      <name><![CDATA[DATENTREE]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[6939d9da1b6de193da85b8ebd25e12e6]]></id>
-      <name><![CDATA[DATSORTIE]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[9a8a777df770590c5da8f113d494b006]]></id>
+      <id><![CDATA[6f16128945ae4b8a03f4166ad5fb87a6]]></id>
       <name><![CDATA[ID_S_INOND]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -43,36 +62,16 @@
       <reference><![CDATA[N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND]]></reference>
     </attribute>
     <attribute>
-      <id><![CDATA[a66f400226a2c478855b393164e01717]]></id>
+      <id><![CDATA[ac485e0fd91c08bcc5ef1c576b03aa15]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[f6d4108c07364845774d43529b19ee11]]></id>
       <name><![CDATA[WKT]]></name>
       <type><![CDATA[MultiPolygon]]></type>
       <nullable>false</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[db5edeef86ffbd02bb328d8e55cbd49e]]></id>
-      <name><![CDATA[ID_TRI]]></name>
-      <description><![CDATA[Valeur vide interdite]]></description>
-      <type><![CDATA[String]]></type>
-      <nullable>false</nullable>
-      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
-    </attribute>
-    <attribute>
-      <id><![CDATA[dd5c19661adb0bbd4f6f1ed76b123b0e]]></id>
-      <name><![CDATA[DEBLIN_MAX]]></name>
-      <description><![CDATA[Exprimé en m²/s - DEBLIN_MAX >= DEBLIN_MIN]]></description>
-      <type><![CDATA[Double]]></type>
-      <nullable>true</nullable>
-      <constraint><![CDATA[ DEBLIN_MAX= NULL  OR   DEBLIN_MAX >=  DEBLIN_MIN]]></constraint>
-    </attribute>
-    <attribute>
-      <regexp><![CDATA[ZCD_[0-9]+$]]></regexp>
-      <id><![CDATA[e84640844c49a5f376a4fa57fd16452a]]></id>
-      <name><![CDATA[ID_ZONE]]></name>
-      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZCD_'[numero]']]></description>
-      <type><![CDATA[String]]></type>
-      <size>30</size>
-      <nullable>false</nullable>
-      <identifier>true</identifier>
     </attribute>
   </attributes>
 </featureType>

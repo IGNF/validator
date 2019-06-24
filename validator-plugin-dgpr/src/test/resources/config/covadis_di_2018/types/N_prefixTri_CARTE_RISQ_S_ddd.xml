@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[a959e3c5826382ff50602a4c059d975d]]></id>
+  <id><![CDATA[2a1263cd00b42f75d03c0afab9d7ddfc]]></id>
   <typeName><![CDATA[N_prefixTri_CARTE_RISQ_S_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[0124cbe5a292ec39307678c339a208f1]]></id>
+      <regexp><![CDATA[CRI_[0-9]+$]]></regexp>
+      <id><![CDATA[22c0b17021825ab18b03b67d9823aa5e]]></id>
+      <name><![CDATA[ID_CARTE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type CRI_[numero]]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[2af1cc82406ae7fde56e5ac019cebc4f]]></id>
+      <name><![CDATA[DATFINVAL]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[554716eb38ea85f72331995857edee08]]></id>
+      <name><![CDATA[DATAPPRO]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[6f4727ef14142ba292b2bbe4ea24d1df]]></id>
       <name><![CDATA[URLRAPPORT]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -12,7 +34,7 @@
       <nullable>false</nullable>
     </attribute>
     <attribute>
-      <id><![CDATA[170ef172c5e2a4a86cbec5949005a72b]]></id>
+      <id><![CDATA[7b4c70160032f729ea925314a7a998cc]]></id>
       <name><![CDATA[ID_TRI]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -20,32 +42,10 @@
       <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
     </attribute>
     <attribute>
-      <id><![CDATA[225c349ae74fe21671ab843a49e88983]]></id>
-      <name><![CDATA[DATAPPRO]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[5154f14e59d27c1bff5da998e2fa5b47]]></id>
-      <name><![CDATA[DATFINVAL]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[a8c04694c781fb115e25d7897c485173]]></id>
+      <id><![CDATA[c98384b5b27f3811c1241d0c55296dc4]]></id>
       <name><![CDATA[WKT]]></name>
       <type><![CDATA[MultiPolygon]]></type>
       <nullable>false</nullable>
-    </attribute>
-    <attribute>
-      <regexp><![CDATA[CRI_[0-9]+$]]></regexp>
-      <id><![CDATA[cc7e9af95a21ae31d77c2e963d77a2fb]]></id>
-      <name><![CDATA[ID_CARTE]]></name>
-      <description><![CDATA[COVADIS B1.2. - Identifiant de type CRI_[numero]]]></description>
-      <type><![CDATA[String]]></type>
-      <size>30</size>
-      <nullable>false</nullable>
-      <identifier>true</identifier>
     </attribute>
   </attributes>
 </featureType>
