@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[10dbf646b397e2c94650f7c38abd8299]]></id>
+  <id><![CDATA[8eeb52323e07eadd0b0d1d1ea5484841]]></id>
   <typeName><![CDATA[N_prefixTri_ENJEU_DCE_S_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[0e69db3b28bcfc0153208241251739eb]]></id>
-      <name><![CDATA[WKT]]></name>
-      <type><![CDATA[MultiPolygon]]></type>
-      <nullable>false</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[19f55f1a75293730734e426baa765494]]></id>
+      <id><![CDATA[07f634f6bbce19450991766999a0b9ef]]></id>
       <name><![CDATA[EST_REF]]></name>
       <type><![CDATA[String]]></type>
       <nullable>true</nullable>
@@ -20,7 +14,13 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[30272dcb117aa08a34cd8f184a740343]]></id>
+      <id><![CDATA[081197ce7b2dc8d4aa44f6f139c34ede]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[148e61971b6725a4240f81803568f415]]></id>
       <name><![CDATA[PA_TYPE]]></name>
       <type><![CDATA[String]]></type>
       <nullable>true</nullable>
@@ -33,7 +33,7 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[c62bead7d972f57098d79f330d2493fe]]></id>
+      <id><![CDATA[615e474e7d54387dbeb609f069d8d9b6]]></id>
       <name><![CDATA[EU_CD_PA]]></name>
       <type><![CDATA[String]]></type>
       <size>30</size>
@@ -41,10 +41,10 @@
       <identifier>true</identifier>
     </attribute>
     <attribute>
-      <id><![CDATA[c8920b059fdc371cf87392cfaeffdf77]]></id>
-      <name><![CDATA[DATIMPORT]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
+      <id><![CDATA[7ecfaaaef5c039b8e9b8e75c833b07d2]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
     </attribute>
   </attributes>
 </featureType>

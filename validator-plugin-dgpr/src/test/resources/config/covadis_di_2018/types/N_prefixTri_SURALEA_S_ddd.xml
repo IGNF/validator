@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[0e72009c670cbda9035572223694e734]]></id>
+  <id><![CDATA[d0c6e5b57fcd339c33eb9d6c902c51e7]]></id>
   <typeName><![CDATA[N_prefixTri_SURALEA_S_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[4e5170eaa69a2173363a93466700d26a]]></id>
+      <id><![CDATA[0b19672e2f029b24b377e2d44f7fc8f0]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[1425f2ed02e8e2860d31808756b68cda]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <regexp><![CDATA[ZSA_[0-9]+$]]></regexp>
+      <id><![CDATA[360b71cf0c1cc5958a0166144d2c77a4]]></id>
+      <name><![CDATA[ID_ZONE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZSA_[numero]]]></description>
+      <type><![CDATA[String]]></type>
+      <size>30</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[4adad6bd65a68a90defbe25a76d0ddaf]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <description><![CDATA[Valeur nulle interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <nullable>false</nullable>
+      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
+    </attribute>
+    <attribute>
+      <id><![CDATA[90ea19d80d3f08471b24d1763f5cb453]]></id>
       <name><![CDATA[SCENARIO]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -17,50 +51,16 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <regexp><![CDATA[ZSA_[0-9]+$]]></regexp>
-      <id><![CDATA[63880adcb5d3d77a784084827ac7a1e8]]></id>
-      <name><![CDATA[ID_ZONE]]></name>
-      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZSA_[numero]]]></description>
-      <type><![CDATA[String]]></type>
-      <size>30</size>
-      <nullable>false</nullable>
-      <identifier>true</identifier>
-    </attribute>
-    <attribute>
-      <id><![CDATA[73fa21eded3aab65b08e38644f61bf30]]></id>
-      <name><![CDATA[ID_TRI]]></name>
-      <description><![CDATA[Valeur nulle interdite]]></description>
-      <type><![CDATA[String]]></type>
-      <nullable>false</nullable>
-      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
-    </attribute>
-    <attribute>
-      <id><![CDATA[a052f3a1d1bf9cf607cd60573680cce0]]></id>
-      <name><![CDATA[DATSORTIE]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[d13a1e3a3e2031d9935e38c67c2e3f8b]]></id>
+      <id><![CDATA[96db45334b8c3388c4470856946f92a9]]></id>
       <name><![CDATA[WKT]]></name>
       <type><![CDATA[MultiPolygon]]></type>
       <nullable>false</nullable>
     </attribute>
     <attribute>
-      <id><![CDATA[d663830d7c42960ae2f5a4c4cd3b03cd]]></id>
+      <id><![CDATA[ea6cc707e0e9309d0f1edf411056d0c3]]></id>
       <name><![CDATA[DATENTREE]]></name>
       <type><![CDATA[Date]]></type>
       <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[f89eb4d308e01be4acf0b21cc6797844]]></id>
-      <name><![CDATA[EST_REF]]></name>
-      <type><![CDATA[String]]></type>
-      <nullable>true</nullable>
-      <listOfValues>
-        <value><![CDATA[T]]></value>
-        <value><![CDATA[F]]></value>
-      </listOfValues>
     </attribute>
   </attributes>
 </featureType>

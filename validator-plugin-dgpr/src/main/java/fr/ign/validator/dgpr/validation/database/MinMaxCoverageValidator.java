@@ -117,29 +117,31 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 			return;
 		}
 
-		if (!compare(listIsoHauteur.get(listIsoHauteur.size() - 1).getHtMax(), null)
-			&& !compare(listIsoHauteur.get(listIsoHauteur.size() - 1).getHtMax(), "9999.0")
-		) {
-			reportError(surfaceId, errorMessageListHt, wkt);
-			return;
-		}
-
 		for (int i = 0; i < listIsoHauteur.size(); i++) {
 			IsoHauteur isoHauteur = listIsoHauteur.get(i);
-			// test htmin different htmax
+			// 1) htmin[i] != htmax[i]
 			if (compare(isoHauteur.getHtMin(), isoHauteur.getHtMax())) {
 				reportError(surfaceId, errorMessageListHt, wkt);
 				return;
 			}
+			// 2) if last -> continue
 			if (i == listIsoHauteur.size() - 1) {
 				continue;
 			}
-			// test htmax == htmin[i+1]
 			IsoHauteur isoHauteurNext = listIsoHauteur.get(i + 1);
-			if (!compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMin())) {
-				reportError(surfaceId, errorMessageListHt, wkt);
-				return;
+			// 3) htmin[i] / htmax[i] === hmin[i+1] / htmax[i+1]
+			if (compare(isoHauteur.getHtMin(), isoHauteurNext.getHtMin())
+				&& compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMax())
+			) {
+				continue;
 			}
+			// OR
+			// 3bis) htmax[i] === hmin[i+1]
+			if (compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMin())) {
+				continue;
+			}
+			reportError(surfaceId, errorMessageListHt, wkt);
+			return;
 		}
 
 	}

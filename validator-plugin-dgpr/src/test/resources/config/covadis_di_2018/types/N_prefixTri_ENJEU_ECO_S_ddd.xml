@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[853080daabf23e0e9a718f5b81dbc3cc]]></id>
+  <id><![CDATA[b02de7508cc2b4af4c9fe6a22ccfca41]]></id>
   <typeName><![CDATA[N_prefixTri_ENJEU_ECO_S_ddd]]></typeName>
   <attributes>
     <attribute>
-      <id><![CDATA[261643bf696cf2d298fbef262a89e22e]]></id>
+      <id><![CDATA[03e36025c6fc5a01d0bd4d9a9169403c]]></id>
+      <name><![CDATA[ID_SI_EXT]]></name>
+      <description><![CDATA[Valeur vide interdite]]></description>
+      <type><![CDATA[String]]></type>
+      <size>50</size>
+      <nullable>false</nullable>
+      <identifier>true</identifier>
+    </attribute>
+    <attribute>
+      <id><![CDATA[43c07f3a86657e32e3814145454b39f5]]></id>
       <name><![CDATA[NOM_SI_EXT]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -12,7 +21,19 @@
       <nullable>false</nullable>
     </attribute>
     <attribute>
-      <id><![CDATA[2ff13e6b2fab4f8aa791b64ecafeb536]]></id>
+      <id><![CDATA[7fa0f2246ab0653c7af55401905f6e26]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[82f23905b944a195a875c9cc7e07d5ae]]></id>
+      <name><![CDATA[DATIMPORT]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ac48ad924536ddc3bea5f10a3019141e]]></id>
       <name><![CDATA[TYPE_ACTIV]]></name>
       <type><![CDATA[String]]></type>
       <nullable>true</nullable>
@@ -28,39 +49,15 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[54ea8c1df98a4d71e5e47d85bba67ed2]]></id>
-      <name><![CDATA[EST_REF]]></name>
+      <id><![CDATA[dcf1c62fc9c1eb441b1b5691df4991c1]]></id>
+      <name><![CDATA[VER_SI_EXT]]></name>
       <type><![CDATA[String]]></type>
-      <nullable>true</nullable>
-      <listOfValues>
-        <value><![CDATA[T]]></value>
-        <value><![CDATA[F]]></value>
-      </listOfValues>
-    </attribute>
-    <attribute>
-      <id><![CDATA[898a2e08746af4d9a9fd60533ec03b38]]></id>
-      <name><![CDATA[WKT]]></name>
-      <type><![CDATA[MultiPolygon]]></type>
-      <nullable>false</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[ab65531d132089e166c7d51c0ea79af7]]></id>
-      <name><![CDATA[ID_SI_EXT]]></name>
-      <description><![CDATA[Valeur vide interdite]]></description>
-      <type><![CDATA[String]]></type>
-      <size>50</size>
-      <nullable>false</nullable>
-      <identifier>true</identifier>
-    </attribute>
-    <attribute>
-      <id><![CDATA[ac820cdb18938a3c13baf2e9c982ec61]]></id>
-      <name><![CDATA[DATIMPORT]]></name>
-      <type><![CDATA[Date]]></type>
+      <size>10</size>
       <nullable>true</nullable>
     </attribute>
     <attribute>
       <regexp><![CDATA[^[0-9]{4}[a-z]*$]]></regexp>
-      <id><![CDATA[b939d7b734d0e3055fb902cf5e83e1e6]]></id>
+      <id><![CDATA[f0e3e39833709f36ea37f397f536fe2b]]></id>
       <name><![CDATA[CODCOVADIS]]></name>
       <description><![CDATA[Cf. nomenclature COVADIS standard PPRN (annexe D.1)]]></description>
       <type><![CDATA[String]]></type>
@@ -68,11 +65,14 @@
       <nullable>true</nullable>
     </attribute>
     <attribute>
-      <id><![CDATA[e91d0d17fa9aa4e2e7137aa309e09a51]]></id>
-      <name><![CDATA[VER_SI_EXT]]></name>
+      <id><![CDATA[ff545a0486fa774c25f1ad35e9aa50a7]]></id>
+      <name><![CDATA[EST_REF]]></name>
       <type><![CDATA[String]]></type>
-      <size>10</size>
       <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
     </attribute>
   </attributes>
 </featureType>

@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featureType>
-  <id><![CDATA[40be8e2af5f08141f5adf1f04ccffa8e]]></id>
+  <id><![CDATA[33e20967e436cf542ca8d7a87917c4a0]]></id>
   <typeName><![CDATA[N_prefixTri_ECOUL_S_ddd]]></typeName>
   <attributes>
     <attribute>
-      <regexp><![CDATA[ZE_[0-9]+$]]></regexp>
-      <id><![CDATA[01a5ec58cbd1ce9e7afd23ed41078905]]></id>
-      <name><![CDATA[ID_ZONE]]></name>
-      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZE_[numero]]]></description>
+      <id><![CDATA[0dd2a15f808b258a03d731641a8fe2a2]]></id>
+      <name><![CDATA[ID_TRI]]></name>
+      <description><![CDATA[Valeur nulle interdite]]></description>
       <type><![CDATA[String]]></type>
-      <size>30</size>
       <nullable>false</nullable>
-      <identifier>true</identifier>
+      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
     </attribute>
     <attribute>
-      <id><![CDATA[342fb090de58db7a3653a9db6b894231]]></id>
+      <id><![CDATA[2067c8f284a0882e053ec808ca16c2c8]]></id>
+      <name><![CDATA[DATENTREE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[5b8926e7ccc01dfc563fb6a7435f24cb]]></id>
+      <name><![CDATA[EST_REF]]></name>
+      <type><![CDATA[String]]></type>
+      <nullable>true</nullable>
+      <listOfValues>
+        <value><![CDATA[T]]></value>
+        <value><![CDATA[F]]></value>
+      </listOfValues>
+    </attribute>
+    <attribute>
+      <id><![CDATA[9edbb2031f5e49934196a69966de5f85]]></id>
+      <name><![CDATA[DATSORTIE]]></name>
+      <type><![CDATA[Date]]></type>
+      <nullable>true</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[acc2a58597c25e28df6769f25fa38b1a]]></id>
       <name><![CDATA[VITESSE]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -26,7 +46,13 @@
       </listOfValues>
     </attribute>
     <attribute>
-      <id><![CDATA[6e2be2ad08c8a44091c35d399ce2d155]]></id>
+      <id><![CDATA[b8030d026a7bce32dd805082a50af034]]></id>
+      <name><![CDATA[WKT]]></name>
+      <type><![CDATA[MultiPolygon]]></type>
+      <nullable>false</nullable>
+    </attribute>
+    <attribute>
+      <id><![CDATA[ed528dbe22e5152b87e3f345dc675808]]></id>
       <name><![CDATA[ID_S_INOND]]></name>
       <description><![CDATA[Valeur vide interdite]]></description>
       <type><![CDATA[String]]></type>
@@ -34,40 +60,14 @@
       <reference><![CDATA[N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND]]></reference>
     </attribute>
     <attribute>
-      <id><![CDATA[8bcfb21a12be4379e5e4a3c9badf6fd0]]></id>
-      <name><![CDATA[WKT]]></name>
-      <type><![CDATA[MultiPolygon]]></type>
-      <nullable>false</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[9dc202ea6be7b203788658aef22124e1]]></id>
-      <name><![CDATA[EST_REF]]></name>
+      <regexp><![CDATA[ZE_[0-9]+$]]></regexp>
+      <id><![CDATA[f5a90aaf88c4a0cba2c56ae22d65e5b7]]></id>
+      <name><![CDATA[ID_ZONE]]></name>
+      <description><![CDATA[COVADIS B1.2. - Identifiant de type ZE_[numero]]]></description>
       <type><![CDATA[String]]></type>
-      <nullable>true</nullable>
-      <listOfValues>
-        <value><![CDATA[T]]></value>
-        <value><![CDATA[F]]></value>
-      </listOfValues>
-    </attribute>
-    <attribute>
-      <id><![CDATA[bc083dbd6e61b27689fbf7ae07e93705]]></id>
-      <name><![CDATA[ID_TRI]]></name>
-      <description><![CDATA[Valeur nulle interdite]]></description>
-      <type><![CDATA[String]]></type>
+      <size>30</size>
       <nullable>false</nullable>
-      <reference><![CDATA[N_prefixTri_TRI_S_ddd.ID_TRI]]></reference>
-    </attribute>
-    <attribute>
-      <id><![CDATA[bdea4c6368b02525be02602aaff15420]]></id>
-      <name><![CDATA[DATSORTIE]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
-    </attribute>
-    <attribute>
-      <id><![CDATA[ffeba6b6b76e9b2adbc4b050f36b1222]]></id>
-      <name><![CDATA[DATENTREE]]></name>
-      <type><![CDATA[Date]]></type>
-      <nullable>true</nullable>
+      <identifier>true</identifier>
     </attribute>
   </attributes>
 </featureType>
