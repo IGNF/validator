@@ -119,8 +119,11 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 
 		for (int i = 0; i < listIsoHauteur.size(); i++) {
 			IsoHauteur isoHauteur = listIsoHauteur.get(i);
-			// 1) htmin[i] != htmax[i]
-			if (compare(isoHauteur.getHtMin(), isoHauteur.getHtMax())) {
+			// 1) htmax === null || htmin[i] > htmax[i]
+			if (isoHauteur.getHtMax() != null
+				&& isoHauteur.getHtMin() != null
+				&& Double.compare(Double.parseDouble(isoHauteur.getHtMax()), Double.parseDouble(isoHauteur.getHtMin())) <= 0
+			) {
 				reportError(surfaceId, errorMessageListHt, wkt);
 				return;
 			}
