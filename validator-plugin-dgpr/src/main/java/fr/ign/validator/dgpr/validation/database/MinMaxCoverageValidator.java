@@ -1,7 +1,7 @@
 package fr.ign.validator.dgpr.validation.database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +15,7 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.database.model.IsoHauteur;
+import fr.ign.validator.dgpr.database.model.SurfaceInondable;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;
@@ -60,7 +61,7 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 			String[] row = innondTable.next();
 			// for each id perform MinMaxCoverage validation
 			try {
-				validateSurfaceInondable(row[indexId], row[indexWkt]);
+				validateSurfaceInondable(new SurfaceInondable(row[indexId], row[indexWkt]));
 			} catch (NumberFormatException e) {
 				log.error(MARKER, "NumberFormatException, impossible de valider les plages de valeurs");
 			}
@@ -71,19 +72,18 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 
 	/**
 	 * Validate zone iso ht in a given SurfaceInondable
-	 * @param surfaceId
-	 * @param wkt 
-	 * @throws SQLException 
+	 * @param surfaceInondable
+	 * @throws Exception
 	 */
-	private void validateSurfaceInondable(String surfaceId, String wkt) throws Exception {
-		if (surfaceId == null || surfaceId.equals("null")) {		
+	private void validateSurfaceInondable(SurfaceInondable surfaceInondable) throws Exception {
+		if (surfaceInondable.getId() == null || surfaceInondable.getId().equals("null")) {		
 			log.error(MARKER, "{} - Impossible de valider la couverture de hauteur, identifiant 'null' détecté ");
 			return;
 		}
 		// select zone iso
 		RowIterator isoHtTable = database.query(
 				" SELECT * FROM N_prefixTri_ISO_HT_suffixIsoHt_S_ddd "
-				+ " WHERE ID_S_INOND LIKE '" + surfaceId + "'"
+				+ " WHERE ID_S_INOND LIKE '" + surfaceInondable.getId() + "'"
 				+ " ORDER BY ht_min ASC ;"
 		);
 
@@ -92,46 +92,90 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 		int indexHtMin = isoHtTable.getColumn("HT_MIN");
 		int indexHtMax = isoHtTable.getColumn("HT_MAX");
 
-		ArrayList<IsoHauteur> listIsoHauteur = new ArrayList<IsoHauteur>();
+		ArrayList<IsoHauteur> sortedIsoHauteurs = new ArrayList<IsoHauteur>();
 		while (isoHtTable.hasNext()) {
 			String[] row = isoHtTable.next();
 			IsoHauteur isoHauteur = new IsoHauteur(row[indexIdZone], row[indexIdSInnond], row[indexHtMin], row[indexHtMax]);
-			listIsoHauteur.add(isoHauteur);					 
+			sortedIsoHauteurs.add(isoHauteur);					 
 		}
 		isoHtTable.close();
 
 		// Si il n'y a q'une iso hauteur dans la liste, pas besoin de tester, on passe à l'itération suivante de la boucle
-		if (listIsoHauteur.size() == 0) {
+		if (sortedIsoHauteurs.size() == 0) {
 			return;
 		}
 
+		if (!evaluate(surfaceInondable, sortedIsoHauteurs)) {
+			reportError(surfaceInondable, sortedIsoHauteurs);
+		}
+	}
+
+	private void reportError(SurfaceInondable surfaceInondable, List<IsoHauteur> isoHauteurs) throws Exception {
+		// ids part
 		String errorMessageListHt = "";
-		for (IsoHauteur isoHauteur : listIsoHauteur) {
+		for (IsoHauteur isoHauteur : isoHauteurs) {
 			errorMessageListHt += isoHauteur.toString() + " ";
 		}
 		errorMessageListHt = errorMessageListHt.trim();
+		// enveloppe part
+		Envelope envelope = DatabaseUtils.getEnveloppe(surfaceInondable.getWkt(), context.getCoordinateReferenceSystem());
+		// report error
+		context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
+				.setScope(ErrorScope.FEATURE)
+				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+				.setAttribute("--")
+				.setFeatureId(surfaceInondable.getId())
+				.setFeatureBbox(envelope)
+				.setMessageParam("ID_SINOND", surfaceInondable.getId())
+				.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
+		);
+	}
+	
+	
+	/**
+	 * compare to str has double
+	 * @param doubleStrA
+	 * @param doubleStrB
+	 * @return
+	 * @throws NumberFormatException
+	 */
+	public boolean compare(String doubleStrA, String doubleStrB) throws NumberFormatException {
+		if (doubleStrA == null || doubleStrB == null) {
+			return (doubleStrA == null && doubleStrB == null);
+		}
+		return Double.compare(Double.parseDouble(doubleStrA), Double.parseDouble(doubleStrB)) == 0;
+	}
 
+
+	/**
+	 * 
+	 * @param surfaceInondable
+	 * @param isoHauteurs must be sorted (by asc htmin)
+	 * @return
+	 */
+	public boolean evaluate(SurfaceInondable surfaceInondable, List<IsoHauteur> isoHauteurs) {
 		// initialisation
-		if (!compare(listIsoHauteur.get(0).getHtMin(), "0.00")) {
-			reportError(surfaceId, errorMessageListHt, wkt);
-			return;
+		if (!compare(isoHauteurs.get(0).getHtMin(), "0.00")) {
+			return false;
 		}
 
-		for (int i = 0; i < listIsoHauteur.size(); i++) {
-			IsoHauteur isoHauteur = listIsoHauteur.get(i);
-			// 1) htmax === null || htmin[i] > htmax[i]
-			if (isoHauteur.getHtMax() != null
-				&& isoHauteur.getHtMin() != null
-				&& Double.compare(Double.parseDouble(isoHauteur.getHtMax()), Double.parseDouble(isoHauteur.getHtMin())) <= 0
-			) {
-				reportError(surfaceId, errorMessageListHt, wkt);
-				return;
+		for (int i = 0; i < isoHauteurs.size(); i++) {
+			IsoHauteur isoHauteur = isoHauteurs.get(i);
+			// 1) htmax != null && htmin != null
+			if (isoHauteur.getHtMax() == null && isoHauteur.getHtMin() == null) {
+				return false;
 			}
-			// 2) if last -> continue
-			if (i == listIsoHauteur.size() - 1) {
+			// 2) htmax === null || htmin[i] > htmax[i]
+			if (isoHauteur.getHtMax() != null &&
+				Double.compare(Double.parseDouble(isoHauteur.getHtMax()), Double.parseDouble(isoHauteur.getHtMin())) <= 0
+			) {
+				return false;
+			}
+			// if last -> continue
+			if (i == isoHauteurs.size() - 1) {
 				continue;
 			}
-			IsoHauteur isoHauteurNext = listIsoHauteur.get(i + 1);
+			IsoHauteur isoHauteurNext = isoHauteurs.get(i + 1);
 			// 3) htmin[i] / htmax[i] === hmin[i+1] / htmax[i+1]
 			if (compare(isoHauteur.getHtMin(), isoHauteurNext.getHtMin())
 				&& compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMax())
@@ -143,32 +187,10 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 			if (compare(isoHauteur.getHtMax(), isoHauteurNext.getHtMin())) {
 				continue;
 			}
-			reportError(surfaceId, errorMessageListHt, wkt);
-			return;
+			return false;
 		}
 
-	}
-	
-	
-	private void reportError(String surfaceId, String errorMessageListHt, String wkt) throws Exception {
-		Envelope envelope = DatabaseUtils.getEnveloppe(wkt, context.getCoordinateReferenceSystem());
-		context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED)
-				.setScope(ErrorScope.FEATURE)
-				.setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
-				.setAttribute("--")
-				.setFeatureId(surfaceId)
-				.setFeatureBbox(envelope)
-				.setMessageParam("ID_SINOND", surfaceId)
-				.setMessageParam("LIST_VALUE_MIN_MAX", errorMessageListHt)
-		);
-	}
-
-
-	public boolean compare(String doubleStrA, String doubleStrB) throws NumberFormatException {
-		if (doubleStrA == null || doubleStrB == null) {
-			return (doubleStrA == null && doubleStrB == null);
-		}
-		return Double.compare(Double.parseDouble(doubleStrA), Double.parseDouble(doubleStrB)) == 0;
+		return true;
 	}
 
 }
