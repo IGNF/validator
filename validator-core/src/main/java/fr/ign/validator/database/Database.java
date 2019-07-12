@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,6 +47,8 @@ public class Database {
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
 
 	private static final int batchSize = 100;
+	
+	private String schema;
 
 	/**
 	 * Database connection
@@ -69,6 +73,22 @@ public class Database {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public Database(String url, String user, String password, String schema) {
+		log.info(MARKER, "Create POSTGRESQL database {}...", url);
+		try {
+			Class.forName("org.postgresql.Driver");
+			connection = DriverManager.getConnection(url, user, password);
+			connection.setAutoCommit(false);
+			// save schema
+			this.setSchema(schema);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
 
 	/**
 	 * Get database connection
@@ -87,6 +107,16 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public static Database createDatabase(Document document) throws SQLException {
+		String url = System.getenv("VALIDATOR_DB_URL");
+		if (url != null && !url.equals("")) {
+			return createPostgresDatabase(document);
+		}
+		// else
+		return Database.createSqlLiteDatabase(document);
+	}
+
+	
+	private static Database createSqlLiteDatabase(Document document) throws SQLException {
 		File parentDirectory = document.getDocumentPath().getParentFile();
 		File databasePath = new File(parentDirectory, "document_database.db");
 		if (databasePath.exists()) {
@@ -97,7 +127,19 @@ public class Database {
 		database.createTables(document.getDocumentModel());
 		return database;
 	}
+	
+	
+	private static Database createPostgresDatabase(Document document) throws SQLException {
+		String url = System.getenv("VALIDATOR_DB_URL");
+		String user = System.getenv("VALIDATOR_DB_USER");
+		String password = System.getenv("VALIDATOR_DB_PASSWORD");
+		String schema = System.getenv("VALIDATOR_DB_SCHEMA");
+		Database database = new Database(url, user, password, schema);
+		database.createTables(document.getDocumentModel());
+		return database;
+	}
 
+	
 	/**
 	 * Create tables according to documentModel
 	 * 
@@ -227,7 +269,7 @@ public class Database {
 		TableReader reader = TableReader.createTableReaderPreferedCharset(path, charset);
 
 		String[] header = reader.getHeader();
-		String[] columnNames = getSchema(tableName);
+		String[] columnNames = getTableSchema(tableName);
 
 		/*
 		 * Generate insert into template according to columns INSERT INTO TABLE
@@ -317,7 +359,7 @@ public class Database {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	public String[] getSchema(String tablename) throws SQLException, IOException {
+	public String[] getTableSchema(String tablename) throws SQLException, IOException {
 		RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1");
 		String[] header = query.getHeader();
 		query.close();
@@ -346,6 +388,14 @@ public class Database {
 	 */
 	public RowIterator selectAll(String tablename) throws SQLException {
 		return query("SELECT * FROM " + tablename);
+	}
+
+	public String getSchema() {
+		return schema;
+	}
+
+	public void setSchema(String schema) {
+		this.schema = schema;
 	}
 
 }
