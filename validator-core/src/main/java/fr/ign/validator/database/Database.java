@@ -12,8 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.crypto.Data;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,6 +45,8 @@ public class Database {
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
 
 	private static final int batchSize = 100;
+
+	public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
 	
 	private String schema;
 
@@ -124,6 +124,9 @@ public class Database {
 			databasePath.delete();
 		}
 		Database database = new Database(databasePath);
+		if (database.hasSchema()) {
+			database.createSchema(database.getSchema());
+		}
 		database.createTables(document.getDocumentModel());
 		return database;
 	}
@@ -135,8 +138,28 @@ public class Database {
 		String password = System.getenv("VALIDATOR_DB_PASSWORD");
 		String schema = System.getenv("VALIDATOR_DB_SCHEMA");
 		Database database = new Database(url, user, password, schema);
+		if (database.hasSchema()) {
+			database.createSchema(database.getSchema());
+		}
 		database.createTables(document.getDocumentModel());
 		return database;
+	}
+
+	
+	public void createSchema(String schemaName) throws SQLException {
+		String dropClause = "";
+		if (this.isPostgresqlDriver() && !schemaName.equals("public")) {
+			dropClause = "DROP SCHEMA " + schemaName + " CASCADE;";
+		}
+		String sql = dropClause 
+				+ " CREATE SCHEMA IF NOT EXISTS " + schemaName + ";"
+				+ " SET search_path = " + schemaName + ";";
+
+		// debug SQL
+		log.debug(MARKER, sql);
+		Statement sth = connection.createStatement();
+		sth.executeUpdate(sql);
+		connection.commit();
 	}
 
 	
@@ -172,7 +195,11 @@ public class Database {
 	 * @param columnNames
 	 */
 	public void createTable(String tableName, List<String> columnNames) throws SQLException {
-		String sql = "CREATE TABLE " + tableName + " (";
+		String ifClause = "";
+		if (this.isPostgresqlDriver()) {
+			ifClause = "IF NOT EXISTS ";
+		}
+		String sql = "CREATE TABLE " + ifClause + tableName + " (";
 		for ( int i = 0; i < columnNames.size(); i++ ){
 			if ( i != 0 ){
 				sql += ",";
@@ -194,8 +221,14 @@ public class Database {
 	 * @param columnName
 	 */
 	public void createIndex(String tableName, String columnName) throws SQLException {
-		String indexName = "idx_"+tableName+"_"+columnName;
-		String sql = "CREATE INDEX "+indexName+" ON "+tableName+" ("+columnName+")";
+		String ifClause = "";
+		if (this.isPostgresqlDriver()) {
+			ifClause = "IF NOT EXISTS ";
+		}
+		// format : idx_N_prefixTri_CARTE_INOND_S_ddd_ID_CARTE, idx_N_prefixTri_ENJEU_CRISE_P_ddd_ID_SI
+		String indexName = "idx_" + tableName + "_" + columnName;
+		String sql = "CREATE INDEX " + ifClause + indexName 
+				+ " ON " + tableName + " (" + columnName + ")";
 		// debug SQL
 		log.debug(MARKER, sql);
 		Statement sth = connection.createStatement();
@@ -389,6 +422,10 @@ public class Database {
 	public RowIterator selectAll(String tablename) throws SQLException {
 		return query("SELECT * FROM " + tablename);
 	}
+	
+	public boolean hasSchema() {
+		return this.schema != null && !this.schema.isEmpty();
+	}
 
 	public String getSchema() {
 		return schema;
@@ -396,6 +433,14 @@ public class Database {
 
 	public void setSchema(String schema) {
 		this.schema = schema;
+	}
+	
+	public boolean isPostgresqlDriver() {
+		try {
+			return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 
 }

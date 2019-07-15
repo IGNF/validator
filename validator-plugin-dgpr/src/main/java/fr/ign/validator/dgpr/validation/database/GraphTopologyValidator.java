@@ -198,11 +198,24 @@ public class GraphTopologyValidator implements Validator<Database> {
 
 
 	private String findAllHauteur(SurfaceInondable surface, String tablename) throws SQLException {
-		RowIterator iterator = database.query(
-				" SELECT GROUP_CONCAT(ID_ZONE, ', ') as result" +
+		/* IN postgresql there is no GROUP_CONCAT function
+		 * we use
+		 * SELECT id, 
+	     *        string_agg(some_column, ',')
+	     *  FROM the_table
+	     *  GROUP BY id
+         */
+		String sql;
+		if (database.isPostgresqlDriver()) {
+			sql = " SELECT string_agg(ID_ZONE, ', ') as result" +
+					" FROM " + tablename +
+					" WHERE ID_S_INOND LIKE '" + surface.getId() + "' ";
+		} else {
+			sql = " SELECT GROUP_CONCAT(ID_ZONE, ', ') as result" +
 				" FROM " + tablename +
-				" WHERE ID_S_INOND LIKE '" + surface.getId() + "' "
-		);
+				" WHERE ID_S_INOND LIKE '" + surface.getId() + "' ";
+		}
+		RowIterator iterator = database.query(sql);
 
 		int index = iterator.getColumn("result");
 		if (index == -1) {
