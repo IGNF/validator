@@ -47,7 +47,11 @@ public class Database {
 	private static final int batchSize = 100;
 
 	public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
-	
+
+	public static final String GEOMETRY_COLUMN = "WKT";
+
+	public static final String DEFAULT_SRID = "4326";
+
 	private String schema;
 
 	/**
@@ -153,7 +157,7 @@ public class Database {
 		}
 		String sql = dropClause 
 				+ " CREATE SCHEMA IF NOT EXISTS " + schemaName + ";"
-				+ " SET search_path = " + schemaName + ";";
+				+ " SET search_path = " + schemaName + ", public;";
 
 		// debug SQL
 		log.debug(MARKER, sql);
@@ -185,7 +189,11 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public void createTable(TableModel tableModel) throws SQLException {
-		createTable(tableModel.getName(),getColumnNames(tableModel));
+		if (this.isPostgresqlDriver()) {
+			createPostgisTable(tableModel);
+		} else {
+			createTable(tableModel.getName(), getColumnNames(tableModel));
+		}
 	}
 
 	/**
@@ -207,6 +215,39 @@ public class Database {
 			sql += columnNames.get(i) + " TEXT";
 		}
 		sql += ");";
+
+		// debug SQL
+		log.debug(MARKER, sql);
+		Statement sth = connection.createStatement();
+		sth.executeUpdate(sql);
+		connection.commit();
+	}
+	
+	/**
+	 * Create postgis Table with geometry column
+	 * @param tableModel
+	 * @throws SQLException 
+	 */
+	public void createPostgisTable(TableModel tableModel) throws SQLException {
+		List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
+		
+		List<String> columns = new ArrayList<String>(attributes.size());
+		for (AttributeType<?> attribute : attributes) {
+			String part;
+			if (attribute.isGeometry()) {
+//				part = attribute.getName() + " geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")";
+//				part = attribute.getName() + " geometry(" + attribute.getTypeName() + ")";
+//				part = attribute.getName() + " geometry";
+				part = attribute.getName() + " TEXT";
+			} else {
+				part = attribute.getName() + " TEXT";
+			}
+			columns.add(part);
+		}
+		
+		String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
+			+ String.join(",", columns)
+			+ ");";
 
 		// debug SQL
 		log.debug(MARKER, sql);
@@ -366,6 +407,7 @@ public class Database {
 		sth.executeBatch();
 		connection.commit();
 	}
+	
 
 	/**
 	 * Perform any SQL request to DocumentDatabase
