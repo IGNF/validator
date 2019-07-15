@@ -230,19 +230,18 @@ public class Database {
 	 */
 	public void createPostgisTable(TableModel tableModel) throws SQLException {
 		List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
-		
 		List<String> columns = new ArrayList<String>(attributes.size());
 		for (AttributeType<?> attribute : attributes) {
-			String part;
 			if (attribute.isGeometry()) {
 //				part = attribute.getName() + " geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")";
 //				part = attribute.getName() + " geometry(" + attribute.getTypeName() + ")";
 //				part = attribute.getName() + " geometry";
-				part = attribute.getName() + " TEXT";
+				columns.add(attribute.getName() + " TEXT");
+//				columns.add("the_geom geometry");
+				columns.add("the_geom geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")");
 			} else {
-				part = attribute.getName() + " TEXT";
+				columns.add(attribute.getName() + " TEXT");
 			}
-			columns.add(part);
 		}
 		
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
@@ -254,6 +253,10 @@ public class Database {
 		Statement sth = connection.createStatement();
 		sth.executeUpdate(sql);
 		connection.commit();
+		/*
+		 * -- Add a spatial index
+         * CREATE INDEX mydata_geom_idx ON mydata USING gist (geom);
+		 */
 	}
 	
 	/**
@@ -323,6 +326,20 @@ public class Database {
 		FeatureType featureType = documentFile.getFileModel().getFeatureType();
 
 		loadFile(featureType.getName(), documentFile.getPath(), context.getEncoding());
+		if (this.isPostgresqlDriver()) {
+			updateGeom(featureType);
+		}
+	}
+
+	private void updateGeom(FeatureType featureType) throws SQLException {
+		// last commit
+		if (featureType.isSpatial()) {
+			String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = ST_Multi(ST_SetSRID(wkt, 4326));"; 
+			log.debug(MARKER, updateSQL);
+			Statement sth = connection.createStatement();
+			sth.executeUpdate(updateSQL);
+			connection.commit();
+		}
 	}
 
 	/**
