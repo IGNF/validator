@@ -153,7 +153,7 @@ public class Database {
 	public void createSchema(String schemaName) throws SQLException {
 		String dropClause = "";
 		if (this.isPostgresqlDriver() && !schemaName.equals("public")) {
-			dropClause = "DROP SCHEMA " + schemaName + " CASCADE;";
+			dropClause = "DROP SCHEMA IF EXISTS " + schemaName + " CASCADE;";
 		}
 		String sql = dropClause 
 				+ " CREATE SCHEMA IF NOT EXISTS " + schemaName + ";"
@@ -468,6 +468,7 @@ public class Database {
 	public int getCount(String tableName) throws SQLException {
 		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName);
 		ResultSet rs = sth.executeQuery();
+		rs.next();
 		return rs.getInt(1);
 	}
 
