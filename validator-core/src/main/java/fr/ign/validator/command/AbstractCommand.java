@@ -1,5 +1,6 @@
 package fr.ign.validator.command;
 
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
@@ -9,6 +10,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+
+import fr.ign.validator.tools.ProxyParser;
 
 /**
  * 
@@ -119,16 +122,22 @@ public abstract class AbstractCommand implements Command {
 	 */
 	protected void parseProxyOption(CommandLine commandLine) throws ParseException{
 		proxy = commandLine.getOptionValue("proxy", "");
-		if (!proxy.isEmpty()) {
-			String[] proxyParts = proxy.split(":");
-			if (proxyParts.length != 2) {
-				throw new ParseException("Invalid 'proxy' parameter (<proxy-host>:<proxy-port>)");
-			}
-			Properties systemSettings = System.getProperties();
-			systemSettings.put("proxySet", "true");
-			systemSettings.put("http.proxyHost", proxyParts[0]);
-			systemSettings.put("http.proxyPort", proxyParts[1]);
+		configureHttpClient();
+	}
+
+	/**
+	 * Configure network options including proxy
+	 * @throws ParseException
+	 */
+	private void configureHttpClient() throws ParseException {
+		/* configure network */
+		Properties systemSettings = System.getProperties();
+		Map<String,String> properties = ProxyParser.parse(proxy);
+		for ( String key : properties.keySet() ){
+			systemSettings.put(key, properties.get(key));
 		}
+		/* configure SSL */
+		systemSettings.put("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
 	}
 
 }
