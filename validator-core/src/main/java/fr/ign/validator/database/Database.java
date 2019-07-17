@@ -27,6 +27,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.TableReader;
 
@@ -53,6 +54,8 @@ public class Database {
 	public static final String DEFAULT_SRID = "4326";
 
 	private String schema;
+	
+	private Projection projection;
 
 	/**
 	 * Database connection
@@ -334,7 +337,13 @@ public class Database {
 	private void updateGeom(FeatureType featureType) throws SQLException {
 		// last commit
 		if (featureType.isSpatial()) {
-			String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = ST_Multi(ST_SetSRID(wkt, 4326));"; 
+			String srid = Database.DEFAULT_SRID;
+			if (this.getProjection() != null && this.getProjection().getCode().split(":").length > 1) {
+				// must split code
+				srid = this.getProjection().getCode().split(":")[1];
+			}
+			String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = "
+					+ "ST_Multi(ST_Transform(ST_SetSRID(wkt, " + srid + "), 4326));"; 
 			log.debug(MARKER, updateSQL);
 			Statement sth = connection.createStatement();
 			sth.executeUpdate(updateSQL);
@@ -493,6 +502,14 @@ public class Database {
 
 	public void setSchema(String schema) {
 		this.schema = schema;
+	}
+
+	public Projection getProjection() {
+		return projection;
+	}
+
+	public void setProjection(Projection projection) {
+		this.projection = projection;
 	}
 	
 	public boolean isPostgresqlDriver() {

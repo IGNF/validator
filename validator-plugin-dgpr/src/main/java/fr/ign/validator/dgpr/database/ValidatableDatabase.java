@@ -53,6 +53,7 @@ public class ValidatableDatabase implements Validatable {
 		this.document = document;
 		this.database = Database.createDatabase(document);
 		createIndexes(document);
+		database.setProjection(context.getProjection());
 		database.load(context, document);
 	}
 
