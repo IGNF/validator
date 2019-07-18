@@ -248,7 +248,8 @@ public class Database {
 		}
 		
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
-			+ String.join(",", columns)
+			// + String.join(",", columns)
+		    + Database.joinStrings(", ", columns)
 			+ ");";
 
 		// debug SQL
@@ -518,6 +519,21 @@ public class Database {
 		} catch (SQLException e) {
 			return false;
 		}
+	}
+	
+	// there are no String.join method in Java 7
+	public static String joinStrings(String delimiter, List<String> parts) {
+		if (parts.size() <= 0) {
+			return "";
+		}
+		if (parts.size() == 1) {
+			return parts.get(0);
+		}
+		String joinStr = "";
+		for (int i = 0; i < parts.size() - 1; i++) {
+			joinStr += parts.get(i) + delimiter;
+		}
+		return joinStr + parts.get(parts.size() - 1);
 	}
 
 }
