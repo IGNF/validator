@@ -4,7 +4,7 @@
 	<groupId>fr.ign.validator</groupId>
 	<artifactId>validator</artifactId>
 	<packaging>pom</packaging>
-	<version>3.4.5-SNAPSHOT</version>
+	<version>4.0.0-SNAPSHOT</version>
 	<name>Validator</name>
 
 	<scm>
@@ -28,7 +28,7 @@
 		<geotools.version>14.5</geotools.version>
 		<log4j.version>2.8.2</log4j.version>
 		<jackson.version>2.9.7</jackson.version>
-                <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 	</properties>
 
 	<organization>
