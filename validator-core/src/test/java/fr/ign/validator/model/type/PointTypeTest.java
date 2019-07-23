@@ -1,11 +1,12 @@
 package fr.ign.validator.model.type;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
-import static org.junit.Assert.*;
-
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class PointTypeTest extends AbstractTypeTest<Geometry> {
 
