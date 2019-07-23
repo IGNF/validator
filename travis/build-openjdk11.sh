@@ -5,5 +5,5 @@
 source /opt/jdk_switcher/jdk_switcher.sh
 
 # https://github.com/INRIA/spoon/blob/master/chore/travis/
-jdk_switcher use openjdk8 && mvn -Djava.src.version=1.8 clean package
+jdk_switcher use openjdk11 && mvn -Djava.src.version=1.8 clean package
 
