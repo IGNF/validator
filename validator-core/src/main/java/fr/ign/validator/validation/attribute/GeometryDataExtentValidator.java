@@ -1,6 +1,6 @@
 package fr.ign.validator.validation.attribute;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.tools.EnveloppeUtils;
 
@@ -27,7 +27,7 @@ public class EnvelopeSerializer extends JsonSerializer<Envelope> {
 		gen.writeNumber(EnveloppeUtils.formatDouble(value.getMinX()));
 		gen.writeNumber(EnveloppeUtils.formatDouble(value.getMinY()));
 		gen.writeNumber(EnveloppeUtils.formatDouble(value.getMaxX()));
-		gen.writeNumber(EnveloppeUtils.formatDouble(value.getMaxY()));		
+		gen.writeNumber(EnveloppeUtils.formatDouble(value.getMaxY()));
 		gen.writeEndArray();
 	}
 

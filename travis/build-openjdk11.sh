@@ -1,9 +1,11 @@
 #!/bin/bash
 
-# https://github.com/travis-ci/travis-ci/issues/8681#issuecomment-340821970
+# see https://github.com/INRIA/spoon/blob/master/chore/travis/
 
 source /opt/jdk_switcher/jdk_switcher.sh
+wget https://raw.githubusercontent.com/sormuras/bach/master/install-jdk.sh
+chmod +x install-jdk.sh
 
-# https://github.com/INRIA/spoon/blob/master/chore/travis/
-jdk_switcher use openjdk11 && mvn -Djava.src.version=1.8 clean package
+source ./install-jdk.sh -f 11 -c
+mvn -Djava.src.version=1.8 clean package
 

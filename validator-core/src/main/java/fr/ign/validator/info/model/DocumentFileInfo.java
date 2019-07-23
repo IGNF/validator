@@ -3,7 +3,7 @@ package fr.ign.validator.info.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
 

@@ -1,9 +1,9 @@
 package fr.ign.validator.validation.attribute;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.operation.valid.IsValidOp;
-import com.vividsolutions.jts.operation.valid.TopologyValidationError;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.operation.valid.IsValidOp;
+import org.locationtech.jts.operation.valid.TopologyValidationError;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;

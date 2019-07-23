@@ -13,9 +13,9 @@ import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.simple.SimpleFeatureSource;
 
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.exception.InvalidCharsetException;
 
@@ -34,7 +34,7 @@ public class EnveloppeUtils {
 		}
 		try {
 			WKTReader reader = new WKTReader();
-			com.vividsolutions.jts.geom.Geometry geometry = reader.read(wkt);
+			org.locationtech.jts.geom.Geometry geometry = reader.read(wkt);
 			return geometry.getEnvelopeInternal();
 		} catch (ParseException e) {
 			return new Envelope();

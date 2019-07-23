@@ -1,8 +1,8 @@
 package fr.ign.validator.model.type;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.LineString;
 
 public class MultiLineStringType extends GeometryType {
 
