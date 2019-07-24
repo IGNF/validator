@@ -158,11 +158,20 @@ public class MetadataISO19115 implements Metadata {
 
 	@Override
 	public String getIdentifier(){
-		// identificationInfo[1]/*/citation/*/identifier
-		String path = "./gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*";
-		return findValue(path, metadataElement);
+		List<String> identifiers = getIdentifiers();
+		if ( identifiers.isEmpty() ) {
+			return null;
+		}else {
+			return identifiers.get(0);
+		}
 	}
 
+	@Override
+	public List<String> getIdentifiers(){
+		// identificationInfo[1]/*/citation/*/identifier
+		String path = "./gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*";
+		return findValues(path, metadataElement);
+	}
 
 	@Override
 	public LanguageCode getLanguage(){

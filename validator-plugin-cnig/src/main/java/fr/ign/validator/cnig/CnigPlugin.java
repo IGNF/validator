@@ -8,7 +8,6 @@ import fr.ign.validator.cnig.validation.attribute.IdurbaValidationCustomizer;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
-import fr.ign.validator.cnig.validation.metadata.CnigMetadataIdentifierValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataReferenceSystemIdentifierValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigSpecificationsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigTypeValidator;
@@ -56,7 +55,6 @@ public class CnigPlugin implements Plugin {
 		 */
 		context.addListener( new CnigTypeValidator() );
 		context.addListener( new CnigSpecificationsValidator() );
-		context.addListener( new CnigMetadataIdentifierValidator() );
 		context.addListener( new CnigMetadataDateOfLastRevisionValidator() );
 		context.addListener( new CnigMetadataReferenceSystemIdentifierValidator() );
 	}

@@ -1,5 +1,7 @@
 package fr.ign.validator.validation.file.metadata;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,20 +20,26 @@ import fr.ign.validator.validation.Validator;
  * @author MBorne
  *
  */
-public class IdentifierValidator implements Validator<Metadata> {
+public class IdentifiersValidator implements Validator<Metadata> {
 
 	public static final Logger log    = LogManager.getRootLogger() ;
 	public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator") ;	
 	
 	@Override
 	public void validate(Context context, Metadata metadata) {
-		String value = metadata.getIdentifier() ;
-		log.info(MARKER, "metadata.identifier : {}", value);
-		if ( StringUtils.isEmpty(value) ){
-			context.report(
-				CoreErrorCodes.METADATA_IDENTIFIER_NOT_FOUND
-			);
+		/* a non empty identifier should be found */
+		List<String> identifiers = metadata.getIdentifiers() ;
+		for (String identifier : identifiers) {
+			if ( StringUtils.isEmpty(identifier) ) {
+				log.info(MARKER, "metadata.identifier : ignore empty identifier ({})", identifier);
+				continue;
+			}
+			log.info(MARKER, "metadata.identifier : found ({})", identifier);
+			return ;
 		}
+		context.report(
+			CoreErrorCodes.METADATA_IDENTIFIER_NOT_FOUND
+		);
 	}
 
 }

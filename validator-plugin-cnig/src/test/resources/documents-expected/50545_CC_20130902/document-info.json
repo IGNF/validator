@@ -1,166 +1,230 @@
 {
-  "name" : "50545_CC_20130902",
-  "documentModel" : {
-    "name" : "cnig_CC_2013"
+  "name": "50545_CC_20130902",
+  "documentModel": {
+    "name": "cnig_CC_2013"
   },
-  "files" : [ {
-    "type" : "table",
-    "modelName" : "DOC_URBA",
-    "name" : "DOC_URBA.dbf",
-    "path" : "DOC_URBA.dbf"
-  }, {
-    "type" : "table",
-    "modelName" : "DOC_URBA_COM",
-    "name" : "DOC_URBA_COM.dbf",
-    "path" : "DOC_URBA_COM.dbf"
-  }, {
-    "type" : "directory",
-    "modelName" : "Donnees_geographiques",
-    "name" : "Donnees_geographiques",
-    "path" : "Donnees_geographiques"
-  }, {
-    "type" : "table",
-    "modelName" : "SECTEUR_CC",
-    "name" : "SECTEUR_CC.dbf",
-    "path" : "Donnees_geographiques/SECTEUR_CC.dbf",
-    "boundingBox" : [ -1.1257418, 49.0219104, -1.0474823, 49.0552970 ]
-  }, {
-    "type" : "directory",
-    "modelName" : "Pieces_ecrites",
-    "name" : "Pieces_ecrites",
-    "path" : "Pieces_ecrites"
-  }, {
-    "type" : "directory",
-    "modelName" : "Annexes",
-    "name" : "Annexes",
-    "path" : "Pieces_ecrites/Annexes"
-  }, {
-    "type" : "pdf",
-    "modelName" : "ANNEXE",
-    "name" : "50545_plan_1_20130902.pdf",
-    "path" : "Pieces_ecrites/Annexes/50545_plan_1_20130902.pdf"
-  }, {
-    "type" : "directory",
-    "modelName" : "Rapport_de_presentation",
-    "name" : "Rapport_de_presentation",
-    "path" : "Pieces_ecrites/Rapport_de_presentation"
-  }, {
-    "type" : "pdf",
-    "modelName" : "RAPPORT",
-    "name" : "50545_rapport_20130902.pdf",
-    "path" : "Pieces_ecrites/Rapport_de_presentation/50545_rapport_20130902.pdf"
-  }, {
-    "type" : "metadata",
-    "modelName" : "METADONNEES",
-    "name" : "fr-000050545-cc20130902.xml",
-    "path" : "fr-000050545-cc20130902.xml"
-  } ],
-  "documentExtent" : [ -1.1257418, 49.0219104, -1.0474823, 49.0552970 ],
-  "tags" : {
-    "typeref" : "01"
+  "files": [
+    {
+      "type": "table",
+      "modelName": "DOC_URBA",
+      "name": "DOC_URBA.dbf",
+      "path": "DOC_URBA.dbf"
+    },
+    {
+      "type": "table",
+      "modelName": "DOC_URBA_COM",
+      "name": "DOC_URBA_COM.dbf",
+      "path": "DOC_URBA_COM.dbf"
+    },
+    {
+      "type": "directory",
+      "modelName": "Donnees_geographiques",
+      "name": "Donnees_geographiques",
+      "path": "Donnees_geographiques"
+    },
+    {
+      "type": "table",
+      "modelName": "SECTEUR_CC",
+      "name": "SECTEUR_CC.dbf",
+      "path": "Donnees_geographiques/SECTEUR_CC.dbf",
+      "boundingBox": [
+        -1.1257418,
+        49.0219104,
+        -1.0474823,
+        49.0552970
+      ]
+    },
+    {
+      "type": "directory",
+      "modelName": "Pieces_ecrites",
+      "name": "Pieces_ecrites",
+      "path": "Pieces_ecrites"
+    },
+    {
+      "type": "directory",
+      "modelName": "Annexes",
+      "name": "Annexes",
+      "path": "Pieces_ecrites/Annexes"
+    },
+    {
+      "type": "pdf",
+      "modelName": "ANNEXE",
+      "name": "50545_plan_1_20130902.pdf",
+      "path": "Pieces_ecrites/Annexes/50545_plan_1_20130902.pdf"
+    },
+    {
+      "type": "directory",
+      "modelName": "Rapport_de_presentation",
+      "name": "Rapport_de_presentation",
+      "path": "Pieces_ecrites/Rapport_de_presentation"
+    },
+    {
+      "type": "pdf",
+      "modelName": "RAPPORT",
+      "name": "50545_rapport_20130902.pdf",
+      "path": "Pieces_ecrites/Rapport_de_presentation/50545_rapport_20130902.pdf"
+    },
+    {
+      "type": "metadata",
+      "modelName": "METADONNEES",
+      "name": "fr-000050545-cc20130902.xml",
+      "path": "fr-000050545-cc20130902.xml"
+    }
+  ],
+  "documentExtent": [
+    -1.1257418,
+    49.0219104,
+    -1.0474823,
+    49.0552970
+  ],
+  "tags": {
+    "typeref": "01"
   },
-  "metadata" : {
-    "fileIdentifier" : "fr-000050545-cc20130902",
-    "title" : "Carte Communale de Saint-Romphaire",
-    "abstract" : "Carte Communale (CC) numérisée. Ce lot informe du droit à bâtir sur la commune de Saint-Romphaire. Cette carte communale est numérisée conformément aux prescriptions nationales du CNIG",
-    "type" : "dataset",
-    "locators" : [ {
-      "url" : "http://cnig.gouv.fr/wp-content/uploads/2014/02/CNIG_CC_19042013.pdf",
-      "protocol" : "",
-      "name" : ""
-    }, {
-      "url" : "http://wxs-dhup.mongeoportail.ign.fr/externe/wgevy1c30xchwyquak37y0s0/wms/v?",
-      "protocol" : "",
-      "name" : ""
-    }, {
-      "url" : "http://wxs-dhup.mongeoportail.ign.fr/externe/wgevy1c30xchwyquak37y0s0/telechargement/prepackage",
-      "protocol" : "",
-      "name" : ""
-    } ],
-    "identifier" : "fr-000050545-cc20130902",
-    "language" : "fre",
-    "topicCategory" : "planningCadastre",
-    "keywords" : [ {
-      "keywords" : [ "Usage des sols" ],
-      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
-      "thesaurusDate" : "2008-06-01"
-    }, {
-      "keywords" : [ "document d'urbanisme" ],
-      "thesaurusName" : "GEMET - Concepts, version 2.4",
-      "thesaurusDate" : "2010-01-13"
-    }, {
-      "keywords" : [ "cc" ],
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "planification" ],
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "données ouvertes" ],
-      "thesaurusDate" : null
-    } ],
-    "referenceSystemIdentifier" : {
-      "code" : "RGF93 / Lambert 93 (EPSG:2154)",
-      "uri" : null
+  "metadata": {
+    "fileIdentifier": "fr-000050545-cc20130902",
+    "title": "Carte Communale de Saint-Romphaire",
+    "abstract": "Carte Communale (CC) numérisée. Ce lot informe du droit à bâtir sur la commune de Saint-Romphaire. Cette carte communale est numérisée conformément aux prescriptions nationales du CNIG",
+    "type": "dataset",
+    "locators": [
+      {
+        "url": "http://cnig.gouv.fr/wp-content/uploads/2014/02/CNIG_CC_19042013.pdf",
+        "protocol": "",
+        "name": ""
+      },
+      {
+        "url": "http://wxs-dhup.mongeoportail.ign.fr/externe/wgevy1c30xchwyquak37y0s0/wms/v?",
+        "protocol": "",
+        "name": ""
+      },
+      {
+        "url": "http://wxs-dhup.mongeoportail.ign.fr/externe/wgevy1c30xchwyquak37y0s0/telechargement/prepackage",
+        "protocol": "",
+        "name": ""
+      }
+    ],
+    "identifiers": [
+      "fr-000050545-cc20130902"
+    ],
+    "language": "fre",
+    "topicCategory": "planningCadastre",
+    "keywords": [
+      {
+        "keywords": [
+          "Usage des sols"
+        ],
+        "thesaurusName": "GEMET - INSPIRE themes, version 1.0",
+        "thesaurusDate": "2008-06-01"
+      },
+      {
+        "keywords": [
+          "document d'urbanisme"
+        ],
+        "thesaurusName": "GEMET - Concepts, version 2.4",
+        "thesaurusDate": "2010-01-13"
+      },
+      {
+        "keywords": [
+          "cc"
+        ],
+        "thesaurusDate": null
+      },
+      {
+        "keywords": [
+          "planification"
+        ],
+        "thesaurusDate": null
+      },
+      {
+        "keywords": [
+          "données ouvertes"
+        ],
+        "thesaurusDate": null
+      }
+    ],
+    "referenceSystemIdentifier": {
+      "code": "RGF93 / Lambert 93 (EPSG:2154)",
+      "uri": null
     },
-    "dateOfPublication" : null,
-    "dateOfLastRevision" : "2013-09-02",
-    "dateOfCreation" : null,
-    "characterSet" : "utf8",
-    "spatialRepresentationType" : "vector",
-    "lineage" : "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 19 avril 2013. Ce lot de données produit en 2013 a été numérisé à partir du PCI Vecteur de 2013",
-    "spatialResolutions" : [ {
-      "denominator" : "5000"
-    } ],
-    "specifications" : [ {
-      "title" : "CNIG Carte Communale v2013",
-      "date" : "2013-04-19",
-      "dateType" : "publication",
-      "degree" : "true"
-    }, {
-      "title" : "Data Specification on Land use - Draft Technical Guidelines 04.02.2013",
-      "date" : "2013-04-02",
-      "dateType" : "publication",
-      "degree" : "false"
-    } ],
-    "contact" : {
-      "organisationName" : "Communauté de communes de Canisy",
-      "electronicMailAddress" : "cccanisy.geoportailurbanisme@orange.fr",
-      "role" : "pointOfContact",
-      "phone" : null,
-      "deliveryPoint" : null,
-      "city" : null,
-      "postalCode" : null,
-      "country" : null,
-      "onlineResourceUrl" : null,
-      "hoursOfService" : null
+    "dateOfPublication": null,
+    "dateOfLastRevision": "2013-09-02",
+    "dateOfCreation": null,
+    "characterSet": "utf8",
+    "spatialRepresentationType": "vector",
+    "lineage": "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 19 avril 2013. Ce lot de données produit en 2013 a été numérisé à partir du PCI Vecteur de 2013",
+    "spatialResolutions": [
+      {
+        "denominator": "5000"
+      }
+    ],
+    "specifications": [
+      {
+        "title": "CNIG Carte Communale v2013",
+        "date": "2013-04-19",
+        "dateType": "publication",
+        "degree": "true"
+      },
+      {
+        "title": "Data Specification on Land use - Draft Technical Guidelines 04.02.2013",
+        "date": "2013-04-02",
+        "dateType": "publication",
+        "degree": "false"
+      }
+    ],
+    "contact": {
+      "organisationName": "Communauté de communes de Canisy",
+      "electronicMailAddress": "cccanisy.geoportailurbanisme@orange.fr",
+      "role": "pointOfContact",
+      "phone": null,
+      "deliveryPoint": null,
+      "city": null,
+      "postalCode": null,
+      "country": null,
+      "onlineResourceUrl": null,
+      "hoursOfService": null
     },
-    "metadataContact" : {
-      "organisationName" : "Communauté de communes de Canisy",
-      "electronicMailAddress" : "cccanisy.geoportailurbanisme@orange.fr",
-      "role" : "pointOfContact",
-      "phone" : null,
-      "deliveryPoint" : null,
-      "city" : null,
-      "postalCode" : null,
-      "country" : null,
-      "onlineResourceUrl" : null,
-      "hoursOfService" : null
+    "metadataContact": {
+      "organisationName": "Communauté de communes de Canisy",
+      "electronicMailAddress": "cccanisy.geoportailurbanisme@orange.fr",
+      "role": "pointOfContact",
+      "phone": null,
+      "deliveryPoint": null,
+      "city": null,
+      "postalCode": null,
+      "country": null,
+      "onlineResourceUrl": null,
+      "hoursOfService": null
     },
-    "metadataDate" : "2015-07-06",
-    "metadataLanguage" : "fre",
-    "extents" : [ {
-      "boundingBox" : [ -1.12494124835777, 49.0208797527466, -1.0480446868118, 49.0556681277327 ]
-    } ],
-    "constraints" : [ {
-      "type" : "MD_LegalConstraints",
-      "useLimitations" : [ "Aucune condition ne s'applique" ],
-      "accessConstraints" : [ "otherRestrictions" ],
-      "otherConstraints" : [ "Pas de restriction d'accès public" ]
-    } ],
-    "distributionFormats" : [ {
-      "name" : "SHP",
-      "version" : "inconnue"
-    } ]
+    "metadataDate": "2015-07-06",
+    "metadataLanguage": "fre",
+    "extents": [
+      {
+        "boundingBox": [
+          -1.12494124835777,
+          49.0208797527466,
+          -1.0480446868118,
+          49.0556681277327
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "type": "MD_LegalConstraints",
+        "useLimitations": [
+          "Aucune condition ne s'applique"
+        ],
+        "accessConstraints": [
+          "otherRestrictions"
+        ],
+        "otherConstraints": [
+          "Pas de restriction d'accès public"
+        ]
+      }
+    ],
+    "distributionFormats": [
+      {
+        "name": "SHP",
+        "version": "inconnue"
+      }
+    ]
   }
 }
-

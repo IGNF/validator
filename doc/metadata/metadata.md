@@ -3,33 +3,33 @@
 Metadata "attributes" with INSPIRE multiplicity for datasets according to INSPIRE_GUIDELINE_2017.
 
 
-| name                       | type                          | title                                |    multiplicity      |
-|----------------------------|-------------------------------|--------------------------------------|----------------------|
-| fileIdentifier             | String                        | File identifier                      | [0..1]               |
-| title                      | String                        | Resource title                       | [1]                  |
-| abstract                   | String                        | Resource abstract                    | [1]                  |
-| type                       | ScopeCode                     | Resource type                        | [1]                  |
-| locators                   | OnlineResource[]              | Resource locator                     | [1..*]               |
-| identifier                 | String                        | Unique resource identifier           | [1..*] (1)           |
-| language                   | LanguageCode                  | Resource langage                     | [0..*] (1)           |
-| topicCategory              | TopicCategoryCode             | Topic category                       | [1..*] (1)           |
-| keywords                   | Keywords                      | Keyword                              | [1..*]               |
-| extents                    | Extent[]                      | Extents with geographic bounding box | [1..*]               |
-| referenceSystemIdentifier  | ReferenceSystemIdentifier     | Coordinate Reference System          | [0..*] (1)           |
-| dateOfPublication          | Date                          | Date of publication                  | [0..*] (1)           |
-| dateOfLastRevision         | Date                          | Date of last revision                | [0..1]               |
-| dateOfCreation             | Date                          | Date of creation                     | [0..1]               |
-| characterSet               | CharacterSetCode              | Character Encoding                   | [1..*] (1)           |
-| contraints                 | Contraint[]                   | Resource constraints                 | [0..*]               |
-| distributionFormats        | Format                        | Encoding                             | [0..*]               |
-| spatialRepresentationType  | SpatialRepresentationTypeCode | Spatial representation type          | [1..*] (1)           |
-| lineage                    | String                        | Lineage                              | [1]                  |
-| spatialResolutions         | Resolution                    | Spatial resolution                   | [0..*]               |
-| specifications             | Specification                 | Specification title and degree       | [1..*]               |
-| contact                    | ResponsibleParty              | Responsible party                    | [0..*] (1)           |
-| metadataContact            | ResponsibleParty              | Metadata point of contact            | [1..*] (1)           |
-| metadataDate               | Date                          | Metadata date                        | [1]                  |
-| metadataLanguage           | LanguageCode                  | Metadata langage                     | [1]                  |
+| name                      | type                          | title                                | multiplicity |
+| ------------------------- | ----------------------------- | ------------------------------------ | ------------ |
+| fileIdentifier            | String                        | File identifier                      | [0..1]       |
+| title                     | String                        | Resource title                       | [1]          |
+| abstract                  | String                        | Resource abstract                    | [1]          |
+| type                      | ScopeCode                     | Resource type                        | [1]          |
+| locators                  | OnlineResource[]              | Resource locator                     | [1..*]       |
+| identifiers               | String[]                      | Unique resource identifier           | [1..*]       |
+| language                  | LanguageCode                  | Resource langage                     | [0..*] (1)   |
+| topicCategory             | TopicCategoryCode             | Topic category                       | [1..*] (1)   |
+| keywords                  | Keywords                      | Keyword                              | [1..*]       |
+| extents                   | Extent[]                      | Extents with geographic bounding box | [1..*]       |
+| referenceSystemIdentifier | ReferenceSystemIdentifier     | Coordinate Reference System          | [0..*] (1)   |
+| dateOfPublication         | Date                          | Date of publication                  | [0..*] (1)   |
+| dateOfLastRevision        | Date                          | Date of last revision                | [0..1]       |
+| dateOfCreation            | Date                          | Date of creation                     | [0..1]       |
+| characterSet              | CharacterSetCode              | Character Encoding                   | [1..*] (1)   |
+| contraints                | Contraint[]                   | Resource constraints                 | [0..*]       |
+| distributionFormats       | Format                        | Encoding                             | [0..*]       |
+| spatialRepresentationType | SpatialRepresentationTypeCode | Spatial representation type          | [1..*] (1)   |
+| lineage                   | String                        | Lineage                              | [1]          |
+| spatialResolutions        | Resolution                    | Spatial resolution                   | [0..*]       |
+| specifications            | Specification                 | Specification title and degree       | [1..*]       |
+| contact                   | ResponsibleParty              | Responsible party                    | [0..*] (1)   |
+| metadataContact           | ResponsibleParty              | Metadata point of contact            | [1..*] (1)   |
+| metadataDate              | Date                          | Metadata date                        | [1]          |
+| metadataLanguage          | LanguageCode                  | Metadata langage                     | [1]          |
 
 
 (1) multiplicity is adapted, only the first element is parsed
@@ -145,7 +145,7 @@ distributionInfo/*/transferOptions/*/onLine/*/linkage
 * CNIG_MD_DU - 1) Identification des données / Localisateur de la ressource (p5)
 
 
-## identifier
+## identifiers
 
 ### Description
 
@@ -156,7 +156,7 @@ Source : INSPIRE_GUIDELINE_2017
 ### XPath
 
 ```(xpath)
-dentificationInfo[1]/*/citation/*/identifier/*/code
+identificationInfo[1]/*/citation/*/identifier/*/code
 ```
 
 ### References

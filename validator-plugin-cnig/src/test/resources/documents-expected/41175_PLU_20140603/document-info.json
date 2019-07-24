@@ -160,7 +160,7 @@
       "protocol" : "",
       "name" : ""
     } ],
-    "identifier" : "fr-000041175-plu20140603",
+    "identifiers" : ["fr-000041175-plu20140603"],
     "language" : "fre",
     "topicCategory" : "planningCadastre",
     "keywords" : [ {

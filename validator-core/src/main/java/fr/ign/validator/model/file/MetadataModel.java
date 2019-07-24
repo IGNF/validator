@@ -15,7 +15,7 @@ import fr.ign.validator.validation.file.metadata.DatesValidator;
 import fr.ign.validator.validation.file.metadata.DistributionFormatsValidator;
 import fr.ign.validator.validation.file.metadata.ExtentsValidator;
 import fr.ign.validator.validation.file.metadata.FileIdentifierValidator;
-import fr.ign.validator.validation.file.metadata.IdentifierValidator;
+import fr.ign.validator.validation.file.metadata.IdentifiersValidator;
 import fr.ign.validator.validation.file.metadata.LanguageValidator;
 import fr.ign.validator.validation.file.metadata.LineageValidator;
 import fr.ign.validator.validation.file.metadata.LocatorsValidator;
@@ -88,7 +88,7 @@ public class MetadataModel extends FileModel {
 		addMetadataValidator(new LocatorsValidator());
 
 		// identifier
-		addMetadataValidator(new IdentifierValidator());
+		addMetadataValidator(new IdentifiersValidator());
 		// language
 		addMetadataValidator(new LanguageValidator());
 		
