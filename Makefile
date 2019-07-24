@@ -21,4 +21,8 @@ test:
 build:
 	mvn clean package -Dmaven.test.skip=true
 
+.PHONY: clean
+clean:
+	mvn clean
+
 
