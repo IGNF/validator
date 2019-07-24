@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.ign.validator</groupId>
@@ -15,7 +16,7 @@
 
 	<description>
         This program validates data according to a FeatureCatalogue
-    </description>
+	</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,13 +26,14 @@
 		http://docs.geotools.org/latest/userguide/build/install/jdk.html#
 		 -->
 		<geotools.version>21.2</geotools.version>
-		<log4j.version>2.8.2</log4j.version>
+		<log4j.version>2.12.0</log4j.version>
+		<!-- TODO keep an eye on 2.10.0 -->
 		<jackson.version>2.9.9</jackson.version>
 		<jackson.databind.version>2.9.9.1</jackson.databind.version>
 	</properties>
 
 	<organization>
-		<name>Service SAI, IGN</name>
+		<name>IGN - Service RDS</name>
 		<url>http://www.ign.fr</url>
 	</organization>
 
@@ -120,14 +122,14 @@
 		<dependency>
 			<groupId>jaxen</groupId>
 			<artifactId>jaxen</artifactId>
-			<version>1.1.6</version>
+			<version>1.2.0</version>
 		</dependency>
 
 		<!-- Apache common-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.3.2</version>
+			<version>2.6</version>
 		</dependency>
 
 		<!-- Apache common cli -->
@@ -141,7 +143,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.0</version>
+			<version>1.7</version>
 		</dependency>
 
 		<!-- org.apache.commons.lang -->
@@ -196,7 +198,7 @@
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
-			<version>2.2.0</version>
+			<version>2.6.3</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -204,23 +206,23 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>2.28.2</version>
+			<version>3.0.0</version>
 			<scope>test</scope>
 		</dependency>
 
 		<!-- JSONAssert -->
 		<dependency>
-		    <groupId>org.skyscreamer</groupId>
-		    <artifactId>jsonassert</artifactId>
-		    <version>1.5.0</version>
-		    <scope>test</scope>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.5.0</version>
+			<scope>test</scope>
 		</dependency>
 
-    	<!-- Driver SQLite -->
+		<!-- Driver SQLite -->
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.8.10.1</version>
+			<version>3.28.0</version>
 		</dependency>
 
 		<!-- JDK 8 libraries -->
@@ -232,12 +234,12 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>2.4.0-b180725.0427</version>
+			<version>2.4.0-b180830.0359</version>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>2.4.0-b180725.0644</version>
+			<version>2.4.0-b180830.0438</version>
 		</dependency>
 	</dependencies>
 
@@ -281,19 +283,18 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.1</version>
-        <configuration>
-            <useSystemClassLoader>false</useSystemClassLoader>
-			<argLine>
-				--illegal-access=permit
-			</argLine>
-        </configuration>
-      </plugin>
-    </plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+					<argLine> --illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 </project>
