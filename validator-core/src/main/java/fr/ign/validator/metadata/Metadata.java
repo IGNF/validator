@@ -3,7 +3,7 @@ package fr.ign.validator.metadata;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.ign.validator.metadata.code.CharacterSetCode;
 import fr.ign.validator.metadata.code.LanguageCode;
 import fr.ign.validator.metadata.code.ScopeCode;
@@ -24,7 +24,7 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
 	"abstract", 
 	"type", 
 	"locators",
-	"identifier",
+	"identifiers",
 	"language",
 	"topicCategory",
 	
@@ -85,8 +85,16 @@ public interface Metadata {
 	/**
 	 * INSPIRE GUIDELINE - 2.2 Identification / 2.2.5 Unique resource identifier (p24)
 	 * @return
-	 */	
+	 */
+	@Deprecated
+	@JsonIgnore
 	public String getIdentifier();
+
+	/**
+	 * INSPIRE GUIDELINE - 2.2 Identification / 2.2.5 Unique resource identifier (p24)
+	 * @return
+	 */
+	public List<String> getIdentifiers();
 	
 	/**
 	 * INSPIRE GUIDELINE - 2.2 Identification / 2.2.7 Resource langage (p26)

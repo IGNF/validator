@@ -16,7 +16,7 @@
     "protocol" : "WWW:LINK-1.0-http--link",
     "name" : "Site de la mairie de La Baconnière"
   } ],
-  "identifier" : "66484d70-3f8c-44cf-b0e5-98ac84426a2c",
+  "identifiers" : ["66484d70-3f8c-44cf-b0e5-98ac84426a2c"],
   "language" : "fre",
   "topicCategory" : "planningCadastre",
   "keywords" : [ {

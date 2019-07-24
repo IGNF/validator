@@ -119,7 +119,7 @@
       "protocol" : "Download",
       "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme"
     } ],
-    "identifier" : "https://www.geoportail-urbanisme.gouv.fr/document/19182_CC_20150517",
+    "identifiers" : ["https://www.geoportail-urbanisme.gouv.fr/document/19182_CC_20150517"],
     "language" : "fre",
     "topicCategory" : "planningCadastre",
     "keywords" : [ {

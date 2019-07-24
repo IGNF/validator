@@ -8,7 +8,7 @@
     "protocol" : "WWW:LINK-1.0-http--link",
     "name" : "site de la mairie de Belaives-Et-Butz"
   } ],
-  "identifier" : null,
+  "identifiers" : [],
   "language" : "fre",
   "topicCategory" : "planningCadastre",
   "keywords" : [ {
