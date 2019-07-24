@@ -99,7 +99,7 @@ Formats supportés :
 
 Format normalisé : "yyyyMMdd"
 
-### Geometry (com.vividsolutions.jts.geom.Geometry)
+### Geometry (org.locationtech.jts.geom.Geometry)
 
 Remarque :
 * Les types dérivés Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon, GeometryCollection

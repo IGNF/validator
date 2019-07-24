@@ -17,8 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.WKTReader;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.command.options.StringFixerOptions;
@@ -488,7 +488,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		WKTReader reader = new WKTReader();
 		try {
 			nativeDataExtent = reader.read(wktExtent);
-		} catch (com.vividsolutions.jts.io.ParseException e) {
+		} catch (org.locationtech.jts.io.ParseException e) {
 			String message = String.format("Invalid parameter 'data-extent' : '%1s' (invalid WKT)", wktExtent);
 			log.error(MARKER, message);
 			throw new ParseException(message);

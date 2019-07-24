@@ -7,7 +7,6 @@ import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import junit.framework.TestCase;
 
 @Ignore
 public class AbstractTypeTest<T> {

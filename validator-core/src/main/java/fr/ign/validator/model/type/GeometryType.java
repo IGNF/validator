@@ -1,8 +1,8 @@
 package fr.ign.validator.model.type;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.io.WKTReader;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;

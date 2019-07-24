@@ -3,7 +3,6 @@ package fr.ign.validator.normalize;
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,11 +10,11 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.xml.XmlModelManager;
 
 public class CSVNormalizerTest {

@@ -17,7 +17,7 @@ import org.apache.logging.log4j.MarkerManager;
 import org.geotools.referencing.CRS;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.geometry.ProjectionTransform;
