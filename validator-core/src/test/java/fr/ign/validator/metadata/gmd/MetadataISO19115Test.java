@@ -13,7 +13,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.metadata.Constraint;
 import fr.ign.validator.metadata.Extent;
@@ -30,6 +29,7 @@ import fr.ign.validator.metadata.code.LanguageCode;
 import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.metadata.code.TopicCategoryCode;
+import fr.ign.validator.tools.ResourceHelper;
 
 
 /**

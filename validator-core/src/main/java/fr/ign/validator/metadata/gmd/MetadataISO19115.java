@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -654,11 +653,7 @@ public class MetadataISO19115 implements Metadata {
 			@SuppressWarnings("unchecked")
 			List<Object> nodes = xpath.selectNodes(context) ;
 			for (Object node : nodes) {
-				String value = extractNodeValue(node);
-				if ( StringUtils.isEmpty(value) ) {
-					continue;
-				}
-				result.add(value);
+				result.add(extractNodeValue(node));
 			}
 			return result;
 		}catch(JDOMException e){

@@ -24,7 +24,7 @@
     "protocol" : null,
     "name" : "Téléchargement direct du lot et des documents associés"
   } ],
-  "identifiers" : [],
+  "identifiers" : [""],
   "language" : "fre",
   "topicCategory" : "planningCadastre",
   "keywords" : [ {
