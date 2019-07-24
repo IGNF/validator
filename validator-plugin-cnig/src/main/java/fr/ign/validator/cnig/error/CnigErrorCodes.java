@@ -17,11 +17,7 @@ public class CnigErrorCodes {
 	public static final ErrorCode CNIG_IDURBA_NOT_FOUND = ErrorCode.valueOf("CNIG_IDURBA_NOT_FOUND") ;
 
 	public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND      = ErrorCode.valueOf("CNIG_METADATA_SPECIFICATION_NOT_FOUND");
-	/**
-	 * To be removed in futur version (remove from CNIG MD requirements, converted to INFO)
-	 */
-	@Deprecated
-	public static final ErrorCode CNIG_METADATA_IDENTIFIER_INVALID           = ErrorCode.valueOf("CNIG_METADATA_IDENTIFIER_INVALID");
+	
 	public static final ErrorCode CNIG_METADATA_TYPE_INVALID                 = ErrorCode.valueOf("CNIG_METADATA_TYPE_INVALID");
 	public static final ErrorCode CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND = ErrorCode.valueOf("CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND");
 

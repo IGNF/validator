@@ -110,7 +110,6 @@ public class CnigValidatorRegressTest {
 			/* check ERRORS */
 			ReportAssert.assertCount(1, CoreErrorCodes.METADATA_CHARACTERSET_INVALID, report);
 			ReportAssert.assertCount(1, CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR, report);
-			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_IDENTIFIER_INVALID, report);
 			// relative to DOC_URBA.DATEREF
 			ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
 
