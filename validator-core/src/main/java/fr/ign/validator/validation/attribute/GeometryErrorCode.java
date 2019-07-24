@@ -1,6 +1,6 @@
 package fr.ign.validator.validation.attribute;
 
-import com.vividsolutions.jts.operation.valid.TopologyValidationError;
+import org.locationtech.jts.operation.valid.TopologyValidationError;
 
 import fr.ign.validator.code.CodeList;
 import fr.ign.validator.code.CodeListValue;

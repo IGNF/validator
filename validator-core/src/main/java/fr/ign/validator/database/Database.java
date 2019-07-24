@@ -114,7 +114,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public static Database createDatabase(Document document) throws SQLException {
-		String url = System.getenv("VALIDATOR_DB_URL");
+		String url = System.getenv("DB_URL");
 		if (url != null && !url.equals("")) {
 			return createPostgresDatabase(document);
 		}
@@ -140,10 +140,10 @@ public class Database {
 	
 	
 	private static Database createPostgresDatabase(Document document) throws SQLException {
-		String url = System.getenv("VALIDATOR_DB_URL");
-		String user = System.getenv("VALIDATOR_DB_USER");
-		String password = System.getenv("VALIDATOR_DB_PASSWORD");
-		String schema = System.getenv("VALIDATOR_DB_SCHEMA");
+		String url = System.getenv("DB_URL");
+		String user = System.getenv("DB_USER");
+		String password = System.getenv("DB_PASSWORD");
+		String schema = System.getenv("DB_SCHEMA");
 		Database database = new Database(url, user, password, schema);
 		if (database.hasSchema()) {
 			database.createSchema(database.getSchema());

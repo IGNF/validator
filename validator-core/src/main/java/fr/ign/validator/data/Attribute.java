@@ -7,7 +7,6 @@ import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.GeometryErrorCode;
-import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
 
 /**
  * Represents an attribute of a Feature (value associated to a type)

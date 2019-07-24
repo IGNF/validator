@@ -1,7 +1,7 @@
 package fr.ign.validator.data;
 
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.geometry.ProjectionTransform;
