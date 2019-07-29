@@ -1,7 +1,6 @@
-package fr.ign.validator.cnig.idurba.impl;
+package fr.ign.validator.cnig.tools;
 
-import fr.ign.validator.cnig.idurba.IdurbaHelper;
-import fr.ign.validator.cnig.utils.DocumentNameHelper;
+import fr.ign.validator.cnig.model.DocumentName;
 
 /**
  * 
@@ -17,7 +16,7 @@ public class IdurbaHelperV2 extends IdurbaHelper {
 		if ( null == idurba ){
 			return false ;
 		}
-		return idurba.matches(DocumentNameHelper.REGEXP_DU);
+		return idurba.matches(DocumentName.REGEXP_DU);
 	}
 
 	@Override

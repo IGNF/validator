@@ -42,8 +42,25 @@ public class MetadataPreProcess implements ValidatorListener {
 	 */
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
+		/*
+		 * Find first metadata file
+		 */
+		log.info(MARKER, "Locate metadata files...");
+		List<DocumentFile> metadataFiles = document.getDocumentFiles(MetadataModel.class);
+		if ( metadataFiles.isEmpty() ){
+			// already reported if metadata is expected
+			log.warn(MARKER, "Metadata file not found");
+			return;
+		}
+		if ( metadataFiles.size() > 1 ){
+			context
+				.report(context.createError(CoreErrorCodes.METADATA_MULTIPLE_FILES)
+				.setMessageParam("FILENAME_LIST", formatFiles(context,metadataFiles))
+			);
+		}
+		File metadataFile = metadataFiles.get(0).getPath() ;
 		log.info(MARKER, "Search data charset in metadata files...");
-		Charset charset = readCharsetFromMetadata(context, document);
+		Charset charset = readCharsetFromMetadata(context,metadataFile);
 		if ( null == charset ){
 			log.warn(MARKER, "Charset not found in metadata files!");
 		}else{
@@ -58,18 +75,7 @@ public class MetadataPreProcess implements ValidatorListener {
 	 * @param document
 	 * @return
 	 */
-	private Charset readCharsetFromMetadata(Context context, Document document) {
-		List<DocumentFile> metadataFiles = document.getDocumentFiles(MetadataModel.class);
-		if ( metadataFiles.isEmpty() ){
-			return null;
-		}
-		if ( metadataFiles.size() > 1 ){
-			context.report(context.createError(CoreErrorCodes.METADATA_MULTIPLE_FILES)
-				.setMessageParam("FILENAME_LIST", formatFiles(context,metadataFiles))
-			);
-		}
-		
-		File metadataFile = metadataFiles.get(0).getPath() ;
+	private Charset readCharsetFromMetadata(Context context, File metadataFile) {
 		try {
 			Metadata reader = MetadataISO19115.readFile(metadataFile);
 			CharacterSetCode characterSet = reader.getCharacterSet();

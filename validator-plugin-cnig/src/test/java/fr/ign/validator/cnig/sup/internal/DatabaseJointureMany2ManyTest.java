@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils.internal;
+package fr.ign.validator.cnig.sup.internal;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.cnig.process.internal.DatabaseJointureSUP;
 import fr.ign.validator.tools.ResourceHelper;
 
 

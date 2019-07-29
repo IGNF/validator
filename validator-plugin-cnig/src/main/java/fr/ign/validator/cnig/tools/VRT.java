@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.tools;
 
 import java.io.File;
 import java.io.FileWriter;

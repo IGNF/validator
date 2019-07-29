@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.model;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -10,7 +10,7 @@ import fr.ign.validator.metadata.Specification;
  * @author MBorne
  *
  */
-public class SpecificationUtils {
+public class MetadataSpecification {
 	
 	private static final String CNIG_SPECIFICATION_REGEXP = "(?i)CNIG\\s(CC|POS|PLU|PLUi|PSMV|SUP)\\sv\\d{4}";
 	

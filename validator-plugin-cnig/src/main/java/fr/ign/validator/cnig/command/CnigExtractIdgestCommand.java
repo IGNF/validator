@@ -9,7 +9,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-import fr.ign.validator.cnig.utils.IdgestExtractor;
+import fr.ign.validator.cnig.process.internal.IdgestExtractor;
 import fr.ign.validator.command.AbstractCommand;
 
 

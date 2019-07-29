@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.model;
 
 /**
  * 
@@ -9,9 +9,9 @@ package fr.ign.validator.cnig.utils;
  * @author MBorne
  *
  */
-public class SirenUtils {
+public class SirenCode {
 	
-	public static final String REGEXP_SIREN = "[0-9]{9}" ;
+	public static final String REGEXP = "[0-9]{9}" ;
 
 	/**
 	 * Indicates if given parameter is a valid SIREN code
@@ -23,7 +23,7 @@ public class SirenUtils {
 		if ( null == siren ){
 			return false ;
 		}
-		return siren.matches(REGEXP_SIREN) ;
+		return siren.matches(REGEXP) ;
 	}
-	
+
 }

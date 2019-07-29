@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.tools;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -8,13 +8,11 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.cnig.idurba.IdurbaHelper;
 import fr.ign.validator.tools.TableReader;
 
 /**
  * 
  * Extracts typeref (cadastral reference) from DOC_URBA table
- * 
  * 
  * @author MBorne
  * 

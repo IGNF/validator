@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import fr.ign.validator.cnig.model.MetadataSpecification;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.Specification;
 
@@ -31,7 +32,7 @@ public class SpecificationUtilsTest {
 		}
 		when(metadata.getSpecifications()).thenReturn(specifications);
 		
-		Specification result = SpecificationUtils.findCnigSpecification(metadata);
+		Specification result = MetadataSpecification.findCnigSpecification(metadata);
 		assertNotNull(result);
 		assertSame(specifications.get(0),result);
 	}
@@ -51,7 +52,7 @@ public class SpecificationUtilsTest {
 		}
 		when(metadata.getSpecifications()).thenReturn(specifications);
 		
-		Specification result = SpecificationUtils.findCnigSpecification(metadata);
+		Specification result = MetadataSpecification.findCnigSpecification(metadata);
 		assertNotNull(result);
 		assertSame(specifications.get(0),result);
 	}
@@ -78,7 +79,7 @@ public class SpecificationUtilsTest {
 		}
 		when(metadata.getSpecifications()).thenReturn(specifications);
 		
-		Specification result = SpecificationUtils.findCnigSpecification(metadata);
+		Specification result = MetadataSpecification.findCnigSpecification(metadata);
 		assertNull(result);
 	}
 	
@@ -97,7 +98,7 @@ public class SpecificationUtilsTest {
 		}
 		when(metadata.getSpecifications()).thenReturn(specifications);
 		
-		Specification result = SpecificationUtils.findCnigSpecification(metadata);
+		Specification result = MetadataSpecification.findCnigSpecification(metadata);
 		assertNull(result);
 	}
 	
@@ -116,7 +117,7 @@ public class SpecificationUtilsTest {
 		}
 		when(metadata.getSpecifications()).thenReturn(specifications);
 		
-		Specification result = SpecificationUtils.findCnigSpecification(metadata);
+		Specification result = MetadataSpecification.findCnigSpecification(metadata);
 		assertNull(result);
 	}
 }

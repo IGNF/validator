@@ -9,8 +9,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.idurba.IdurbaHelper;
-import fr.ign.validator.cnig.idurba.IdurbaHelperFactory;
+import fr.ign.validator.cnig.tools.IdurbaHelper;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
@@ -40,7 +39,7 @@ public class IdurbaValidationCustomizer implements ValidatorListener {
 		/*
 		 * Configure idurbaHelper according to document model
 		 */
-		IdurbaHelper idurbaHelper = IdurbaHelperFactory.getInstance(context.getDocumentModel());
+		IdurbaHelper idurbaHelper = IdurbaHelper.getInstance(context.getDocumentModel());
 		if ( idurbaHelper == null ){
 			log.info(MARKER, "IDURBA validation not supported for this type of document");
 			return;

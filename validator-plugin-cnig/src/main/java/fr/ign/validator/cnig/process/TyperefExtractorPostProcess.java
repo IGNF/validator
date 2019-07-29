@@ -10,9 +10,8 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.idurba.IdurbaHelper;
-import fr.ign.validator.cnig.idurba.IdurbaHelperFactory;
-import fr.ign.validator.cnig.utils.TyperefExtractor;
+import fr.ign.validator.cnig.tools.IdurbaHelper;
+import fr.ign.validator.cnig.tools.TyperefExtractor;
 import fr.ign.validator.data.Document;
 
 /**
@@ -48,7 +47,7 @@ public class TyperefExtractorPostProcess implements ValidatorListener {
 	private String parseTyperef(Context context, Document document) {
 		String documentName = document.getDocumentName();
 
-		IdurbaHelper helper = IdurbaHelperFactory.getInstance(context.getDocumentModel());
+		IdurbaHelper helper = IdurbaHelper.getInstance(context.getDocumentModel());
 		if (null == helper) {
 			log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
 			return null;

@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.process.internal;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.cnig.utils.internal.DatabaseJointureSUP;
 import fr.ign.validator.tools.TableReader;
 
 /**

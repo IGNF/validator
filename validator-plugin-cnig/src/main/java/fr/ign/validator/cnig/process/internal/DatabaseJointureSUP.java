@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils.internal;
+package fr.ign.validator.cnig.process.internal;
 
 import java.io.File;
 import java.io.IOException;

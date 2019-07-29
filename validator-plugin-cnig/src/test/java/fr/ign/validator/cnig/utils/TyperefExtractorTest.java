@@ -8,7 +8,8 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ign.validator.cnig.idurba.impl.IdurbaHelperV1;
+import fr.ign.validator.cnig.tools.IdurbaHelperV1;
+import fr.ign.validator.cnig.tools.TyperefExtractor;
 import fr.ign.validator.tools.ResourceHelper;
 
 

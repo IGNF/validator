@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.sup;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.ign.validator.cnig.process.internal.ReferenceActeSupJointureBuilder;
 import fr.ign.validator.tools.ResourceHelper;
 
 

@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.model;
 
 /**
  * 
@@ -9,8 +9,10 @@ package fr.ign.validator.cnig.utils;
  * @author MBorne
  *
  */
-public class DocumentModelNameUtils {
+public class DocumentModelName {
 
+	private static final String REGEXP_YYYY = "[0-9]{4}";
+	
 	/**
 	 * Test if document model is a CNIG standard
 	 * @param documentModelName
@@ -44,7 +46,7 @@ public class DocumentModelNameUtils {
 		}
 		String[] parts = documentModelName.split("_");
 		String candidate = parts[parts.length - 1];
-		if ( ! candidate.matches("[0-9]{4}") ){
+		if ( ! candidate.matches(REGEXP_YYYY) ){
 			return null;
 		}
 		return candidate;

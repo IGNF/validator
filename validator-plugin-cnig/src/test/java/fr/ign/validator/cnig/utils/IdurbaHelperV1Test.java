@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.idurba.impl;
+package fr.ign.validator.cnig.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import fr.ign.validator.cnig.tools.IdurbaHelperV1;
 
 public class IdurbaHelperV1Test {
 
