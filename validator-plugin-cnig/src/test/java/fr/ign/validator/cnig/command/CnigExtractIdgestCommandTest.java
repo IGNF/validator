@@ -15,6 +15,11 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * 
+ * Test command CnigExtractIdgestCommand
+ *  
+ * TODO use TemporaryFolder
+ * TODO test on a non SERVITUDE file
+ * 
  * @author FCerizay
  *
  */

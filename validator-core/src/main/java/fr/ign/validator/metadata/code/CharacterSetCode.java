@@ -37,7 +37,7 @@ public class CharacterSetCode extends CodeListValue {
 	 * @return
 	 */
 	public Charset getCharset(){
-		String charsetName = CODE_LIST.getTranslation(getValue());
+		String charsetName = CODE_LIST.getDescription(getValue());
 		if ( null == charsetName ){
 			return null;
 		}

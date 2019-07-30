@@ -13,7 +13,13 @@ import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ValidatorError;
 
-
+/**
+ * 
+ * Ensure that CnigErrorCodes have default configuration 
+ * 
+ * @author MBorne
+ *
+ */
 public class CnigErrorCodesTest {
 
 	@Test

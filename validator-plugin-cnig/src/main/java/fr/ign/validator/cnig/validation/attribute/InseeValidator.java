@@ -60,7 +60,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 	@Override
 	public void validate(Context context, Attribute<String> validatable) {
 		String insee = validatable.getBindedValue() ;
-		if ( ! MunicipalityCode.isValidCommune(insee) ){
+		if ( ! MunicipalityCode.isValid(insee) ){
 			context.report(context.createError(CnigErrorCodes.CNIG_INSEE_INVALID)
 				.setMessageParam("VALUE", insee)
 			);

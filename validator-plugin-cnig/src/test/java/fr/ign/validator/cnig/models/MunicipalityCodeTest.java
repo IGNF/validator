@@ -12,15 +12,15 @@ public class MunicipalityCodeTest {
 	
 	@Test
 	public void testValidCommune(){
-		assertTrue(MunicipalityCode.isValidCommune("25349"));
-		assertTrue(MunicipalityCode.isValidCommune("2B111"));
+		assertTrue(MunicipalityCode.isValid("25349"));
+		assertTrue(MunicipalityCode.isValid("2B111"));
 	}
 
 	@Test	
 	public void testNotValidCommune(){
-		assertFalse(MunicipalityCode.isValidCommune("2534"));
-		assertFalse(MunicipalityCode.isValidCommune("253495"));
-		assertFalse(MunicipalityCode.isValidCommune("2C111"));
+		assertFalse(MunicipalityCode.isValid("2534"));
+		assertFalse(MunicipalityCode.isValid("253495"));
+		assertFalse(MunicipalityCode.isValid("2C111"));
 	}
 
 }

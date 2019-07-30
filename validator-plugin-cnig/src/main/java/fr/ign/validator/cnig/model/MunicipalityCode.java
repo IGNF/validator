@@ -2,7 +2,7 @@ package fr.ign.validator.cnig.model;
 
 /**
  * 
- * Validates insee codes
+ * Validates INSEE codes for municipalities
  * 
  * @author MBorne
  *
@@ -13,14 +13,14 @@ public class MunicipalityCode {
 	/**
 	 * Validates a municipality code
 	 * 
-	 * @param insee
+	 * @param value
 	 * @return
 	 */
-	public static boolean isValidCommune(String insee){
-		if ( null == insee ){
+	public static boolean isValid(String value){
+		if ( null == value ){
 			return false ;
 		}
-		return insee.matches(REGEXP) ;
+		return value.matches(REGEXP) ;
 	}
 
 }

@@ -17,7 +17,7 @@ public abstract class CodeListValue {
 	 */
 	private CodeList codeList ;
 	/**
-	 * ISO 19115 code for charset
+	 * The value of the code
 	 */
 	private String value;
 

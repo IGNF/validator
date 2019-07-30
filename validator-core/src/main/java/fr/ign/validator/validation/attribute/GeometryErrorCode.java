@@ -39,7 +39,7 @@ public class GeometryErrorCode extends CodeListValue {
 	 * @return
 	 */
 	public String getMessage(){
-		return CODE_LIST.getTranslation(getValue());
+		return CODE_LIST.getDescription(getValue());
 	}
 	
 	
