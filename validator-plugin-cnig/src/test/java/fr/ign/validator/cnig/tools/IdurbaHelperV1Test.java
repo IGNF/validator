@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.tools;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

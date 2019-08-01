@@ -30,7 +30,7 @@ public class IdurbaHelperV1 extends IdurbaHelper {
 	 */
 	private String getRegexp(){	
 		// municipality | 
-		String result = DocumentName.REGEXP_DU_TERRITOIRE;
+		String result = DocumentName.REGEXP_INSEE_OR_SIREN;
 		result += "(_?)" ;// optional _
 		result += DocumentName.REGEXP_YYYYMMDD ;
 		return result;
@@ -51,7 +51,7 @@ public class IdurbaHelperV1 extends IdurbaHelper {
 	 * @return
 	 */
 	private String getRegexp(String documentName){
-		Pattern pattern = Pattern.compile("(?i)"+DocumentName.REGEXP_DU);
+		Pattern pattern = Pattern.compile("(?i)"+DocumentName.getRegexpDU());
 		Matcher matcher = pattern.matcher(documentName);
 		
 		if( matcher.matches()){

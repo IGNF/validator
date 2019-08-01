@@ -16,7 +16,7 @@ public class IdurbaHelperV2 extends IdurbaHelper {
 		if ( null == idurba ){
 			return false ;
 		}
-		return idurba.matches(DocumentName.REGEXP_DU);
+		return idurba.matches(DocumentName.getRegexpDU());
 	}
 
 	@Override

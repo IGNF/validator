@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.models;
+package fr.ign.validator.cnig.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import fr.ign.validator.cnig.model.SirenCode;
 
 
-public class SirenUtilsTest {
+public class SirenCodeTest {
 
 	@Test
 	public void testValid(){

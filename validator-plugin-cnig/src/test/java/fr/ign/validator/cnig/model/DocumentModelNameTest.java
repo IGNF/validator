@@ -1,4 +1,4 @@
-package fr.ign.validator.cnig.utils;
+package fr.ign.validator.cnig.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,19 +10,15 @@ import org.junit.Test;
 import fr.ign.validator.cnig.model.DocumentModelName;
 
 
-public class DocumentModelNameUtilsTest {
+public class DocumentModelNameTest {
 	
 	@Test
 	public void testIsCnigStandard(){
 		assertFalse(DocumentModelName.isCnigStandard("test"));
 		assertFalse(DocumentModelName.isCnigStandard("test_bad"));
+
 		assertTrue(DocumentModelName.isCnigStandard("cnig_SCOT_2013"));
-	}
-	
-	@Test
-	public void testIsGetStandard(){
-		assertFalse(DocumentModelName.isCnigStandard("test"));
-		assertFalse(DocumentModelName.isCnigStandard("test_bad"));		
+		assertTrue(DocumentModelName.isCnigStandard("cnig_PSMV_2013"));		
 	}
 	
 	@Test

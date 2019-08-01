@@ -32,7 +32,7 @@ public class CharacterSetValidator implements Validator<Metadata> {
 			context.report(
 				CoreErrorCodes.METADATA_CHARACTERSET_NOT_FOUND
 			);
-		}else if ( ! code.isAllowedValue() ){
+		}else if ( ! code.isValid() ){
 			context.report(context.createError(CoreErrorCodes.METADATA_CHARACTERSET_INVALID)
 				.setMessageParam("CHARSET_CODE", code.getValue())
 				.setMessageParam("EXPECTED_CHARSETS", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))

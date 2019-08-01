@@ -34,7 +34,7 @@ public abstract class CodeListValue {
 	 * True if the value belong to the code list
 	 * @return
 	 */
-	public boolean isAllowedValue(){
+	public boolean isValid(){
 		return getCodeList().getAllowedValues().contains(value);
 	}
 

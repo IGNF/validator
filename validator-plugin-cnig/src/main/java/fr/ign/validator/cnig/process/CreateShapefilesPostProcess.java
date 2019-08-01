@@ -49,7 +49,6 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
 		FileConverter fileConverter = FileConverter.getInstance();
 		
 		String[] extensions = { "csv" } ;
-		@SuppressWarnings("unchecked")
 		Collection<File> csvFiles = FileUtils.listFiles(dataDirectory, extensions, true) ;
 		for (File csvFile : csvFiles) {
 			// get FeatureType
