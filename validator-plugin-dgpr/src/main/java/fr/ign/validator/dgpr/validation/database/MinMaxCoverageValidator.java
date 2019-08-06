@@ -154,10 +154,6 @@ public class MinMaxCoverageValidator implements Validator<Database> {
 	 * @return
 	 */
 	public boolean evaluate(SurfaceInondable surfaceInondable, List<IsoHauteur> isoHauteurs) {
-		// initialisation
-		if (!compare(isoHauteurs.get(0).getHtMin(), "0.00")) {
-			return false;
-		}
 
 		for (int i = 0; i < isoHauteurs.size(); i++) {
 			IsoHauteur isoHauteur = isoHauteurs.get(i);
