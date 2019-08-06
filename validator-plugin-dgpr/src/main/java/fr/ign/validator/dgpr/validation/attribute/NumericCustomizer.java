@@ -15,7 +15,6 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.DoubleType;
-import fr.ign.validator.model.type.IntegerType;
 
 public class NumericCustomizer implements ValidatorListener {
 
@@ -31,9 +30,6 @@ public class NumericCustomizer implements ValidatorListener {
 				continue;
 			}
 			switch (fileModel.getName()) {
-				case "N_prefixTri_COMMUNE_S_ddd":
-					addTauxHabValidator(fileModel);
-					break;
 				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
 					addDebLinValidator(fileModel);
 					addAzimuthValidator(fileModel);					
@@ -111,21 +107,6 @@ public class NumericCustomizer implements ValidatorListener {
 		}
 	}
 	
-	private void addTauxHabValidator(FileModel fileModel) {
-		// looking for N_prefixTri_COMMUNE_S_ddd.TX_HAB_SAI
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("TX_HAB_SAI") ;
-		if ( attribute == null ){
-			return;
-		}
-
-		/* check attribute type and add custom validator */
-		if ( attribute instanceof IntegerType ) {
-			((IntegerType)attribute).addValidator(new TauxHabitantValidator());
-		} else {
-			throw new RuntimeException("TX_HAB_SAI de N_prefixTri_COMMUNE_S_ddd n'est pas configuré comme étant un entier");
-		}
-	}
-
 	private void addAzimuthValidator(FileModel fileModel) {
 		// looking for N_prefixTri_COTE_VIT_DEB_P_ddd
 		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("AZIMUTH");

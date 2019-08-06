@@ -19,7 +19,6 @@ public class MinMaxCoverageValidatorTest {
 		SurfaceInondable surfaceInondable = new SurfaceInondable("id", "wkt");
 		//
 		List<IsoHauteur> hauteurs = new ArrayList<IsoHauteur>();
-		hauteurs.add(new IsoHauteur("iso1", "id", "0.0", "0.5"));
 		hauteurs.add(new IsoHauteur("iso2", "id", "0.5", "1"));
 		hauteurs.add(new IsoHauteur("iso3", "id", "1.0", "2.0"));
 		hauteurs.add(new IsoHauteur("iso4", "id", "1.0", "2.0"));
@@ -97,7 +96,6 @@ public class MinMaxCoverageValidatorTest {
 		SurfaceInondable surfaceInondable = new SurfaceInondable("id", "wkt");
 		//
 		List<IsoHauteur> hauteurs = new ArrayList<IsoHauteur>();
-		hauteurs.add(new IsoHauteur("iso1", "id", "0.0", "0.5"));
 		hauteurs.add(new IsoHauteur("iso2", "id", "0.5", "1"));
 		// htmin == htmax == null
 		hauteurs.add(new IsoHauteur("iso3", "id", null, null));
