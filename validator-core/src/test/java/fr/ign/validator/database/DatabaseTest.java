@@ -191,6 +191,5 @@ public class DatabaseTest {
 		
 		Assert.assertEquals( 0, database.getCount("test") );
 	}
-
 	
 }

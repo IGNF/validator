@@ -115,18 +115,18 @@ public class RelationValidator implements Validator<Database> {
 			sql += fileModel.getName() + ".WKT" + " AS WKT, ";	
 		}
 
-		sql +=  fileModel.getName() + "." + attribute.getName() + " AS ref, "
+		sql +=  fileModel.getName() + "." + attribute.getName() + " AS table_ref, "
 				+ attribute.getTableReference() + "." + attribute.getAttributeReference() + " AS id_table_ref"
 				+ " FROM " + fileModel.getName() 
 				+ " LEFT JOIN " + attribute.getTableReference() 
-				+ " ON ref LIKE id_table_ref";
+				+ " ON " + fileModel.getName() + "." + attribute.getName() + " LIKE " + attribute.getTableReference() + "." + attribute.getAttributeReference();
 
 		// request to join the tables
 		RowIterator table = database.query(sql);
 
 		int indexIdTableRef = table.getColumn("id_table_ref");
 		int indexId = table.getColumn("id");
-		int indexRef = table.getColumn("ref");
+		int indexRef = table.getColumn("table_ref");
 		int indexWkt = table.getColumn("WKT");
 
 		while (table.hasNext()) {

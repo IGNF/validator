@@ -102,5 +102,18 @@ public class Projection {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	/**
+	 * Get SRID code (used in postgis command)
+	 * @return
+	 */
+	public String getSrid() {
+		String srid = getCodeGeotool();
+		// check namespace
+		if (srid.startsWith("EPSG:")) {
+			return srid.substring(5);
+		}
+		return "4326";
+	}
 
 }

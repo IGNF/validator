@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -27,6 +26,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.TableReader;
 
@@ -45,6 +45,21 @@ public class Database {
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
 
 	private static final int batchSize = 100;
+	
+	public static final String ENV_DATABASE_URL = "DB_URL";
+	public static final String ENV_DATABASE_USER = "DB_USER";
+	public static final String ENV_DATABASE_PASSWORD = "DB_PASSWORD";
+	public static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
+
+	public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
+
+	public static final String GEOMETRY_COLUMN = "WKT";
+
+	public static final String DEFAULT_SRID = "4326";
+
+	private String schema;
+	
+	private Projection projection;
 
 	/**
 	 * Database connection
@@ -69,6 +84,22 @@ public class Database {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public Database(String url, String user, String password, String schema) {
+		log.info(MARKER, "Create POSTGRESQL database {}...", url);
+		try {
+			Class.forName("org.postgresql.Driver");
+			connection = DriverManager.getConnection(url, user, password);
+			connection.setAutoCommit(false);
+			// save schema
+			this.setSchema(schema);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
 
 	/**
 	 * Get database connection
@@ -87,6 +118,16 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public static Database createDatabase(Document document) throws SQLException {
+		String url = System.getenv(Database.ENV_DATABASE_URL);
+		if (url != null && !url.isEmpty()) {
+			return createPostgresDatabase(document);
+		}
+		// else
+		return Database.createSqlLiteDatabase(document);
+	}
+
+	
+	private static Database createSqlLiteDatabase(Document document) throws SQLException {
 		File parentDirectory = document.getDocumentPath().getParentFile();
 		File databasePath = new File(parentDirectory, "document_database.db");
 		if (databasePath.exists()) {
@@ -94,10 +135,45 @@ public class Database {
 			databasePath.delete();
 		}
 		Database database = new Database(databasePath);
+		if (database.hasSchema()) {
+			database.createSchema(database.getSchema());
+		}
+		database.createTables(document.getDocumentModel());
+		return database;
+	}
+	
+	
+	private static Database createPostgresDatabase(Document document) throws SQLException {
+		String url = System.getenv(Database.ENV_DATABASE_URL);
+		String user = System.getenv(Database.ENV_DATABASE_USER);
+		String password = System.getenv(Database.ENV_DATABASE_PASSWORD);
+		String schema = System.getenv(Database.ENV_DATABASE_SCHEMA);
+		Database database = new Database(url, user, password, schema);
+		if (database.hasSchema()) {
+			database.createSchema(database.getSchema());
+		}
 		database.createTables(document.getDocumentModel());
 		return database;
 	}
 
+
+	public void createSchema(String schemaName) throws SQLException {
+		String dropClause = "";
+		if (this.isPostgresqlDriver() && !schemaName.equals("public")) {
+			dropClause = "DROP SCHEMA IF EXISTS " + schemaName + " CASCADE;";
+		}
+		String sql = dropClause 
+				+ " CREATE SCHEMA IF NOT EXISTS " + schemaName + ";"
+				+ " SET search_path = " + schemaName + ", public;";
+
+		// debug SQL
+		log.debug(MARKER, sql);
+		Statement sth = connection.createStatement();
+		sth.executeUpdate(sql);
+		connection.commit();
+	}
+
+	
 	/**
 	 * Create tables according to documentModel
 	 * 
@@ -120,7 +196,11 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public void createTable(TableModel tableModel) throws SQLException {
-		createTable(tableModel.getName(),getColumnNames(tableModel));
+		if (this.isPostgresqlDriver()) {
+			createPostgisTable(tableModel);
+		} else {
+			createTable(tableModel.getName(), getColumnNames(tableModel));
+		}
 	}
 
 	/**
@@ -130,7 +210,11 @@ public class Database {
 	 * @param columnNames
 	 */
 	public void createTable(String tableName, List<String> columnNames) throws SQLException {
-		String sql = "CREATE TABLE " + tableName + " (";
+		String ifClause = "";
+		if (this.isPostgresqlDriver()) {
+			ifClause = "IF NOT EXISTS ";
+		}
+		String sql = "CREATE TABLE " + ifClause + tableName + " (";
 		for ( int i = 0; i < columnNames.size(); i++ ){
 			if ( i != 0 ){
 				sql += ",";
@@ -147,13 +231,52 @@ public class Database {
 	}
 	
 	/**
+	 * Create postgis Table with geometry column
+	 * @param tableModel
+	 * @throws SQLException 
+	 */
+	public void createPostgisTable(TableModel tableModel) throws SQLException {
+		List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
+		List<String> columns = new ArrayList<String>(attributes.size());
+
+		for (AttributeType<?> attribute : attributes) {
+			if (attribute.isGeometry()) {
+				columns.add(attribute.getName() + " TEXT");
+				columns.add("the_geom geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")");
+			} else {
+				columns.add(attribute.getName() + " TEXT");
+			}
+		}
+
+		String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
+			+ String.join(",", columns)
+			+ ");";
+
+		// debug SQL
+		log.debug(MARKER, sql);
+		Statement sth = connection.createStatement();
+		sth.executeUpdate(sql);
+		connection.commit();
+		/*
+		 * -- Add a spatial index
+         * CREATE INDEX mydata_geom_idx ON mydata USING gist (geom);
+		 */
+	}
+	
+	/**
 	 * Create index idx_{tableName}_{columnName} on {tableName}({columnName}
 	 * @param tableName
 	 * @param columnName
 	 */
 	public void createIndex(String tableName, String columnName) throws SQLException {
-		String indexName = "idx_"+tableName+"_"+columnName;
-		String sql = "CREATE INDEX "+indexName+" ON "+tableName+" ("+columnName+")";
+		String ifClause = "";
+		if (this.isPostgresqlDriver()) {
+			ifClause = "IF NOT EXISTS ";
+		}
+		// format : idx_N_prefixTri_CARTE_INOND_S_ddd_ID_CARTE, idx_N_prefixTri_ENJEU_CRISE_P_ddd_ID_SI
+		String indexName = "idx_" + tableName + "_" + columnName;
+		String sql = "CREATE INDEX " + ifClause + indexName 
+				+ " ON " + tableName + " (" + columnName + ")";
 		// debug SQL
 		log.debug(MARKER, sql);
 		Statement sth = connection.createStatement();
@@ -207,6 +330,26 @@ public class Database {
 		FeatureType featureType = documentFile.getFileModel().getFeatureType();
 
 		loadFile(featureType.getName(), documentFile.getPath(), context.getEncoding());
+		if (this.isPostgresqlDriver()) {
+			updateGeom(featureType);
+		}
+	}
+
+	private void updateGeom(FeatureType featureType) throws SQLException {
+		// last commit
+		if (featureType.isSpatial()) {
+			String srid = Database.DEFAULT_SRID;
+			if (this.getProjection() != null && this.getProjection().getCode().split(":").length > 1) {
+				// must split code
+				srid = this.getProjection().getCode().split(":")[1];
+			}
+			String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = "
+					+ "ST_Multi(ST_Transform(ST_SetSRID(wkt, " + srid + "), 4326));"; 
+			log.debug(MARKER, updateSQL);
+			Statement sth = connection.createStatement();
+			sth.executeUpdate(updateSQL);
+			connection.commit();
+		}
 	}
 
 	/**
@@ -227,7 +370,7 @@ public class Database {
 		TableReader reader = TableReader.createTableReaderPreferedCharset(path, charset);
 
 		String[] header = reader.getHeader();
-		String[] columnNames = getSchema(tableName);
+		String[] columnNames = getTableSchema(tableName);
 
 		/*
 		 * Generate insert into template according to columns INSERT INTO TABLE
@@ -254,16 +397,18 @@ public class Database {
 		if ( indexes.isEmpty() ){
 			log.warn(MARKER, "No matching column found in {} for {} with {}", 
 				tableName, 
-				path, 
-				StringUtils.join(header, ",")
+				path,
+				String.join(",", header)
 			);
 			return;
 		}
 		
 
 		String sql = "INSERT INTO " + tableName 
-			+ " (" + StringUtils.join(columnParts, ", ") + ") VALUES (" 
-			+ StringUtils.join(valueParts, ", ") 
+			+ " (" 
+			+ 	String.join(", ", columnParts)
+			+ ") VALUES (" 
+			+ String.join(", ", valueParts)
 			+ ");"
 		;
 
@@ -291,6 +436,7 @@ public class Database {
 		sth.executeBatch();
 		connection.commit();
 	}
+	
 
 	/**
 	 * Perform any SQL request to DocumentDatabase
@@ -317,7 +463,7 @@ public class Database {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	public String[] getSchema(String tablename) throws SQLException, IOException {
+	public String[] getTableSchema(String tablename) throws SQLException, IOException {
 		RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1");
 		String[] header = query.getHeader();
 		query.close();
@@ -334,6 +480,7 @@ public class Database {
 	public int getCount(String tableName) throws SQLException {
 		PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName);
 		ResultSet rs = sth.executeQuery();
+		rs.next();
 		return rs.getInt(1);
 	}
 
@@ -346,6 +493,34 @@ public class Database {
 	 */
 	public RowIterator selectAll(String tablename) throws SQLException {
 		return query("SELECT * FROM " + tablename);
+	}
+	
+	public boolean hasSchema() {
+		return this.schema != null && !this.schema.isEmpty();
+	}
+
+	public String getSchema() {
+		return schema;
+	}
+
+	public void setSchema(String schema) {
+		this.schema = schema;
+	}
+
+	public Projection getProjection() {
+		return projection;
+	}
+
+	public void setProjection(Projection projection) {
+		this.projection = projection;
+	}
+	
+	public boolean isPostgresqlDriver() {
+		try {
+			return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 
 }
