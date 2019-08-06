@@ -1,7 +1,7 @@
 package fr.ign.validator.model.type;
 
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 
 
 public class LineStringType extends GeometryType {

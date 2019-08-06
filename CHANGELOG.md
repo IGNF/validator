@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## 4.0.x (ROADMAP)
+
+[See milestone](https://github.com/IGNF/validator/milestone/8)
+
+## Core
+
+* Remove java 7 support, support java 9, 10,... and upgrade dependencies
+* Remove ogr2ogr 1.x support and improve convertion to CSV robutness
+* Add support for `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` environment variables (`--proxy` deprecated)
+
+## Models
+
+* Add hability to load JSON models from URL (XML is deprecated)
+* Improve and document JSON models with JSON schemas (validator-schema repository)
+* Add hability to load data to PostgreSQL in a custom schema
+* Handle changes for metadata validation and conversion to JSON
+
+## Deploy
+
+* Provide `.deb` or `.rpm` throw `fpm` to deploy to `/opt/validator/validator-cli.jar`?
+
+
+## 3.4.*
+
+* Update jackson
+* Add support for HTTP proxy with authentication
+* Improve validator-dgpr-plugin
+
 ## 3.3.*
 
 * Add SQLITE Database utility in validator-core to simplify some checks

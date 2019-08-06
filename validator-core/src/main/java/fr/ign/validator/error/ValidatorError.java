@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.Envelope;
+import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
 import fr.ign.validator.jackson.serializer.ValidatorErrorDeserializer;

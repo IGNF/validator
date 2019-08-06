@@ -21,7 +21,7 @@ public class BooleanTypeTest extends AbstractTypeTest<Boolean> {
 
 	@Test
 	public void testCheckAttributeValue1() {
-		bindValidate(context,new Boolean(false)) ;
+		bindValidate(context,Boolean.valueOf(false)) ;
 		assertTrue( reportBuilder.isValid() ) ;
 	}
 	
@@ -70,7 +70,7 @@ public class BooleanTypeTest extends AbstractTypeTest<Boolean> {
 	
 	@Test
 	public void testCheckAttributeValue8() {
-		bindValidate(context, new Boolean(true));
+		bindValidate(context, Boolean.valueOf(true));
 		assertTrue( reportBuilder.isValid() ) ;
 	}
 	

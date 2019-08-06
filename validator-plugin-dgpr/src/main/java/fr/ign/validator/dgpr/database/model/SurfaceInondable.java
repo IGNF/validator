@@ -1,6 +1,6 @@
 package fr.ign.validator.dgpr.database.model;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 public class SurfaceInondable {
 

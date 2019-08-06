@@ -4,17 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import javax.annotation.Resource;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.data.file.MetadataFile;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * High level regression test
