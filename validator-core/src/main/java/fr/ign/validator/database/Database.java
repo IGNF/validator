@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -46,6 +45,11 @@ public class Database {
 	public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
 
 	private static final int batchSize = 100;
+	
+	public static final String ENV_DATABASE_URL = "DB_URL";
+	public static final String ENV_DATABASE_USER = "DB_USER";
+	public static final String ENV_DATABASE_PASSWORD = "DB_PASSWORD";
+	public static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
 
 	public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
 
@@ -114,8 +118,8 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public static Database createDatabase(Document document) throws SQLException {
-		String url = System.getenv("VALIDATOR_DB_URL");
-		if (url != null && !url.equals("")) {
+		String url = System.getenv(Database.ENV_DATABASE_URL);
+		if (url != null && !url.isEmpty()) {
 			return createPostgresDatabase(document);
 		}
 		// else
@@ -140,10 +144,10 @@ public class Database {
 	
 	
 	private static Database createPostgresDatabase(Document document) throws SQLException {
-		String url = System.getenv("VALIDATOR_DB_URL");
-		String user = System.getenv("VALIDATOR_DB_USER");
-		String password = System.getenv("VALIDATOR_DB_PASSWORD");
-		String schema = System.getenv("VALIDATOR_DB_SCHEMA");
+		String url = System.getenv(Database.ENV_DATABASE_URL);
+		String user = System.getenv(Database.ENV_DATABASE_USER);
+		String password = System.getenv(Database.ENV_DATABASE_PASSWORD);
+		String schema = System.getenv(Database.ENV_DATABASE_SCHEMA);
 		Database database = new Database(url, user, password, schema);
 		if (database.hasSchema()) {
 			database.createSchema(database.getSchema());
@@ -152,7 +156,7 @@ public class Database {
 		return database;
 	}
 
-	
+
 	public void createSchema(String schemaName) throws SQLException {
 		String dropClause = "";
 		if (this.isPostgresqlDriver() && !schemaName.equals("public")) {
@@ -234,22 +238,18 @@ public class Database {
 	public void createPostgisTable(TableModel tableModel) throws SQLException {
 		List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
 		List<String> columns = new ArrayList<String>(attributes.size());
+
 		for (AttributeType<?> attribute : attributes) {
 			if (attribute.isGeometry()) {
-//				part = attribute.getName() + " geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")";
-//				part = attribute.getName() + " geometry(" + attribute.getTypeName() + ")";
-//				part = attribute.getName() + " geometry";
 				columns.add(attribute.getName() + " TEXT");
-//				columns.add("the_geom geometry");
 				columns.add("the_geom geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")");
 			} else {
 				columns.add(attribute.getName() + " TEXT");
 			}
 		}
-		
+
 		String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
-			// + String.join(",", columns)
-		    + Database.joinStrings(", ", columns)
+			+ String.join(",", columns)
 			+ ");";
 
 		// debug SQL
@@ -397,16 +397,18 @@ public class Database {
 		if ( indexes.isEmpty() ){
 			log.warn(MARKER, "No matching column found in {} for {} with {}", 
 				tableName, 
-				path, 
-				StringUtils.join(header, ",")
+				path,
+				String.join(",", header)
 			);
 			return;
 		}
 		
 
 		String sql = "INSERT INTO " + tableName 
-			+ " (" + StringUtils.join(columnParts, ", ") + ") VALUES (" 
-			+ StringUtils.join(valueParts, ", ") 
+			+ " (" 
+			+ 	String.join(", ", columnParts)
+			+ ") VALUES (" 
+			+ String.join(", ", valueParts)
 			+ ");"
 		;
 
@@ -519,21 +521,6 @@ public class Database {
 		} catch (SQLException e) {
 			return false;
 		}
-	}
-	
-	// there are no String.join method in Java 7
-	public static String joinStrings(String delimiter, List<String> parts) {
-		if (parts.size() <= 0) {
-			return "";
-		}
-		if (parts.size() == 1) {
-			return parts.get(0);
-		}
-		String joinStr = "";
-		for (int i = 0; i < parts.size() - 1; i++) {
-			joinStr += parts.get(i) + delimiter;
-		}
-		return joinStr + parts.get(parts.size() - 1);
 	}
 
 }

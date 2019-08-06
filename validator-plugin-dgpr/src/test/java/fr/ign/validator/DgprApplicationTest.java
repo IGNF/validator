@@ -72,35 +72,6 @@ public class DgprApplicationTest {
 		return documentPath;
 	}
 
-
-	/**
-	 * @throws Exception
-	 */
-	@Test
-	public void testDocument() throws Exception {
-		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_SIG_DI");
-
-		Context context = createContext(documentPath);
-		Document document = new Document(documentModel, documentPath);
-		try {
-			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_SIG_DI", document.getDocumentName());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-	}
-
-
 	/**
 	 * @throws Exception
 	 */
@@ -128,71 +99,6 @@ public class DgprApplicationTest {
 			Assert.fail(e.getMessage());
 		}
 	}
-
-
-	/**
-	 * @throws Exception
-	 */
-	@Test
-	public void testDocumentNotOkTolerance10() throws Exception {
-		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
-
-		Context context = createContext(documentPath);
-		context.setTolerance(10.0);
-		Document document = new Document(documentModel, documentPath);
-		try {
-			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-			ValidatorError error = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-	}
-
-
-
-	/**
-	 * @throws Exception
-	 */
-	@Test
-	public void testDocumentNotOkTolerance10noSafe() throws Exception {
-		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
-
-		Context context = createContext(documentPath);
-		context.setTolerance(10.0);
-		context.setDistanceSimplification(5.0);
-		context.setSafeSimplification(false);
-		Document document = new Document(documentModel, documentPath);
-		try {
-			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(29, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-			ValidatorError error = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-	}
-
-
 
 	/**
 	 * @throws Exception
@@ -224,31 +130,6 @@ public class DgprApplicationTest {
 			Assert.fail(e.getMessage());
 		}
 	}
-	
-	@Test
-	public void testDocumentOkWithNoTolerance() throws Exception {
-		DocumentModel documentModel = getDocumentModel("covadis_di_2018");
-		File documentPath = getSampleDocument("TRI_JTEST_TOPO_SIG_DI");
-
-		Context context = createContext(documentPath);
-		context.setTolerance(0.0);
-		Document document = new Document(documentModel, documentPath);
-		try {
-			document.validate(context);
-			Assert.assertEquals("TRI_JTEST_TOPO_SIG_DI", document.getDocumentName());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_FILENAME_PREFIX_ERROR).size());
-
-			// validation database
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
-			Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-	}
-
 
 	/**
 	 * @throws Exception
@@ -292,21 +173,23 @@ public class DgprApplicationTest {
 			 * ZCH_9 et ZCH_10 (scénario Faible) ne constituent pas une partition de SIN_6
 			 */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-// TODO : rendre insensible à l'ordre
-//			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
-//			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6. Leurs périmètres s'intersectent.", error20.getMessage());
+			/*
+			ValidatorError error20 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).get(0);
+			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6. Leurs périmètres s'intersectent.", error20.getMessage());
+			*/
 			Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
-//			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
-//			Assert.assertEquals("Les ISO_DEB ZCD_1, ZCD_2 ne constituent pas une partition de SIN_1 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
-//			ValidatorError error22 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(1);
-//			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error22.getMessage());
+			/*
+			ValidatorError error21 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(0);
+			Assert.assertEquals("Les ISO_DEB ZCD_1, ZCD_2 ne constituent pas une partition de SIN_1 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error21.getMessage());
+			ValidatorError error22 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).get(1);
+			Assert.assertEquals("Les ISO_HT ZCH_9, ZCH_10 ne constituent pas une partition de SIN_6 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.", error22.getMessage());
+			*/
 
 			/*
 			 * Zone de suralea ZSA_2 non adjacente à l'ouvrage de protection OUV_2
              * Zone soustraite à l'inondation ZSI_2 non adjacente à l'ouvrage de protection 0UV_2
              * Zone inondable SIN_2 non adjacente à l'ouvrage de protection OUV_2
 			 */
-			// TODO AdjacenceValidator
 
 			/*
 			 * Appartenance au même scenario.

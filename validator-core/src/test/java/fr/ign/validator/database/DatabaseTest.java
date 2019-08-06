@@ -3,7 +3,6 @@ package fr.ign.validator.database;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -192,15 +191,5 @@ public class DatabaseTest {
 		
 		Assert.assertEquals( 0, database.getCount("test") );
 	}
-	
-	@Test
-	public void testJoinStrings() {
-		List<String> parts = Arrays.asList("a", "b", "c");
-		
-		Assert.assertEquals("a,b,c", Database.joinStrings(",", parts));
-		Assert.assertEquals("a, b, c", Database.joinStrings(", ", parts));
-		Assert.assertEquals("a michel b michel c", Database.joinStrings(" michel ", parts));
-	}
-
 	
 }
