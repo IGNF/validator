@@ -63,18 +63,12 @@ public class GraphTopologyValidator implements Validator<Database> {
 	}
 
 	
-	private double getDistanceSimplification() {
-		if (context.getDistanceSimplification() == null) {
-			return 0.0;
-		}
+	private Double getDistanceSimplification() {
 		return context.getDistanceSimplification();
 	}
 	
 	
-	private boolean isSafeSimplification() {
-		if (context.isSafeSimplification() == null) {
-			return false;
-		}
+	private Boolean isSafeSimplification() {
 		return context.isSafeSimplification();
 	}
 
