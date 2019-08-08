@@ -45,6 +45,8 @@ public class DgprApplicationTest {
 		context.setReportBuilder(report);
 		context.setProjection("EPSG:2154");
 		context.setTolerance(1.0);
+		context.setDistanceSimplification(null);
+		context.setSafeSimplification(true);
 		File validationDirectory = new File(documentPath.getParentFile(), "validation");
 		context.setValidationDirectory(validationDirectory);
 		PluginManager pluginManager = new PluginManager();
@@ -82,6 +84,7 @@ public class DgprApplicationTest {
 
 		Context context = createContext(documentPath);
 		context.setTolerance(5.0);
+		context.setDistanceSimplification(null);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);

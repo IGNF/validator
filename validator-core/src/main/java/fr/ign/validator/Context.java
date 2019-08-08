@@ -670,7 +670,7 @@ public class Context {
 	 * simplification distance option
 	 * @param distanceSimplification
 	 */
-	public void setDistanceSimplification(double distanceSimplification) {
+	public void setDistanceSimplification(Double distanceSimplification) {
 		this.distanceSimplification = distanceSimplification;
 	}
 	

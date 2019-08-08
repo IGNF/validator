@@ -184,12 +184,16 @@ public class DatabaseUtils {
 	 * @param tolerance
 	 * @return
 	 */
-	public static Geometry getGeometryFromWkt(String wkt, double tolerance, boolean keepTopology) {
+	public static Geometry getGeometryFromWkt(String wkt, Double tolerance, Boolean keepTopology) {
 		try {
-			if (keepTopology) {
-				return TopologyPreservingSimplifier.simplify(format.read(wkt), tolerance);
+			Geometry geometry = format.read(wkt);
+			if (tolerance == null) {
+				return geometry;
 			}
-			return DouglasPeuckerSimplifier.simplify(format.read(wkt), tolerance);
+			if (keepTopology) {
+				return TopologyPreservingSimplifier.simplify(geometry, tolerance);
+			}
+			return DouglasPeuckerSimplifier.simplify(geometry, tolerance);
 		} catch (ParseException e) {
 			// Invalid WKT format
 			return null;

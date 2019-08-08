@@ -118,9 +118,10 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	
 	/**
 	 * option - distance (double) express in the input projection system.
-	 * Default value is a meter express in the default CRS (EPSG:4326): 0.0001
+	 * Example value : a meter express in the default CRS (EPSG:4326): 0.0001
+	 * Default value : null (no simplification)
 	 */
-	protected double distanceSimplification;
+	protected Double distanceSimplification;
 	
 	/**
 	 * option - switch (boolean)
@@ -668,11 +669,16 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @throws ParseException 
 	 */
 	protected void parseDistanceSimplificationOption(CommandLine commandLine) throws ParseException {
-		String strValue = commandLine.getOptionValue("simplify", "0.0000001");
+		String strValue = commandLine.getOptionValue("simplify", null);
+		if (strValue == null) {
+			this.distanceSimplification = null;
+			log.info(MARKER, "validator command running whith no geometric simplification");
+			return;
+		}
 
 		try {
 			Double distance = Double.valueOf(strValue);
-			this.distanceSimplification = distance;	
+			this.distanceSimplification = distance;
 		} catch (NumberFormatException e) {
 			String message = String.format("Paramètre invalide 'simplify' : '%1s' n'est pas un double", strValue);
 			throw new ParseException(message);
