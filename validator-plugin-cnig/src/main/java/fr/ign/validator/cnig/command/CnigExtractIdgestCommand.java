@@ -1,6 +1,7 @@
 package fr.ign.validator.cnig.command;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -9,7 +10,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
-import fr.ign.validator.cnig.utils.IdgestExtractor;
+import fr.ign.validator.cnig.process.internal.IdgestExtractor;
 import fr.ign.validator.command.AbstractCommand;
 
 
@@ -61,7 +62,7 @@ public class CnigExtractIdgestCommand extends AbstractCommand {
 		
 		// write results to file
 		File resultFile = new File(servitudeFile.getParent(), "idGest.txt");
-		FileUtils.writeStringToFile(resultFile, idGest);
+		FileUtils.writeStringToFile(resultFile, idGest,StandardCharsets.UTF_8);
 	}
 
 }

@@ -52,8 +52,7 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
 	 */
 	private List<File> findFilesByFilename(File root, String filename){
 		List<File> result = new ArrayList<File>() ;
-		
-		@SuppressWarnings("unchecked")
+
 		Collection<File> files = FileUtils.listFiles(root, null, true) ;
 		for (File file : files) {
 			if ( file.getName().equals(filename) ){

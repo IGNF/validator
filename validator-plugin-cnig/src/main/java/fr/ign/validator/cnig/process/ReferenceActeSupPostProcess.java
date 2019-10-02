@@ -7,13 +7,11 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.utils.ReferenceActeSupJointureBuilder;
+import fr.ign.validator.cnig.process.internal.ReferenceActeSupJointureBuilder;
 import fr.ign.validator.data.Document;
 
-
 /**
- * 
- * Adds a field `Files` to "génératuers" and "assiettes" to join with "actes" and "servitudes"
+ * Adds a field "fichiers" to "GENERATEUR" and "ASSIETE" table
  * 
  * @author MBorne
  */

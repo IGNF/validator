@@ -24,6 +24,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.command.options.StringFixerOptions;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.plugin.Plugin;
@@ -240,7 +241,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		 */
 		try {
 			DocumentModel documentModel = loadDocumentModel();
-
 			context.report(context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam("MESSAGE",
 					"Validation avec le modèle : " + documentModel.getName()));
 
@@ -348,10 +348,15 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * 
 	 * @return
 	 * @throws IOException
+	 * @throws ModelNotFoundException 
 	 */
-	protected DocumentModel loadDocumentModel() throws IOException {
+	protected DocumentModel loadDocumentModel() throws IOException, ModelNotFoundException {
 		DocumentModelRepository repository = new XmlDocumentModelRepository(configDir);
-		return repository.findOneByName(documentModelName);
+		DocumentModel documentModel = repository.findOneByName(documentModelName);
+		if ( documentModel == null ) {
+			throw new ModelNotFoundException(documentModelName);
+		}
+		return documentModel;
 	}
 
 	/**

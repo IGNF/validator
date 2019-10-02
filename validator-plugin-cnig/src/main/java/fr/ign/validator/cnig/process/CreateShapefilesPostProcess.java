@@ -12,7 +12,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
-import fr.ign.validator.cnig.utils.VRT;
+import fr.ign.validator.cnig.tools.VRT;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -49,7 +49,6 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
 		FileConverter fileConverter = FileConverter.getInstance();
 		
 		String[] extensions = { "csv" } ;
-		@SuppressWarnings("unchecked")
 		Collection<File> csvFiles = FileUtils.listFiles(dataDirectory, extensions, true) ;
 		for (File csvFile : csvFiles) {
 			// get FeatureType

@@ -44,7 +44,6 @@ public class FileConverterTest {
 		try {
 			fileConverter.convertToCSV(source, target);
 			Assert.assertTrue(target.exists());
-			@SuppressWarnings("unchecked")
 			List<String> lines = FileUtils.readLines(target);
 			Assert.assertEquals(37, lines.size());
 			Assert.assertEquals("WKT,LIBELLE,LIBELONG,TYPEZONE,DESTDOMI,NOMFIC,URLFIC,INSEE,DATAPPRO,DATVALID",
@@ -70,12 +69,10 @@ public class FileConverterTest {
 		String expectedTargetName = getExpectedPointName();
 		Assume.assumeNotNull(expectedTargetName);
 		File expectedTarget = ResourceHelper.getResourceFile(getClass(),expectedTargetName);
-		@SuppressWarnings("unchecked")
 		List<String> expectedLines = FileUtils.readLines(expectedTarget);
 		try {
 			fileConverter.convertToCSV(source, target);
 			Assert.assertTrue(target.exists());
-			@SuppressWarnings("unchecked")
 			List<String> lines = FileUtils.readLines(target);
 			Assert.assertEquals(11, lines.size());
 			for ( int i = 0; i < lines.size(); i++ ){
@@ -120,7 +117,6 @@ public class FileConverterTest {
 		try {
 			fileConverter.convertToCSV(source, target);
 			Assert.assertTrue(target.exists());
-			@SuppressWarnings("unchecked")
 			List<String> lines = FileUtils.readLines(target);
 			Assert.assertEquals(2, lines.size());
 			Assert.assertEquals("URLFIC,INSEE", lines.get(0));
@@ -150,7 +146,6 @@ public class FileConverterTest {
 			/* dbf -> csv */
 			fileConverter.convertToCSV(targetDbf, targetCsv);
 			Assert.assertTrue(targetCsv.exists());
-			@SuppressWarnings("unchecked")
 			List<String> lines = FileUtils.readLines(targetCsv);
 			Assert.assertEquals(2, lines.size());
 			Assert.assertEquals("URLFIC,INSEE", lines.get(0));

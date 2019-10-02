@@ -3,7 +3,7 @@ package fr.ign.validator.cnig.validation.metadata;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.utils.SpecificationUtils;
+import fr.ign.validator.cnig.tools.CnigSpecificationFinder;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.Specification;
@@ -24,7 +24,7 @@ public class CnigSpecificationsValidator implements Validator<Metadata>, Validat
 
 	@Override
 	public void validate(Context context, Metadata metadata) {
-		Specification specification = SpecificationUtils.findCnigSpecification(metadata);
+		Specification specification = CnigSpecificationFinder.findCnigSpecification(metadata);
 		if ( specification == null ){
 			context.report(
 				CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND

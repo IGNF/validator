@@ -45,8 +45,7 @@ public class JsonReportBuilderTest {
 		report.close();
 		
 		File expectedFile = ResourceHelper.getResourceFile(getClass(),"/report/report-01.jsonl") ;
-	
-		@SuppressWarnings("unchecked")
+
 		List<String> lines = FileUtils.readLines(file) ;
 		assertEquals(2, lines.size());
 		assertEquals(

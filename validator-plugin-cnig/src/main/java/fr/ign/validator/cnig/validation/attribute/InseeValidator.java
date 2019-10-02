@@ -10,7 +10,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.utils.InseeUtils;
+import fr.ign.validator.cnig.model.MunicipalityCode;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
@@ -30,6 +30,8 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 	public static final Logger log    = LogManager.getRootLogger() ;
 	public static final Marker MARKER = MarkerManager.getMarker("InseeValidator") ;
 
+	public static final String ATTRIBUTE_INSEE = "INSEE";
+	
 	@Override
 	public void beforeMatching(Context context, Document document) throws Exception {
 		
@@ -41,7 +43,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 		for (FileModel fileModel : fileModels) {
 			if ( fileModel instanceof TableModel ){
 				FeatureType featureType = fileModel.getFeatureType() ;
-				AttributeType<?> attributeType = featureType.getAttribute("INSEE") ;
+				AttributeType<?> attributeType = featureType.getAttribute(ATTRIBUTE_INSEE) ;
 				if ( null != attributeType && attributeType instanceof StringType ){
 					log.info(MARKER, "Ajout de InseeValidator à {}",attributeType.getName());
 					((StringType)attributeType).addValidator(new InseeValidator());					
@@ -58,7 +60,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 	@Override
 	public void validate(Context context, Attribute<String> validatable) {
 		String insee = validatable.getBindedValue() ;
-		if ( ! InseeUtils.isValidCommune(insee) ){
+		if ( ! MunicipalityCode.isValid(insee) ){
 			context.report(context.createError(CnigErrorCodes.CNIG_INSEE_INVALID)
 				.setMessageParam("VALUE", insee)
 			);

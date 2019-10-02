@@ -32,7 +32,7 @@ public class TypeValidator implements Validator<Metadata> {
 			context.report(
 				CoreErrorCodes.METADATA_TYPE_NOT_FOUND
 			);
-		}else if ( ! code.isAllowedValue() ){
+		}else if ( ! code.isValid() ){
 			context.report(context.createError(CoreErrorCodes.METADATA_TYPE_INVALID)
 				.setMessageParam("CODE", code.getValue())
 				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
