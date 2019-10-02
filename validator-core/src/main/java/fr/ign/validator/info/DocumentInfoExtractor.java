@@ -2,6 +2,7 @@ package fr.ign.validator.info;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.info.model.DocumentFileInfo;
 import fr.ign.validator.info.model.DocumentInfo;
@@ -27,6 +29,7 @@ import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.EnveloppeUtils;
+import fr.ign.validator.tools.TableReader;
 
 /**
  * 
@@ -83,13 +86,47 @@ public class DocumentInfoExtractor {
 			documentFileInfo.setName(documentFile.getPath().getName());
 			documentFileInfo.setPath(context.relativize(documentFile.getPath()));
 			if ( fileModel instanceof TableModel ){
-				File csvPath = new File(context.getDataDirectory(),fileModel.getName()+".csv");
-				documentFileInfo.setBoundingBox(EnveloppeUtils.getBoundingBoxFromCSV(csvPath));
+				parseTable(context, fileModel, documentFileInfo);
 			}
 			documentInfo.addFile(documentFileInfo);
 		}
 	}
-	
+
+	/**
+	 * Retreive boundingBox and featureCount from normalized file
+	 * @param context
+	 * @param fileModel
+	 * @param documentFileInfo
+	 */
+	private void parseTable(Context context, FileModel fileModel, DocumentFileInfo documentFileInfo) {
+		File csvFile = new File(context.getDataDirectory(),fileModel.getName()+".csv");
+		
+		Envelope boundingBox = new Envelope();
+		int totalFeatures = 0;
+		try {
+			TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
+			// retreive geometry column
+			int indexWktColumn = reader.findColumn("WKT");
+			while ( reader.hasNext() ){
+				String[] row = reader.next();
+				// count features
+				totalFeatures++;
+				// compute bounding box
+				if ( indexWktColumn >= 0 ){
+					String wkt = row[indexWktColumn];
+					boundingBox.expandToInclude(EnveloppeUtils.getBoundingBoxFromWKT(wkt));
+				}
+			}
+
+		} catch (IOException | InvalidCharsetException e) {
+			log.error(MARKER,"Fail to extract infos from "+fileModel.getName()+".csv");
+			return;
+		}
+		
+		documentFileInfo.setTotalFeatures(totalFeatures);
+		documentFileInfo.setBoundingBox(boundingBox);
+	}
+
 
 	/**
 	 * Gets fileIdentifier from metadataFiles

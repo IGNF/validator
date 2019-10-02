@@ -8,13 +8,17 @@
       "type": "table",
       "modelName": "DOC_URBA",
       "name": "DOC_URBA.dbf",
-      "path": "DOC_URBA.dbf"
+      "path": "DOC_URBA.dbf",
+      "boundingBox": null,
+      "totalFeatures": 1
     },
     {
       "type": "table",
       "modelName": "DOC_URBA_COM",
       "name": "DOC_URBA_COM.dbf",
-      "path": "DOC_URBA_COM.dbf"
+      "path": "DOC_URBA_COM.dbf",
+      "boundingBox": null,
+      "totalFeatures": 12
     },
     {
       "type": "directory",
@@ -32,7 +36,8 @@
         46.9345337,
         3.0797908,
         47.0850234
-      ]
+      ],
+      "totalFeatures": 222
     },
     {
       "type": "directory",

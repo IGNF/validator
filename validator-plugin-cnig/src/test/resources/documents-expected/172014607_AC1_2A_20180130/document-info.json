@@ -728,7 +728,9 @@
       "type": "table",
       "modelName": "ACTE_SUP",
       "name": "AC1_ACTE_SUP.dbf",
-      "path": "Donnees_geographiques/AC1_ACTE_SUP.dbf"
+      "path": "Donnees_geographiques/AC1_ACTE_SUP.dbf",
+      "boundingBox": null,
+      "totalFeatures": 104
     },
     {
       "type": "table",
@@ -740,7 +742,8 @@
         41.3324541,
         9.4118624,
         42.2722707
-      ]
+      ],
+      "totalFeatures": 206
     },
     {
       "type": "table",
@@ -752,25 +755,32 @@
         41.3369286,
         9.4058889,
         42.2677974
-      ]
+      ],
+      "totalFeatures": 104
     },
     {
       "type": "table",
       "modelName": "GESTIONNAIRE_SUP",
       "name": "AC1_GESTIONNAIRE_SUP.dbf",
-      "path": "Donnees_geographiques/AC1_GESTIONNAIRE_SUP.dbf"
+      "path": "Donnees_geographiques/AC1_GESTIONNAIRE_SUP.dbf",
+      "boundingBox": null,
+      "totalFeatures": 1
     },
     {
       "type": "table",
       "modelName": "SERVITUDE",
       "name": "AC1_SERVITUDE.dbf",
-      "path": "Donnees_geographiques/AC1_SERVITUDE.dbf"
+      "path": "Donnees_geographiques/AC1_SERVITUDE.dbf",
+      "boundingBox": null,
+      "totalFeatures": 104
     },
     {
       "type": "table",
       "modelName": "SERVITUDE_ACTE_SUP",
       "name": "AC1_SERVITUDE_ACTE_SUP.dbf",
-      "path": "Donnees_geographiques/AC1_SERVITUDE_ACTE_SUP.dbf"
+      "path": "Donnees_geographiques/AC1_SERVITUDE_ACTE_SUP.dbf",
+      "boundingBox": null,
+      "totalFeatures": 104
     },
     {
       "type": "metadata",

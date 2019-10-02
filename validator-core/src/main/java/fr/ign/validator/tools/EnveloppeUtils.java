@@ -1,23 +1,10 @@
 package fr.ign.validator.tools;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-
-import org.geotools.data.DataStore;
-import org.geotools.data.DataStoreFinder;
-import org.geotools.data.simple.SimpleFeatureSource;
 
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
-
-import fr.ign.validator.exception.InvalidCharsetException;
 
 /**
  * Manipulates Bounding Boxes (envelope or bbox)
@@ -27,7 +14,11 @@ import fr.ign.validator.exception.InvalidCharsetException;
  */
 public class EnveloppeUtils {
 	
-	
+	/**
+	 * Get bounding box from WKT string
+	 * @param wkt
+	 * @return
+	 */
 	public static Envelope getBoundingBoxFromWKT(String wkt){
 		if ( wkt == null || wkt.isEmpty() ){
 			return new Envelope();
@@ -41,62 +32,6 @@ public class EnveloppeUtils {
 		}
 	}
 
-	/**
-	 * Reads bbox from an UTF-8 CSV file
-	 * 
-	 * @param csvFile
-	 * @return
-	 */
-	public static Envelope getBoundingBoxFromCSV(File csvFile){
-		Envelope result = new Envelope();
-		try {
-			TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
-			int indexWktColumn = reader.findColumn("WKT");
-			if ( indexWktColumn < 0 ){
-				return null;
-			}
-			while ( reader.hasNext() ){
-				String[] row = reader.next();
-				String wkt = row[indexWktColumn];
-				result.expandToInclude(getBoundingBoxFromWKT(wkt));
-			}
-			return result;
-		} catch (IOException | InvalidCharsetException e) {
-			return null;
-		}
-	}
-
-	/**
-	 * Reads bbox from a shapefile
-	 * 
-	 * @param shpFile
-	 * @return
-	 * @throws Exception
-	 */
-	public static Envelope getBoundingBoxFromShapefile(File shpFile) {
-		/*
-		 * DataStore opening
-		 */
-		Envelope bbox = null;
-		Map<String, URL> map = new HashMap<String, URL>();
-		try {
-			map.put("url", shpFile.toURI().toURL());
-			DataStore dataStore = DataStoreFinder.getDataStore( map );
-			SimpleFeatureSource featureSource = dataStore.getFeatureSource( dataStore.getTypeNames()[0] );    
-			dataStore.dispose();
-			bbox = featureSource.getFeatures().getBounds();
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-
-		if ( isNullEnvelope(bbox) ){
-			return new Envelope();
-		}else{
-			return bbox;
-		}
-	}
 	
 	/**
 	 * Formats bbox as string : "xmin,ymin,xmax,ymax"
