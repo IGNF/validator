@@ -146,9 +146,10 @@ public class CnigValidatorRegressTest {
 			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
 			ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
 
-			ReportAssert.assertCount(7, ErrorLevel.WARNING, report);
+			ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
 			ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
 			ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+			//INFO
 			ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
 		} catch (Exception e) {
 			e.printStackTrace();

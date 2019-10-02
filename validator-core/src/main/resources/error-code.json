@@ -53,13 +53,13 @@
     },
     {
         "name": "FILE_MISSING_RECOMMANDED",
-        "level": "WARNING",
+        "level": "INFO",
         "message": "Le fichier optionnel '{FILEMODEL_NAME}' est absent du document.",
         "documentation": "Cette erreur se produit lorsqu'un fichier marqué comme mandatory=WARNING est absent"
     },
     {
         "name": "FILE_MISSING_RECOMMANDED_DIRECTORY",
-        "level": "WARNING",
+        "level": "INFO",
         "message": "Le répertoire optionnel '{FILEMODEL_NAME}' est absent du document.",
         "documentation": "Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=WARNING est absent"
     },
@@ -77,7 +77,7 @@
     },
     {
         "name": "TABLE_MISSING_NULLABLE_ATTRIBUTE",
-        "level": "WARNING",
+        "level": "INFO",
         "message": "L'attribut optionnel '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
         "documentation": "Cette erreur se produit lorsqu'un champ spécifié comme nullable dans le modèle n'est pas présent dans la table"
     },
@@ -113,7 +113,7 @@
     },
     {
         "name": "ATTRIBUTE_CHARACTERS_REPLACED",
-        "level": "WARNING",
+        "level": "INFO",
         "message": "La valeur (‘{VALUE}’) sera remplacée par (‘{FIXED_VALUE}’) pour l’intégration des données.",
         "documentation": ""
     },
@@ -167,7 +167,7 @@
     },
     {
         "name": "METADATA_IGNORED_FILE",
-        "level": "WARNING",
+        "level": "INFO",
         "message": "Le fichier XML '{FILEPATH}' n'a pas été reconnu comme une fiche de métadonnée (absence de balise MD_Metadata). Il sera ignoré.",
         "documentation": "Cette erreur se produit lorsqu'un fichier xml détecté comme métadonnée dans l'arborescence ne contient pas de balise MD_Metadata"
     },
