@@ -8,13 +8,17 @@
       "type": "table",
       "modelName": "DOC_URBA",
       "name": "30014_DOC_URBA_20171013.DBF",
-      "path": "30014_DOC_URBA_20171013.DBF"
+      "path": "30014_DOC_URBA_20171013.DBF",
+      "boundingBox": null,
+      "totalFeatures": 1
     },
     {
       "type": "table",
       "modelName": "DOC_URBA_COM",
       "name": "30014_DOC_URBA_COM_20171013.DBF",
-      "path": "30014_DOC_URBA_COM_20171013.DBF"
+      "path": "30014_DOC_URBA_COM_20171013.DBF",
+      "boundingBox": null,
+      "totalFeatures": 1
     },
     {
       "type": "directory",
@@ -32,7 +36,8 @@
         43.9910599,
         4.3846672,
         44.0039905
-      ]
+      ],
+      "totalFeatures": 6
     },
     {
       "type": "table",
@@ -44,7 +49,8 @@
         43.9760147,
         4.3984780,
         44.0207913
-      ]
+      ],
+      "totalFeatures": 18
     },
     {
       "type": "table",
@@ -56,7 +62,8 @@
         43.9762132,
         4.3950963,
         44.0083347
-      ]
+      ],
+      "totalFeatures": 15
     },
     {
       "type": "table",
@@ -68,7 +75,8 @@
         43.9818576,
         4.3893169,
         44.0163171
-      ]
+      ],
+      "totalFeatures": 93
     },
     {
       "type": "table",
@@ -80,7 +88,8 @@
         43.9783425,
         4.3986027,
         44.0151800
-      ]
+      ],
+      "totalFeatures": 77
     },
     {
       "type": "table",
@@ -92,7 +101,8 @@
         43.9760147,
         4.3984780,
         44.0207913
-      ]
+      ],
+      "totalFeatures": 90
     },
     {
       "type": "directory",

@@ -31,9 +31,13 @@ public class DocumentFileInfo {
 	 */
 	private String path;
 	/**
-	 * Bounding box
+	 * Bounding box (only for tables)
 	 */
 	private Envelope boundingBox = null;
+	/**
+	 * Feature count (only for tables)
+	 */
+	private Integer totalFeatures = null;
 
 	public String getType() {
 		return type;
@@ -80,6 +84,15 @@ public class DocumentFileInfo {
 
 	public void setBoundingBox(Envelope boundingBox) {
 		this.boundingBox = boundingBox;
+	}
+
+	@JsonInclude(value = Include.NON_NULL)
+	public Integer getTotalFeatures() {
+		return totalFeatures;
+	}
+
+	public void setTotalFeatures(Integer totalFeatures) {
+		this.totalFeatures = totalFeatures;
 	}
 
 }
