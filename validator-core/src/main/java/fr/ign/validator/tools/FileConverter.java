@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +40,6 @@ public class FileConverter {
 
 	private static FileConverter instance = new FileConverter();
 
-	/**
-	 * @brief path to ogr2ogr executable
-	 */
-	private String ogr2ogr = System.getProperty("ogr2ogr_path", "ogr2ogr");
 
 	/**
 	 * ogr2ogr version
@@ -63,6 +60,22 @@ public class FileConverter {
 	 */
 	public static FileConverter getInstance() {
 		return instance;
+	}
+
+	/**
+	 * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
+	 * <ul>
+	 *   <li>Environment variable OGR2OGR_PATH</li>
+	 *   <li>System property ogr2ogr_path</li>
+  	 * </ul>
+	 * @return
+	 */
+	private String getOgr2ogrPath() {
+		String result = System.getenv("OGR2OGR_PATH");
+		if ( result != null ) {
+			return result;
+		}
+		return System.getProperty("ogr2ogr_path", "ogr2ogr");
 	}
 
 	/**
@@ -101,7 +114,7 @@ public class FileConverter {
 	 */
 	private String retrieveFullVersion() {
 		log.info(MARKER, "ogr2ogr --version");
-		String[] args = new String[] { ogr2ogr, "--version" };
+		String[] args = new String[] { getOgr2ogrPath(), "--version" };
 		ProcessBuilder builder = new ProcessBuilder(args);
 		try {
 			Process process = builder.start();
@@ -191,7 +204,7 @@ public class FileConverter {
 		 * Generating cgp file
 		 */
 		File cpgFile = CompanionFileUtils.getCompanionFile(target, "cpg");
-		FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1);
+		FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1, StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -222,7 +235,7 @@ public class FileConverter {
 	 */
 	private String[] getArguments(File source, File target, String driver) {
 		List<String> arguments = new ArrayList<String>();
-		arguments.add(ogr2ogr);
+		arguments.add(getOgr2ogrPath());
 
 		// Otherwise, some ogr2ogr versions transforms 01 to 1...
 		if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
@@ -243,6 +256,11 @@ public class FileConverter {
 				arguments.add("GEOMETRY=AS_WKT");
 			}
 
+			// avoid useless quotes
+			arguments.add("-lco");
+			arguments.add("STRING_QUOTING=IF_NEEDED");
+
+			// force "\r\n"
 			arguments.add("-lco");
 			arguments.add("LINEFORMAT=CRLF");
 		}

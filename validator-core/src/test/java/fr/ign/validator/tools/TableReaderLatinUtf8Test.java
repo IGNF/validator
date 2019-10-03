@@ -93,7 +93,6 @@ public class TableReaderLatinUtf8Test {
 				assertEquals(9,row.length);
 				
 				assertEquals("Bâtiment agricole", row[1]);//LIBELLE
-				
 			}
 			
 		} catch (IOException e) {
