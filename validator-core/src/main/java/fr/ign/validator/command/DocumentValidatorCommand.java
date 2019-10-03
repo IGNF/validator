@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
 
@@ -32,7 +31,6 @@ import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.FilteredReportBuilder;
 import fr.ign.validator.report.JsonReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.report.ReportBuilderLegacy;
 import fr.ign.validator.repository.DocumentModelRepository;
 import fr.ign.validator.repository.ProjectionRepository;
 import fr.ign.validator.repository.xml.XmlDocumentModelRepository;
@@ -399,7 +397,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 */
 	protected void buildReportBuilderOptions(Options options) {
 		{
-			Option option = new Option(null, "report-format", true, "report format (xml|jsonl), default : xml");
+			Option option = new Option(null, "report-format", true, "report format (DEPRECATED, jsonl default and required)");
 			option.setRequired(false);
 			option.setArgName("FORMAT");
 			options.addOption(option);
@@ -416,16 +414,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * 
 	 * @param commandLine
 	 */
-	protected void parseReportBuilder(CommandLine commandLine) {
-		File validationRapport = null;
-		if (commandLine.hasOption("report-format") && commandLine.getOptionValue("report-format").equals("jsonl")) {
-			validationRapport = new File(validationDirectory, "validation.jsonl");
-			reportBuilder = new JsonReportBuilder(validationRapport);
-		} else {
-			validationRapport = new File(validationDirectory, "validation.xml");
-			reportBuilder = new ReportBuilderLegacy(validationRapport);
+	protected void parseReportBuilder(CommandLine commandLine) throws ParseException {
+		File validationRapport = new File(validationDirectory, "validation.jsonl");
+		reportBuilder = new JsonReportBuilder(validationRapport);
+		if (commandLine.hasOption("report-format") && ! commandLine.getOptionValue("report-format").equals("jsonl")) {
+			throw new ParseException("Since 4.0, only jsonl report are supported");
 		}
-
 		// max-errors in validation report...
 		if (commandLine.hasOption("max-errors")) {
 			// TODO check Integer.parseInt exceptions
