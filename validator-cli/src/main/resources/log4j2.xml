@@ -15,18 +15,6 @@
 			</PatternLayout>
 		</File>
 
-		<!-- writes validation report (validation.xml) -->
-		<Routing name="ValidatorAppender">
-			<Routes pattern="${ctx:path}">
-				<Route>
-					<File name="XML" fileName="${ctx:path}" append="false">
-						<XMLLayout compact="false" charset="UTF-8"
-							namespacePrefix="validation" complete="true" />
-					</File>
-				</Route>
-			</Routes>
-		</Routing>
-
 	</Appenders>
 
 	<Loggers>
@@ -35,10 +23,6 @@
 			<AppenderRef ref="STDOUT" level="debug" />
 			<AppenderRef ref="FILE" level="debug" />
 		</Root>
-
-		<Logger name="fr.ign.validator.report.ReportBuilderLegacy" level="debug">
-			<AppenderRef ref="ValidatorAppender" level="info" />
-		</Logger>
 
 	</Loggers>
 
