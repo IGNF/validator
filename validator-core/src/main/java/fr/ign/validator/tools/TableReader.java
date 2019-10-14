@@ -3,6 +3,7 @@ package fr.ign.validator.tools;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -172,18 +173,32 @@ public class TableReader implements Iterator< String[] >{
 	 * @throws InvalidCharsetException
 	 */
 	public static TableReader createTableReader(File file, Charset charset) throws IOException, InvalidCharsetException{
-		File csvFile = convertToCSV(file);
-		if ( ! CharsetDetector.isValidCharset(csvFile, charset) ) {
+		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
+			if ( ! CharsetDetector.isValidCharset(file, charset) ) {
+				throw new InvalidCharsetException(
+					String.format("Le fichier %s n'est pas valide pour la charset %s",
+						file.toString(),
+						charset.toString()
+					)
+				);
+			}
+			return new TableReader(file, charset) ;
+		}
+
+		/* convert to CSV */
+		File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
+		FileConverter converter = FileConverter.getInstance();
+		Charset csvCharset = converter.convertToCSV(file, csvFile, charset);
+		if ( ! CharsetDetector.isValidCharset(csvFile, csvCharset) ) {
 			throw new InvalidCharsetException(
-				String.format("Le fichier {} n'est pas valide pour la charset {}",
-					csvFile.toString(),
+				String.format("Le fichier %s n'est pas valide pour la charset %s",
+					file.toString(),
 					charset.toString()
 				)
 			);
 		}
-		return new TableReader(csvFile, charset) ;
+		return new TableReader(csvFile, csvCharset) ;
 	}
-	
 
 	/**
 	 * Create TableReader with a given charset. If the given charset is invalid,
@@ -202,7 +217,7 @@ public class TableReader implements Iterator< String[] >{
 			return TableReader.createTableReaderDetectCharset(file) ;
 		}
 	}
-	
+
 	
 	/**
 	 * Create TableReader with charset autodetection
@@ -211,35 +226,16 @@ public class TableReader implements Iterator< String[] >{
 	 * @throws IOException
 	 */
 	public static TableReader createTableReaderDetectCharset(File file) throws IOException {
-		File csvFile = convertToCSV(file);
+		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
+			Charset charset = CharsetDetector.detectCharset(file) ;
+			return new TableReader(file, charset) ;
+		}
+
+		File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
+		FileConverter converter = FileConverter.getInstance();
+		converter.convertToCSV(file, csvFile, StandardCharsets.UTF_8);
 		Charset charset = CharsetDetector.detectCharset(csvFile) ;
 		return new TableReader(csvFile, charset) ;
 	}
 
-	
-	/**
-	 * Converts to csv if needed
-	 * 
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	private static File convertToCSV(File file) throws IOException{
-		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
-			return file ;
-		}
-		File csvFile = new File(
-			file.getParent(),
-			FilenameUtils.getBaseName(file.getName())+".csv"
-		);
-
-		if ( csvFile.exists() ){
-			csvFile.delete();
-		}
-		
-		FileConverter converter = FileConverter.getInstance();
-		converter.convertToCSV(file, csvFile);
-		return csvFile ;
-	}
-	
 }

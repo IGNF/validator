@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
  * 
- * File converter to different formats based on GDAL - ogr2ogr
+ * Helper based on GDAL/ogr2ogr to convert spatial file formats
  * 
  * @author MBorne
  * @author CBouche
@@ -62,6 +63,7 @@ public class FileConverter {
 		return instance;
 	}
 
+	
 	/**
 	 * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
 	 * <ul>
@@ -97,6 +99,17 @@ public class FileConverter {
 		return getVersion().getMajor() == 1;
 	}
 
+	/**
+	 * Prior to GDAL 2.3, LATIN1 encoded TAB are not converted to UTF-8 encoded CSV.
+	 * 
+	 * After GDAL 2.3, it seems that there is no way to avoid this behavior.
+	 * @return
+	 */
+	public boolean isConvertingTabToCsvUtf8() {
+		return getVersion().getMajor() >= 2 && getVersion().getMinor() >= 3 ;
+	}
+	
+	
 	/**
 	 * Récupération de la version de ogr2ogr
 	 * 
@@ -134,11 +147,7 @@ public class FileConverter {
 	}
 
 	/**
-	 * 
-	 * Converts a source file in csv
-	 * 
-	 * Warning : As GDAL doesn't convert SHP and TAB the same way, GDAL is used
-	 * as if data were encoded in utf-8 so it doesn't convert data encoding
+	 * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV target
 	 * 
 	 * @param source
 	 * @param destination
@@ -146,15 +155,15 @@ public class FileConverter {
 	 * @throws SAXException
 	 * @throws Exception
 	 */
-	public void convertToCSV(File source, File target) throws IOException {
+	public Charset convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
 		if (target.exists()) {
 			target.delete();
 		}
-
+		String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
 		/*
 		 * patch on GML files
 		 */
-		if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
+		if (sourceExtension.equals("gml")) {
 			fixGML(source);
 		}
 		/*
@@ -169,7 +178,9 @@ public class FileConverter {
 		String[] args = getArguments(source, target, "CSV");
 		Map<String,String> envs = new HashMap<String, String>();
 		// encoding is specified in UTF-8 so that ogr2ogr doesn't convert
-		envs.put("SHAPE_ENCODING", ENCODING_UTF8);	
+		if ( sourceExtension.equals("dbf") || sourceExtension.equals("shp") ) {
+			envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));	
+		}
 		runCommand(args, envs);
 		/*
 		 * Controls that output file is created
@@ -177,6 +188,27 @@ public class FileConverter {
 		if (!target.exists()) {
 			log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
 			createFalseCSV(target);
+		}
+		/*
+		 * Hack to support GDAL prior to 2.3
+		 */
+		if ( sourceExtension.equals("tab") && ! isConvertingTabToCsvUtf8() ) {
+			return sourceCharset;
+		}else {
+			return StandardCharsets.UTF_8;
+		}
+	}
+
+	/**
+	 * Convert java charset to GDAL encoding
+	 * @param sourceCharset
+	 * @return
+	 */
+	private String toEncoding(Charset sourceCharset) {
+		if ( sourceCharset.equals(StandardCharsets.ISO_8859_1) ) {
+			return ENCODING_LATIN1;
+		}else {
+			return ENCODING_UTF8;
 		}
 	}
 
@@ -227,7 +259,7 @@ public class FileConverter {
 	}
 
 	/**
-	 * get params
+	 * Get arguments to invoke ogr2ogr
 	 * 
 	 * @param source
 	 * @param target
@@ -261,7 +293,7 @@ public class FileConverter {
 			// avoid useless quotes (GDAL 2.3 or more)
 			if ( version.getMajor() >= 2 && version.getMinor() >= 3 ) {
 				arguments.add("-lco");
-				arguments.add("STRING_QUOTING=IF_NEEDED");				
+				arguments.add("STRING_QUOTING=IF_NEEDED");
 			}
 
 			// force "\r\n"
@@ -381,5 +413,6 @@ public class FileConverter {
 		source.renameTo(backupedFile);
 		FixGML.replaceAutoclosedByEmpty(backupedFile, source);
 	}
+
 
 }

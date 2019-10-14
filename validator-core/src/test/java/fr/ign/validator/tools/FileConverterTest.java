@@ -2,6 +2,7 @@ package fr.ign.validator.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -41,9 +42,9 @@ public class FileConverterTest {
 	public void testConvertShpLatin1ToCSV() throws IOException {
 		File source = ResourceHelper.getResourceFile(getClass(),"/data/shp_latin1/PRESCRIPTION_PCT.dbf");
 		File target = folder.newFile("PRESCRIPTION_PCT.csv");
-		fileConverter.convertToCSV(source, target);
+		fileConverter.convertToCSV(source, target, StandardCharsets.ISO_8859_1);
 		Assert.assertTrue(target.exists());
-		List<String> lines = FileUtils.readLines(target,StandardCharsets.ISO_8859_1);
+		List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
 		Assert.assertEquals(60, lines.size());
 		Assert.assertEquals(
 			"WKT,LIBELLE,TXT,TYPEPSC,NOMFIC,URLFIC,INSEE,DATAPPRO,DATVALID",
@@ -59,7 +60,7 @@ public class FileConverterTest {
 	public void testConvertShpUtf8ToCSV() throws IOException {
 		File source = ResourceHelper.getResourceFile(getClass(),"/data/shp_utf8/PRESCRIPTION_PCT.dbf");
 		File target = folder.newFile("PRESCRIPTION_PCT.csv");
-		fileConverter.convertToCSV(source, target);
+		fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
 		Assert.assertTrue(target.exists());
 		List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
 		Assert.assertEquals(60, lines.size());
@@ -77,9 +78,9 @@ public class FileConverterTest {
 	public void testConvertTabLatin1ToCSV() throws IOException {
 		File source = ResourceHelper.getResourceFile(getClass(),"/data/tab_latin1/PRESCRIPTION_PCT.TAB");
 		File target = folder.newFile("PRESCRIPTION_PCT.csv");
-		fileConverter.convertToCSV(source, target);
+		Charset targetCharset = fileConverter.convertToCSV(source, target, StandardCharsets.ISO_8859_1);
 		Assert.assertTrue(target.exists());
-		List<String> lines = FileUtils.readLines(target,StandardCharsets.ISO_8859_1);
+		List<String> lines = FileUtils.readLines(target,targetCharset);
 		Assert.assertEquals(60, lines.size());
 		Assert.assertEquals(
 			"WKT,LIBELLE,TXT,TYPEPSC,NOMFIC,URLFIC,INSEE,DATAPPRO,DATVALID",
@@ -90,14 +91,14 @@ public class FileConverterTest {
 			lines.get(1)
 		);
 	}
-	
+
 	@Test
 	public void testConvertTabUtf8ToCSV() throws IOException {
 		File source = ResourceHelper.getResourceFile(getClass(),"/data/tab_utf8/PRESCRIPTION_PCT.tab");
 		File target = folder.newFile("PRESCRIPTION_PCT.csv");
-		fileConverter.convertToCSV(source, target);
+		Charset targetCharset = fileConverter.convertToCSV(source, target,StandardCharsets.UTF_8);
 		Assert.assertTrue(target.exists());
-		List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
+		List<String> lines = FileUtils.readLines(target,targetCharset);
 		Assert.assertEquals(60, lines.size());
 		Assert.assertEquals(
 			"WKT,LIBELLE,TXT,TYPEPSC,NOMFIC,URLFIC,INSEE,DATAPPRO,DATVALID",
@@ -113,9 +114,9 @@ public class FileConverterTest {
 	public void testConvertGmlUtf8ToCSV() throws IOException {
 		File source = ResourceHelper.getResourceFile(getClass(),"/gml/PRESCRIPTION_LIN.gml");
 		File target = folder.newFile("PRESCRIPTION_LIN.csv");
-		fileConverter.convertToCSV(source, target);
+		Charset targetCharset = fileConverter.convertToCSV(source, target,StandardCharsets.UTF_8);
 		Assert.assertTrue(target.exists());
-		List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
+		List<String> lines = FileUtils.readLines(target,targetCharset);
 		Assert.assertEquals(92, lines.size());
 		Assert.assertEquals(
 			"WKT,gml_id,LIBELLE,TYPEPSC,TYPEPSC2,INSEE,DATAPPRO",
@@ -131,9 +132,9 @@ public class FileConverterTest {
 	public void testConvertGmlInvalid() throws IOException {
 		File source = ResourceHelper.getResourceFile(getClass(),"/gml/INVALID.gml");
 		File target = folder.newFile("INVALID.csv");
-		fileConverter.convertToCSV(source, target);
+		Charset targetCharset = fileConverter.convertToCSV(source, target,StandardCharsets.UTF_8);
 		Assert.assertTrue(target.exists());
-		List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
+		List<String> lines = FileUtils.readLines(target,targetCharset);
 		Assert.assertEquals(1, lines.size());
 		Assert.assertEquals(
 			"header1,header2,header3",
@@ -159,9 +160,9 @@ public class FileConverterTest {
 		File expectedTarget = ResourceHelper.getResourceFile(getClass(),expectedTargetName);
 		List<String> expectedLines = FileUtils.readLines(expectedTarget,StandardCharsets.UTF_8);
 		try {
-			fileConverter.convertToCSV(source, target);
+			Charset targetCharset = fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
 			Assert.assertTrue(target.exists());
-			List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
+			List<String> lines = FileUtils.readLines(target,targetCharset);
 			Assert.assertEquals(11, lines.size());
 			for ( int i = 0; i < lines.size(); i++ ){
 				String expected = expectedLines.get(i);
@@ -203,9 +204,9 @@ public class FileConverterTest {
 		File source = ResourceHelper.getResourceFile(getClass(),"/bug-backslash/source.dbf");
 		File target = folder.newFile("output.csv");
 		try {
-			fileConverter.convertToCSV(source, target);
+			Charset targetCharset = fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
 			Assert.assertTrue(target.exists());
-			List<String> lines = FileUtils.readLines(target,StandardCharsets.UTF_8);
+			List<String> lines = FileUtils.readLines(target,targetCharset);
 			Assert.assertEquals(2, lines.size());
 			Assert.assertEquals("URLFIC,INSEE", lines.get(0));
 			Assert.assertEquals(
@@ -229,12 +230,12 @@ public class FileConverterTest {
 		File targetCsv = folder.newFile("output.csv");
 		try {
 			/* csv -> dbf */
-			fileConverter.convertToCSV(source, targetDbf);
+			fileConverter.convertToCSV(source, targetDbf, StandardCharsets.UTF_8);
 			Assert.assertTrue(targetDbf.exists());
 			/* dbf -> csv */
-			fileConverter.convertToCSV(targetDbf, targetCsv);
+			Charset targetCharset = fileConverter.convertToCSV(targetDbf, targetCsv, StandardCharsets.UTF_8);
 			Assert.assertTrue(targetCsv.exists());
-			List<String> lines = FileUtils.readLines(targetCsv,StandardCharsets.UTF_8);
+			List<String> lines = FileUtils.readLines(targetCsv,targetCharset);
 			Assert.assertEquals(2, lines.size());
 			Assert.assertEquals("URLFIC,INSEE", lines.get(0));
 			Assert.assertEquals(
