@@ -39,11 +39,7 @@ public class TableReaderGMLTest {
 			assertTrue(Arrays.asList(header).contains("IDURBA")) ;
 			assertTrue(Arrays.asList(header).contains("INSEE")) ;
 
-			// test case insensitive find
-			assertEquals(2,reader.findColumn("IDURBA"));
-			assertEquals(2,reader.findColumn("IdUrBa"));			
-			assertEquals(-1,reader.findColumn("_IdUrBa"));
-			assertEquals(-1,reader.findColumn("IdUrBa_"));			
+			assertEquals(2,reader.findColumn("IDURBA"));	
 			
 			// Note that DATECOG is ignored (gml is not fixed)
 			// assertTrue(Arrays.asList(header).contains("DATECOG")) ;

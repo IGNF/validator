@@ -188,8 +188,8 @@ public class TableReader implements Iterator< String[] >{
 		/* convert to CSV */
 		File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
 		FileConverter converter = FileConverter.getInstance();
-		Charset csvCharset = converter.convertToCSV(file, csvFile, charset);
-		if ( ! CharsetDetector.isValidCharset(csvFile, csvCharset) ) {
+		converter.convertToCSV(file, csvFile, charset);
+		if ( ! CharsetDetector.isValidCharset(csvFile, StandardCharsets.UTF_8) ) {
 			throw new InvalidCharsetException(
 				String.format("Le fichier %s n'est pas valide pour la charset %s",
 					file.toString(),
@@ -197,7 +197,7 @@ public class TableReader implements Iterator< String[] >{
 				)
 			);
 		}
-		return new TableReader(csvFile, csvCharset) ;
+		return new TableReader(csvFile, StandardCharsets.UTF_8) ;
 	}
 
 	/**
