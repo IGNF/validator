@@ -9,10 +9,10 @@ matrix:
       - GDAL_VERSION: 2.2.*
       - GDAL_PPA: "ppa:ubuntugis/ppa"
   - os: linux
-    dist: xenial
+    dist: bionic
     env:
       - JDK: openjdk11
-      - GDAL_VERSION: 2.3.*
+      - GDAL_VERSION: 2.4.*
       - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
 notifications:
