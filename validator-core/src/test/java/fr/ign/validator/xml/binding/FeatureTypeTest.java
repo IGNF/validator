@@ -48,7 +48,7 @@ public class FeatureTypeTest {
 	
 	@Test
 	public void testMarshallUnmarshallCommune() throws JAXBException, IOException {
-		File featureTypePath = ResourceHelper.getResourceFile(getClass(),"/xml/sample-document/types/COMMUNE.xml") ;
+		File featureTypePath = ResourceHelper.getResourceFile(getClass(),"/config/sample-document/types/COMMUNE.xml") ;
 
 		FeatureType featureType = (FeatureType)unmarshaller.unmarshal(featureTypePath);
 		Assert.assertNotNull(featureType);
@@ -102,7 +102,7 @@ public class FeatureTypeTest {
 
 	@Test
 	public void testUnmarshallWithCDATA() throws JAXBException{
-		File srcFile = ResourceHelper.getResourceFile(getClass(),"/xml/sample-document/types/SIMPLE.xml") ;
+		File srcFile = ResourceHelper.getResourceFile(getClass(),"/config/sample-document/types/SIMPLE.xml") ;
 
 		FeatureType featureType = (FeatureType)unmarshaller.unmarshal(srcFile) ;
 		Assert.assertEquals("SIMPLE", featureType.getName()) ;

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -49,7 +50,7 @@ public class ResourceHelperTest {
 	public void testGetCoreMainResource() throws IOException{
 		File file = ResourceHelper.getResourceFile(Context.class,"/error-code.json");
 		Assert.assertTrue(file.exists());
-		String content = FileUtils.readFileToString(file);
+		String content = FileUtils.readFileToString(file,StandardCharsets.UTF_8);
 		assertTrue(content.contains("FILE_EMPTY"));
 	}
 	

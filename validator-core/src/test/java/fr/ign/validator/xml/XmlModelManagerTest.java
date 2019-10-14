@@ -27,7 +27,7 @@ public class XmlModelManagerTest {
 	 */
 	@Test
 	public void testLoadDocumentModel() throws JAXBException{
-		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/xml/sample-document/files.xml") ;
+		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config/sample-document/files.xml") ;
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 		Assert.assertEquals("ccccc_CC_dddddddd",documentModel.getName());
 		Assert.assertEquals(3, documentModel.getFileModels().size());

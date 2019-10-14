@@ -8,9 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -167,10 +167,10 @@ public class FileConverter {
 		log.info(MARKER, "{} => {} (gdal {})", source, target, version);
 
 		String[] args = getArguments(source, target, "CSV");
-		/*
-		 * Note : encoding is specified in UTF-8 so that ogr2ogr doesn't convert
-		 */
-		runCommand(args, ENCODING_UTF8);
+		Map<String,String> envs = new HashMap<String, String>();
+		// encoding is specified in UTF-8 so that ogr2ogr doesn't convert
+		envs.put("SHAPE_ENCODING", ENCODING_UTF8);	
+		runCommand(args, envs);
 		/*
 		 * Controls that output file is created
 		 */
@@ -192,7 +192,9 @@ public class FileConverter {
 		}
 
 		String[] args = getArguments(source, target, "ESRI Shapefile");
-		runCommand(args, ENCODING_LATIN1);
+		Map<String,String> envs = new HashMap<String, String>();
+		envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
+		runCommand(args, envs);
 		/*
 		 * Controls that output file is created
 		 */
@@ -256,9 +258,11 @@ public class FileConverter {
 				arguments.add("GEOMETRY=AS_WKT");
 			}
 
-			// avoid useless quotes
-			arguments.add("-lco");
-			arguments.add("STRING_QUOTING=IF_NEEDED");
+			// avoid useless quotes (GDAL 2.3 or more)
+			if ( version.getMajor() >= 2 && version.getMinor() >= 3 ) {
+				arguments.add("-lco");
+				arguments.add("STRING_QUOTING=IF_NEEDED");				
+			}
 
 			// force "\r\n"
 			arguments.add("-lco");
@@ -307,7 +311,7 @@ public class FileConverter {
 	 * 
 	 * @throws IOException
 	 */
-	private void runCommand(String[] args, String shapeEncoding) throws IOException {
+	private void runCommand(String[] args, Map<String,String> envs) throws IOException {
 		Process process = null;
 		try {
 			/*
@@ -320,7 +324,10 @@ public class FileConverter {
 			 * Executing command
 			 */
 			ProcessBuilder builder = new ProcessBuilder(args);
-			builder.environment().put("SHAPE_ENCODING", shapeEncoding);
+			for ( String envName : envs.keySet() ) {
+				builder.environment().put(envName, envs.get(envName));
+			}
+			//
 
 			process = builder.start();
 			InputStream stderr = process.getErrorStream();
