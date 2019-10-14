@@ -194,10 +194,7 @@ public class FileConverterTest {
 			return "/data/POINT_EXPECTED_1.10.x.csv";
 		} else if (version.getFullVersion().startsWith("GDAL 1.11.")) {
 			return "/data/POINT_EXPECTED_1.11.x.csv";
-		} else if (version.getFullVersion().startsWith("GDAL 2.1.")) {
-			// supposed to be same as GDAL 2.2.2 output
-			return "/data/POINT_EXPECTED_2.2.x.csv";
-		} else if (version.getFullVersion().startsWith("GDAL 2.2.")) {
+		} else if (version.getMajor() >= 2 ) {
 			return "/data/POINT_EXPECTED_2.2.x.csv";
 		} else {
 			System.err.println("GDAL version is not supported for this test : " + version);
