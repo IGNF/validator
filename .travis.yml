@@ -5,11 +5,6 @@ jdk:
 matrix:
   include:
   - os: linux
-    dist: trusty
-    env:
-      - GDAL_VERSION: 2.2.*
-      - GDAL_PPA: "ppa:ubuntugis/ppa"
-  - os: linux
     dist: bionic
     env:
       - GDAL_VERSION: 2.4.*
