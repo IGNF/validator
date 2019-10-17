@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/IGNF/validator.svg?branch=master)](https://travis-ci.org/IGNF/validator)
 
-
 ## Description
 
 > This programs allows to validate datasets (a folder containing shapefiles, PDF, etc.) according to a file mapping and a FeatureCatalog. It outputs a report describing validation errors and normalized data ready for database integration.
@@ -60,7 +59,7 @@ Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](h
 
 ## Dépendances
 
-* [ogr2ogr](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
+* [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
 
 ## Compilation
 
@@ -89,9 +88,11 @@ java -jar validator-cli.jar document_validator --help
 
 Voir [https://github.com/IGNF/validator-example](https://github.com/IGNF/validator-example) pour des exemples d'utilisation.
 
-Remarque : 
+Remarques :
 
-* `java -Dogr2ogr_path=/path/to/ogr2ogr -jar validator-cli.jar ...` permet de spécifier l'emplacement de `ogr2ogr`
+* Le chemin d'accès à `ogr2ogr` peut être spécifié :
+  * A l'aide d'une propriété : `java -Dogr2ogr_path=/path/to/ogr2ogr -jar validator-cli.jar ...`
+  * A l'aide d'une variable d'environnement : `OGR2OGR_PATH=/path/to/ogr2ogr java -jar validator-cli.jar`
 * `java  -jar validator-cli.jar --plugins=gpu ...` est utilisé dans le cadre du Géoportail de l'Urbanisme
 
 
@@ -100,7 +101,9 @@ Remarque :
 **ATTENTION : Le modèle pivot JSON n'est pas standardisé et est suspectible d'évoluer**
 
 ```bash
-java -jar validator-cli/target/validator-cli.jar metadata_to_json -i fiche.xml -o fiche.json
+java -jar validator-cli/target/validator-cli.jar metadata_to_json \
+    -i validator-core/src/test/resources/metadata/01.xml \
+    -o validator-core/src/test/resources/metadata/01-expected.json
 ```
 
 Exemple : [01.xml](validator-core/src/test/resources/metadata/01.xml) -> [01.json](validator-core/src/test/resources/metadata/01-expected.json)

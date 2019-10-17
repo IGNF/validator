@@ -27,7 +27,7 @@ public class DocumentModelTest {
 	
 	@Test
 	public void testUnmarshallMarshall() throws JAXBException, IOException{
-		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/xml/sample-document/files.xml") ;
+		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config/sample-document/files.xml") ;
 		
 		JAXBContext context = JAXBContext.newInstance( FeatureType.class,DocumentModel.class );
 		Unmarshaller unmarshaller = context.createUnmarshaller() ;

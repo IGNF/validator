@@ -2,6 +2,7 @@ package fr.ign.validator.command;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
@@ -68,8 +69,8 @@ public class MetadataToJsonCommandRegressTest {
 		Assert.assertTrue("json file not produced for " + inputName, outputFile.exists());
 		Assert.assertTrue("Expected file not found : " + expectedFile, expectedFile.exists());
 
-		String expected = FileUtils.readFileToString(expectedFile);
-		String actual = FileUtils.readFileToString(outputFile);
+		String expected = FileUtils.readFileToString(expectedFile,StandardCharsets.UTF_8);
+		String actual = FileUtils.readFileToString(outputFile,StandardCharsets.UTF_8);
 		JSONAssert.assertEquals(expected, actual, false);
 	}
 

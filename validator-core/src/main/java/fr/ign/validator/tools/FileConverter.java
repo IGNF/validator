@@ -1,15 +1,21 @@
 package fr.ign.validator.tools;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -24,7 +30,7 @@ import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
  * 
- * File converter to different formats based on GDAL - ogr2ogr
+ * Helper based on GDAL/ogr2ogr to convert spatial file formats
  * 
  * @author MBorne
  * @author CBouche
@@ -38,11 +44,6 @@ public class FileConverter {
 	public static final String ENCODING_LATIN1 = "ISO-8859-1";
 
 	private static FileConverter instance = new FileConverter();
-
-	/**
-	 * @brief path to ogr2ogr executable
-	 */
-	private String ogr2ogr = System.getProperty("ogr2ogr_path", "ogr2ogr");
 
 	/**
 	 * ogr2ogr version
@@ -66,6 +67,23 @@ public class FileConverter {
 	}
 
 	/**
+	 * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
+	 * <ul>
+	 * <li>Environment variable OGR2OGR_PATH</li>
+	 * <li>System property ogr2ogr_path</li>
+	 * </ul>
+	 * 
+	 * @return
+	 */
+	private String getOgr2ogrPath() {
+		String result = System.getenv("OGR2OGR_PATH");
+		if (result != null) {
+			return result;
+		}
+		return System.getProperty("ogr2ogr_path", "ogr2ogr");
+	}
+
+	/**
 	 * returns ogr2ogr version
 	 * 
 	 * @return null if command `ogr2ogr --version` fails
@@ -75,13 +93,24 @@ public class FileConverter {
 	}
 
 	/**
-	 * True for GDAL 1.x as coordinate precision is broken even with a lot
-	 * number of decimals
+	 * True for GDAL 1.x as coordinate precision is broken even with a lot number of
+	 * decimals
 	 * 
 	 * @return
 	 */
 	public boolean isBreakingCoordinatePrecision() {
 		return getVersion().getMajor() == 1;
+	}
+
+	/**
+	 * Prior to GDAL 2.3, LATIN1 encoded TAB are not converted to UTF-8 encoded CSV.
+	 * 
+	 * After GDAL 2.3, it seems that there is no way to avoid this behavior.
+	 * 
+	 * @return
+	 */
+	private boolean isConvertingTabToCsvUtf8() {
+		return getVersion().getMajor() >= 2 && getVersion().getMinor() >= 3;
 	}
 
 	/**
@@ -101,7 +130,7 @@ public class FileConverter {
 	 */
 	private String retrieveFullVersion() {
 		log.info(MARKER, "ogr2ogr --version");
-		String[] args = new String[] { ogr2ogr, "--version" };
+		String[] args = new String[] { getOgr2ogrPath(), "--version" };
 		ProcessBuilder builder = new ProcessBuilder(args);
 		try {
 			Process process = builder.start();
@@ -121,27 +150,21 @@ public class FileConverter {
 	}
 
 	/**
-	 * 
-	 * Converts a source file in csv
-	 * 
-	 * Warning : As GDAL doesn't convert SHP and TAB the same way, GDAL is used
-	 * as if data were encoded in utf-8 so it doesn't convert data encoding
-	 * 
+	 * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV target
 	 * @param source
-	 * @param destination
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws Exception
+	 * @param target
+	 * @param sourceCharset
+	 * @throws IOException
 	 */
-	public void convertToCSV(File source, File target) throws IOException {
+	public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
 		if (target.exists()) {
 			target.delete();
 		}
-
+		String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
 		/*
 		 * patch on GML files
 		 */
-		if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
+		if (sourceExtension.equals("gml")) {
 			fixGML(source);
 		}
 		/*
@@ -154,16 +177,38 @@ public class FileConverter {
 		log.info(MARKER, "{} => {} (gdal {})", source, target, version);
 
 		String[] args = getArguments(source, target, "CSV");
-		/*
-		 * Note : encoding is specified in UTF-8 so that ogr2ogr doesn't convert
-		 */
-		runCommand(args, ENCODING_UTF8);
+		Map<String, String> envs = new HashMap<String, String>();
+		// encoding is specified in UTF-8 so that ogr2ogr doesn't convert
+		if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
+			envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));
+		}
+		runCommand(args, envs);
 		/*
 		 * Controls that output file is created
 		 */
 		if (!target.exists()) {
 			log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
 			createFalseCSV(target);
+		}
+		/*
+		 * Hack to support GDAL prior to 2.3
+		 */
+		if (sourceExtension.equals("tab") && !isConvertingTabToCsvUtf8()) {
+			fixUtf8(target,sourceCharset);
+		}
+	}
+
+	/**
+	 * Convert java charset to GDAL encoding
+	 * 
+	 * @param sourceCharset
+	 * @return
+	 */
+	private String toEncoding(Charset sourceCharset) {
+		if (sourceCharset.equals(StandardCharsets.ISO_8859_1)) {
+			return ENCODING_LATIN1;
+		} else {
+			return ENCODING_UTF8;
 		}
 	}
 
@@ -179,7 +224,9 @@ public class FileConverter {
 		}
 
 		String[] args = getArguments(source, target, "ESRI Shapefile");
-		runCommand(args, ENCODING_LATIN1);
+		Map<String, String> envs = new HashMap<String, String>();
+		envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
+		runCommand(args, envs);
 		/*
 		 * Controls that output file is created
 		 */
@@ -191,13 +238,13 @@ public class FileConverter {
 		 * Generating cgp file
 		 */
 		File cpgFile = CompanionFileUtils.getCompanionFile(target, "cpg");
-		FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1);
+		FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1, StandardCharsets.UTF_8);
 	}
 
 	/**
 	 * 
-	 * Any invalid csv file blocks ogr2ogr use A valid file with header without
-	 * data is created to avoid this problem
+	 * Any invalid csv file blocks ogr2ogr use A valid file with header without data
+	 * is created to avoid this problem
 	 * 
 	 * @param target
 	 * @throws IOException
@@ -212,7 +259,7 @@ public class FileConverter {
 	}
 
 	/**
-	 * get params
+	 * Get arguments to invoke ogr2ogr
 	 * 
 	 * @param source
 	 * @param target
@@ -222,7 +269,7 @@ public class FileConverter {
 	 */
 	private String[] getArguments(File source, File target, String driver) {
 		List<String> arguments = new ArrayList<String>();
-		arguments.add(ogr2ogr);
+		arguments.add(getOgr2ogrPath());
 
 		// Otherwise, some ogr2ogr versions transforms 01 to 1...
 		if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
@@ -243,6 +290,13 @@ public class FileConverter {
 				arguments.add("GEOMETRY=AS_WKT");
 			}
 
+			// avoid useless quotes (GDAL 2.3 or more)
+			if (version.getMajor() >= 2 && version.getMinor() >= 3) {
+				arguments.add("-lco");
+				arguments.add("STRING_QUOTING=IF_NEEDED");
+			}
+
+			// force "\r\n"
 			arguments.add("-lco");
 			arguments.add("LINEFORMAT=CRLF");
 		}
@@ -266,8 +320,8 @@ public class FileConverter {
 	/**
 	 * Indicates if a source file has a geometry column
 	 * 
-	 * Note : This is used to avoid the different behaviors of ogr2ogr when
-	 * treating dbf files
+	 * Note : This is used to avoid the different behaviors of ogr2ogr when treating
+	 * dbf files
 	 * 
 	 * @param source
 	 * @return
@@ -289,7 +343,7 @@ public class FileConverter {
 	 * 
 	 * @throws IOException
 	 */
-	private void runCommand(String[] args, String shapeEncoding) throws IOException {
+	private void runCommand(String[] args, Map<String, String> envs) throws IOException {
 		Process process = null;
 		try {
 			/*
@@ -302,7 +356,10 @@ public class FileConverter {
 			 * Executing command
 			 */
 			ProcessBuilder builder = new ProcessBuilder(args);
-			builder.environment().put("SHAPE_ENCODING", shapeEncoding);
+			for (String envName : envs.keySet()) {
+				builder.environment().put(envName, envs.get(envName));
+			}
+			//
 
 			process = builder.start();
 			InputStream stderr = process.getErrorStream();
@@ -355,6 +412,36 @@ public class FileConverter {
 		File backupedFile = new File(source.getPath() + ".backup");
 		source.renameTo(backupedFile);
 		FixGML.replaceAutoclosedByEmpty(backupedFile, source);
+	}
+
+	/**
+	 * ogr2ogr prior to 2.3 doesn't convert TAB encoding to UTF-8
+	 * 
+	 * TODO remove support for ogr2ogr prior to 2.3.0 to get rid of this patch  
+	 * 
+	 * @param file
+	 * @param charset
+	 * @throws IOException
+	 */
+	private void fixUtf8(File file, Charset charset) throws IOException {
+		log.warn(MARKER, "ogr2ogr prior to 2.3, patching output encoding to UTF-8 for {}", file.getPath());
+		File backupedFile = new File(file.getPath() + ".backup");
+		file.renameTo(backupedFile);
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+			new FileInputStream(backupedFile), charset
+		));
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+			new FileOutputStream(file), 
+			StandardCharsets.UTF_8
+		));
+		String line;
+		while ((line = in.readLine()) != null) {
+			out.write(line+"\r\n");
+		}
+		in.close();
+		out.close();
+		backupedFile.delete();
 	}
 
 }

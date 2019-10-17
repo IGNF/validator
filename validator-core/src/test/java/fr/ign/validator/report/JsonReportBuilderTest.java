@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -46,10 +47,10 @@ public class JsonReportBuilderTest {
 		
 		File expectedFile = ResourceHelper.getResourceFile(getClass(),"/report/report-01.jsonl") ;
 
-		List<String> lines = FileUtils.readLines(file) ;
+		List<String> lines = FileUtils.readLines(file,StandardCharsets.UTF_8) ;
 		assertEquals(2, lines.size());
 		assertEquals(
-			FileUtils.readLines(expectedFile),
+			FileUtils.readLines(expectedFile,StandardCharsets.UTF_8),
 			lines
 		);
 	}

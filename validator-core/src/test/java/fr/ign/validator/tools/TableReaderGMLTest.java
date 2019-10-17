@@ -12,37 +12,17 @@ import java.util.Arrays;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
 
-public class TableReaderTest {
+/**
+ * 
+ * Test CSV file reading with TableReader
+ * 
+ * @author mickael
+ *
+ */
+public class TableReaderGMLTest {
 
-	
-	@Test
-	public void testReadTAB(){
-		File file = ResourceHelper.getResourceFile(getClass(),"/data/ZONE_URBA_41003.TAB") ;
-		assertTrue(file.exists());
-		try {
-			TableReader reader = TableReader.createTableReader(file,StandardCharsets.ISO_8859_1);
-
-			String[] header = reader.getHeader() ;
-			assertEquals( 10, header.length );
-			
-			int count = 0 ;
-			while ( reader.hasNext() ){
-				String[] row = reader.next() ;
-				assertEquals(header.length, row.length);
-				count++ ;
-			}
-			assertEquals(36, count);			
-		} catch (IOException e) {
-			fail(e.getMessage());
-		} catch (InvalidCharsetException e) {
-			fail(e.getMessage());
-		}
-		
-	}
-	
 	@Test
 	public void testReadDocUrbaComGML(){
 		File file = ResourceHelper.getResourceFile(getClass(),"/gml/DOC_URBA_COM.gml") ;
@@ -59,11 +39,7 @@ public class TableReaderTest {
 			assertTrue(Arrays.asList(header).contains("IDURBA")) ;
 			assertTrue(Arrays.asList(header).contains("INSEE")) ;
 
-			// test case insensitive find
-			assertEquals(2,reader.findColumn("IDURBA"));
-			assertEquals(2,reader.findColumn("IdUrBa"));			
-			assertEquals(-1,reader.findColumn("_IdUrBa"));
-			assertEquals(-1,reader.findColumn("IdUrBa_"));			
+			assertEquals(2,reader.findColumn("IDURBA"));	
 			
 			// Note that DATECOG is ignored (gml is not fixed)
 			// assertTrue(Arrays.asList(header).contains("DATECOG")) ;
@@ -122,89 +98,27 @@ public class TableReaderTest {
 	
 	/**
 	 * This test works with some ogr2ogr versions
+	 * TODO NOMFIC should appears with FixGML 
 	 */
-    @Test
-    @Ignore("reprendre avec un jeu test où les FeatureType sont accessibles")
+	@Test
+	@Ignore
 	public void testReadZoneUrbaGML(){
-    	return ;/*
-    			
     	File file = new File(getClass().getResource("/gml/ZONE_URBA.gml").getPath()) ;
 		assertTrue(file.exists());
 		try {
 			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);
 
 			String[] header = reader.getHeader() ;
-
+			
 			assertTrue(Arrays.asList(header).contains("LIBELLE")) ;
-			// patché, n'apparait pas quand il est vide
+			// TODO NOMFIC should appears with FixGML 
 			assertTrue(Arrays.asList(header).contains("NOMFIC")) ;
 
 		} catch (IOException e) {
 			fail(e.getMessage());
 		} catch (InvalidCharsetException e) {
 			fail(e.getMessage());
-		}*/
-	}
-    
-    
-    /**
-     * ogr2ogr csv conversion outputs a strange result :
-     *
-     *		IDSUP,
-     *		75
-     *		26
-     *		85
-     *		84
-     *		83
-     *		82
-     *		81
-     *		80
-     *
-     * This test verifies that the null elements from header are ignored
-     */
-    public void testReadSingleColumn(){
-    	File file = ResourceHelper.getResourceFile(getClass(),"/dbf/SINGLE_COLUMN_BUG.dbf") ;
-		assertTrue(file.exists());
-		try {
-			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);
-
-			String[] header = reader.getHeader() ;
-
-			assertEquals(1,header.length);
-			assertEquals("IDSUP",header[0]);
-			
-		} catch (IOException e) {
-			fail(e.getMessage());
-		} catch (InvalidCharsetException e) {
-			fail(e.getMessage());
-		}
-    }
-    
-
-	@Test
-	public void testTrim(){
-		File file = ResourceHelper.getResourceFile(getClass(),"/csv/not-trimmed.csv");
-		assertTrue(file.exists());
-		try {
-			TableReader reader = TableReader.createTableReader(file,StandardCharsets.UTF_8);
-
-			String[] header = reader.getHeader() ;
-
-			assertTrue(Arrays.asList(header).contains("A")) ;
-			assertTrue(Arrays.asList(header).contains("B")) ;
-			
-			assertTrue(reader.hasNext());
-			String[] row = reader.next() ;
-			assertEquals("valeur A", row[0]);
-			assertEquals("valeur B", row[1]);
-			
-		} catch (IOException e) {
-			fail(e.getMessage());
-		} catch (InvalidCharsetException e) {
-			fail(e.getMessage());
 		}
 	}
 
-	
-	
 }

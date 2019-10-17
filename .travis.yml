@@ -1,13 +1,14 @@
 language: java
+jdk:
+  - openjdk11
 
 matrix:
   include:
   - os: linux
-    dist: trusty
+    dist: bionic
     env:
-      - JDK: openjdk11
-      - GDAL_VERSION: 2.2.*
-      - GDAL_PPA: "ppa:ubuntugis/ppa"
+      - GDAL_VERSION: 2.4.*
+      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
 notifications:
   email: false
@@ -21,7 +22,7 @@ install: true
 
 script:
   - ogr2ogr --version
-  - ./travis/build-${JDK}.sh
+  - ./travis/build-openjdk11.sh
 
 cache:
   directories:

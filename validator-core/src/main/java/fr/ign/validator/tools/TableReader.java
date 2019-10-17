@@ -3,10 +3,14 @@ package fr.ign.validator.tools;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +38,7 @@ public class TableReader implements Iterator< String[] >{
 	/**
 	 * CSV file reader
 	 */
-	private CSVReader csvReader ;
+	private Iterator<CSVRecord> iterator ;
 	/**
 	 * File header
 	 */
@@ -50,10 +54,8 @@ public class TableReader implements Iterator< String[] >{
 	 * @throws IOException 
 	 */
 	private TableReader(File csvFile, Charset charset) throws IOException{
-		/*
-		 * opening file
-		 */
-		csvReader = new CSVReader(csvFile, charset);
+		CSVParser parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180) ;
+		this.iterator = parser.iterator() ;
 		readHeader();
 	}
 
@@ -67,10 +69,10 @@ public class TableReader implements Iterator< String[] >{
 	 * @throws IOException 
 	 */
 	private void readHeader() throws IOException{
-		if ( ! csvReader.hasNext() ){
+		if ( ! hasNext() ){
 			throw new IOException("Impossible de lire l'entête");
 		}
-		String[] fields = csvReader.next() ;
+		String[] fields = next() ;
 		List<String> filteredFields = new ArrayList<String>();
 		for (String field : fields) {
 			if ( field == null || field.isEmpty() ){
@@ -80,8 +82,7 @@ public class TableReader implements Iterator< String[] >{
 		}
 		header = filteredFields.toArray(new String[filteredFields.size()]);
 	}
-	
-	
+
 	/**
 	 * @return the header
 	 */
@@ -89,28 +90,61 @@ public class TableReader implements Iterator< String[] >{
 		return header;
 	}
 
-	/**
-	 * @param header the header to set
-	 */
-	public void setHeader(String[] header) {
-		this.header = header;
-	}
-	
+
 	@Override
 	public boolean hasNext() {
-		return csvReader.hasNext() ;
+		return iterator.hasNext() ;
 	}
 
 	@Override
 	public String[] next() {
-		return csvReader.next() ;
+		CSVRecord row = iterator.next() ;
+		return toArray(row);
 	}
 
 	@Override
 	public void remove() {
-		csvReader.remove();
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * 
+	 * @param row
+	 * @return
+	 */
+	private String[] toArray(CSVRecord row) {
+		String[] result = new String[row.size()];
+		for ( int i = 0; i < row.size(); i++ ){
+			result[i] = nullifyEmptyString( trimString( row.get(i) ) ) ;
+		}
+		return result ;
+	}
+
+	/**
+	 * Trims a string
+	 * @param value
+	 * @return
+	 */
+	private String trimString(String value){
+		if ( null == value ){
+			return null ;
+		}
+		return value.trim();
 	}
 	
+	
+	/**
+	 * Converts to NULL an empty string
+	 * @param value
+	 */
+	private String nullifyEmptyString(String value){
+		if ( null == value || value.isEmpty() ){
+			return null ;
+		}else{
+			return value ;
+		}
+	}
+
 	/**
 	 * Finds the position of a column by its name in header
 	 * 
@@ -139,18 +173,32 @@ public class TableReader implements Iterator< String[] >{
 	 * @throws InvalidCharsetException
 	 */
 	public static TableReader createTableReader(File file, Charset charset) throws IOException, InvalidCharsetException{
-		File csvFile = convertToCSV(file);
-		if ( ! CharsetDetector.isValidCharset(csvFile, charset) ) {
+		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
+			if ( ! CharsetDetector.isValidCharset(file, charset) ) {
+				throw new InvalidCharsetException(
+					String.format("Le fichier %s n'est pas valide pour la charset %s",
+						file.toString(),
+						charset.toString()
+					)
+				);
+			}
+			return new TableReader(file, charset) ;
+		}
+
+		/* convert to CSV */
+		File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
+		FileConverter converter = FileConverter.getInstance();
+		converter.convertToCSV(file, csvFile, charset);
+		if ( ! CharsetDetector.isValidCharset(csvFile, StandardCharsets.UTF_8) ) {
 			throw new InvalidCharsetException(
-				String.format("Le fichier {} n'est pas valide pour la charset {}",
-					csvFile.toString(),
+				String.format("Le fichier %s n'est pas valide pour la charset %s",
+					file.toString(),
 					charset.toString()
 				)
 			);
 		}
-		return new TableReader(csvFile, charset) ;
+		return new TableReader(csvFile, StandardCharsets.UTF_8) ;
 	}
-	
 
 	/**
 	 * Create TableReader with a given charset. If the given charset is invalid,
@@ -169,7 +217,7 @@ public class TableReader implements Iterator< String[] >{
 			return TableReader.createTableReaderDetectCharset(file) ;
 		}
 	}
-	
+
 	
 	/**
 	 * Create TableReader with charset autodetection
@@ -178,35 +226,16 @@ public class TableReader implements Iterator< String[] >{
 	 * @throws IOException
 	 */
 	public static TableReader createTableReaderDetectCharset(File file) throws IOException {
-		File csvFile = convertToCSV(file);
+		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
+			Charset charset = CharsetDetector.detectCharset(file) ;
+			return new TableReader(file, charset) ;
+		}
+
+		File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
+		FileConverter converter = FileConverter.getInstance();
+		converter.convertToCSV(file, csvFile, StandardCharsets.UTF_8);
 		Charset charset = CharsetDetector.detectCharset(csvFile) ;
 		return new TableReader(csvFile, charset) ;
 	}
 
-	
-	/**
-	 * Converts to csv if needed
-	 * 
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	private static File convertToCSV(File file) throws IOException{
-		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
-			return file ;
-		}
-		File csvFile = new File(
-			file.getParent(),
-			FilenameUtils.getBaseName(file.getName())+".csv"
-		);
-
-		if ( csvFile.exists() ){
-			csvFile.delete();
-		}
-		
-		FileConverter converter = FileConverter.getInstance();
-		converter.convertToCSV(file, csvFile);
-		return csvFile ;
-	}
-	
 }
