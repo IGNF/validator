@@ -1,6 +1,6 @@
 package fr.ign.validator.exception;
 
-public class ModelNotFoundException extends Exception {
+public class ModelNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 

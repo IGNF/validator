@@ -5,8 +5,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,7 +35,7 @@ public class RelationValidatorTest {
 	private Context context;
 
 	@Before
-	public void setUp() throws NoSuchAuthorityCodeException, FactoryException, JAXBException{
+	public void setUp() throws NoSuchAuthorityCodeException, FactoryException {
 		context = new Context();
 		context.setProjection("EPSG:4326");
 		context.setReportBuilder(reportBuilder);

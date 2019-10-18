@@ -7,8 +7,6 @@ import org.apache.commons.io.FileUtils;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.model.DocumentModel;
-import fr.ign.validator.repository.DocumentModelRepository;
-import fr.ign.validator.repository.xml.XmlDocumentModelRepository;
 import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.xml.XmlModelManager;
 
@@ -20,21 +18,6 @@ import fr.ign.validator.xml.XmlModelManager;
  *
  */
 public class CnigRegressHelper {
-	
-	/**
-	 * Get DocumentModelRepository
-	 * 
-	 * @see validator-plugin-cnig/test/resources/config
-	 * 
-	 * @return
-	 */
-	public static DocumentModelRepository getDocumentModelRepository(){
-		File configDir = ResourceHelper.getResourceFile(
-			CnigRegressHelper.class, 
-			"/config"
-		);
-		return new XmlDocumentModelRepository(configDir);
-	}
 
 	/**
 	 * Get document model
@@ -45,7 +28,7 @@ public class CnigRegressHelper {
 	 * @return
 	 * @throws Exception
 	 */
-	public static DocumentModel getDocumentModel(String documentModelName) throws Exception {
+	public static DocumentModel getDocumentModel(String documentModelName) {
 		File documentModelPath = ResourceHelper.getResourceFile(
 			CnigRegressHelper.class, 
 			"/config/" + documentModelName + "/files.xml"

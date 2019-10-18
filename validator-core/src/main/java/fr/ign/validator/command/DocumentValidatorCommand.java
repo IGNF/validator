@@ -31,11 +31,10 @@ import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.FilteredReportBuilder;
 import fr.ign.validator.report.JsonReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.repository.DocumentModelRepository;
 import fr.ign.validator.repository.ProjectionRepository;
-import fr.ign.validator.repository.xml.XmlDocumentModelRepository;
 import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.tools.FileConverter;
+import fr.ign.validator.xml.XmlModelManager;
 
 /**
  * 
@@ -357,12 +356,9 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @throws ModelNotFoundException 
 	 */
 	protected DocumentModel loadDocumentModel() throws IOException, ModelNotFoundException {
-		DocumentModelRepository repository = new XmlDocumentModelRepository(configDir);
-		DocumentModel documentModel = repository.findOneByName(documentModelName);
-		if ( documentModel == null ) {
-			throw new ModelNotFoundException(documentModelName);
-		}
-		return documentModel;
+		XmlModelManager modelReader = new XmlModelManager();
+		File documentModelPath = new File(configDir, documentModelName + "/files.xml");
+		return modelReader.loadDocumentModel(documentModelPath);
 	}
 
 	/**
