@@ -44,9 +44,9 @@ public class DgprApplicationTest {
 		Context context = new Context();
 		context.setReportBuilder(report);
 		context.setProjection("EPSG:2154");
-		context.setTolerance(1.0);
-		context.setDistanceSimplification(null);
-		context.setSafeSimplification(true);
+		context.setDgprTolerance(1.0);
+		context.setDgprSimplification(null);
+		context.setDgprSafeMode(true);
 		File validationDirectory = new File(documentPath.getParentFile(), "validation");
 		context.setValidationDirectory(validationDirectory);
 		PluginManager pluginManager = new PluginManager();
@@ -83,8 +83,8 @@ public class DgprApplicationTest {
 		File documentPath = getSampleDocument("TRI_JTEST_TOPO_SIG_DI");
 
 		Context context = createContext(documentPath);
-		context.setTolerance(5.0);
-		context.setDistanceSimplification(null);
+		context.setDgprTolerance(5.0);
+		context.setDgprSimplification(null);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
@@ -112,9 +112,9 @@ public class DgprApplicationTest {
 		File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
 
 		Context context = createContext(documentPath);
-		context.setTolerance(10.0);
-		context.setDistanceSimplification(5.0);
-		context.setSafeSimplification(true);
+		context.setDgprTolerance(10.0);
+		context.setDgprSimplification(5.0);
+		context.setDgprSafeMode(true);
 		Document document = new Document(documentModel, documentPath);
 		try {
 			document.validate(context);
