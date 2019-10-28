@@ -115,19 +115,19 @@ public class Context {
 	/**
 	 * Tolerance for geometric operation such as intersection
 	 */
-	private Double tolerance;
+	private Double dgprTolerance;
 
 	
 	/**
 	 * Simplification distance
 	 */
-	private Double distanceSimplification;
+	private Double dgprSimplification;
 	
 	
 	/**
 	 * Allow using faster simplification against topologicaly safe simplification
 	 */
-	private Boolean safeSimplification;
+	private Boolean dgprSafeMode;
 
 
 	public Context(){
@@ -644,8 +644,8 @@ public class Context {
 	 * used in geometric operation (dgpr plugin)
 	 * @return
 	 */
-	public Double getTolerance() {
-		return this.tolerance;
+	public Double getDgprTolerance() {
+		return this.dgprTolerance;
 	}
 
 
@@ -654,40 +654,40 @@ public class Context {
 	 * used in geometric operation (dgpr plugin)
 	 * @param topologicalTolerance
 	 */
-	public void setTolerance(double topologicalTolerance) {
-		this.tolerance = topologicalTolerance;
+	public void setDgprTolerance(double topologicalTolerance) {
+		this.dgprTolerance = topologicalTolerance;
 	}
 
 	/**
 	 * simplification distance option
 	 * @return distance
 	 */
-	public Double getDistanceSimplification() {
-		return distanceSimplification;
+	public Double getDgprSimplification() {
+		return dgprSimplification;
 	}
 	
 	/**
 	 * simplification distance option
 	 * @param distanceSimplification
 	 */
-	public void setDistanceSimplification(Double distanceSimplification) {
-		this.distanceSimplification = distanceSimplification;
+	public void setDgprSimplification(Double distanceSimplification) {
+		this.dgprSimplification = distanceSimplification;
 	}
 	
 	/**
 	 * safe simplification option
 	 * @return safe simplication allowed
 	 */
-	public Boolean isSafeSimplification() {
-		return safeSimplification;
+	public Boolean isDgprSafeMode() {
+		return dgprSafeMode;
 	}
 	
 	/**
 	 * safe simplification option
 	 * @param safeSimplification
 	 */
-	public void setSafeSimplification(boolean safeSimplification) {
-		this.safeSimplification = safeSimplification;
+	public void setDgprSafeMode(boolean safeSimplification) {
+		this.dgprSafeMode = safeSimplification;
 	}
 
 }

@@ -56,20 +56,20 @@ public class GraphTopologyValidator implements Validator<Database> {
 
 	
 	private double getDistanceBuffer() {
-		if (context.getTolerance() == null) {
+		if (context.getDgprTolerance() == null) {
 			return 0.0;
 		}
-		return context.getTolerance();
+		return context.getDgprTolerance();
 	}
 
 	
 	private Double getDistanceSimplification() {
-		return context.getDistanceSimplification();
+		return context.getDgprSimplification();
 	}
 	
 	
 	private Boolean isSafeSimplification() {
-		return context.isSafeSimplification();
+		return context.isDgprSafeMode();
 	}
 
 	

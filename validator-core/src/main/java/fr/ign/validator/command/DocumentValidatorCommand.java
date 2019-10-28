@@ -113,20 +113,20 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * option - distance (double) express in the input projection system.
 	 * Default value is a meter express in the default CRS (EPSG:4326): 0.0001
 	 */
-	protected double topologicalTolerance;
+	protected double dgprTolerance;
 	
 	/**
 	 * option - distance (double) express in the input projection system.
 	 * Example value : a meter express in the default CRS (EPSG:4326): 0.0001
 	 * Default value : null (no simplification)
 	 */
-	protected Double distanceSimplification;
+	protected Double dgprSimplification;
 	
 	/**
 	 * option - switch (boolean)
 	 * Default value is false (faster)
 	 */
-	protected boolean safeSimplification;
+	protected boolean dgprSafeMode;
 
 	@Override
 	public String getName() {
@@ -157,9 +157,13 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		buildStringFixerOptions(options);
 		buildFlatOption(options);
 		buildPluginsOption(options);
-		buildTopologicalTolerance(options);
-		buildSimplifyDistance(options);
-		buildSimplifySafe(options);
+		
+		/*
+		 * dgpr-plugin options
+		 */
+		buildDgprTolerance(options);
+		buildDgprSimplifyDistance(options);
+		buildDgprSimplifySafe(options);
 	}
 
 	@Override
@@ -223,9 +227,13 @@ public class DocumentValidatorCommand extends AbstractCommand {
 		context.setStringFixer(stringFixer);
 		context.setNativeDataExtent(nativeDataExtent);
 		context.setFlatValidation(flat);
-		context.setTolerance(topologicalTolerance);
-		context.setDistanceSimplification(distanceSimplification);
-		context.setSafeSimplification(safeSimplification);
+
+		/*
+		 * dgpr-plugin options
+		 */
+		context.setDgprTolerance(dgprTolerance);
+		context.setDgprSimplification(dgprSimplification);
+		context.setDgprSafeMode(dgprSafeMode);
 
 		/*
 		 * load plugins
@@ -604,12 +612,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 
 	/**
-	 * Add option "--tolerance"
+	 * Add option "--dgpr-tolerance"
 	 * @param options
 	 */
-	protected void buildTopologicalTolerance(Options options) {
+	protected void buildDgprTolerance(Options options) {
 		{
-			Option option = new Option(null, "tolerance", true, "Tolerance express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
+			Option option = new Option(null, "dgpr-tolerance", true, "Tolerance express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -617,12 +625,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 
 	/**
-	 * Add option "--simplify"
+	 * Add option "--dgpr-simplify"
 	 * @param options
 	 */
-	protected void buildSimplifyDistance(Options options) {
+	protected void buildDgprSimplifyDistance(Options options) {
 		{
-			Option option = new Option(null, "simplify", true, "Distance for geometric simplification express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
+			Option option = new Option(null, "dgpr-simplify", true, "Distance for geometric simplification express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -630,12 +638,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 
 	/**
-	 * Add option "--safe-simplify"
+	 * Add option "--dgpr-safe-simplify"
 	 * @param options
 	 */
-	protected void buildSimplifySafe(Options options) {
+	protected void buildDgprSimplifySafe(Options options) {
 		{
-			Option option = new Option(null, "safe-simplify", false, "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier");
+			Option option = new Option(null, "dgpr-safe-simplify", false, "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier");
 			option.setRequired(false);
 			options.addOption(option);
 		}
@@ -653,7 +661,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
 		try {
 			Double tolerance = Double.valueOf(toleranceString);
-			this.topologicalTolerance = tolerance;	
+			this.dgprTolerance = tolerance;	
 		} catch (NumberFormatException e) {
 			String message = String.format("Paramètre invalide 'tolerance' : '%1s' n'est pas un double", toleranceString);
 			throw new ParseException(message);
@@ -670,14 +678,14 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	protected void parseDistanceSimplificationOption(CommandLine commandLine) throws ParseException {
 		String strValue = commandLine.getOptionValue("simplify", null);
 		if (strValue == null) {
-			this.distanceSimplification = null;
+			this.dgprSimplification = null;
 			log.info(MARKER, "validator command running whith no geometric simplification");
 			return;
 		}
 
 		try {
 			Double distance = Double.valueOf(strValue);
-			this.distanceSimplification = distance;
+			this.dgprSimplification = distance;
 		} catch (NumberFormatException e) {
 			String message = String.format("Paramètre invalide 'simplify' : '%1s' n'est pas un double", strValue);
 			throw new ParseException(message);
@@ -691,8 +699,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @return
 	 */
 	protected void parseSafeSimplificationOption(CommandLine commandLine) {
-		this.safeSimplification = commandLine.hasOption("safe-simplify");
-		if (this.safeSimplification) {
+		this.dgprSafeMode = commandLine.hasOption("safe-simplify");
+		if (this.dgprSafeMode) {
 			log.info(MARKER, "validator command running whith Safe Simplifier");
 		} else {
 			log.info(MARKER, "validator command running whith unsafe Simplifier");
