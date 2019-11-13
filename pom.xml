@@ -28,7 +28,7 @@
 		<geotools.version>21.2</geotools.version>
 		<log4j.version>2.12.0</log4j.version>
 		<jackson.version>2.9.10</jackson.version>
-		<jackson.databind.version>2.9.10</jackson.databind.version>
+		<jackson.databind.version>2.9.10.1</jackson.databind.version>
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 	</properties>
 
