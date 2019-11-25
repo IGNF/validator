@@ -657,13 +657,13 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @throws ParseException 
 	 */
 	protected void parseTopologicalToleranceOption(CommandLine commandLine) throws ParseException {
-		String toleranceString = commandLine.getOptionValue("tolerance", "0.0000001");
+		String toleranceString = commandLine.getOptionValue("dgpr-tolerance", "0.0000001");
 
 		try {
 			Double tolerance = Double.valueOf(toleranceString);
 			this.dgprTolerance = tolerance;	
 		} catch (NumberFormatException e) {
-			String message = String.format("Paramètre invalide 'tolerance' : '%1s' n'est pas un double", toleranceString);
+			String message = String.format("Paramètre invalide 'dgpr-tolerance' : '%1s' n'est pas un double", toleranceString);
 			throw new ParseException(message);
 		}
 	}
@@ -676,7 +676,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @throws ParseException 
 	 */
 	protected void parseDistanceSimplificationOption(CommandLine commandLine) throws ParseException {
-		String strValue = commandLine.getOptionValue("simplify", null);
+		String strValue = commandLine.getOptionValue("dgpr-simplify", null);
 		if (strValue == null) {
 			this.dgprSimplification = null;
 			log.info(MARKER, "validator command running whith no geometric simplification");
@@ -687,7 +687,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 			Double distance = Double.valueOf(strValue);
 			this.dgprSimplification = distance;
 		} catch (NumberFormatException e) {
-			String message = String.format("Paramètre invalide 'simplify' : '%1s' n'est pas un double", strValue);
+			String message = String.format("Paramètre invalide 'dgpr-simplify' : '%1s' n'est pas un double", strValue);
 			throw new ParseException(message);
 		}
 	}
@@ -699,7 +699,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 	 * @return
 	 */
 	protected void parseSafeSimplificationOption(CommandLine commandLine) {
-		this.dgprSafeMode = commandLine.hasOption("safe-simplify");
+		this.dgprSafeMode = commandLine.hasOption("dgpr-safe-simplify");
 		if (this.dgprSafeMode) {
 			log.info(MARKER, "validator command running whith Safe Simplifier");
 		} else {
