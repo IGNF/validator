@@ -161,18 +161,6 @@ public class DgprApplicationTest {
 			Assert.assertEquals("La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai.", error1.getMessage());
 
 			/*
-			 * Les ISO_HT couvrant SIN_4 ne couvrent pas l'intégralité des hauteurs d'eau (0-4) (pas d'erreur car un seul objet)
-             * Les ISO_HT couvrant SIN_5 ne couvrent pas l'intégralité des hauteurs d'eau (0-2 puis 3-HTMAX)
-             */
-			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).size());
-			/*
-			ValidatorError error10 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).get(0);
-			ValidatorError error11 = report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED).get(1);
-			Assert.assertEquals("Les ISO_HT couvrant SIN_5 ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ([0.00, 2.00] [3.00, null]).", error10.getMessage());
-			Assert.assertEquals("Les ISO_HT couvrant SIN_4 ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ([0.00, 4.00]).", error11.getMessage());
-			*/
-
-			/*
 			 * ZCH_9 et ZCH_10 (scénario Faible) ne constituent pas une partition de SIN_6
 			 */
 			Assert.assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
