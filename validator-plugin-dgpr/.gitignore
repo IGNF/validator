@@ -12,3 +12,4 @@
 /.apt_generated/
 
 /validator-plugin-*
+/.apt_generated_tests/

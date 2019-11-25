@@ -604,12 +604,6 @@
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
     },
     {
-        "name": "DGPR_ISO_HT_MIN_MAX_VALUE_UNCOVERED",
-        "level": "ERROR",
-        "message": "Les ISO_HT se rapportant {ID_SINOND} ne couvrent pas l'intégralité des hauteurs d'eau de manière unique ({LIST_VALUE_MIN_MAX}).",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.3.3 Classe d'objets <Zone_iso_classe_hauteur>"
-    },
-    {
         "name": "DGPR_UNMATCHED_SCENARIO",
         "level": "ERROR",
         "message": "L'objet {ID} de la classe {TABLE_NAME} a un scénario ({VALUE_SCENARIO}) différent de celui de la surface inondable {ID_S_INOND} ({EXPECTED_SCENARIO}) à laquelle il est rattaché.",

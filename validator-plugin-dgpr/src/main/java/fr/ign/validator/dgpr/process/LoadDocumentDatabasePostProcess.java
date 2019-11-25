@@ -8,7 +8,6 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
-import fr.ign.validator.dgpr.validation.database.MinMaxCoverageValidator;
 import fr.ign.validator.dgpr.validation.database.ScenarioValidator;
 import fr.ign.validator.dgpr.validation.database.RelationValidator;
 import fr.ign.validator.dgpr.database.ValidatableDatabase;
@@ -36,7 +35,7 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 	public void afterValidate(Context context, Document document) throws Exception {
 		log.info(MARKER,
 			"Load document database"
-		);
+		);	
 
 		ValidatableDatabase database = new ValidatableDatabase(context, document);
 
@@ -54,7 +53,6 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 		 * Custom database Validation
 		 */
 		database.addValidator(new ScenarioValidator());
-		database.addValidator(new MinMaxCoverageValidator());
 		database.addValidator(new InclusionValidator());
 		database.addValidator(new GraphTopologyValidator());
 		
