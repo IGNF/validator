@@ -74,6 +74,10 @@ public class XmlModelManager {
 		}
 	}
 
+	// TODO 
+	// TODO JsonModelManager
+	// TODO XmlModelManager -> LegacyModelManager
+
 	/**
 	 * Load FeatureType from XML file (types/[NAME].xml)
 	 * 
@@ -86,6 +90,7 @@ public class XmlModelManager {
 		throwIfFileNotFound(path);
 
 		try {
+			// TODO change here
 			FeatureType featureType = (FeatureType) unmarshaller.unmarshal(path);
 			/*
 			 * check typeName = fileName
