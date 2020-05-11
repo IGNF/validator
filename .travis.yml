@@ -8,7 +8,7 @@ matrix:
     dist: bionic
     env:
       - GDAL_VERSION: 2.4.*
-      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
+      - GDAL_PPA: "ppa:ubuntugis/ppa"
 
 notifications:
   email: false
