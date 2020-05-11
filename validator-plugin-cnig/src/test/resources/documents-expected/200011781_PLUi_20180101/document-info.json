@@ -1,326 +1,254 @@
 {
-  "name": "200011781_PLUi_20180101",
-  "documentModel": {
-    "name": "cnig_PLUi_2014"
+  "name" : "200011781_PLUi_20180101",
+  "documentModel" : {
+    "name" : "cnig_PLUi_2014"
   },
-  "files": [
-    {
-      "type": "table",
-      "modelName": "DOC_URBA",
-      "name": "DOC_URBA.dbf",
-      "path": "DOC_URBA.dbf",
-      "boundingBox": null,
-      "totalFeatures": 1
-    },
-    {
-      "type": "table",
-      "modelName": "DOC_URBA_COM",
-      "name": "DOC_URBA_COM.dbf",
-      "path": "DOC_URBA_COM.dbf",
-      "boundingBox": null,
-      "totalFeatures": 12
-    },
-    {
-      "type": "directory",
-      "modelName": "Donnees_geographiques",
-      "name": "Donnees_geographiques",
-      "path": "Donnees_geographiques"
-    },
-    {
-      "type": "table",
-      "modelName": "ZONE_URBA",
-      "name": "ZONE_URBA.dbf",
-      "path": "Donnees_geographiques/ZONE_URBA.dbf",
-      "boundingBox": [
-        2.9161400,
-        46.9345337,
-        3.0797908,
-        47.0850234
-      ],
-      "totalFeatures": 222
-    },
-    {
-      "type": "directory",
-      "modelName": "Pieces_ecrites",
-      "name": "Pieces_ecrites",
-      "path": "Pieces_ecrites"
-    },
-    {
-      "type": "directory",
-      "modelName": "0_Procedure",
-      "name": "0_Procedure",
-      "path": "Pieces_ecrites/0_Procedure"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PROCEDURE",
-      "name": "200011781_procedure_20180101.pdf",
-      "path": "Pieces_ecrites/0_Procedure/200011781_procedure_20180101.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "1_Rapport_de_presentation",
-      "name": "1_Rapport_de_presentation",
-      "path": "Pieces_ecrites/1_Rapport_de_presentation"
-    },
-    {
-      "type": "pdf",
-      "modelName": "RAPPORT",
-      "name": "200011781_rapport_20180101.pdf",
-      "path": "Pieces_ecrites/1_Rapport_de_presentation/200011781_rapport_20180101.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "2_PADD",
-      "name": "2_PADD",
-      "path": "Pieces_ecrites/2_PADD"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PADD",
-      "name": "200011781_padd_20180101.pdf",
-      "path": "Pieces_ecrites/2_PADD/200011781_padd_20180101.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "3_Reglement",
-      "name": "3_Reglement",
-      "path": "Pieces_ecrites/3_Reglement"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PRESCRIPTION",
-      "name": "200011781_prescription_surf_01_20180101.pdf",
-      "path": "Pieces_ecrites/3_Reglement/200011781_prescription_surf_01_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PRESCRIPTION",
-      "name": "200011781_prescription_surf_05_20180101.pdf",
-      "path": "Pieces_ecrites/3_Reglement/200011781_prescription_surf_05_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "REGLEMENT",
-      "name": "200011781_reglement_20180101.pdf",
-      "path": "Pieces_ecrites/3_Reglement/200011781_reglement_20180101.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "4_Annexes",
-      "name": "4_Annexes",
-      "path": "Pieces_ecrites/4_Annexes"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "200011781_info_lin_19_aep_20180101.pdf",
-      "path": "Pieces_ecrites/4_Annexes/200011781_info_lin_19_aep_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "200011781_info_lin_19_eu_20180101.pdf",
-      "path": "Pieces_ecrites/4_Annexes/200011781_info_lin_19_eu_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "200011781_info_surf_04_20180101.pdf",
-      "path": "Pieces_ecrites/4_Annexes/200011781_info_surf_04_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "200011781_liste_SUP_20180101.pdf",
-      "path": "Pieces_ecrites/4_Annexes/200011781_liste_SUP_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "200011781_plan_SUP_20180101.pdf",
-      "path": "Pieces_ecrites/4_Annexes/200011781_plan_SUP_20180101.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "5_Orientations_amenagement",
-      "name": "5_Orientations_amenagement",
-      "path": "Pieces_ecrites/5_Orientations_amenagement"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ORIENTATIONS_AMENAGEMENT",
-      "name": "200011781_orientations_amenagement_1_20180101.pdf",
-      "path": "Pieces_ecrites/5_Orientations_amenagement/200011781_orientations_amenagement_1_20180101.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ORIENTATIONS_AMENAGEMENT",
-      "name": "200011781_orientations_amenagement_2_20180101.pdf",
-      "path": "Pieces_ecrites/5_Orientations_amenagement/200011781_orientations_amenagement_2_20180101.pdf"
-    },
-    {
-      "type": "metadata",
-      "modelName": "METADONNEES",
-      "name": "fr-200011781-PLUi20180101.xml",
-      "path": "fr-200011781-PLUi20180101.xml"
-    }
-  ],
-  "documentExtent": [
-    2.9161400,
-    46.9345337,
-    3.0797908,
-    47.0850234
-  ],
-  "tags": {
-    "typeref": "01"
+  "files" : [ {
+    "type" : "table",
+    "modelName" : "DOC_URBA",
+    "name" : "DOC_URBA.dbf",
+    "path" : "DOC_URBA.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "DOC_URBA_COM",
+    "name" : "DOC_URBA_COM.dbf",
+    "path" : "DOC_URBA_COM.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 12
+  }, {
+    "type" : "directory",
+    "modelName" : "Donnees_geographiques",
+    "name" : "Donnees_geographiques",
+    "path" : "Donnees_geographiques"
+  }, {
+    "type" : "table",
+    "modelName" : "ZONE_URBA",
+    "name" : "ZONE_URBA.dbf",
+    "path" : "Donnees_geographiques/ZONE_URBA.dbf",
+    "boundingBox" : [ 2.9161400, 46.9345337, 3.0797908, 47.0850234 ],
+    "totalFeatures" : 222
+  }, {
+    "type" : "directory",
+    "modelName" : "Pieces_ecrites",
+    "name" : "Pieces_ecrites",
+    "path" : "Pieces_ecrites"
+  }, {
+    "type" : "directory",
+    "modelName" : "0_Procedure",
+    "name" : "0_Procedure",
+    "path" : "Pieces_ecrites/0_Procedure"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PROCEDURE",
+    "name" : "200011781_procedure_20180101.pdf",
+    "path" : "Pieces_ecrites/0_Procedure/200011781_procedure_20180101.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "1_Rapport_de_presentation",
+    "name" : "1_Rapport_de_presentation",
+    "path" : "Pieces_ecrites/1_Rapport_de_presentation"
+  }, {
+    "type" : "pdf",
+    "modelName" : "RAPPORT",
+    "name" : "200011781_rapport_20180101.pdf",
+    "path" : "Pieces_ecrites/1_Rapport_de_presentation/200011781_rapport_20180101.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "2_PADD",
+    "name" : "2_PADD",
+    "path" : "Pieces_ecrites/2_PADD"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PADD",
+    "name" : "200011781_padd_20180101.pdf",
+    "path" : "Pieces_ecrites/2_PADD/200011781_padd_20180101.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "3_Reglement",
+    "name" : "3_Reglement",
+    "path" : "Pieces_ecrites/3_Reglement"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PRESCRIPTION",
+    "name" : "200011781_prescription_surf_01_20180101.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/200011781_prescription_surf_01_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PRESCRIPTION",
+    "name" : "200011781_prescription_surf_05_20180101.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/200011781_prescription_surf_05_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "REGLEMENT",
+    "name" : "200011781_reglement_20180101.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/200011781_reglement_20180101.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "4_Annexes",
+    "name" : "4_Annexes",
+    "path" : "Pieces_ecrites/4_Annexes"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "200011781_info_lin_19_aep_20180101.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/200011781_info_lin_19_aep_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "200011781_info_lin_19_eu_20180101.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/200011781_info_lin_19_eu_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "200011781_info_surf_04_20180101.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/200011781_info_surf_04_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "200011781_liste_SUP_20180101.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/200011781_liste_SUP_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "200011781_plan_SUP_20180101.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/200011781_plan_SUP_20180101.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "5_Orientations_amenagement",
+    "name" : "5_Orientations_amenagement",
+    "path" : "Pieces_ecrites/5_Orientations_amenagement"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ORIENTATIONS_AMENAGEMENT",
+    "name" : "200011781_orientations_amenagement_1_20180101.pdf",
+    "path" : "Pieces_ecrites/5_Orientations_amenagement/200011781_orientations_amenagement_1_20180101.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ORIENTATIONS_AMENAGEMENT",
+    "name" : "200011781_orientations_amenagement_2_20180101.pdf",
+    "path" : "Pieces_ecrites/5_Orientations_amenagement/200011781_orientations_amenagement_2_20180101.pdf"
+  }, {
+    "type" : "metadata",
+    "modelName" : "METADONNEES",
+    "name" : "fr-200011781-PLUi20180101.xml",
+    "path" : "fr-200011781-PLUi20180101.xml"
+  } ],
+  "documentExtent" : [ 2.9161400, 46.9345337, 3.0797908, 47.0850234 ],
+  "tags" : {
+    "typeref" : "01"
   },
-  "metadata": {
-    "fileIdentifier": "fr-200011781-PLUi20180101",
-    "title": "Plan Local d'Urbanisme Intercommunal de la commune de PLUI PORTES DU BERRY ENTRE LOIRE ET VAL D'AUBOIS",
-    "abstract": "Plan Local d'Urbanisme Intercommunal (PLUi) numérisé. Ce lot informe du droit à bâtir sur la commune de PLUI PORTES DU BERRY ENTRE LOIRE ET VAL D'AUBOIS. Ce PLUi est numérisé conformément aux prescriptions nationales du CNIG.",
-    "type": "dataset",
-    "locators": [
-      {
-        "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
-        "protocol": "OGC:WMS",
-        "name": "Lien vers le service WMS du Géoportail de l'urbanisme"
-      },
-      {
-        "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
-        "protocol": "OGC:WFS",
-        "name": "Lien vers le service WFS du Géoportail de l'urbanisme"
-      },
-      {
-        "url": "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
-        "protocol": "ATOM",
-        "name": "Lien vers le service ATOM du Géoportail de l'urbanisme"
-      }
-    ],
-    "identifiers": [
-      "https://www.geoportail-urbanisme.gouv.fr/document/200011781_PLUi_20180101"
-    ],
-    "language": "fre",
-    "topicCategory": "planningCadastre",
-    "keywords": [
-      {
-        "keywords": [
-          "Usage des sols"
-        ],
-        "thesaurusName": "GEMET - INSPIRE themes, version 1.0",
-        "thesaurusDate": "2008-06-01"
-      },
-      {
-        "keywords": [
-          "Document d'urbanisme"
-        ],
-        "thesaurusName": "GEMET - Concepts, version 2.4",
-        "thesaurusDate": "2010-01-13"
-      },
-      {
-        "keywords": [
-          "planification",
-          "PLUi",
-          "Plan local d'urbanisme intercommunal",
-          "données ouvertes"
-        ],
-        "thesaurusDate": null
-      }
-    ],
-    "referenceSystemIdentifier": {
-      "code": "EPSG:2154",
-      "uri": "http://www.opengis.net/def/crs/EPSG/0/2154"
+  "metadata" : {
+    "fileIdentifier" : "fr-200011781-PLUi20180101",
+    "title" : "Plan Local d'Urbanisme Intercommunal de la commune de PLUI PORTES DU BERRY ENTRE LOIRE ET VAL D'AUBOIS",
+    "abstract" : "Plan Local d'Urbanisme Intercommunal (PLUi) numérisé. Ce lot informe du droit à bâtir sur la commune de PLUI PORTES DU BERRY ENTRE LOIRE ET VAL D'AUBOIS. Ce PLUi est numérisé conformément aux prescriptions nationales du CNIG.",
+    "type" : "dataset",
+    "locators" : [ {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
+      "protocol" : "OGC:WMS",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
+      "protocol" : "OGC:WFS",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
+      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
+      "protocol" : "ATOM",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    } ],
+    "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/200011781_PLUi_20180101" ],
+    "language" : "fre",
+    "topicCategory" : "planningCadastre",
+    "keywords" : [ {
+      "keywords" : [ "Usage des sols" ],
+      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+      "thesaurusDate" : "2008-06-01"
+    }, {
+      "keywords" : [ "Document d'urbanisme" ],
+      "thesaurusName" : "GEMET - Concepts, version 2.4",
+      "thesaurusDate" : "2010-01-13"
+    }, {
+      "keywords" : [ "planification", "PLUi", "Plan local d'urbanisme intercommunal", "données ouvertes" ],
+      "thesaurusDate" : null
+    } ],
+    "referenceSystemIdentifier" : {
+      "code" : "EPSG:2154",
+      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
     },
-    "dateOfPublication": null,
-    "dateOfLastRevision": "2018-01-01",
-    "dateOfCreation": null,
-    "characterSet": "utf8",
-    "spatialRepresentationType": "vector",
-    "lineage": "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 02/10/2014. Ce lot de données produit en 2018 a été numérisé à partir de la BD Parcellaire.",
-    "spatialResolutions": [
-      {
-        "denominator": "5000"
-      }
-    ],
-    "specifications": [
-      {
-        "title": "CNIG PLUi v2014",
-        "date": "2014-10-02",
-        "dateType": "publication",
-        "degree": "true"
-      },
-      {
-        "title": "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
-        "date": "2014-04-07",
-        "dateType": "publication",
-        "degree": "true"
-      },
-      {
-        "title": "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
-        "date": "2010-12-08",
-        "dateType": "publication",
-        "degree": "true"
-      }
-    ],
-    "contact": {
-      "organisationName": "Communauté de communes des Portes du Berry entre Loire et Val d'Aubois",
-      "electronicMailAddress": "cdcportesduberry@orange.fr",
-      "role": "owner",
-      "phone": null,
-      "deliveryPoint": null,
-      "city": null,
-      "postalCode": null,
-      "country": null,
-      "onlineResourceUrl": null,
-      "hoursOfService": null
+    "dateOfPublication" : null,
+    "dateOfLastRevision" : "2018-01-01",
+    "dateOfCreation" : null,
+    "characterSet" : "utf8",
+    "spatialRepresentationType" : "vector",
+    "lineage" : "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 02/10/2014. Ce lot de données produit en 2018 a été numérisé à partir de la BD Parcellaire.",
+    "spatialResolutions" : [ {
+      "denominator" : "5000"
+    } ],
+    "specifications" : [ {
+      "title" : "CNIG PLUi v2014",
+      "date" : "2014-10-02",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
+      "date" : "2014-04-07",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
+      "date" : "2010-12-08",
+      "dateType" : "publication",
+      "degree" : "true"
+    } ],
+    "contact" : {
+      "organisationName" : "Communauté de communes des Portes du Berry entre Loire et Val d'Aubois",
+      "electronicMailAddress" : "cdcportesduberry@orange.fr",
+      "role" : "owner",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
     },
-    "metadataContact": {
-      "organisationName": "Communauté de communes des Portes du Berry entre Loire et Val d'Aubois",
-      "electronicMailAddress": "cdcportesduberry@orange.fr",
-      "role": "pointOfContact",
-      "phone": null,
-      "deliveryPoint": null,
-      "city": null,
-      "postalCode": null,
-      "country": null,
-      "onlineResourceUrl": null,
-      "hoursOfService": null
+    "metadataContact" : {
+      "organisationName" : "Communauté de communes des Portes du Berry entre Loire et Val d'Aubois",
+      "electronicMailAddress" : "cdcportesduberry@orange.fr",
+      "role" : "pointOfContact",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
     },
-    "metadataDate": "2018-11-23T01:37:25+01:00",
-    "metadataLanguage": "fre",
-    "extents": [
-      {
-        "boundingBox": [
-          2.82331587498848,
-          46.86760164062619,
-          3.07938812727365,
-          47.0849547544002
-        ]
-      }
-    ],
-    "constraints": [
-      {
-        "type": "MD_LegalConstraints",
-        "useLimitations": [
-          "Aucune condition ne s'applique",
-          "Licence Ouverte 2.0"
-        ],
-        "accessConstraints": [
-          "otherRestrictions"
-        ],
-        "useConstraints": [
-          "license"
-        ],
-        "otherConstraints": [
-          "Pas de restriction d’accès public"
-        ]
-      }
-    ],
-    "distributionFormats": [
-      {
-        "name": "SHP",
-        "version": "1.0"
-      }
-    ]
+    "metadataDate" : "2018-11-23T01:37:25+01:00",
+    "metadataLanguage" : "fre",
+    "extents" : [ {
+      "boundingBox" : [ 2.82331587498848, 46.86760164062619, 3.07938812727365, 47.0849547544002 ]
+    } ],
+    "constraints" : [ {
+      "type" : "MD_LegalConstraints",
+      "useLimitations" : [ "Aucune condition ne s'applique", "Licence Ouverte 2.0" ],
+      "accessConstraints" : [ "otherRestrictions" ],
+      "useConstraints" : [ "license" ],
+      "otherConstraints" : [ "Pas de restriction d’accès public" ]
+    } ],
+    "distributionFormats" : [ {
+      "name" : "SHP",
+      "version" : "1.0"
+    } ]
   }
 }

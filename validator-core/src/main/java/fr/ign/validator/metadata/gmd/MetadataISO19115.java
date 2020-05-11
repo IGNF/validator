@@ -146,12 +146,36 @@ public class MetadataISO19115 implements Metadata {
 		List<Element> onlineResourceElements = findElements(path,metadataElement);
 		for (Element onlineResourceElement : onlineResourceElements) {
 			OnlineResource onlineResource = new OnlineResource();
-			onlineResource.setName(findValue("./gmd:name/*", onlineResourceElement));
-			onlineResource.setProtocol(findValue("./gmd:protocol/*", onlineResourceElement));
-			onlineResource.setUrl(findValue("./gmd:linkage/gmd:URL", onlineResourceElement));
+			onlineResource.setUrl(findValue(
+				"./gmd:linkage/gmd:URL",
+				onlineResourceElement
+			));
+			onlineResource.setName(findValue(
+				"./gmd:name/*",
+				onlineResourceElement
+			));
+			// protocol
+			onlineResource.setProtocol(findValue(
+				"./gmd:protocol/*",
+				onlineResourceElement
+			));
+			onlineResource.setProtocolUrl(findValue(
+				"./gmd:protocol/*/@xlink:href",
+				onlineResourceElement
+			));
+			// applicationProfile
+			onlineResource.setApplicationProfile(findValue(
+				"./gmd:applicationProfile/*",
+				onlineResourceElement
+			));
+			onlineResource.setApplicationProfileUrl(findValue(
+				"./gmd:applicationProfile/*/@xlink:href",
+				onlineResourceElement
+			));
+
 			result.add(onlineResource);
 		}
-		
+
 		return result;
 	}
 
@@ -512,10 +536,10 @@ public class MetadataISO19115 implements Metadata {
 	public List<Specification> getSpecifications(){
 		// dataQualityInfo/*/report/*/result/*/specification
 		// dataQualityInfo/*/report/*/result/*/pass
-		
+
 		String path = "./gmd:dataQualityInfo/*/gmd:report/*/gmd:result/*/gmd:specification";
 		List<Element> specificationElements = findElements(path, metadataElement);
-		
+
 		List<Specification> result = new ArrayList<>();
 		for (Element specificationElement : specificationElements) {
 			Specification specification = new Specification();
@@ -535,8 +559,7 @@ public class MetadataISO19115 implements Metadata {
 		}
 		return result;
 	}
-	
-	
+
 
 	/**
 	 * INSPIRE GUIDELINE - 2.10 Responsible organisation (p55)
@@ -549,7 +572,7 @@ public class MetadataISO19115 implements Metadata {
 		if ( contactElement == null ){
 			return null;
 		}
-		return parseResponsibleParty(contactElement);		
+		return parseResponsibleParty(contactElement);
 	}
 
 
@@ -565,7 +588,6 @@ public class MetadataISO19115 implements Metadata {
 		return parseResponsibleParty(contactElement);
 	}
 
-	
 
 	@Override
 	public Date getMetadataDate(){
@@ -576,7 +598,7 @@ public class MetadataISO19115 implements Metadata {
 		}
 		return new Date(value);
 	}
-	
+
 
 	@Override
 	public LanguageCode getMetadataLanguage(){
@@ -597,7 +619,7 @@ public class MetadataISO19115 implements Metadata {
 	 */
 	private XPath createXPath(String path) throws JDOMException {
 		XPath xpath = XPath.newInstance(path);
-		xpath.addNamespace("gmd", "http://www.isotc211.org/2005/gmd"); 
+		xpath.addNamespace("gmd", "http://www.isotc211.org/2005/gmd");
 		xpath.addNamespace("gco", "http://www.isotc211.org/2005/gco");
 		xpath.addNamespace("gmx", "http://www.isotc211.org/2005/gmx");
 		xpath.addNamespace("xlink", "http://www.w3.org/1999/xlink");
@@ -620,10 +642,10 @@ public class MetadataISO19115 implements Metadata {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/**
 	 * Finds a text value according with alternative paths
-	 * 
+	 *
 	 * @param paths
 	 * @param context
 	 * @return
@@ -638,10 +660,10 @@ public class MetadataISO19115 implements Metadata {
 		return null;
 	}
 
-	
+
 	/**
 	 * Finds text values for a given path (selectSingleNodes converted to strings)
-	 * 
+	 *
 	 * @param path
 	 * @param context
 	 * @return
@@ -663,11 +685,10 @@ public class MetadataISO19115 implements Metadata {
 
 
 	/**
-	 * 
 	 * Extracts text value from XML node
-	 * 
+	 *
 	 * @see {@link XPath.selectSingleNode} for types
-	 * 
+	 *
 	 * @param node
 	 * @return
 	 */
@@ -687,11 +708,10 @@ public class MetadataISO19115 implements Metadata {
 			throw new RuntimeException("unexpected item type : "+node.getClass().getName());
 		}
 	}
-	
-	
+
 	/**
 	 * Finds a single node
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -703,10 +723,10 @@ public class MetadataISO19115 implements Metadata {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/**
 	 * Finds multiple nodes
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -739,7 +759,7 @@ public class MetadataISO19115 implements Metadata {
 		contact.setPhone(
 			findValue("./*/gmd:contactInfo/*/gmd:phone/*/gmd:voice/*",contactElement)
 		);
-		
+
 		contact.setDeliveryPoint(
 			findValue("./*/gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint/*",contactElement)
 		);
@@ -753,16 +773,16 @@ public class MetadataISO19115 implements Metadata {
 			findValue("./*/gmd:contactInfo/*/gmd:address/*/gmd:country/*",contactElement)
 		);
 
-	
+
 		contact.setHoursOfService(
 			findValue("./*/gmd:contactInfo/*/gmd:hoursOfService/*",contactElement)
 		);
-		
+
 		contact.setOnlineResourceUrl(
 			findValue("./*/gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*",contactElement)
 		);
 
 		return contact;
 	}
-	
+
 }

@@ -1,439 +1,329 @@
 {
-  "name": "30014_PLU_20171013",
-  "documentModel": {
-    "name": "cnig_PLU_2017"
+  "name" : "30014_PLU_20171013",
+  "documentModel" : {
+    "name" : "cnig_PLU_2017"
   },
-  "files": [
-    {
-      "type": "table",
-      "modelName": "DOC_URBA",
-      "name": "30014_DOC_URBA_20171013.DBF",
-      "path": "30014_DOC_URBA_20171013.DBF",
-      "boundingBox": null,
-      "totalFeatures": 1
-    },
-    {
-      "type": "table",
-      "modelName": "DOC_URBA_COM",
-      "name": "30014_DOC_URBA_COM_20171013.DBF",
-      "path": "30014_DOC_URBA_COM_20171013.DBF",
-      "boundingBox": null,
-      "totalFeatures": 1
-    },
-    {
-      "type": "directory",
-      "modelName": "Donnees_geographiques",
-      "name": "Donnees_geographiques",
-      "path": "Donnees_geographiques"
-    },
-    {
-      "type": "table",
-      "modelName": "INFO_PCT",
-      "name": "30014_INFO_PCT_20171013.dbf",
-      "path": "Donnees_geographiques/30014_INFO_PCT_20171013.dbf",
-      "boundingBox": [
-        4.3459720,
-        43.9910599,
-        4.3846672,
-        44.0039905
-      ],
-      "totalFeatures": 6
-    },
-    {
-      "type": "table",
-      "modelName": "INFO_SURF",
-      "name": "30014_INFO_SURF_20171013.dbf",
-      "path": "Donnees_geographiques/30014_INFO_SURF_20171013.dbf",
-      "boundingBox": [
-        4.3387489,
-        43.9760147,
-        4.3984780,
-        44.0207913
-      ],
-      "totalFeatures": 18
-    },
-    {
-      "type": "table",
-      "modelName": "PRESCRIPTION_LIN",
-      "name": "30014_PRESCRIPTION_LIN_20171013.dbf",
-      "path": "Donnees_geographiques/30014_PRESCRIPTION_LIN_20171013.dbf",
-      "boundingBox": [
-        4.3409674,
-        43.9762132,
-        4.3950963,
-        44.0083347
-      ],
-      "totalFeatures": 15
-    },
-    {
-      "type": "table",
-      "modelName": "PRESCRIPTION_PCT",
-      "name": "30014_PRESCRIPTION_PCT_20171013.dbf",
-      "path": "Donnees_geographiques/30014_PRESCRIPTION_PCT_20171013.dbf",
-      "boundingBox": [
-        4.3478964,
-        43.9818576,
-        4.3893169,
-        44.0163171
-      ],
-      "totalFeatures": 93
-    },
-    {
-      "type": "table",
-      "modelName": "PRESCRIPTION_SURF",
-      "name": "30014_PRESCRIPTION_SURF_20171013.dbf",
-      "path": "Donnees_geographiques/30014_PRESCRIPTION_SURF_20171013.dbf",
-      "boundingBox": [
-        4.3415833,
-        43.9783425,
-        4.3986027,
-        44.0151800
-      ],
-      "totalFeatures": 77
-    },
-    {
-      "type": "table",
-      "modelName": "ZONE_URBA",
-      "name": "30014_ZONE_URBA_20171013.dbf",
-      "path": "Donnees_geographiques/30014_ZONE_URBA_20171013.dbf",
-      "boundingBox": [
-        4.3387357,
-        43.9760147,
-        4.3984780,
-        44.0207913
-      ],
-      "totalFeatures": 90
-    },
-    {
-      "type": "directory",
-      "modelName": "Pieces_ecrites",
-      "name": "Pieces_ecrites",
-      "path": "Pieces_ecrites"
-    },
-    {
-      "type": "directory",
-      "modelName": "0_Procedure",
-      "name": "0_Procedure",
-      "path": "Pieces_ecrites/0_Procedure"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PROCEDURE",
-      "name": "30014_procedure_20171013.pdf",
-      "path": "Pieces_ecrites/0_Procedure/30014_procedure_20171013.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "1_Rapport_de_presentation",
-      "name": "1_Rapport_de_presentation",
-      "path": "Pieces_ecrites/1_Rapport_de_presentation"
-    },
-    {
-      "type": "pdf",
-      "modelName": "RAPPORT",
-      "name": "30014_rapport_20171013.pdf",
-      "path": "Pieces_ecrites/1_Rapport_de_presentation/30014_rapport_20171013.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "2_PADD",
-      "name": "2_PADD",
-      "path": "Pieces_ecrites/2_PADD"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PADD",
-      "name": "30014_padd_20141013.pdf",
-      "path": "Pieces_ecrites/2_PADD/30014_padd_20141013.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "3_Reglement",
-      "name": "3_Reglement",
-      "path": "Pieces_ecrites/3_Reglement"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PRESCRIPTION",
-      "name": "30014_prescription_surf_01_20171013.pdf",
-      "path": "Pieces_ecrites/3_Reglement/30014_prescription_surf_01_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "PRESCRIPTION",
-      "name": "30014_prescription_surf_05_20171013.pdf",
-      "path": "Pieces_ecrites/3_Reglement/30014_prescription_surf_05_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "REGLEMENT",
-      "name": "30014_reglement_20171013.pdf",
-      "path": "Pieces_ecrites/3_Reglement/30014_reglement_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "REGLEMENT_GRAPHIQUE",
-      "name": "30014_reglement_graphique_20171013.pdf",
-      "path": "Pieces_ecrites/3_Reglement/30014_reglement_graphique_20171013.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "4_Annexes",
-      "name": "4_Annexes",
-      "path": "Pieces_ecrites/4_Annexes"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_lin_19_eu_01_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_lin_19_eu_01_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_lin_19_eu_02_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_lin_19_eu_02_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_lin_99_00_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_lin_99_00_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_pct_99_00_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_pct_99_00_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_surf_04_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_surf_04_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_surf_99_00_1_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_1_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_surf_99_00_2_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_2_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_surf_99_00_3_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_3_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_surf_99_00_4_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_4_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_surf_99_00_5_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_5_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_info_text_19_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_info_text_19_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_liste_sup_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_liste_sup_20171013.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ANNEXE",
-      "name": "30014_plan_sup_20171013.pdf",
-      "path": "Pieces_ecrites/4_Annexes/30014_plan_sup_20171013.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "5_Orientations_amenagement",
-      "name": "5_Orientations_amenagement",
-      "path": "Pieces_ecrites/5_Orientations_amenagement"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ORIENTATIONS_AMENAGEMENT",
-      "name": "30014_orientations_amenagement_20171013.pdf",
-      "path": "Pieces_ecrites/5_Orientations_amenagement/30014_orientations_amenagement_20171013.pdf"
-    },
-    {
-      "type": "metadata",
-      "modelName": "METADONNEES",
-      "name": "fr-000030014-plu20171013.xml",
-      "path": "fr-000030014-plu20171013.xml"
-    }
-  ],
-  "documentExtent": [
-    4.3387357,
-    43.9760147,
-    4.3986027,
-    44.0207913
-  ],
-  "tags": {
-    "typeref": "01"
+  "files" : [ {
+    "type" : "table",
+    "modelName" : "DOC_URBA",
+    "name" : "30014_DOC_URBA_20171013.DBF",
+    "path" : "30014_DOC_URBA_20171013.DBF",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "DOC_URBA_COM",
+    "name" : "30014_DOC_URBA_COM_20171013.DBF",
+    "path" : "30014_DOC_URBA_COM_20171013.DBF",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "directory",
+    "modelName" : "Donnees_geographiques",
+    "name" : "Donnees_geographiques",
+    "path" : "Donnees_geographiques"
+  }, {
+    "type" : "table",
+    "modelName" : "INFO_PCT",
+    "name" : "30014_INFO_PCT_20171013.dbf",
+    "path" : "Donnees_geographiques/30014_INFO_PCT_20171013.dbf",
+    "boundingBox" : [ 4.3459720, 43.9910599, 4.3846672, 44.0039905 ],
+    "totalFeatures" : 6
+  }, {
+    "type" : "table",
+    "modelName" : "INFO_SURF",
+    "name" : "30014_INFO_SURF_20171013.dbf",
+    "path" : "Donnees_geographiques/30014_INFO_SURF_20171013.dbf",
+    "boundingBox" : [ 4.3387489, 43.9760147, 4.3984780, 44.0207913 ],
+    "totalFeatures" : 18
+  }, {
+    "type" : "table",
+    "modelName" : "PRESCRIPTION_LIN",
+    "name" : "30014_PRESCRIPTION_LIN_20171013.dbf",
+    "path" : "Donnees_geographiques/30014_PRESCRIPTION_LIN_20171013.dbf",
+    "boundingBox" : [ 4.3409674, 43.9762132, 4.3950963, 44.0083347 ],
+    "totalFeatures" : 15
+  }, {
+    "type" : "table",
+    "modelName" : "PRESCRIPTION_PCT",
+    "name" : "30014_PRESCRIPTION_PCT_20171013.dbf",
+    "path" : "Donnees_geographiques/30014_PRESCRIPTION_PCT_20171013.dbf",
+    "boundingBox" : [ 4.3478964, 43.9818576, 4.3893169, 44.0163171 ],
+    "totalFeatures" : 93
+  }, {
+    "type" : "table",
+    "modelName" : "PRESCRIPTION_SURF",
+    "name" : "30014_PRESCRIPTION_SURF_20171013.dbf",
+    "path" : "Donnees_geographiques/30014_PRESCRIPTION_SURF_20171013.dbf",
+    "boundingBox" : [ 4.3415833, 43.9783425, 4.3986027, 44.0151800 ],
+    "totalFeatures" : 77
+  }, {
+    "type" : "table",
+    "modelName" : "ZONE_URBA",
+    "name" : "30014_ZONE_URBA_20171013.dbf",
+    "path" : "Donnees_geographiques/30014_ZONE_URBA_20171013.dbf",
+    "boundingBox" : [ 4.3387357, 43.9760147, 4.3984780, 44.0207913 ],
+    "totalFeatures" : 90
+  }, {
+    "type" : "directory",
+    "modelName" : "Pieces_ecrites",
+    "name" : "Pieces_ecrites",
+    "path" : "Pieces_ecrites"
+  }, {
+    "type" : "directory",
+    "modelName" : "0_Procedure",
+    "name" : "0_Procedure",
+    "path" : "Pieces_ecrites/0_Procedure"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PROCEDURE",
+    "name" : "30014_procedure_20171013.pdf",
+    "path" : "Pieces_ecrites/0_Procedure/30014_procedure_20171013.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "1_Rapport_de_presentation",
+    "name" : "1_Rapport_de_presentation",
+    "path" : "Pieces_ecrites/1_Rapport_de_presentation"
+  }, {
+    "type" : "pdf",
+    "modelName" : "RAPPORT",
+    "name" : "30014_rapport_20171013.pdf",
+    "path" : "Pieces_ecrites/1_Rapport_de_presentation/30014_rapport_20171013.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "2_PADD",
+    "name" : "2_PADD",
+    "path" : "Pieces_ecrites/2_PADD"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PADD",
+    "name" : "30014_padd_20141013.pdf",
+    "path" : "Pieces_ecrites/2_PADD/30014_padd_20141013.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "3_Reglement",
+    "name" : "3_Reglement",
+    "path" : "Pieces_ecrites/3_Reglement"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PRESCRIPTION",
+    "name" : "30014_prescription_surf_01_20171013.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/30014_prescription_surf_01_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PRESCRIPTION",
+    "name" : "30014_prescription_surf_05_20171013.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/30014_prescription_surf_05_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "REGLEMENT",
+    "name" : "30014_reglement_20171013.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/30014_reglement_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "REGLEMENT_GRAPHIQUE",
+    "name" : "30014_reglement_graphique_20171013.pdf",
+    "path" : "Pieces_ecrites/3_Reglement/30014_reglement_graphique_20171013.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "4_Annexes",
+    "name" : "4_Annexes",
+    "path" : "Pieces_ecrites/4_Annexes"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_lin_19_eu_01_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_lin_19_eu_01_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_lin_19_eu_02_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_lin_19_eu_02_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_lin_99_00_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_lin_99_00_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_pct_99_00_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_pct_99_00_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_surf_04_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_surf_04_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_surf_99_00_1_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_1_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_surf_99_00_2_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_2_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_surf_99_00_3_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_3_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_surf_99_00_4_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_4_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_surf_99_00_5_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_surf_99_00_5_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_info_text_19_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_info_text_19_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_liste_sup_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_liste_sup_20171013.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ANNEXE",
+    "name" : "30014_plan_sup_20171013.pdf",
+    "path" : "Pieces_ecrites/4_Annexes/30014_plan_sup_20171013.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "5_Orientations_amenagement",
+    "name" : "5_Orientations_amenagement",
+    "path" : "Pieces_ecrites/5_Orientations_amenagement"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ORIENTATIONS_AMENAGEMENT",
+    "name" : "30014_orientations_amenagement_20171013.pdf",
+    "path" : "Pieces_ecrites/5_Orientations_amenagement/30014_orientations_amenagement_20171013.pdf"
+  }, {
+    "type" : "metadata",
+    "modelName" : "METADONNEES",
+    "name" : "fr-000030014-plu20171013.xml",
+    "path" : "fr-000030014-plu20171013.xml"
+  } ],
+  "documentExtent" : [ 4.3387357, 43.9760147, 4.3986027, 44.0207913 ],
+  "tags" : {
+    "typeref" : "01"
   },
-  "metadata": {
-    "fileIdentifier": "fr-000030014-PLU20171013",
-    "title": "Plan Local d'Urbanisme de la commune de ARPAILLARGUES-ET-AUREILLAC",
-    "abstract": "Plan Local d'Urbanisme (PLU) numérisé. Ce lot informe du droit à bâtir sur la commune de ARPAILLARGUES-ET-AUREILLAC. Ce PLU est numérisé conformément aux prescriptions nationales du CNIG.",
-    "type": "dataset",
-    "locators": [
-      {
-        "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
-        "protocol": "OGC:WMS",
-        "name": "Lien vers le service WMS du Géoportail de l'urbanisme"
-      },
-      {
-        "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
-        "protocol": "OGC:WFS",
-        "name": "Lien vers le service WFS du Géoportail de l'urbanisme"
-      },
-      {
-        "url": "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
-        "protocol": "ATOM",
-        "name": "Lien vers le service ATOM du Géoportail de l'urbanisme"
-      }
-    ],
-    "identifiers": [
-      "https://www.geoportail-urbanisme.gouv.fr/document/30014_PLU_20171013"
-    ],
-    "language": "fre",
-    "topicCategory": "planningCadastre",
-    "keywords": [
-      {
-        "keywords": [
-          "Usage des sols"
-        ],
-        "thesaurusName": "GEMET - INSPIRE themes, version 1.0",
-        "thesaurusDate": "2008-06-01"
-      },
-      {
-        "keywords": [
-          "Document d'urbanisme"
-        ],
-        "thesaurusName": "GEMET - Concepts, version 2.4",
-        "thesaurusDate": "2010-01-13"
-      },
-      {
-        "keywords": [
-          "planification",
-          "PLU",
-          "Plan local d'urbanisme",
-          "données ouvertes"
-        ],
-        "thesaurusDate": null
-      }
-    ],
-    "referenceSystemIdentifier": {
-      "code": "EPSG:2154",
-      "uri": "http://www.opengis.net/def/crs/EPSG/0/2154"
+  "metadata" : {
+    "fileIdentifier" : "fr-000030014-PLU20171013",
+    "title" : "Plan Local d'Urbanisme de la commune de ARPAILLARGUES-ET-AUREILLAC",
+    "abstract" : "Plan Local d'Urbanisme (PLU) numérisé. Ce lot informe du droit à bâtir sur la commune de ARPAILLARGUES-ET-AUREILLAC. Ce PLU est numérisé conformément aux prescriptions nationales du CNIG.",
+    "type" : "dataset",
+    "locators" : [ {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
+      "protocol" : "OGC:WMS",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
+      "protocol" : "OGC:WFS",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
+      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
+      "protocol" : "ATOM",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    } ],
+    "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/30014_PLU_20171013" ],
+    "language" : "fre",
+    "topicCategory" : "planningCadastre",
+    "keywords" : [ {
+      "keywords" : [ "Usage des sols" ],
+      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+      "thesaurusDate" : "2008-06-01"
+    }, {
+      "keywords" : [ "Document d'urbanisme" ],
+      "thesaurusName" : "GEMET - Concepts, version 2.4",
+      "thesaurusDate" : "2010-01-13"
+    }, {
+      "keywords" : [ "planification", "PLU", "Plan local d'urbanisme", "données ouvertes" ],
+      "thesaurusDate" : null
+    } ],
+    "referenceSystemIdentifier" : {
+      "code" : "EPSG:2154",
+      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
     },
-    "dateOfPublication": null,
-    "dateOfLastRevision": "2017-10-13",
-    "dateOfCreation": null,
-    "characterSet": "8859part1",
-    "spatialRepresentationType": "vector",
-    "lineage": "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 08/12/2017. Ce lot de données produit en 2017 a été numérisé à partir du PCI Vecteur.",
-    "spatialResolutions": [
-      {
-        "denominator": "5000"
-      }
-    ],
-    "specifications": [
-      {
-        "title": "CNIG PLU v2017",
-        "date": "2017-12-08",
-        "dateType": "publication",
-        "degree": "true"
-      },
-      {
-        "title": "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
-        "date": "2014-04-07",
-        "dateType": "publication",
-        "degree": "true"
-      },
-      {
-        "title": "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
-        "date": "2010-12-08",
-        "dateType": "publication",
-        "degree": "true"
-      }
-    ],
-    "contact": {
-      "organisationName": "Mairie d'Arpaillargues et Aureilhac",
-      "electronicMailAddress": "contact@arpaillargues-aureilhac.fr",
-      "role": "owner",
-      "phone": null,
-      "deliveryPoint": null,
-      "city": null,
-      "postalCode": null,
-      "country": null,
-      "onlineResourceUrl": null,
-      "hoursOfService": null
+    "dateOfPublication" : null,
+    "dateOfLastRevision" : "2017-10-13",
+    "dateOfCreation" : null,
+    "characterSet" : "8859part1",
+    "spatialRepresentationType" : "vector",
+    "lineage" : "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 08/12/2017. Ce lot de données produit en 2017 a été numérisé à partir du PCI Vecteur.",
+    "spatialResolutions" : [ {
+      "denominator" : "5000"
+    } ],
+    "specifications" : [ {
+      "title" : "CNIG PLU v2017",
+      "date" : "2017-12-08",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
+      "date" : "2014-04-07",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
+      "date" : "2010-12-08",
+      "dateType" : "publication",
+      "degree" : "true"
+    } ],
+    "contact" : {
+      "organisationName" : "Mairie d'Arpaillargues et Aureilhac",
+      "electronicMailAddress" : "contact@arpaillargues-aureilhac.fr",
+      "role" : "owner",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
     },
-    "metadataContact": {
-      "organisationName": "Mairie d'Arpaillargues et Aureilhac",
-      "electronicMailAddress": "contact@arpaillargues-aureilhac.fr",
-      "role": "pointOfContact",
-      "phone": null,
-      "deliveryPoint": null,
-      "city": null,
-      "postalCode": null,
-      "country": null,
-      "onlineResourceUrl": null,
-      "hoursOfService": null
+    "metadataContact" : {
+      "organisationName" : "Mairie d'Arpaillargues et Aureilhac",
+      "electronicMailAddress" : "contact@arpaillargues-aureilhac.fr",
+      "role" : "pointOfContact",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
     },
-    "metadataDate": "2018-10-01T09:26:36+02:00",
-    "metadataLanguage": "fre",
-    "extents": [
-      {
-        "boundingBox": [
-          4.33908535124715,
-          43.97607660127221,
-          4.39857085419267,
-          44.020820858913595
-        ]
-      }
-    ],
-    "constraints": [
-      {
-        "type": "MD_LegalConstraints",
-        "useLimitations": [
-          "Aucune condition ne s'applique",
-          "Licence Ouverte 2.0"
-        ],
-        "accessConstraints": [
-          "otherRestrictions"
-        ],
-        "useConstraints": [
-          "license"
-        ],
-        "otherConstraints": [
-          "Pas de restriction d’accès public"
-        ]
-      }
-    ],
-    "distributionFormats": [
-      {
-        "name": "SHP",
-        "version": "1.0"
-      }
-    ]
+    "metadataDate" : "2018-10-01T09:26:36+02:00",
+    "metadataLanguage" : "fre",
+    "extents" : [ {
+      "boundingBox" : [ 4.33908535124715, 43.97607660127221, 4.39857085419267, 44.020820858913595 ]
+    } ],
+    "constraints" : [ {
+      "type" : "MD_LegalConstraints",
+      "useLimitations" : [ "Aucune condition ne s'applique", "Licence Ouverte 2.0" ],
+      "accessConstraints" : [ "otherRestrictions" ],
+      "useConstraints" : [ "license" ],
+      "otherConstraints" : [ "Pas de restriction d’accès public" ]
+    } ],
+    "distributionFormats" : [ {
+      "name" : "SHP",
+      "version" : "1.0"
+    } ]
   }
 }
