@@ -129,7 +129,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Test CC en standard 2013
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -167,7 +167,7 @@ public class CnigValidatorRegressTest {
 	/**
 	 * Test CC en standard 2014 avec aucune donnée géographique
 	 * (CNIG_NO_SPATIAL_DATA)
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -205,7 +205,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Test en standard 2017 (IDURBA change de format)
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -259,7 +259,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Test SUP
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -289,9 +289,9 @@ public class CnigValidatorRegressTest {
 	/**
 	 * SUP with duplicated values in AC1_ACTE_SUP.dbf (ex :
 	 * "AC1-172014607-00099077-1", "AC1-172014607-00099077-1")
-	 * 
+	 *
 	 * (was previously crashing SQLITE database insertion)
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -321,7 +321,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Test PLU avec coordonnées 3D en standard cnig_PLU_2017
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -375,9 +375,9 @@ public class CnigValidatorRegressTest {
 		}
 
 		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
-		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
-
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
+
+		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}

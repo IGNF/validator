@@ -1,945 +1,774 @@
 {
-  "name": "172014607_AC1_2A_20180130",
-  "documentModel": {
-    "name": "cnig_SUP_AC1_2016"
+  "name" : "172014607_AC1_2A_20180130",
+  "documentModel" : {
+    "name" : "cnig_SUP_AC1_2016"
   },
-  "files": [
-    {
-      "type": "directory",
-      "modelName": "Actes",
-      "name": "Actes",
-      "path": "Actes"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AbriPrehistoriquedAraguinaSennola_19880901_act.pdf",
-      "path": "Actes/AC1_AbriPrehistoriquedAraguinaSennola_19880901_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AlignementdemenhirsdePagliajo_19741023_act.pdf",
-      "path": "Actes/AC1_AlignementdemenhirsdePagliajo_19741023_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Alignementsdemenhirsetdestatuesmenhirs_19750228_act.pdf",
-      "path": "Actes/AC1_Alignementsdemenhirsetdestatuesmenhirs_19750228_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienCouventSaintDominique_19900130_act.pdf",
-      "path": "Actes/AC1_AncienCouventSaintDominique_19900130_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienPalaisEpiscopal_19841221_act.pdf",
-      "path": "Actes/AC1_AncienPalaisEpiscopal_19841221_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AnciencouventSaintFrancois_19761231_act.pdf",
-      "path": "Actes/AC1_AnciencouventSaintFrancois_19761231_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AnciencouventSaintJulien_19740828_act.pdf",
-      "path": "Actes/AC1_AnciencouventSaintJulien_19740828_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneEgliseSaintBarthelemyouSanBarto_19940422_act.pdf",
-      "path": "Actes/AC1_AncienneEgliseSaintBarthelemyouSanBarto_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneEgliseSainteMarieMadeleineSanta_19940422_act.pdf",
-      "path": "Actes/AC1_AncienneEgliseSainteMarieMadeleineSanta_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AnciennechapelleSanAgostinodeChera_19800206_act.pdf",
-      "path": "Actes/AC1_AnciennechapelleSanAgostinodeChera_19800206_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AnciennechapelleaArcaChapellefunerair_19810511_act.pdf",
-      "path": "Actes/AC1_AnciennechapelleaArcaChapellefunerair_19810511_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneegliseSaintJacquesSanGiacomoG_19940422_act.pdf",
-      "path": "Actes/AC1_AncienneegliseSaintJacquesSanGiacomoG_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneegliseSaintJean_19301229_act.pdf",
-      "path": "Actes/AC1_AncienneegliseSaintJean_19301229_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneegliseSanGiovanniBattista_19770729_act.pdf",
-      "path": "Actes/AC1_AncienneegliseSanGiovanniBattista_19770729_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneegliseparoissialeSaintAlbertdeC_20120510_act.pdf",
-      "path": "Actes/AC1_AncienneegliseparoissialeSaintAlbertdeC_20120510_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_AncienneusineAlban_19921027_act.pdf",
-      "path": "Actes/AC1_AncienneusineAlban_19921027_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_BaptisterepaleochretiendeSaintJean_20130214_act.pdf",
-      "path": "Actes/AC1_BaptisterepaleochretiendeSaintJean_20130214_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CarriereromainedesilesCavalloetSanBain_19920804_act.pdf",
-      "path": "Actes/AC1_CarriereromainedesilesCavalloetSanBain_19920804_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CasernegenoiseMontlaur_19940422_act.pdf",
-      "path": "Actes/AC1_CasernegenoiseMontlaur_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CastellodeContorba_20100330_act.pdf",
-      "path": "Actes/AC1_CastellodeContorba_20100330_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CathedraleNotreDame_19061030_act.pdf",
-      "path": "Actes/AC1_CathedraleNotreDame_19061030_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CathedraleSaintAppien_19890904_act.pdf",
-      "path": "Actes/AC1_CathedraleSaintAppien_19890904_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleImperiale_19240722_act.pdf",
-      "path": "Actes/AC1_ChapelleImperiale_19240722_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleSaintErasmeouSantErasmu_19930105_act.pdf",
-      "path": "Actes/AC1_ChapelleSaintErasmeouSantErasmu_19930105_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleSaintJeanBaptistedePruno_19770719_act.pdf",
-      "path": "Actes/AC1_ChapelleSaintJeanBaptistedePruno_19770719_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleSainteLucieanciennementditeSan_19890213_act.pdf",
-      "path": "Actes/AC1_ChapelleSainteLucieanciennementditeSan_19890213_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleSainteMarie_19760715_act.pdf",
-      "path": "Actes/AC1_ChapelleSainteMarie_19760715_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleSanPietrodiPanicali_20091013_act.pdf",
-      "path": "Actes/AC1_ChapelleSanPietrodiPanicali_20091013_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelleSanQuilicudeMontilati_19770707_act.pdf",
-      "path": "Actes/AC1_ChapelleSanQuilicudeMontilati_19770707_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapelledesGrecs_19270309_act.pdf",
-      "path": "Actes/AC1_ChapelledesGrecs_19270309_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapellefunerairePozzodiBorgo_20120514_act.pdf",
-      "path": "Actes/AC1_ChapellefunerairePozzodiBorgo_20120514_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChapellesantaMariaAssuntadeCruscaglia_19261202_act.pdf",
-      "path": "Actes/AC1_ChapellesantaMariaAssuntadeCruscaglia_19261202_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChateaudeVicodOrnano_20120510_act.pdf",
-      "path": "Actes/AC1_ChateaudeVicodOrnano_20120510_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ChateaudelaPunta_19770207_act.pdf",
-      "path": "Actes/AC1_ChateaudelaPunta_19770207_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CitadelledAjaccio_19750718_act.pdf",
-      "path": "Actes/AC1_CitadelledAjaccio_19750718_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CitadelledeBonifacio_19291024_act.pdf",
-      "path": "Actes/AC1_CitadelledeBonifacio_19291024_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CliniquechirurgicaleGrandvalancienchatea_19841228_act.pdf",
-      "path": "Actes/AC1_CliniquechirurgicaleGrandvalancienchatea_19841228_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CouventSaintAntoine_19910308_act.pdf",
-      "path": "Actes/AC1_CouventSaintAntoine_19910308_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_CouventSaintFrancoisdIstria_19930623_act.pdf",
-      "path": "Actes/AC1_CouventSaintFrancoisdIstria_19930623_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Deuxcimetieresmilitairesetlastelecommem_19830308_act.pdf",
-      "path": "Actes/AC1_Deuxcimetieresmilitairesetlastelecommem_19830308_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_DeuxmenhirsduRizzanese_19000101_act.pdf",
-      "path": "Actes/AC1_DeuxmenhirsduRizzanese_19000101_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_DolmendeFontanaccia_19000101_act.pdf",
-      "path": "Actes/AC1_DolmendeFontanaccia_19000101_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_DomainedesMilelli_19580214_act.pdf",
-      "path": "Actes/AC1_DomainedesMilelli_19580214_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EchauguetteetleRempartattenant_19841221_act.pdf",
-      "path": "Actes/AC1_EchauguetteetleRempartattenant_19841221_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseSaintDominique_18750101_act.pdf",
-      "path": "Actes/AC1_EgliseSaintDominique_18750101_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseSaintJeanBaptiste_19760723_act.pdf",
-      "path": "Actes/AC1_EgliseSaintJeanBaptiste_19760723_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseSainteMarieMajeure_19820921_act.pdf",
-      "path": "Actes/AC1_EgliseSainteMarieMajeure_19820921_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseSantaMariaAssunta_19810423_act.pdf",
-      "path": "Actes/AC1_EgliseSantaMariaAssunta_19810423_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EglisedeSantaMariaFiganiella_19270829_act.pdf",
-      "path": "Actes/AC1_EglisedeSantaMariaFiganiella_19270829_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseetbatimentconventuelducouventSain_19800311_act.pdf",
-      "path": "Actes/AC1_EgliseetbatimentconventuelducouventSain_19800311_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseparoissialeSaintGeorges_19890213_act.pdf",
-      "path": "Actes/AC1_EgliseparoissialeSaintGeorges_19890213_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseparoissialeSaintNicolas_19900130_act.pdf",
-      "path": "Actes/AC1_EgliseparoissialeSaintNicolas_19900130_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseparoissialeSaintSpiridon_19900630_act.pdf",
-      "path": "Actes/AC1_EgliseparoissialeSaintSpiridon_19900630_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseparoissialeSainteMarie_19850906_act.pdf",
-      "path": "Actes/AC1_EgliseparoissialeSainteMarie_19850906_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseparoissialedelAssomption_19890213_act.pdf",
-      "path": "Actes/AC1_EgliseparoissialedelAssomption_19890213_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EgliseparoissialesaintJeanBaptisteetson_18860712_act.pdf",
-      "path": "Actes/AC1_EgliseparoissialesaintJeanBaptisteetson_18860712_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EnsemblemonumentaltorreenditCastello_19740902_act.pdf",
-      "path": "Actes/AC1_EnsemblemonumentaltorreenditCastello_19740902_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_EscalierduRoidAragon_19940422_act.pdf",
-      "path": "Actes/AC1_EscalierduRoidAragon_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_FigureantiquedAppriciani_18400101_act.pdf",
-      "path": "Actes/AC1_FigureantiquedAppriciani_18400101_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Filitosa_19801210_act.pdf",
-      "path": "Actes/AC1_Filitosa_19801210_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_FortindeGirolata_20131023_act.pdf",
-      "path": "Actes/AC1_FortindeGirolata_20131023_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_FortindeTizzano_19850906_act.pdf",
-      "path": "Actes/AC1_FortindeTizzano_19850906_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_GrandHoteldAjaccio_19920317_act.pdf",
-      "path": "Actes/AC1_GrandHoteldAjaccio_19920317_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_HotelLesRochesRouges_19910308_act.pdf",
-      "path": "Actes/AC1_HotelLesRochesRouges_19910308_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_HotelPalaceCyrnos_19901112_act.pdf",
-      "path": "Actes/AC1_HotelPalaceCyrnos_19901112_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_HoteldeVille_19900130_act.pdf",
-      "path": "Actes/AC1_HoteldeVille_19900130_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_HoteldeVille_19910308_act.pdf",
-      "path": "Actes/AC1_HoteldeVille_19910308_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ImmeubledelappartementBaciocchi_19921027_act.pdf",
-      "path": "Actes/AC1_ImmeubledelappartementBaciocchi_19921027_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_LazaretdAspretto_19770316_act.pdf",
-      "path": "Actes/AC1_LazaretdAspretto_19770316_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MaisonCharlesdeRoccaSerra_20140407_act.pdf",
-      "path": "Actes/AC1_MaisonCharlesdeRoccaSerra_20140407_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MaisonDoria_19351007_act.pdf",
-      "path": "Actes/AC1_MaisonDoria_19351007_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MaisonPeraldi_19850906_act.pdf",
-      "path": "Actes/AC1_MaisonPeraldi_19850906_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MaisonPhilippedeRoccaSerra_20140407_act.pdf",
-      "path": "Actes/AC1_MaisonPhilippedeRoccaSerra_20140407_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Maison_19270512_act.pdf",
-      "path": "Actes/AC1_Maison_19270512_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Maison_19351104_act.pdf",
-      "path": "Actes/AC1_Maison_19351104_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MaisondeNapoleonBonaparte_19240423_act.pdf",
-      "path": "Actes/AC1_MaisondeNapoleonBonaparte_19240423_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Maisonforte_19870115_act.pdf",
-      "path": "Actes/AC1_Maisonforte_19870115_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Maisonforte_20070109_act.pdf",
-      "path": "Actes/AC1_Maisonforte_20070109_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MenhirdeCampodiLuogo_18620101_act.pdf",
-      "path": "Actes/AC1_MenhirdeCampodiLuogo_18620101_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MenhirdeVaccilVecchio_18621231_act.pdf",
-      "path": "Actes/AC1_MenhirdeVaccilVecchio_18621231_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MonumentcommemoratifdeSampieroCorso_20080208_act.pdf",
-      "path": "Actes/AC1_MonumentcommemoratifdeSampieroCorso_20080208_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_MoulindeGuardienna_19870729_act.pdf",
-      "path": "Actes/AC1_MoulindeGuardienna_19870729_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_OrangeraiedePortiglio_20161012_act.pdf",
-      "path": "Actes/AC1_OrangeraiedePortiglio_20161012_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_OratoireSaintJeanBaptiste_19850906_act.pdf",
-      "path": "Actes/AC1_OratoireSaintJeanBaptiste_19850906_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_OratoireSaintRoch_19850906_act.pdf",
-      "path": "Actes/AC1_OratoireSaintRoch_19850906_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PalaisFesch_19761102_act.pdf",
-      "path": "Actes/AC1_PalaisFesch_19761102_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PalaisLantivy_19900130_act.pdf",
-      "path": "Actes/AC1_PalaisLantivy_19900130_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ParcellesditesdeFrasso_19870602_act.pdf",
-      "path": "Actes/AC1_ParcellesditesdeFrasso_19870602_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PontASpinaCavallu_19761022_act.pdf",
-      "path": "Actes/AC1_PontASpinaCavallu_19761022_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PontdeZaglia_19900626_act.pdf",
-      "path": "Actes/AC1_PontdeZaglia_19900626_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PontgenoisdePianella_19761129_act.pdf",
-      "path": "Actes/AC1_PontgenoisdePianella_19761129_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PontgenoisdeZippitoli_19770215_act.pdf",
-      "path": "Actes/AC1_PontgenoisdeZippitoli_19770215_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PontiVicchiusurleTaravo_19761110_act.pdf",
-      "path": "Actes/AC1_PontiVicchiusurleTaravo_19761110_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_PuitsSaintBarthelemy_19940422_act.pdf",
-      "path": "Actes/AC1_PuitsSaintBarthelemy_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Ruinesarcheologiquesetlesterrainsquiles_19940516_act.pdf",
-      "path": "Actes/AC1_Ruinesarcheologiquesetlesterrainsquiles_19940516_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_RuinesdelamaisonSampieroCorso_20120625_act.pdf",
-      "path": "Actes/AC1_RuinesdelamaisonSampieroCorso_20120625_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_SitearcheologiqueICalanchiSaparata_19901206_act.pdf",
-      "path": "Actes/AC1_SitearcheologiqueICalanchiSaparata_19901206_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_SitearcheologiqueantiquedePiantarella_20070626_act.pdf",
-      "path": "Actes/AC1_SitearcheologiqueantiquedePiantarella_20070626_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_SitearcheologiquedeCucuruzzu_19821109_act.pdf",
-      "path": "Actes/AC1_SitearcheologiquedeCucuruzzu_19821109_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_SitedeCapula_19901206_act.pdf",
-      "path": "Actes/AC1_SitedeCapula_19901206_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_SitedelErmitagedelaTrinite_20160406_act.pdf",
-      "path": "Actes/AC1_SitedelErmitagedelaTrinite_20160406_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_Statuemenhir_20111221_act.pdf",
-      "path": "Actes/AC1_Statuemenhir_20111221_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourGenoisedeSagone_19740419_act.pdf",
-      "path": "Actes/AC1_TourGenoisedeSagone_19740419_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdOmigna_19910308_act.pdf",
-      "path": "Actes/AC1_TourdOmigna_19910308_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeCampoMoroetsonenceintefortifiee_19920804_act.pdf",
-      "path": "Actes/AC1_TourdeCampoMoroetsonenceintefortifiee_19920804_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeCapoNerooudeCapuNeru_19940422_act.pdf",
-      "path": "Actes/AC1_TourdeCapoNerooudeCapuNeru_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeCapodiMurooudeCapudiMuru_19940422_act.pdf",
-      "path": "Actes/AC1_TourdeCapodiMurooudeCapudiMuru_19940422_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeColomba_19520307_act.pdf",
-      "path": "Actes/AC1_TourdeColomba_19520307_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeFautea_19921027_act.pdf",
-      "path": "Actes/AC1_TourdeFautea_19921027_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeFigari_19950124_act.pdf",
-      "path": "Actes/AC1_TourdeFigari_19950124_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdePinarello_19920804_act.pdf",
-      "path": "Actes/AC1_TourdePinarello_19920804_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdePorto_19460622_act.pdf",
-      "path": "Actes/AC1_TourdePorto_19460622_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeRoccapina_19940729_act.pdf",
-      "path": "Actes/AC1_TourdeRoccapina_19940729_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdeSenetosa_19921027_act.pdf",
-      "path": "Actes/AC1_TourdeSenetosa_19921027_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourdelIsolella_19920804_act.pdf",
-      "path": "Actes/AC1_TourdelIsolella_19920804_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_TourduCapitello_19910308_act.pdf",
-      "path": "Actes/AC1_TourduCapitello_19910308_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_ToursanCipriano_19950124_act.pdf",
-      "path": "Actes/AC1_ToursanCipriano_19950124_act.pdf"
-    },
-    {
-      "type": "pdf",
-      "modelName": "ACTE",
-      "name": "AC1_VillagemedievaldelOrtolo_20090410_act.pdf",
-      "path": "Actes/AC1_VillagemedievaldelOrtolo_20090410_act.pdf"
-    },
-    {
-      "type": "directory",
-      "modelName": "Donnees_geographiques",
-      "name": "Donnees_geographiques",
-      "path": "Donnees_geographiques"
-    },
-    {
-      "type": "table",
-      "modelName": "ACTE_SUP",
-      "name": "AC1_ACTE_SUP.dbf",
-      "path": "Donnees_geographiques/AC1_ACTE_SUP.dbf",
-      "boundingBox": null,
-      "totalFeatures": 104
-    },
-    {
-      "type": "table",
-      "modelName": "AC1_ASSIETTE_SUP_S",
-      "name": "AC1_ASSIETTE_SUP_S.dbf",
-      "path": "Donnees_geographiques/AC1_ASSIETTE_SUP_S.dbf",
-      "boundingBox": [
-        8.5538275,
-        41.3324541,
-        9.4118624,
-        42.2722707
-      ],
-      "totalFeatures": 206
-    },
-    {
-      "type": "table",
-      "modelName": "AC1_GENERATEUR_SUP_S",
-      "name": "AC1_GENERATEUR_SUP_S.dbf",
-      "path": "Donnees_geographiques/AC1_GENERATEUR_SUP_S.dbf",
-      "boundingBox": [
-        8.5598500,
-        41.3369286,
-        9.4058889,
-        42.2677974
-      ],
-      "totalFeatures": 104
-    },
-    {
-      "type": "table",
-      "modelName": "GESTIONNAIRE_SUP",
-      "name": "AC1_GESTIONNAIRE_SUP.dbf",
-      "path": "Donnees_geographiques/AC1_GESTIONNAIRE_SUP.dbf",
-      "boundingBox": null,
-      "totalFeatures": 1
-    },
-    {
-      "type": "table",
-      "modelName": "SERVITUDE",
-      "name": "AC1_SERVITUDE.dbf",
-      "path": "Donnees_geographiques/AC1_SERVITUDE.dbf",
-      "boundingBox": null,
-      "totalFeatures": 104
-    },
-    {
-      "type": "table",
-      "modelName": "SERVITUDE_ACTE_SUP",
-      "name": "AC1_SERVITUDE_ACTE_SUP.dbf",
-      "path": "Donnees_geographiques/AC1_SERVITUDE_ACTE_SUP.dbf",
-      "boundingBox": null,
-      "totalFeatures": 104
-    },
-    {
-      "type": "metadata",
-      "modelName": "METADONNEES",
-      "name": "SUP-AC1-2A-172014607-20180130.xml",
-      "path": "SUP-AC1-2A-172014607-20180130.xml"
-    }
-  ],
-  "documentExtent": [
-    8.5538275,
-    41.3324541,
-    9.4118624,
-    42.2722707
-  ],
-  "tags": {
-    "typeref": null
+  "files" : [ {
+    "type" : "directory",
+    "modelName" : "Actes",
+    "name" : "Actes",
+    "path" : "Actes"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AbriPrehistoriquedAraguinaSennola_19880901_act.pdf",
+    "path" : "Actes/AC1_AbriPrehistoriquedAraguinaSennola_19880901_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AlignementdemenhirsdePagliajo_19741023_act.pdf",
+    "path" : "Actes/AC1_AlignementdemenhirsdePagliajo_19741023_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Alignementsdemenhirsetdestatuesmenhirs_19750228_act.pdf",
+    "path" : "Actes/AC1_Alignementsdemenhirsetdestatuesmenhirs_19750228_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienCouventSaintDominique_19900130_act.pdf",
+    "path" : "Actes/AC1_AncienCouventSaintDominique_19900130_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienPalaisEpiscopal_19841221_act.pdf",
+    "path" : "Actes/AC1_AncienPalaisEpiscopal_19841221_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AnciencouventSaintFrancois_19761231_act.pdf",
+    "path" : "Actes/AC1_AnciencouventSaintFrancois_19761231_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AnciencouventSaintJulien_19740828_act.pdf",
+    "path" : "Actes/AC1_AnciencouventSaintJulien_19740828_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneEgliseSaintBarthelemyouSanBarto_19940422_act.pdf",
+    "path" : "Actes/AC1_AncienneEgliseSaintBarthelemyouSanBarto_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneEgliseSainteMarieMadeleineSanta_19940422_act.pdf",
+    "path" : "Actes/AC1_AncienneEgliseSainteMarieMadeleineSanta_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AnciennechapelleSanAgostinodeChera_19800206_act.pdf",
+    "path" : "Actes/AC1_AnciennechapelleSanAgostinodeChera_19800206_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AnciennechapelleaArcaChapellefunerair_19810511_act.pdf",
+    "path" : "Actes/AC1_AnciennechapelleaArcaChapellefunerair_19810511_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneegliseSaintJacquesSanGiacomoG_19940422_act.pdf",
+    "path" : "Actes/AC1_AncienneegliseSaintJacquesSanGiacomoG_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneegliseSaintJean_19301229_act.pdf",
+    "path" : "Actes/AC1_AncienneegliseSaintJean_19301229_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneegliseSanGiovanniBattista_19770729_act.pdf",
+    "path" : "Actes/AC1_AncienneegliseSanGiovanniBattista_19770729_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneegliseparoissialeSaintAlbertdeC_20120510_act.pdf",
+    "path" : "Actes/AC1_AncienneegliseparoissialeSaintAlbertdeC_20120510_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_AncienneusineAlban_19921027_act.pdf",
+    "path" : "Actes/AC1_AncienneusineAlban_19921027_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_BaptisterepaleochretiendeSaintJean_20130214_act.pdf",
+    "path" : "Actes/AC1_BaptisterepaleochretiendeSaintJean_20130214_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CarriereromainedesilesCavalloetSanBain_19920804_act.pdf",
+    "path" : "Actes/AC1_CarriereromainedesilesCavalloetSanBain_19920804_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CasernegenoiseMontlaur_19940422_act.pdf",
+    "path" : "Actes/AC1_CasernegenoiseMontlaur_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CastellodeContorba_20100330_act.pdf",
+    "path" : "Actes/AC1_CastellodeContorba_20100330_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CathedraleNotreDame_19061030_act.pdf",
+    "path" : "Actes/AC1_CathedraleNotreDame_19061030_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CathedraleSaintAppien_19890904_act.pdf",
+    "path" : "Actes/AC1_CathedraleSaintAppien_19890904_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleImperiale_19240722_act.pdf",
+    "path" : "Actes/AC1_ChapelleImperiale_19240722_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleSaintErasmeouSantErasmu_19930105_act.pdf",
+    "path" : "Actes/AC1_ChapelleSaintErasmeouSantErasmu_19930105_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleSaintJeanBaptistedePruno_19770719_act.pdf",
+    "path" : "Actes/AC1_ChapelleSaintJeanBaptistedePruno_19770719_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleSainteLucieanciennementditeSan_19890213_act.pdf",
+    "path" : "Actes/AC1_ChapelleSainteLucieanciennementditeSan_19890213_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleSainteMarie_19760715_act.pdf",
+    "path" : "Actes/AC1_ChapelleSainteMarie_19760715_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleSanPietrodiPanicali_20091013_act.pdf",
+    "path" : "Actes/AC1_ChapelleSanPietrodiPanicali_20091013_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelleSanQuilicudeMontilati_19770707_act.pdf",
+    "path" : "Actes/AC1_ChapelleSanQuilicudeMontilati_19770707_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapelledesGrecs_19270309_act.pdf",
+    "path" : "Actes/AC1_ChapelledesGrecs_19270309_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapellefunerairePozzodiBorgo_20120514_act.pdf",
+    "path" : "Actes/AC1_ChapellefunerairePozzodiBorgo_20120514_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChapellesantaMariaAssuntadeCruscaglia_19261202_act.pdf",
+    "path" : "Actes/AC1_ChapellesantaMariaAssuntadeCruscaglia_19261202_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChateaudeVicodOrnano_20120510_act.pdf",
+    "path" : "Actes/AC1_ChateaudeVicodOrnano_20120510_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ChateaudelaPunta_19770207_act.pdf",
+    "path" : "Actes/AC1_ChateaudelaPunta_19770207_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CitadelledAjaccio_19750718_act.pdf",
+    "path" : "Actes/AC1_CitadelledAjaccio_19750718_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CitadelledeBonifacio_19291024_act.pdf",
+    "path" : "Actes/AC1_CitadelledeBonifacio_19291024_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CliniquechirurgicaleGrandvalancienchatea_19841228_act.pdf",
+    "path" : "Actes/AC1_CliniquechirurgicaleGrandvalancienchatea_19841228_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CouventSaintAntoine_19910308_act.pdf",
+    "path" : "Actes/AC1_CouventSaintAntoine_19910308_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_CouventSaintFrancoisdIstria_19930623_act.pdf",
+    "path" : "Actes/AC1_CouventSaintFrancoisdIstria_19930623_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Deuxcimetieresmilitairesetlastelecommem_19830308_act.pdf",
+    "path" : "Actes/AC1_Deuxcimetieresmilitairesetlastelecommem_19830308_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_DeuxmenhirsduRizzanese_19000101_act.pdf",
+    "path" : "Actes/AC1_DeuxmenhirsduRizzanese_19000101_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_DolmendeFontanaccia_19000101_act.pdf",
+    "path" : "Actes/AC1_DolmendeFontanaccia_19000101_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_DomainedesMilelli_19580214_act.pdf",
+    "path" : "Actes/AC1_DomainedesMilelli_19580214_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EchauguetteetleRempartattenant_19841221_act.pdf",
+    "path" : "Actes/AC1_EchauguetteetleRempartattenant_19841221_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseSaintDominique_18750101_act.pdf",
+    "path" : "Actes/AC1_EgliseSaintDominique_18750101_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseSaintJeanBaptiste_19760723_act.pdf",
+    "path" : "Actes/AC1_EgliseSaintJeanBaptiste_19760723_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseSainteMarieMajeure_19820921_act.pdf",
+    "path" : "Actes/AC1_EgliseSainteMarieMajeure_19820921_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseSantaMariaAssunta_19810423_act.pdf",
+    "path" : "Actes/AC1_EgliseSantaMariaAssunta_19810423_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EglisedeSantaMariaFiganiella_19270829_act.pdf",
+    "path" : "Actes/AC1_EglisedeSantaMariaFiganiella_19270829_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseetbatimentconventuelducouventSain_19800311_act.pdf",
+    "path" : "Actes/AC1_EgliseetbatimentconventuelducouventSain_19800311_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseparoissialeSaintGeorges_19890213_act.pdf",
+    "path" : "Actes/AC1_EgliseparoissialeSaintGeorges_19890213_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseparoissialeSaintNicolas_19900130_act.pdf",
+    "path" : "Actes/AC1_EgliseparoissialeSaintNicolas_19900130_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseparoissialeSaintSpiridon_19900630_act.pdf",
+    "path" : "Actes/AC1_EgliseparoissialeSaintSpiridon_19900630_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseparoissialeSainteMarie_19850906_act.pdf",
+    "path" : "Actes/AC1_EgliseparoissialeSainteMarie_19850906_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseparoissialedelAssomption_19890213_act.pdf",
+    "path" : "Actes/AC1_EgliseparoissialedelAssomption_19890213_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EgliseparoissialesaintJeanBaptisteetson_18860712_act.pdf",
+    "path" : "Actes/AC1_EgliseparoissialesaintJeanBaptisteetson_18860712_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EnsemblemonumentaltorreenditCastello_19740902_act.pdf",
+    "path" : "Actes/AC1_EnsemblemonumentaltorreenditCastello_19740902_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_EscalierduRoidAragon_19940422_act.pdf",
+    "path" : "Actes/AC1_EscalierduRoidAragon_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_FigureantiquedAppriciani_18400101_act.pdf",
+    "path" : "Actes/AC1_FigureantiquedAppriciani_18400101_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Filitosa_19801210_act.pdf",
+    "path" : "Actes/AC1_Filitosa_19801210_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_FortindeGirolata_20131023_act.pdf",
+    "path" : "Actes/AC1_FortindeGirolata_20131023_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_FortindeTizzano_19850906_act.pdf",
+    "path" : "Actes/AC1_FortindeTizzano_19850906_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_GrandHoteldAjaccio_19920317_act.pdf",
+    "path" : "Actes/AC1_GrandHoteldAjaccio_19920317_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_HotelLesRochesRouges_19910308_act.pdf",
+    "path" : "Actes/AC1_HotelLesRochesRouges_19910308_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_HotelPalaceCyrnos_19901112_act.pdf",
+    "path" : "Actes/AC1_HotelPalaceCyrnos_19901112_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_HoteldeVille_19900130_act.pdf",
+    "path" : "Actes/AC1_HoteldeVille_19900130_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_HoteldeVille_19910308_act.pdf",
+    "path" : "Actes/AC1_HoteldeVille_19910308_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ImmeubledelappartementBaciocchi_19921027_act.pdf",
+    "path" : "Actes/AC1_ImmeubledelappartementBaciocchi_19921027_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_LazaretdAspretto_19770316_act.pdf",
+    "path" : "Actes/AC1_LazaretdAspretto_19770316_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MaisonCharlesdeRoccaSerra_20140407_act.pdf",
+    "path" : "Actes/AC1_MaisonCharlesdeRoccaSerra_20140407_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MaisonDoria_19351007_act.pdf",
+    "path" : "Actes/AC1_MaisonDoria_19351007_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MaisonPeraldi_19850906_act.pdf",
+    "path" : "Actes/AC1_MaisonPeraldi_19850906_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MaisonPhilippedeRoccaSerra_20140407_act.pdf",
+    "path" : "Actes/AC1_MaisonPhilippedeRoccaSerra_20140407_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Maison_19270512_act.pdf",
+    "path" : "Actes/AC1_Maison_19270512_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Maison_19351104_act.pdf",
+    "path" : "Actes/AC1_Maison_19351104_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MaisondeNapoleonBonaparte_19240423_act.pdf",
+    "path" : "Actes/AC1_MaisondeNapoleonBonaparte_19240423_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Maisonforte_19870115_act.pdf",
+    "path" : "Actes/AC1_Maisonforte_19870115_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Maisonforte_20070109_act.pdf",
+    "path" : "Actes/AC1_Maisonforte_20070109_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MenhirdeCampodiLuogo_18620101_act.pdf",
+    "path" : "Actes/AC1_MenhirdeCampodiLuogo_18620101_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MenhirdeVaccilVecchio_18621231_act.pdf",
+    "path" : "Actes/AC1_MenhirdeVaccilVecchio_18621231_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MonumentcommemoratifdeSampieroCorso_20080208_act.pdf",
+    "path" : "Actes/AC1_MonumentcommemoratifdeSampieroCorso_20080208_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_MoulindeGuardienna_19870729_act.pdf",
+    "path" : "Actes/AC1_MoulindeGuardienna_19870729_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_OrangeraiedePortiglio_20161012_act.pdf",
+    "path" : "Actes/AC1_OrangeraiedePortiglio_20161012_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_OratoireSaintJeanBaptiste_19850906_act.pdf",
+    "path" : "Actes/AC1_OratoireSaintJeanBaptiste_19850906_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_OratoireSaintRoch_19850906_act.pdf",
+    "path" : "Actes/AC1_OratoireSaintRoch_19850906_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PalaisFesch_19761102_act.pdf",
+    "path" : "Actes/AC1_PalaisFesch_19761102_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PalaisLantivy_19900130_act.pdf",
+    "path" : "Actes/AC1_PalaisLantivy_19900130_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ParcellesditesdeFrasso_19870602_act.pdf",
+    "path" : "Actes/AC1_ParcellesditesdeFrasso_19870602_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PontASpinaCavallu_19761022_act.pdf",
+    "path" : "Actes/AC1_PontASpinaCavallu_19761022_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PontdeZaglia_19900626_act.pdf",
+    "path" : "Actes/AC1_PontdeZaglia_19900626_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PontgenoisdePianella_19761129_act.pdf",
+    "path" : "Actes/AC1_PontgenoisdePianella_19761129_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PontgenoisdeZippitoli_19770215_act.pdf",
+    "path" : "Actes/AC1_PontgenoisdeZippitoli_19770215_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PontiVicchiusurleTaravo_19761110_act.pdf",
+    "path" : "Actes/AC1_PontiVicchiusurleTaravo_19761110_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_PuitsSaintBarthelemy_19940422_act.pdf",
+    "path" : "Actes/AC1_PuitsSaintBarthelemy_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Ruinesarcheologiquesetlesterrainsquiles_19940516_act.pdf",
+    "path" : "Actes/AC1_Ruinesarcheologiquesetlesterrainsquiles_19940516_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_RuinesdelamaisonSampieroCorso_20120625_act.pdf",
+    "path" : "Actes/AC1_RuinesdelamaisonSampieroCorso_20120625_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_SitearcheologiqueICalanchiSaparata_19901206_act.pdf",
+    "path" : "Actes/AC1_SitearcheologiqueICalanchiSaparata_19901206_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_SitearcheologiqueantiquedePiantarella_20070626_act.pdf",
+    "path" : "Actes/AC1_SitearcheologiqueantiquedePiantarella_20070626_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_SitearcheologiquedeCucuruzzu_19821109_act.pdf",
+    "path" : "Actes/AC1_SitearcheologiquedeCucuruzzu_19821109_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_SitedeCapula_19901206_act.pdf",
+    "path" : "Actes/AC1_SitedeCapula_19901206_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_SitedelErmitagedelaTrinite_20160406_act.pdf",
+    "path" : "Actes/AC1_SitedelErmitagedelaTrinite_20160406_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_Statuemenhir_20111221_act.pdf",
+    "path" : "Actes/AC1_Statuemenhir_20111221_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourGenoisedeSagone_19740419_act.pdf",
+    "path" : "Actes/AC1_TourGenoisedeSagone_19740419_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdOmigna_19910308_act.pdf",
+    "path" : "Actes/AC1_TourdOmigna_19910308_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeCampoMoroetsonenceintefortifiee_19920804_act.pdf",
+    "path" : "Actes/AC1_TourdeCampoMoroetsonenceintefortifiee_19920804_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeCapoNerooudeCapuNeru_19940422_act.pdf",
+    "path" : "Actes/AC1_TourdeCapoNerooudeCapuNeru_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeCapodiMurooudeCapudiMuru_19940422_act.pdf",
+    "path" : "Actes/AC1_TourdeCapodiMurooudeCapudiMuru_19940422_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeColomba_19520307_act.pdf",
+    "path" : "Actes/AC1_TourdeColomba_19520307_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeFautea_19921027_act.pdf",
+    "path" : "Actes/AC1_TourdeFautea_19921027_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeFigari_19950124_act.pdf",
+    "path" : "Actes/AC1_TourdeFigari_19950124_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdePinarello_19920804_act.pdf",
+    "path" : "Actes/AC1_TourdePinarello_19920804_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdePorto_19460622_act.pdf",
+    "path" : "Actes/AC1_TourdePorto_19460622_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeRoccapina_19940729_act.pdf",
+    "path" : "Actes/AC1_TourdeRoccapina_19940729_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdeSenetosa_19921027_act.pdf",
+    "path" : "Actes/AC1_TourdeSenetosa_19921027_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourdelIsolella_19920804_act.pdf",
+    "path" : "Actes/AC1_TourdelIsolella_19920804_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_TourduCapitello_19910308_act.pdf",
+    "path" : "Actes/AC1_TourduCapitello_19910308_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_ToursanCipriano_19950124_act.pdf",
+    "path" : "Actes/AC1_ToursanCipriano_19950124_act.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "AC1_VillagemedievaldelOrtolo_20090410_act.pdf",
+    "path" : "Actes/AC1_VillagemedievaldelOrtolo_20090410_act.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "Donnees_geographiques",
+    "name" : "Donnees_geographiques",
+    "path" : "Donnees_geographiques"
+  }, {
+    "type" : "table",
+    "modelName" : "ACTE_SUP",
+    "name" : "AC1_ACTE_SUP.dbf",
+    "path" : "Donnees_geographiques/AC1_ACTE_SUP.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 104
+  }, {
+    "type" : "table",
+    "modelName" : "AC1_ASSIETTE_SUP_S",
+    "name" : "AC1_ASSIETTE_SUP_S.dbf",
+    "path" : "Donnees_geographiques/AC1_ASSIETTE_SUP_S.dbf",
+    "boundingBox" : [ 8.5538275, 41.3324541, 9.4118624, 42.2722707 ],
+    "totalFeatures" : 206
+  }, {
+    "type" : "table",
+    "modelName" : "AC1_GENERATEUR_SUP_S",
+    "name" : "AC1_GENERATEUR_SUP_S.dbf",
+    "path" : "Donnees_geographiques/AC1_GENERATEUR_SUP_S.dbf",
+    "boundingBox" : [ 8.5598500, 41.3369286, 9.4058889, 42.2677974 ],
+    "totalFeatures" : 104
+  }, {
+    "type" : "table",
+    "modelName" : "GESTIONNAIRE_SUP",
+    "name" : "AC1_GESTIONNAIRE_SUP.dbf",
+    "path" : "Donnees_geographiques/AC1_GESTIONNAIRE_SUP.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "SERVITUDE",
+    "name" : "AC1_SERVITUDE.dbf",
+    "path" : "Donnees_geographiques/AC1_SERVITUDE.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 104
+  }, {
+    "type" : "table",
+    "modelName" : "SERVITUDE_ACTE_SUP",
+    "name" : "AC1_SERVITUDE_ACTE_SUP.dbf",
+    "path" : "Donnees_geographiques/AC1_SERVITUDE_ACTE_SUP.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 104
+  }, {
+    "type" : "metadata",
+    "modelName" : "METADONNEES",
+    "name" : "SUP-AC1-2A-172014607-20180130.xml",
+    "path" : "SUP-AC1-2A-172014607-20180130.xml"
+  } ],
+  "documentExtent" : [ 8.5538275, 41.3324541, 9.4118624, 42.2722707 ],
+  "tags" : {
+    "typeref" : null
   },
-  "metadata": {
-    "fileIdentifier": "SUP-AC1-2A-172014607-20180130",
-    "title": "Servitude d’Utilité Publique de catégorie AC1 sur le département de CORSE-DU-SUD",
-    "abstract": "Servitude d’Utilité Publique (SUP) en vigueur sur le département de CORSE-DU-SUD au 30/01/2018. Cette SUP est numérisée conformément aux prescriptions nationales du CNIG.",
-    "type": "dataset",
-    "locators": [
-      {
-        "url": "http://84.39.32.245/atom/principal/AC1/2A",
-        "protocol": null,
-        "name": "SUP2A"
-      },
-      {
-        "url": "http://wxs-gputest.mongeoportail.ign.fr/externe/rpxgugeeggtovh8ws5uvsjj6/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
-        "protocol": "OGC:WMS",
-        "name": "Lien vers le service WMS du Géoportail de l'urbanisme"
-      },
-      {
-        "url": "http://wxs-gputest.mongeoportail.ign.fr/externe/rpxgugeeggtovh8ws5uvsjj6/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
-        "protocol": "OGC:WFS",
-        "name": "Lien vers le service WFS du Géoportail de l'urbanisme"
-      },
-      {
-        "url": "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
-        "protocol": "ATOM",
-        "name": "Lien vers le service ATOM du Géoportail de l'urbanisme"
-      }
-    ],
-    "identifiers": [
-      "https://www.geoportail-urbanisme.gouv.fr/document/172014607_AC1_2A_20180130"
-    ],
-    "language": "fre",
-    "topicCategory": "planningCadastre",
-    "keywords": [
-      {
-        "keywords": [
-          "Usage des sols"
-        ],
-        "thesaurusName": "GEMET - INSPIRE themes, version 1.0",
-        "thesaurusDate": "2008-06-01"
-      },
-      {
-        "keywords": [
-          "Zones de gestion, de restriction ou de réglementation et unités de déclaration"
-        ],
-        "thesaurusName": "GEMET - INSPIRE themes, version 1.0",
-        "thesaurusDate": "2008-06-01"
-      }
-    ],
-    "referenceSystemIdentifier": {
-      "code": "EPSG:2154",
-      "uri": "http://www.opengis.net/def/crs/EPSG/0/2154"
+  "metadata" : {
+    "fileIdentifier" : "SUP-AC1-2A-172014607-20180130",
+    "title" : "Servitude d’Utilité Publique de catégorie AC1 sur le département de CORSE-DU-SUD",
+    "abstract" : "Servitude d’Utilité Publique (SUP) en vigueur sur le département de CORSE-DU-SUD au 30/01/2018. Cette SUP est numérisée conformément aux prescriptions nationales du CNIG.",
+    "type" : "dataset",
+    "locators" : [ {
+      "url" : "http://84.39.32.245/atom/principal/AC1/2A",
+      "name" : "SUP2A",
+      "protocol" : null,
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "http://wxs-gputest.mongeoportail.ign.fr/externe/rpxgugeeggtovh8ws5uvsjj6/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
+      "protocol" : "OGC:WMS",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "http://wxs-gputest.mongeoportail.ign.fr/externe/rpxgugeeggtovh8ws5uvsjj6/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
+      "protocol" : "OGC:WFS",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    }, {
+      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
+      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
+      "protocol" : "ATOM",
+      "protocolUrl" : null,
+      "applicationProfile" : null,
+      "applicationProfileUrl" : null
+    } ],
+    "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/172014607_AC1_2A_20180130" ],
+    "language" : "fre",
+    "topicCategory" : "planningCadastre",
+    "keywords" : [ {
+      "keywords" : [ "Usage des sols" ],
+      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+      "thesaurusDate" : "2008-06-01"
+    }, {
+      "keywords" : [ "Zones de gestion, de restriction ou de réglementation et unités de déclaration" ],
+      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+      "thesaurusDate" : "2008-06-01"
+    } ],
+    "referenceSystemIdentifier" : {
+      "code" : "EPSG:2154",
+      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
     },
-    "dateOfPublication": "2017-09-26",
-    "dateOfLastRevision": "2018-01-30",
-    "dateOfCreation": "2017-09-26",
-    "characterSet": "utf8",
-    "spatialRepresentationType": "vector",
-    "lineage": "Servitude d’utilité publique numérisée conformément aux prescriptions nationales du CNIG du 01/07/2016. Ce lot de données produit en 2018 a été numérisé à partir de la BD Parcellaire.",
-    "spatialResolutions": [
-      {
-        "denominator": "5000"
-      }
-    ],
-    "specifications": [
-      {
-        "title": "CNIG SUP v2016",
-        "date": "2016-07-01",
-        "dateType": "publication",
-        "degree": "true"
-      },
-      {
-        "title": "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
-        "date": "2014-04-07",
-        "dateType": "publication",
-        "degree": "true"
-      },
-      {
-        "title": "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
-        "date": "2010-12-08",
-        "dateType": "publication",
-        "degree": "true"
-      }
-    ],
-    "contact": {
-      "organisationName": "MCC",
-      "electronicMailAddress": "mcc@culture.gouv.fr",
-      "role": "owner",
-      "phone": null,
-      "deliveryPoint": "3 rue de Valois",
-      "city": "Paris",
-      "postalCode": "75002",
-      "country": "France",
-      "onlineResourceUrl": null,
-      "hoursOfService": null
+    "dateOfPublication" : "2017-09-26",
+    "dateOfLastRevision" : "2018-01-30",
+    "dateOfCreation" : "2017-09-26",
+    "characterSet" : "utf8",
+    "spatialRepresentationType" : "vector",
+    "lineage" : "Servitude d’utilité publique numérisée conformément aux prescriptions nationales du CNIG du 01/07/2016. Ce lot de données produit en 2018 a été numérisé à partir de la BD Parcellaire.",
+    "spatialResolutions" : [ {
+      "denominator" : "5000"
+    } ],
+    "specifications" : [ {
+      "title" : "CNIG SUP v2016",
+      "date" : "2016-07-01",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
+      "date" : "2014-04-07",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
+      "date" : "2010-12-08",
+      "dateType" : "publication",
+      "degree" : "true"
+    } ],
+    "contact" : {
+      "organisationName" : "MCC",
+      "electronicMailAddress" : "mcc@culture.gouv.fr",
+      "role" : "owner",
+      "phone" : null,
+      "deliveryPoint" : "3 rue de Valois",
+      "city" : "Paris",
+      "postalCode" : "75002",
+      "country" : "France",
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
     },
-    "metadataContact": {
-      "organisationName": "MCC",
-      "electronicMailAddress": "emmanuel.pierrez@culture.gouv.fr",
-      "role": "pointOfContact",
-      "phone": null,
-      "deliveryPoint": "3 rue de Valois",
-      "city": "Paris",
-      "postalCode": "75002",
-      "country": "France",
-      "onlineResourceUrl": null,
-      "hoursOfService": null
+    "metadataContact" : {
+      "organisationName" : "MCC",
+      "electronicMailAddress" : "emmanuel.pierrez@culture.gouv.fr",
+      "role" : "pointOfContact",
+      "phone" : null,
+      "deliveryPoint" : "3 rue de Valois",
+      "city" : "Paris",
+      "postalCode" : "75002",
+      "country" : "France",
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
     },
-    "metadataDate": "2018-09-14T15:58:08+02:00",
-    "metadataLanguage": "fre",
-    "extents": [
-      {
-        "boundingBox": [
-          8.53532352445879,
-          41.338699551477674,
-          9.40814778872609,
-          42.38140571207629
-        ]
-      }
-    ],
-    "constraints": [
-      {
-        "type": "MD_LegalConstraints",
-        "useLimitations": [
-          "Aucune condition ne s'applique",
-          "Licence Ouverte 2.0"
-        ],
-        "accessConstraints": [
-          "otherRestrictions"
-        ],
-        "useConstraints": [
-          "license"
-        ],
-        "otherConstraints": [
-          "Pas de restriction d’accès public"
-        ]
-      }
-    ],
-    "distributionFormats": [
-      {
-        "name": "SHP",
-        "version": "1.0"
-      }
-    ]
+    "metadataDate" : "2018-09-14T15:58:08+02:00",
+    "metadataLanguage" : "fre",
+    "extents" : [ {
+      "boundingBox" : [ 8.53532352445879, 41.338699551477674, 9.40814778872609, 42.38140571207629 ]
+    } ],
+    "constraints" : [ {
+      "type" : "MD_LegalConstraints",
+      "useLimitations" : [ "Aucune condition ne s'applique", "Licence Ouverte 2.0" ],
+      "accessConstraints" : [ "otherRestrictions" ],
+      "useConstraints" : [ "license" ],
+      "otherConstraints" : [ "Pas de restriction d’accès public" ]
+    } ],
+    "distributionFormats" : [ {
+      "name" : "SHP",
+      "version" : "1.0"
+    } ]
   }
 }
