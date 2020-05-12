@@ -17,46 +17,49 @@ import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 /**
  * Customizes validator for CNIG standard validation
  * 
- * @see <a href="http://www.geoportail-urbanisme.gouv.fr/standard">http://www.geoportail-urbanisme.gouv.fr/standard</a>
+ * @see <a href=
+ *      "http://www.geoportail-urbanisme.gouv.fr/standard">http://www.geoportail-urbanisme.gouv.fr/standard</a>
  * 
  * @author MBorne
  *
  */
 public class CnigPlugin implements Plugin {
 
-	public static final String NAME = "CNIG";
-	
-	@Override
-	public String getName() {
-		return NAME;
-	}
+    public static final String NAME = "CNIG";
 
-	@Override
-	public void setup( Context context ) {
-		// Join SUP files to add a column "fichiers" (must be done before CreateShapefilesPostProcess)
-		context.addListener( new ReferenceActeSupPostProcess() );
-		// converts DATA/*.csv to DATA/*.shp (must follow ReferenceActeSupPostProcess)
-		context.addListener( new CreateShapefilesPostProcess() );
-		// compute document.tag.typeref (must be done before document-info.json generation)
-		context.addListenerBefore(
-			new TyperefExtractorPostProcess(), 
-			DocumentInfoExtractorPostProcess.class 
-		);
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
-		/*
-		 * extends attribute validation
-		 */
-		context.addListener( new InseeValidator() );
-		context.addListener( new AtLeastOneWritingMaterialValidator() );
-		context.addListener( new IdurbaValidationCustomizer() );
+    @Override
+    public void setup(Context context) {
+        // Join SUP files to add a column "fichiers" (must be done before
+        // CreateShapefilesPostProcess)
+        context.addListener(new ReferenceActeSupPostProcess());
+        // converts DATA/*.csv to DATA/*.shp (must follow ReferenceActeSupPostProcess)
+        context.addListener(new CreateShapefilesPostProcess());
+        // compute document.tag.typeref (must be done before document-info.json
+        // generation)
+        context.addListenerBefore(
+            new TyperefExtractorPostProcess(),
+            DocumentInfoExtractorPostProcess.class
+        );
 
-		/*
-		 * extends metadata validation
-		 */
-		context.addListener( new CnigTypeValidator() );
-		context.addListener( new CnigSpecificationsValidator() );
-		context.addListener( new CnigMetadataDateOfLastRevisionValidator() );
-		context.addListener( new CnigMetadataReferenceSystemIdentifierValidator() );
-	}
+        /*
+         * extends attribute validation
+         */
+        context.addListener(new InseeValidator());
+        context.addListener(new AtLeastOneWritingMaterialValidator());
+        context.addListener(new IdurbaValidationCustomizer());
+
+        /*
+         * extends metadata validation
+         */
+        context.addListener(new CnigTypeValidator());
+        context.addListener(new CnigSpecificationsValidator());
+        context.addListener(new CnigMetadataDateOfLastRevisionValidator());
+        context.addListener(new CnigMetadataReferenceSystemIdentifierValidator());
+    }
 
 }

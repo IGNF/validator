@@ -11,30 +11,30 @@ import fr.ign.validator.cnig.model.DocumentName;
  */
 public class IdurbaHelperV2 extends IdurbaHelper {
 
-	@Override
-	public boolean isValid(String idurba){
-		if ( null == idurba ){
-			return false ;
-		}
-		return idurba.matches(DocumentName.getRegexpDU());
-	}
+    @Override
+    public boolean isValid(String idurba) {
+        if (null == idurba) {
+            return false;
+        }
+        return idurba.matches(DocumentName.getRegexpDU());
+    }
 
-	@Override
-	public boolean isValid(String idurba, String documentName){
-		if ( null == idurba ){
-			return false;
-		}
-		return idurba.equalsIgnoreCase(documentName);
-	}
+    @Override
+    public boolean isValid(String idurba, String documentName) {
+        if (null == idurba) {
+            return false;
+        }
+        return idurba.equalsIgnoreCase(documentName);
+    }
 
-	@Override
-	public String getHelpFormat() {
-		return "<INSEE/SIREN>_<TYPEDOC>_<DATAPPRO>{_CodeDU}";
-	}	
+    @Override
+    public String getHelpFormat() {
+        return "<INSEE/SIREN>_<TYPEDOC>_<DATAPPRO>{_CodeDU}";
+    }
 
-	@Override
-	public String getHelpExpected(String documentName) {
-		return documentName;
-	}
+    @Override
+    public String getHelpExpected(String documentName) {
+        return documentName;
+    }
 
 }

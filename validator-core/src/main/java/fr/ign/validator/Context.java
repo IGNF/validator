@@ -216,8 +216,7 @@ public class Context {
 	}
 
 	/**
-	 * TODO rename to setProjection
-	 * @param coordinateReferenceSystem
+	 * @param projection
 	 */
 	public void setProjection(Projection projection) {
 		this.projection = projection;

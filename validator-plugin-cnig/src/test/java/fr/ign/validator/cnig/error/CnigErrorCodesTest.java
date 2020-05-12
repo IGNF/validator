@@ -15,38 +15,38 @@ import fr.ign.validator.error.ValidatorError;
 
 /**
  * 
- * Ensure that CnigErrorCodes have default configuration 
+ * Ensure that CnigErrorCodes have default configuration
  * 
  * @author MBorne
  *
  */
 public class CnigErrorCodesTest {
 
-	@Test
-	public void testNewFromResourceFactory(){
-		ErrorFactory factory = new ErrorFactory() ;
-		assertFalse( factory.getPrototypes().isEmpty() ) ;
-	}
+    @Test
+    public void testNewFromResourceFactory() {
+        ErrorFactory factory = new ErrorFactory();
+        assertFalse(factory.getPrototypes().isEmpty());
+    }
 
-	@Test
-	public void testAllCodeExists(){
-		ErrorFactory factory = new ErrorFactory() ;
-		
-		Field[] fields = CnigErrorCodes.class.getDeclaredFields() ;
-		for (Field field : fields) {
-			// Filtrage sur les champs en majuscules...
-			if ( ! field.getName().equals( field.getName().toUpperCase() ) ){
-				continue ;
-			}
-			ErrorCode code = ErrorCode.valueOf(field.getName()) ;
-			assertEquals(code.toString(),field.getName()) ;
-			try {
-				ValidatorError error = factory.newError(code) ;
-				assertNotNull(error);
-			}catch (Exception e){
-				fail(e.getMessage());
-			}
-		}
-	}
+    @Test
+    public void testAllCodeExists() {
+        ErrorFactory factory = new ErrorFactory();
+
+        Field[] fields = CnigErrorCodes.class.getDeclaredFields();
+        for (Field field : fields) {
+            // Filtrage sur les champs en majuscules...
+            if (!field.getName().equals(field.getName().toUpperCase())) {
+                continue;
+            }
+            ErrorCode code = ErrorCode.valueOf(field.getName());
+            assertEquals(code.toString(), field.getName());
+            try {
+                ValidatorError error = factory.newError(code);
+                assertNotNull(error);
+            } catch (Exception e) {
+                fail(e.getMessage());
+            }
+        }
+    }
 
 }

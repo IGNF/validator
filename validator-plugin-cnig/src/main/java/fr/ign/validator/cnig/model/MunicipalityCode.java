@@ -1,5 +1,7 @@
 package fr.ign.validator.cnig.model;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 
  * Validates INSEE codes for municipalities
@@ -17,7 +19,7 @@ public class MunicipalityCode {
 	 * @return
 	 */
 	public static boolean isValid(String value){
-		if ( null == value ){
+		if ( StringUtils.isEmpty(value) ){
 			return false ;
 		}
 		return value.matches(REGEXP) ;
