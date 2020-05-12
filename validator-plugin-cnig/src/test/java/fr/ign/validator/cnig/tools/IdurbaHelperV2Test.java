@@ -7,8 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ign.validator.cnig.tools.IdurbaHelperV2;
-
 public class IdurbaHelperV2Test {
 	
 	private IdurbaHelperV2 idurbaHelper;

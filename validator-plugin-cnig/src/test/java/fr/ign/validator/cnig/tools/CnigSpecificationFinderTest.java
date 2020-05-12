@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import fr.ign.validator.cnig.tools.CnigSpecificationFinder;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.Specification;
 

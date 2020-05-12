@@ -7,8 +7,6 @@ import java.util.Collection;
 
 import org.junit.Test;
 
-import fr.ign.validator.tools.ResourceHelper;
-
 public class FileUtilsTest {
 
 	@Test

@@ -11,7 +11,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import fr.ign.validator.exception.InvalidCharsetException;

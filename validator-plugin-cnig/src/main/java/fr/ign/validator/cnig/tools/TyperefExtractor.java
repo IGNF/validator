@@ -18,83 +18,83 @@ import fr.ign.validator.tools.TableReader;
  * 
  */
 public class TyperefExtractor {
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("TYPEREF_EXTRACTOR");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("TYPEREF_EXTRACTOR");
 
-	/**
-	 * The document model providing IDURBA naming convention
-	 */
-	private IdurbaHelper idurbaHelper ;
-	
-	/**
-	 * 
-	 * @param idurbaHelper
-	 */
-	public TyperefExtractor(IdurbaHelper idurbaHelper){
-		this.idurbaHelper = idurbaHelper;
-	}
-	
-	/**
-	 * Finds a typeref in docUrbaFile according to documentName
-	 * 
-	 * @param documentName
-	 * @return
-	 */
-	public String findTyperef(File docUrbaFile, String documentName) {
-		if (!docUrbaFile.exists()) {
-			log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
-			return null;
-		}
+    /**
+     * The document model providing IDURBA naming convention
+     */
+    private IdurbaHelper idurbaHelper;
 
-		try {
-			TableReader reader = TableReader.createTableReader(docUrbaFile, StandardCharsets.UTF_8);
+    /**
+     * 
+     * @param idurbaHelper
+     */
+    public TyperefExtractor(IdurbaHelper idurbaHelper) {
+        this.idurbaHelper = idurbaHelper;
+    }
 
-			int indexTyperef = reader.findColumn("TYPEREF");
-			if (indexTyperef < 0) {
-				log.error(MARKER, "Champ TYPEREF non défini dans DOC_URBA");
-				return null;
-			}
-			int indexIdurba = reader.findColumn("IDURBA");
-			if (indexIdurba < 0) {
-				log.error(MARKER, "IDURBA non défini dans DOC_URBA");
-				return null;
-			}
+    /**
+     * Finds a typeref in docUrbaFile according to documentName
+     * 
+     * @param documentName
+     * @return
+     */
+    public String findTyperef(File docUrbaFile, String documentName) {
+        if (!docUrbaFile.exists()) {
+            log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
+            return null;
+        }
 
-			/*
-			 * Search of row corresponding to documentName
-			 */
-			while (reader.hasNext()) {
-				String[] row = reader.next();
-				String idurba = row[indexIdurba];
+        try {
+            TableReader reader = TableReader.createTableReader(docUrbaFile, StandardCharsets.UTF_8);
 
-				if (null == idurba || idurba.isEmpty()) {
-					continue;
-				}
+            int indexTyperef = reader.findColumn("TYPEREF");
+            if (indexTyperef < 0) {
+                log.error(MARKER, "Champ TYPEREF non défini dans DOC_URBA");
+                return null;
+            }
+            int indexIdurba = reader.findColumn("IDURBA");
+            if (indexIdurba < 0) {
+                log.error(MARKER, "IDURBA non défini dans DOC_URBA");
+                return null;
+            }
 
-				if ( ! idurbaHelper.isValid(idurba,documentName) ){
-					continue;
-				}
+            /*
+             * Search of row corresponding to documentName
+             */
+            while (reader.hasNext()) {
+                String[] row = reader.next();
+                String idurba = row[indexIdurba];
 
-				String result = row[indexTyperef];
+                if (null == idurba || idurba.isEmpty()) {
+                    continue;
+                }
 
-				/*
-				 * if idUrba found an typeref is null, default is 01
-				 */
-				if (null == result) {
-					result = "01";
-				}
+                if (!idurbaHelper.isValid(idurba, documentName)) {
+                    continue;
+                }
 
-				log.info(MARKER, "TYPEREF pour IDURBA={} : {}", idurba, result);
-				return result;
-			}
+                String result = row[indexTyperef];
 
-		} catch (Exception e) {
-			log.error(MARKER, "Erreur dans la lecture de DOC_URBA.csv");
-			return null;
-		}
+                /*
+                 * if idUrba found an typeref is null, default is 01
+                 */
+                if (null == result) {
+                    result = "01";
+                }
 
-		log.error(MARKER, "Impossible de trouver une ligne correspondant à {} dans DOC_URBA.csv", documentName);
-		return null;
-	}
+                log.info(MARKER, "TYPEREF pour IDURBA={} : {}", idurba, result);
+                return result;
+            }
+
+        } catch (Exception e) {
+            log.error(MARKER, "Erreur dans la lecture de DOC_URBA.csv");
+            return null;
+        }
+
+        log.error(MARKER, "Impossible de trouver une ligne correspondant à {} dans DOC_URBA.csv", documentName);
+        return null;
+    }
 
 }

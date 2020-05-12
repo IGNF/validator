@@ -81,7 +81,7 @@ public class CommandApplication {
 		}
 		String commandName = args[0];
 		Command command = getCommandByName(commandName);
-		if ( command == null || command.equals("--help") || command.equals("-h") ){
+		if ( command == null || commandName.equals("--help") || commandName.equals("-h") ){
 			System.err.println("command '"+commandName+"' not found");
 			displayHelp();
 			return 1;

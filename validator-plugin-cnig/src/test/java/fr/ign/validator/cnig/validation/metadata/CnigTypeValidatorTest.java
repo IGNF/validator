@@ -13,62 +13,61 @@ import fr.ign.validator.metadata.code.ScopeCode;
 
 public class CnigTypeValidatorTest extends CnigValidatorTestBase {
 
-	/*
-	 * check valid for "dataset"
-	 */
-	@Test
-	public void testValidDataset(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getType()).thenReturn(ScopeCode.valueOf("dataset"));
-		
-		CnigTypeValidator validator = new CnigTypeValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(0, report.getErrors().size());
-	}
+    /*
+     * check valid for "dataset"
+     */
+    @Test
+    public void testValidDataset() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getType()).thenReturn(ScopeCode.valueOf("dataset"));
 
-	/*
-	 * check valid for "serie"
-	 */
-	@Test
-	public void testValidSerie(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getType()).thenReturn(ScopeCode.valueOf("serie"));
-		
-		CnigTypeValidator validator = new CnigTypeValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(0, report.getErrors().size());
-	}
+        CnigTypeValidator validator = new CnigTypeValidator();
+        validator.validate(context, metadata);
 
-	/*
-	 * check not valid for serie
-	 */
-	@Test
-	public void testInvalid(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getType()).thenReturn(ScopeCode.valueOf("feature"));
-		
-		CnigTypeValidator validator = new CnigTypeValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(1, report.getErrors().size());
-		assertEquals(
-			CnigErrorCodes.CNIG_METADATA_TYPE_INVALID, 
-			report.getErrors().get(0).getCode()
-		);
-	}
+        assertEquals(0, report.getErrors().size());
+    }
 
-	@Test
-	public void testEmptyNoErrorDuplication(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getType()).thenReturn(null);
-		
-		CnigTypeValidator validator = new CnigTypeValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(0, report.getErrors().size());
-	}
+    /*
+     * check valid for "serie"
+     */
+    @Test
+    public void testValidSerie() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getType()).thenReturn(ScopeCode.valueOf("serie"));
 
-	
+        CnigTypeValidator validator = new CnigTypeValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(0, report.getErrors().size());
+    }
+
+    /*
+     * check not valid for serie
+     */
+    @Test
+    public void testInvalid() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getType()).thenReturn(ScopeCode.valueOf("feature"));
+
+        CnigTypeValidator validator = new CnigTypeValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(1, report.getErrors().size());
+        assertEquals(
+            CnigErrorCodes.CNIG_METADATA_TYPE_INVALID,
+            report.getErrors().get(0).getCode()
+        );
+    }
+
+    @Test
+    public void testEmptyNoErrorDuplication() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getType()).thenReturn(null);
+
+        CnigTypeValidator validator = new CnigTypeValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(0, report.getErrors().size());
+    }
+
 }

@@ -3,6 +3,7 @@ package fr.ign.validator.xml.binding;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class FeatureTypeTest {
 		StringWriter output = new StringWriter() ;
 		marshaller.marshal(featureType, output);
 		Assert.assertEquals(
-			FileUtils.readFileToString(featureTypePath),
+			FileUtils.readFileToString(featureTypePath,StandardCharsets.UTF_8),
 			output.toString()
 		);
 	}

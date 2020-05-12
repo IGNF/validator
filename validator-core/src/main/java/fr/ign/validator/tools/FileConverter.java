@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.xml.sax.SAXException;
 
 import fr.ign.validator.tools.internal.FixGML;
 import fr.ign.validator.tools.ogr.OgrVersion;
@@ -139,8 +138,8 @@ public class FileConverter {
 
 			InputStream stdout = process.getInputStream();
 			BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(stdout));
-
 			String version = stdoutReader.readLine();
+			stdoutReader.close();
 			return version;
 		} catch (IOException e) {
 			return null;
@@ -346,32 +345,29 @@ public class FileConverter {
 	private void runCommand(String[] args, Map<String, String> envs) throws IOException {
 		Process process = null;
 		try {
-			/*
-			 * Creating command
-			 */
+            /* output command line to logs */
 			String commandLine = commandToString(args);
 			log.info(MARKER, commandLine);
 
-			/*
-			 * Executing command
-			 */
+            /* create process */
 			ProcessBuilder builder = new ProcessBuilder(args);
 			for (String envName : envs.keySet()) {
 				builder.environment().put(envName, envs.get(envName));
 			}
-			//
 
+			/* run process */
 			process = builder.start();
-			InputStream stderr = process.getErrorStream();
 			process.waitFor();
 
-			/*
-			 * Reading error
-			 */
-			BufferedReader errorReader = new BufferedReader(new InputStreamReader(stderr));
-			String line = null;
-			while ((line = errorReader.readLine()) != null) {
-				log.error(MARKER, line);
+            /* read errors from process */
+			BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            try {
+			    String line = null;
+    			while ((line = errorReader.readLine()) != null) {
+    				log.error(MARKER, line);
+    			}
+			}finally {
+			    errorReader.close();
 			}
 
 			if (process.exitValue() != 0) {

@@ -1,6 +1,6 @@
 package fr.ign.validator.tools;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +8,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
-
-import fr.ign.validator.tools.ResourceHelper;
 
 public class CharsetDetectorTest {
 	

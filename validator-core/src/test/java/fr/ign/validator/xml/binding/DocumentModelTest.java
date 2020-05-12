@@ -3,6 +3,7 @@ package fr.ign.validator.xml.binding;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -65,7 +66,7 @@ public class DocumentModelTest {
 		StringWriter sw = new StringWriter();
 		marshaller.marshal(documentModel, sw);
 		String marshalled = sw.toString();
-		Assert.assertEquals(marshalled, FileUtils.readFileToString(documentModelPath));
+		Assert.assertEquals(marshalled, FileUtils.readFileToString(documentModelPath,StandardCharsets.UTF_8));
 	}
 	
 	

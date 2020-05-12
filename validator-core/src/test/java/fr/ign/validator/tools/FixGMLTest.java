@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.tools.internal.FixGML;
 
 public class FixGMLTest {

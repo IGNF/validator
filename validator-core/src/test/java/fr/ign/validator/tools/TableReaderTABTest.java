@@ -10,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.exception.InvalidCharsetException;
 
 public class TableReaderTABTest {
