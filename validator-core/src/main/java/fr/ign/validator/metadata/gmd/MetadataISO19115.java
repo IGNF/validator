@@ -172,6 +172,11 @@ public class MetadataISO19115 implements Metadata {
 				"./gmd:applicationProfile/*/@xlink:href",
 				onlineResourceElement
 			));
+			// description (note that descriptionUrl is ignored)
+			onlineResource.setDescription(findValue(
+			    "./gmd:description/*",
+                onlineResourceElement
+            ));
 
 			result.add(onlineResource);
 		}

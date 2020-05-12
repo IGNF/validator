@@ -75,21 +75,24 @@
       "protocol" : "",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : "Prescriptions nationales pour la dématérialisation des documents d’urbanisme"
     }, {
       "url" : "http://wxs-dhup.mongeoportail.ign.fr/externe/wgevy1c30xchwyquak37y0s0/wms/v?",
       "name" : "",
       "protocol" : "",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : "Service de visualisation du Géoportail de l'Urbanisme"
     }, {
       "url" : "http://wxs-dhup.mongeoportail.ign.fr/externe/wgevy1c30xchwyquak37y0s0/telechargement/prepackage",
       "name" : "",
       "protocol" : "",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : "Service de téléchargement du Géoportail de l'Urbanisme"
     } ],
     "identifiers" : [ "fr-000050545-cc20130902" ],
     "language" : "fre",

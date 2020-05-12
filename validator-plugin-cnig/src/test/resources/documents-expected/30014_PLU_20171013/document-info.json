@@ -225,21 +225,24 @@
       "protocol" : "OGC:WMS",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     }, {
       "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
       "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
       "protocol" : "OGC:WFS",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     }, {
       "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
       "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
       "protocol" : "ATOM",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     } ],
     "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/30014_PLU_20171013" ],
     "language" : "fre",

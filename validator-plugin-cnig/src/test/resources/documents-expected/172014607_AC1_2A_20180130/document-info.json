@@ -666,28 +666,32 @@
       "protocol" : null,
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     }, {
       "url" : "http://wxs-gputest.mongeoportail.ign.fr/externe/rpxgugeeggtovh8ws5uvsjj6/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
       "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
       "protocol" : "OGC:WMS",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     }, {
       "url" : "http://wxs-gputest.mongeoportail.ign.fr/externe/rpxgugeeggtovh8ws5uvsjj6/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
       "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
       "protocol" : "OGC:WFS",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     }, {
       "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
       "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
       "protocol" : "ATOM",
       "protocolUrl" : null,
       "applicationProfile" : null,
-      "applicationProfileUrl" : null
+      "applicationProfileUrl" : null,
+      "description" : null
     } ],
     "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/172014607_AC1_2A_20180130" ],
     "language" : "fre",
