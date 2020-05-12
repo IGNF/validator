@@ -12,64 +12,74 @@ package fr.ign.validator.metadata;
  */
 public class OnlineResource {
 
-	private String url;
+    private String url;
 
-	private String name;
+    private String name;
 
-	private String protocol;
+    private String protocol;
 
-	private String protocolUrl;
+    private String protocolUrl;
 
-	private String applicationProfile;
+    private String applicationProfile;
 
-	private String applicationProfileUrl;
+    private String applicationProfileUrl;
 
-	public String getUrl() {
-		return url;
-	}
+    private String description;
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getProtocol() {
-		return protocol;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}
+    public String getProtocol() {
+        return protocol;
+    }
 
-	public String getProtocolUrl() {
-		return protocolUrl;
-	}
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
 
-	public void setProtocolUrl(String protocolUrl) {
-		this.protocolUrl = protocolUrl;
-	}
+    public String getProtocolUrl() {
+        return protocolUrl;
+    }
 
-	public String getApplicationProfile() {
-		return applicationProfile;
-	}
+    public void setProtocolUrl(String protocolUrl) {
+        this.protocolUrl = protocolUrl;
+    }
 
-	public void setApplicationProfile(String applicationProfile) {
-		this.applicationProfile = applicationProfile;
-	}
+    public String getApplicationProfile() {
+        return applicationProfile;
+    }
 
-	public String getApplicationProfileUrl() {
-		return applicationProfileUrl;
-	}
+    public void setApplicationProfile(String applicationProfile) {
+        this.applicationProfile = applicationProfile;
+    }
 
-	public void setApplicationProfileUrl(String applicationProfileUrl) {
-		this.applicationProfileUrl = applicationProfileUrl;
-	}
+    public String getApplicationProfileUrl() {
+        return applicationProfileUrl;
+    }
+
+    public void setApplicationProfileUrl(String applicationProfileUrl) {
+        this.applicationProfileUrl = applicationProfileUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 }

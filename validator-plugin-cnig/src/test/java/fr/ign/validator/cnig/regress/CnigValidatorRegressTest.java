@@ -63,7 +63,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Create validation context
-	 * 
+	 *
 	 * @param documentPath
 	 * @return
 	 * @throws Exception
@@ -81,7 +81,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Get generated document-info.json file
-	 * 
+	 *
 	 * @param documentPath
 	 * @return
 	 */
@@ -92,7 +92,7 @@ public class CnigValidatorRegressTest {
 
 	/**
 	 * Test PLU en standard 2014
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -123,6 +123,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("41175_PLU_20140603");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/41175_PLU_20140603/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
@@ -160,6 +161,7 @@ public class CnigValidatorRegressTest {
 		File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("50545_CC_20130902");
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/50545_CC_20130902/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
@@ -199,6 +201,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("50545_CC_20140101");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/50545_CC_20140101/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
@@ -250,6 +253,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("19182_CC_20150517");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/19182_CC_20150517/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		/* skips tests for GDAL 1.11 */
 		if (!gdalDestroysCoordinates) {
@@ -282,6 +286,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("110068012_PM3_28_20161104");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/110068012_PM3_28_20161104/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
@@ -315,6 +320,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("172014607_AC1_2A_20180130");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/172014607_AC1_2A_20180130/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
@@ -345,6 +351,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/30014_PLU_20171013/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
@@ -378,6 +385,7 @@ public class CnigValidatorRegressTest {
 		File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
 
 		String actual = FileUtils.readFileToString(producedInfosCnigPath,StandardCharsets.UTF_8).trim();
+		//FileUtils.writeStringToFile(new File("src/test/resources/documents-expected/200011781_PLUi_20180101/document-info.json"),actual,StandardCharsets.UTF_8);
 		String expected = FileUtils.readFileToString(expectedInfosCnigPath,StandardCharsets.UTF_8).trim();
 		JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
 	}
