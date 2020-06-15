@@ -41,6 +41,30 @@ public class ProxyParser {
 			return parseUrl(proxy);
 		}
 	}
+	
+	/**
+	 * Convert syntax from NO_PROXY env variable to java's nonProxyHosts
+	 * @param noProxy
+	 * @return
+	 */
+	public static String toNonProxyHosts(String noProxy) {
+		if ( StringUtils.isEmpty(noProxy) ) {
+			return "";
+		}
+
+		StringBuilder result = new StringBuilder();
+		String[] hosts = StringUtils.split(noProxy,",");
+		boolean isFirst = true;
+		for (String host : hosts) {
+			if ( isFirst ) {
+				isFirst = false;
+			}else {
+				result.append("|");
+			}
+			result.append(host);
+		}
+		return result.toString();
+	}
 
 	/**
 	 * Parse legacy format {proxyHost}:{proxyPort}

@@ -63,7 +63,7 @@ public class ReadUrlCommand extends AbstractCommand {
 	@Override
 	protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
 		this.url = commandLine.getOptionValue("url");
-		log.info("URL : {}",this.url);
+		log.info(MARKER,"URL : {}",this.url);
 	}
 
 }
