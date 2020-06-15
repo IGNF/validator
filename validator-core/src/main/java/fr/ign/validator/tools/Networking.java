@@ -18,7 +18,7 @@ public class Networking {
 	 * Configure networking options (ssl, proxy,...) using environment variables for
 	 * proxy
 	 */
-	public static void configureHttpClient() throws ParseException {
+	public static void configureHttpClient() {
 		Networking.configureHttpClient("");
 	}
 
@@ -29,7 +29,7 @@ public class Networking {
 	 * @param proxy
 	 * @throws ParseException
 	 */
-	public static void configureHttpClient(String proxy) throws ParseException {
+	public static void configureHttpClient(String proxy) {
 		Properties systemSettings = System.getProperties();
 
 		/* configure SSL */

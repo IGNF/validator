@@ -6,25 +6,26 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
-import org.apache.commons.cli.ParseException;
 import org.junit.Test;
+
+import fr.ign.validator.exception.InvalidProxyException;
 
 public class ProxyParserTest {
 
 	@Test
-	public void testNull() throws ParseException {
+	public void testNull() {
 		Map<String,String> properties = ProxyParser.parse(null);
 		assertTrue(properties.isEmpty());
 	}
 
 	@Test
-	public void testEmpty() throws ParseException {
+	public void testEmpty() {
 		Map<String,String> properties = ProxyParser.parse("");
 		assertTrue(properties.isEmpty());
 	}
 
 	@Test
-	public void testHostPort() throws ParseException {
+	public void testHostPort() {
 		Map<String,String> properties = ProxyParser.parse("proxy.ign.fr:3128");
 		assertFalse(properties.isEmpty());
 		
@@ -34,7 +35,7 @@ public class ProxyParserTest {
 	}
 
 	@Test
-	public void testHttpHostPort() throws ParseException {
+	public void testHttpHostPort() {
 		Map<String,String> properties = ProxyParser.parse("http://proxy.ign.fr:3128");
 		assertFalse(properties.isEmpty());
 		
@@ -45,7 +46,7 @@ public class ProxyParserTest {
 	
 	
 	@Test
-	public void testHttpUserPasswordHostPort() throws ParseException {
+	public void testHttpUserPasswordHostPort() {
 		Map<String,String> properties = ProxyParser.parse("http://username:userpass@proxy.ign.fr:3128");
 		assertFalse(properties.isEmpty());
 		
@@ -58,7 +59,7 @@ public class ProxyParserTest {
 	}
 
 	@Test
-	public void testInvalidUrl() throws ParseException {
+	public void testInvalidUrl() {
 		assertThrowForInvalid("http://invalid-no-port.fr");
 		assertThrowForInvalid("http:///invalid-no-port.fr:3128");
 		assertThrowForInvalid("ftp://invalid-not-http.fr:3128");
@@ -69,10 +70,10 @@ public class ProxyParserTest {
 		boolean thrown = false;
 		try {
 			ProxyParser.parse(input);
-		}catch(ParseException e){
+		}catch(InvalidProxyException e){
 			thrown = true;
 		}
-		assertTrue("Should have thrown exception for : "+input, thrown);
+		assertTrue("Should have thrown an InvalidProxyException for : "+input, thrown);
 	}
 
 }

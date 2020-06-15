@@ -21,7 +21,7 @@ public class NetworkingTest {
 	 * @throws ParseException
 	 */
 	@Test
-	public void testConfigureHttpClientSample() throws ParseException {
+	public void testConfigureHttpClientSample() {
 		Networking.configureHttpClient("http://proxy.home:3128");
 		Properties systemSettings = System.getProperties();
 		assertEquals("true", systemSettings.get("proxySet"));
@@ -41,7 +41,7 @@ public class NetworkingTest {
 	 * @throws ParseException 
 	 */
 	@Test
-	public void testReadUrl() throws MalformedURLException, IOException, ParseException {
+	public void testReadUrl() throws MalformedURLException, IOException {
 		Networking.configureHttpClient("");
 
 		String url = "https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json";
