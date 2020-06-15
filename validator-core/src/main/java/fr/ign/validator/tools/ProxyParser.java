@@ -41,7 +41,7 @@ public class ProxyParser {
 	}
 
 	/**
-	 * Parse legacy {proxyHost}:{proxyPort}
+	 * Parse legacy format {proxyHost}:{proxyPort}
 	 * @param proxy
 	 * @param properties
 	 * @return
@@ -58,17 +58,14 @@ public class ProxyParser {
 		if (proxyParts.length != 2) {
 			throw new ParseException("Invalid proxy, expecting {proxyUser}:{proxyPassword} or URL");
 		}
-		properties.put("proxySet", "true");
-		properties.put("http.proxyHost", proxyParts[0]);
-		properties.put("http.proxyPort", proxyParts[1]);
-		properties.put("https.proxyHost", proxyParts[0]);
-		properties.put("https.proxyPort", proxyParts[1]);
+		properties.put("proxyHost", proxyParts[0]);
+		properties.put("proxyPort", proxyParts[1]);
 		return properties;
 	}
 
 
 	/**
-	 * Parse proxy define as an URL
+	 * Parse proxy defined as an URL
 	 * @param proxy
 	 * @param properties
 	 * @return
@@ -90,11 +87,8 @@ public class ProxyParser {
 				throw new ParseException("Invalid proxy URL (expecting http protocol)");
 			}
 
-			properties.put("proxySet", "true");
-			properties.put("http.proxyHost", uri.getHost());
-			properties.put("http.proxyPort", ""+uri.getPort());
-			properties.put("https.proxyHost", uri.getHost());
-			properties.put("https.proxyPort", ""+uri.getPort());
+			properties.put("proxyHost", uri.getHost());
+			properties.put("proxyPort", ""+uri.getPort());
 
 			String userInfo = uri.getUserInfo();
 			if ( ! StringUtils.isEmpty(userInfo) ){
@@ -102,10 +96,8 @@ public class ProxyParser {
 				if (userInfoParts.length != 2) {
 					throw new ParseException("Invalid proxy user");
 				}
-				properties.put("http.proxyUser", userInfoParts[0]);
-				properties.put("http.proxyPassword", ""+userInfoParts[1]);
-				properties.put("https.proxyUser", userInfoParts[0]);
-				properties.put("https.proxyPassword", ""+userInfoParts[1]);
+				properties.put("proxyUser", userInfoParts[0]);
+				properties.put("proxyPassword", ""+userInfoParts[1]);
 			}
 			return properties;
 		}catch(URISyntaxException e){

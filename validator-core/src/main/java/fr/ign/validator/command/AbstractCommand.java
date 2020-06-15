@@ -11,6 +11,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import fr.ign.validator.tools.Networking;
 import fr.ign.validator.tools.ProxyParser;
 
 /**
@@ -63,7 +64,7 @@ public abstract class AbstractCommand implements Command {
 				displayHelp(options);
 				return 1;
 			}
-			parseProxyOption(commandLine);
+			configureNetworkingAndProxy(commandLine);
 			parseCustomOptions(commandLine);
 		} catch (ParseException e) {
 			System.err.println(e.getMessage());
@@ -120,24 +121,9 @@ public abstract class AbstractCommand implements Command {
 	 * @param commandLine
 	 * @throws ParseException
 	 */
-	protected void parseProxyOption(CommandLine commandLine) throws ParseException{
+	protected void configureNetworkingAndProxy(CommandLine commandLine) throws ParseException{
 		proxy = commandLine.getOptionValue("proxy", "");
-		configureHttpClient();
-	}
-
-	/**
-	 * Configure network options including proxy
-	 * @throws ParseException
-	 */
-	private void configureHttpClient() throws ParseException {
-		/* configure network */
-		Properties systemSettings = System.getProperties();
-		Map<String,String> properties = ProxyParser.parse(proxy);
-		for ( String key : properties.keySet() ){
-			systemSettings.put(key, properties.get(key));
-		}
-		/* configure SSL */
-		systemSettings.put("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+		Networking.configureHttpClient(proxy);
 	}
 
 }
