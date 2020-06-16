@@ -48,7 +48,7 @@ public class DocumentModel implements Model {
     /**
      * Constraints on the document
      */
-    private DocumentConstraints contraints = new DocumentConstraints();
+    private DocumentConstraints constraints = new DocumentConstraints();
  
     /**
      * The list of validators on the Document
@@ -81,13 +81,24 @@ public class DocumentModel implements Model {
         this.name = name;
     }
 
+
+    @XmlTransient
+    public DocumentConstraints getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(DocumentConstraints constraints) {
+        this.constraints = constraints;
+    }
+
+
     /**
      * @deprecated kept for compatibility with old models
      * @return
      */
     @JsonIgnore
     public String getRegexp() {
-        return contraints.getFolderName();
+        return constraints.getFolderName();
     }
 
     /**
@@ -98,7 +109,7 @@ public class DocumentModel implements Model {
      * @deprecated
      */
     public void setRegexp(String regexp) {
-        this.contraints.setFolderName(regexp);
+        this.constraints.setFolderName(regexp);
     }
 
 
@@ -169,20 +180,6 @@ public class DocumentModel implements Model {
         return result;
     }
 
-    /**
-     * @return
-     */
-    @XmlTransient
-    public DocumentConstraints getConstraints() {
-        return contraints;
-    }
-
-    /**
-     * @param contraints
-     */
-    public void setConstraints(DocumentConstraints contraints) {
-        this.contraints = contraints;
-    }
 
     /**
      * Add a validator to the document

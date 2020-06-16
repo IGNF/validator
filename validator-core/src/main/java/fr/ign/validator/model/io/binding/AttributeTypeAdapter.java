@@ -21,7 +21,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 		AdaptedAttributeType adaptedAttributeType = new AdaptedAttributeType();
 		adaptedAttributeType.name = attributeType.getName() ;
 		adaptedAttributeType.type = attributeType.getTypeName() ;
-		adaptedAttributeType.definition = attributeType.getDefinition() ;
+		adaptedAttributeType.definition = attributeType.getDescription() ;
 		adaptedAttributeType.regexp = attributeType.getRegexp() ;
 		adaptedAttributeType.size = attributeType.getSize() ;
 		adaptedAttributeType.nullable = attributeType.isNullable() ;
@@ -40,7 +40,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 
 		AttributeType<?> attributeType = AttributeType.forName( adaptedValueType.type ) ;
 		attributeType.setName(adaptedValueType.name);
-		attributeType.setDefinition(adaptedValueType.definition);
+		attributeType.setDescription(adaptedValueType.definition);
 		attributeType.setRegexp(adaptedValueType.regexp);
 		attributeType.setSize(adaptedValueType.size);
 		attributeType.setNullable(adaptedValueType.nullable) ;
