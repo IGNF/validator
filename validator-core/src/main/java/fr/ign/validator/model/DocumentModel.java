@@ -87,7 +87,7 @@ public class DocumentModel implements Model {
      */
     @JsonIgnore
     public String getRegexp() {
-        return contraints.folderName;
+        return contraints.getFolderName();
     }
 
     /**
@@ -98,7 +98,7 @@ public class DocumentModel implements Model {
      * @deprecated
      */
     public void setRegexp(String regexp) {
-        this.contraints.folderName = regexp;
+        this.contraints.setFolderName(regexp);
     }
 
 
