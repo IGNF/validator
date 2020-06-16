@@ -1,4 +1,4 @@
-package fr.ign.validator.xml.binding;
+package fr.ign.validator.model.io.binding;
 
 import java.util.List;
 

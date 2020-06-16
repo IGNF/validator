@@ -7,8 +7,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.io.XmlModelReader;
 import fr.ign.validator.tools.ResourceHelper;
-import fr.ign.validator.xml.XmlModelManager;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class CnigRegressHelper {
 			CnigRegressHelper.class, 
 			"/config/" + documentModelName + "/files.xml"
 		);
-		XmlModelManager loader = new XmlModelManager();
+		XmlModelReader loader = new XmlModelReader();
 		DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
 		documentModel.setName(documentModelName);
 		return documentModel;

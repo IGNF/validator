@@ -1,4 +1,4 @@
-package fr.ign.validator.xml;
+package fr.ign.validator.model.io;
 
 import java.io.File;
 
@@ -24,14 +24,14 @@ import fr.ign.validator.model.file.TableModel;
  * 
  * @author MBorne
  */
-public class XmlModelManager {
+public class XmlModelReader {
 	public static final Logger log = LogManager.getRootLogger();
 	public static final Marker MARKER = MarkerManager.getMarker("XmlModelManager");
 
 	private JAXBContext context;
 	private Unmarshaller unmarshaller;
 
-	public XmlModelManager() {
+	public XmlModelReader() {
 		try {
 			this.context = JAXBContext.newInstance(FeatureType.class, DocumentModel.class);
 			this.unmarshaller = context.createUnmarshaller();

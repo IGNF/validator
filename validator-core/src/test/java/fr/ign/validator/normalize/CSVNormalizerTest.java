@@ -13,9 +13,9 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.io.XmlModelReader;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
-import fr.ign.validator.xml.XmlModelManager;
 
 public class CSVNormalizerTest {
 
@@ -36,7 +36,7 @@ public class CSVNormalizerTest {
 		context.setReportBuilder(reportBuilder);
 
 		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/normalizer/config/sample/files.xml") ;
-		XmlModelManager modelLoader = new XmlModelManager();
+		XmlModelReader modelLoader = new XmlModelReader();
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
 		File documentPath = ResourceHelper.getResourceFile(getClass(),"/normalizer/documents/sample");

@@ -1,4 +1,4 @@
-package fr.ign.validator.xml.binding;
+package fr.ign.validator.model.io.binding;
 
 import com.sun.xml.bind.marshaller.NamespacePrefixMapper;
 import com.sun.xml.bind.v2.WellKnownNamespace;

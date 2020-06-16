@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.xml.binding.FileModelAdapter;
+import fr.ign.validator.model.io.binding.FileModelAdapter;
 
 /**
  * Represents a file of a Document

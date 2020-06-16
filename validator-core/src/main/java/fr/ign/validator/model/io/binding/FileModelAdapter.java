@@ -1,4 +1,4 @@
-package fr.ign.validator.xml.binding;
+package fr.ign.validator.model.io.binding;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

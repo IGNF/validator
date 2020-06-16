@@ -15,9 +15,9 @@ import org.junit.rules.TemporaryFolder;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.io.XmlModelReader;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
-import fr.ign.validator.xml.XmlModelManager;
 
 public class DatabaseTest {
 
@@ -88,7 +88,7 @@ public class DatabaseTest {
 		context.setReportBuilder(reportBuilder);
 
 		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config/cnig_PLU_2014/files.xml") ;
-		XmlModelManager modelLoader = new XmlModelManager();
+		XmlModelReader modelLoader = new XmlModelReader();
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
 		File documentPath = ResourceHelper.getResourceFile(getClass(),"/database/41003_PLU_20130903");
