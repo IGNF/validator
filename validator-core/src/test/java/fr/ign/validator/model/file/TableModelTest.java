@@ -11,7 +11,7 @@ public class TableModelTest {
 	public void testFullRegexp() {
 		TableModel tableModel = new TableModel();
 		tableModel.setRegexp("COMMUNE");
-		Assert.assertEquals("(?i).*/COMMUNE\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)", tableModel.getFullRegexp());
+		Assert.assertEquals("(?i).*/COMMUNE\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)", tableModel.getPathRegexp());
 	}
 
 	@Test

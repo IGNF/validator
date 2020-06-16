@@ -40,11 +40,6 @@ public class DocumentInfo {
 	 * Wrapped document
 	 */
 	private Document document;
-	
-	/**
-	 * The standard (documentModelName)
-	 */
-	private DocumentModel documentModel ;
 
 	/**
 	 * List of DataFiles in directory
@@ -77,18 +72,13 @@ public class DocumentInfo {
 	}
 
 	/**
+	 * Get partial informations for DocumentModel
 	 * @return
 	 */
-	public DocumentModel getDocumentModel() {
-		return documentModel;
+	public DocumentModelInfo getDocumentModel() {
+	    DocumentModel documentModel = document.getDocumentModel();
+		return documentModel != null ? new DocumentModelInfo(documentModel) : null;
 	}
-	/**
-	 * @param standard
-	 */
-	public void setDocumentModel(DocumentModel documentModel) {
-		this.documentModel = documentModel;
-	}
-
 
 	/**
 	 * get register Files

@@ -244,7 +244,7 @@ public class Document implements Validatable {
 		for (File file : files) {
 			log.info(MARKER, "Recherche du FileModel pour le fichier {}...", file);
 			
-			FileModel fileModel = documentModel.FindFileModelByFilepath( file ) ;		
+			FileModel fileModel = documentModel.findFileModelByPath( file ) ;		
 			
 			if ( fileModel != null ){
 				log.info(MARKER, "[MATCH]{} => {}", file, fileModel.getName());
