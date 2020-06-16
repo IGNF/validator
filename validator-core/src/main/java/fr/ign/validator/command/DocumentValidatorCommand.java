@@ -2,6 +2,8 @@ package fr.ign.validator.command;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -54,11 +56,10 @@ public class DocumentValidatorCommand extends AbstractCommand {
     public static final String VALIDATION_DIRECTORY_NAME = "validation";
 
     /**
-     * Path to the document model. Either {configDir}/{documentModel.name}/files.xml
-     * or {documentModelUrl}
+     * URL of the document model.
      * 
      */
-    protected File documentModelPath;
+    protected URL documentModelUrl;
 
     /**
      * Standard name (ex : cnig_PLU_2013)
@@ -188,7 +189,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         /*
          * Config and version
          */
-        parseDocumentModelPath(commandLine);
+        parseDocumentModelUrl(commandLine);
 
         /*
          * Validation options
@@ -347,9 +348,9 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildModelOption(Options options) {
         {
-            Option option = new Option("m", "model", true, "URL for the document model");
+            Option option = new Option("m", "model", true, "URL of the document model");
             option.setRequired(false);
-            option.setArgName("DOCUMENT_MODEL");
+            option.setArgName("DOCUMENT_MODEL_URL");
             options.addOption(option);
         }
     }
@@ -360,20 +361,24 @@ public class DocumentValidatorCommand extends AbstractCommand {
      * @param commandLine
      * @throws ParseException
      */
-    protected void parseDocumentModelPath(CommandLine commandLine) throws ParseException {
+    protected void parseDocumentModelUrl(CommandLine commandLine) throws ParseException {
         String config = commandLine.getOptionValue("config");
         String version = commandLine.getOptionValue("version");
-        if ( ! StringUtils.isEmpty(config) && ! StringUtils.isEmpty(version) ) {
-            File configDir = new File(config);
-            this.documentModelPath = new File(configDir, version + "/files.xml");
-        }else {
-            String documentModelPath = commandLine.getOptionValue("model");
-            if ( StringUtils.isEmpty(documentModelPath) ) {
-                throw new ParseException("--model or --config,--version options required)");
-            }
-            this.documentModelPath = new File(documentModelPath);
-        }
         
+        try {
+            if ( ! StringUtils.isEmpty(config) && ! StringUtils.isEmpty(version) ) {
+                File configDir = new File(config);
+                this.documentModelUrl = (new File(configDir, version + "/files.xml")).toURI().toURL();
+            }else {
+                String modelUri = commandLine.getOptionValue("model");
+                if ( StringUtils.isEmpty(modelUri) ) {
+                    throw new ParseException("--model or --config,--version options required)");
+                }
+                this.documentModelUrl = new URL(modelUri);
+            }
+        } catch (MalformedURLException e) {
+            throw new ParseException("invalid model URL");
+        }
     }
 
     /**
@@ -385,7 +390,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected DocumentModel loadDocumentModel() throws IOException, ModelNotFoundException {
         XmlModelReader modelReader = new XmlModelReader();
-        return modelReader.loadDocumentModel(documentModelPath);
+        return modelReader.loadDocumentModel(documentModelUrl);
     }
 
     /**
