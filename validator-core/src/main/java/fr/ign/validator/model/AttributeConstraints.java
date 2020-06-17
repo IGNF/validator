@@ -2,6 +2,8 @@ package fr.ign.validator.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Constraints on AttributeType
  *
@@ -38,11 +40,17 @@ public class AttributeConstraints {
      */
     private String pattern;
     /**
-     * Limit size of the attribute TODO rename to maxLength
+     * Maximum length of the value 
+     * 
+     * @since 4.0 previously "size"
+     * 
+     * @see fr.ign.validator.validation.attribute.StringSizeValidator
+     * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_EXCEEDED
      */
-    private Integer size;
+    private Integer maxLength;
     /**
-     * Restriction on a list of values TODO rename to enum at JSON level
+     * Restriction on a list of values 
+     * TODO rename to enumValues at JSON level
      */
     private List<String> listOfValues;
 
@@ -50,6 +58,7 @@ public class AttributeConstraints {
      * Reference to another table attribute. Format TABLE_NAME.ATTRIBUTE_NAME
      * 
      * TODO support alternative format TABLE_NAME(ATTRIBUTE_NAME)
+     * TODO move validation from validator-plugin-dgpr to validator-core
      */
     private String reference;
 
@@ -82,14 +91,15 @@ public class AttributeConstraints {
         this.pattern = pattern;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getMaxLength() {
+        return maxLength;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setMaxLength(Integer maxLength) {
+        this.maxLength = maxLength;
     }
 
+    @JsonProperty("enum")
     public List<String> getListOfValues() {
         return listOfValues;
     }

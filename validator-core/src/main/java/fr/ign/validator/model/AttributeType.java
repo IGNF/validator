@@ -139,12 +139,12 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     @JsonIgnore
     @Deprecated
     public Integer getSize() {
-        return constraints.getSize();
+        return constraints.getMaxLength();
     }
 
     @Deprecated
     public void setSize(Integer size) {
-        this.constraints.setSize(size);
+        this.constraints.setMaxLength(size);
     }
 
     @Deprecated
