@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <id><![CDATA[]]></id>
+  <name><![CDATA[missing_feature_type]]></name>
+  <description><![CDATA[Sample configuration with a missing FeatureType)]]></description>
+  <regexp><![CDATA[+[a-Z]]]></regexp>
+  <files>
+    <file>
+      <id><![CDATA[]]></id>
+      <type><![CDATA[table]]></type>
+      <name><![CDATA[MY_TABLE]]></name>
+      <path><![CDATA[MY_TABLE]]></path>
+      <mandatory><![CDATA[ERROR]]></mandatory>
+    </file>
+  </files>
+</document>

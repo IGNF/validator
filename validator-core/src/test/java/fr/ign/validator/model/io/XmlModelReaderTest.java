@@ -1,6 +1,8 @@
 package fr.ign.validator.model.io;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.apache.logging.log4j.util.Strings;
@@ -10,6 +12,7 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
@@ -28,12 +31,69 @@ public class XmlModelReaderTest {
     }
 
     /**
+     * Ensure that ModelNotFoundException are thrown if DocumentModel file doesn't
+     * exists
+     */
+    @Test
+    public void testLoadDocumentModelFileNotFound() {
+        File configDir = ResourceHelper.getResourceFile(getClass(), "/config-xml");
+        File documentModelPath = new File(configDir, "/not-found/files.xml");
+        boolean thrown = false;
+        try {
+            modelLoader.loadDocumentModel(documentModelPath);
+        } catch (ModelNotFoundException e) {
+            Assert.assertTrue(e.getMessage().contains("/not-found/files.xml"));
+            thrown = true;
+        }
+        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+    }
+
+    /**
+     * Ensure that ModelNotFoundException are thrown if DocumentModel URL doesn't
+     * exists
+     * 
+     * @throws MalformedURLException
+     */
+    @Test
+    public void testLoadDocumentModelUrlNotFound() throws MalformedURLException {
+        URL documentModelUrl = new URL("https://example.local/not-found/files.xml");
+        boolean thrown = false;
+        try {
+            modelLoader.loadDocumentModel(documentModelUrl);
+        } catch (ModelNotFoundException e) {
+            Assert.assertEquals("Model 'https://example.local/not-found/files.xml' not found", e.getMessage());
+            thrown = true;
+        }
+        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+    }
+
+    /**
+     * Ensure that ModelNotFoundException are thrown if a FeatureType is missing
+     * 
+     * @throws MalformedURLException
+     */
+    @Test
+    public void testLoadDocumentModelFeatureTypeNotFound() throws MalformedURLException {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-xml/missing_feature_type/files.xml"
+        );
+        boolean thrown = false;
+        try {
+            modelLoader.loadDocumentModel(documentModelPath);
+        } catch (ModelNotFoundException e) {
+            Assert.assertTrue(e.getMessage().contains("/missing_feature_type/types/MY_TABLE.xml' not found"));
+            thrown = true;
+        }
+        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+    }
+
+    /**
      * Read cnig_PLU_2014 and performs regress test
      * 
      * @throws JsonProcessingException
      */
     @Test
-    public void tesDocumentModelCnigPlu2014() throws JsonProcessingException {
+    public void testLoadDocumentModelCnigPlu2014() {
         File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/cnig_PLU_2014/files.xml");
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
         assertIsValid(documentModel);
@@ -83,7 +143,8 @@ public class XmlModelReaderTest {
     }
 
     /**
-     * Check FeatureType definition for /config-xml/sample-document/types/COMMUNE.xml
+     * Check FeatureType definition for
+     * /config-xml/sample-document/types/COMMUNE.xml
      * 
      * @param featureType
      */
