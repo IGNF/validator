@@ -12,6 +12,7 @@ import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
@@ -38,7 +39,7 @@ public class CSVNormalizerTest {
         context.setReportBuilder(reportBuilder);
 
         File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/adresse/files.xml");
-        XmlModelReader modelLoader = new XmlModelReader();
+        ModelReader modelLoader = new XmlModelReader();
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
         File documentPath = ResourceHelper.getResourceFile(getClass(), "/documents/adresse-multiple");

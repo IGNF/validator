@@ -1,11 +1,18 @@
 package fr.ign.validator.model;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
 import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import fr.ign.validator.data.Attribute;
+import fr.ign.validator.io.json.ObjectMapperFactory;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.StringType;
 
 public class AttributeTypeTest {
@@ -26,6 +33,31 @@ public class AttributeTypeTest {
             AttributeType<?> type = factory.createAttributeTypeByName(name);
             Assert.assertEquals(name, type.getTypeName());
         }
+    }
+
+    /**
+     * Test jackson's config
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testJsonIO() throws IOException {
+        AttributeType<?> attribute = new StringType();
+        attribute.setName("TEST");
+        attribute.setDescription("Test description");
+
+        // save to JSON
+        ObjectMapper mapper = ObjectMapperFactory.createObjectMapper();
+        String result = mapper.writeValueAsString(attribute);
+        assertEquals(
+            "{\"type\":\"String\",\"name\":\"TEST\",\"description\":\"Test description\",\"constraints\":{\"required\":true,\"unique\":false}}",
+            result
+        );
+
+        // read from JSON
+        AttributeType<?> newAttribute = mapper.readValue(result, AttributeType.class);
+        assertEquals(attribute.getName(), newAttribute.getName());
+        assertEquals(attribute.getDescription(), newAttribute.getDescription());
     }
 
     /**

@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Describe the content of a table
  * 
@@ -19,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlType(propOrder = {
-    "typeName", "description", "attributes"
+    "name", "description", "attributes"
 })
 public class FeatureType implements Model {
     /**
@@ -29,7 +31,7 @@ public class FeatureType implements Model {
     /**
      * Type name
      */
-    private String typeName;
+    private String name;
     /**
      * Description
      */
@@ -72,17 +74,13 @@ public class FeatureType implements Model {
     }
 
     @Override
+    @XmlElement(name = "typeName")
     public String getName() {
-        return typeName;
+        return name;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    @XmlElement
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setName(String typeName) {
+        this.name = typeName;
     }
 
     /**
@@ -114,6 +112,7 @@ public class FeatureType implements Model {
 
     @XmlElementWrapper(name = "attributes")
     @XmlElement(name = "attribute")
+    @JsonProperty("columns")
     public void setAttributes(List<AttributeType<?>> attributes) {
         this.attributes = attributes;
     }

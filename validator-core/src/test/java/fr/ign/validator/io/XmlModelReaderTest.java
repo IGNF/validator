@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +24,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 public class XmlModelReaderTest {
 
-    private XmlModelReader modelLoader;
+    private ModelReader modelLoader;
 
     @Before
     public void setUp() throws Exception {
@@ -250,9 +251,7 @@ public class XmlModelReaderTest {
      * @param documentModel
      */
     private void assertIsValid(FeatureType featureType) {
-        Assert.assertNotNull(featureType.getName());
-        Assert.assertNotNull(featureType.getTypeName());
-        Assert.assertEquals(featureType.getName(), featureType.getTypeName());
+        Assert.assertFalse(StringUtils.isEmpty(featureType.getName()));
 
         Assert.assertFalse(
             "featureType must have at least one attribute",

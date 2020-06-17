@@ -1,0 +1,24 @@
+{
+  "name": "ADRESSE",
+  "description": "Table d'identifiant et adresse",
+  "columns": [
+    {
+      "name": "ID",
+      "description": "Identifiant unique",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "unique": true
+      }
+    },
+    {
+      "name": "ADRESSE",
+      "description": "Une adresse dans une ville",
+      "type": "String",
+      "constraints": {
+        "required": false,
+        "maxLength": 254
+      }
+    }
+  ]
+}

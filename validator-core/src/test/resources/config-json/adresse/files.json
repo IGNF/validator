@@ -1,0 +1,11 @@
+{
+  "name": "adresse",
+  "title": "Adresse",
+  "description": "Sample configuration for adresse files",
+  "files": [{
+    "type": "table",
+    "name": "ADRESSE",
+    "path": "ADRESSE(_+[0-9])?]",
+    "mandatory": "ERROR"
+  }]
+}

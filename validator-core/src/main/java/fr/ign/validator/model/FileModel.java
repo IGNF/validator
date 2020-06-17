@@ -14,8 +14,17 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.io.xml.FileModelAdapter;
+import fr.ign.validator.model.file.DirectoryModel;
+import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.model.file.PdfModel;
+import fr.ign.validator.model.file.TableModel;
 
 /**
  * Represents a file of a Document
@@ -23,6 +32,17 @@ import fr.ign.validator.io.xml.FileModelAdapter;
  * @author MBorne
  */
 @XmlJavaTypeAdapter(FileModelAdapter.class)
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME, 
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type"
+)
+@JsonSubTypes({ 
+    @Type(value = DirectoryModel.class, name = DirectoryModel.TYPE), 
+    @Type(value = MetadataModel.class, name = MetadataModel.TYPE),
+    @Type(value = PdfModel.class, name = PdfModel.TYPE), 
+    @Type(value = TableModel.class, name = TableModel.TYPE),
+})
 public abstract class FileModel implements Model {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("FileModel");
@@ -75,6 +95,7 @@ public abstract class FileModel implements Model {
      * 
      * @return
      */
+    @JsonIgnore
     public abstract String getType();
 
     /**
@@ -109,6 +130,7 @@ public abstract class FileModel implements Model {
         this.mandatory = mandatory;
     }
 
+    @JsonIgnore
     public FeatureType getFeatureType() {
         return featureType;
     }
@@ -124,6 +146,7 @@ public abstract class FileModel implements Model {
      * 
      * @return
      */
+    @JsonIgnore
     public String getRegexpSuffix() {
         return "";
     }
@@ -147,6 +170,7 @@ public abstract class FileModel implements Model {
      * 
      * @return
      */
+    @JsonIgnore
     public String getPathRegexp() {
         // (?i) : case insensitive
         // .* : starts by any character
@@ -173,6 +197,7 @@ public abstract class FileModel implements Model {
      * 
      * @return
      */
+    @JsonIgnore
     public String getFilenameRegexp() {
         String parts[] = getPath().split("/");
 

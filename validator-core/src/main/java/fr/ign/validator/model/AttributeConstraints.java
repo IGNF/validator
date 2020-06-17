@@ -2,13 +2,16 @@ package fr.ign.validator.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Constraints on AttributeType
  *
  * @author MBorne
  */
+@JsonInclude(value = Include.NON_NULL)
 public class AttributeConstraints {
     /**
      * Indicates if null values are forbidden

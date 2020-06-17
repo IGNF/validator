@@ -3,6 +3,8 @@ package fr.ign.validator.model.type;
 import java.io.File;
 import java.net.URI;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.FilenameExistsValidator;
 
@@ -14,8 +16,11 @@ import fr.ign.validator.validation.attribute.FilenameExistsValidator;
  * 
  * @author MBorne
  */
+@JsonTypeName(FilenameType.TYPE)
 public class FilenameType extends AttributeType<File> {
-	
+
+    public static final String TYPE = "Filename";
+
 	public FilenameType() {
 		super(File.class);
 		addValidator(new FilenameExistsValidator());
@@ -23,7 +28,7 @@ public class FilenameType extends AttributeType<File> {
 	
 	@Override
 	public String getTypeName() {
-		return "Filename" ;
+		return TYPE ;
 	}
 	
 	/**

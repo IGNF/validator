@@ -7,6 +7,9 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.io.xml.AttributeTypeAdapter;
@@ -22,6 +25,11 @@ import fr.ign.validator.validation.attribute.CharactersValidator;
  * @param <T> the matching java type
  */
 @XmlJavaTypeAdapter(AttributeTypeAdapter.class)
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    property = "type"
+)
+@JsonInclude(value = Include.NON_NULL)
 public abstract class AttributeType<T> implements Model, Cloneable {
     /**
      * Matching java class
@@ -64,6 +72,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
      * 
      * @return
      */
+    @JsonIgnore
     public abstract String getTypeName();
 
     /**
@@ -71,6 +80,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
      * 
      * @return
      */
+    @JsonIgnore
     public boolean isGeometry() {
         return false;
     }
@@ -124,9 +134,9 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     public boolean hasRegexp() {
         return null != constraints.getPattern();
     }
-
-    @JsonIgnore
+    
     @Deprecated
+    @JsonIgnore
     public String getRegexp() {
         return constraints.getPattern();
     }
@@ -136,8 +146,8 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         this.constraints.setPattern(regexp);
     }
 
-    @JsonIgnore
     @Deprecated
+    @JsonIgnore
     public Integer getSize() {
         return constraints.getMaxLength();
     }
@@ -148,6 +158,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     }
 
     @Deprecated
+    @JsonIgnore
     public boolean isNullable() {
         return ! constraints.isRequired();
     }
@@ -158,11 +169,13 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     }
 
     @Deprecated
+    @JsonIgnore
     public boolean hasListOfValues() {
         return constraints.getListOfValues() != null;
     }
 
     @Deprecated
+    @JsonIgnore
     public List<String> getListOfValues() {
         return constraints.getListOfValues();
     }
@@ -173,6 +186,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     }
 
     @Deprecated
+    @JsonIgnore
     public boolean isIdentifier() {
         return constraints.isUnique();
     }
@@ -183,6 +197,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     }
 
     @Deprecated
+    @JsonIgnore
     public String getReference() {
         return this.constraints.getReference();
     }
@@ -193,11 +208,13 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     }
 
     @Deprecated
+    @JsonIgnore
     public boolean isReference() {
         return this.constraints.getReference() != null;
     }
 
     @Deprecated
+    @JsonIgnore
     public String getTableReference() {
         if (this.constraints.getReference() == null) {
             return null;
@@ -209,6 +226,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     }
 
     @Deprecated
+    @JsonIgnore
     public String getAttributeReference() {
         if (this.constraints.getReference() == null) {
             return null;
@@ -219,12 +237,14 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         return this.constraints.getReference().split("\\.")[1];
     }
 
-    public void addValidator(Validator<Attribute<T>> validator) {
-        this.validators.add(validator);
-    }
-
+    
+    @JsonIgnore
     public List<Validator<Attribute<T>>> getValidators() {
         return this.validators;
+    }
+    
+    public void addValidator(Validator<Attribute<T>> validator) {
+        this.validators.add(validator);
     }
 
     /**
