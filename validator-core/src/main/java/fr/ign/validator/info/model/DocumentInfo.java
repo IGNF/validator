@@ -13,7 +13,7 @@ import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.info.internal.DocumentFileInfoComparator;
-import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
+import fr.ign.validator.io.json.EnvelopeSerializer;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.model.DocumentModel;
 

@@ -6,8 +6,8 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
-import fr.ign.validator.model.io.XmlModelReader;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**

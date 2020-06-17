@@ -1,4 +1,4 @@
-package fr.ign.validator.jackson.serializer;
+package fr.ign.validator.io.json;
 
 import java.io.IOException;
 

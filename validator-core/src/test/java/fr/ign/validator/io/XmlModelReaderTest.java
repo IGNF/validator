@@ -1,4 +1,4 @@
-package fr.ign.validator.model.io;
+package fr.ign.validator.io;
 
 import java.io.File;
 import java.net.MalformedURLException;

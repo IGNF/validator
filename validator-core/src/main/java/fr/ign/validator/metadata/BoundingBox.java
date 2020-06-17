@@ -2,7 +2,7 @@ package fr.ign.validator.metadata;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import fr.ign.validator.jackson.serializer.BoundingBoxSerializer;
+import fr.ign.validator.io.json.BoundingBoxSerializer;
 
 /**
  * 

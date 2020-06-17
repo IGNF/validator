@@ -16,8 +16,8 @@ import org.junit.rules.TemporaryFolder;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
-import fr.ign.validator.model.io.XmlModelReader;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 

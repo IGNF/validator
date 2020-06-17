@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.model.io.binding.AttributeTypeAdapter;
+import fr.ign.validator.io.xml.AttributeTypeAdapter;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeNullableValidator;
 import fr.ign.validator.validation.attribute.CharactersValidator;
