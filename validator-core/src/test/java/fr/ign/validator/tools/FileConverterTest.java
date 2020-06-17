@@ -207,7 +207,7 @@ public class FileConverterTest {
 	 */
 	@Test
 	public void testRegressBugBackslash01() throws IOException {
-		File source = ResourceHelper.getResourceFile(getClass(), "/bug-backslash/source.dbf");
+		File source = ResourceHelper.getResourceFile(getClass(), "/data/bug-backslash/source.dbf");
 		File target = folder.newFile("output.csv");
 		try {
 			fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
@@ -230,7 +230,7 @@ public class FileConverterTest {
 	@Test
 	public void testRegressBugBackslash02() throws IOException {
 		Assume.assumeFalse(isOgrVersionKnownToHaveBackslashBug());
-		File source = ResourceHelper.getResourceFile(getClass(), "/bug-backslash/source.csv");
+		File source = ResourceHelper.getResourceFile(getClass(), "/data/bug-backslash/source.csv");
 		File targetDbf = folder.newFile("output.dbf");
 		File targetCsv = folder.newFile("output.csv");
 		try {

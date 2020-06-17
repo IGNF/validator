@@ -4,6 +4,16 @@ import java.util.List;
 
 public class AttributeConstraints {
     /**
+     * Indicates if the value is nullable
+     * TODO rename to required inverting values
+     */
+    private boolean nullable;
+    /**
+     * Indicates if the value represent the feature id
+     * TODO rename to unique
+     */
+    private boolean identifier;
+    /**
      * Regexp matching the attribute value
      * TODO rename to pattern
      */
@@ -13,18 +23,6 @@ public class AttributeConstraints {
      * TODO rename to maxLength
      */
     private Integer size;
-    /**
-     * Indicates if the value is nullable
-     * TODO rename to required inverting values
-     */
-    private boolean nullable;
-
-    /**
-     * Indicates if the value represent the feature id
-     * TODO rename to unique
-     */
-    private boolean identifier;
-    
     /**
      * Restriction on a list of values
      * TODO rename to enum at JSON level

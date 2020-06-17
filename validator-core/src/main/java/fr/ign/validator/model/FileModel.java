@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -48,9 +49,12 @@ public abstract class FileModel implements Model {
     private String name;
 
     /**
-     * Path of the file (regexp without extension, ex : Donnees_geographiques/ZONE_URBA_[0-9a-b]{5})
+     * Path of the file (regexp without extension, ex :
+     * Donnees_geographiques/ZONE_URBA_[0-9a-b]{5})
+     * 
+     * @since 4.0 previously regexp
      */
-    private String regexp;
+    private String path;
 
     /**
      * Mandatory mode
@@ -58,7 +62,7 @@ public abstract class FileModel implements Model {
     private MandatoryMode mandatory = MandatoryMode.WARN;
 
     /**
-     * Data model (optional, for tables only)
+     * Table model (optional, for tables only)
      */
     private FeatureType featureType = null;
 
@@ -67,12 +71,18 @@ public abstract class FileModel implements Model {
     }
 
     /**
-     * Gets type
+     * Get file type
      * 
      * @return
      */
     public abstract String getType();
 
+    /**
+     * Creates a DocumentFile for this FileModel
+     * 
+     * @return
+     */
+    abstract public DocumentFile createDocumentFile(File path);
 
     public String getName() {
         return name;
@@ -82,15 +92,14 @@ public abstract class FileModel implements Model {
         this.name = name;
     }
 
-
-    public String getRegexp() {
-        return regexp;
+    public String getPath() {
+        return path;
     }
 
-    public void setRegexp(String regexp) {
-        this.regexp = regexp;
+    @XmlElement(name = "regexp")
+    public void setPath(String path) {
+        this.path = path;
     }
-
 
     public MandatoryMode getMandatory() {
         return mandatory;
@@ -100,7 +109,6 @@ public abstract class FileModel implements Model {
         this.mandatory = mandatory;
     }
 
-
     public FeatureType getFeatureType() {
         return featureType;
     }
@@ -108,38 +116,6 @@ public abstract class FileModel implements Model {
     @XmlTransient
     public void setFeatureType(FeatureType featureType) {
         this.featureType = featureType;
-    }
-
-    /**
-     * Returns a regexp corresponding to the full path (with folder and extension according to file type)
-     * 
-     * @return
-     */
-    public String getPathRegexp() {
-        // (?i) : case insensitive
-        // .* : starts by any character
-        String regexp = "(?i).*/" + getRegexp() + getRegexpSuffix();
-        return regexp;
-    }
-
-    /**
-     * Returns a regexp corresponding to the filename (with folder for flat validation
-     * and extension according to file type)
-     * 
-     * @return
-     */
-    public String getNameRegexp() {
-        String parts[] = getRegexp().split("/");
-
-        String result = "(?i)" + parts[parts.length - 1] + ".*" + getRegexpSuffix();
-
-        // validate regexp (/ may be misplaced)
-        try {
-            Pattern.compile(result);
-            return result;
-        } catch (PatternSyntaxException exception) {
-            return "(?i)" + getName() + ".*" + getRegexpSuffix();
-        }
     }
 
     /**
@@ -166,6 +142,19 @@ public abstract class FileModel implements Model {
     }
 
     /**
+     * Returns a regexp corresponding to the full path (with folder and extension
+     * according to file type)
+     * 
+     * @return
+     */
+    public String getPathRegexp() {
+        // (?i) : case insensitive
+        // .* : starts by any character
+        String regexp = "(?i).*/" + getPath() + getRegexpSuffix();
+        return regexp;
+    }
+
+    /**
      * Tests if filename matches the regexp (in order to detect files in wrong
      * directory)
      * 
@@ -173,16 +162,29 @@ public abstract class FileModel implements Model {
      * @return
      */
     public boolean matchFilename(File file) {
-        String regexp = getNameRegexp();
+        String regexp = getFilenameRegexp();
         log.trace(MARKER, "matchFilename / {} / {} match {} ...", getName(), file, regexp);
         return file.getName().matches(regexp);
     }
 
     /**
-     * Creates a document file for the given file model
+     * Returns a regexp corresponding to the filename (with folder for flat
+     * validation and extension according to file type)
      * 
      * @return
      */
-    abstract public DocumentFile createDocumentFile(File path);
+    public String getFilenameRegexp() {
+        String parts[] = getPath().split("/");
+
+        String result = "(?i)" + parts[parts.length - 1] + ".*" + getRegexpSuffix();
+
+        // validate regexp (/ may be misplaced)
+        try {
+            Pattern.compile(result);
+            return result;
+        } catch (PatternSyntaxException exception) {
+            return "(?i)" + getName() + ".*" + getRegexpSuffix();
+        }
+    }
 
 }

@@ -1,8 +1,5 @@
 package fr.ign.validator.command;
 
-import java.util.Map;
-import java.util.Properties;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -12,7 +9,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import fr.ign.validator.tools.Networking;
-import fr.ign.validator.tools.ProxyParser;
 
 /**
  * 

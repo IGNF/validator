@@ -153,7 +153,7 @@ public class DocumentModel implements Model {
         for (FileModel fileModel : fileModels) {
             if (fileModel.matchPath(file)) {
                 // keep longest regexp
-                if (result == null || fileModel.getRegexp().length() > result.getRegexp().length()) {
+                if (result == null || fileModel.getPath().length() > result.getPath().length()) {
                     result = fileModel;
                 }
             }
@@ -172,7 +172,7 @@ public class DocumentModel implements Model {
         for (FileModel fileModel : fileModels) {
             if (fileModel.matchFilename(file)) {
                 // keep longest regexp
-                if (result == null || fileModel.getRegexp().length() > result.getRegexp().length()) {
+                if (result == null || fileModel.getPath().length() > result.getPath().length()) {
                     result = fileModel;
                 }
             }

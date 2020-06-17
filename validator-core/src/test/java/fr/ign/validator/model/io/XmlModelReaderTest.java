@@ -34,7 +34,7 @@ public class XmlModelReaderTest {
      */
     @Test
     public void tesDocumentModelCnigPlu2014() throws JsonProcessingException {
-        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config/cnig_PLU_2014/files.xml");
+        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/cnig_PLU_2014/files.xml");
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
         assertIsValid(documentModel);
 
@@ -43,11 +43,11 @@ public class XmlModelReaderTest {
     }
 
     /**
-     * Load DocumentModel /config/sample-document/files.xml and performs checks
+     * Load DocumentModel /config-xml/sample-document/files.xml and performs checks
      */
     @Test
     public void testLoadDocumentModelSampleDocument() {
-        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config/sample-document/files.xml");
+        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/sample-document/files.xml");
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
         assertIsValid(documentModel);
 
@@ -83,7 +83,7 @@ public class XmlModelReaderTest {
     }
 
     /**
-     * Check FeatureType definition for /config/sample-document/types/COMMUNE.xml
+     * Check FeatureType definition for /config-xml/sample-document/types/COMMUNE.xml
      * 
      * @param featureType
      */
@@ -124,7 +124,7 @@ public class XmlModelReaderTest {
 
     @Test
     public void testLoadFeatureTypeWithCDATA() {
-        File srcFile = ResourceHelper.getResourceFile(getClass(), "/config/sample-document/types/SIMPLE.xml");
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/config-xml/sample-document/types/SIMPLE.xml");
 
         FeatureType featureType = modelLoader.loadFeatureType(srcFile);
         Assert.assertEquals("SIMPLE", featureType.getName());

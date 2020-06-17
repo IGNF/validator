@@ -35,7 +35,7 @@ public class FileModelAdapter extends XmlAdapter<FileModelAdapter.AdaptedFileMod
 			));
 		}
 		fileModel.setName(adaptedFileModel.name);
-		fileModel.setRegexp(adaptedFileModel.path);
+		fileModel.setPath(adaptedFileModel.path);
 		fileModel.setMandatory(adaptedFileModel.mandatory);
 		return fileModel ;
 	}
@@ -48,7 +48,7 @@ public class FileModelAdapter extends XmlAdapter<FileModelAdapter.AdaptedFileMod
 		AdaptedFileModel adaptedFileModel = new AdaptedFileModel() ;
 		adaptedFileModel.type = fileModel.getType() ;
 		adaptedFileModel.name = fileModel.getName() ;
-		adaptedFileModel.path = fileModel.getRegexp() ;
+		adaptedFileModel.path = fileModel.getPath() ;
 		adaptedFileModel.mandatory = fileModel.getMandatory() ;
 		return adaptedFileModel ;
 	}

@@ -24,7 +24,7 @@ public class DocumentDirectoryNameValidatorTest {
 		validator = new DocumentDirectoryNameValidator();
 		
 		context = new Context();
-		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/config/geofla") ;
+		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/config-xml/geofla") ;
 		context.setCurrentDirectory(currentDirectory);
 		
 		report = new InMemoryReportBuilder() ;

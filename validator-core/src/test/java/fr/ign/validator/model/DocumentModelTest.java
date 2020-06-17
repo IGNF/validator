@@ -21,13 +21,13 @@ public class DocumentModelTest {
 		{
 			FileModel fileModel = new TableModel();
 			fileModel.setName("ACTE_SUP");
-			fileModel.setRegexp("Donnees_geographiques/([a-zA-Z0-9]*_)?ACTE_SUP");
+			fileModel.setPath("Donnees_geographiques/([a-zA-Z0-9]*_)?ACTE_SUP");
 			fileModels.add(fileModel);
 		}
 		{
 			FileModel fileModel = new TableModel();
 			fileModel.setName("SERVITUDE_ACTE_SUP");			
-			fileModel.setRegexp("Donnees_geographiques/([a-zA-Z0-9]*_)?SERVITUDE_ACTE_SUP");
+			fileModel.setPath("Donnees_geographiques/([a-zA-Z0-9]*_)?SERVITUDE_ACTE_SUP");
 			fileModels.add(fileModel);
 		}
 		documentModel.setFileModels(fileModels);

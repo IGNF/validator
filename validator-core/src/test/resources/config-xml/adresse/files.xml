@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
   <id><![CDATA[]]></id>
-  <name><![CDATA[sample]]></name>
-  <description><![CDATA[sample configuration for csv validation]]></description>
+  <name><![CDATA[adresse]]></name>
+  <description><![CDATA[Sample configuration for adresse files)]]></description>
   <regexp><![CDATA[+[a-Z]]]></regexp>
   <files>
     <file>

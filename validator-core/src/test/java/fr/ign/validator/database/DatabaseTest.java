@@ -87,11 +87,11 @@ public class DatabaseTest {
 		context.setProjection("EPSG:4326");
 		context.setReportBuilder(reportBuilder);
 
-		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config/cnig_PLU_2014/files.xml") ;
+		File documentModelPath = ResourceHelper.getResourceFile(getClass(),"/config-xml/cnig_PLU_2014/files.xml") ;
 		XmlModelReader modelLoader = new XmlModelReader();
 		DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
-		File documentPath = ResourceHelper.getResourceFile(getClass(),"/database/41003_PLU_20130903");
+		File documentPath = ResourceHelper.getResourceFile(getClass(),"/documents/41003_PLU_20130903");
 		File copy = folder.newFolder(documentPath.getName());
 		FileUtils.copyDirectory(documentPath, copy);
 

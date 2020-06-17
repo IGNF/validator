@@ -28,9 +28,9 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
- * 
- * Regress test with document /regress/document-a
- * 
+ *
+ * Regress test with sample document
+ *
  * @author MBorne
  *
  */
@@ -42,14 +42,14 @@ public class ValidateDocumentARegressTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		documentPath = ResourceHelper.getResourceFile(getClass(),"/regress/document-a");
+		documentPath = ResourceHelper.getResourceFile(getClass(),"/documents/commune-sample");
 		
 		documentModel = new DocumentModel();
 		List<FileModel> fileModels = new ArrayList<FileModel>();
 		{
 			TableModel tableModel = new TableModel();
 			tableModel.setName("COMMUNE");
-			tableModel.setRegexp("commune");
+			tableModel.setPath("commune");
 			
 			FeatureType featureType = new FeatureType();
 			// INSEE
@@ -77,19 +77,19 @@ public class ValidateDocumentARegressTest {
 		{
 			MetadataModel metadata = new MetadataModel();
 			metadata.setName("metadata");
-			metadata.setRegexp("metadata");
+			metadata.setPath("metadata");
 			fileModels.add(metadata);
 		}
 		{
 			DirectoryModel directory = new DirectoryModel();
 			directory.setName("a_directory");
-			directory.setRegexp("a_directory");
+			directory.setPath("a_directory");
 			fileModels.add(directory);
 		}
 		{
 			PdfModel directory = new PdfModel();
 			directory.setName("a_file");
-			directory.setRegexp("a_directory/a_file");
+			directory.setPath("a_directory/a_file");
 			fileModels.add(directory);
 		}
 		
