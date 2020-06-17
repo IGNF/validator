@@ -30,8 +30,13 @@ public class AttributeConstraints {
     private boolean unique;
     /**
      * Regexp matching the attribute value TODO rename to pattern
+     * 
+     * @since 4.0 previously "regexp"
+     * 
+     * @see fr.ign.validator.validation.attribute.StringRegexpValidator
+     * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_INVALID_REGEXP
      */
-    private String regexp;
+    private String pattern;
     /**
      * Limit size of the attribute TODO rename to maxLength
      */
@@ -69,12 +74,12 @@ public class AttributeConstraints {
         this.unique = unique;
     }
 
-    public String getRegexp() {
-        return regexp;
+    public String getPattern() {
+        return pattern;
     }
 
-    public void setRegexp(String regexp) {
-        this.regexp = regexp;
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 
     public Integer getSize() {

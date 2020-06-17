@@ -122,18 +122,18 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     @Deprecated
     public boolean hasRegexp() {
-        return null != constraints.getRegexp();
+        return null != constraints.getPattern();
     }
 
     @JsonIgnore
     @Deprecated
     public String getRegexp() {
-        return constraints.getRegexp();
+        return constraints.getPattern();
     }
 
     @Deprecated
     public void setRegexp(String regexp) {
-        this.constraints.setRegexp(regexp);
+        this.constraints.setPattern(regexp);
     }
 
     @JsonIgnore
