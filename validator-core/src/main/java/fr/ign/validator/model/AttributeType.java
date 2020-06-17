@@ -149,12 +149,12 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     @Deprecated
     public boolean isNullable() {
-        return constraints.isNullable();
+        return ! constraints.isRequired();
     }
 
     @Deprecated
     public void setNullable(boolean nullable) {
-        this.constraints.setNullable(nullable);
+        this.constraints.setRequired(!nullable);
     }
 
     @Deprecated
@@ -174,12 +174,12 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     @Deprecated
     public boolean isIdentifier() {
-        return constraints.isIdentifier();
+        return constraints.isUnique();
     }
 
     @Deprecated
     public void setIdentifier(boolean identifier) {
-        this.constraints.setIdentifier(identifier);
+        this.constraints.setUnique(identifier);
     }
 
     @Deprecated
