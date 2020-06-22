@@ -28,7 +28,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.io.ModelReader;
-import fr.ign.validator.io.XmlModelReader;
+import fr.ign.validator.io.ModelReaderFactory;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.plugin.Plugin;
@@ -390,7 +390,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
      * @throws ModelNotFoundException
      */
     protected DocumentModel loadDocumentModel() throws IOException, ModelNotFoundException {
-        ModelReader modelReader = new XmlModelReader();
+        ModelReader modelReader = ModelReaderFactory.createModelReader(documentModelUrl);
         return modelReader.loadDocumentModel(documentModelUrl);
     }
 
