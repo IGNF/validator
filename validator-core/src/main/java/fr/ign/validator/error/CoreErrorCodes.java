@@ -49,6 +49,8 @@ public class CoreErrorCodes {
  	 * ErrorCode for error in Metadata Content
  	 */	
 	public static final ErrorCode METADATA_FILEIDENTIFIER_NOT_FOUND   = ErrorCode.valueOf("METADATA_FILEIDENTIFIER_NOT_FOUND") ;
+	public static final ErrorCode METADATA_FILEIDENTIFIER_INVALID     = ErrorCode.valueOf("METADATA_FILEIDENTIFIER_INVALID") ;
+
 	public static final ErrorCode METADATA_IDENTIFIER_NOT_FOUND       = ErrorCode.valueOf("METADATA_IDENTIFIER_NOT_FOUND") ;
 	
 	public static final ErrorCode METADATA_TITLE_NOT_FOUND            = ErrorCode.valueOf("METADATA_TITLE_NOT_FOUND");

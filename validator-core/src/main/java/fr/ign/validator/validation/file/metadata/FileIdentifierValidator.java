@@ -23,6 +23,8 @@ public class FileIdentifierValidator implements Validator<Metadata> {
 	public static final Logger log    = LogManager.getRootLogger() ;
 	public static final Marker MARKER = MarkerManager.getMarker("FileIdentifierValidator") ;	
 	
+	public static final String REGEXP = "[\\w-.:]+";
+	
 	@Override
 	public void validate(Context context, Metadata metadata) {
 		String fileIdentifier = metadata.getFileIdentifier() ;
@@ -30,6 +32,13 @@ public class FileIdentifierValidator implements Validator<Metadata> {
 		if ( StringUtils.isEmpty(fileIdentifier) ){
 			context.report(
 				CoreErrorCodes.METADATA_FILEIDENTIFIER_NOT_FOUND
+			);
+			return;
+		}
+		if ( ! fileIdentifier.matches(REGEXP) ){
+			context.report(context.createError(CoreErrorCodes.METADATA_FILEIDENTIFIER_INVALID)
+				.setMessageParam("VALUE", fileIdentifier)
+				.setMessageParam("EXPECTED_REGEXP", REGEXP)
 			);
 		}
 	}
