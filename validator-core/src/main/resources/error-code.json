@@ -192,7 +192,7 @@
     {
         "name": "METADATA_FILEIDENTIFIER_INVALID",
         "level": "ERROR",
-        "message": "Le champ \"fileIdentifier\" ({VALUE}) ne correspond pas à l'expression régulière ({EXPECTED_REGEXP}).",
+        "message": "Le champ \"fileIdentifier\" ({VALUE}) ne correspond pas aux caractères autorisés.",
         "documentation": "Ce contrôle permet de s'assurer que fileIdentifier peut bien être dérivé en un nom de fichier (moissonnage FTP geosource par exemple)."
     },
     {
