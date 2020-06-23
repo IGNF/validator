@@ -190,6 +190,12 @@
         "documentation": ""
     },
     {
+        "name": "METADATA_FILEIDENTIFIER_INVALID",
+        "level": "ERROR",
+        "message": "Le champ \"fileIdentifier\" ({VALUE}) ne correspond pas aux caractères autorisés.",
+        "documentation": "Ce contrôle permet de s'assurer que fileIdentifier peut bien être dérivé en un nom de fichier (moissonnage FTP geosource par exemple)."
+    },
+    {
         "name": "METADATA_IDENTIFIER_NOT_FOUND",
         "level": "WARNING",
         "message": "Le champ \"identificateur de ressource unique\" n'est pas renseigné.",
