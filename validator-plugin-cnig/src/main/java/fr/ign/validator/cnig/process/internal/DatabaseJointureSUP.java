@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import fr.ign.validator.database.Database;
@@ -345,11 +346,11 @@ public class DatabaseJointureSUP {
      * @throws SQLException
      */
     private List<String> getFichiersFromResultSet(ResultSet rs) throws SQLException {
-        List<String> result = new ArrayList<String>();
+    	HashSet<String> result = new HashSet<String>();
         while (rs.next()) {
             result.add(rs.getString("fichier"));
         }
-        return result;
+        return new ArrayList<String>(result);
     }
 
 }
