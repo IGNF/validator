@@ -5,17 +5,17 @@ import java.util.List;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.Validator;
 
 /**
  * 
  * Validates according to a list of values
  * 
- * 
  * @author MBorne
  *
  */
-public class ListOfValuesValidator implements Validator<Attribute<String>> {
+public class StringEnumValuesValidator implements Validator<Attribute<String>> {
 
 	@Override
 	public void validate(Context context, Attribute<String> attribute) {
@@ -24,15 +24,16 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 		if ( value == null ){
 			return ;
 		}
-		
-		if ( ! attribute.getType().hasListOfValues() ){
+
+		AttributeType<String> attributeType = attribute.getType();
+		if ( ! attributeType.getConstraints().hasEnumValues() ){
 			return ;
 		}
 
 		/*
 		 * search of corresponding value
 		 */
-		for ( String string : attribute.getType().getListOfValues() ) {
+		for ( String string : attributeType.getConstraints().getEnumValues() ) {
 			if ( string.equals(value) ){
 				return ; 
 			}
@@ -40,7 +41,9 @@ public class ListOfValuesValidator implements Validator<Attribute<String>> {
 
 		context.report(context.createError(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE)
 			.setMessageParam("VALUE", value)
-			.setMessageParam("EXPECTED_VALUES", formatListOfValues( attribute.getType().getListOfValues() ))
+			.setMessageParam("EXPECTED_VALUES", formatListOfValues(
+			    attributeType.getConstraints().getEnumValues()
+			))
 		);
 	}
 

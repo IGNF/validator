@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ign.validator.io.json.ObjectMapperFactory;

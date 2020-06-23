@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.validation.Validator;
-import fr.ign.validator.validation.document.DocumentDirectoryNameValidator;
+import fr.ign.validator.validation.document.DocumentFolderNameValidator;
 import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
 /**
@@ -60,7 +60,7 @@ public class DocumentModel implements Model {
      * Constructs a DocumentModel with default constraints
      */
     public DocumentModel() {
-        addValidator(new DocumentDirectoryNameValidator());
+        addValidator(new DocumentFolderNameValidator());
         addValidator(new DocumentMandatoryFileValidator());
     }
 

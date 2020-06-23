@@ -72,7 +72,7 @@ public abstract class FileModel implements Model {
      * Path of the file (regexp without extension, ex :
      * Donnees_geographiques/ZONE_URBA_[0-9a-b]{5})
      * 
-     * @since 4.0 previously regexp
+     * @since 4.0 previously "regexp"
      */
     private String path;
 

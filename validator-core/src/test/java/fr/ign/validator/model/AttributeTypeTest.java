@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.io.json.ObjectMapperFactory;
-import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.StringType;
 
 public class AttributeTypeTest {

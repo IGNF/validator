@@ -13,15 +13,17 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @JsonInclude(value = Include.NON_NULL)
 public class AttributeConstraints {
+
     /**
      * Indicates if null values are forbidden
      * 
      * @since 4.0 previously "nullable" with opposite value
      * 
-     * @see fr.ign.validator.validation.attribute.AttributeNullableValidator
+     * @see fr.ign.validator.validation.attribute.AttributeRequiredValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_UNEXPECTED_NULL
      */
     private boolean required;
+
     /**
      * Indicates if the value is unique in the table
      * 
@@ -33,29 +35,38 @@ public class AttributeConstraints {
      * @see fr.ign.validator.dgpr.DgprErrorCodes#DGPR_IDENTIFIER_UNICITY
      */
     private boolean unique;
+
     /**
      * Regexp matching the attribute value TODO rename to pattern
      * 
      * @since 4.0 previously "regexp"
      * 
-     * @see fr.ign.validator.validation.attribute.StringRegexpValidator
+     * @see fr.ign.validator.validation.attribute.StringPatternValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_INVALID_REGEXP
      */
     private String pattern;
+
+    // TODO add private Integer minLength
+    
     /**
      * Maximum length of the value 
      * 
      * @since 4.0 previously "size"
      * 
-     * @see fr.ign.validator.validation.attribute.StringSizeValidator
+     * @see fr.ign.validator.validation.attribute.StringMaxLengthValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_EXCEEDED
      */
     private Integer maxLength;
+    
     /**
      * Restriction on a list of values 
-     * TODO rename to enumValues at JSON level
+     * 
+     * @since 4.0 previously "listOfValues"
+     * 
+     * @see fr.ign.validator.validation.attribute.StringEnumValuesValidator
+     * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_UNEXPECTED_VALUE
      */
-    private List<String> listOfValues;
+    private List<String> enumValues;
 
     /**
      * Reference to another table attribute. Format TABLE_NAME.ATTRIBUTE_NAME
@@ -102,13 +113,21 @@ public class AttributeConstraints {
         this.maxLength = maxLength;
     }
 
+    /**
+     * Tell if enum restriction is defined
+     * @return
+     */
+    public boolean hasEnumValues() {
+        return enumValues != null && ! enumValues.isEmpty();
+    }
+    
     @JsonProperty("enum")
-    public List<String> getListOfValues() {
-        return listOfValues;
+    public List<String> getEnumValues() {
+        return enumValues;
     }
 
-    public void setListOfValues(List<String> listOfValues) {
-        this.listOfValues = listOfValues;
+    public void getEnumValues(List<String> enumValues) {
+        this.enumValues = enumValues;
     }
 
     public String getReference() {
@@ -118,4 +137,5 @@ public class AttributeConstraints {
     public void setReference(String reference) {
         this.reference = reference;
     }
+
 }

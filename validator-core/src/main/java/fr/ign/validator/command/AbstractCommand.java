@@ -2,7 +2,7 @@ package fr.ign.validator.command;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -53,7 +53,7 @@ public abstract class AbstractCommand implements Command {
 		/*
 		 * parse command line options and handle command line options error
 		 */
-		CommandLineParser parser = new GnuParser();
+		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine commandLine = parser.parse(options, args);
 			if ( commandLine.hasOption("help") ){

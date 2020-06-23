@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import fr.ign.validator.exception.ModelNotFoundException;
+import fr.ign.validator.model.AttributeConstraints;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
@@ -114,8 +115,14 @@ public class XmlModelReaderTest {
 
         // name
         Assert.assertEquals("ccccc_CC_dddddddd", documentModel.getName());
-        // regexp
-        Assert.assertEquals("[0-9]{5}_CC_[0-9]{8}", documentModel.getRegexp());
+        // DocumentContraints
+        Assert.assertEquals(
+            "[0-9]{5}_CC_[0-9]{8}",
+            documentModel.getConstraints().getFolderName()
+        );
+        Assert.assertNull(
+            documentModel.getConstraints().getMetadataSpecification()
+        );
 
         // fileModels
         Assert.assertEquals(3, documentModel.getFileModels().size());
@@ -155,32 +162,35 @@ public class XmlModelReaderTest {
             AttributeType<?> attributeType = featureType.getAttribute(index++);
             Assert.assertEquals("INSEE", attributeType.getName());
             Assert.assertEquals("String", attributeType.getTypeName());
-            Assert.assertEquals(false, attributeType.isNullable());
-            Assert.assertEquals("[0-9]{5}", attributeType.getRegexp());
-            Assert.assertEquals(true, attributeType.isIdentifier());
-            Assert.assertEquals(false, attributeType.isReference());
-            Assert.assertNull(attributeType.getListOfValues());
+            AttributeConstraints contraints = attributeType.getConstraints();
+            Assert.assertEquals(true, contraints.isRequired());
+            Assert.assertEquals(true, contraints.isUnique());
+            Assert.assertEquals("[0-9]{5}", contraints.getPattern());
+            Assert.assertNull(contraints.getReference());
+            Assert.assertNull(contraints.getEnumValues());
         }
         {
             AttributeType<?> attributeType = featureType.getAttribute(index++);
             Assert.assertEquals("CODE_DEPT", attributeType.getName());
             Assert.assertEquals("String", attributeType.getTypeName());
-            Assert.assertEquals(false, attributeType.isNullable());
-            Assert.assertNull(attributeType.getRegexp());
-            Assert.assertEquals(false, attributeType.isIdentifier());
-            Assert.assertEquals(false, attributeType.isReference());
-            Assert.assertNotNull(attributeType.getListOfValues());
-            Assert.assertEquals("01,02", Strings.join(attributeType.getListOfValues(), ','));
+            AttributeConstraints constraints = attributeType.getConstraints();
+            Assert.assertEquals(true, constraints.isRequired());
+            Assert.assertNull(constraints.getPattern());
+            Assert.assertEquals(false, constraints.isUnique());
+            Assert.assertNull(constraints.getReference());
+            Assert.assertNotNull(constraints.getEnumValues());
+            Assert.assertEquals("01,02", Strings.join(constraints.getEnumValues(), ','));
         }
         {
             AttributeType<?> attributeType = featureType.getAttribute(index++);
             Assert.assertEquals("DETRUIT", attributeType.getName());
             Assert.assertEquals("Boolean", attributeType.getTypeName());
-            Assert.assertEquals(true, attributeType.isNullable());
-            Assert.assertNull(attributeType.getRegexp());
-            Assert.assertEquals(false, attributeType.isIdentifier());
-            Assert.assertEquals(false, attributeType.isReference());
-            Assert.assertNull(attributeType.getListOfValues());
+            AttributeConstraints constraints = attributeType.getConstraints();
+            Assert.assertEquals(false, constraints.isRequired());
+            Assert.assertNull(constraints.getPattern());
+            Assert.assertEquals(false, constraints.isUnique());
+            Assert.assertNull(constraints.getReference());
+            Assert.assertNull(constraints.getEnumValues());
         }
     }
 
@@ -199,30 +209,36 @@ public class XmlModelReaderTest {
             AttributeType<?> attribute = featureType.getAttribute(index++);
             Assert.assertEquals("ID", attribute.getName());
             Assert.assertEquals("Integer", attribute.getTypeName());
-            Assert.assertNull(attribute.getRegexp());
-            Assert.assertFalse(attribute.isNullable());
-            Assert.assertEquals(false, attribute.isIdentifier());
-            Assert.assertNull(attribute.getListOfValues());
+
+            AttributeConstraints constraints = attribute.getConstraints();
+            Assert.assertTrue(constraints.isRequired());
+            Assert.assertFalse(constraints.isUnique());
+            Assert.assertNull(constraints.getPattern());
+            Assert.assertNull(constraints.getEnumValues());
         }
 
         {
             AttributeType<?> attribute = featureType.getAttribute(index++);
             Assert.assertEquals("NAME", attribute.getName());
             Assert.assertEquals("String", attribute.getTypeName());
-            Assert.assertNull(attribute.getRegexp());
-            Assert.assertFalse(attribute.isNullable());
-            Assert.assertEquals(false, attribute.isIdentifier());
 
-            Assert.assertNull(attribute.getListOfValues());
+            AttributeConstraints constraints = attribute.getConstraints();
+            Assert.assertTrue(constraints.isRequired());
+            Assert.assertFalse(constraints.isUnique());
+            Assert.assertNull(constraints.getPattern());
+            Assert.assertNull(constraints.getEnumValues());
         }
 
         {
             AttributeType<?> attribute = featureType.getAttribute(index++);
             Assert.assertEquals("GEOMETRY", attribute.getName());
             Assert.assertEquals("Geometry", attribute.getTypeName());
-            Assert.assertTrue(attribute.isNullable());
-            Assert.assertEquals(false, attribute.isIdentifier());
-            Assert.assertNull(attribute.getListOfValues());
+            
+            AttributeConstraints constraints = attribute.getConstraints();
+            Assert.assertFalse(constraints.isRequired());
+            Assert.assertFalse(constraints.isUnique());
+            Assert.assertNull(constraints.getPattern());
+            Assert.assertNull(constraints.getEnumValues());
         }
 
     }

@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.io.xml.AttributeTypeAdapter;
 import fr.ign.validator.validation.Validator;
-import fr.ign.validator.validation.attribute.AttributeNullableValidator;
+import fr.ign.validator.validation.attribute.AttributeRequiredValidator;
 import fr.ign.validator.validation.attribute.CharactersValidator;
 
 /**
@@ -63,7 +63,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
      */
     protected AttributeType(Class<T> clazz) {
         this.clazz = clazz;
-        addValidator(new AttributeNullableValidator<T>());
+        addValidator(new AttributeRequiredValidator<T>());
         addValidator(new CharactersValidator<T>());
     }
 
@@ -171,18 +171,18 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     @Deprecated
     @JsonIgnore
     public boolean hasListOfValues() {
-        return constraints.getListOfValues() != null;
+        return constraints.getEnumValues() != null;
     }
 
     @Deprecated
     @JsonIgnore
     public List<String> getListOfValues() {
-        return constraints.getListOfValues();
+        return constraints.getEnumValues();
     }
 
     @Deprecated
     public void setListOfValues(List<String> listOfValues) {
-        this.constraints.setListOfValues(listOfValues);
+        this.constraints.getEnumValues(listOfValues);
     }
 
     @Deprecated

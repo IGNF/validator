@@ -41,6 +41,8 @@ public class FeatureType implements Model {
      */
     private List<AttributeType<?>> attributes = new ArrayList<AttributeType<?>>();
 
+    // TODO add private List<String> primaryKey;
+
     public FeatureType() {
 
     }

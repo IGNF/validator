@@ -3,9 +3,9 @@ package fr.ign.validator.model.type;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.validation.attribute.ListOfValuesValidator;
-import fr.ign.validator.validation.attribute.StringRegexpValidator;
-import fr.ign.validator.validation.attribute.StringSizeValidator;
+import fr.ign.validator.validation.attribute.StringEnumValuesValidator;
+import fr.ign.validator.validation.attribute.StringPatternValidator;
+import fr.ign.validator.validation.attribute.StringMaxLengthValidator;
 
 /**
  * Represents a character string
@@ -20,9 +20,9 @@ public class StringType extends AttributeType<String> {
 
     public StringType() {
         super(String.class);
-        addValidator(new StringSizeValidator());
-        addValidator(new StringRegexpValidator());
-        addValidator(new ListOfValuesValidator());
+        addValidator(new StringMaxLengthValidator());
+        addValidator(new StringPatternValidator());
+        addValidator(new StringEnumValuesValidator());
     }
 
     @Override
