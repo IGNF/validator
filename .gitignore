@@ -1,5 +1,8 @@
+# dev tools
 .project
 .settings
+/.vscode/
+# build
 /target/
 *.log
 /validator.launch

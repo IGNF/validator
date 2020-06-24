@@ -1,11 +1,8 @@
 package fr.ign.validator.dgpr.validation.database;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.JAXBException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +34,7 @@ public class IdentifierValidatorTest {
 	private Context context;
 
 	@Before
-	public void setUp() throws NoSuchAuthorityCodeException, FactoryException, JAXBException{
+	public void setUp() throws NoSuchAuthorityCodeException, FactoryException {
 		context = new Context();
 		context.setProjection("EPSG:4326");
 		context.setReportBuilder(reportBuilder);

@@ -3,6 +3,8 @@ package fr.ign.validator.model.type;
 import java.io.File;
 import java.net.URI;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.PathExistsValidator;
 
@@ -12,8 +14,11 @@ import fr.ign.validator.validation.attribute.PathExistsValidator;
  * 
  * @author MBorne
  */
+@JsonTypeName(PathType.TYPE)
 public class PathType extends AttributeType<File> {
-	
+
+    public static final String TYPE = "Path";
+
 	public PathType() {
 		super(File.class);
 		addValidator(new PathExistsValidator());
@@ -21,7 +26,7 @@ public class PathType extends AttributeType<File> {
 	
 	@Override
 	public String getTypeName() {
-		return "Path" ;
+		return TYPE ;
 	}
 	
 	/**

@@ -57,7 +57,6 @@ public class DocumentInfoExtractor {
 	 */
 	public DocumentInfo parseDocument(Context context, Document document) {
 		DocumentInfo documentInfo = new DocumentInfo(document);
-		documentInfo.setDocumentModel(context.getDocumentModel());
 		parseDocumentFiles(context, document, documentInfo);
 		documentInfo.sortFiles();
 		documentInfo.setMetadata(findMetadata(document));

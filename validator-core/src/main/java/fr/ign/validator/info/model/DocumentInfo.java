@@ -13,7 +13,7 @@ import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.info.internal.DocumentFileInfoComparator;
-import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
+import fr.ign.validator.io.json.EnvelopeSerializer;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.model.DocumentModel;
 
@@ -40,11 +40,6 @@ public class DocumentInfo {
 	 * Wrapped document
 	 */
 	private Document document;
-	
-	/**
-	 * The standard (documentModelName)
-	 */
-	private DocumentModel documentModel ;
 
 	/**
 	 * List of DataFiles in directory
@@ -77,18 +72,13 @@ public class DocumentInfo {
 	}
 
 	/**
+	 * Get partial informations for DocumentModel
 	 * @return
 	 */
-	public DocumentModel getDocumentModel() {
-		return documentModel;
+	public DocumentModelInfo getDocumentModel() {
+	    DocumentModel documentModel = document.getDocumentModel();
+		return documentModel != null ? new DocumentModelInfo(documentModel) : null;
 	}
-	/**
-	 * @param standard
-	 */
-	public void setDocumentModel(DocumentModel documentModel) {
-		this.documentModel = documentModel;
-	}
-
 
 	/**
 	 * get register Files

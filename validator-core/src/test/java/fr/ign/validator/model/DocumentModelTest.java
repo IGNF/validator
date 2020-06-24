@@ -21,13 +21,13 @@ public class DocumentModelTest {
 		{
 			FileModel fileModel = new TableModel();
 			fileModel.setName("ACTE_SUP");
-			fileModel.setRegexp("Donnees_geographiques/([a-zA-Z0-9]*_)?ACTE_SUP");
+			fileModel.setPath("Donnees_geographiques/([a-zA-Z0-9]*_)?ACTE_SUP");
 			fileModels.add(fileModel);
 		}
 		{
 			FileModel fileModel = new TableModel();
 			fileModel.setName("SERVITUDE_ACTE_SUP");			
-			fileModel.setRegexp("Donnees_geographiques/([a-zA-Z0-9]*_)?SERVITUDE_ACTE_SUP");
+			fileModel.setPath("Donnees_geographiques/([a-zA-Z0-9]*_)?SERVITUDE_ACTE_SUP");
 			fileModels.add(fileModel);
 		}
 		documentModel.setFileModels(fileModels);
@@ -38,7 +38,7 @@ public class DocumentModelTest {
 	public void testFindFileModelByPathBadName(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("not_found.shp");
-		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
+		FileModel fileModel = documentModel.findFileModelByPath(path);
 		Assert.assertNull(fileModel);
 	}
 	
@@ -46,7 +46,7 @@ public class DocumentModelTest {
 	public void testFindFileModelByPathGoodNameBadPath(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("ACTE_SUP.shp");
-		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
+		FileModel fileModel = documentModel.findFileModelByPath(path);
 		Assert.assertNull(fileModel);
 	}
 	
@@ -54,7 +54,7 @@ public class DocumentModelTest {
 	public void testFindFileModelByPathGoodFilenameGoodPath(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("Donnees_geographiques/ACTE_SUP.dbf");
-		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
+		FileModel fileModel = documentModel.findFileModelByPath(path);
 		Assert.assertNotNull(fileModel);
 		Assert.assertEquals("ACTE_SUP", fileModel.getName());
 	}
@@ -63,7 +63,7 @@ public class DocumentModelTest {
 	public void testFindFileModelByPathLongerRegexp(){
 		DocumentModel documentModel = createFakeDocumentModel();
 		File path = new File("Donnees_geographiques/SERVITUDE_ACTE_SUP.dbf");
-		FileModel fileModel = documentModel.FindFileModelByFilepath(path);
+		FileModel fileModel = documentModel.findFileModelByPath(path);
 		Assert.assertNotNull(fileModel);
 		Assert.assertEquals("SERVITUDE_ACTE_SUP", fileModel.getName());
 	}

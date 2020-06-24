@@ -1,5 +1,7 @@
 package fr.ign.validator.model.type;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import fr.ign.validator.model.AttributeType;
 
 /**
@@ -8,15 +10,18 @@ import fr.ign.validator.model.AttributeType;
  * @author MBorne
  *
  */
+@JsonTypeName(BooleanType.TYPE)
 public class BooleanType extends AttributeType<Boolean> {
-	
+
+	public static final String TYPE = "Boolean";
+
 	public BooleanType() {
 		super(Boolean.class);
 	}
 
 	@Override
 	public String getTypeName() {
-		return "Boolean" ;
+		return TYPE ;
 	}
 
 	@Override

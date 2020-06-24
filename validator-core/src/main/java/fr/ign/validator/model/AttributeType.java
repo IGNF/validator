@@ -3,17 +3,21 @@ package fr.ign.validator.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import fr.ign.validator.data.Attribute;
-import fr.ign.validator.validation.Validator;
-import fr.ign.validator.validation.attribute.AttributeNullableValidator;
-import fr.ign.validator.validation.attribute.CharactersValidator;
-import fr.ign.validator.xml.binding.AttributeTypeAdapter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import fr.ign.validator.data.Attribute;
+import fr.ign.validator.io.xml.AttributeTypeAdapter;
+import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.attribute.AttributeRequiredValidator;
+import fr.ign.validator.validation.attribute.CharactersValidator;
 
 /**
- * 
  * Describes an attribute of a table (FeatureType)
  * 
  * @author MBorne
@@ -21,277 +25,290 @@ import fr.ign.validator.xml.binding.AttributeTypeAdapter;
  * @param <T> the matching java type
  */
 @XmlJavaTypeAdapter(AttributeTypeAdapter.class)
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    property = "type"
+)
+@JsonInclude(value = Include.NON_NULL)
 public abstract class AttributeType<T> implements Model, Cloneable {
-	/**
-	 * Matching java class
-	 */
-	private Class<T> clazz ;
+    /**
+     * Matching java class
+     */
+    private Class<T> clazz;
 
-	/**
-	 * Attribute name
-	 */
-	private String name ;
-	/**
-	 * Attribute definition (description)
-	 */
-	private String definition ;
-	/**
-	 * Regexp matching the attribute value
-	 */
-	private String regexp ;
-	/**
-	 * Limit size of the attribute
-	 */
-	private Integer size ;
-	/**
-	 * Indicates if the value is nullable
-	 */
-	private boolean nullable = false ;
-	/**
-	 * Restriction on a list of values
-	 */
-	private List<String> listOfValues ;
-	/**
-	 * Indicates if the value represent the feature id
-	 */
-	private boolean identifier = false;
+    /**
+     * Attribute name
+     */
+    private String name;
 
-	/**
-	 * Validators on attributes
-	 */
-	private List<Validator<Attribute<T>>> validators = new ArrayList<Validator<Attribute<T>>>() ;
+    /**
+     * Attribute description
+     */
+    private String description;
 
-	/**
-	 * Reference to another table attribute.
-	 * Format TABLE_NAME.ATTRIBUTE_NAME
-	 */
-	private String reference;
+    /**
+     * Constraints on the attribute
+     */
+    private AttributeConstraints constraints = new AttributeConstraints();
 
-	/**
-	 * Constructing a class and validators by default
-	 * @param clazz
-	 */
-	protected AttributeType(Class<T> clazz){
-		this.clazz = clazz ;
-		addValidator(new AttributeNullableValidator<T>());
-		addValidator(new CharactersValidator<T>());
-	}
+    /**
+     * Validators on attributes
+     */
+    private List<Validator<Attribute<T>>> validators = new ArrayList<Validator<Attribute<T>>>();
 
+    /**
+     * Constructing a class and validators by default
+     * 
+     * @param clazz
+     */
+    protected AttributeType(Class<T> clazz) {
+        this.clazz = clazz;
+        addValidator(new AttributeRequiredValidator<T>());
+        addValidator(new CharactersValidator<T>());
+    }
 
-	/**
-	 * Returns type name
-	 * 
-	 * @return
-	 */
-	public abstract String getTypeName() ;
+    /**
+     * Returns type name
+     * 
+     * @return
+     */
+    @JsonIgnore
+    public abstract String getTypeName();
 
-	/**
-	 * Indicates if attribute is a geometry
-	 * @return
-	 */
-	public boolean isGeometry(){
-		return false ;
-	}
+    /**
+     * Indicates if attribute is a geometry
+     * 
+     * @return
+     */
+    @JsonIgnore
+    public boolean isGeometry() {
+        return false;
+    }
 
+    /**
+     * Create an AttributeType instance for a given type name
+     * 
+     * @param type
+     * @return
+     */
+    public static AttributeType<?> forName(String type) {
+        return AttributeTypeFactory.getInstance().createAttributeTypeByName(type);
+    }
 
-	/**
-	 * Converts a value in the matching java type.
-	 * Validates the possibility of a conversion of a value in the java type matching the ValueType
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public abstract T bind(Object value) throws IllegalArgumentException ;
+    /**
+     * Create an Attribute with a given value
+     * 
+     * @param object
+     * @return
+     */
+    public Attribute<T> newAttribute(Object value) {
+        return new Attribute<T>(this, value);
+    }
 
-	/**
-	 * Formats the value as a string parameter (e.g. YYYYMMDD for dates)
-	 * 
-	 * Note : null stays null
-	 * 
-	 * @param value
-	 * @return
-	 * @throws IllegalArgumentException if type is incorrect
-	 */
-	public abstract String format(T value) throws IllegalArgumentException;
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Formats object in parameter
-	 * 
-	 * @param value
-	 * @return
-	 * @throws IllegalArgumentException if type is incorrect
-	 */
-	public String formatObject(Object value) throws IllegalArgumentException {
-		if ( value == null ){
-			return null ;
-		}
-		if ( this.clazz.isAssignableFrom(value.getClass()) ){
-			return format( this.clazz.cast(value) ) ;
-		}else{
-			throw new IllegalArgumentException(String.format(
-					"Invalid type {} for value"
-					));
-		}
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Gets value type for name
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static AttributeType<?> forName(String name){
-		return AttributeTypeFactory.getInstance().createAttributeTypeByName(name) ;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public boolean hasRegexp(){
-		return null != regexp ;
-	}
+    @XmlTransient
+    public AttributeConstraints getConstraints() {
+        return constraints;
+    }
 
-	public String getRegexp() {
-		return regexp;
-	}
+    public void setConstraints(AttributeConstraints constraints) {
+        this.constraints = constraints;
+    }
 
-	public void setRegexp(String regexp) {
-		this.regexp = regexp;
-	}
+    @Deprecated
+    public boolean hasRegexp() {
+        return null != constraints.getPattern();
+    }
+    
+    @Deprecated
+    @JsonIgnore
+    public String getRegexp() {
+        return constraints.getPattern();
+    }
 
-	public String getDefinition() {
-		return definition;
-	}
+    @Deprecated
+    public void setRegexp(String regexp) {
+        this.constraints.setPattern(regexp);
+    }
 
-	public void setDefinition(String definition) {
-		this.definition = definition;
-	}
+    @Deprecated
+    @JsonIgnore
+    public Integer getSize() {
+        return constraints.getMaxLength();
+    }
 
+    @Deprecated
+    public void setSize(Integer size) {
+        this.constraints.setMaxLength(size);
+    }
 
-	public Integer getSize() {
-		return size;
-	}
+    @Deprecated
+    @JsonIgnore
+    public boolean isNullable() {
+        return ! constraints.isRequired();
+    }
 
-	public void setSize(Integer size) {
-		this.size = size;
-	}
+    @Deprecated
+    public void setNullable(boolean nullable) {
+        this.constraints.setRequired(!nullable);
+    }
 
+    @Deprecated
+    @JsonIgnore
+    public boolean hasListOfValues() {
+        return constraints.getEnumValues() != null;
+    }
 
-	public boolean isNullable() {
-		return nullable;
-	}
+    @Deprecated
+    @JsonIgnore
+    public List<String> getListOfValues() {
+        return constraints.getEnumValues();
+    }
 
-	public void setNullable(boolean nullable) {
-		this.nullable = nullable;
-	}
+    @Deprecated
+    public void setListOfValues(List<String> listOfValues) {
+        this.constraints.getEnumValues(listOfValues);
+    }
 
+    @Deprecated
+    @JsonIgnore
+    public boolean isIdentifier() {
+        return constraints.isUnique();
+    }
 
-	public boolean hasListOfValues(){
-		return listOfValues != null ;
-	}
+    @Deprecated
+    public void setIdentifier(boolean identifier) {
+        this.constraints.setUnique(identifier);
+    }
 
-	public List<String> getListOfValues() {
-		return listOfValues;
-	}
+    @Deprecated
+    @JsonIgnore
+    public String getReference() {
+        return this.constraints.getReference();
+    }
 
-	public void setListOfValues(List<String> listOfValues) {
-		this.listOfValues = listOfValues;
-	}
+    @Deprecated
+    public void setReference(String reference) {
+        this.constraints.setReference(reference);
+    }
 
-	/**
-	 * adds a validator
-	 * @param validator
-	 */
-	public void addValidator(Validator<Attribute<T>> validator) {
-		this.validators.add(validator);
-	}
+    @Deprecated
+    @JsonIgnore
+    public boolean isReference() {
+        return this.constraints.getReference() != null;
+    }
 
-	/**
-	 * @return the validators
-	 */
-	public List<Validator<Attribute<T>>> getValidators(){
-		return this.validators ;
-	}
+    @Deprecated
+    @JsonIgnore
+    public String getTableReference() {
+        if (this.constraints.getReference() == null) {
+            return null;
+        }
+        if (!this.constraints.getReference().contains(".")) {
+            return null;
+        }
+        return this.constraints.getReference().split("\\.")[0];
+    }
 
-	public boolean isIdentifier() {
-		return identifier;
-	}
+    @Deprecated
+    @JsonIgnore
+    public String getAttributeReference() {
+        if (this.constraints.getReference() == null) {
+            return null;
+        }
+        if (!this.constraints.getReference().contains(".")) {
+            return null;
+        }
+        return this.constraints.getReference().split("\\.")[1];
+    }
 
-	public void setIdentifier(boolean identifier) {
-		this.identifier = identifier;
-	}
+    
+    @JsonIgnore
+    public List<Validator<Attribute<T>>> getValidators() {
+        return this.validators;
+    }
+    
+    public void addValidator(Validator<Attribute<T>> validator) {
+        this.validators.add(validator);
+    }
 
+    /**
+     * Converts a value in the matching java type. Validates the possibility of a
+     * conversion of a value in the java type matching the ValueType
+     * 
+     * @param value
+     * @return
+     */
+    public abstract T bind(Object value) throws IllegalArgumentException;
 
-	public String getReference() {
-		return this.reference;
-	}
+    /**
+     * Formats the value as a string parameter (e.g. YYYYMMDD for dates)
+     * 
+     * Note : null stays null
+     * 
+     * @param value
+     * @return
+     * @throws IllegalArgumentException if type is incorrect
+     */
+    public abstract String format(T value) throws IllegalArgumentException;
 
+    /**
+     * Formats object in parameter
+     * 
+     * @param value
+     * @return
+     * @throws IllegalArgumentException if type is incorrect
+     */
+    public String formatObject(Object value) throws IllegalArgumentException {
+        if (value == null) {
+            return null;
+        }
+        if (this.clazz.isAssignableFrom(value.getClass())) {
+            return format(this.clazz.cast(value));
+        } else {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Invalid type {} for value"
+                )
+            );
+        }
+    }
 
-	public void setReference(String reference) {
-		this.reference = reference;
-	}
+    @Override
+    public String toString() {
+        String result = name + " (" + getClass().getSimpleName() + ")";
+        return result;
+    }
 
-	
-	public boolean isReference() {
-		return this.reference != null;
-	}
+    @SuppressWarnings("unchecked")
+    public Object clone() {
+        AttributeType<T> attributeType = null;
+        try {
+            attributeType = (AttributeType<T>) super.clone();
+            attributeType.constraints = new AttributeConstraints();
+            attributeType.validators = new ArrayList<Validator<Attribute<T>>>(validators.size());
+            attributeType.validators.addAll(validators);
+        } catch (CloneNotSupportedException cnse) {
+            throw new RuntimeException(cnse);
+        }
 
-	public String getTableReference() {
-		if (this.reference == null) {
-			return null;
-		}
-		if (!this.reference.contains(".")) {
-			return null;
-		}
-		return this.reference.split("\\.")[0];
-	}
-
-
-	public String getAttributeReference() {
-		if (this.reference == null) {
-			return null;
-		}
-		if (!this.reference.contains(".")) {
-			return null;
-		}
-		return this.reference.split("\\.")[1];
-	}
-
-
-	@Override
-	public String toString() {
-		String result = name+ " ("+getClass().getSimpleName()+")" ;
-		return result ;
-	}
-
-	@SuppressWarnings("unchecked")
-	public Object clone() {
-		AttributeType<T> attributeType = null;
-		try {
-			attributeType = (AttributeType<T>) super.clone();
-			attributeType.validators = new ArrayList<Validator<Attribute<T>>>(validators.size());
-			attributeType.validators.addAll(validators);
-		} catch(CloneNotSupportedException cnse) {
-			throw new RuntimeException(cnse);
-		}
-
-		// returns the clone
-		return attributeType;
-	}
-
-	/**
-	 * Creating attribute
-	 * 
-	 * @param object
-	 * @return
-	 */
-	public Attribute<T> newAttribute(Object value) {
-		return new Attribute<T>(this, value);
-	}
-
+        // returns the clone
+        return attributeType;
+    }
 
 }

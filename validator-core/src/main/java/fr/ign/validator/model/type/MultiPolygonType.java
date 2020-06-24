@@ -4,12 +4,17 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName(MultiPolygonType.TYPE)
 public class MultiPolygonType extends GeometryType {
-	
-	@Override
-	public String getTypeName() {
-		return "MultiPolygon" ;
-	}
+
+    public static final String TYPE = "MultiPolygon";
+
+    @Override
+    public String getTypeName() {
+        return TYPE;
+    }
 	
 	@Override
 	public Geometry bind(Object value) {

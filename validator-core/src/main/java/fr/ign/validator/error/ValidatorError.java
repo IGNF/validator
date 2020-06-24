@@ -4,10 +4,11 @@ import org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.locationtech.jts.geom.Envelope;
 
-import fr.ign.validator.jackson.serializer.EnvelopeSerializer;
-import fr.ign.validator.jackson.serializer.ValidatorErrorDeserializer;
+import fr.ign.validator.io.json.EnvelopeSerializer;
+import fr.ign.validator.io.json.ValidatorErrorDeserializer;
+
+import org.locationtech.jts.geom.Envelope;
 
 /**
  * A validation error with corresponding context informations

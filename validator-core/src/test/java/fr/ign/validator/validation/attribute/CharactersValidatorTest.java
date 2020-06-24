@@ -28,7 +28,7 @@ public class CharactersValidatorTest {
 		
 		context = new Context();
 		context.setStringFixer(StringFixer.createFullStringFixer(StandardCharsets.ISO_8859_1));
-		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/config/geofla") ;
+		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/config-xml/geofla") ;
 		context.setCurrentDirectory(currentDirectory);
 		
 		report = new InMemoryReportBuilder() ;

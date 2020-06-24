@@ -42,7 +42,7 @@ public class NetworkingTest {
 	 */
 	@Test
 	public void testReadUrl() throws MalformedURLException, IOException {
-		Networking.configureHttpClient("");
+		Networking.configureHttpClient();
 
 		String url = "https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json";
 		InputStream in = new URL(url).openStream();

@@ -1,5 +1,7 @@
 package fr.ign.validator.model.type;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import fr.ign.validator.model.AttributeType;
 
 /**
@@ -9,32 +11,35 @@ import fr.ign.validator.model.AttributeType;
  * @author MBorne
  *
  */
+@JsonTypeName(DoubleType.TYPE)
 public class DoubleType extends AttributeType<Double> {
-	
-	public DoubleType() {
-		super(Double.class);
-	}
 
-	@Override
-	public String getTypeName() {
-		return "Double" ;
-	}
+    public static final String TYPE = "Double";
 
-	@Override
-	public Double bind(Object object) {
-		if ( object == null || object instanceof Double ){
-			return (Double)object ;
-		}
-		String value = object.toString();
-		return Double.parseDouble(value);
-	}
+    public DoubleType() {
+        super(Double.class);
+    }
 
-	@Override
-	public String format(Double value) throws IllegalArgumentException {
-		if ( null == value ){
-			return null ;
-		}
-		return value.toString() ;
-	}
+    @Override
+    public String getTypeName() {
+        return TYPE;
+    }
+
+    @Override
+    public Double bind(Object object) {
+        if (object == null || object instanceof Double) {
+            return (Double) object;
+        }
+        String value = object.toString();
+        return Double.parseDouble(value);
+    }
+
+    @Override
+    public String format(Double value) throws IllegalArgumentException {
+        if (null == value) {
+            return null;
+        }
+        return value.toString();
+    }
 
 }

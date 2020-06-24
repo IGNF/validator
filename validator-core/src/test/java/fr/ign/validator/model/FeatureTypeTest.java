@@ -19,7 +19,7 @@ public class FeatureTypeTest {
 	public void setUp() throws Exception {
 
 		featureType = new FeatureType() ;
-		featureType.setTypeName("PARENT");
+		featureType.setName("PARENT");
 		{
 			StringType attribute = new StringType() ;
 			attribute.setName("A");
@@ -32,7 +32,7 @@ public class FeatureTypeTest {
 		}
 	
 		featureTypeChild = new FeatureType() ;
-		featureTypeChild.setTypeName("CHILD");
+		featureTypeChild.setName("CHILD");
 		featureTypeChild.setParent(featureType);
 		
 		{
