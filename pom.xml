@@ -30,6 +30,7 @@
 		<jackson.version>2.9.10</jackson.version>
 		<jackson.databind.version>2.9.10.5</jackson.databind.version>
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<maven-formatter-plugin.version>2.11.0</maven-formatter-plugin.version>
 	</properties>
 	<organization>
 		<name>IGN - Service RDS</name>
@@ -282,6 +283,24 @@
 
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+					<argLine> --illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>net.revelc.code.formatter</groupId>
+				<artifactId>formatter-maven-plugin</artifactId>
+				<version>${maven-formatter-plugin.version}</version>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -302,20 +321,18 @@
 						<tagNameFormat>v@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>net.revelc.code.formatter</groupId>
+					<artifactId>formatter-maven-plugin</artifactId>
+					<version>${maven-formatter-plugin.version}</version>
+					<configuration>
+						<configFile>${project.parent.basedir}/eclipse/formatter-config.xml</configFile>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.1</version>
-				<configuration>
-					<useSystemClassLoader>false</useSystemClassLoader>
-					<argLine> --illegal-access=permit
-					</argLine>
-				</configuration>
-			</plugin>
-		</plugins>
+
 	</build>
 
 </project>
