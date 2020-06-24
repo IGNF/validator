@@ -16,63 +16,67 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensures that "specifications" is not empty and that each "specification" is valid
- *  
+ * Ensures that "specifications" is not empty and that each "specification" is
+ * valid
+ * 
  * @author MBorne
  *
  */
 public class SpecificationsValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("LocatorsValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		List<Specification> specifications = metadata.getSpecifications() ;
-		log.info(MARKER, "metadata.specifications.size : {}", specifications.size());
-		if ( specifications.isEmpty()  ){
-			context.report(
-				CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY
-			);
-		}
-		int count = 1 ;
-		for (Specification specification : specifications) {
-			// specification.title
-			if ( StringUtils.isEmpty(specification.getTitle()) ){
-				context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_TITLE_NOT_FOUND)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(specifications.size()))
-				);
-			}
-			
-			// specification.date
-			if ( specification.getDate() == null ){
-				context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DATE_NOT_FOUND)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(specifications.size()))
-				);
-			}else if ( ! specification.getDate().isValid() ){
-				context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DATE_INVALID)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(specifications.size()))
-					.setMessageParam("VALUE", specification.getDate().toString())
-				);
-			}
-			
-			// specification.degree
-			if ( ! StringUtils.isEmpty(specification.getDegree()) ){
-				if ( ! specification.getDegree().equals("true") && ! specification.getDegree().equals("false") ){
-					context.report(context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DEGREE_INVALID)
-						.setMessageParam("NUMBER", String.valueOf(count))
-						.setMessageParam("COUNT", String.valueOf(specifications.size()))
-						.setMessageParam("VALUE", specification.getDegree())
-					);
-				}
-			}
-			
-			count++;
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("LocatorsValidator");
 
-	
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        List<Specification> specifications = metadata.getSpecifications();
+        log.info(MARKER, "metadata.specifications.size : {}", specifications.size());
+        if (specifications.isEmpty()) {
+            context.report(
+                CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY
+            );
+        }
+        int count = 1;
+        for (Specification specification : specifications) {
+            // specification.title
+            if (StringUtils.isEmpty(specification.getTitle())) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_SPECIFICATION_TITLE_NOT_FOUND)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(specifications.size()))
+                );
+            }
+
+            // specification.date
+            if (specification.getDate() == null) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DATE_NOT_FOUND)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(specifications.size()))
+                );
+            } else if (!specification.getDate().isValid()) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DATE_INVALID)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(specifications.size()))
+                        .setMessageParam("VALUE", specification.getDate().toString())
+                );
+            }
+
+            // specification.degree
+            if (!StringUtils.isEmpty(specification.getDegree())) {
+                if (!specification.getDegree().equals("true") && !specification.getDegree().equals("false")) {
+                    context.report(
+                        context.createError(CoreErrorCodes.METADATA_SPECIFICATION_DEGREE_INVALID)
+                            .setMessageParam("NUMBER", String.valueOf(count))
+                            .setMessageParam("COUNT", String.valueOf(specifications.size()))
+                            .setMessageParam("VALUE", specification.getDegree())
+                    );
+                }
+            }
+
+            count++;
+        }
+    }
+
 }

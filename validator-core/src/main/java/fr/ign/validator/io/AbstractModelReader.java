@@ -18,7 +18,6 @@ import fr.ign.validator.model.FileModel;
  * @author MBorne
  */
 abstract class AbstractModelReader implements ModelReader {
-    
 
     @Override
     public DocumentModel loadDocumentModel(File documentModelPath) {
@@ -61,12 +60,15 @@ abstract class AbstractModelReader implements ModelReader {
             /* URL convention */
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.xml
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.xml
-            return new URL(parentUrl + "/" + documentModel.getName() + "/types/" + documentFile.getName() + "." + getFormat());
+            return new URL(
+                parentUrl + "/" + documentModel.getName() + "/types/" + documentFile.getName() + "." + getFormat()
+            );
         }
     }
 
     /**
      * Get parent URL
+     * 
      * @param url
      * @return
      */
@@ -94,5 +96,5 @@ abstract class AbstractModelReader implements ModelReader {
             throw new ModelNotFoundException(url);
         }
     }
-    
+
 }

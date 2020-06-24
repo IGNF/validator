@@ -12,63 +12,60 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * 
  * TODO add thesaurusDate (it is required by INSPIRE)
  * 
- * @see <a href="http://www.datypic.com/sc/niem21/e-gmd_MD_Keywords.html">gmd:MD_Keywords</a>
+ * @see <a href=
+ *      "http://www.datypic.com/sc/niem21/e-gmd_MD_Keywords.html">gmd:MD_Keywords</a>
  * 
  * @author MBorne
  *
  */
 public class Keywords {
 
-	private List<String> keywords ;
-	
-	/**
-	 * ./gmd:thesaurusName/gmd:CI_Citation/gmd:title/*
-	 */
-	@JsonInclude(Include.NON_EMPTY)
-	private String thesaurusName ;
+    private List<String> keywords;
 
-	
-	@JsonInclude(Include.NON_EMPTY)
-	private String thesaurusUri ;
-	
-	/**
-	 * ./gmd:thesaurusName/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/*
-	 */
-	private Date thesaurusDate ;
-	
-	
-	public List<String> getKeywords() {
-		return keywords;
-	}
+    /**
+     * ./gmd:thesaurusName/gmd:CI_Citation/gmd:title/*
+     */
+    @JsonInclude(Include.NON_EMPTY)
+    private String thesaurusName;
 
-	public void setKeywords(List<String> keywords) {
-		this.keywords = keywords;
-	}
+    @JsonInclude(Include.NON_EMPTY)
+    private String thesaurusUri;
 
-	public String getThesaurusName() {
-		return thesaurusName;
-	}
+    /**
+     * ./gmd:thesaurusName/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/*
+     */
+    private Date thesaurusDate;
 
-	public void setThesaurusName(String thesaurusName) {
-		this.thesaurusName = thesaurusName;
-	}
+    public List<String> getKeywords() {
+        return keywords;
+    }
 
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
 
-	public String getThesaurusUri() {
-		return thesaurusUri;
-	}
+    public String getThesaurusName() {
+        return thesaurusName;
+    }
 
-	public void setThesaurusUri(String thesaurusUri) {
-		this.thesaurusUri = thesaurusUri;
-	}
+    public void setThesaurusName(String thesaurusName) {
+        this.thesaurusName = thesaurusName;
+    }
 
-	public Date getThesaurusDate() {
-		return thesaurusDate;
-	}
+    public String getThesaurusUri() {
+        return thesaurusUri;
+    }
 
-	public void setThesaurusDate(Date thesaurusDate) {
-		this.thesaurusDate = thesaurusDate;
-	}
+    public void setThesaurusUri(String thesaurusUri) {
+        this.thesaurusUri = thesaurusUri;
+    }
 
-	
+    public Date getThesaurusDate() {
+        return thesaurusDate;
+    }
+
+    public void setThesaurusDate(Date thesaurusDate) {
+        this.thesaurusDate = thesaurusDate;
+    }
+
 }

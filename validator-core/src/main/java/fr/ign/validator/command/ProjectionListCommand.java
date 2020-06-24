@@ -29,54 +29,51 @@ import fr.ign.validator.repository.ProjectionRepository;
  */
 public class ProjectionListCommand extends AbstractCommand {
 
-	public static final String NAME = "projection_list";
+    public static final String NAME = "projection_list";
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("ProjectionListCommand");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("ProjectionListCommand");
 
-	private File outputFile ;
-	
-	@Override
-	public String getName() {
-		return NAME;
-	}
-	
-	@Override
-	protected void buildCustomOptions(Options options) {
-		// output
-		{
-			Option option = new Option("o", "output", true, "Output file (json)");
-			option.setRequired(false);
-			option.setType(File.class);
-			options.addOption(option);
-		}
-	}
+    private File outputFile;
 
-	@Override
-	protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-		outputFile = (File) commandLine.getParsedOptionValue("output");
-	}
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
+    @Override
+    protected void buildCustomOptions(Options options) {
+        // output
+        {
+            Option option = new Option("o", "output", true, "Output file (json)");
+            option.setRequired(false);
+            option.setType(File.class);
+            options.addOption(option);
+        }
+    }
 
-	@Override
-	public void execute() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		
-		List<Projection> projections = ProjectionRepository.getInstance().findAll();
-		objectMapper.writeValue(getOutputStream(), projections);
-	}
+    @Override
+    protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
+        outputFile = (File) commandLine.getParsedOptionValue("output");
+    }
 
-	
-	private PrintStream getOutputStream() throws FileNotFoundException{
-		if ( outputFile == null ){
-			return System.out;
-		}
-		if ( outputFile.exists() ){
-			outputFile.delete();
-		}
-		return new PrintStream(outputFile);
-	}
+    @Override
+    public void execute() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
+        List<Projection> projections = ProjectionRepository.getInstance().findAll();
+        objectMapper.writeValue(getOutputStream(), projections);
+    }
+
+    private PrintStream getOutputStream() throws FileNotFoundException {
+        if (outputFile == null) {
+            return System.out;
+        }
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        return new PrintStream(outputFile);
+    }
 
 }

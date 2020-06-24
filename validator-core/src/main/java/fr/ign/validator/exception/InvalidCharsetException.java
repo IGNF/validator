@@ -9,10 +9,10 @@ package fr.ign.validator.exception;
  */
 public class InvalidCharsetException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public InvalidCharsetException(String message){
-		super(message);
-	}
-	
+    public InvalidCharsetException(String message) {
+        super(message);
+    }
+
 }

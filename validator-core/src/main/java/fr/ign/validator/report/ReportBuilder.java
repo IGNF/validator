@@ -11,10 +11,11 @@ import fr.ign.validator.error.ValidatorError;
  */
 public interface ReportBuilder {
 
-	/**
-	 * Add error to the report
-	 * @param error
-	 */
-	public void addError(ValidatorError error);
-	
+    /**
+     * Add error to the report
+     * 
+     * @param error
+     */
+    public void addError(ValidatorError error);
+
 }

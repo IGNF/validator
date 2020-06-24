@@ -47,9 +47,9 @@ public class AttributeConstraints {
     private String pattern;
 
     // TODO add private Integer minLength
-    
+
     /**
-     * Maximum length of the value 
+     * Maximum length of the value
      * 
      * @since 4.0 previously "size"
      * 
@@ -57,9 +57,9 @@ public class AttributeConstraints {
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_EXCEEDED
      */
     private Integer maxLength;
-    
+
     /**
-     * Restriction on a list of values 
+     * Restriction on a list of values
      * 
      * @since 4.0 previously "listOfValues"
      * 
@@ -71,8 +71,8 @@ public class AttributeConstraints {
     /**
      * Reference to another table attribute. Format TABLE_NAME.ATTRIBUTE_NAME
      * 
-     * TODO support alternative format TABLE_NAME(ATTRIBUTE_NAME)
-     * TODO move validation from validator-plugin-dgpr to validator-core
+     * TODO support alternative format TABLE_NAME(ATTRIBUTE_NAME) TODO move
+     * validation from validator-plugin-dgpr to validator-core
      */
     private String reference;
 
@@ -115,12 +115,13 @@ public class AttributeConstraints {
 
     /**
      * Tell if enum restriction is defined
+     * 
      * @return
      */
     public boolean hasEnumValues() {
-        return enumValues != null && ! enumValues.isEmpty();
+        return enumValues != null && !enumValues.isEmpty();
     }
-    
+
     @JsonProperty("enum")
     public List<String> getEnumValues() {
         return enumValues;

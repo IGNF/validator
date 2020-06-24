@@ -346,7 +346,7 @@ public class DatabaseJointureSUP {
      * @throws SQLException
      */
     private List<String> getFichiersFromResultSet(ResultSet rs) throws SQLException {
-    	HashSet<String> result = new HashSet<String>();
+        HashSet<String> result = new HashSet<String>();
         while (rs.next()) {
             result.add(rs.getString("fichier"));
         }

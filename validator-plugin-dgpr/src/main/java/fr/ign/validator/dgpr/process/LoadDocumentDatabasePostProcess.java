@@ -20,43 +20,45 @@ import fr.ign.validator.ValidatorListener;
  */
 public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("LoadDocumentDatabasePostProcess");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("LoadDocumentDatabasePostProcess");
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-	}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
+    }
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-	}
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
+    }
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
-		log.info(MARKER,
-			"Load document database"
-		);	
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
+        log.info(
+            MARKER,
+            "Load document database"
+        );
 
-		ValidatableDatabase database = new ValidatableDatabase(context, document);
+        ValidatableDatabase database = new ValidatableDatabase(context, document);
 
-		log.info(MARKER,
-			"Validate document database"
-		);
+        log.info(
+            MARKER,
+            "Validate document database"
+        );
 
-		/*
-		 * Standard database Validation 
-		 */
-		database.addValidator(new IdentifierValidator());
-		database.addValidator(new RelationValidator());
+        /*
+         * Standard database Validation
+         */
+        database.addValidator(new IdentifierValidator());
+        database.addValidator(new RelationValidator());
 
-		/*
-		 * Custom database Validation
-		 */
-		database.addValidator(new ScenarioValidator());
-		database.addValidator(new InclusionValidator());
-		database.addValidator(new GraphTopologyValidator());
-		
-		database.validate(context);
-	}
+        /*
+         * Custom database Validation
+         */
+        database.addValidator(new ScenarioValidator());
+        database.addValidator(new InclusionValidator());
+        database.addValidator(new GraphTopologyValidator());
+
+        database.validate(context);
+    }
 
 }

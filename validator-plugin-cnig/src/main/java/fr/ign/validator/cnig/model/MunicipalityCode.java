@@ -10,21 +10,19 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public class MunicipalityCode {
-	public static final String REGEXP = "(2[AB][0-9]{3}|[0-9]{5})" ; 
+    public static final String REGEXP = "(2[AB][0-9]{3}|[0-9]{5})";
 
-	/**
-	 * Validates a municipality code
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public static boolean isValid(String value){
-		if ( StringUtils.isEmpty(value) ){
-			return false ;
-		}
-		return value.matches(REGEXP) ;
-	}
+    /**
+     * Validates a municipality code
+     * 
+     * @param value
+     * @return
+     */
+    public static boolean isValid(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return false;
+        }
+        return value.matches(REGEXP);
+    }
 
 }
-
-

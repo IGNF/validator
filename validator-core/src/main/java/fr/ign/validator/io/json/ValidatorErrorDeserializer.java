@@ -20,29 +20,27 @@ import fr.ign.validator.error.ValidatorError;
  * @author MBorne
  *
  */
-public class ValidatorErrorDeserializer extends StdDeserializer<ValidatorError> { 
+public class ValidatorErrorDeserializer extends StdDeserializer<ValidatorError> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ValidatorErrorDeserializer() { 
-        this(null); 
-    } 
- 
-    public ValidatorErrorDeserializer(Class<?> vc) { 
-        super(vc); 
+    public ValidatorErrorDeserializer() {
+        this(null);
     }
 
-    
+    public ValidatorErrorDeserializer(Class<?> vc) {
+        super(vc);
+    }
+
     @Override
-    public ValidatorError deserialize(JsonParser jp, DeserializationContext ctxt) 
-      throws IOException, JsonProcessingException {
+    public ValidatorError deserialize(JsonParser jp, DeserializationContext ctxt)
+        throws IOException, JsonProcessingException {
         JsonNode node = jp.getCodec().readTree(jp);
- 
-        ErrorCode code = ErrorCode.valueOf( node.get("name").asText() ) ;
+
+        ErrorCode code = ErrorCode.valueOf(node.get("name").asText());
         ValidatorError error = new ValidatorError(code);
         error.setLevel(ErrorLevel.valueOf(node.get("level").asText()));
         error.setMessage(node.get("message").asText());
         return error;
     }
 }
-

@@ -15,33 +15,33 @@ import fr.ign.validator.metadata.ResponsibleParty;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MetadataContactValidatorTest extends MetadataValidatorTestBase {
-	
-	@Test
-	public void testValid(){
-		Metadata metadata = mock(Metadata.class);
-		ResponsibleParty contact = new ResponsibleParty();
-		when(metadata.getMetadataContact()).thenReturn(contact);
-		
-		MetadataContactValidator validator = new MetadataContactValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(0, report.getErrors().size());
-	}
-	
-	@Test
-	public void testEmpty(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getMetadataContact()).thenReturn(null);
-		
-		MetadataContactValidator validator = new MetadataContactValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(1, report.getErrors().size());
-		ValidatorError error = report.getErrors().get(0);
-		assertEquals(
-			CoreErrorCodes.METADATA_METADATACONTACT_NOT_FOUND,
-			error.getCode()
-		);
-	}
-	
+
+    @Test
+    public void testValid() {
+        Metadata metadata = mock(Metadata.class);
+        ResponsibleParty contact = new ResponsibleParty();
+        when(metadata.getMetadataContact()).thenReturn(contact);
+
+        MetadataContactValidator validator = new MetadataContactValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(0, report.getErrors().size());
+    }
+
+    @Test
+    public void testEmpty() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getMetadataContact()).thenReturn(null);
+
+        MetadataContactValidator validator = new MetadataContactValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(1, report.getErrors().size());
+        ValidatorError error = report.getErrors().get(0);
+        assertEquals(
+            CoreErrorCodes.METADATA_METADATACONTACT_NOT_FOUND,
+            error.getCode()
+        );
+    }
+
 }

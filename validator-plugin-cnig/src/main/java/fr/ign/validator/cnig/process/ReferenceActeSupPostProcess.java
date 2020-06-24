@@ -16,27 +16,26 @@ import fr.ign.validator.data.Document;
  * @author MBorne
  */
 public class ReferenceActeSupPostProcess implements ValidatorListener {
-	
-	public static final Logger log = LogManager.getRootLogger() ;
-	public static final Marker POSTPROCESS_REFERENCEACTE = MarkerManager.getMarker("POSTPROCESS_REFERENCEACTE") ;
 
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker POSTPROCESS_REFERENCEACTE = MarkerManager.getMarker("POSTPROCESS_REFERENCEACTE");
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-		
-	}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-		
-	}
+    }
 
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
-		ReferenceActeSupJointureBuilder jointureBuilder = new ReferenceActeSupJointureBuilder(context.getDataDirectory());
-		jointureBuilder.run() ;
-	}
-	
+    }
+
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
+        ReferenceActeSupJointureBuilder jointureBuilder = new ReferenceActeSupJointureBuilder(
+            context.getDataDirectory()
+        );
+        jointureBuilder.run();
+    }
 
 }

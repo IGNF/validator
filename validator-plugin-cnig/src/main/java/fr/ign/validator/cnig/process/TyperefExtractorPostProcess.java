@@ -18,58 +18,58 @@ import fr.ign.validator.data.Document;
  * Extract typeref (cadastral reference)
  */
 public class TyperefExtractorPostProcess implements ValidatorListener {
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("TyperefExtractorPostProcess");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("TyperefExtractorPostProcess");
 
-	private static final String TAG_TYPEREF = "typeref";
+    private static final String TAG_TYPEREF = "typeref";
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-		
-	}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-		
-	}
+    }
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
-		document.setTag(TAG_TYPEREF, parseTyperef(context, document));
-	}
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
 
-	/**
-	 * Get typeref value from DOC_URBA.csv file
-	 * 
-	 * @param context
-	 * @return null if not found
-	 */
-	private String parseTyperef(Context context, Document document) {
-		String documentName = document.getDocumentName();
+    }
 
-		IdurbaHelper helper = IdurbaHelper.getInstance(context.getDocumentModel());
-		if (null == helper) {
-			log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
-			return null;
-		}
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
+        document.setTag(TAG_TYPEREF, parseTyperef(context, document));
+    }
 
-		File documentDirectory = new File(context.getValidationDirectory(), documentName);
-		File dataDirectory = new File(documentDirectory, "DATA");
-		File docUrbaFile = new File(dataDirectory, "DOC_URBA.csv");
+    /**
+     * Get typeref value from DOC_URBA.csv file
+     * 
+     * @param context
+     * @return null if not found
+     */
+    private String parseTyperef(Context context, Document document) {
+        String documentName = document.getDocumentName();
 
-		if (!docUrbaFile.exists()) {
-			log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
-		}
+        IdurbaHelper helper = IdurbaHelper.getInstance(context.getDocumentModel());
+        if (null == helper) {
+            log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
+            return null;
+        }
 
-		TyperefExtractor typerefExtractor = new TyperefExtractor(helper);
-		String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
-		if (null == result) {
-			context.report(context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
-				.setMessageParam("EXPECTED_IDURBA", helper.getHelpExpected(documentName))
-			);
-		}
-		return result;
-	}
+        File documentDirectory = new File(context.getValidationDirectory(), documentName);
+        File dataDirectory = new File(documentDirectory, "DATA");
+        File docUrbaFile = new File(dataDirectory, "DOC_URBA.csv");
 
-	
+        if (!docUrbaFile.exists()) {
+            log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
+        }
+
+        TyperefExtractor typerefExtractor = new TyperefExtractor(helper);
+        String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
+        if (null == result) {
+            context.report(
+                context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
+                    .setMessageParam("EXPECTED_IDURBA", helper.getHelpExpected(documentName))
+            );
+        }
+        return result;
+    }
+
 }

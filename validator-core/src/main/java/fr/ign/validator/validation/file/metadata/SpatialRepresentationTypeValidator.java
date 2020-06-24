@@ -21,23 +21,24 @@ import fr.ign.validator.validation.Validator;
  */
 public class SpatialRepresentationTypeValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("SpatialRepresentationTypeValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		SpatialRepresentationTypeCode code = metadata.getSpatialRepresentationType() ;
-		log.info(MARKER, "metadata.type : {}", code);
-		if ( null == code ){
-			context.report(
-				CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND
-			);
-		}else if ( ! code.isValid() ){
-			context.report(context.createError(CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_INVALID)
-				.setMessageParam("CODE", code.getValue())
-				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("SpatialRepresentationTypeValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        SpatialRepresentationTypeCode code = metadata.getSpatialRepresentationType();
+        log.info(MARKER, "metadata.type : {}", code);
+        if (null == code) {
+            context.report(
+                CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND
+            );
+        } else if (!code.isValid()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_SPATIALREPRESENTATIONTYPE_INVALID)
+                    .setMessageParam("CODE", code.getValue())
+                    .setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
+            );
+        }
+    }
 
 }

@@ -11,12 +11,13 @@ import fr.ign.validator.Context;
  * @param <T>
  */
 public interface Validator<T> {
-	
-	/**
-	 * Validates the element
-	 * @param context
-	 * @param validatable
-	 */
-	public void validate(Context context, T validatable) ;
-	
+
+    /**
+     * Validates the element
+     * 
+     * @param context
+     * @param validatable
+     */
+    public void validate(Context context, T validatable);
+
 }

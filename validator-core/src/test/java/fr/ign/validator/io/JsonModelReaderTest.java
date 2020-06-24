@@ -123,7 +123,8 @@ public class JsonModelReaderTest {
     }
 
     /**
-     * Check FeatureType for /config-json/adresse/types/ADRESSE.json 
+     * Check FeatureType for /config-json/adresse/types/ADRESSE.json
+     * 
      * @param featureType
      */
     private void assertExceptedFeatureTypeAdresse(FeatureType featureType) {

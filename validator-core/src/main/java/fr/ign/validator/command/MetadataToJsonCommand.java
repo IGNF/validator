@@ -33,15 +33,15 @@ public class MetadataToJsonCommand extends AbstractCommand {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("MetadataToJsonCommand");
-    
+
     /**
      * Input metadata file (XML) or folder
      */
     private File inputFile;
 
     /**
-     * Optional output file. Default is stdout for a single file 
-     * and {inputFile}.json for each XML file in a directory
+     * Optional output file. Default is stdout for a single file and
+     * {inputFile}.json for each XML file in a directory
      */
     private File outputFile;
 
@@ -59,11 +59,11 @@ public class MetadataToJsonCommand extends AbstractCommand {
             log.info(MARKER, "Processing XML files in {} ...", inputFile.getAbsolutePath());
             Collection<File> sourceFiles = FileUtils.listFiles(inputFile, extensions, true);
             for (File sourceFile : sourceFiles) {
-                File targetFile = new File(sourceFile.getAbsolutePath()+".json");
+                File targetFile = new File(sourceFile.getAbsolutePath() + ".json");
                 log.info(MARKER, "{} ...", sourceFile.getAbsolutePath());
                 try {
-                    convertFile(sourceFile,targetFile);
-                }catch(Exception e) {
+                    convertFile(sourceFile, targetFile);
+                } catch (Exception e) {
                     log.error(MARKER, "fail to convert {} ", sourceFile.getAbsolutePath());
                     e.printStackTrace(System.err);
                 }

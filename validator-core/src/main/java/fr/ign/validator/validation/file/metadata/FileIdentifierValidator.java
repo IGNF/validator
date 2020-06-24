@@ -20,39 +20,38 @@ import fr.ign.validator.validation.Validator;
  */
 public class FileIdentifierValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("FileIdentifierValidator") ;	
-	
-	/**
-	 * Allows [a-z][A-Z][0-9], spaces, "-", ".", ":" "/" "\"
-	 */
-	public static final String REGEXP = "[\\w\\s-.:/\\[\\]]+";
-	
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("FileIdentifierValidator");
 
-	public boolean isValid(String fileIdentifier) {
-		if ( StringUtils.isEmpty(fileIdentifier) ) {
-			return false;
-		}
-		return fileIdentifier.matches(REGEXP);
-	}
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		String fileIdentifier = metadata.getFileIdentifier() ;
-		log.info(MARKER, "metadata.fileIdentifier : {}", fileIdentifier);
-		if ( StringUtils.isEmpty(fileIdentifier) ){
-			context.report(
-				CoreErrorCodes.METADATA_FILEIDENTIFIER_NOT_FOUND
-			);
-			return;
-		}
-		if ( ! isValid(fileIdentifier) ){
-			context.report(context.createError(CoreErrorCodes.METADATA_FILEIDENTIFIER_INVALID)
-				.setMessageParam("VALUE", fileIdentifier)
-				.setMessageParam("EXPECTED_REGEXP", REGEXP)
-			);
-		}
-	}
+    /**
+     * Allows [a-z][A-Z][0-9], spaces, "-", ".", ":" "/" "\"
+     */
+    public static final String REGEXP = "[\\w\\s-.:/\\[\\]]+";
 
+    public boolean isValid(String fileIdentifier) {
+        if (StringUtils.isEmpty(fileIdentifier)) {
+            return false;
+        }
+        return fileIdentifier.matches(REGEXP);
+    }
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        String fileIdentifier = metadata.getFileIdentifier();
+        log.info(MARKER, "metadata.fileIdentifier : {}", fileIdentifier);
+        if (StringUtils.isEmpty(fileIdentifier)) {
+            context.report(
+                CoreErrorCodes.METADATA_FILEIDENTIFIER_NOT_FOUND
+            );
+            return;
+        }
+        if (!isValid(fileIdentifier)) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_FILEIDENTIFIER_INVALID)
+                    .setMessageParam("VALUE", fileIdentifier)
+                    .setMessageParam("EXPECTED_REGEXP", REGEXP)
+            );
+        }
+    }
 
 }

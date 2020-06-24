@@ -17,123 +17,120 @@ import fr.ign.validator.io.json.EnvelopeSerializer;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.model.DocumentModel;
 
-/** 
+/**
  * 
- * Represents a directory.
- * Contains DataFiles and DataLayers
- *  
+ * Represents a directory. Contains DataFiles and DataLayers
+ * 
  * 
  * @author CBouche
  *
  */
-@JsonPropertyOrder({ 
-	"name",
-	"documentModel",
-	"files",
-	"documentExtent",
-	"tags",
-	"metadata"
+@JsonPropertyOrder({
+    "name",
+    "documentModel",
+    "files",
+    "documentExtent",
+    "tags",
+    "metadata"
 })
 public class DocumentInfo {
-	
-	/**
-	 * Wrapped document
-	 */
-	private Document document;
 
-	/**
-	 * List of DataFiles in directory
-	 */
-	private List<DocumentFileInfo> files = new ArrayList<DocumentFileInfo>() ;
+    /**
+     * Wrapped document
+     */
+    private Document document;
 
-	/**
-	 * Enveloppe du document
-	 */
-	private Envelope documentExtent = new Envelope();
+    /**
+     * List of DataFiles in directory
+     */
+    private List<DocumentFileInfo> files = new ArrayList<DocumentFileInfo>();
 
-	/**
-	 * Metadata 
-	 */
-	private Metadata metadata ;
+    /**
+     * Enveloppe du document
+     */
+    private Envelope documentExtent = new Envelope();
 
-	/**
-	 * Constructor
-	 */
-	public DocumentInfo(Document document) {
-		this.document = document ;
-	}
+    /**
+     * Metadata
+     */
+    private Metadata metadata;
 
-	/**
-	 * get directory name
-	 * @return
-	 */
-	public String getName() {
-		return document.getDocumentName();
-	}
+    /**
+     * Constructor
+     */
+    public DocumentInfo(Document document) {
+        this.document = document;
+    }
 
-	/**
-	 * Get partial informations for DocumentModel
-	 * @return
-	 */
-	public DocumentModelInfo getDocumentModel() {
-	    DocumentModel documentModel = document.getDocumentModel();
-		return documentModel != null ? new DocumentModelInfo(documentModel) : null;
-	}
+    /**
+     * get directory name
+     * 
+     * @return
+     */
+    public String getName() {
+        return document.getDocumentName();
+    }
 
-	/**
-	 * get register Files
-	 * @return
-	 */
-	public List<DocumentFileInfo> getFiles() {
-		return files;
-	}
+    /**
+     * Get partial informations for DocumentModel
+     * 
+     * @return
+     */
+    public DocumentModelInfo getDocumentModel() {
+        DocumentModel documentModel = document.getDocumentModel();
+        return documentModel != null ? new DocumentModelInfo(documentModel) : null;
+    }
 
-	/**
-	 * add register File
-	 * @param dataFile
-	 */
-	public void addFile(DocumentFileInfo dataFile) {
-		files.add(dataFile) ;
-	}
-	
+    /**
+     * get register Files
+     * 
+     * @return
+     */
+    public List<DocumentFileInfo> getFiles() {
+        return files;
+    }
 
-	
-	@JsonSerialize(using=EnvelopeSerializer.class)
-	@JsonInclude(value=Include.NON_NULL)
-	public Envelope getDocumentExtent() {
-		return documentExtent;
-	}
+    /**
+     * add register File
+     * 
+     * @param dataFile
+     */
+    public void addFile(DocumentFileInfo dataFile) {
+        files.add(dataFile);
+    }
 
+    @JsonSerialize(using = EnvelopeSerializer.class)
+    @JsonInclude(value = Include.NON_NULL)
+    public Envelope getDocumentExtent() {
+        return documentExtent;
+    }
 
-	public void setDocumentExtent(Envelope documentExtent) {
-		this.documentExtent = documentExtent;
-	}
+    public void setDocumentExtent(Envelope documentExtent) {
+        this.documentExtent = documentExtent;
+    }
 
-	public Metadata getMetadata() {
-		return metadata;
-	}
+    public Metadata getMetadata() {
+        return metadata;
+    }
 
-	public void setMetadata(Metadata metadata) {
-		this.metadata = metadata;
-	}
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
 
-	/**
-	 * Get tags
-	 * @return
-	 */
-	public Map<String,String> getTags(){
-		return document.getTags();
-	}
+    /**
+     * Get tags
+     * 
+     * @return
+     */
+    public Map<String, String> getTags() {
+        return document.getTags();
+    }
 
+    /**
+     * simplify test
+     */
+    public void sortFiles() {
+        Collections.sort(files, new DocumentFileInfoComparator());
+    }
 
-	/**
-	 * simplify test
-	 */
-	public void sortFiles(){
-		Collections.sort(files, new DocumentFileInfoComparator());
-	}
-	
 }
-
-
-

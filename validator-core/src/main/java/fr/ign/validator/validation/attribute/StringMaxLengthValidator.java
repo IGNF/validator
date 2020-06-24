@@ -15,26 +15,27 @@ import fr.ign.validator.validation.Validator;
  */
 public class StringMaxLengthValidator implements Validator<Attribute<String>> {
 
-	@Override
-	public void validate(Context context, Attribute<String> attribute) {
-		String value = attribute.getBindedValue() ;
-		
-		if ( value == null ){
-			return ;
-		}
-		
-		AttributeConstraints constraints = attribute.getType().getConstraints();
-		Integer maxLength = constraints.getMaxLength() ;
-		if ( maxLength == null || maxLength < 0 ){
-			return ;
-		}
-		
-		if ( value.length() > maxLength ){
-			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_SIZE_EXCEEDED)
-				.setMessageParam("VALUE_LENGTH", String.valueOf(value.length()))
-				.setMessageParam("EXPECTED_LENGTH", maxLength.toString())
-			);
-		}
-	}
+    @Override
+    public void validate(Context context, Attribute<String> attribute) {
+        String value = attribute.getBindedValue();
+
+        if (value == null) {
+            return;
+        }
+
+        AttributeConstraints constraints = attribute.getType().getConstraints();
+        Integer maxLength = constraints.getMaxLength();
+        if (maxLength == null || maxLength < 0) {
+            return;
+        }
+
+        if (value.length() > maxLength) {
+            context.report(
+                context.createError(CoreErrorCodes.ATTRIBUTE_SIZE_EXCEEDED)
+                    .setMessageParam("VALUE_LENGTH", String.valueOf(value.length()))
+                    .setMessageParam("EXPECTED_LENGTH", maxLength.toString())
+            );
+        }
+    }
 
 }

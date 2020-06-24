@@ -14,24 +14,24 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Ensures that "title" is defined and not empty
- *  
+ * 
  * @author MBorne
  *
  */
 public class TitleValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("TitleValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		String value = metadata.getTitle() ;
-		log.info(MARKER, "metadata.title : {}", value);
-		if ( StringUtils.isEmpty(value)  ){
-			context.report(
-				CoreErrorCodes.METADATA_TITLE_NOT_FOUND
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("TitleValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        String value = metadata.getTitle();
+        log.info(MARKER, "metadata.title : {}", value);
+        if (StringUtils.isEmpty(value)) {
+            context.report(
+                CoreErrorCodes.METADATA_TITLE_NOT_FOUND
+            );
+        }
+    }
 
 }

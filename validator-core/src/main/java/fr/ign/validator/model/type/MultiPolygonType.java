@@ -15,20 +15,20 @@ public class MultiPolygonType extends GeometryType {
     public String getTypeName() {
         return TYPE;
     }
-	
-	@Override
-	public Geometry bind(Object value) {
-		Geometry geometry = super.bind(value);
-		if ( null == geometry || geometry.isEmpty() || geometry instanceof MultiPolygon ){
-			return geometry ;
-		}else if ( geometry instanceof Polygon ){
-			Polygon[] polygons = new Polygon[]{
-				(Polygon)geometry
-			};
-			return geometry.getFactory().createMultiPolygon(polygons);
-		}else{
-			throw new IllegalArgumentException(getMessageInvalidGeometryType(geometry));
-		}
-	}
-	
+
+    @Override
+    public Geometry bind(Object value) {
+        Geometry geometry = super.bind(value);
+        if (null == geometry || geometry.isEmpty() || geometry instanceof MultiPolygon) {
+            return geometry;
+        } else if (geometry instanceof Polygon) {
+            Polygon[] polygons = new Polygon[] {
+                (Polygon) geometry
+            };
+            return geometry.getFactory().createMultiPolygon(polygons);
+        } else {
+            throw new IllegalArgumentException(getMessageInvalidGeometryType(geometry));
+        }
+    }
+
 }

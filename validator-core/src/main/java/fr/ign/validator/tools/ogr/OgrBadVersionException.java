@@ -9,10 +9,10 @@ package fr.ign.validator.tools.ogr;
  */
 public class OgrBadVersionException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public OgrBadVersionException(String message){
-		super(message);
-	}
-	
+    public OgrBadVersionException(String message) {
+        super(message);
+    }
+
 }
