@@ -27,43 +27,43 @@ import fr.ign.validator.validation.Validator;
  *
  */
 public class InseeValidator implements Validator<Attribute<String>>, ValidatorListener {
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("InseeValidator") ;
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("InseeValidator");
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-		
-	}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-		List<FileModel> fileModels = document.getDocumentModel().getFileModels() ;
-		for (FileModel fileModel : fileModels) {
-			if ( fileModel instanceof TableModel ){
-				FeatureType featureType = fileModel.getFeatureType() ;
-				AttributeType<?> attributeType = featureType.getAttribute("INSEE") ;
-				if ( null != attributeType && attributeType instanceof StringType ){
-					log.info(MARKER, "Ajout de InseeValidator à {}",attributeType.getName());
-					((StringType)attributeType).addValidator(new InseeValidator());					
-				}
-			}
-		}
-	}
+    }
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
-		
-	}
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
+        List<FileModel> fileModels = document.getDocumentModel().getFileModels();
+        for (FileModel fileModel : fileModels) {
+            if (fileModel instanceof TableModel) {
+                FeatureType featureType = fileModel.getFeatureType();
+                AttributeType<?> attributeType = featureType.getAttribute("INSEE");
+                if (null != attributeType && attributeType instanceof StringType) {
+                    log.info(MARKER, "Ajout de InseeValidator à {}", attributeType.getName());
+                    ((StringType) attributeType).addValidator(new InseeValidator());
+                }
+            }
+        }
+    }
 
-	@Override
-	public void validate(Context context, Attribute<String> validatable) {
-		String insee = validatable.getBindedValue() ;
-		if ( ! InseeUtils.isValidCommune(insee) ){
-			context.report(context.createError(CnigErrorCodes.CNIG_INSEE_INVALID)
-				.setMessageParam("VALUE", insee)
-			);
-		}
-	}
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
 
+    }
+
+    @Override
+    public void validate(Context context, Attribute<String> validatable) {
+        String insee = validatable.getBindedValue();
+        if (!InseeUtils.isValidCommune(insee)) {
+            context.report(
+                context.createError(CnigErrorCodes.CNIG_INSEE_INVALID)
+                    .setMessageParam("VALUE", insee)
+            );
+        }
+    }
 
 }

@@ -25,59 +25,57 @@ import fr.ign.validator.metadata.gmd.MetadataISO19115;
  */
 public class MetadataToJsonCommand extends AbstractCommand {
 
-	public static final String NAME = "metadata_to_json";
+    public static final String NAME = "metadata_to_json";
 
-	private File inputFile;
-	
-	private File outputFile;
+    private File inputFile;
 
-	@Override
-	public String getName() {
-		return NAME;
-	}
+    private File outputFile;
 
-	@Override
-	public void execute() throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-		Metadata metadata = MetadataISO19115.readFile(inputFile);
-		objectMapper.writeValue(getOutputStream(), metadata);
-	}
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
-	
-	private PrintStream getOutputStream() throws FileNotFoundException{
-		if ( outputFile == null ){
-			return System.out;
-		}
-		if ( outputFile.exists() ){
-			outputFile.delete();
-		}
-		return new PrintStream(outputFile);
-	}
-	
-	
-	@Override
-	protected void buildCustomOptions(Options options) {
-		// input
-		{
-			Option option = new Option("i", "input", true, "Input file (xml)");
-			option.setRequired(true);
-			option.setType(File.class);
-			options.addOption(option);
-		}
-		// output
-		{
-			Option option = new Option("o", "output", true, "Output file (json)");
-			option.setRequired(false);
-			option.setType(File.class);
-			options.addOption(option);
-		}
-	}
+    @Override
+    public void execute() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Metadata metadata = MetadataISO19115.readFile(inputFile);
+        objectMapper.writeValue(getOutputStream(), metadata);
+    }
 
-	@Override
-	protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-		inputFile  = (File) commandLine.getParsedOptionValue("input");
-		outputFile = (File) commandLine.getParsedOptionValue("output");
-	}
+    private PrintStream getOutputStream() throws FileNotFoundException {
+        if (outputFile == null) {
+            return System.out;
+        }
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        return new PrintStream(outputFile);
+    }
+
+    @Override
+    protected void buildCustomOptions(Options options) {
+        // input
+        {
+            Option option = new Option("i", "input", true, "Input file (xml)");
+            option.setRequired(true);
+            option.setType(File.class);
+            options.addOption(option);
+        }
+        // output
+        {
+            Option option = new Option("o", "output", true, "Output file (json)");
+            option.setRequired(false);
+            option.setType(File.class);
+            options.addOption(option);
+        }
+    }
+
+    @Override
+    protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
+        inputFile = (File) commandLine.getParsedOptionValue("input");
+        outputFile = (File) commandLine.getParsedOptionValue("output");
+    }
 
 }

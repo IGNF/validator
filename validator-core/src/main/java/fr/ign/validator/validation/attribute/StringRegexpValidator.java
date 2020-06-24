@@ -14,25 +14,26 @@ import fr.ign.validator.validation.Validator;
  */
 public class StringRegexpValidator implements Validator<Attribute<String>> {
 
-	@Override
-	public void validate(Context context, Attribute<String> attribute) {
-		String value = attribute.getBindedValue() ;
-		
-		if ( value == null ){
-			return ;
-		}
-		
-		if ( ! attribute.getType().hasRegexp() ){
-			return ;
-		}
-		
-		if (! value.matches(attribute.getType().getRegexp())) {
-			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP)
-				.setMessageParam("VALUE", value)
-				.setMessageParam("REGEXP", attribute.getType().getRegexp())
-			);
-		}
-		
-	}
+    @Override
+    public void validate(Context context, Attribute<String> attribute) {
+        String value = attribute.getBindedValue();
+
+        if (value == null) {
+            return;
+        }
+
+        if (!attribute.getType().hasRegexp()) {
+            return;
+        }
+
+        if (!value.matches(attribute.getType().getRegexp())) {
+            context.report(
+                context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP)
+                    .setMessageParam("VALUE", value)
+                    .setMessageParam("REGEXP", attribute.getType().getRegexp())
+            );
+        }
+
+    }
 
 }

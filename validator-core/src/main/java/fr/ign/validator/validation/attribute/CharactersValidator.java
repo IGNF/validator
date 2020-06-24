@@ -18,31 +18,30 @@ import fr.ign.validator.validation.Validator;
  */
 public class CharactersValidator<T> implements Validator<Attribute<T>> {
 
-	@Override
-	public void validate(Context context, Attribute<T> validatable) {
-		Object originalValue = validatable.getValue();
-		if ( originalValue == null ){
-			return;
-		}
-		
-		String originalString = originalValue.toString();
-		String fixedString    = context.getStringFixer().transform(originalString) ;
+    @Override
+    public void validate(Context context, Attribute<T> validatable) {
+        Object originalValue = validatable.getValue();
+        if (originalValue == null) {
+            return;
+        }
 
-		if ( ! fixedString.equals(originalString) ){
-			IsoControlEscaper transform = new IsoControlEscaper(false);
-			/*
-			 * if the string contains escaped controls after transform, 
-			 * it's assumed that string contains illegal ("non displayable") characters 
-			 */
-			ErrorCode code = fixedString.contains("\\u") ? 
-					CoreErrorCodes.ATTRIBUTE_CHARACTERS_ILLEGAL 
-				  : CoreErrorCodes.ATTRIBUTE_CHARACTERS_REPLACED
-			;
-			context.report(context.createError(code)
-				.setMessageParam("VALUE", transform.transform(originalString)) // original string
-				.setMessageParam("FIXED_VALUE", fixedString) // transformed string
-			);
-		}
-	}
+        String originalString = originalValue.toString();
+        String fixedString = context.getStringFixer().transform(originalString);
+
+        if (!fixedString.equals(originalString)) {
+            IsoControlEscaper transform = new IsoControlEscaper(false);
+            /*
+             * if the string contains escaped controls after transform, it's assumed that
+             * string contains illegal ("non displayable") characters
+             */
+            ErrorCode code = fixedString.contains("\\u") ? CoreErrorCodes.ATTRIBUTE_CHARACTERS_ILLEGAL
+                : CoreErrorCodes.ATTRIBUTE_CHARACTERS_REPLACED;
+            context.report(
+                context.createError(code)
+                    .setMessageParam("VALUE", transform.transform(originalString)) // original string
+                    .setMessageParam("FIXED_VALUE", fixedString) // transformed string
+            );
+        }
+    }
 
 }

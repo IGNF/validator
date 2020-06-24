@@ -20,19 +20,19 @@ import fr.ign.validator.validation.Validator;
  */
 public class ContactValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("ContactValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		ResponsibleParty contact = metadata.getContact() ;
-		if ( null == contact ){
-			context.report(
-				CoreErrorCodes.METADATA_CONTACT_NOT_FOUND
-			);
-			return ;
-		}
-		//TODO validate content (not required by GPU)
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("ContactValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        ResponsibleParty contact = metadata.getContact();
+        if (null == contact) {
+            context.report(
+                CoreErrorCodes.METADATA_CONTACT_NOT_FOUND
+            );
+            return;
+        }
+        // TODO validate content (not required by GPU)
+    }
 
 }

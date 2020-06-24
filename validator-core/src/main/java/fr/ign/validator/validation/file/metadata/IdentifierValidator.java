@@ -20,18 +20,18 @@ import fr.ign.validator.validation.Validator;
  */
 public class IdentifierValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		String value = metadata.getIdentifier() ;
-		log.info(MARKER, "metadata.identifier : {}", value);
-		if ( StringUtils.isEmpty(value) ){
-			context.report(
-				CoreErrorCodes.METADATA_IDENTIFIER_NOT_FOUND
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        String value = metadata.getIdentifier();
+        log.info(MARKER, "metadata.identifier : {}", value);
+        if (StringUtils.isEmpty(value)) {
+            context.report(
+                CoreErrorCodes.METADATA_IDENTIFIER_NOT_FOUND
+            );
+        }
+    }
 
 }

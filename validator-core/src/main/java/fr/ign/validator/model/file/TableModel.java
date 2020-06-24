@@ -13,25 +13,25 @@ import fr.ign.validator.model.FileModel;
  *
  */
 public class TableModel extends FileModel {
-	public static final String TYPE = "table" ;
-	
-	public TableModel() {
-		super();
-	}
+    public static final String TYPE = "table";
 
-	@Override
-	public String getType() {
-		return TYPE ;
-	}
-	
-	@Override
-	public String getRegexpSuffix() {
-		return "\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)";
-	}
-	
-	@Override
-	public DocumentFile createDocumentFile(File path) {
-		return new TableFile(this,path);
-	}
+    public TableModel() {
+        super();
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    @Override
+    public String getRegexpSuffix() {
+        return "\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)";
+    }
+
+    @Override
+    public DocumentFile createDocumentFile(File path) {
+        return new TableFile(this, path);
+    }
 
 }

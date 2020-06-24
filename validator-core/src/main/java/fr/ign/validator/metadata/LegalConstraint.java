@@ -9,58 +9,59 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
  * Implementation of gmd:MD_LegalConstraints
  * 
- * @see <a href="http://www.datypic.com/sc/niem21/e-gmd_MD_LegalConstraints.html">gmd:MD_LegalConstraints</a>
+ * @see <a href=
+ *      "http://www.datypic.com/sc/niem21/e-gmd_MD_LegalConstraints.html">gmd:MD_LegalConstraints</a>
  * 
  * @author MBorne
  *
  */
 public class LegalConstraint extends Constraint {
-	
-	/**
-	 * TODO MD_RestrictionCode?
-	 */
-	@JsonInclude(Include.NON_EMPTY)
-	private List<String> accessConstraints = new ArrayList<>();
-	
-	/**
-	 * TODO MD_RestrictionCode?
-	 */
-	@JsonInclude(Include.NON_EMPTY)
-	private List<String> useConstraints = new ArrayList<>();
 
-	/**
-	 * MD_RestrictionCode
-	 */
-	@JsonInclude(Include.NON_EMPTY)
-	private List<String> otherConstraints = new ArrayList<>();
-	
-	@Override
-	public String getType(){
-		return "MD_LegalConstraints";
-	}
+    /**
+     * TODO MD_RestrictionCode?
+     */
+    @JsonInclude(Include.NON_EMPTY)
+    private List<String> accessConstraints = new ArrayList<>();
 
-	public List<String> getAccessConstraints() {
-		return accessConstraints;
-	}
+    /**
+     * TODO MD_RestrictionCode?
+     */
+    @JsonInclude(Include.NON_EMPTY)
+    private List<String> useConstraints = new ArrayList<>();
 
-	public void setAccessConstraints(List<String> accessConstraints) {
-		this.accessConstraints = accessConstraints;
-	}
+    /**
+     * MD_RestrictionCode
+     */
+    @JsonInclude(Include.NON_EMPTY)
+    private List<String> otherConstraints = new ArrayList<>();
 
-	public List<String> getUseConstraints() {
-		return useConstraints;
-	}
+    @Override
+    public String getType() {
+        return "MD_LegalConstraints";
+    }
 
-	public void setUseConstraints(List<String> useConstraints) {
-		this.useConstraints = useConstraints;
-	}
+    public List<String> getAccessConstraints() {
+        return accessConstraints;
+    }
 
-	public List<String> getOtherConstraints() {
-		return otherConstraints;
-	}
+    public void setAccessConstraints(List<String> accessConstraints) {
+        this.accessConstraints = accessConstraints;
+    }
 
-	public void setOtherConstraints(List<String> otherConstraints) {
-		this.otherConstraints = otherConstraints;
-	}
-	
+    public List<String> getUseConstraints() {
+        return useConstraints;
+    }
+
+    public void setUseConstraints(List<String> useConstraints) {
+        this.useConstraints = useConstraints;
+    }
+
+    public List<String> getOtherConstraints() {
+        return otherConstraints;
+    }
+
+    public void setOtherConstraints(List<String> otherConstraints) {
+        this.otherConstraints = otherConstraints;
+    }
+
 }

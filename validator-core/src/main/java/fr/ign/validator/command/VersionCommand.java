@@ -14,26 +14,26 @@ import fr.ign.validator.Version;
  */
 public class VersionCommand extends AbstractCommand {
 
-	public static final String NAME = "version";
+    public static final String NAME = "version";
 
-	@Override
-	public String getName() {
-		return NAME;
-	}
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
-	@Override
-	public void execute() throws Exception {
-		System.out.println(Version.VERSION);
-	}
+    @Override
+    public void execute() throws Exception {
+        System.out.println(Version.VERSION);
+    }
 
-	@Override
-	protected void buildCustomOptions(Options options) {
-		
-	}
+    @Override
+    protected void buildCustomOptions(Options options) {
 
-	@Override
-	protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-		
-	}
+    }
+
+    @Override
+    protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
+
+    }
 
 }

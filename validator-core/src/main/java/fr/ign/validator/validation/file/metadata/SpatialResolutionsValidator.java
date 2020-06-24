@@ -15,79 +15,84 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Ensures that "spatialResolutions" is not empty and that content (denominator or distance) is valid. 
- *  
+ * Ensures that "spatialResolutions" is not empty and that content (denominator
+ * or distance) is valid.
+ * 
  * @author MBorne
  *
  */
 public class SpatialResolutionsValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("SpatialResolutionsValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		List<Resolution> resolutions = metadata.getSpatialResolutions() ;
-		log.info(MARKER, "metadata.resolutions.size : {}", resolutions.size());
-		if ( resolutions.isEmpty()  ){
-			context.report(
-				CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY
-			);
-		}
-		int count = 1 ;
-		for (Resolution resolution : resolutions) {
-			String denominator = resolution.getDenominator();
-			if ( ! isValidInteger(denominator) ){
-				context.report(context.createError(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR)
-					.setMessageParam("VALUE", denominator)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(resolutions.size()))
-				);
-			}
-			
-			String distance = resolution.getDistance();
-			if ( ! isValidDouble(distance) ){
-				context.report(context.createError(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DISTANCE)
-					.setMessageParam("VALUE", distance)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(resolutions.size()))
-				);
-			}
-			count++;
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("SpatialResolutionsValidator");
 
-	/**
-	 * TODO move to IntegerType
-	 * @param value
-	 * @return
-	 */
-	private boolean isValidInteger(String value){
-		if ( value == null ){
-			return true;
-		}
-		try {
-			Integer.valueOf(value);
-		}catch(Exception e){
-			return false;
-		}
-		return true;		
-	}
-	
-	/**
-	 * TODO move to DoubleType
-	 * @param value
-	 * @return
-	 */
-	private boolean isValidDouble(String value){
-		if ( value == null ){
-			return true;
-		}
-		try {
-			Double.valueOf(value);
-		}catch(Exception e){
-			return false;
-		}
-		return true;		
-	}
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        List<Resolution> resolutions = metadata.getSpatialResolutions();
+        log.info(MARKER, "metadata.resolutions.size : {}", resolutions.size());
+        if (resolutions.isEmpty()) {
+            context.report(
+                CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY
+            );
+        }
+        int count = 1;
+        for (Resolution resolution : resolutions) {
+            String denominator = resolution.getDenominator();
+            if (!isValidInteger(denominator)) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR)
+                        .setMessageParam("VALUE", denominator)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(resolutions.size()))
+                );
+            }
+
+            String distance = resolution.getDistance();
+            if (!isValidDouble(distance)) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DISTANCE)
+                        .setMessageParam("VALUE", distance)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(resolutions.size()))
+                );
+            }
+            count++;
+        }
+    }
+
+    /**
+     * TODO move to IntegerType
+     * 
+     * @param value
+     * @return
+     */
+    private boolean isValidInteger(String value) {
+        if (value == null) {
+            return true;
+        }
+        try {
+            Integer.valueOf(value);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * TODO move to DoubleType
+     * 
+     * @param value
+     * @return
+     */
+    private boolean isValidDouble(String value) {
+        if (value == null) {
+            return true;
+        }
+        try {
+            Double.valueOf(value);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }

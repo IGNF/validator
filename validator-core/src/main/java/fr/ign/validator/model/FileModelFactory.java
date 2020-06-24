@@ -14,24 +14,24 @@ import fr.ign.validator.model.file.TableModel;
  */
 public class FileModelFactory {
 
-	/**
-	 * Create a file model for a given type
-	 * @param name
-	 * @return
-	 */
-	public static FileModel createFileModelByType(String type){
-		if ( DirectoryModel.TYPE.equals( type ) ){
-			return new DirectoryModel() ;
-		}else if ( TableModel.TYPE.equals( type ) ){
-			return new TableModel() ;
-		}else if ( PdfModel.TYPE.equals( type ) ){
-			return new PdfModel() ;
-		}else if ( MetadataModel.TYPE.equals( type ) ){
-			return new MetadataModel() ;
-		}else{
-			throw new IllegalArgumentException(String.format("invalid FileModel type : %s",type));
-		}
-	}
+    /**
+     * Create a file model for a given type
+     * 
+     * @param name
+     * @return
+     */
+    public static FileModel createFileModelByType(String type) {
+        if (DirectoryModel.TYPE.equals(type)) {
+            return new DirectoryModel();
+        } else if (TableModel.TYPE.equals(type)) {
+            return new TableModel();
+        } else if (PdfModel.TYPE.equals(type)) {
+            return new PdfModel();
+        } else if (MetadataModel.TYPE.equals(type)) {
+            return new MetadataModel();
+        } else {
+            throw new IllegalArgumentException(String.format("invalid FileModel type : %s", type));
+        }
+    }
 
-	
 }

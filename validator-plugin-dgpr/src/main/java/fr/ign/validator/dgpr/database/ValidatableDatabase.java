@@ -24,100 +24,100 @@ import fr.ign.validator.validation.Validator;
  */
 public class ValidatableDatabase implements Validatable {
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("ValidatableDatabase");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("ValidatableDatabase");
 
-	/**
-	 * Database
-	 */
-	private Database database;
+    /**
+     * Database
+     */
+    private Database database;
 
-	/**
-	 * Document
-	 */
-	private Document document;
+    /**
+     * Document
+     */
+    private Document document;
 
-	/**
-	 * Validators
-	 */
-	private List<Validator<Database>> validators = new ArrayList<>();
+    /**
+     * Validators
+     */
+    private List<Validator<Database>> validators = new ArrayList<>();
 
+    /**
+     * Create database from document model and document files
+     * 
+     * @param context
+     * @param document
+     * @throws Exception
+     */
+    public ValidatableDatabase(Context context, Document document) throws Exception {
+        this.document = document;
+        this.database = Database.createDatabase(document);
+        createIndexes(document);
+        database.load(context, document);
+    }
 
-	/**
-	 * Create database from document model and document files
-	 * @param context
-	 * @param document
-	 * @throws Exception
-	 */
-	public ValidatableDatabase(Context context, Document document) throws Exception {
-		this.document = document;
-		this.database = Database.createDatabase(document);
-		createIndexes(document);
-		database.load(context, document);
-	}
+    /**
+     * create all table indexes on identifier fields
+     * 
+     * @param document
+     * @throws SQLException
+     */
+    private void createIndexes(Document document) throws SQLException {
+        for (FileModel file : document.getDocumentModel().getFileModels()) {
+            if (!(file instanceof TableModel)) {
+                continue;
+            }
+            List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
+            for (AttributeType<?> attributeType : attributes) {
+                if (!attributeType.isIdentifier()) {
+                    continue;
+                }
+                database.createIndex(file.getName(), attributeType.getName());
+            }
+        }
+    }
 
+    @Override
+    public void validate(Context context) throws Exception {
+        log.info(
+            MARKER, "Validation de la database {}",
+            document.getDocumentModel().getName()
+        );
 
-	/**
-	 * create all table indexes on identifier fields
-	 * @param document
-	 * @throws SQLException
-	 */
-	private void createIndexes(Document document) throws SQLException {
-		for (FileModel file : document.getDocumentModel().getFileModels()) {
-			if (!(file instanceof TableModel)) {
-				continue;
-			}
-			List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
-			for (AttributeType<?> attributeType : attributes) {
-				if (!attributeType.isIdentifier()) {
-					continue;
-				}
-				database.createIndex(file.getName(), attributeType.getName());
-			}
-		}
-	}
+        /*
+         * Validation at document level
+         */
+        for (Validator<Database> validator : getValidators()) {
+            validator.validate(context, database);
+        }
 
+    }
 
-	@Override
-	public void validate(Context context) throws Exception {
-		log.info(MARKER, "Validation de la database {}",
-			document.getDocumentModel().getName()
-		);
+    /**
+     * get list of database validators
+     * 
+     * @return
+     */
+    public List<Validator<Database>> getValidators() {
+        return validators;
+    }
 
-		/*
-		 * Validation at document level
-		 */
-		for (Validator<Database> validator : getValidators()) {
-			validator.validate(context, database);
-		}
+    /**
+     * set list of database validators
+     * 
+     * @param validators
+     */
+    public void setValidators(List<Validator<Database>> validators) {
+        this.validators = validators;
+    }
 
-	}
-
-
-	/**
-	 * get list of database validators
-	 * @return
-	 */
-	public List<Validator<Database>> getValidators() {
-		return validators;
-	}
-
-
-	/**
-	 * set list of database validators
-	 * @param validators
-	 */
-	public void setValidators(List<Validator<Database>> validators) {
-		this.validators = validators;
-	}
-
-
-	/**
-	 * push a database validator to current list
-	 * @param validator
-	 */
-	public void addValidator(Validator<Database> validator) {
-		validators.add(validator);
-	}
+    /**
+     * push a database validator to current list
+     * 
+     * @param validator
+     */
+    public void addValidator(Validator<Database> validator) {
+        validators.add(validator);
+    }
 
 }

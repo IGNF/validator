@@ -10,33 +10,32 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Validation de la projection déclarée sur une géométrie en comparaison avec
- * l'emprise de définition de la projection
- * Validates that the geometry fits in data extent 
+ * l'emprise de définition de la projection Validates that the geometry fits in
+ * data extent
  * 
  * @author MBorne
  *
  */
 public class GeometryDataExtentValidator implements Validator<Attribute<Geometry>> {
 
-	@Override
-	public void validate(Context context, Attribute<Geometry> attribute) {
-		Geometry geometry = attribute.getBindedValue() ;
-		
-		if ( null == geometry || geometry.isEmpty() ){
-			return ;
-		}
-		Geometry nativeDataExtent = context.getNativeDataExtent();
-		
-		if ( nativeDataExtent == null || nativeDataExtent.isEmpty() ){
-			return ;
-		}
-		
-		if ( ! nativeDataExtent.contains(geometry) ){
-			context.report(
-				CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT
-			);
-		}
-	}
-	
-	
+    @Override
+    public void validate(Context context, Attribute<Geometry> attribute) {
+        Geometry geometry = attribute.getBindedValue();
+
+        if (null == geometry || geometry.isEmpty()) {
+            return;
+        }
+        Geometry nativeDataExtent = context.getNativeDataExtent();
+
+        if (nativeDataExtent == null || nativeDataExtent.isEmpty()) {
+            return;
+        }
+
+        if (!nativeDataExtent.contains(geometry)) {
+            context.report(
+                CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT
+            );
+        }
+    }
+
 }

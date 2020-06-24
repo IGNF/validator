@@ -17,36 +17,35 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Ensures that "distributionFormats" is not empty and that formats are valid
- *  
+ * 
  * @author MBorne
  *
  */
 public class DistributionFormatsValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("DistributionFormatsValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		List<Format> formats = metadata.getDistributionFormats();
-		log.info(MARKER, "metadata.distributionFormats.size : {}", formats.size());
-		if ( formats.isEmpty()  ){
-			context.report(
-				CoreErrorCodes.METADATA_DISTRIBUTIONFORMATS_EMPTY
-			);
-		}
-		int count = 1 ;
-		for (Format format : formats) {
-			if ( StringUtils.isEmpty(format.getName()) ){
-				context.report(context.createError(CoreErrorCodes.METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(formats.size()))					
-				);
-			}
-			count++;
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("DistributionFormatsValidator");
 
-	
-	
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        List<Format> formats = metadata.getDistributionFormats();
+        log.info(MARKER, "metadata.distributionFormats.size : {}", formats.size());
+        if (formats.isEmpty()) {
+            context.report(
+                CoreErrorCodes.METADATA_DISTRIBUTIONFORMATS_EMPTY
+            );
+        }
+        int count = 1;
+        for (Format format : formats) {
+            if (StringUtils.isEmpty(format.getName())) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(formats.size()))
+                );
+            }
+            count++;
+        }
+    }
+
 }

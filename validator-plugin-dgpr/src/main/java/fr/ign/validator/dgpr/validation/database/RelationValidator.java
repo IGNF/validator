@@ -23,144 +23,148 @@ import fr.ign.validator.validation.Validator;
 
 public class RelationValidator implements Validator<Database> {
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("RelationValidator");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("RelationValidator");
 
-	/**
-	 * Context
-	 */
-	private Context context;
+    /**
+     * Context
+     */
+    private Context context;
 
-	/**
-	 * Document
-	 */
-	private Database database;
+    /**
+     * Document
+     */
+    private Database database;
 
-	/**
-	 * Check if there every ID is unique in a given table 
-	 * @param context
-	 * @param document
-	 * @param database
-	 * @throws Exception
-	 */
-	public void validate(Context context, Database database) {
-		// context
-		this.context = context;
-		this.database = database;
-		try {	
-			runValidation();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    /**
+     * Check if there every ID is unique in a given table
+     * 
+     * @param context
+     * @param document
+     * @param database
+     * @throws Exception
+     */
+    public void validate(Context context, Database database) {
+        // context
+        this.context = context;
+        this.database = database;
+        try {
+            runValidation();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    private void runValidation() throws Exception {
+        List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
+        // For each table
+        for (FileModel fileModel : fileModelsList) {
+            if (!(fileModel instanceof TableModel)) {
+                continue;
+            }
+            validateFileModel(fileModel);
+        }
+    }
 
-	private void runValidation() throws Exception {
-		List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
-		// For each table
-		for (FileModel fileModel : fileModelsList) {
-			if (!(fileModel instanceof TableModel)) {
-				continue;
-			}
-			validateFileModel(fileModel);	
-		}
-	}
+    /**
+     * Search for references attributes
+     * 
+     * @param fileModel
+     * @throws Exception
+     */
+    private void validateFileModel(FileModel fileModel) throws Exception {
+        FeatureType featureType = fileModel.getFeatureType();
 
-	/**
-	 * Search for references attributes
-	 * @param fileModel
-	 * @throws Exception 
-	 */
-	private void validateFileModel(FileModel fileModel) throws Exception {
-		FeatureType featureType = fileModel.getFeatureType();
+        List<AttributeType<?>> attributesList = featureType.getAttributes();
 
-		List<AttributeType<?>> attributesList = featureType.getAttributes();
+        // searching for the identifier attribute
+        String identifierName = "";
+        for (AttributeType<?> attribute : attributesList) {
+            if (attribute.isIdentifier()) {
+                identifierName = attribute.getName();
+                break;
+            }
+        }
 
-		// searching for the identifier attribute
-		String identifierName = "";			
-		for (AttributeType<?> attribute : attributesList) {
-			if (attribute.isIdentifier()) {
-				identifierName = attribute.getName();
-				break;
-			}
-		}
+        // Looking for attributes who are references
+        for (AttributeType<?> attribute : attributesList) {
+            if (!attribute.isReference()) {
+                continue;
+            }
+            validateRelation(fileModel, attribute, identifierName);
+        }
 
-		// Looking for attributes who are references
-		for (AttributeType<?> attribute : attributesList) {
-			if (!attribute.isReference()) {
-				continue;
-			}
-			validateRelation(fileModel, attribute, identifierName);
-		}
+    }
 
-	}
+    /**
+     * Join a table and a reference table to check if all relations are valid
+     * 
+     * @param fileModel
+     * @param attribute
+     * @param identifierName
+     * @throws Exception
+     */
+    public void validateRelation(FileModel fileModel, AttributeType<?> attribute, String identifierName)
+        throws Exception {
+        String sql = "SELECT ";
 
+        // if no identifier in the table
+        if (!identifierName.equals("")) {
+            sql += identifierName + " AS id, ";
+        }
 
-	/**
-	 * Join a table and a reference table to check if all relations are valid
-	 * @param fileModel
-	 * @param attribute
-	 * @param identifierName
-	 * @throws Exception 
-	 */
-	public void validateRelation(FileModel fileModel, AttributeType<?> attribute, String identifierName) throws Exception {
-		String sql = "SELECT ";
+        if (fileModel.getFeatureType().isSpatial()) {
+            sql += fileModel.getName() + ".WKT" + " AS WKT, ";
+        }
 
-		// if no identifier in the table
-		if (!identifierName.equals("")) {
-			sql +=  identifierName + " AS id, ";
-		}
+        sql += fileModel.getName() + "." + attribute.getName() + " AS ref, "
+            + attribute.getTableReference() + "." + attribute.getAttributeReference() + " AS id_table_ref"
+            + " FROM " + fileModel.getName()
+            + " LEFT JOIN " + attribute.getTableReference()
+            + " ON ref LIKE id_table_ref";
 
-		if (fileModel.getFeatureType().isSpatial()) {
-			sql += fileModel.getName() + ".WKT" + " AS WKT, ";	
-		}
+        // request to join the tables
+        RowIterator table = database.query(sql);
 
-		sql +=  fileModel.getName() + "." + attribute.getName() + " AS ref, "
-				+ attribute.getTableReference() + "." + attribute.getAttributeReference() + " AS id_table_ref"
-				+ " FROM " + fileModel.getName() 
-				+ " LEFT JOIN " + attribute.getTableReference() 
-				+ " ON ref LIKE id_table_ref";
+        int indexIdTableRef = table.getColumn("id_table_ref");
+        int indexId = table.getColumn("id");
+        int indexRef = table.getColumn("ref");
+        int indexWkt = table.getColumn("WKT");
 
-		// request to join the tables
-		RowIterator table = database.query(sql);
+        while (table.hasNext()) {
+            String[] row = table.next();
+            if (row[indexIdTableRef] == null || row[indexIdTableRef].equals("")) {
+                String idObject = "sans identifiant";
+                if (indexId != -1) {
+                    idObject = row[indexId];
+                }
+                Envelope envelope = null;
+                if (indexWkt != -1) {
+                    envelope = DatabaseUtils.getEnveloppe(row[indexWkt], context.getCoordinateReferenceSystem());
+                }
+                String idRefValue = "NULL";
+                if (indexRef != -1 && row[indexRef] != null) {
+                    idRefValue = row[indexRef];
+                }
+                // if the value {row[indexIdTableRef]} does not exist in the reference table,
+                // send error message
+                context.report(
+                    context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
+                        .setScope(ErrorScope.FEATURE)
+                        .setFileModel(fileModel.getName())
+                        .setAttribute(attribute.getName())
+                        .setFeatureId(idObject)
+                        .setFeatureBbox(envelope)
+                        .setMessageParam("ID_OBJECT", idObject)
+                        .setMessageParam("ORIGIN_TABLE", fileModel.getName())
+                        .setMessageParam("REF_VALUE", idRefValue)
+                        .setMessageParam("REFERENCE_NAME", attribute.getAttributeReference())
+                        .setMessageParam("REFERENCE_TABLE", attribute.getTableReference())
+                );
+            }
 
-		int indexIdTableRef = table.getColumn("id_table_ref");
-		int indexId = table.getColumn("id");
-		int indexRef = table.getColumn("ref");
-		int indexWkt = table.getColumn("WKT");
+        }
 
-		while (table.hasNext()) {
-			String[] row = table.next();
-			if(row[indexIdTableRef] == null || row[indexIdTableRef].equals("") ) {
-				String idObject = "sans identifiant";
-				if(indexId != -1) {
-					idObject = row[indexId];
-				}
-				Envelope envelope = null;
-				if (indexWkt != -1) {
-					envelope = DatabaseUtils.getEnveloppe(row[indexWkt], context.getCoordinateReferenceSystem());
-				}
-				String idRefValue = "NULL";
-				if (indexRef != -1 && row[indexRef] != null) {
-					idRefValue = row[indexRef];
-				}
-				// if the value {row[indexIdTableRef]} does not exist in the reference table, send error message
-				context.report(context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
-						.setScope(ErrorScope.FEATURE)
-						.setFileModel(fileModel.getName())
-						.setAttribute(attribute.getName())
-						.setFeatureId(idObject)
-						.setFeatureBbox(envelope)
-						.setMessageParam("ID_OBJECT", idObject)
-						.setMessageParam("ORIGIN_TABLE", fileModel.getName())
-						.setMessageParam("REF_VALUE", idRefValue)
-						.setMessageParam("REFERENCE_NAME", attribute.getAttributeReference())
-						.setMessageParam("REFERENCE_TABLE", attribute.getTableReference())			
-				);
-			}
-
-		}
-
-	}
+    }
 
 }

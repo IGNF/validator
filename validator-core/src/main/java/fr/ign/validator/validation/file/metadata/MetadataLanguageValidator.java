@@ -21,23 +21,24 @@ import fr.ign.validator.validation.Validator;
  */
 public class MetadataLanguageValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("MetadataLanguageValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		LanguageCode code = metadata.getMetadataLanguage() ;
-		log.info(MARKER, "metadata.metadataLanguage : {}", code);
-		if ( null == code ){
-			context.report(
-				CoreErrorCodes.METADATA_METADATALANGUAGE_NOT_FOUND
-			);
-		}else if ( ! code.isAllowedValue() ){
-			context.report(context.createError(CoreErrorCodes.METADATA_METADATALANGUAGE_INVALID)
-				.setMessageParam("CODE", code.getValue())
-				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("MetadataLanguageValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        LanguageCode code = metadata.getMetadataLanguage();
+        log.info(MARKER, "metadata.metadataLanguage : {}", code);
+        if (null == code) {
+            context.report(
+                CoreErrorCodes.METADATA_METADATALANGUAGE_NOT_FOUND
+            );
+        } else if (!code.isAllowedValue()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_METADATALANGUAGE_INVALID)
+                    .setMessageParam("CODE", code.getValue())
+                    .setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
+            );
+        }
+    }
 
 }

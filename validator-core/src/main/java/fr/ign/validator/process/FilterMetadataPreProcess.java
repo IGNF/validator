@@ -28,45 +28,46 @@ import fr.ign.validator.model.file.MetadataModel;
  */
 public class FilterMetadataPreProcess implements ValidatorListener {
 
-	public static final Logger log = LogManager.getRootLogger();
-	private static final Marker MARKER = MarkerManager.getMarker("FilterMetadataPreProcess");
+    public static final Logger log = LogManager.getRootLogger();
+    private static final Marker MARKER = MarkerManager.getMarker("FilterMetadataPreProcess");
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
 
-	}
+    }
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-		log.info(MARKER, "Filtrage des fichiers xml qui ne sont pas des métadonnées...");
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
+        log.info(MARKER, "Filtrage des fichiers xml qui ne sont pas des métadonnées...");
 
-		for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
-			if (!(fileModel instanceof MetadataModel)) {
-				continue;
-			}
+        for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
+            if (!(fileModel instanceof MetadataModel)) {
+                continue;
+            }
 
-			List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
+            List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
 
-			if (documentFiles.isEmpty()) {
-				continue;
-			}
+            if (documentFiles.isEmpty()) {
+                continue;
+            }
 
-			for (DocumentFile documentFile : documentFiles) {
-				File xmlFile = documentFile.getPath();
-				if (!MetadataISO19115.isMetadataFile(xmlFile)) {
-					context.report(context.createError(CoreErrorCodes.METADATA_IGNORED_FILE)
-						.setMessageParam("FILEPATH", context.relativize(xmlFile))
-					);
-					log.info(MARKER, "Suppression du fichier XML {}...", documentFile);
-					document.removeDocumentFile(documentFile);
-				}
-			}
-		}
-	}
+            for (DocumentFile documentFile : documentFiles) {
+                File xmlFile = documentFile.getPath();
+                if (!MetadataISO19115.isMetadataFile(xmlFile)) {
+                    context.report(
+                        context.createError(CoreErrorCodes.METADATA_IGNORED_FILE)
+                            .setMessageParam("FILEPATH", context.relativize(xmlFile))
+                    );
+                    log.info(MARKER, "Suppression du fichier XML {}...", documentFile);
+                    document.removeDocumentFile(documentFile);
+                }
+            }
+        }
+    }
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
 
-	}
+    }
 
 }

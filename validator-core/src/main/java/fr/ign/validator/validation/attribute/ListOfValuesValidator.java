@@ -17,52 +17,52 @@ import fr.ign.validator.validation.Validator;
  */
 public class ListOfValuesValidator implements Validator<Attribute<String>> {
 
-	@Override
-	public void validate(Context context, Attribute<String> attribute) {
-		String value = attribute.getBindedValue() ;
-		
-		if ( value == null ){
-			return ;
-		}
-		
-		if ( ! attribute.getType().hasListOfValues() ){
-			return ;
-		}
+    @Override
+    public void validate(Context context, Attribute<String> attribute) {
+        String value = attribute.getBindedValue();
 
-		/*
-		 * search of corresponding value
-		 */
-		for ( String string : attribute.getType().getListOfValues() ) {
-			if ( string.equals(value) ){
-				return ; 
-			}
-		}
+        if (value == null) {
+            return;
+        }
 
-		context.report(context.createError(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE)
-			.setMessageParam("VALUE", value)
-			.setMessageParam("EXPECTED_VALUES", formatListOfValues( attribute.getType().getListOfValues() ))
-		);
-	}
+        if (!attribute.getType().hasListOfValues()) {
+            return;
+        }
 
-	/**
-	 * Formatting a list of values for error report
-	 * 
-	 * @param listOfValues
-	 * @return
-	 */
-	private String formatListOfValues(List<String> listOfValues) {
-		StringBuilder sb = new StringBuilder();
-		boolean first = true ;
-		for (String string : listOfValues) {
-			if ( ! first ){
-				sb.append(", ");
-			}else{
-				first = false ;
-			}
-			sb.append(string);
-		}
-		return sb.toString();
-	}
-	
+        /*
+         * search of corresponding value
+         */
+        for (String string : attribute.getType().getListOfValues()) {
+            if (string.equals(value)) {
+                return;
+            }
+        }
+
+        context.report(
+            context.createError(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE)
+                .setMessageParam("VALUE", value)
+                .setMessageParam("EXPECTED_VALUES", formatListOfValues(attribute.getType().getListOfValues()))
+        );
+    }
+
+    /**
+     * Formatting a list of values for error report
+     * 
+     * @param listOfValues
+     * @return
+     */
+    private String formatListOfValues(List<String> listOfValues) {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        for (String string : listOfValues) {
+            if (!first) {
+                sb.append(", ");
+            } else {
+                first = false;
+            }
+            sb.append(string);
+        }
+        return sb.toString();
+    }
 
 }

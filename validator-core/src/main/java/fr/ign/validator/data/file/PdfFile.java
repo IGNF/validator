@@ -8,21 +8,21 @@ import fr.ign.validator.model.file.PdfModel;
 
 public class PdfFile extends DocumentFile {
 
-	private PdfModel fileModel ; 
-	
-	public PdfFile(PdfModel fileModel, File path) {
-		super(path);
-		this.fileModel = fileModel;
-	}
+    private PdfModel fileModel;
 
-	@Override
-	public PdfModel getFileModel() {
-		return fileModel;
-	}
+    public PdfFile(PdfModel fileModel, File path) {
+        super(path);
+        this.fileModel = fileModel;
+    }
 
-	@Override
-	protected void validateContent(Context context) {
-		// no content validation
-	}
+    @Override
+    public PdfModel getFileModel() {
+        return fileModel;
+    }
+
+    @Override
+    protected void validateContent(Context context) {
+        // no content validation
+    }
 
 }
