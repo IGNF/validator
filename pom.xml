@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.ign.validator</groupId>
@@ -15,7 +16,7 @@
 
 	<description>
         This program validates data according to a FeatureCatalogue
-    </description>
+	</description>
 
 	<properties>
 		<jdk.version>1.7</jdk.version>
@@ -28,7 +29,8 @@
 		<geotools.version>14.5</geotools.version>
 		<log4j.version>2.8.2</log4j.version>
 		<jackson.version>2.9.9</jackson.version>
-		<jackson.databind.version>2.9.9.1</jackson.databind.version>
+		<jackson.databind.version>2.9.10.5</jackson.databind.version>
+		<maven-formatter-plugin.version>2.11.0</maven-formatter-plugin.version>
 	</properties>
 
 	<organization>
@@ -215,16 +217,16 @@
 			<version>2.11.0</version>
 			<scope>test</scope>
 		</dependency>
-	
+
 		<!-- JSONAssert -->
 		<dependency>
-		    <groupId>org.skyscreamer</groupId>
-		    <artifactId>jsonassert</artifactId>
-		    <version>1.5.0</version>
-		    <scope>test</scope>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.5.0</version>
+			<scope>test</scope>
 		</dependency>
 
-    <!-- Driver SQLite -->
+		<!-- Driver SQLite -->
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
@@ -236,20 +238,41 @@
 
 		<repository>
 			<id>maven</id>
-			<name>Maven repository 2</name>
-			<url>http://central.maven.org/maven2/</url>
+			<name>Maven central repository</name>
+			<url>https://repo1.maven.org/maven2/</url>
 		</repository>
 
 		<repository>
 			<id>osgeo</id>
-			<name>Open Source Geospatial Foundation Repository</name>
-			<url>http://download.osgeo.org/webdav/geotools/</url>
+			<name>OSGeo Release Repository</name>
+			<url>https://repo.osgeo.org/repository/release/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
 		</repository>
 
 	</repositories>
 
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.1</version>
+				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.revelc.code.formatter</groupId>
+				<artifactId>formatter-maven-plugin</artifactId>
+				<version>${maven-formatter-plugin.version}</version>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -269,18 +292,18 @@
 						<tagNameFormat>v@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
+
+				<plugin>
+					<groupId>net.revelc.code.formatter</groupId>
+					<artifactId>formatter-maven-plugin</artifactId>
+					<version>${maven-formatter-plugin.version}</version>
+					<configuration>
+						<configFile>${project.parent.basedir}/eclipse/formatter-config.xml</configFile>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.1</version>
-        <configuration>
-            <useSystemClassLoader>false</useSystemClassLoader>
-        </configuration>
-      </plugin>
-    </plugins>
+
 	</build>
 
 </project>
