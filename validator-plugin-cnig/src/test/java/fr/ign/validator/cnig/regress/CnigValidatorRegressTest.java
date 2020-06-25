@@ -24,7 +24,6 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import fr.ign.validator.tools.FileConverter;
 
 /**
  * 
@@ -49,16 +48,9 @@ public class CnigValidatorRegressTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    /*
-     * allows to skip some tests if GDAL breaks coordinates precision
-     */
-    private boolean gdalDestroysCoordinates;
-
     @Before
     public void setUp() {
         report = new InMemoryReportBuilder();
-
-        gdalDestroysCoordinates = FileConverter.getInstance().isBreakingCoordinatePrecision();
     }
 
     /**
@@ -218,29 +210,15 @@ public class CnigValidatorRegressTest {
         try {
             document.validate(context);
             Assert.assertEquals("19182_CC_20150517", document.getDocumentName());
-            if (gdalDestroysCoordinates) {
-                /* check errors */
-                ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
-                // DOC_URBA.DATEREF = 2010 (bad regexp)
-                ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
+            /* check errors */
+            ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+            // DOC_URBA.DATEREF = 2010 (bad regexp)
+            ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
 
-                ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
-                ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+            ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
 
-                // GDAL 1.10.1 and 1.11.3 changes coordinates so that it turns
-                // invalid geometries to valid geometries...
-                ReportAssert.assertCount(0, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
-            } else {
-                /* check errors */
-                ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
-                // DOC_URBA.DATEREF = 2010 (bad regexp)
-                ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-
-                ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
-
-                ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-                ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
-            }
+            ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+            ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());
@@ -251,10 +229,7 @@ public class CnigValidatorRegressTest {
 
         String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
         String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        /* skips tests for GDAL 1.11 */
-        if (!gdalDestroysCoordinates) {
-            JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
-        }
+        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
     }
 
     /**
@@ -363,12 +338,8 @@ public class CnigValidatorRegressTest {
             document.validate(context);
             Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
 
-            if (!gdalDestroysCoordinates) {
-                ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
-                ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
-            } else {
-                ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
-            }
+            ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
+            ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());

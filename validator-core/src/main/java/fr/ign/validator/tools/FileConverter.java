@@ -92,16 +92,6 @@ public class FileConverter {
     }
 
     /**
-     * True for GDAL 1.x as coordinate precision is broken even with a lot number of
-     * decimals
-     * 
-     * @return
-     */
-    public boolean isBreakingCoordinatePrecision() {
-        return getVersion().getMajor() == 1;
-    }
-
-    /**
      * Prior to GDAL 2.3, LATIN1 encoded TAB are not converted to UTF-8 encoded CSV.
      * 
      * After GDAL 2.3, it seems that there is no way to avoid this behavior.
