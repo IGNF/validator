@@ -36,408 +36,416 @@ import fr.ign.validator.tools.ogr.OgrVersion;
  * 
  */
 public class FileConverter {
-	public static final Marker MARKER = MarkerManager.getMarker("FileConverter");
-	public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("FileConverter");
+    public static final Logger log = LogManager.getRootLogger();
 
-	public static final String ENCODING_UTF8 = "UTF-8";
-	public static final String ENCODING_LATIN1 = "ISO-8859-1";
+    public static final String ENCODING_UTF8 = "UTF-8";
+    public static final String ENCODING_LATIN1 = "ISO-8859-1";
 
-	private static FileConverter instance = new FileConverter();
+    private static FileConverter instance = new FileConverter();
 
-	/**
-	 * ogr2ogr version
-	 */
-	private OgrVersion version;
+    /**
+     * ogr2ogr version
+     */
+    private OgrVersion version;
 
-	/**
-	 * Default constructor
-	 */
-	private FileConverter() {
-		this.version = retrieveAndValidateOgrVersion();
-	}
+    /**
+     * Default constructor
+     */
+    private FileConverter() {
+        this.version = retrieveAndValidateOgrVersion();
+    }
 
-	/**
-	 * Get instance
-	 * 
-	 * @return
-	 */
-	public static FileConverter getInstance() {
-		return instance;
-	}
+    /**
+     * Get instance
+     * 
+     * @return
+     */
+    public static FileConverter getInstance() {
+        return instance;
+    }
 
-	/**
-	 * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
-	 * <ul>
-	 * <li>Environment variable OGR2OGR_PATH</li>
-	 * <li>System property ogr2ogr_path</li>
-	 * </ul>
-	 * 
-	 * @return
-	 */
-	private String getOgr2ogrPath() {
-		String result = System.getenv("OGR2OGR_PATH");
-		if (result != null) {
-			return result;
-		}
-		return System.getProperty("ogr2ogr_path", "ogr2ogr");
-	}
+    /**
+     * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
+     * <ul>
+     * <li>Environment variable OGR2OGR_PATH</li>
+     * <li>System property ogr2ogr_path</li>
+     * </ul>
+     * 
+     * @return
+     */
+    private String getOgr2ogrPath() {
+        String result = System.getenv("OGR2OGR_PATH");
+        if (result != null) {
+            return result;
+        }
+        return System.getProperty("ogr2ogr_path", "ogr2ogr");
+    }
 
-	/**
-	 * returns ogr2ogr version
-	 * 
-	 * @return null if command `ogr2ogr --version` fails
-	 */
-	public OgrVersion getVersion() {
-		return this.version;
-	}
+    /**
+     * returns ogr2ogr version
+     * 
+     * @return null if command `ogr2ogr --version` fails
+     */
+    public OgrVersion getVersion() {
+        return this.version;
+    }
 
-	/**
-	 * True for GDAL 1.x as coordinate precision is broken even with a lot number of
-	 * decimals
-	 * 
-	 * @return
-	 */
-	public boolean isBreakingCoordinatePrecision() {
-		return getVersion().getMajor() == 1;
-	}
+    /**
+     * True for GDAL 1.x as coordinate precision is broken even with a lot number of
+     * decimals
+     * 
+     * @return
+     */
+    public boolean isBreakingCoordinatePrecision() {
+        return getVersion().getMajor() == 1;
+    }
 
-	/**
-	 * Prior to GDAL 2.3, LATIN1 encoded TAB are not converted to UTF-8 encoded CSV.
-	 * 
-	 * After GDAL 2.3, it seems that there is no way to avoid this behavior.
-	 * 
-	 * @return
-	 */
-	private boolean isConvertingTabToCsvUtf8() {
-		return getVersion().getMajor() >= 2 && getVersion().getMinor() >= 3;
-	}
+    /**
+     * Prior to GDAL 2.3, LATIN1 encoded TAB are not converted to UTF-8 encoded CSV.
+     * 
+     * After GDAL 2.3, it seems that there is no way to avoid this behavior.
+     * 
+     * @return
+     */
+    private boolean isConvertingTabToCsvUtf8() {
+        return getVersion().getMajor() >= 2 && getVersion().getMinor() >= 3;
+    }
 
-	/**
-	 * Récupération de la version de ogr2ogr
-	 * 
-	 * @return
-	 */
-	private OgrVersion retrieveAndValidateOgrVersion() {
-		String fullVersion = retrieveFullVersion();
-		return new OgrVersion(fullVersion);
-	}
+    /**
+     * Récupération de la version de ogr2ogr
+     * 
+     * @return
+     */
+    private OgrVersion retrieveAndValidateOgrVersion() {
+        String fullVersion = retrieveFullVersion();
+        return new OgrVersion(fullVersion);
+    }
 
-	/**
-	 * Call `ogr2ogr --version` to get GDAL version
-	 * 
-	 * @return
-	 */
-	private String retrieveFullVersion() {
-		log.info(MARKER, "ogr2ogr --version");
-		String[] args = new String[] { getOgr2ogrPath(), "--version" };
-		ProcessBuilder builder = new ProcessBuilder(args);
-		try {
-			Process process = builder.start();
+    /**
+     * Call `ogr2ogr --version` to get GDAL version
+     * 
+     * @return
+     */
+    private String retrieveFullVersion() {
+        log.info(MARKER, "ogr2ogr --version");
+        String[] args = new String[] {
+            getOgr2ogrPath(), "--version"
+        };
+        ProcessBuilder builder = new ProcessBuilder(args);
+        try {
+            Process process = builder.start();
 
-			process.waitFor();
+            process.waitFor();
 
-			InputStream stdout = process.getInputStream();
-			BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(stdout));
-			String version = stdoutReader.readLine();
-			stdoutReader.close();
-			return version;
-		} catch (IOException e) {
-			return null;
-		} catch (InterruptedException e) {
-			return null;
-		}
-	}
+            InputStream stdout = process.getInputStream();
+            BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(stdout));
+            String version = stdoutReader.readLine();
+            stdoutReader.close();
+            return version;
+        } catch (IOException e) {
+            return null;
+        } catch (InterruptedException e) {
+            return null;
+        }
+    }
 
-	/**
-	 * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV target
-	 * @param source
-	 * @param target
-	 * @param sourceCharset
-	 * @throws IOException
-	 */
-	public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
-		if (target.exists()) {
-			target.delete();
-		}
-		String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
-		/*
-		 * patch on GML files
-		 */
-		if (sourceExtension.equals("gml")) {
-			fixGML(source);
-		}
-		/*
-		 * Removing cpg
-		 */
-		CompanionFileUtils.removeCompanionFile(source, "cpg");
-		CompanionFileUtils.removeCompanionFile(source, "CPG");
+    /**
+     * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV
+     * target
+     * 
+     * @param source
+     * @param target
+     * @param sourceCharset
+     * @throws IOException
+     */
+    public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
+        if (target.exists()) {
+            target.delete();
+        }
+        String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
+        /*
+         * patch on GML files
+         */
+        if (sourceExtension.equals("gml")) {
+            fixGML(source);
+        }
+        /*
+         * Removing cpg
+         */
+        CompanionFileUtils.removeCompanionFile(source, "cpg");
+        CompanionFileUtils.removeCompanionFile(source, "CPG");
 
-		OgrVersion version = getVersion();
-		log.info(MARKER, "{} => {} (gdal {})", source, target, version);
+        OgrVersion version = getVersion();
+        log.info(MARKER, "{} => {} (gdal {})", source, target, version);
 
-		String[] args = getArguments(source, target, "CSV");
-		Map<String, String> envs = new HashMap<String, String>();
-		// encoding is specified in UTF-8 so that ogr2ogr doesn't convert
-		if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
-			envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));
-		}
-		runCommand(args, envs);
-		/*
-		 * Controls that output file is created
-		 */
-		if (!target.exists()) {
-			log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
-			createFalseCSV(target);
-		}
-		/*
-		 * Hack to support GDAL prior to 2.3
-		 */
-		if (sourceExtension.equals("tab") && !isConvertingTabToCsvUtf8()) {
-			fixUtf8(target,sourceCharset);
-		}
-	}
+        String[] args = getArguments(source, target, "CSV");
+        Map<String, String> envs = new HashMap<String, String>();
+        // encoding is specified in UTF-8 so that ogr2ogr doesn't convert
+        if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
+            envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));
+        }
+        runCommand(args, envs);
+        /*
+         * Controls that output file is created
+         */
+        if (!target.exists()) {
+            log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
+            createFalseCSV(target);
+        }
+        /*
+         * Hack to support GDAL prior to 2.3
+         */
+        if (sourceExtension.equals("tab") && !isConvertingTabToCsvUtf8()) {
+            fixUtf8(target, sourceCharset);
+        }
+    }
 
-	/**
-	 * Convert java charset to GDAL encoding
-	 * 
-	 * @param sourceCharset
-	 * @return
-	 */
-	private String toEncoding(Charset sourceCharset) {
-		if (sourceCharset.equals(StandardCharsets.ISO_8859_1)) {
-			return ENCODING_LATIN1;
-		} else {
-			return ENCODING_UTF8;
-		}
-	}
+    /**
+     * Convert java charset to GDAL encoding
+     * 
+     * @param sourceCharset
+     * @return
+     */
+    private String toEncoding(Charset sourceCharset) {
+        if (sourceCharset.equals(StandardCharsets.ISO_8859_1)) {
+            return ENCODING_LATIN1;
+        } else {
+            return ENCODING_UTF8;
+        }
+    }
 
-	/**
-	 * Converts a source file in LATIN1 encoded shapefile
-	 * 
-	 * @param files
-	 * @throws IOException
-	 */
-	public void convertToShapefile(File source, File target) throws IOException {
-		if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
-			fixGML(source);
-		}
+    /**
+     * Converts a source file in LATIN1 encoded shapefile
+     * 
+     * @param files
+     * @throws IOException
+     */
+    public void convertToShapefile(File source, File target) throws IOException {
+        if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
+            fixGML(source);
+        }
 
-		String[] args = getArguments(source, target, "ESRI Shapefile");
-		Map<String, String> envs = new HashMap<String, String>();
-		envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
-		runCommand(args, envs);
-		/*
-		 * Controls that output file is created
-		 */
-		if (!target.exists()) {
-			log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
-			createFalseCSV(target);
-		}
-		/*
-		 * Generating cgp file
-		 */
-		File cpgFile = CompanionFileUtils.getCompanionFile(target, "cpg");
-		FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1, StandardCharsets.UTF_8);
-	}
+        String[] args = getArguments(source, target, "ESRI Shapefile");
+        Map<String, String> envs = new HashMap<String, String>();
+        envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
+        runCommand(args, envs);
+        /*
+         * Controls that output file is created
+         */
+        if (!target.exists()) {
+            log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
+            createFalseCSV(target);
+        }
+        /*
+         * Generating cgp file
+         */
+        File cpgFile = CompanionFileUtils.getCompanionFile(target, "cpg");
+        FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1, StandardCharsets.UTF_8);
+    }
 
-	/**
-	 * 
-	 * Any invalid csv file blocks ogr2ogr use A valid file with header without data
-	 * is created to avoid this problem
-	 * 
-	 * @param target
-	 * @throws IOException
-	 */
-	private void createFalseCSV(File target) throws IOException {
-		target.createNewFile();
-		FileWriter fileWriter = new FileWriter(target);
-		String header = "header1,header2,header3";
-		fileWriter.append(header);
-		fileWriter.flush();
-		fileWriter.close();
-	}
+    /**
+     * 
+     * Any invalid csv file blocks ogr2ogr use A valid file with header without data
+     * is created to avoid this problem
+     * 
+     * @param target
+     * @throws IOException
+     */
+    private void createFalseCSV(File target) throws IOException {
+        target.createNewFile();
+        FileWriter fileWriter = new FileWriter(target);
+        String header = "header1,header2,header3";
+        fileWriter.append(header);
+        fileWriter.flush();
+        fileWriter.close();
+    }
 
-	/**
-	 * Get arguments to invoke ogr2ogr
-	 * 
-	 * @param source
-	 * @param target
-	 * @param driver
-	 * @param encode
-	 * @return
-	 */
-	private String[] getArguments(File source, File target, String driver) {
-		List<String> arguments = new ArrayList<String>();
-		arguments.add(getOgr2ogrPath());
+    /**
+     * Get arguments to invoke ogr2ogr
+     * 
+     * @param source
+     * @param target
+     * @param driver
+     * @param encode
+     * @return
+     */
+    private String[] getArguments(File source, File target, String driver) {
+        List<String> arguments = new ArrayList<String>();
+        arguments.add(getOgr2ogrPath());
 
-		// Otherwise, some ogr2ogr versions transforms 01 to 1...
-		if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
-			arguments.add("--config");
-			arguments.add("GML_FIELDTYPES");
-			arguments.add("ALWAYS_STRING");
-		}
+        // Otherwise, some ogr2ogr versions transforms 01 to 1...
+        if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
+            arguments.add("--config");
+            arguments.add("GML_FIELDTYPES");
+            arguments.add("ALWAYS_STRING");
+        }
 
-		arguments.add("-f");
-		arguments.add(driver);
-		/*
-		 * Getting format-specific parameters
-		 */
-		if (driver.equals("CSV")) {
-			if (hasSpatialColumn(source)) {
-				// unsure conversion to WKT
-				arguments.add("-lco");
-				arguments.add("GEOMETRY=AS_WKT");
-			}
+        arguments.add("-f");
+        arguments.add(driver);
+        /*
+         * Getting format-specific parameters
+         */
+        if (driver.equals("CSV")) {
+            if (hasSpatialColumn(source)) {
+                // unsure conversion to WKT
+                arguments.add("-lco");
+                arguments.add("GEOMETRY=AS_WKT");
+            }
 
-			// avoid useless quotes (GDAL 2.3 or more)
-			if (version.getMajor() >= 2 && version.getMinor() >= 3) {
-				arguments.add("-lco");
-				arguments.add("STRING_QUOTING=IF_NEEDED");
-			}
+            // avoid useless quotes (GDAL 2.3 or more)
+            if (version.getMajor() >= 2 && version.getMinor() >= 3) {
+                arguments.add("-lco");
+                arguments.add("STRING_QUOTING=IF_NEEDED");
+            }
 
-			// force "\r\n"
-			arguments.add("-lco");
-			arguments.add("LINEFORMAT=CRLF");
-		}
-		/*
-		 * Getting input/output files
-		 */
-		arguments.add(target.getAbsolutePath());
-		arguments.add(source.getAbsolutePath());
+            // force "\r\n"
+            arguments.add("-lco");
+            arguments.add("LINEFORMAT=CRLF");
+        }
+        /*
+         * Getting input/output files
+         */
+        arguments.add(target.getAbsolutePath());
+        arguments.add(source.getAbsolutePath());
 
-		arguments.add("-dim");
-		arguments.add("2");
+        arguments.add("-dim");
+        arguments.add("2");
 
-		/*
-		 * Getting source encoding
-		 */
-		String[] args = new String[arguments.size()];
-		arguments.toArray(args);
-		return args;
-	}
+        /*
+         * Getting source encoding
+         */
+        String[] args = new String[arguments.size()];
+        arguments.toArray(args);
+        return args;
+    }
 
-	/**
-	 * Indicates if a source file has a geometry column
-	 * 
-	 * Note : This is used to avoid the different behaviors of ogr2ogr when treating
-	 * dbf files
-	 * 
-	 * @param source
-	 * @return
-	 */
-	private boolean hasSpatialColumn(File source) {
-		if (!FilenameUtils.getExtension(source.getName()).toLowerCase().equals("dbf")) {
-			return true;
-		}
-		// C'est un .dbf, est-ce qu'il y a un .shp?
-		if (CompanionFileUtils.hasCompanionFile(source, "shp") || CompanionFileUtils.hasCompanionFile(source, "SHP")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Indicates if a source file has a geometry column
+     * 
+     * Note : This is used to avoid the different behaviors of ogr2ogr when treating
+     * dbf files
+     * 
+     * @param source
+     * @return
+     */
+    private boolean hasSpatialColumn(File source) {
+        if (!FilenameUtils.getExtension(source.getName()).toLowerCase().equals("dbf")) {
+            return true;
+        }
+        // C'est un .dbf, est-ce qu'il y a un .shp?
+        if (CompanionFileUtils.hasCompanionFile(source, "shp") || CompanionFileUtils.hasCompanionFile(source, "SHP")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	/**
-	 * Run command line
-	 * 
-	 * @throws IOException
-	 */
-	private void runCommand(String[] args, Map<String, String> envs) throws IOException {
-		Process process = null;
-		try {
+    /**
+     * Run command line
+     * 
+     * @throws IOException
+     */
+    private void runCommand(String[] args, Map<String, String> envs) throws IOException {
+        Process process = null;
+        try {
             /* output command line to logs */
-			String commandLine = commandToString(args);
-			log.info(MARKER, commandLine);
+            String commandLine = commandToString(args);
+            log.info(MARKER, commandLine);
 
             /* create process */
-			ProcessBuilder builder = new ProcessBuilder(args);
-			for (String envName : envs.keySet()) {
-				builder.environment().put(envName, envs.get(envName));
-			}
+            ProcessBuilder builder = new ProcessBuilder(args);
+            for (String envName : envs.keySet()) {
+                builder.environment().put(envName, envs.get(envName));
+            }
 
-			/* run process */
-			process = builder.start();
-			process.waitFor();
+            /* run process */
+            process = builder.start();
+            process.waitFor();
 
             /* read errors from process */
-			BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             try {
-			    String line = null;
-    			while ((line = errorReader.readLine()) != null) {
-    				log.error(MARKER, line);
-    			}
-			}finally {
-			    errorReader.close();
-			}
+                String line = null;
+                while ((line = errorReader.readLine()) != null) {
+                    log.error(MARKER, line);
+                }
+            } finally {
+                errorReader.close();
+            }
 
-			if (process.exitValue() != 0) {
-				log.error(MARKER, "command fail!");
-			}
-		} catch (IOException e1) {
-			throw new RuntimeException("Echec dans l'appel de ogr2ogr");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+            if (process.exitValue() != 0) {
+                log.error(MARKER, "command fail!");
+            }
+        } catch (IOException e1) {
+            throw new RuntimeException("Echec dans l'appel de ogr2ogr");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Logs the execution of a command
-	 * 
-	 * @param args
-	 */
-	private String commandToString(String[] args) {
-		String message = "";
-		for (int i = 0; i < args.length; i++) {
-			if (i == 0 || args[i].isEmpty() || (args[i].charAt(0) == '-') || (args[i].charAt(0) == '"')
-					|| (args[i].charAt(0) == '\'')) {
-				message += args[i] + " ";
-			} else {
-				message += "'" + args[i] + "' ";
-			}
-		}
-		return message;
-	}
+    /**
+     * Logs the execution of a command
+     * 
+     * @param args
+     */
+    private String commandToString(String[] args) {
+        String message = "";
+        for (int i = 0; i < args.length; i++) {
+            if (i == 0 || args[i].isEmpty() || (args[i].charAt(0) == '-') || (args[i].charAt(0) == '"')
+                || (args[i].charAt(0) == '\'')) {
+                message += args[i] + " ";
+            } else {
+                message += "'" + args[i] + "' ";
+            }
+        }
+        return message;
+    }
 
-	/**
-	 * ogr2ogr ignores self-closing tags. They are changed to empty tags
-	 * 
-	 * @param source
-	 * @throws IOException
-	 */
-	private void fixGML(File source) throws IOException {
-		File backupedFile = new File(source.getPath() + ".backup");
-		source.renameTo(backupedFile);
-		FixGML.replaceAutoclosedByEmpty(backupedFile, source);
-	}
+    /**
+     * ogr2ogr ignores self-closing tags. They are changed to empty tags
+     * 
+     * @param source
+     * @throws IOException
+     */
+    private void fixGML(File source) throws IOException {
+        File backupedFile = new File(source.getPath() + ".backup");
+        source.renameTo(backupedFile);
+        FixGML.replaceAutoclosedByEmpty(backupedFile, source);
+    }
 
-	/**
-	 * ogr2ogr prior to 2.3 doesn't convert TAB encoding to UTF-8
-	 * 
-	 * TODO remove support for ogr2ogr prior to 2.3.0 to get rid of this patch  
-	 * 
-	 * @param file
-	 * @param charset
-	 * @throws IOException
-	 */
-	private void fixUtf8(File file, Charset charset) throws IOException {
-		log.warn(MARKER, "ogr2ogr prior to 2.3, patching output encoding to UTF-8 for {}", file.getPath());
-		File backupedFile = new File(file.getPath() + ".backup");
-		file.renameTo(backupedFile);
+    /**
+     * ogr2ogr prior to 2.3 doesn't convert TAB encoding to UTF-8
+     * 
+     * TODO remove support for ogr2ogr prior to 2.3.0 to get rid of this patch
+     * 
+     * @param file
+     * @param charset
+     * @throws IOException
+     */
+    private void fixUtf8(File file, Charset charset) throws IOException {
+        log.warn(MARKER, "ogr2ogr prior to 2.3, patching output encoding to UTF-8 for {}", file.getPath());
+        File backupedFile = new File(file.getPath() + ".backup");
+        file.renameTo(backupedFile);
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-			new FileInputStream(backupedFile), charset
-		));
-		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-			new FileOutputStream(file), 
-			StandardCharsets.UTF_8
-		));
-		String line;
-		while ((line = in.readLine()) != null) {
-			out.write(line+"\r\n");
-		}
-		in.close();
-		out.close();
-		backupedFile.delete();
-	}
+        BufferedReader in = new BufferedReader(
+            new InputStreamReader(
+                new FileInputStream(backupedFile), charset
+            )
+        );
+        BufferedWriter out = new BufferedWriter(
+            new OutputStreamWriter(
+                new FileOutputStream(file),
+                StandardCharsets.UTF_8
+            )
+        );
+        String line;
+        while ((line = in.readLine()) != null) {
+            out.write(line + "\r\n");
+        }
+        in.close();
+        out.close();
+        backupedFile.delete();
+    }
 
 }

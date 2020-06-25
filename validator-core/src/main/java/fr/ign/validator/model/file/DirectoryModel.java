@@ -9,31 +9,31 @@ import fr.ign.validator.model.FileModel;
 /**
  * 
  * Represents a directory (as a file with the type "directory")
- *  
+ * 
  * @author MBorne
  *
  */
 public class DirectoryModel extends FileModel {
-	
-	public static final String TYPE = "directory" ;
-	
-	public DirectoryModel(){
-		super();
-	}
 
-	@Override
-	public String getType() {
-		return TYPE ;
-	}
-	
-	@Override
-	public String getRegexpSuffix() {
-		return "/";
-	}
+    public static final String TYPE = "directory";
 
-	@Override
-	public DocumentFile createDocumentFile(File path) {
-		return new DirectoryFile(this,path);
-	}
+    public DirectoryModel() {
+        super();
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    @Override
+    public String getRegexpSuffix() {
+        return "/";
+    }
+
+    @Override
+    public DocumentFile createDocumentFile(File path) {
+        return new DirectoryFile(this, path);
+    }
 
 }

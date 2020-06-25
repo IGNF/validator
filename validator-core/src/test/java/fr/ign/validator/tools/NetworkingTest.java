@@ -15,43 +15,43 @@ import org.junit.Test;
 
 public class NetworkingTest {
 
-	/**
-	 * Ensure that proxy is correctly defined from CLI option (--proxy)
-	 * 
-	 * @throws ParseException
-	 */
-	@Test
-	public void testConfigureHttpClientSample() {
-		Networking.configureHttpClient("http://proxy.home:3128");
-		Properties systemSettings = System.getProperties();
-		assertEquals("true", systemSettings.get("proxySet"));
-		assertEquals("proxy.home", systemSettings.get("http.proxyHost"));
-		assertEquals("proxy.home", systemSettings.get("http.proxyHost"));
-		assertEquals("3128", systemSettings.get("http.proxyPort"));
-		assertEquals("proxy.home", systemSettings.get("https.proxyHost"));
-		assertEquals("3128", systemSettings.get("https.proxyPort"));
-	}
+    /**
+     * Ensure that proxy is correctly defined from CLI option (--proxy)
+     * 
+     * @throws ParseException
+     */
+    @Test
+    public void testConfigureHttpClientSample() {
+        Networking.configureHttpClient("http://proxy.home:3128");
+        Properties systemSettings = System.getProperties();
+        assertEquals("true", systemSettings.get("proxySet"));
+        assertEquals("proxy.home", systemSettings.get("http.proxyHost"));
+        assertEquals("proxy.home", systemSettings.get("http.proxyHost"));
+        assertEquals("3128", systemSettings.get("http.proxyPort"));
+        assertEquals("proxy.home", systemSettings.get("https.proxyHost"));
+        assertEquals("3128", systemSettings.get("https.proxyPort"));
+    }
 
-	/**
-	 * Ensure that proxy is correctly defined from environment variables while
-	 * running tests so that URL content can be retreived.
-	 * 
-	 * @throws IOException
-	 * @throws MalformedURLException
-	 * @throws ParseException 
-	 */
-	@Test
-	public void testReadUrl() throws MalformedURLException, IOException {
-		Networking.configureHttpClient();
+    /**
+     * Ensure that proxy is correctly defined from environment variables while
+     * running tests so that URL content can be retreived.
+     * 
+     * @throws IOException
+     * @throws MalformedURLException
+     * @throws ParseException
+     */
+    @Test
+    public void testReadUrl() throws MalformedURLException, IOException {
+        Networking.configureHttpClient();
 
-		String url = "https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json";
-		InputStream in = new URL(url).openStream();
-		try {
-			String content = IOUtils.toString(in,StandardCharsets.UTF_8);
-			assertTrue(content.contains("cnig_PLU_2017"));
-		} finally {
-			in.close();
-		}
-	}
+        String url = "https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json";
+        InputStream in = new URL(url).openStream();
+        try {
+            String content = IOUtils.toString(in, StandardCharsets.UTF_8);
+            assertTrue(content.contains("cnig_PLU_2017"));
+        } finally {
+            in.close();
+        }
+    }
 
 }

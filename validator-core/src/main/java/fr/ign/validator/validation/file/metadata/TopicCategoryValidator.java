@@ -15,29 +15,30 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Ensures that "topicCategory" is defined and valid
- *  
+ * 
  * @author MBorne
  *
  */
 public class TopicCategoryValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("TopicCategoryValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		TopicCategoryCode code = metadata.getTopicCategory() ;
-		log.info(MARKER, "metadata.topicCategory : {}", code);
-		if ( null == code ){
-			context.report(
-				CoreErrorCodes.METADATA_TOPICCATEGORY_NOT_FOUND
-			);
-		}else if ( ! code.isValid() ){
-			context.report(context.createError(CoreErrorCodes.METADATA_TOPICCATEGORY_INVALID)
-				.setMessageParam("CODE", code.getValue())
-				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("TopicCategoryValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        TopicCategoryCode code = metadata.getTopicCategory();
+        log.info(MARKER, "metadata.topicCategory : {}", code);
+        if (null == code) {
+            context.report(
+                CoreErrorCodes.METADATA_TOPICCATEGORY_NOT_FOUND
+            );
+        } else if (!code.isValid()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_TOPICCATEGORY_INVALID)
+                    .setMessageParam("CODE", code.getValue())
+                    .setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
+            );
+        }
+    }
 
 }

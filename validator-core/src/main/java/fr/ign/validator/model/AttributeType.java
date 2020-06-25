@@ -25,10 +25,7 @@ import fr.ign.validator.validation.attribute.CharactersValidator;
  * @param <T> the matching java type
  */
 @XmlJavaTypeAdapter(AttributeTypeAdapter.class)
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    property = "type"
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonInclude(value = Include.NON_NULL)
 public abstract class AttributeType<T> implements Model, Cloneable {
     /**
@@ -134,7 +131,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     public boolean hasRegexp() {
         return null != constraints.getPattern();
     }
-    
+
     @Deprecated
     @JsonIgnore
     public String getRegexp() {
@@ -160,7 +157,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     @Deprecated
     @JsonIgnore
     public boolean isNullable() {
-        return ! constraints.isRequired();
+        return !constraints.isRequired();
     }
 
     @Deprecated
@@ -237,12 +234,11 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         return this.constraints.getReference().split("\\.")[1];
     }
 
-    
     @JsonIgnore
     public List<Validator<Attribute<T>>> getValidators() {
         return this.validators;
     }
-    
+
     public void addValidator(Validator<Attribute<T>> validator) {
         this.validators.add(validator);
     }

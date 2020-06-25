@@ -22,24 +22,24 @@ import fr.ign.validator.validation.Validator;
  */
 public class IdentifiersValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		/* a non empty identifier should be found */
-		List<String> identifiers = metadata.getIdentifiers() ;
-		for (String identifier : identifiers) {
-			if ( StringUtils.isEmpty(identifier) ) {
-				log.info(MARKER, "metadata.identifier : ignore empty identifier ({})", identifier);
-				continue;
-			}
-			log.info(MARKER, "metadata.identifier : found ({})", identifier);
-			return ;
-		}
-		context.report(
-			CoreErrorCodes.METADATA_IDENTIFIER_NOT_FOUND
-		);
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        /* a non empty identifier should be found */
+        List<String> identifiers = metadata.getIdentifiers();
+        for (String identifier : identifiers) {
+            if (StringUtils.isEmpty(identifier)) {
+                log.info(MARKER, "metadata.identifier : ignore empty identifier ({})", identifier);
+                continue;
+            }
+            log.info(MARKER, "metadata.identifier : found ({})", identifier);
+            return;
+        }
+        context.report(
+            CoreErrorCodes.METADATA_IDENTIFIER_NOT_FOUND
+        );
+    }
 
 }

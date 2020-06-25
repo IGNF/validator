@@ -15,11 +15,11 @@ public interface ModelReader {
 
     /**
      * Get format (json or xml, lowercase)
+     * 
      * @return
      */
-    public String getFormat() ;
-    
-    
+    public String getFormat();
+
     /**
      * Read File as a DocumentModel (files.xml)
      * 

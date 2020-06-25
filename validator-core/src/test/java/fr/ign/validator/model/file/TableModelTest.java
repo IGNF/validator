@@ -7,19 +7,19 @@ import org.junit.Test;
 
 public class TableModelTest {
 
-	@Test
-	public void testFullRegexp() {
-		TableModel tableModel = new TableModel();
-		tableModel.setPath("COMMUNE");
-		Assert.assertEquals("(?i).*/COMMUNE\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)", tableModel.getPathRegexp());
-	}
+    @Test
+    public void testFullRegexp() {
+        TableModel tableModel = new TableModel();
+        tableModel.setPath("COMMUNE");
+        Assert.assertEquals("(?i).*/COMMUNE\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)", tableModel.getPathRegexp());
+    }
 
-	@Test
-	public void testMatchPath() {
-		TableModel tableModel = new TableModel();
-		tableModel.setPath("COMMUNE");
-		Assert.assertTrue(tableModel.matchPath(new File("/test/path/COMMUNE.dbf")));
-		Assert.assertFalse(tableModel.matchPath(new File("/test/path/LIMITE_COMMUNE.dbf")));
-	}
+    @Test
+    public void testMatchPath() {
+        TableModel tableModel = new TableModel();
+        tableModel.setPath("COMMUNE");
+        Assert.assertTrue(tableModel.matchPath(new File("/test/path/COMMUNE.dbf")));
+        Assert.assertFalse(tableModel.matchPath(new File("/test/path/LIMITE_COMMUNE.dbf")));
+    }
 
 }

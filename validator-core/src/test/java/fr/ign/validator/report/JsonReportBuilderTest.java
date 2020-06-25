@@ -20,39 +20,39 @@ import fr.ign.validator.error.ValidatorError;
 
 public class JsonReportBuilderTest {
 
-	@Rule
-	public TemporaryFolder folder= new TemporaryFolder();
-	
-	@Test
-	public void test01() throws IOException {
-		File file = folder.newFile("report.jsonl");
-		JsonReportBuilder report = new JsonReportBuilder(file);
-		
-		{
-			ValidatorError error = new ValidatorError(CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND);
-			error.setLevel(ErrorLevel.DEBUG);
-			error.setScope(ErrorScope.DIRECTORY);
-			error.setMessage("message 1");
-			report.addError(error);
-		}
-		{
-			ValidatorError error = new ValidatorError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID);
-			error.setLevel(ErrorLevel.DEBUG);
-			error.setScope(ErrorScope.DIRECTORY);
-			error.setMessage("message 2");
-			report.addError(error);
-		}
-		
-		report.close();
-		
-		File expectedFile = ResourceHelper.getResourceFile(getClass(),"/report/report-01.jsonl") ;
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
-		List<String> lines = FileUtils.readLines(file,StandardCharsets.UTF_8) ;
-		assertEquals(2, lines.size());
-		assertEquals(
-			FileUtils.readLines(expectedFile,StandardCharsets.UTF_8),
-			lines
-		);
-	}
+    @Test
+    public void test01() throws IOException {
+        File file = folder.newFile("report.jsonl");
+        JsonReportBuilder report = new JsonReportBuilder(file);
+
+        {
+            ValidatorError error = new ValidatorError(CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND);
+            error.setLevel(ErrorLevel.DEBUG);
+            error.setScope(ErrorScope.DIRECTORY);
+            error.setMessage("message 1");
+            report.addError(error);
+        }
+        {
+            ValidatorError error = new ValidatorError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID);
+            error.setLevel(ErrorLevel.DEBUG);
+            error.setScope(ErrorScope.DIRECTORY);
+            error.setMessage("message 2");
+            report.addError(error);
+        }
+
+        report.close();
+
+        File expectedFile = ResourceHelper.getResourceFile(getClass(), "/report/report-01.jsonl");
+
+        List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
+        assertEquals(2, lines.size());
+        assertEquals(
+            FileUtils.readLines(expectedFile, StandardCharsets.UTF_8),
+            lines
+        );
+    }
 
 }

@@ -15,41 +15,41 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class DocumentPrefixValidatorTest {
 
-	private Context context;
-	private InMemoryReportBuilder report;
-	private DocumentPrefixValidator validator;
+    private Context context;
+    private InMemoryReportBuilder report;
+    private DocumentPrefixValidator validator;
 
-	@Before
-	public void setUp() throws Exception {
-		validator = new DocumentPrefixValidator();
+    @Before
+    public void setUp() throws Exception {
+        validator = new DocumentPrefixValidator();
 
-		context = new Context();
-		report = new InMemoryReportBuilder() ;
-		context.setReportBuilder(report);
-	}
+        context = new Context();
+        report = new InMemoryReportBuilder();
+        context.setReportBuilder(report);
+    }
 
-	@Test
-	public void testDocumentOk() {
-		DocumentModel documentModel = new DocumentModel();
-		File documentPath = new File("N_TRI_GREN2013_SIG_DI");
+    @Test
+    public void testDocumentOk() {
+        DocumentModel documentModel = new DocumentModel();
+        File documentPath = new File("N_TRI_GREN2013_SIG_DI");
 
-		Document document = new Document(documentModel, documentPath);
+        Document document = new Document(documentModel, documentPath);
 
-		validator.validate(context, document);
+        validator.validate(context, document);
 
-		assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-	}
+        assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+    }
 
-	@Test
-	public void testDocumentError() {
-		DocumentModel documentModel = new DocumentModel();
-		File documentPath = new File("N_TRI_GREN2013_mauvais_suffix");
+    @Test
+    public void testDocumentError() {
+        DocumentModel documentModel = new DocumentModel();
+        File documentPath = new File("N_TRI_GREN2013_mauvais_suffix");
 
-		Document document = new Document(documentModel, documentPath);
+        Document document = new Document(documentModel, documentPath);
 
-		validator.validate(context, document);
+        validator.validate(context, document);
 
-		assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
-	}
+        assertEquals(1, report.getErrorsByCode(DgprErrorCodes.DGPR_DOCUMENT_PREFIX_ERROR).size());
+    }
 
 }

@@ -22,48 +22,47 @@ import org.apache.logging.log4j.MarkerManager;
  */
 public class ReadUrlCommand extends AbstractCommand {
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("ReadUrlCommand");
-	
-	
-	public static final String NAME = "read_url";
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("ReadUrlCommand");
 
-	private String url ;
-	
-	@Override
-	public String getName() {
-		return NAME;
-	}
+    public static final String NAME = "read_url";
 
-	@Override
-	public void execute() throws Exception {
-		URL url = new URL(this.url);
-		InputStream in = url.openStream();
-		try {
-			InputStreamReader inR = new InputStreamReader(in);
-			BufferedReader buf = new BufferedReader(inR);
-			String line;
-			while ((line = buf.readLine()) != null) {
-				System.out.println(line);
-			}
-		} finally {
-			in.close();
-		}
-	}
+    private String url;
 
-	@Override
-	protected void buildCustomOptions(Options options) {
-		{
-			Option option = new Option("url", "url", true, "URL to test");
-			option.setRequired(true);
-			options.addOption(option);
-		}
-	}
+    @Override
+    public String getName() {
+        return NAME;
+    }
 
-	@Override
-	protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-		this.url = commandLine.getOptionValue("url");
-		log.info(MARKER,"URL : {}",this.url);
-	}
+    @Override
+    public void execute() throws Exception {
+        URL url = new URL(this.url);
+        InputStream in = url.openStream();
+        try {
+            InputStreamReader inR = new InputStreamReader(in);
+            BufferedReader buf = new BufferedReader(inR);
+            String line;
+            while ((line = buf.readLine()) != null) {
+                System.out.println(line);
+            }
+        } finally {
+            in.close();
+        }
+    }
+
+    @Override
+    protected void buildCustomOptions(Options options) {
+        {
+            Option option = new Option("url", "url", true, "URL to test");
+            option.setRequired(true);
+            options.addOption(option);
+        }
+    }
+
+    @Override
+    protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
+        this.url = commandLine.getOptionValue("url");
+        log.info(MARKER, "URL : {}", this.url);
+    }
 
 }

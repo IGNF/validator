@@ -233,7 +233,7 @@ public class XmlModelReaderTest {
             AttributeType<?> attribute = featureType.getAttribute(index++);
             Assert.assertEquals("GEOMETRY", attribute.getName());
             Assert.assertEquals("Geometry", attribute.getTypeName());
-            
+
             AttributeConstraints constraints = attribute.getConstraints();
             Assert.assertFalse(constraints.isRequired());
             Assert.assertFalse(constraints.isUnique());

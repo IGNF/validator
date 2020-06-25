@@ -16,39 +16,40 @@ import fr.ign.validator.validation.Validator;
  */
 public class PathExistsValidator implements Validator<Attribute<File>> {
 
-	@Override
-	public void validate(Context context, Attribute<File> attribute) {
-		File path = attribute.getBindedValue() ;
-		
-		if ( null == path ){
-			return ;
-		}
-		
-		File absolutePath = new File(
-			context.getCurrentDirectory(), 
-			filterFragment( path.toString() )
-		) ;
+    @Override
+    public void validate(Context context, Attribute<File> attribute) {
+        File path = attribute.getBindedValue();
 
-		if ( ! absolutePath.exists() ){
-			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_PATH_NOT_FOUND)
-				.setMessageParam("VALUE", path.toString())
-			);
-		}
-	}
-	
-	/**
-	 * Remove fragment from URI (#page=125)
-	 * @param path
-	 * @return
-	 */
-	private String filterFragment(String path){
-		int position = path.lastIndexOf('#') ;
-		if ( position >= 0 ){
-			return path.substring(0, position);
-		}else{
-			return path ;
-		}
-	}
+        if (null == path) {
+            return;
+        }
 
+        File absolutePath = new File(
+            context.getCurrentDirectory(),
+            filterFragment(path.toString())
+        );
+
+        if (!absolutePath.exists()) {
+            context.report(
+                context.createError(CoreErrorCodes.ATTRIBUTE_PATH_NOT_FOUND)
+                    .setMessageParam("VALUE", path.toString())
+            );
+        }
+    }
+
+    /**
+     * Remove fragment from URI (#page=125)
+     * 
+     * @param path
+     * @return
+     */
+    private String filterFragment(String path) {
+        int position = path.lastIndexOf('#');
+        if (position >= 0) {
+            return path.substring(0, position);
+        } else {
+            return path;
+        }
+    }
 
 }

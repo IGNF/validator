@@ -32,15 +32,11 @@ import fr.ign.validator.model.file.TableModel;
  * @author MBorne
  */
 @XmlJavaTypeAdapter(FileModelAdapter.class)
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME, 
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "type"
-)
-@JsonSubTypes({ 
-    @Type(value = DirectoryModel.class, name = DirectoryModel.TYPE), 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @Type(value = DirectoryModel.class, name = DirectoryModel.TYPE),
     @Type(value = MetadataModel.class, name = MetadataModel.TYPE),
-    @Type(value = PdfModel.class, name = PdfModel.TYPE), 
+    @Type(value = PdfModel.class, name = PdfModel.TYPE),
     @Type(value = TableModel.class, name = TableModel.TYPE),
 })
 public abstract class FileModel implements Model {

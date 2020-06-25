@@ -20,22 +20,23 @@ import fr.ign.validator.validation.Validator;
  */
 public class MetadataDateValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("MetadataDateValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		Date value = metadata.getMetadataDate() ;
-		log.info(MARKER, "metadata.metadataDate : {}", value);
-		if ( null == value ){
-			context.report(
-				CoreErrorCodes.METADATA_METADATADATE_NOT_FOUND
-			);
-		}else if ( ! value.isValid() ){
-			context.report(context.createError(CoreErrorCodes.METADATA_METADATADATE_INVALID)
-				.setMessageParam("VALUE", value.toString())
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("MetadataDateValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        Date value = metadata.getMetadataDate();
+        log.info(MARKER, "metadata.metadataDate : {}", value);
+        if (null == value) {
+            context.report(
+                CoreErrorCodes.METADATA_METADATADATE_NOT_FOUND
+            );
+        } else if (!value.isValid()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_METADATADATE_INVALID)
+                    .setMessageParam("VALUE", value.toString())
+            );
+        }
+    }
 
 }

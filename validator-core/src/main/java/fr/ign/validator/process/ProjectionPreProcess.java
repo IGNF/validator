@@ -15,27 +15,28 @@ import fr.ign.validator.model.Projection;
  */
 public class ProjectionPreProcess implements ValidatorListener {
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-		
-	}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-		Projection projection = context.getProjection();
+    }
 
-		context.report(context.createError(CoreErrorCodes.VALIDATOR_PROJECTION_INFO)
-			.setMessageParam("CODE_PROJECTION", projection.getCode())
-			.setMessageParam("URI_PROJECTION", projection.getUri())
-		);
-		if ( projection.getCode().equals("EPSG:4326") ){
-			context.report(context.createError(CoreErrorCodes.VALIDATOR_PROJECTION_LATLON));
-		}
-	}
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
+        Projection projection = context.getProjection();
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
+        context.report(
+            context.createError(CoreErrorCodes.VALIDATOR_PROJECTION_INFO)
+                .setMessageParam("CODE_PROJECTION", projection.getCode())
+                .setMessageParam("URI_PROJECTION", projection.getUri())
+        );
+        if (projection.getCode().equals("EPSG:4326")) {
+            context.report(context.createError(CoreErrorCodes.VALIDATOR_PROJECTION_LATLON));
+        }
+    }
 
-	}
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
+
+    }
 
 }

@@ -10,11 +10,12 @@ import fr.ign.validator.Context;
  *
  */
 public interface Validatable {
-	
-	/**
-	 * Validates a data with a context
-	 * @param context
-	 */
-	public void validate(Context context) throws Exception ;
-	
+
+    /**
+     * Validates a data with a context
+     * 
+     * @param context
+     */
+    public void validate(Context context) throws Exception;
+
 }

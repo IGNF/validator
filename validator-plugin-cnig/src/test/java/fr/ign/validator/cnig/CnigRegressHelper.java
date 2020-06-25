@@ -20,59 +20,61 @@ import fr.ign.validator.tools.ResourceHelper;
  */
 public class CnigRegressHelper {
 
-	/**
-	 * Get document model
-	 * 
-	 * @see validator-plugin-cnig/test/resources/config/{documentModelName}
-	 * 
-	 * @param documentModelName
-	 * @return
-	 * @throws Exception
-	 */
-	public static DocumentModel getDocumentModel(String documentModelName) {
-		File documentModelPath = ResourceHelper.getResourceFile(
-			CnigRegressHelper.class, 
-			"/config/" + documentModelName + "/files.xml"
-		);
-		ModelReader loader = new XmlModelReader();
-		DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
-		documentModel.setName(documentModelName);
-		return documentModel;
-	}
+    /**
+     * Get document model
+     * 
+     * @see validator-plugin-cnig/test/resources/config/{documentModelName}
+     * 
+     * @param documentModelName
+     * @return
+     * @throws Exception
+     */
+    public static DocumentModel getDocumentModel(String documentModelName) {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            CnigRegressHelper.class,
+            "/config/" + documentModelName + "/files.xml"
+        );
+        ModelReader loader = new XmlModelReader();
+        DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
+        documentModel.setName(documentModelName);
+        return documentModel;
+    }
 
-	/**
-	 * Get sample document. If folder is not null, document is copied to a temp folder (keep this explicit)
-	 * 
-	 * @see validator-plugin-cnig/test/resources/documents/{documentName}
-	 * 
-	 * @param documentName
-	 * @param folder
-	 * @return
-	 * @throws IOException
-	 */
-	public static File getSampleDocument(String documentName,TemporaryFolder folder) throws IOException{
-		File sourcePath = ResourceHelper.getResourceFile(
-			CnigRegressHelper.class, 
-			"/documents/"+documentName
-		);
-		if ( folder == null ){
-			return sourcePath;
-		}
-		File documentPath = folder.newFolder(documentName);
-		FileUtils.copyDirectory(sourcePath, documentPath);
-		return documentPath;
-	}
+    /**
+     * Get sample document. If folder is not null, document is copied to a temp
+     * folder (keep this explicit)
+     * 
+     * @see validator-plugin-cnig/test/resources/documents/{documentName}
+     * 
+     * @param documentName
+     * @param folder
+     * @return
+     * @throws IOException
+     */
+    public static File getSampleDocument(String documentName, TemporaryFolder folder) throws IOException {
+        File sourcePath = ResourceHelper.getResourceFile(
+            CnigRegressHelper.class,
+            "/documents/" + documentName
+        );
+        if (folder == null) {
+            return sourcePath;
+        }
+        File documentPath = folder.newFolder(documentName);
+        FileUtils.copyDirectory(sourcePath, documentPath);
+        return documentPath;
+    }
 
-	/**
-	 * Get path to expected document-info.json
-	 * @param documentName
-	 * @return
-	 */
-	public static File getExpectedDocumentInfos(String documentName) {
-		return ResourceHelper.getResourceFile(
-			CnigRegressHelper.class, 
-			"/documents-expected/"+documentName+"/document-info.json"
-		);
-	}
+    /**
+     * Get path to expected document-info.json
+     * 
+     * @param documentName
+     * @return
+     */
+    public static File getExpectedDocumentInfos(String documentName) {
+        return ResourceHelper.getResourceFile(
+            CnigRegressHelper.class,
+            "/documents-expected/" + documentName + "/document-info.json"
+        );
+    }
 
 }

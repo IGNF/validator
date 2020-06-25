@@ -15,29 +15,30 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Ensures that "type" is defined and allowed
- *  
+ * 
  * @author MBorne
  *
  */
 public class TypeValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("TypeValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		ScopeCode code = metadata.getType() ;
-		log.info(MARKER, "metadata.type : {}", code);
-		if ( code == null ){
-			context.report(
-				CoreErrorCodes.METADATA_TYPE_NOT_FOUND
-			);
-		}else if ( ! code.isValid() ){
-			context.report(context.createError(CoreErrorCodes.METADATA_TYPE_INVALID)
-				.setMessageParam("CODE", code.getValue())
-				.setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("TypeValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        ScopeCode code = metadata.getType();
+        log.info(MARKER, "metadata.type : {}", code);
+        if (code == null) {
+            context.report(
+                CoreErrorCodes.METADATA_TYPE_NOT_FOUND
+            );
+        } else if (!code.isValid()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_TYPE_INVALID)
+                    .setMessageParam("CODE", code.getValue())
+                    .setMessageParam("EXPECTED_CODES", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
+            );
+        }
+    }
 
 }

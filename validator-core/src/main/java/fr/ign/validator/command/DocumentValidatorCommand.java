@@ -345,6 +345,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "document-model" option
+     * 
      * @param options
      */
     protected void buildModelOption(Options options) {
@@ -365,14 +366,14 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected void parseDocumentModelUrl(CommandLine commandLine) throws ParseException {
         String config = commandLine.getOptionValue("config");
         String version = commandLine.getOptionValue("version");
-        
+
         try {
-            if ( ! StringUtils.isEmpty(config) && ! StringUtils.isEmpty(version) ) {
+            if (!StringUtils.isEmpty(config) && !StringUtils.isEmpty(version)) {
                 File configDir = new File(config);
                 this.documentModelUrl = (new File(configDir, version + "/files.xml")).toURI().toURL();
-            }else {
+            } else {
                 String modelUri = commandLine.getOptionValue("model");
-                if ( StringUtils.isEmpty(modelUri) ) {
+                if (StringUtils.isEmpty(modelUri)) {
                     throw new ParseException("--model or --config,--version options required)");
                 }
                 this.documentModelUrl = new URL(modelUri);

@@ -36,98 +36,95 @@ import fr.ign.validator.tools.ResourceHelper;
  */
 public class ValidateDocumentARegressTest {
 
-	private File documentPath ;
-	
-	private DocumentModel documentModel;
-	
-	@Before
-	public void setUp() throws Exception {
-		documentPath = ResourceHelper.getResourceFile(getClass(),"/documents/commune-sample");
-		
-		documentModel = new DocumentModel();
-		List<FileModel> fileModels = new ArrayList<FileModel>();
-		{
-			TableModel tableModel = new TableModel();
-			tableModel.setName("COMMUNE");
-			tableModel.setPath("commune");
-			
-			FeatureType featureType = new FeatureType();
-			// INSEE
-			{
-				StringType attributeType = new StringType();
-				attributeType.setName("INSEE");
-				featureType.addAttribute(attributeType);
-			}
-			// NOM
-			{
-				StringType attributeType = new StringType();
-				attributeType.setName("NOM");
-				featureType.addAttribute(attributeType);
-			}
-			// WKT
-			{
-				GeometryType attributeType = new GeometryType();
-				attributeType.setName("WKT");
-				featureType.addAttribute(attributeType);
-			}
-			tableModel.setFeatureType(featureType);
-			
-			fileModels.add(tableModel);
-		}
-		{
-			MetadataModel metadata = new MetadataModel();
-			metadata.setName("metadata");
-			metadata.setPath("metadata");
-			fileModels.add(metadata);
-		}
-		{
-			DirectoryModel directory = new DirectoryModel();
-			directory.setName("a_directory");
-			directory.setPath("a_directory");
-			fileModels.add(directory);
-		}
-		{
-			PdfModel directory = new PdfModel();
-			directory.setName("a_file");
-			directory.setPath("a_directory/a_file");
-			fileModels.add(directory);
-		}
-		
-		documentModel.setFileModels(fileModels);
-	}
+    private File documentPath;
 
-	
-	@Test
-	public void testValidate() throws NoSuchAuthorityCodeException, FactoryException{
-		Context context = new Context();
-		context.setCurrentDirectory(documentPath);
-		context.setProjection("CRS:84");
-		Document document = new Document(documentModel,documentPath);
-		File validationDirectory = new File( documentPath.getParentFile(), "validation" ) ;
-		context.setValidationDirectory( validationDirectory ) ;
-		InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
-		context.setReportBuilder(reportBuilder);
-		
-		try {
-			document.validate(context);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Assert.fail(e.getMessage());
-		}
-		
+    private DocumentModel documentModel;
 
-		Assert.assertEquals(2,reportBuilder.getErrorsByLevel(ErrorLevel.ERROR).size());
-		Assert.assertEquals(0,reportBuilder.getErrorsByLevel(ErrorLevel.WARNING).size());
-		
-		Assert.assertEquals(1,reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY).size());
-		Assert.assertEquals(1,reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY).size());
-		
-		File expectedNormalized = new File( context.getDataDirectory(), "COMMUNE.csv");
-		Assert.assertTrue(expectedNormalized.exists());		
-		
-		// from metadata
-		Assert.assertEquals( StandardCharsets.ISO_8859_1, context.getEncoding() ) ;
-	}
-	
-	
+    @Before
+    public void setUp() throws Exception {
+        documentPath = ResourceHelper.getResourceFile(getClass(), "/documents/commune-sample");
+
+        documentModel = new DocumentModel();
+        List<FileModel> fileModels = new ArrayList<FileModel>();
+        {
+            TableModel tableModel = new TableModel();
+            tableModel.setName("COMMUNE");
+            tableModel.setPath("commune");
+
+            FeatureType featureType = new FeatureType();
+            // INSEE
+            {
+                StringType attributeType = new StringType();
+                attributeType.setName("INSEE");
+                featureType.addAttribute(attributeType);
+            }
+            // NOM
+            {
+                StringType attributeType = new StringType();
+                attributeType.setName("NOM");
+                featureType.addAttribute(attributeType);
+            }
+            // WKT
+            {
+                GeometryType attributeType = new GeometryType();
+                attributeType.setName("WKT");
+                featureType.addAttribute(attributeType);
+            }
+            tableModel.setFeatureType(featureType);
+
+            fileModels.add(tableModel);
+        }
+        {
+            MetadataModel metadata = new MetadataModel();
+            metadata.setName("metadata");
+            metadata.setPath("metadata");
+            fileModels.add(metadata);
+        }
+        {
+            DirectoryModel directory = new DirectoryModel();
+            directory.setName("a_directory");
+            directory.setPath("a_directory");
+            fileModels.add(directory);
+        }
+        {
+            PdfModel directory = new PdfModel();
+            directory.setName("a_file");
+            directory.setPath("a_directory/a_file");
+            fileModels.add(directory);
+        }
+
+        documentModel.setFileModels(fileModels);
+    }
+
+    @Test
+    public void testValidate() throws NoSuchAuthorityCodeException, FactoryException {
+        Context context = new Context();
+        context.setCurrentDirectory(documentPath);
+        context.setProjection("CRS:84");
+        Document document = new Document(documentModel, documentPath);
+        File validationDirectory = new File(documentPath.getParentFile(), "validation");
+        context.setValidationDirectory(validationDirectory);
+        InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
+        context.setReportBuilder(reportBuilder);
+
+        try {
+            document.validate(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail(e.getMessage());
+        }
+
+        Assert.assertEquals(2, reportBuilder.getErrorsByLevel(ErrorLevel.ERROR).size());
+        Assert.assertEquals(0, reportBuilder.getErrorsByLevel(ErrorLevel.WARNING).size());
+
+        Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY).size());
+        Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY).size());
+
+        File expectedNormalized = new File(context.getDataDirectory(), "COMMUNE.csv");
+        Assert.assertTrue(expectedNormalized.exists());
+
+        // from metadata
+        Assert.assertEquals(StandardCharsets.ISO_8859_1, context.getEncoding());
+    }
+
 }

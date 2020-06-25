@@ -9,14 +9,14 @@ package fr.ign.validator.exception;
  */
 public class InvalidModelException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public InvalidModelException(String message){
-		super(message);
-	}
-	
-	public InvalidModelException(String message, Throwable e){
-		super(message,e);
-	}
+    public InvalidModelException(String message) {
+        super(message);
+    }
+
+    public InvalidModelException(String message, Throwable e) {
+        super(message, e);
+    }
 
 }

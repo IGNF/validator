@@ -40,17 +40,17 @@ public class DocumentModel implements Model {
      * The name of the DocumentModel (ex : "cnig_PLU_2013")
      */
     private String name;
-    
+
     /**
      * The list of files in Document
      */
     private List<FileModel> fileModels = new ArrayList<FileModel>();
- 
+
     /**
      * Constraints on the document
      */
     private DocumentConstraints constraints = new DocumentConstraints();
- 
+
     /**
      * The list of validators on the Document
      */
@@ -82,7 +82,6 @@ public class DocumentModel implements Model {
         this.name = name;
     }
 
-
     @XmlTransient
     public DocumentConstraints getConstraints() {
         return constraints;
@@ -91,7 +90,6 @@ public class DocumentModel implements Model {
     public void setConstraints(DocumentConstraints constraints) {
         this.constraints = constraints;
     }
-
 
     /**
      * @deprecated kept for compatibility with old models
@@ -112,7 +110,6 @@ public class DocumentModel implements Model {
     public void setRegexp(String regexp) {
         this.constraints.setFolderName(regexp);
     }
-
 
     @XmlElementWrapper(name = "files")
     @XmlElement(name = "file")
@@ -181,7 +178,6 @@ public class DocumentModel implements Model {
         }
         return result;
     }
-
 
     /**
      * Add a validator to the document

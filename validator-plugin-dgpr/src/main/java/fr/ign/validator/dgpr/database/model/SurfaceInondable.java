@@ -4,67 +4,58 @@ import org.locationtech.jts.geom.Geometry;
 
 public class SurfaceInondable {
 
-	private String id;
+    private String id;
 
-	private String scenario;
+    private String scenario;
 
-	private String wkt;
+    private String wkt;
 
-	private Geometry geometry;
+    private Geometry geometry;
 
+    public SurfaceInondable() {
+    }
 
-	public SurfaceInondable() {
-	}
+    public SurfaceInondable(String id, String scenario, String wkt) {
+        this.id = id;
+        this.scenario = scenario;
+        this.wkt = wkt;
+    }
 
+    public SurfaceInondable(String id, String wkt) {
+        this.id = id;
+        this.wkt = wkt;
+    }
 
-	public SurfaceInondable(String id, String scenario, String wkt) {
-		this.id = id;
-		this.scenario = scenario;
-		this.wkt = wkt;
-	}
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public SurfaceInondable(String id, String wkt) {
-		this.id = id;
-		this.wkt = wkt;
-	}
+    public String getScenario() {
+        return scenario;
+    }
 
+    public void setScenario(String scenario) {
+        this.scenario = scenario;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getWkt() {
+        return wkt;
+    }
 
+    public void setWkt(String wkt) {
+        this.wkt = wkt;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public Geometry getGeometry() {
+        return this.geometry;
+    }
 
-
-	public String getScenario() {
-		return scenario;
-	}
-
-
-	public void setScenario(String scenario) {
-		this.scenario = scenario;
-	}
-
-
-	public String getWkt() {
-		return wkt;
-	}
-
-
-	public void setWkt(String wkt) {
-		this.wkt = wkt;
-	}
-	
-	public Geometry getGeometry() {
-		return this.geometry;
-	}
-	
-	public void setGeometry(Geometry geometry) {
-		this.geometry = geometry;
-	}
+    public void setGeometry(Geometry geometry) {
+        this.geometry = geometry;
+    }
 
 }

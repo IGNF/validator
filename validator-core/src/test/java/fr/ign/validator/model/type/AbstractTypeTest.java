@@ -11,37 +11,39 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 @Ignore
 public class AbstractTypeTest<T> {
 
-	protected AttributeType<T> type;
-	protected Context context ;
-	protected InMemoryReportBuilder reportBuilder ;
-	
-	public AbstractTypeTest(AttributeType<T> type) {
-		this.type = type;
-		type.setName("test");
-		
-		context = new Context() ;
-		reportBuilder = new InMemoryReportBuilder() ; 
-		context.setReportBuilder(reportBuilder);
-	}
+    protected AttributeType<T> type;
+    protected Context context;
+    protected InMemoryReportBuilder reportBuilder;
 
-	/**
-	 * bind and validate attribute
-	 * @param context
-	 * @param inputValue
-	 * @return
-	 */
-	protected T bindValidate(Context context, Object inputValue) {
-		try {
-			Attribute<T> attribute = new Attribute<T>(type, inputValue);
-			attribute.validate(context);
-			return attribute.getBindedValue() ;
-		}catch ( IllegalArgumentException e ){
-			context.report(context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)
-				.setMessageParam("VALUE",inputValue.toString())
-				.setMessageParam("EXPECTED_TYPE",type.getTypeName())			
-			);
-			return null ;
-		}
-	}
+    public AbstractTypeTest(AttributeType<T> type) {
+        this.type = type;
+        type.setName("test");
+
+        context = new Context();
+        reportBuilder = new InMemoryReportBuilder();
+        context.setReportBuilder(reportBuilder);
+    }
+
+    /**
+     * bind and validate attribute
+     * 
+     * @param context
+     * @param inputValue
+     * @return
+     */
+    protected T bindValidate(Context context, Object inputValue) {
+        try {
+            Attribute<T> attribute = new Attribute<T>(type, inputValue);
+            attribute.validate(context);
+            return attribute.getBindedValue();
+        } catch (IllegalArgumentException e) {
+            context.report(
+                context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)
+                    .setMessageParam("VALUE", inputValue.toString())
+                    .setMessageParam("EXPECTED_TYPE", type.getTypeName())
+            );
+            return null;
+        }
+    }
 
 }

@@ -15,85 +15,84 @@ import org.locationtech.jts.geom.Envelope;
  *
  */
 public class DocumentFileInfo {
-	/**
-	 * file type
-	 */
-	private String type;
-	/**
-	 * FileModel name
-	 */
-	private String modelName;
-	/**
-	 * file name
-	 */
-	private String name;
-	/**
-	 * path (relative to document)
-	 */
-	private String path;
-	/**
-	 * Bounding box (only for tables)
-	 */
-	private Envelope boundingBox = null;
-	/**
-	 * Feature count (only for tables)
-	 */
-	private Integer totalFeatures = null;
+    /**
+     * file type
+     */
+    private String type;
+    /**
+     * FileModel name
+     */
+    private String modelName;
+    /**
+     * file name
+     */
+    private String name;
+    /**
+     * path (relative to document)
+     */
+    private String path;
+    /**
+     * Bounding box (only for tables)
+     */
+    private Envelope boundingBox = null;
+    /**
+     * Feature count (only for tables)
+     */
+    private Integer totalFeatures = null;
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-	
-	public String getModelName() {
-		return modelName;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setModelName(String modelName) {
-		this.modelName = modelName;
-	}
+    public String getModelName() {
+        return modelName;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	public boolean hasExtent() {
-		return boundingBox != null;
-	}
+    public boolean hasExtent() {
+        return boundingBox != null;
+    }
 
-	@JsonSerialize(using = EnvelopeSerializer.class)
-	@JsonInclude(value = Include.NON_NULL)
-	public Envelope getBoundingBox() {
-		return boundingBox;
-	}
+    @JsonSerialize(using = EnvelopeSerializer.class)
+    @JsonInclude(value = Include.NON_NULL)
+    public Envelope getBoundingBox() {
+        return boundingBox;
+    }
 
-	public void setBoundingBox(Envelope boundingBox) {
-		this.boundingBox = boundingBox;
-	}
+    public void setBoundingBox(Envelope boundingBox) {
+        this.boundingBox = boundingBox;
+    }
 
-	@JsonInclude(value = Include.NON_NULL)
-	public Integer getTotalFeatures() {
-		return totalFeatures;
-	}
+    @JsonInclude(value = Include.NON_NULL)
+    public Integer getTotalFeatures() {
+        return totalFeatures;
+    }
 
-	public void setTotalFeatures(Integer totalFeatures) {
-		this.totalFeatures = totalFeatures;
-	}
+    public void setTotalFeatures(Integer totalFeatures) {
+        this.totalFeatures = totalFeatures;
+    }
 
 }

@@ -1,6 +1,5 @@
 package fr.ign.validator.dgpr.validation.attribute;
 
-
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,121 +17,127 @@ import fr.ign.validator.model.type.DoubleType;
 
 public class NumericCustomizer implements ValidatorListener {
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("NumericCustomizer");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("NumericCustomizer");
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
-		// looking for TableModel where to add Validator
-		for (FileModel fileModel : fileModels) {
-			if (!(fileModel instanceof TableModel)) {
-				continue;
-			}
-			switch (fileModel.getName()) {
-				case "N_prefixTri_COTE_VIT_DEB_P_ddd":
-					addDebLinValidator(fileModel);
-					addAzimuthValidator(fileModel);					
-					break;
-				case "N_prefixTri_CHAMP_VIT_P_ddd":
-					addVitesseMinValidator(fileModel);
-					break;
-					
-				case "N_prefixTri_ISO_DEB_S_ddd":
-					addDebLinMinValidator(fileModel);
-					addDebLinMaxValidator(fileModel);
-					break;
-	
-				default:
-					break;
-			}
-		}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
+        List<FileModel> fileModels = document.getDocumentModel().getFileModels();
+        // looking for TableModel where to add Validator
+        for (FileModel fileModel : fileModels) {
+            if (!(fileModel instanceof TableModel)) {
+                continue;
+            }
+            switch (fileModel.getName()) {
+            case "N_prefixTri_COTE_VIT_DEB_P_ddd":
+                addDebLinValidator(fileModel);
+                addAzimuthValidator(fileModel);
+                break;
+            case "N_prefixTri_CHAMP_VIT_P_ddd":
+                addVitesseMinValidator(fileModel);
+                break;
 
-	}
+            case "N_prefixTri_ISO_DEB_S_ddd":
+                addDebLinMinValidator(fileModel);
+                addDebLinMaxValidator(fileModel);
+                break;
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-	}
+            default:
+                break;
+            }
+        }
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
-	}
+    }
 
-	private void addDebLinMaxValidator(FileModel fileModel) {
-		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MAX
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MAX") ;
-		if ( attribute == null ){
-			return;
-		}
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
+    }
 
-		/* check attribute type and add custom validator */
-		if ( attribute instanceof DoubleType ) {
-			((DoubleType)attribute).addValidator(new DebLinMaxValidator());
-		} else {
-			throw new RuntimeException("DEBLIN_MAX de N_prefixTri_ISO_DEB_S_ddd n'est pas configuré comme étant un double");
-		}
-	}
-	
-	private void addDebLinMinValidator(FileModel fileModel) {		
-		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
-		
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MIN");
-	
-		if ( attribute == null ){
-			return;
-		}
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
+    }
 
-		/* check attribute type and add custom validator */
-		if ( attribute instanceof DoubleType ) {
-			((DoubleType)attribute).addValidator(new DebLinMinValidator());
-		} else {
-			throw new RuntimeException("L'attribut n'est pas du type attendu");
-		}
-	}
-	
-	private void addDebLinValidator(FileModel fileModel) {		
-		// looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
-		
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN");
-	
-		if ( attribute == null ){
-			return;
-		}
+    private void addDebLinMaxValidator(FileModel fileModel) {
+        // looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MAX
+        AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MAX");
+        if (attribute == null) {
+            return;
+        }
 
-		/* check attribute type and add custom validator */
-		if ( attribute instanceof DoubleType ) {
-			((DoubleType)attribute).addValidator(new DebLinValidator());
-		} else {
-			throw new RuntimeException("L'attribut n'est pas du type attendu");
-		}
-	}
-	
-	private void addAzimuthValidator(FileModel fileModel) {
-		// looking for N_prefixTri_COTE_VIT_DEB_P_ddd
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("AZIMUTH");
-		if ( attribute == null ) {
-			return;
-		}
-		/* check attribute type and add custom validator */
-		if ( attribute instanceof DoubleType ) {
-			((DoubleType)attribute).addValidator(new AzimuthValidator());
-		} else {
-			throw new RuntimeException("AZIMUTH de N_prefixTri_COTE_VIT_DEB_P_ddd n'est pas configuré comme étant un double");
-		}	
-	}
+        /* check attribute type and add custom validator */
+        if (attribute instanceof DoubleType) {
+            ((DoubleType) attribute).addValidator(new DebLinMaxValidator());
+        } else {
+            throw new RuntimeException(
+                "DEBLIN_MAX de N_prefixTri_ISO_DEB_S_ddd n'est pas configuré comme étant un double"
+            );
+        }
+    }
 
-	private void addVitesseMinValidator(FileModel fileModel) {
-		// looking for N_prefixTri_COTE_VIT_DEB_P_ddd.VITESS_MIN
-		AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("VITESS_MIN");
-		if ( attribute == null ) {
-			return;
-		}
-		/* check attribute type and add custom validator */
-		if ( attribute instanceof DoubleType ) {
-			((DoubleType)attribute).addValidator(new VitesseMinValidator());
-		} else {
-			throw new RuntimeException("ERREUR a la configuration de la table");
-		}
-	}
+    private void addDebLinMinValidator(FileModel fileModel) {
+        // looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or
+        // N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
+
+        AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MIN");
+
+        if (attribute == null) {
+            return;
+        }
+
+        /* check attribute type and add custom validator */
+        if (attribute instanceof DoubleType) {
+            ((DoubleType) attribute).addValidator(new DebLinMinValidator());
+        } else {
+            throw new RuntimeException("L'attribut n'est pas du type attendu");
+        }
+    }
+
+    private void addDebLinValidator(FileModel fileModel) {
+        // looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or
+        // N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
+
+        AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN");
+
+        if (attribute == null) {
+            return;
+        }
+
+        /* check attribute type and add custom validator */
+        if (attribute instanceof DoubleType) {
+            ((DoubleType) attribute).addValidator(new DebLinValidator());
+        } else {
+            throw new RuntimeException("L'attribut n'est pas du type attendu");
+        }
+    }
+
+    private void addAzimuthValidator(FileModel fileModel) {
+        // looking for N_prefixTri_COTE_VIT_DEB_P_ddd
+        AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("AZIMUTH");
+        if (attribute == null) {
+            return;
+        }
+        /* check attribute type and add custom validator */
+        if (attribute instanceof DoubleType) {
+            ((DoubleType) attribute).addValidator(new AzimuthValidator());
+        } else {
+            throw new RuntimeException(
+                "AZIMUTH de N_prefixTri_COTE_VIT_DEB_P_ddd n'est pas configuré comme étant un double"
+            );
+        }
+    }
+
+    private void addVitesseMinValidator(FileModel fileModel) {
+        // looking for N_prefixTri_COTE_VIT_DEB_P_ddd.VITESS_MIN
+        AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("VITESS_MIN");
+        if (attribute == null) {
+            return;
+        }
+        /* check attribute type and add custom validator */
+        if (attribute instanceof DoubleType) {
+            ((DoubleType) attribute).addValidator(new VitesseMinValidator());
+        } else {
+            throw new RuntimeException("ERREUR a la configuration de la table");
+        }
+    }
 
 }

@@ -14,26 +14,26 @@ import fr.ign.validator.model.FileModel;
  *
  */
 public class PdfModel extends FileModel {
-	
-	public static final String TYPE = "pdf" ;
-	
-	public PdfModel(){
-		super();
-	}
-	
-	@Override
-	public String getType() {
-		return TYPE ;
-	}
-	
-	@Override
-	public String getRegexpSuffix() {
-		return "\\.(pdf|PDF)";
-	}
-	
-	@Override
-	public DocumentFile createDocumentFile(File path) {
-		return new PdfFile(this,path);
-	}
+
+    public static final String TYPE = "pdf";
+
+    public PdfModel() {
+        super();
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    @Override
+    public String getRegexpSuffix() {
+        return "\\.(pdf|PDF)";
+    }
+
+    @Override
+    public DocumentFile createDocumentFile(File path) {
+        return new PdfFile(this, path);
+    }
 
 }

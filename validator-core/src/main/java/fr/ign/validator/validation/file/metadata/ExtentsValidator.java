@@ -16,37 +16,36 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Ensures that "extents" is defined and is valid
- *  
+ * 
  * @author MBorne
  *
  */
 public class ExtentsValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("ExtentsValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		List<Extent> extents = metadata.getExtents() ;
-		log.info(MARKER, "metadata.extents.size : {}", extents.size());
-		if ( extents.isEmpty()  ){
-			context.report(
-				CoreErrorCodes.METADATA_EXTENTS_EMPTY
-			);
-		}
-		int count = 1 ;
-		for (Extent extent : extents) {
-			if ( ! extent.getBoundingBox().isValid() ){
-				context.report(context.createError(CoreErrorCodes.METADATA_EXTENT_INVALID)
-					.setMessageParam("NUMBER", String.valueOf(count))
-					.setMessageParam("COUNT", String.valueOf(extents.size()))
-					.setMessageParam("BBOX", extent.getBoundingBox().toString())
-				);
-			}
-			count++;
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("ExtentsValidator");
 
-	
-	
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        List<Extent> extents = metadata.getExtents();
+        log.info(MARKER, "metadata.extents.size : {}", extents.size());
+        if (extents.isEmpty()) {
+            context.report(
+                CoreErrorCodes.METADATA_EXTENTS_EMPTY
+            );
+        }
+        int count = 1;
+        for (Extent extent : extents) {
+            if (!extent.getBoundingBox().isValid()) {
+                context.report(
+                    context.createError(CoreErrorCodes.METADATA_EXTENT_INVALID)
+                        .setMessageParam("NUMBER", String.valueOf(count))
+                        .setMessageParam("COUNT", String.valueOf(extents.size()))
+                        .setMessageParam("BBOX", extent.getBoundingBox().toString())
+                );
+            }
+            count++;
+        }
+    }
+
 }

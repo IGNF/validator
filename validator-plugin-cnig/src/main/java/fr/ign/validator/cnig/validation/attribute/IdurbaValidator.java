@@ -17,36 +17,36 @@ import fr.ign.validator.validation.Validator;
  * 
  * TODO
  * <ul>
- * 	<li>Define IdurbaHelper as a constructor parameter</li>
- *  <li>Move ValidatorListener implementation to process.CustomizeDocumentModel (do the same for other validators)</li>
+ * <li>Define IdurbaHelper as a constructor parameter</li>
+ * <li>Move ValidatorListener implementation to process.CustomizeDocumentModel
+ * (do the same for other validators)</li>
  * </ul>
  * 
  * @author MBorne
  *
  */
 public class IdurbaValidator implements Validator<Attribute<String>> {
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("IDURBA_VALIDATOR");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("IDURBA_VALIDATOR");
 
-	/**
-	 * idurbaHelper configured according to document model (see beforeMatching)
-	 */
-	private IdurbaHelper idurbaHelper;
-	
-	public IdurbaValidator(IdurbaHelper idurbaHelper){
-		this.idurbaHelper = idurbaHelper;
-	}
+    /**
+     * idurbaHelper configured according to document model (see beforeMatching)
+     */
+    private IdurbaHelper idurbaHelper;
 
+    public IdurbaValidator(IdurbaHelper idurbaHelper) {
+        this.idurbaHelper = idurbaHelper;
+    }
 
-	@Override
-	public void validate(Context context, Attribute<String> attribute) {
-		if ( ! idurbaHelper.isValid(attribute.getBindedValue()) ){
-			context.report(context.createError(CnigErrorCodes.CNIG_IDURBA_INVALID)
-				.setMessageParam("VALUE", attribute.getBindedValue())
-				.setMessageParam("IDURBA_FORMAT", idurbaHelper.getHelpFormat())
-			);
-		}
-	}
-
+    @Override
+    public void validate(Context context, Attribute<String> attribute) {
+        if (!idurbaHelper.isValid(attribute.getBindedValue())) {
+            context.report(
+                context.createError(CnigErrorCodes.CNIG_IDURBA_INVALID)
+                    .setMessageParam("VALUE", attribute.getBindedValue())
+                    .setMessageParam("IDURBA_FORMAT", idurbaHelper.getHelpFormat())
+            );
+        }
+    }
 
 }

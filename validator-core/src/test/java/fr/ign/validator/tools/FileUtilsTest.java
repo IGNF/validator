@@ -9,12 +9,14 @@ import org.junit.Test;
 
 public class FileUtilsTest {
 
-	@Test
-	public void testListFilesAndDirs(){
-		File directory = ResourceHelper.getResourceFile(getClass(),"/config-xml/geofla") ;
-		String[] extensions = {"xml"};
-		Collection<File> files = FileUtils.listFilesAndDirs(directory,extensions);
-		assertEquals(4,files.size());		
-	}
-	
+    @Test
+    public void testListFilesAndDirs() {
+        File directory = ResourceHelper.getResourceFile(getClass(), "/config-xml/geofla");
+        String[] extensions = {
+            "xml"
+        };
+        Collection<File> files = FileUtils.listFilesAndDirs(directory, extensions);
+        assertEquals(4, files.size());
+    }
+
 }

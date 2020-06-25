@@ -401,7 +401,7 @@ public class MetadataISO19115Test {
         assertEquals("fr-210800405-08042-plu20140213", metadata.getFileIdentifier());
 
         assertTrue(metadata.getIdentifiers().isEmpty());
-        
+
         assertEquals(TopicCategoryCode.valueOf("planningCadastre"), metadata.getTopicCategory());
         assertEquals("8859part1", metadata.getCharacterSet().getValue());
 
@@ -545,7 +545,7 @@ public class MetadataISO19115Test {
             "fr-210800405-08042plu20140213"
         };
         assertArrayEquals(expectedIdentifiers, metadata.getIdentifiers().toArray());
-        
+
         assertEquals(TopicCategoryCode.valueOf("planningCadastre"), metadata.getTopicCategory());
         assertEquals("8859part1", metadata.getCharacterSet().getValue());
 
@@ -634,7 +634,7 @@ public class MetadataISO19115Test {
         assertEquals(
             "fr-120066022-ldd-f7d6f581-31f7-43b7-857f-0687297c25c8", metadata.getFileIdentifier()
         );
-        
+
         String[] expectedIdentifiers = {
             "fr-120066022-orphan-residentifier-beed2702-07b7-4e4e-89fb-04b882e55334"
         };
@@ -777,7 +777,7 @@ public class MetadataISO19115Test {
             "https://www.geoportail-urbanisme.gouv.fr/document/22358_PLU_20190101"
         };
         assertArrayEquals(expectedIdentifiers, metadata.getIdentifiers().toArray());
-        
+
         List<OnlineResource> locators = metadata.getLocators();
         assertEquals(3, locators.size());
 
