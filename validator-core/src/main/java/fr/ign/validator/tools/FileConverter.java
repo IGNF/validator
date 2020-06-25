@@ -119,7 +119,9 @@ public class FileConverter {
      */
     private OgrVersion retrieveAndValidateOgrVersion() {
         String fullVersion = retrieveFullVersion();
-        return new OgrVersion(fullVersion);
+        OgrVersion version = new OgrVersion(fullVersion);
+        version.ensureVersionIsSupported();
+        return version;
     }
 
     /**
@@ -128,7 +130,7 @@ public class FileConverter {
      * @return
      */
     private String retrieveFullVersion() {
-        log.info(MARKER, "ogr2ogr --version");
+        log.info(MARKER, "Run 'ogr2ogr --version' to retrieve GDAL version...");
         String[] args = new String[] {
             getOgr2ogrPath(), "--version"
         };

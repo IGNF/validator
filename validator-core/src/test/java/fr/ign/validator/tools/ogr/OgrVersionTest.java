@@ -1,6 +1,7 @@
 package fr.ign.validator.tools.ogr;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -9,8 +10,8 @@ public class OgrVersionTest {
 
     @Test
     public void testEmptyOrNull() {
-        checkThrowOgrNotFound("");
-        checkThrowOgrNotFound(null);
+        assertThatParsingThrow("");
+        assertThatParsingThrow(null);
     }
 
     @Test
@@ -23,33 +24,50 @@ public class OgrVersionTest {
 
     @Test
     public void testBadFormat() {
-        checkThrowOgrNotFound("NOT VALID");
-        checkThrowOgrNotFound("GDAL 1.15");
+        assertThatParsingThrow("NOT VALID");
+        assertThatParsingThrow("GDAL 1.15");
     }
 
     @Test
-    public void testBannedVersion() {
-        checkThrowOgrBadVersionException("GDAL 1.11.0");
+    public void testEnsureVersionIsSupported() {
+        assertThatEnsureVersionIsSupportedThrow("GDAL 1.11.0");
+        assertThatEnsureVersionIsSupportedThrow("GDAL 2.2.0");
+        // greater than 2.3.0 is ok
+        assertThatEnsureVersionIsSupportedDoesntThrow("GDAL 2.3.0");
+        assertThatEnsureVersionIsSupportedDoesntThrow("GDAL 2.4.2");
+        assertThatEnsureVersionIsSupportedDoesntThrow("GDAL 3.0.0");
     }
 
-    private void checkThrowOgrNotFound(String fullVersion) {
+    private void assertThatParsingThrow(String fullVersion) {
         boolean thrown = false;
         try {
             new OgrVersion(fullVersion);
         } catch (OgrNotFoundException e) {
             thrown = true;
         }
-        assertTrue("OgrNotFoundException expected", thrown);
+        assertTrue("OgrBadVersionException expected", thrown);
     }
 
-    private void checkThrowOgrBadVersionException(String fullVersion) {
+    private void assertThatEnsureVersionIsSupportedThrow(String fullVersion) {
+        OgrVersion version = new OgrVersion(fullVersion);
         boolean thrown = false;
         try {
-            new OgrVersion(fullVersion);
+            version.ensureVersionIsSupported();
         } catch (OgrBadVersionException e) {
             thrown = true;
         }
-        assertTrue("OgrBadVersionException expected", thrown);
+        assertTrue("OgrNotFoundException expected", thrown);
+    }
+
+    private void assertThatEnsureVersionIsSupportedDoesntThrow(String fullVersion) {
+        OgrVersion version = new OgrVersion(fullVersion);
+        boolean thrown = false;
+        try {
+            version.ensureVersionIsSupported();
+        } catch (OgrBadVersionException e) {
+            thrown = true;
+        }
+        assertFalse("OgrNotFoundException is not expected", thrown);
     }
 
 }
