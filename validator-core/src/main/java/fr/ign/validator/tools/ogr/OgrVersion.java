@@ -89,7 +89,11 @@ public class OgrVersion {
      */
     public void ensureVersionIsSupported() throws OgrBadVersionException {
         if (!isSupported()) {
-            throw new OgrBadVersionException(SUPPORTED_VERSION_MESSAGE);
+            String message = SUPPORTED_VERSION_MESSAGE + String.format(
+                " (version found : %s)",
+                fullVersion
+            );
+            throw new OgrBadVersionException(message);
         }
     }
 
