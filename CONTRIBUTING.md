@@ -1,6 +1,6 @@
 # Contributing
 
-## Source formatting
+## Source formatting
 
 Please ensure that you run `mvn formatter:format` before commit.
 
