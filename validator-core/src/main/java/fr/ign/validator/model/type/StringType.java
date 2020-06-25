@@ -12,30 +12,30 @@ import fr.ign.validator.validation.attribute.StringSizeValidator;
  *
  */
 public class StringType extends AttributeType<String> {
-	
-	public StringType() {
-		super(String.class);
-		addValidator(new StringSizeValidator());
-		addValidator(new StringRegexpValidator());
-		addValidator(new ListOfValuesValidator());
-	}
 
-	@Override
-	public String getTypeName() {
-		return "String" ;
-	}
-	
-	@Override
-	public String bind(Object value) {
-		if ( value == null || value instanceof String ){
-			return (String)value ;
-		}
-		return value.toString() ;
-	}
+    public StringType() {
+        super(String.class);
+        addValidator(new StringSizeValidator());
+        addValidator(new StringRegexpValidator());
+        addValidator(new ListOfValuesValidator());
+    }
 
-	@Override
-	public String format(String value) {
-		return value ;
-	}
+    @Override
+    public String getTypeName() {
+        return "String";
+    }
+
+    @Override
+    public String bind(Object value) {
+        if (value == null || value instanceof String) {
+            return (String) value;
+        }
+        return value.toString();
+    }
+
+    @Override
+    public String format(String value) {
+        return value;
+    }
 
 }

@@ -12,57 +12,57 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class StringSizeValidatorTest {
 
-	private StringSizeValidator validator ;
-	
-	private Context context ;
-	
-	private InMemoryReportBuilder report ;
-	
-	@Before
-	public void setUp() throws Exception {
-		validator = new StringSizeValidator();
-		
-		context = new Context();
-		report = new InMemoryReportBuilder() ;
-		context.setReportBuilder(report);
-	}
+    private StringSizeValidator validator;
 
-	@Test
-	public void testNoLimit(){
-		StringType type = new StringType();
-		Attribute<String> attribute = new Attribute<String>(type, "abc");
-		validator.validate(context, attribute);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
+    private Context context;
 
-	@Test
-	public void testLess(){
-		StringType type = new StringType();
-		type.setSize(5);
-		Attribute<String> attribute = new Attribute<String>(type, "abc");
-		validator.validate(context, attribute);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
+    private InMemoryReportBuilder report;
 
-	@Test
-	public void testEqual(){
-		StringType type = new StringType();
-		type.setSize(5);
-		Attribute<String> attribute = new Attribute<String>(type, "abcde");
-		validator.validate(context, attribute);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
+    @Before
+    public void setUp() throws Exception {
+        validator = new StringSizeValidator();
 
-	@Test
-	public void testMore(){
-		StringType type = new StringType();
-		type.setSize(5);
-		Attribute<String> attribute = new Attribute<String>(type, "abcdef");
-		validator.validate(context, attribute);
-		Assert.assertEquals(1, report.countErrors() ) ;
-		
-		ValidatorError error = report.getErrors().get(0);
-		Assert.assertEquals( "La taille de l'attribut (6) dépasse la taille limite autorisée (5).", error.getMessage() );
-	}
-	
+        context = new Context();
+        report = new InMemoryReportBuilder();
+        context.setReportBuilder(report);
+    }
+
+    @Test
+    public void testNoLimit() {
+        StringType type = new StringType();
+        Attribute<String> attribute = new Attribute<String>(type, "abc");
+        validator.validate(context, attribute);
+        Assert.assertEquals(0, report.countErrors());
+    }
+
+    @Test
+    public void testLess() {
+        StringType type = new StringType();
+        type.setSize(5);
+        Attribute<String> attribute = new Attribute<String>(type, "abc");
+        validator.validate(context, attribute);
+        Assert.assertEquals(0, report.countErrors());
+    }
+
+    @Test
+    public void testEqual() {
+        StringType type = new StringType();
+        type.setSize(5);
+        Attribute<String> attribute = new Attribute<String>(type, "abcde");
+        validator.validate(context, attribute);
+        Assert.assertEquals(0, report.countErrors());
+    }
+
+    @Test
+    public void testMore() {
+        StringType type = new StringType();
+        type.setSize(5);
+        Attribute<String> attribute = new Attribute<String>(type, "abcdef");
+        validator.validate(context, attribute);
+        Assert.assertEquals(1, report.countErrors());
+
+        ValidatorError error = report.getErrors().get(0);
+        Assert.assertEquals("La taille de l'attribut (6) dépasse la taille limite autorisée (5).", error.getMessage());
+    }
+
 }

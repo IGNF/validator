@@ -21,23 +21,24 @@ import fr.ign.validator.validation.Validator;
  */
 public class CharacterSetValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("CharacterSetValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		CharacterSetCode code = metadata.getCharacterSet() ;
-		log.info(MARKER, "metadata.characterSet : {}", code);
-		if ( null == code ){
-			context.report(
-				CoreErrorCodes.METADATA_CHARACTERSET_NOT_FOUND
-			);
-		}else if ( ! code.isAllowedValue() ){
-			context.report(context.createError(CoreErrorCodes.METADATA_CHARACTERSET_INVALID)
-				.setMessageParam("CHARSET_CODE", code.getValue())
-				.setMessageParam("EXPECTED_CHARSETS", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("CharacterSetValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        CharacterSetCode code = metadata.getCharacterSet();
+        log.info(MARKER, "metadata.characterSet : {}", code);
+        if (null == code) {
+            context.report(
+                CoreErrorCodes.METADATA_CHARACTERSET_NOT_FOUND
+            );
+        } else if (!code.isAllowedValue()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_CHARACTERSET_INVALID)
+                    .setMessageParam("CHARSET_CODE", code.getValue())
+                    .setMessageParam("EXPECTED_CHARSETS", StringUtils.join(code.getCodeList().getAllowedValues(), ", "))
+            );
+        }
+    }
 
 }

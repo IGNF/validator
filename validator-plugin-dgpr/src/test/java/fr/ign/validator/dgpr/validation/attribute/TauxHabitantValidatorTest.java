@@ -16,67 +16,67 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class TauxHabitantValidatorTest {
 
-	public static final Logger log = LogManager.getRootLogger();
+    public static final Logger log = LogManager.getRootLogger();
 
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
-	protected Context context;
+    protected Context context;
 
-	protected InMemoryReportBuilder report;
+    protected InMemoryReportBuilder report;
 
+    @Before
+    public void setUp() {
+        report = new InMemoryReportBuilder();
+        context = new Context();
+        context.setReportBuilder(report);
+    }
 
-	@Before
-	public void setUp() {
-		report = new InMemoryReportBuilder();
-		context = new Context();
-		context.setReportBuilder(report);
-	}
+    @Test
+    public void testValidate() throws Exception {
+        // le modele
+        IntegerType integerTypeTxhab = new IntegerType();
+        integerTypeTxhab.setName("TX_HAB_SAI");
 
+        // le test
+        TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
+        Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, 50);
+        txHabValidator.validate(context, attribute);
 
-	@Test
-	public void testValidate() throws Exception {
-		// le modele
-		IntegerType integerTypeTxhab = new IntegerType();
-		integerTypeTxhab.setName("TX_HAB_SAI");
+        Assert.assertEquals(0, report.countErrors());
+    }
 
-		// le test
-		TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
-		Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, 50);
-		txHabValidator.validate(context, attribute);
+    @Test
+    public void testError() throws Exception {
+        // le modele
+        IntegerType integerTypeTxhab = new IntegerType();
+        integerTypeTxhab.setName("TX_HAB_SAI");
 
-		Assert.assertEquals(0, report.countErrors());
-	}
+        // le test
+        TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
+        Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, 200);
+        txHabValidator.validate(context, attribute);
 
+        Assert.assertEquals(1, report.countErrors());
+        Assert.assertEquals(
+            "La valeur de TX_HAB_SAI 200 n'est pas comprise entre 0 et 100.", report.getErrorsByCode(
+                DgprErrorCodes.DGPR_TX_HAB_SAI_ERROR
+            ).get(0).getMessage()
+        );
+    }
 
-	@Test
-	public void testError() throws Exception {
-		// le modele
-		IntegerType integerTypeTxhab = new IntegerType();
-		integerTypeTxhab.setName("TX_HAB_SAI");
+    @Test
+    public void testNullError() throws Exception {
+        // le modele
+        IntegerType integerTypeTxhab = new IntegerType();
+        integerTypeTxhab.setName("TX_HAB_SAI");
 
-		// le test
-		TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
-		Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, 200);
-		txHabValidator.validate(context, attribute);
+        // le test
+        TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
+        Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, null);
+        txHabValidator.validate(context, attribute);
 
-		Assert.assertEquals(1, report.countErrors());	
-		Assert.assertEquals("La valeur de TX_HAB_SAI 200 n'est pas comprise entre 0 et 100.", report.getErrorsByCode(DgprErrorCodes.DGPR_TX_HAB_SAI_ERROR).get(0).getMessage());	
-	}
-
-
-	@Test
-	public void testNullError() throws Exception {
-		// le modele
-		IntegerType integerTypeTxhab = new IntegerType();
-		integerTypeTxhab.setName("TX_HAB_SAI");
-
-		// le test
-		TauxHabitantValidator txHabValidator = new TauxHabitantValidator();
-		Attribute<Integer> attribute = new Attribute<>(integerTypeTxhab, null);
-		txHabValidator.validate(context, attribute);
-
-		Assert.assertEquals(0, report.countErrors());	
-	}
+        Assert.assertEquals(0, report.countErrors());
+    }
 
 }

@@ -13,78 +13,74 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class DocumentDirectoryNameValidatorTest {
-	
-	private Context context ;
-	private InMemoryReportBuilder report ;
-	private DocumentDirectoryNameValidator validator ;
-	
-	
-	@Before
-	public void setUp() throws Exception {
-		validator = new DocumentDirectoryNameValidator();
-		
-		context = new Context();
-		File currentDirectory = ResourceHelper.getResourceFile(getClass(),"/geofla") ;
-		context.setCurrentDirectory(currentDirectory);
-		
-		report = new InMemoryReportBuilder() ;
-		context.setReportBuilder(report);
-	}
 
-	@Test
-	public void testNoRegexp(){
-		DocumentModel documentModel = new DocumentModel();
-		File documentPath = new File("/my/path/to/130009970_PM1_59_20160623");
-		Document document = new Document(documentModel,documentPath);
-		validator.validate(context, document);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
+    private Context context;
+    private InMemoryReportBuilder report;
+    private DocumentDirectoryNameValidator validator;
 
-	@Test
-	public void testGoodRegexp(){
-		DocumentModel documentModel = new DocumentModel();
-		documentModel.setRegexp(".*_PM1_((0)?2A|(0)?2B|[0-9]{2,3})_[0-9]{8}");
+    @Before
+    public void setUp() throws Exception {
+        validator = new DocumentDirectoryNameValidator();
 
-		File documentPath = new File("/my/path/to/130009970_PM1_59_20160623");
-		Document document = new Document(documentModel,documentPath);
-		validator.validate(context, document);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
+        context = new Context();
+        File currentDirectory = ResourceHelper.getResourceFile(getClass(), "/geofla");
+        context.setCurrentDirectory(currentDirectory);
 
-	@Test
-	public void testGoodRegexpTrailingSlash(){
-		DocumentModel documentModel = new DocumentModel();
-		documentModel.setRegexp(".*_PM1_((0)?2A|(0)?2B|[0-9]{2,3})_[0-9]{8}");
+        report = new InMemoryReportBuilder();
+        context.setReportBuilder(report);
+    }
 
-		File documentPath = new File("/my/path/to/130009970_PM1_59_20160623/");
-		Document document = new Document(documentModel,documentPath);
-		validator.validate(context, document);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
+    @Test
+    public void testNoRegexp() {
+        DocumentModel documentModel = new DocumentModel();
+        File documentPath = new File("/my/path/to/130009970_PM1_59_20160623");
+        Document document = new Document(documentModel, documentPath);
+        validator.validate(context, document);
+        Assert.assertEquals(0, report.countErrors());
+    }
 
-	@Test
-	public void testCaseInsensitive(){
-		DocumentModel documentModel = new DocumentModel();
-		documentModel.setRegexp(".*_SCOT");
+    @Test
+    public void testGoodRegexp() {
+        DocumentModel documentModel = new DocumentModel();
+        documentModel.setRegexp(".*_PM1_((0)?2A|(0)?2B|[0-9]{2,3})_[0-9]{8}");
 
-		File documentPath = new File("/my/path/to/123456789_scot/");
-		Document document = new Document(documentModel,documentPath);
-		validator.validate(context, document);
-		Assert.assertEquals(0, report.countErrors() ) ;
-	}
-	
+        File documentPath = new File("/my/path/to/130009970_PM1_59_20160623");
+        Document document = new Document(documentModel, documentPath);
+        validator.validate(context, document);
+        Assert.assertEquals(0, report.countErrors());
+    }
 
-	@Test
-	public void testBadRegexp(){
-		DocumentModel documentModel = new DocumentModel();
-		documentModel.setRegexp(".*_PM1_((0)?2A|(0)?2B|[0-9]{2,3})_[0-9]{8}");
+    @Test
+    public void testGoodRegexpTrailingSlash() {
+        DocumentModel documentModel = new DocumentModel();
+        documentModel.setRegexp(".*_PM1_((0)?2A|(0)?2B|[0-9]{2,3})_[0-9]{8}");
 
-		File documentPath = new File("/my/path/to/130009970_PM2_59_20160623");
-		Document document = new Document(documentModel,documentPath);
-		validator.validate(context, document);
-		Assert.assertEquals(1, report.countErrors() ) ;
-	}
-	
-	
-	
+        File documentPath = new File("/my/path/to/130009970_PM1_59_20160623/");
+        Document document = new Document(documentModel, documentPath);
+        validator.validate(context, document);
+        Assert.assertEquals(0, report.countErrors());
+    }
+
+    @Test
+    public void testCaseInsensitive() {
+        DocumentModel documentModel = new DocumentModel();
+        documentModel.setRegexp(".*_SCOT");
+
+        File documentPath = new File("/my/path/to/123456789_scot/");
+        Document document = new Document(documentModel, documentPath);
+        validator.validate(context, document);
+        Assert.assertEquals(0, report.countErrors());
+    }
+
+    @Test
+    public void testBadRegexp() {
+        DocumentModel documentModel = new DocumentModel();
+        documentModel.setRegexp(".*_PM1_((0)?2A|(0)?2B|[0-9]{2,3})_[0-9]{8}");
+
+        File documentPath = new File("/my/path/to/130009970_PM2_59_20160623");
+        Document document = new Document(documentModel, documentPath);
+        validator.validate(context, document);
+        Assert.assertEquals(1, report.countErrors());
+    }
+
 }

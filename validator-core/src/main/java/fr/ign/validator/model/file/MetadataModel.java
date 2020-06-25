@@ -32,114 +32,114 @@ import fr.ign.validator.validation.file.metadata.TypeValidator;
 /**
  * 
  * Represents a metadata file
- *  
+ * 
  *
  */
 public class MetadataModel extends FileModel {
-	public static final String TYPE = "metadata" ;
-	
-	/**
-	 * Metadata content validators
-	 */
-	private List<Validator<Metadata>> metadataValidators = new ArrayList<>();
-	
-	public MetadataModel(){
-		super();
-		registerDefaultValidators();
-	}
+    public static final String TYPE = "metadata";
 
-	@Override
-	public String getType() {
-		return TYPE ;
-	}
-	
-	@Override
-	public String getRegexpSuffix() {
-		return "\\.(xml|XML)";
-	}
+    /**
+     * Metadata content validators
+     */
+    private List<Validator<Metadata>> metadataValidators = new ArrayList<>();
 
-	@Override
-	public MetadataFile createDocumentFile(File path) {
-		return new MetadataFile(this,path);
-	}
+    public MetadataModel() {
+        super();
+        registerDefaultValidators();
+    }
 
-	public List<Validator<Metadata>> getMetadataValidators() {
-		return metadataValidators;
-	}
-	
-	public void addMetadataValidator(Validator<Metadata> validator){
-		metadataValidators.add(validator);
-	}
+    @Override
+    public String getType() {
+        return TYPE;
+    }
 
-	private void registerDefaultValidators() {
-		// fileIdentifier
-		addMetadataValidator(new FileIdentifierValidator());
-		
-		// title
-		addMetadataValidator(new TitleValidator());
-		
-		// abstract
-		addMetadataValidator(new AbstractValidator());
+    @Override
+    public String getRegexpSuffix() {
+        return "\\.(xml|XML)";
+    }
 
-		// type
-		addMetadataValidator(new TypeValidator());
-		
-		// locators
-		addMetadataValidator(new LocatorsValidator());
+    @Override
+    public MetadataFile createDocumentFile(File path) {
+        return new MetadataFile(this, path);
+    }
 
-		// identifier
-		addMetadataValidator(new IdentifierValidator());
-		// language
-		addMetadataValidator(new LanguageValidator());
-		
-		// topicCategory
-		addMetadataValidator(new TopicCategoryValidator());
+    public List<Validator<Metadata>> getMetadataValidators() {
+        return metadataValidators;
+    }
 
-		// keywords
-		// TODO
+    public void addMetadataValidator(Validator<Metadata> validator) {
+        metadataValidators.add(validator);
+    }
 
-		// extents
-		addMetadataValidator(new ExtentsValidator());
-		
-		// referenceSystemIdentifier
-		// TODO
+    private void registerDefaultValidators() {
+        // fileIdentifier
+        addMetadataValidator(new FileIdentifierValidator());
 
-		// dateOfPublication
-		// dateOfLastRevision
-		// dateOfCreation
-		addMetadataValidator(new DatesValidator());
+        // title
+        addMetadataValidator(new TitleValidator());
 
-		// characterSet
-		addMetadataValidator(new CharacterSetValidator());
+        // abstract
+        addMetadataValidator(new AbstractValidator());
 
-		// contraints
-		// TODO
+        // type
+        addMetadataValidator(new TypeValidator());
 
-		// distributionFormats
-		addMetadataValidator(new DistributionFormatsValidator());
+        // locators
+        addMetadataValidator(new LocatorsValidator());
 
-		// spatialRepresentationType
-		addMetadataValidator(new SpatialRepresentationTypeValidator());
+        // identifier
+        addMetadataValidator(new IdentifierValidator());
+        // language
+        addMetadataValidator(new LanguageValidator());
 
-		// lineage
-		addMetadataValidator(new LineageValidator());
+        // topicCategory
+        addMetadataValidator(new TopicCategoryValidator());
 
-		// spatialResolutions
-		addMetadataValidator(new SpatialResolutionsValidator());
+        // keywords
+        // TODO
 
-		// specifications
-		addMetadataValidator(new SpecificationsValidator());
+        // extents
+        addMetadataValidator(new ExtentsValidator());
 
-		// contact
-		addMetadataValidator(new ContactValidator());
+        // referenceSystemIdentifier
+        // TODO
 
-		// metadataContact
-		addMetadataValidator(new MetadataContactValidator());
+        // dateOfPublication
+        // dateOfLastRevision
+        // dateOfCreation
+        addMetadataValidator(new DatesValidator());
 
-		// metadataDate
-		addMetadataValidator(new MetadataDateValidator());
+        // characterSet
+        addMetadataValidator(new CharacterSetValidator());
 
-		// metadataLanguage
-		addMetadataValidator(new MetadataLanguageValidator());
-	}
+        // contraints
+        // TODO
+
+        // distributionFormats
+        addMetadataValidator(new DistributionFormatsValidator());
+
+        // spatialRepresentationType
+        addMetadataValidator(new SpatialRepresentationTypeValidator());
+
+        // lineage
+        addMetadataValidator(new LineageValidator());
+
+        // spatialResolutions
+        addMetadataValidator(new SpatialResolutionsValidator());
+
+        // specifications
+        addMetadataValidator(new SpecificationsValidator());
+
+        // contact
+        addMetadataValidator(new ContactValidator());
+
+        // metadataContact
+        addMetadataValidator(new MetadataContactValidator());
+
+        // metadataDate
+        addMetadataValidator(new MetadataDateValidator());
+
+        // metadataLanguage
+        addMetadataValidator(new MetadataLanguageValidator());
+    }
 }

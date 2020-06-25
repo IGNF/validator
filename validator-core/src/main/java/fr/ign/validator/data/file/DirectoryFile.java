@@ -8,21 +8,21 @@ import fr.ign.validator.model.file.DirectoryModel;
 
 public class DirectoryFile extends DocumentFile {
 
-	private DirectoryModel fileModel;
-	
-	public DirectoryFile(DirectoryModel fileModel, File path) {
-		super(path);
-		this.fileModel = fileModel;
-	}
-	
-	@Override
-	public DirectoryModel getFileModel() {
-		return fileModel;
-	}
+    private DirectoryModel fileModel;
 
-	@Override
-	protected void validateContent(Context context) {
-		// no specific validation
-	}
-	
+    public DirectoryFile(DirectoryModel fileModel, File path) {
+        super(path);
+        this.fileModel = fileModel;
+    }
+
+    @Override
+    public DirectoryModel getFileModel() {
+        return fileModel;
+    }
+
+    @Override
+    protected void validateContent(Context context) {
+        // no specific validation
+    }
+
 }

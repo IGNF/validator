@@ -7,22 +7,23 @@ import fr.ign.validator.validation.Validator;
 
 public class DebLinMinValidator implements Validator<Attribute<Double>> {
 
-	@Override
-	public void validate(Context context, Attribute<Double> attribute) {
-		
-		if (attribute.getBindedValue() == null) {
-			// nothing to validate
-			return;
-		}
+    @Override
+    public void validate(Context context, Attribute<Double> attribute) {
 
-		if (attribute.getBindedValue() >= 0) {
-			// all is ok
-			return;
-		}
+        if (attribute.getBindedValue() == null) {
+            // nothing to validate
+            return;
+        }
 
-		context.report(context.createError(DgprErrorCodes.DGPR_DEBLIN_MIN_ERROR)
-				.setMessageParam("VALUE_MIN", attribute.getBindedValue().toString())
-		);
-	}
+        if (attribute.getBindedValue() >= 0) {
+            // all is ok
+            return;
+        }
+
+        context.report(
+            context.createError(DgprErrorCodes.DGPR_DEBLIN_MIN_ERROR)
+                .setMessageParam("VALUE_MIN", attribute.getBindedValue().toString())
+        );
+    }
 
 }

@@ -20,18 +20,18 @@ import fr.ign.validator.validation.Validator;
  */
 public class LineageValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("LineageValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		String value = metadata.getLineage() ;
-		log.info(MARKER, "metadata.lineage : {}", value);
-		if ( StringUtils.isEmpty(value) ){
-			context.report(
-				CoreErrorCodes.METADATA_LINEAGE_NOT_FOUND
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("LineageValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        String value = metadata.getLineage();
+        log.info(MARKER, "metadata.lineage : {}", value);
+        if (StringUtils.isEmpty(value)) {
+            context.report(
+                CoreErrorCodes.METADATA_LINEAGE_NOT_FOUND
+            );
+        }
+    }
 
 }

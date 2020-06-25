@@ -6,25 +6,28 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-
 /**
  * Test demo command
  */
 public class HelloWorldCommandTest {
 
-	@Test
-	public void testBadCall(){
-		HelloWorldCommand command = new HelloWorldCommand();
-		String[] args = new String[] { "--nonoption", "plugin name" };
-		assertEquals(1, command.run(args));
-	}
+    @Test
+    public void testBadCall() {
+        HelloWorldCommand command = new HelloWorldCommand();
+        String[] args = new String[] {
+            "--nonoption", "plugin name"
+        };
+        assertEquals(1, command.run(args));
+    }
 
-	@Test
-	public void testHelloWorld() throws IOException {
-		HelloWorldCommand command = new HelloWorldCommand();
+    @Test
+    public void testHelloWorld() throws IOException {
+        HelloWorldCommand command = new HelloWorldCommand();
 
-		String[] args = new String[] { "--option", "Hello Validator" };
-		assertEquals(0, command.run(args));
-	}
+        String[] args = new String[] {
+            "--option", "Hello Validator"
+        };
+        assertEquals(0, command.run(args));
+    }
 
 }

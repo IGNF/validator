@@ -8,40 +8,38 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 public class FileByExtensionAndDirectoryFilter implements IOFileFilter {
 
-	private IOFileFilter filter ;
-	
-	public FileByExtensionAndDirectoryFilter( String[] allowedExtensions ){
-		if ( allowedExtensions == null) {
+    private IOFileFilter filter;
+
+    public FileByExtensionAndDirectoryFilter(String[] allowedExtensions) {
+        if (allowedExtensions == null) {
             filter = TrueFileFilter.INSTANCE;
         } else {
             String[] suffixes = toSuffixes(allowedExtensions);
             filter = new SuffixFileFilter(suffixes);
         }
-	}
-	
-	@Override
-	public boolean accept(File file) {
-		if ( file.isDirectory() ){
-			return true ;
-		}
-		return filter.accept(file);
-	}
+    }
 
-	@Override
-	public boolean accept(File dir, String name) {
-		if ( name.equals("validation") || name.equals("archive")){
-			return false ;
-		}else{
-			return true ;
-		}
-	}
+    @Override
+    public boolean accept(File file) {
+        if (file.isDirectory()) {
+            return true;
+        }
+        return filter.accept(file);
+    }
 
-	
-	/**
-     * Converts an array of file extensions to suffixes for use
-     * with IOFileFilters.
+    @Override
+    public boolean accept(File dir, String name) {
+        if (name.equals("validation") || name.equals("archive")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Converts an array of file extensions to suffixes for use with IOFileFilters.
      *
-     * @param extensions  an array of extensions. Format: {"java", "xml"}
+     * @param extensions an array of extensions. Format: {"java", "xml"}
      * @return an array of suffixes. Format: {".java", ".xml"}
      */
     private static String[] toSuffixes(String[] extensions) {

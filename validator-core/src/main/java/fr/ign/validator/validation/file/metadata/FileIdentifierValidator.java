@@ -20,18 +20,18 @@ import fr.ign.validator.validation.Validator;
  */
 public class FileIdentifierValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("FileIdentifierValidator") ;	
-	
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		String fileIdentifier = metadata.getFileIdentifier() ;
-		log.info(MARKER, "metadata.fileIdentifier : {}", fileIdentifier);
-		if ( StringUtils.isEmpty(fileIdentifier) ){
-			context.report(
-				CoreErrorCodes.METADATA_FILEIDENTIFIER_NOT_FOUND
-			);
-		}
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("FileIdentifierValidator");
+
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        String fileIdentifier = metadata.getFileIdentifier();
+        log.info(MARKER, "metadata.fileIdentifier : {}", fileIdentifier);
+        if (StringUtils.isEmpty(fileIdentifier)) {
+            context.report(
+                CoreErrorCodes.METADATA_FILEIDENTIFIER_NOT_FOUND
+            );
+        }
+    }
 
 }

@@ -22,92 +22,90 @@ import fr.ign.validator.validation.Validator;
 
 public class IdentifierValidator implements Validator<Database> {
 
-	public static final Logger log = LogManager.getRootLogger();
-	public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
 
-	/**
-	 * Context
-	 */
-	private Context context;
+    /**
+     * Context
+     */
+    private Context context;
 
-	/**
-	 * Document
-	 */
-	private Database database;
+    /**
+     * Document
+     */
+    private Database database;
 
-	/**
-	 * Check if there every ID is unique in a given table 
-	 * @param context
-	 * @param document
-	 * @param database
-	 * @throws Exception
-	 */
-	public void validate(Context context, Database database) {
-		// context
-		this.context = context;
-		this.database = database;
-		try {	
-			runValidation();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    /**
+     * Check if there every ID is unique in a given table
+     * 
+     * @param context
+     * @param document
+     * @param database
+     * @throws Exception
+     */
+    public void validate(Context context, Database database) {
+        // context
+        this.context = context;
+        this.database = database;
+        try {
+            runValidation();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    private void runValidation() throws SQLException, IOException {
+        List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
 
-	private void runValidation() throws SQLException, IOException {
-		List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
+        // For each table
+        for (FileModel fileModel : fileModelsList) {
+            if (!(fileModel instanceof TableModel)) {
+                continue;
+            }
 
-		//For each table
-		for (FileModel fileModel : fileModelsList) {
-			if (!(fileModel instanceof TableModel)) {
-				continue;
-			}
+            FeatureType featureType = fileModel.getFeatureType();
 
+            List<AttributeType<?>> attributesList = featureType.getAttributes();
 
-			FeatureType featureType = fileModel.getFeatureType();
+            // Looking for attributes who are identifiers
+            for (AttributeType<?> attribute : attributesList) {
+                if (!attribute.isIdentifier()) {
+                    continue;
+                }
+                validateOneIdentifier(attribute.getName(), fileModel);
+            }
+        }
+    }
 
-			List<AttributeType<?>> attributesList = featureType.getAttributes();
+    private void validateOneIdentifier(String identifier, FileModel fileModel) throws SQLException, IOException {
+        RowIterator table = database.query(
+            "SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
+                + " FROM " + fileModel.getName()
+                + " GROUP BY " + identifier
+        );
+        int indexId = table.getColumn("id");
+        int indexCount = table.getColumn("count");
 
-			//Looking for attributes who are identifiers
-			for(AttributeType<?> attribute : attributesList) {
-				if(!attribute.isIdentifier()) {
-					continue;
-				}
-				validateOneIdentifier(attribute.getName(), fileModel);
-			}
-		}	
-	}
+        while (table.hasNext()) {
+            String[] row = table.next();
 
+            int compte = Integer.parseInt(row[indexCount]);
 
-	private void validateOneIdentifier(String identifier, FileModel fileModel) throws SQLException, IOException {
-		RowIterator table = database.query(
-				"SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
-						+ " FROM " + fileModel.getName() 
-						+ " GROUP BY " + identifier
-		);
-		int indexId = table.getColumn("id");
-		int indexCount = table.getColumn("count");
+            // if not unique, send error
+            if (compte > 1) {
+                context.report(
+                    context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
+                        .setScope(ErrorScope.HEADER)
+                        .setFileModel(fileModel.getName())
+                        .setMessageParam("TABLE_NAME", fileModel.getName())
+                        .setMessageParam("ID_NAME", row[indexId])
+                        .setMessageParam("ID_COUNT", row[indexCount])
+                );
+            }
 
-		while (table.hasNext()) {
-			String[] row = table.next();
+        }
+        table.close();
 
-			int compte = Integer.parseInt(row[indexCount]);
-
-			//if not unique, send error
-			if(compte > 1)
-			{
-				context.report(context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
-						.setScope(ErrorScope.HEADER)
-						.setFileModel(fileModel.getName())
-						.setMessageParam("TABLE_NAME", fileModel.getName())
-						.setMessageParam("ID_NAME", row[indexId])
-						.setMessageParam("ID_COUNT", row[indexCount])
-				);
-			}
-
-		}
-		table.close();
-
-	}
+    }
 
 }

@@ -10,35 +10,34 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.utils.ReferenceActeSupJointureBuilder;
 import fr.ign.validator.data.Document;
 
-
 /**
  * 
- * Adds a field `Files` to "génératuers" and "assiettes" to join with "actes" and "servitudes"
+ * Adds a field `Files` to "génératuers" and "assiettes" to join with "actes"
+ * and "servitudes"
  * 
  * @author MBorne
  */
 public class ReferenceActeSupPostProcess implements ValidatorListener {
-	
-	public static final Logger log = LogManager.getRootLogger() ;
-	public static final Marker POSTPROCESS_REFERENCEACTE = MarkerManager.getMarker("POSTPROCESS_REFERENCEACTE") ;
 
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker POSTPROCESS_REFERENCEACTE = MarkerManager.getMarker("POSTPROCESS_REFERENCEACTE");
 
-	@Override
-	public void beforeMatching(Context context, Document document) throws Exception {
-		
-	}
+    @Override
+    public void beforeMatching(Context context, Document document) throws Exception {
 
-	@Override
-	public void beforeValidate(Context context, Document document) throws Exception {
-		
-	}
+    }
 
+    @Override
+    public void beforeValidate(Context context, Document document) throws Exception {
 
-	@Override
-	public void afterValidate(Context context, Document document) throws Exception {
-		ReferenceActeSupJointureBuilder jointureBuilder = new ReferenceActeSupJointureBuilder(context.getDataDirectory());
-		jointureBuilder.run() ;
-	}
-	
+    }
+
+    @Override
+    public void afterValidate(Context context, Document document) throws Exception {
+        ReferenceActeSupJointureBuilder jointureBuilder = new ReferenceActeSupJointureBuilder(
+            context.getDataDirectory()
+        );
+        jointureBuilder.run();
+    }
 
 }

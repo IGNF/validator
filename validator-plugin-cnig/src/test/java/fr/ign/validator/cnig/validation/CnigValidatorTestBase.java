@@ -7,14 +7,14 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class CnigValidatorTestBase {
 
-	protected Context context;
-	protected InMemoryReportBuilder report;
+    protected Context context;
+    protected InMemoryReportBuilder report;
 
-	@Before
-	public void setUp() {
-		context = new Context();
-		report = new InMemoryReportBuilder() ;
-		context.setReportBuilder(report);
-	}
+    @Before
+    public void setUp() {
+        context = new Context();
+        report = new InMemoryReportBuilder();
+        context.setReportBuilder(report);
+    }
 
 }

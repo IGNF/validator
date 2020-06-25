@@ -16,197 +16,197 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.exception.InvalidCharsetException;
 
 /**
- * SHP/TAB file reader 
+ * SHP/TAB file reader
  * 
- * Note : 
+ * Note :
  * <ul>
- * 		<li>Based on a csv conversion made by ogr2ogr</li>
- * 		<li>Puts csv file next to the original file</li>
+ * <li>Based on a csv conversion made by ogr2ogr</li>
+ * <li>Puts csv file next to the original file</li>
  * </ul>
- *  
+ * 
  * @author MBorne
  */
-public class TableReader implements Iterator< String[] >{
-	
-	public static final Logger log = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("TableReader") ;	
+public class TableReader implements Iterator<String[]> {
 
-	/**
-	 * CSV file reader
-	 */
-	private CSVReader csvReader ;
-	/**
-	 * File header
-	 */
-	private String[] header ;
-	
-	/**
-	 * 
-	 * Reading file with given charset (validated by system).
-	 * 
-	 * 
-	 * @param file
-	 * @param charset
-	 * @throws IOException 
-	 */
-	private TableReader(File csvFile, Charset charset) throws IOException{
-		/*
-		 * opening file
-		 */
-		csvReader = new CSVReader(csvFile, charset);
-		readHeader();
-	}
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("TableReader");
 
-	/**
-	 * Header reading
-	 * 
-	 * 
-	 * Note :
-	 * NULL or empty fields are filtered to avoid problems with files with only one column
-	 * 
-	 * @throws IOException 
-	 */
-	private void readHeader() throws IOException{
-		if ( ! csvReader.hasNext() ){
-			throw new IOException("Impossible de lire l'entête");
-		}
-		String[] fields = csvReader.next() ;
-		List<String> filteredFields = new ArrayList<String>();
-		for (String field : fields) {
-			if ( field == null || field.isEmpty() ){
-				continue ;
-			}
-			filteredFields.add(field);
-		}
-		header = filteredFields.toArray(new String[filteredFields.size()]);
-	}
-	
-	
-	/**
-	 * @return the header
-	 */
-	public String[] getHeader() {
-		return header;
-	}
+    /**
+     * CSV file reader
+     */
+    private CSVReader csvReader;
+    /**
+     * File header
+     */
+    private String[] header;
 
-	/**
-	 * @param header the header to set
-	 */
-	public void setHeader(String[] header) {
-		this.header = header;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		return csvReader.hasNext() ;
-	}
+    /**
+     * 
+     * Reading file with given charset (validated by system).
+     * 
+     * 
+     * @param file
+     * @param charset
+     * @throws IOException
+     */
+    private TableReader(File csvFile, Charset charset) throws IOException {
+        /*
+         * opening file
+         */
+        csvReader = new CSVReader(csvFile, charset);
+        readHeader();
+    }
 
-	@Override
-	public String[] next() {
-		return csvReader.next() ;
-	}
+    /**
+     * Header reading
+     * 
+     * 
+     * Note : NULL or empty fields are filtered to avoid problems with files with
+     * only one column
+     * 
+     * @throws IOException
+     */
+    private void readHeader() throws IOException {
+        if (!csvReader.hasNext()) {
+            throw new IOException("Impossible de lire l'entête");
+        }
+        String[] fields = csvReader.next();
+        List<String> filteredFields = new ArrayList<String>();
+        for (String field : fields) {
+            if (field == null || field.isEmpty()) {
+                continue;
+            }
+            filteredFields.add(field);
+        }
+        header = filteredFields.toArray(new String[filteredFields.size()]);
+    }
 
-	@Override
-	public void remove() {
-		csvReader.remove();
-	}
-	
-	/**
-	 * Finds the position of a column by its name in header
-	 * 
-	 * @param string
-	 * @return
-	 */
-	public int findColumn(String name) {
-		String regexp = "(?i)"+name ;
-		for ( int index = 0; index < header.length; index++) {
-			if ( header[index].matches(regexp) ){
-				return index ;
-			}
-		}
-		return -1;
-	}
-	
-	
-	
-	/**
-	 * Creates a reader from a file and a charset (throws exception if charset is invalid)
-	 * 
-	 * @param file
-	 * @param charset
-	 * @return
-	 * @throws IOException
-	 * @throws InvalidCharsetException
-	 */
-	public static TableReader createTableReader(File file, Charset charset) throws IOException, InvalidCharsetException{
-		File csvFile = convertToCSV(file);
-		if ( ! CharsetDetector.isValidCharset(csvFile, charset) ) {
-			throw new InvalidCharsetException(
-				String.format("Le fichier {} n'est pas valide pour la charset {}",
-					csvFile.toString(),
-					charset.toString()
-				)
-			);
-		}
-		return new TableReader(csvFile, charset) ;
-	}
-	
+    /**
+     * @return the header
+     */
+    public String[] getHeader() {
+        return header;
+    }
 
-	/**
-	 * Create TableReader with a given charset. If the given charset is invalid,
-	 * redirect to createTableReaderDetectCharset
-	 *  
-	 * @param file
-	 * @param charset
-	 * @return
-	 * @throws IOException
-	 */
-	public static TableReader createTableReaderPreferedCharset(File file, Charset charset) throws IOException {
-		try {
-			return TableReader.createTableReader(file,charset);
-		}  catch (InvalidCharsetException e) {
-			log.info(MARKER, "Charset invalide, tentative d'autodétection de la charset pour la validation de {}",file);
-			return TableReader.createTableReaderDetectCharset(file) ;
-		}
-	}
-	
-	
-	/**
-	 * Create TableReader with charset autodetection
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	public static TableReader createTableReaderDetectCharset(File file) throws IOException {
-		File csvFile = convertToCSV(file);
-		Charset charset = CharsetDetector.detectCharset(csvFile) ;
-		return new TableReader(csvFile, charset) ;
-	}
+    /**
+     * @param header the header to set
+     */
+    public void setHeader(String[] header) {
+        this.header = header;
+    }
 
-	
-	/**
-	 * Converts to csv if needed
-	 * 
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	private static File convertToCSV(File file) throws IOException{
-		if ( FilenameUtils.getExtension( file.getName() ).toLowerCase().equals("csv") ){
-			return file ;
-		}
-		File csvFile = new File(
-			file.getParent(),
-			FilenameUtils.getBaseName(file.getName())+".csv"
-		);
+    @Override
+    public boolean hasNext() {
+        return csvReader.hasNext();
+    }
 
-		if ( csvFile.exists() ){
-			csvFile.delete();
-		}
-		
-		FileConverter converter = FileConverter.getInstance();
-		converter.convertToCSV(file, csvFile);
-		return csvFile ;
-	}
-	
+    @Override
+    public String[] next() {
+        return csvReader.next();
+    }
+
+    @Override
+    public void remove() {
+        csvReader.remove();
+    }
+
+    /**
+     * Finds the position of a column by its name in header
+     * 
+     * @param string
+     * @return
+     */
+    public int findColumn(String name) {
+        String regexp = "(?i)" + name;
+        for (int index = 0; index < header.length; index++) {
+            if (header[index].matches(regexp)) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Creates a reader from a file and a charset (throws exception if charset is
+     * invalid)
+     * 
+     * @param file
+     * @param charset
+     * @return
+     * @throws IOException
+     * @throws InvalidCharsetException
+     */
+    public static TableReader createTableReader(File file, Charset charset) throws IOException,
+        InvalidCharsetException {
+        File csvFile = convertToCSV(file);
+        if (!CharsetDetector.isValidCharset(csvFile, charset)) {
+            throw new InvalidCharsetException(
+                String.format(
+                    "Le fichier {} n'est pas valide pour la charset {}",
+                    csvFile.toString(),
+                    charset.toString()
+                )
+            );
+        }
+        return new TableReader(csvFile, charset);
+    }
+
+    /**
+     * Create TableReader with a given charset. If the given charset is invalid,
+     * redirect to createTableReaderDetectCharset
+     * 
+     * @param file
+     * @param charset
+     * @return
+     * @throws IOException
+     */
+    public static TableReader createTableReaderPreferedCharset(File file, Charset charset) throws IOException {
+        try {
+            return TableReader.createTableReader(file, charset);
+        } catch (InvalidCharsetException e) {
+            log.info(
+                MARKER, "Charset invalide, tentative d'autodétection de la charset pour la validation de {}", file
+            );
+            return TableReader.createTableReaderDetectCharset(file);
+        }
+    }
+
+    /**
+     * Create TableReader with charset autodetection
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static TableReader createTableReaderDetectCharset(File file) throws IOException {
+        File csvFile = convertToCSV(file);
+        Charset charset = CharsetDetector.detectCharset(csvFile);
+        return new TableReader(csvFile, charset);
+    }
+
+    /**
+     * Converts to csv if needed
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    private static File convertToCSV(File file) throws IOException {
+        if (FilenameUtils.getExtension(file.getName()).toLowerCase().equals("csv")) {
+            return file;
+        }
+        File csvFile = new File(
+            file.getParent(),
+            FilenameUtils.getBaseName(file.getName()) + ".csv"
+        );
+
+        if (csvFile.exists()) {
+            csvFile.delete();
+        }
+
+        FileConverter converter = FileConverter.getInstance();
+        converter.convertToCSV(file, csvFile);
+        return csvFile;
+    }
+
 }

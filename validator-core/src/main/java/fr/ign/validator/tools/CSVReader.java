@@ -16,77 +16,78 @@ import org.apache.commons.csv.CSVRecord;
  * @author MBorne
  *
  */
-public class CSVReader implements Iterator< String[] >{
-	private Iterator<CSVRecord> iterator ;
-	
-	/**
-	 * Reading file with given charset
-	 * @param file
-	 * @param charset
-	 * @throws IOException 
-	 */
-	public CSVReader( File file, Charset charset ) throws IOException{
-		CSVParser parser = CSVParser.parse(file, charset, CSVFormat.RFC4180) ;
-		this.iterator = parser.iterator() ;
-	}
-	
-	public CSVReader( Reader reader, Charset charset ) throws IOException {  
-		CSVParser parser = new CSVParser(reader, CSVFormat.RFC4180) ;
-		this.iterator = parser.iterator() ;
-	}
+public class CSVReader implements Iterator<String[]> {
+    private Iterator<CSVRecord> iterator;
 
-	
-	@Override
-	public boolean hasNext() {
-		return iterator.hasNext() ;
-	}
+    /**
+     * Reading file with given charset
+     * 
+     * @param file
+     * @param charset
+     * @throws IOException
+     */
+    public CSVReader(File file, Charset charset) throws IOException {
+        CSVParser parser = CSVParser.parse(file, charset, CSVFormat.RFC4180);
+        this.iterator = parser.iterator();
+    }
 
-	@Override
-	public String[] next() {
-		CSVRecord row = iterator.next() ;
-		return toArray(row);
-	}
+    public CSVReader(Reader reader, Charset charset) throws IOException {
+        CSVParser parser = new CSVParser(reader, CSVFormat.RFC4180);
+        this.iterator = parser.iterator();
+    }
 
-	/**
-	 * 
-	 * @param row
-	 * @return
-	 */
-	private String[] toArray(CSVRecord row) {
-		String[] result = new String[row.size()];
-		for ( int i = 0; i < row.size(); i++ ){
-			result[i] = nullifyEmptyString( trimString( row.get(i) ) ) ;
-		}
-		return result ;
-	}
+    @Override
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
 
-	/**
-	 * Trims a string
-	 * @param value
-	 * @return
-	 */
-	private String trimString(String value){
-		if ( null == value ){
-			return null ;
-		}
-		return value.trim();
-	}
-	
-	
-	/**
-	 * Converts to NULL an empty string
-	 * @param value
-	 */
-	private String nullifyEmptyString(String value){
-		if ( null == value || value.isEmpty() ){
-			return null ;
-		}else{
-			return value ;
-		}
-	}
+    @Override
+    public String[] next() {
+        CSVRecord row = iterator.next();
+        return toArray(row);
+    }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * 
+     * @param row
+     * @return
+     */
+    private String[] toArray(CSVRecord row) {
+        String[] result = new String[row.size()];
+        for (int i = 0; i < row.size(); i++) {
+            result[i] = nullifyEmptyString(trimString(row.get(i)));
+        }
+        return result;
+    }
+
+    /**
+     * Trims a string
+     * 
+     * @param value
+     * @return
+     */
+    private String trimString(String value) {
+        if (null == value) {
+            return null;
+        }
+        return value.trim();
+    }
+
+    /**
+     * Converts to NULL an empty string
+     * 
+     * @param value
+     */
+    private String nullifyEmptyString(String value) {
+        if (null == value || value.isEmpty()) {
+            return null;
+        } else {
+            return value;
+        }
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 }

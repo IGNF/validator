@@ -13,30 +13,31 @@ import fr.ign.validator.validation.Validator;
 
 public class MetadataFile extends DocumentFile {
 
-	private MetadataModel fileModel;
+    private MetadataModel fileModel;
 
-	public MetadataFile(MetadataModel fileModel, File path) {
-		super(path);
-		this.fileModel = fileModel;
-	}
+    public MetadataFile(MetadataModel fileModel, File path) {
+        super(path);
+        this.fileModel = fileModel;
+    }
 
-	@Override
-	public MetadataModel getFileModel() {
-		return fileModel;
-	}
+    @Override
+    public MetadataModel getFileModel() {
+        return fileModel;
+    }
 
-	@Override
-	protected void validateContent(Context context) {
-		try {
-			Metadata metadata = MetadataISO19115.readFile(getPath());
-			for (Validator<Metadata> validator : getFileModel().getMetadataValidators()) {
-				validator.validate(context, metadata);
-			}
-		} catch (InvalidMetadataException e) {
-			context.report(context.createError(CoreErrorCodes.METADATA_INVALID_FILE)
-				.setMessageParam("FILEPATH", context.relativize(getPath()))
-			);
-		}
-	}
+    @Override
+    protected void validateContent(Context context) {
+        try {
+            Metadata metadata = MetadataISO19115.readFile(getPath());
+            for (Validator<Metadata> validator : getFileModel().getMetadataValidators()) {
+                validator.validate(context, metadata);
+            }
+        } catch (InvalidMetadataException e) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_INVALID_FILE)
+                    .setMessageParam("FILEPATH", context.relativize(getPath()))
+            );
+        }
+    }
 
 }

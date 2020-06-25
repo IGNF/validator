@@ -14,24 +14,24 @@ import fr.ign.validator.validation.Validator;
 /**
  * 
  * Ensures that "abstract" is defined and not empty
- *  
+ * 
  * @author MBorne
  *
  */
 public class AbstractValidator implements Validator<Metadata> {
 
-	public static final Logger log    = LogManager.getRootLogger() ;
-	public static final Marker MARKER = MarkerManager.getMarker("AbstractValidator") ;	
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("AbstractValidator");
 
-	@Override
-	public void validate(Context context, Metadata metadata) {
-		String value = metadata.getAbstract() ;
-		log.info(MARKER, "abstract : {}", value);
-		if ( StringUtils.isEmpty(value) ){
-			context.report(
-				CoreErrorCodes.METADATA_ABSTRACT_NOT_FOUND
-			);
-		}
-	}
+    @Override
+    public void validate(Context context, Metadata metadata) {
+        String value = metadata.getAbstract();
+        log.info(MARKER, "abstract : {}", value);
+        if (StringUtils.isEmpty(value)) {
+            context.report(
+                CoreErrorCodes.METADATA_ABSTRACT_NOT_FOUND
+            );
+        }
+    }
 
 }

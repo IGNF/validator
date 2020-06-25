@@ -19,172 +19,184 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class DebLinMaxValidatorTest {
 
-	public static final Logger log = LogManager.getRootLogger();
+    public static final Logger log = LogManager.getRootLogger();
 
-	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
-	protected Context context;
+    protected Context context;
 
-	protected InMemoryReportBuilder report;
+    protected InMemoryReportBuilder report;
 
+    @Before
+    public void setUp() {
+        report = new InMemoryReportBuilder();
+        context = new Context();
+        context.setReportBuilder(report);
+    }
 
-	@Before
-	public void setUp() {
-		report = new InMemoryReportBuilder();
-		context = new Context();
-		context.setReportBuilder(report);
-	}
+    @Test
+    public void testValidate() throws Exception {
+        // le csv
+        String[] header = {
+            "DEBLIN_MIN"
+        };
+        String[] values = {
+            "1.0"
+        };
 
+        // le modele
+        DoubleType doubleTypeDebLinMin = new DoubleType();
+        doubleTypeDebLinMin.setName("DEBLIN_MIN");
 
-	@Test
-	public void testValidate() throws Exception {
-		// le csv
-		String[] header = {"DEBLIN_MIN"};
-		String[] values = {"1.0"};
+        DoubleType doubleTypeDebLinMax = new DoubleType();
+        doubleTypeDebLinMax.setName("DEBLIN_MAX");
 
-		// le modele
-		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+        FeatureType featureType = new FeatureType();
+        featureType.addAttribute(doubleTypeDebLinMin);
+        featureType.addAttribute(doubleTypeDebLinMax);
 
-		DoubleType doubleTypeDebLinMax = new DoubleType();
-		doubleTypeDebLinMax.setName("DEBLIN_MAX");
+        FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
 
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeDebLinMin);
-		featureType.addAttribute(doubleTypeDebLinMax);
+        // la ligne
+        Row row = new Row(0, values, mapping);
+        context.beginData(row);
 
-		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+        // test avec DEBLIN_MAX = 1.5
+        DebLinMaxValidator maxValidator = new DebLinMaxValidator();
+        Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 1.5);
+        maxValidator.validate(context, attribute);
 
-		// la ligne
-		Row row = new Row(0, values, mapping);
-		context.beginData(row);
+        // test avec DEBLIN_MAX = null
+        DebLinMaxValidator maxValidator2 = new DebLinMaxValidator();
+        Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMax, null);
+        maxValidator2.validate(context, attribute2);
 
-		// test avec DEBLIN_MAX = 1.5
-		DebLinMaxValidator maxValidator = new DebLinMaxValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 1.5);
-		maxValidator.validate(context, attribute);
+        context.beginData(row);
 
-		// test avec DEBLIN_MAX = null
-		DebLinMaxValidator maxValidator2 = new DebLinMaxValidator();
-		Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMax, null);
-		maxValidator2.validate(context, attribute2);
+        Assert.assertEquals(0, report.countErrors());
+    }
 
-		context.beginData(row);
+    @Test
+    public void testValueMaxError() throws Exception {
+        // le csv
+        String[] header = {
+            "DEBLIN_MIN"
+        };
+        String[] values = {
+            "1.0"
+        };
 
-		Assert.assertEquals(0, report.countErrors());
-	}
+        // le modele
+        DoubleType doubleTypeDebLinMin = new DoubleType();
+        doubleTypeDebLinMin.setName("DEBLIN_MIN");
 
+        DoubleType doubleTypeDebLinMax = new DoubleType();
+        doubleTypeDebLinMax.setName("DEBLIN_MAX");
 
-	@Test
-	public void testValueMaxError() throws Exception {
-		// le csv
-		String[] header = {"DEBLIN_MIN"};
-		String[] values = {"1.0"};
+        FeatureType featureType = new FeatureType();
+        featureType.addAttribute(doubleTypeDebLinMin);
+        featureType.addAttribute(doubleTypeDebLinMax);
 
-		// le modele
-		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+        FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
 
-		DoubleType doubleTypeDebLinMax = new DoubleType();
-		doubleTypeDebLinMax.setName("DEBLIN_MAX");
+        // la ligne
+        Row row = new Row(0, values, mapping);
+        context.beginData(row);
 
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeDebLinMin);
-		featureType.addAttribute(doubleTypeDebLinMax);
+        // test
+        DebLinMaxValidator minValidator = new DebLinMaxValidator();
+        Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 0.9);
+        minValidator.validate(context, attribute);
 
-		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+        context.beginData(row);
 
-		// la ligne
-		Row row = new Row(0, values, mapping);
-		context.beginData(row);
+        Assert.assertEquals(1, report.countErrors());
+        Assert.assertEquals(
+            "La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure à la valeur DEBLIN_MIN (1.0)", report
+                .getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage()
+        );
+    }
 
-		// test
-		DebLinMaxValidator minValidator = new DebLinMaxValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 0.9);
-		minValidator.validate(context, attribute);
+    @Test
+    public void testNoValueMinError() throws Exception {
+        // le csv
+        String[] header = {};
+        String[] values = {};
 
-		context.beginData(row);
+        // le modele
+        DoubleType doubleTypeDebLinMin = new DoubleType();
+        doubleTypeDebLinMin.setName("DEBLIN_MIN");
 
-		Assert.assertEquals(1, report.countErrors());
-		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure à la valeur DEBLIN_MIN (1.0)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
-	}
+        DoubleType doubleTypeDebLinMax = new DoubleType();
+        doubleTypeDebLinMax.setName("DEBLIN_MAX");
 
+        FeatureType featureType = new FeatureType();
+        featureType.addAttribute(doubleTypeDebLinMin);
+        featureType.addAttribute(doubleTypeDebLinMax);
 
-	@Test
-	public void testNoValueMinError() throws Exception {
-		// le csv
-		String[] header = {};
-		String[] values = {};
+        FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
 
-		// le modele
-		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+        // la ligne
+        Row row = new Row(0, values, mapping);
+        context.beginData(row);
 
-		DoubleType doubleTypeDebLinMax = new DoubleType();
-		doubleTypeDebLinMax.setName("DEBLIN_MAX");
+        // test
+        DebLinMaxValidator minValidator = new DebLinMaxValidator();
+        Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 0.9);
+        minValidator.validate(context, attribute);
 
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeDebLinMin);
-		featureType.addAttribute(doubleTypeDebLinMax);
+        context.beginData(row);
 
-		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
+        Assert.assertEquals(1, report.countErrors());
+        Assert.assertEquals(
+            "La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure à la valeur DEBLIN_MIN (non renseignée)", report
+                .getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage()
+        );
+    }
 
-		// la ligne
-		Row row = new Row(0, values, mapping);
-		context.beginData(row);
+    @Test
+    public void testIllegalDouble() throws Exception {
+        // le csv
+        String[] header = {
+            "DEBLIN_MIN"
+        };
+        String[] values = {
+            "1,5"
+        };
 
-		// test
-		DebLinMaxValidator minValidator = new DebLinMaxValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 0.9);
-		minValidator.validate(context, attribute);
+        // le modele
+        DoubleType doubleTypeDebLinMin = new DoubleType();
+        doubleTypeDebLinMin.setName("DEBLIN_MIN");
 
-		context.beginData(row);
+        DoubleType doubleTypeDebLinMax = new DoubleType();
+        doubleTypeDebLinMax.setName("DEBLIN_MAX");
 
-		Assert.assertEquals(1, report.countErrors());
-		Assert.assertEquals("La valeur DEBLIN_MAX (0.9) doit être nulle ou supérieure à la valeur DEBLIN_MIN (non renseignée)", report.getErrorsByCode(DgprErrorCodes.DGPR_DEBLIN_MAX_ERROR).get(0).getMessage());
-	}
+        FeatureType featureType = new FeatureType();
+        featureType.addAttribute(doubleTypeDebLinMin);
+        featureType.addAttribute(doubleTypeDebLinMax);
 
+        FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
 
-	@Test
-	public void testIllegalDouble() throws Exception {
-		// le csv
-		String[] header = {"DEBLIN_MIN"};
-		String[] values = {"1,5"};
+        // la ligne
+        Row row = new Row(0, values, mapping);
+        context.beginData(row);
 
-		// le modele
-		DoubleType doubleTypeDebLinMin = new DoubleType();
-		doubleTypeDebLinMin.setName("DEBLIN_MIN");
+        // test avec DEBLIN_MAX = 2.0
+        // error no value for deblinmin
+        DebLinMaxValidator maxValidator = new DebLinMaxValidator();
+        Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 2.0);
+        maxValidator.validate(context, attribute);
 
-		DoubleType doubleTypeDebLinMax = new DoubleType();
-		doubleTypeDebLinMax.setName("DEBLIN_MAX");
+        // test avec DEBLIN_MAX = null
+        // no error
+        DebLinMaxValidator maxValidator2 = new DebLinMaxValidator();
+        Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMax, null);
+        maxValidator2.validate(context, attribute2);
 
-		FeatureType featureType = new FeatureType();
-		featureType.addAttribute(doubleTypeDebLinMin);
-		featureType.addAttribute(doubleTypeDebLinMax);
+        context.beginData(row);
 
-		FeatureTypeMapper mapping = new FeatureTypeMapper(header, featureType);
-
-		// la ligne
-		Row row = new Row(0, values, mapping);
-		context.beginData(row);
-
-		// test avec DEBLIN_MAX = 2.0
-		// error no value for deblinmin
-		DebLinMaxValidator maxValidator = new DebLinMaxValidator();
-		Attribute<Double> attribute = new Attribute<>(doubleTypeDebLinMax, 2.0);
-		maxValidator.validate(context, attribute);
-
-		// test avec DEBLIN_MAX = null
-		// no error
-		DebLinMaxValidator maxValidator2 = new DebLinMaxValidator();
-		Attribute<Double> attribute2 = new Attribute<>(doubleTypeDebLinMax, null);
-		maxValidator2.validate(context, attribute2);
-
-		context.beginData(row);
-
-		Assert.assertEquals(1, report.countErrors());
-	}
-
+        Assert.assertEquals(1, report.countErrors());
+    }
 
 }

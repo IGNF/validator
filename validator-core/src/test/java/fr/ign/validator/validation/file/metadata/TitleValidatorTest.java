@@ -15,28 +15,28 @@ import fr.ign.validator.metadata.Metadata;
 @RunWith(MockitoJUnitRunner.class)
 public class TitleValidatorTest extends MetadataValidatorTestBase {
 
-	@Test
-	public void testValid(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getTitle()).thenReturn("test title");
-		
-		TitleValidator validator = new TitleValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(0, report.getErrors().size());
-	}
-	
-	@Test
-	public void testNotValid(){
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getTitle()).thenReturn(null);
-		
-		TitleValidator validator = new TitleValidator();
-		validator.validate(context, metadata);
-		
-		assertEquals(1, report.getErrors().size());
-		ValidatorError error = report.getErrors().get(0);
-		assertEquals(CoreErrorCodes.METADATA_TITLE_NOT_FOUND, error.getCode());
-	}
+    @Test
+    public void testValid() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getTitle()).thenReturn("test title");
+
+        TitleValidator validator = new TitleValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(0, report.getErrors().size());
+    }
+
+    @Test
+    public void testNotValid() {
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getTitle()).thenReturn(null);
+
+        TitleValidator validator = new TitleValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(1, report.getErrors().size());
+        ValidatorError error = report.getErrors().get(0);
+        assertEquals(CoreErrorCodes.METADATA_TITLE_NOT_FOUND, error.getCode());
+    }
 
 }
