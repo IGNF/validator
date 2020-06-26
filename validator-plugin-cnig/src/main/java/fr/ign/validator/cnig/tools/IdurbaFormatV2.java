@@ -20,7 +20,7 @@ public class IdurbaFormatV2 implements IdurbaFormat {
         if (null == value) {
             return false;
         }
-        return value.matches(DocumentName.getRegexpDU());
+        return value.matches("(?i)" + DocumentName.getRegexpDU());
     }
 
     @Override
