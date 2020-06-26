@@ -10,17 +10,26 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.tools.IdurbaHelper;
+import fr.ign.validator.cnig.tools.IdurbaFormat;
+import fr.ign.validator.cnig.tools.IdurbaFormatFactory;
 import fr.ign.validator.cnig.tools.TyperefExtractor;
 import fr.ign.validator.data.Document;
 
 /**
- * Extract typeref (cadastral reference)
+ * Post-process DOC_URBA table :
+ * <ul>
+ * <li>Filter rows in DATA/DOC_URBA.csv where IDURBA is not expected for the
+ * given document</li>
+ * <li>Locate line corresponding to the expected IDURBA</li>
+ * </ul>
  */
-public class TyperefExtractorPostProcess implements ValidatorListener {
+public class DocUrbaPostProcess implements ValidatorListener {
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("TyperefExtractorPostProcess");
+    public static final Marker MARKER = MarkerManager.getMarker("DocUrbaPostProcess");
 
+    /**
+     * Tag to store typeref found for document
+     */
     private static final String TAG_TYPEREF = "typeref";
 
     @Override
@@ -35,6 +44,12 @@ public class TyperefExtractorPostProcess implements ValidatorListener {
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
+        /*
+         * TODO sd-redmine-6627 - filter rows according to expected IDURBA in
+         * DATA/DOC_URBA.csv
+         * 
+         * So refactor TyperefExtractor to ZoneUrbaFilter...
+         */
         document.setTag(TAG_TYPEREF, parseTyperef(context, document));
     }
 
@@ -47,26 +62,23 @@ public class TyperefExtractorPostProcess implements ValidatorListener {
     private String parseTyperef(Context context, Document document) {
         String documentName = document.getDocumentName();
 
-        IdurbaHelper helper = IdurbaHelper.getInstance(context.getDocumentModel());
-        if (null == helper) {
+        IdurbaFormat idurbaFormat = IdurbaFormatFactory.getFormat(context.getDocumentModel());
+        if (null == idurbaFormat) {
             log.info(MARKER, "TYPEREF ne sera pas extrait, le document n'est pas un DU");
             return null;
         }
 
-        File documentDirectory = new File(context.getValidationDirectory(), documentName);
-        File dataDirectory = new File(documentDirectory, "DATA");
-        File docUrbaFile = new File(dataDirectory, "DOC_URBA.csv");
-
+        File docUrbaFile = new File(context.getDataDirectory(), "DOC_URBA.csv");
         if (!docUrbaFile.exists()) {
             log.error(MARKER, "Impossible d'extraire TYPEREF, DOC_URBA non trouvée");
         }
 
-        TyperefExtractor typerefExtractor = new TyperefExtractor(helper);
+        TyperefExtractor typerefExtractor = new TyperefExtractor(idurbaFormat);
         String result = typerefExtractor.findTyperef(docUrbaFile, documentName);
         if (null == result) {
             context.report(
                 context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
-                    .setMessageParam("EXPECTED_IDURBA", helper.getHelpExpected(documentName))
+                    .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
             );
         }
         return result;

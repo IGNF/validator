@@ -8,7 +8,7 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.ign.validator.cnig.tools.IdurbaHelperV1;
+import fr.ign.validator.cnig.tools.IdurbaFormatV1;
 import fr.ign.validator.cnig.tools.TyperefExtractor;
 import fr.ign.validator.tools.ResourceHelper;
 
@@ -24,7 +24,7 @@ public class TyperefExtractorTest {
 
     @Before
     public void setUp() throws Exception {
-        extractor = new TyperefExtractor(new IdurbaHelperV1());
+        extractor = new TyperefExtractor(new IdurbaFormatV1());
     }
 
     @Test

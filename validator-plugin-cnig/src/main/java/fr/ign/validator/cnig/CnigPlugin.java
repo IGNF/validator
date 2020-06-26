@@ -2,9 +2,9 @@ package fr.ign.validator.cnig;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
+import fr.ign.validator.cnig.process.CustomizeIdurbaPreProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
-import fr.ign.validator.cnig.process.TyperefExtractorPostProcess;
-import fr.ign.validator.cnig.validation.attribute.IdurbaValidationCustomizer;
+import fr.ign.validator.cnig.process.DocUrbaPostProcess;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
@@ -39,10 +39,12 @@ public class CnigPlugin implements Plugin {
         context.addListener(new ReferenceActeSupPostProcess());
         // converts DATA/*.csv to DATA/*.shp (must follow ReferenceActeSupPostProcess)
         context.addListener(new CreateShapefilesPostProcess());
-        // compute document.tag.typeref (must be done before document-info.json
-        // generation)
+        /*
+         * compute document.tag.typeref (must be done before document-info.json
+         * generation)
+         */
         context.addListenerBefore(
-            new TyperefExtractorPostProcess(),
+            new DocUrbaPostProcess(),
             DocumentInfoExtractorPostProcess.class
         );
 
@@ -51,7 +53,7 @@ public class CnigPlugin implements Plugin {
          */
         context.addListener(new InseeValidator());
         context.addListener(new AtLeastOneWritingMaterialValidator());
-        context.addListener(new IdurbaValidationCustomizer());
+        context.addListener(new CustomizeIdurbaPreProcess());
 
         /*
          * extends metadata validation

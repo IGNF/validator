@@ -7,44 +7,40 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.tools.IdurbaHelper;
+import fr.ign.validator.cnig.tools.IdurbaFormat;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * Customize attributes named IDURBA validation
+ * Dedicated to IDURBA validation in DOC_URBA table.
  * 
- * TODO
- * <ul>
- * <li>Define IdurbaHelper as a constructor parameter</li>
- * <li>Move ValidatorListener implementation to process.CustomizeDocumentModel
- * (do the same for other validators)</li>
- * </ul>
+ * Ensure that the value matches one of the supported {@link IdurbaFormat}.
  * 
  * @author MBorne
  *
  */
-public class IdurbaValidator implements Validator<Attribute<String>> {
+public class IdurbaFormatValidator implements Validator<Attribute<String>> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("IDURBA_VALIDATOR");
 
     /**
      * idurbaHelper configured according to document model (see beforeMatching)
      */
-    private IdurbaHelper idurbaHelper;
+    private IdurbaFormat idurbaHelper;
 
-    public IdurbaValidator(IdurbaHelper idurbaHelper) {
+    public IdurbaFormatValidator(IdurbaFormat idurbaHelper) {
         this.idurbaHelper = idurbaHelper;
     }
 
     @Override
     public void validate(Context context, Attribute<String> attribute) {
-        if (!idurbaHelper.isValid(attribute.getBindedValue())) {
+        String value = attribute.getBindedValue();
+        if (!idurbaHelper.isValid(value)) {
             context.report(
                 context.createError(CnigErrorCodes.CNIG_IDURBA_INVALID)
                     .setMessageParam("VALUE", attribute.getBindedValue())
-                    .setMessageParam("IDURBA_FORMAT", idurbaHelper.getHelpFormat())
+                    .setMessageParam("IDURBA_FORMAT", idurbaHelper.getRegexpHelp())
             );
         }
     }

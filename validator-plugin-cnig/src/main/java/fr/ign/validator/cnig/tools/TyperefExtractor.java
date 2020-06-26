@@ -19,19 +19,19 @@ import fr.ign.validator.tools.TableReader;
  */
 public class TyperefExtractor {
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("TYPEREF_EXTRACTOR");
+    public static final Marker MARKER = MarkerManager.getMarker("TyperefExtractor");
 
     /**
      * The document model providing IDURBA naming convention
      */
-    private IdurbaHelper idurbaHelper;
+    private IdurbaFormat idurbaFormat;
 
     /**
      * 
-     * @param idurbaHelper
+     * @param idurbaFormat
      */
-    public TyperefExtractor(IdurbaHelper idurbaHelper) {
-        this.idurbaHelper = idurbaHelper;
+    public TyperefExtractor(IdurbaFormat idurbaFormat) {
+        this.idurbaFormat = idurbaFormat;
     }
 
     /**
@@ -71,7 +71,7 @@ public class TyperefExtractor {
                     continue;
                 }
 
-                if (!idurbaHelper.isValid(idurba, documentName)) {
+                if (!idurbaFormat.isValid(idurba, documentName)) {
                     continue;
                 }
 
