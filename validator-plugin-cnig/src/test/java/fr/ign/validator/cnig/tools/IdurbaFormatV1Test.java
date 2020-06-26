@@ -17,6 +17,12 @@ public class IdurbaFormatV1Test {
     }
 
     @Test
+    public void testEmptyOrNull() {
+        assertFalse(format.isValid(""));
+        assertFalse(format.isValid(null));
+    }
+
+    @Test
     public void testValidInseeWithSeparator() {
         assertTrue(format.isValid("25349_20140101"));
         assertTrue(format.isValid("2B111_20140101"));
@@ -29,7 +35,6 @@ public class IdurbaFormatV1Test {
 
     @Test
     public void testNotValid() {
-        assertFalse(format.isValid(null));
         assertFalse(format.isValid("a254"));
         assertFalse(format.isValid("25349X_20140101")); // bad insee
         assertFalse(format.isValid("25349_201401015")); // bad date

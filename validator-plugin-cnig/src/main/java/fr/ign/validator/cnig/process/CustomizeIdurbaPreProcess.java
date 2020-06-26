@@ -12,6 +12,7 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.tools.IdurbaFormat;
 import fr.ign.validator.cnig.tools.IdurbaFormatFactory;
 import fr.ign.validator.cnig.validation.attribute.IdurbaFormatValidator;
+import fr.ign.validator.cnig.validation.attribute.IdurbaValidator;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -70,14 +71,23 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
                     );
                 }
                 StringType idurbaAttribute = (StringType) attribute;
-                idurbaAttribute.addValidator(new IdurbaFormatValidator(idurbaFormat));
-// TODO :
-//                if ( fileModel.getName().equalsIgnoreCase("DOC_URBA") ) {
-//                    idurbaAttribute.addValidator(new IdurbaFormatValidator());
-//                }else {
-//                    String expectedIdurbaRegexp = idurbaHelper.getRegexp(document.getDocumentName());
-//                    idurbaAttribute.addValidator(new IdurbaValueValidator(expectedIdurbaRegexp));
-//                }
+                if (fileModel.getName().equalsIgnoreCase("DOC_URBA")) {
+                    /*
+                     * Ensure any format is respected for DOC_URBA
+                     */
+                    idurbaAttribute.addValidator(new IdurbaFormatValidator());
+                } else {
+                    /*
+                     * Check value according to document name and IdurbaFormat associated to the
+                     * standard version
+                     */
+                    idurbaAttribute.addValidator(
+                        new IdurbaValidator(
+                            idurbaFormat,
+                            document.getDocumentName()
+                        )
+                    );
+                }
             }
         }
     }

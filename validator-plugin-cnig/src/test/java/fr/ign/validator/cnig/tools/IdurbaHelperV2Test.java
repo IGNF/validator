@@ -17,6 +17,12 @@ public class IdurbaHelperV2Test {
     }
 
     @Test
+    public void testEmptyOrNull() {
+        assertFalse(format.isValid(""));
+        assertFalse(format.isValid(null));
+    }
+
+    @Test
     public void testValid() {
         assertTrue(format.isValid("25349_PLU_20180101"));
         assertTrue(format.isValid("25349_PLU_20180101_A"));

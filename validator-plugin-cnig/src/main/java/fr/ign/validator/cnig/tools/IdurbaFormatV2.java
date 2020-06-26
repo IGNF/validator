@@ -17,7 +17,7 @@ public class IdurbaFormatV2 implements IdurbaFormat {
 
     @Override
     public boolean isValid(String value) {
-        if (null == value) {
+        if (StringUtils.isEmpty(value)) {
             return false;
         }
         return value.matches("(?i)" + DocumentName.getRegexpDU());
@@ -38,7 +38,7 @@ public class IdurbaFormatV2 implements IdurbaFormat {
 
     @Override
     public String getRegexpHelp(String documentName) {
-        return documentName;
+        return documentName.toUpperCase();
     }
 
 }

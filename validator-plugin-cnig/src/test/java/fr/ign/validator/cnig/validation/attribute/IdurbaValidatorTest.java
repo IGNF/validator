@@ -1,77 +1,76 @@
 package fr.ign.validator.cnig.validation.attribute;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import org.junit.Test;
 
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.tools.IdurbaFormatV1;
 import fr.ign.validator.cnig.tools.IdurbaFormatV2;
 import fr.ign.validator.cnig.validation.CnigValidatorTestBase;
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.type.StringType;
 
 public class IdurbaValidatorTest extends CnigValidatorTestBase {
 
     @Test
-    public void testNotValid() {
-        StringType type = new StringType();
-        Attribute<String> attribute = new Attribute<String>(type, "test");
-        IdurbaFormatValidator validator = new IdurbaFormatValidator(new IdurbaFormatV1());
-        validator.validate(context, attribute);
-        assertEquals(1, report.countErrors(ErrorLevel.WARNING));
+    public void testFormatV2() {
+        IdurbaValidator validator = new IdurbaValidator(
+            new IdurbaFormatV2(),
+            "25349_CC_20010101"
+        );
+        // format v1
+        assertFalse(validator.isValid("2534920010101"));
+        assertFalse(validator.isValid("25349_20010101"));
+
+        // format v2
+        assertTrue(validator.isValid("25349_CC_20010101"));
+
     }
 
     @Test
-    public void testValidV1() {
+    public void testValidDoesntReport() {
         StringType type = new StringType();
-        Attribute<String> attribute = new Attribute<String>(type, "25349_20140101");
-        IdurbaFormatValidator validator = new IdurbaFormatValidator(new IdurbaFormatV1());
+        Attribute<String> attribute = new Attribute<String>(type, "123456789_PLUI_20010101");
+
+        IdurbaValidator validator = new IdurbaValidator(
+            new IdurbaFormatV2(),
+            "123456789_PLUi_20010101"
+        );
         validator.validate(context, attribute);
+
         assertEquals(0, report.countErrors());
     }
 
     @Test
-    public void testValidNotValidV1() {
+    public void testNotValidReport() {
         StringType type = new StringType();
-        Attribute<String> attribute = new Attribute<String>(type, "25349_PLU_20140101");
-        IdurbaFormatValidator validator = new IdurbaFormatValidator(new IdurbaFormatV1());
+        Attribute<String> attribute = new Attribute<String>(type, "25349_20010101");
+        IdurbaValidator validator = new IdurbaValidator(
+            new IdurbaFormatV2(),
+            "25349_CC_20010101"
+        );
         validator.validate(context, attribute);
-        assertEquals(1, report.countErrors());
 
-        ValidatorError error = report.getErrors().get(0);
-        assertEquals(CnigErrorCodes.CNIG_IDURBA_INVALID, error.getCode());
+        List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_IDURBA_UNEXPECTED);
+        assertEquals(1, errors.size());
         assertEquals(
-            "La valeur du champ \"IDURBA\" (25349_PLU_20140101) ne respecte pas le format attendu (<INSEE/SIREN><DATAPPRO>).",
-            error.getMessage()
+            "La valeur du champ \"IDURBA\" (25349_20010101) ne correspond pas à la valeur attendue (25349_CC_20010101).",
+            errors.get(0).getMessage()
         );
     }
 
     @Test
-    public void testValidV2() {
-        StringType type = new StringType();
-        Attribute<String> attribute = new Attribute<String>(type, "25349_PLU_20140101");
-        IdurbaFormatValidator validator = new IdurbaFormatValidator(new IdurbaFormatV2());
-        validator.validate(context, attribute);
-        assertEquals(0, report.countErrors());
-    }
-
-    @Test
-    public void testValidNotValidV2() {
+    public void testValidNoReport() {
         StringType type = new StringType();
         Attribute<String> attribute = new Attribute<String>(type, "25349_20140101");
-        IdurbaFormatValidator validator = new IdurbaFormatValidator(new IdurbaFormatV2());
+        IdurbaFormatValidator validator = new IdurbaFormatValidator();
         validator.validate(context, attribute);
-        assertEquals(1, report.countErrors());
-
-        ValidatorError error = report.getErrors().get(0);
-        assertEquals(CnigErrorCodes.CNIG_IDURBA_INVALID, error.getCode());
-        assertEquals(
-            "La valeur du champ \"IDURBA\" (25349_20140101) ne respecte pas le format attendu (<INSEE/SIREN>_<TYPEDOC>_<DATAPPRO>{_CodeDU}).",
-            error.getMessage()
-        );
+        assertEquals(0, report.countErrors());
     }
 
 }

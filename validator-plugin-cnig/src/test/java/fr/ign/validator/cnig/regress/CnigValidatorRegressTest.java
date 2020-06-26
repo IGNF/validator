@@ -135,13 +135,15 @@ public class CnigValidatorRegressTest {
             document.validate(context);
             Assert.assertEquals("50545_CC_20130902", document.getDocumentName());
             /* check errors */
-            ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
+            ReportAssert.assertCount(843, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+            ReportAssert.assertCount(845, ErrorLevel.ERROR, report);
 
-            ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+            ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+
             // INFO
             ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
         } catch (Exception e) {
@@ -173,11 +175,12 @@ public class CnigValidatorRegressTest {
             document.validate(context);
             Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
 
-            ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
             ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
             ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
             ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
+            ReportAssert.assertCount(844, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+            ReportAssert.assertCount(848, ErrorLevel.ERROR, report);
 
             ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
@@ -309,7 +312,10 @@ public class CnigValidatorRegressTest {
         try {
             document.validate(context);
             Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
-            ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+            // YYYYMMDD different in tables
+            ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+
+            ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
             ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
         } catch (Exception e) {
             e.printStackTrace();

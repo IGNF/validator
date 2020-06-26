@@ -30,6 +30,7 @@ public interface IdurbaFormat {
      * 
      * @return
      */
+    @Deprecated
     public String getRegexpHelp();
 
     /**

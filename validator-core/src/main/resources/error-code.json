@@ -462,8 +462,14 @@
     {
         "name": "CNIG_IDURBA_INVALID",
         "level": "WARNING",
-        "message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu ({IDURBA_FORMAT}).",
-        "documentation": ""
+        "message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",
+        "documentation": "Vérification du format de IDURBA dans la table DOC_URBA."
+    },
+    {
+        "name": "CNIG_IDURBA_UNEXPECTED",
+        "level": "ERROR",
+        "message": "La valeur du champ \"IDURBA\" ({VALUE}) ne correspond pas à la valeur attendue ({EXPECTED_VALUE}).",
+        "documentation": "Vérification de la cohérence entre IDURBA et {NomDeDossier} sur les tables autres que DOC_URBA."
     },
     {
         "name": "CNIG_IDURBA_NOT_FOUND",

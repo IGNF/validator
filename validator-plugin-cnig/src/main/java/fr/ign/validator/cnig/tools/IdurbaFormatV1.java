@@ -3,6 +3,8 @@ package fr.ign.validator.cnig.tools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import fr.ign.validator.cnig.model.DocumentName;
 
 /**
@@ -38,7 +40,7 @@ public class IdurbaFormatV1 implements IdurbaFormat {
 
     @Override
     public boolean isValid(String idurba, String documentName) {
-        if (null == idurba) {
+        if (StringUtils.isEmpty(idurba)) {
             return false;
         }
         return idurba.matches(getRegexp(documentName));
