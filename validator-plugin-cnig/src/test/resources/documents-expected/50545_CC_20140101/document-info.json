@@ -9,7 +9,7 @@
     "name" : "DOC_URBA.dbf",
     "path" : "DOC_URBA.dbf",
     "boundingBox" : null,
-    "totalFeatures" : 844
+    "totalFeatures" : 0
   }, {
     "type" : "table",
     "modelName" : "DOC_URBA_COM",
@@ -62,7 +62,8 @@
   } ],
   "documentExtent" : null,
   "tags" : {
-    "typeref" : null
+    "idurba": null,
+    "typeref" : "01"
   },
   "metadata" : {
     "fileIdentifier" : "fr-000050545-cc20130902",

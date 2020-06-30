@@ -9,7 +9,7 @@
     "name" : "DOC_URBA.dbf",
     "path" : "DOC_URBA.dbf",
     "boundingBox" : null,
-    "totalFeatures" : 844
+    "totalFeatures" : 1
   }, {
     "type" : "table",
     "modelName" : "DOC_URBA_COM",
@@ -62,6 +62,7 @@
   } ],
   "documentExtent" : [ -1.1257418, 49.0219104, -1.0474823, 49.0552970 ],
   "tags" : {
+    "idurba": "50545_20130902",
     "typeref" : "01"
   },
   "metadata" : {
