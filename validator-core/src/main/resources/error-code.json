@@ -478,6 +478,12 @@
         "documentation": ""
     },
     {
+        "name": "CNIG_IDURBA_MULTIPLE_FOUND",
+        "level": "WARNING",
+        "message": "{COUNT_ROWS} lignes correspondant au document trouvées dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
+        "documentation": ""
+    },
+    {
         "name": "NO_SPATIAL_DATA",
         "level": "ERROR",
         "message": "Aucune donnée géographique trouvée dans le document.",

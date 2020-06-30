@@ -23,9 +23,14 @@ public class CnigErrorCodes {
      */
     public static final ErrorCode CNIG_IDURBA_UNEXPECTED = ErrorCode.valueOf("CNIG_IDURBA_UNEXPECTED");
     /**
-     * DU - Reported when no row with the expected IDURBA for is found in ZONE_URBA
+     * DU - Reported when no row with the expected IDURBA is found in DOC_URBA
      */
     public static final ErrorCode CNIG_IDURBA_NOT_FOUND = ErrorCode.valueOf("CNIG_IDURBA_NOT_FOUND");
+    /**
+     * DU - Reported when multiple rows with the expected IDURBA are found in
+     * DOC_URBA
+     */
+    public static final ErrorCode CNIG_IDURBA_MULTIPLE_FOUND = ErrorCode.valueOf("CNIG_IDURBA_MULTIPLE_FOUND");
 
     public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND = ErrorCode.valueOf(
         "CNIG_METADATA_SPECIFICATION_NOT_FOUND"

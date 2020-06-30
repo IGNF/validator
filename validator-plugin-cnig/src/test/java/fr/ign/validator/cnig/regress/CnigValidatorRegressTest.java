@@ -316,9 +316,10 @@ public class CnigValidatorRegressTest {
             Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
             // YYYYMMDD different in tables
             ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-
             ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
-            ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+
+            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+            ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());
@@ -326,7 +327,6 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
-
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
@@ -353,7 +353,6 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
-
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 

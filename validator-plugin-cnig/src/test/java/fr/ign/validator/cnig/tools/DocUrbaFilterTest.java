@@ -1,10 +1,8 @@
 package fr.ign.validator.cnig.tools;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +44,7 @@ public class DocUrbaFilterTest {
         DocUrbaFilter filter = new DocUrbaFilter(new IdurbaFormatV1(), "test");
         DocUrbaFilter.Result result = filter.process(docUrbaFile);
         assertNotNull(result);
-        assertFalse(result.isIdurbaFound());
+        assertEquals(0, result.count);
         // default value for typeref
         assertEquals("01", result.typeref);
     }
@@ -55,7 +53,7 @@ public class DocUrbaFilterTest {
     public void testFindStrictEquals() throws IOException {
         DocUrbaFilter filter = new DocUrbaFilter(new IdurbaFormatV1(), "50041_PLU_20130403");
         DocUrbaFilter.Result result = filter.process(docUrbaFile);
-        assertTrue(result.isIdurbaFound());
+        assertEquals(1, result.count);
         assertEquals("50041_20130403", result.idurba);
         assertEquals("01", result.typeref);
         List<String> lines = FileUtils.readLines(docUrbaFile, StandardCharsets.UTF_8);
@@ -66,7 +64,7 @@ public class DocUrbaFilterTest {
     public void testIdurbaNotFound() throws IOException {
         DocUrbaFilter filter = new DocUrbaFilter(new IdurbaFormatV1(), "99999_PLU_20130403");
         DocUrbaFilter.Result result = filter.process(docUrbaFile);
-        assertFalse(result.isIdurbaFound());
+        assertEquals(0, result.count);
         assertNull(result.idurba);
         assertEquals("01", result.typeref);
         List<String> lines = FileUtils.readLines(docUrbaFile, StandardCharsets.UTF_8);

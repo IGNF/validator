@@ -57,9 +57,15 @@ public class DocUrbaPostProcess implements ValidatorListener {
         DocUrbaFilter docUrbaFilter = new DocUrbaFilter(idurbaFormat, documentName);
         File docUrbaFile = new File(context.getDataDirectory(), "DOC_URBA.csv");
         DocUrbaFilter.Result result = docUrbaFilter.process(docUrbaFile);
-        if (!result.isIdurbaFound()) {
+        if (result.count == 0) {
             context.report(
                 context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
+                    .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
+            );
+        }else if ( result.count > 1 ) {
+            context.report(
+                context.createError(CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND)
+                    .setMessageParam("COUNT_ROWS", ""+result.count)
                     .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
             );
         }

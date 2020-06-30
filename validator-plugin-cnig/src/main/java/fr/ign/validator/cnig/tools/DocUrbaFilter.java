@@ -30,12 +30,9 @@ public class DocUrbaFilter {
     public static final Marker MARKER = MarkerManager.getMarker("DocUrbaFilter");
 
     public class Result {
+        public int count = 0;
         public String idurba;
         public String typeref = DEFAULT_TYPEREF;
-
-        public boolean isIdurbaFound() {
-            return !StringUtils.isEmpty(idurba);
-        }
     }
 
     /**
@@ -118,6 +115,7 @@ public class DocUrbaFilter {
                 }
 
                 // retreive IDURBA and TYPEREF
+                result.count++;
                 result.idurba = idurba;
                 String typeref = row[indexTyperef];
                 if (!StringUtils.isEmpty(typeref)) {

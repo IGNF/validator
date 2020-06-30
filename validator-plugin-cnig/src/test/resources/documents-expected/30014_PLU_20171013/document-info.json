@@ -9,7 +9,7 @@
     "name" : "30014_DOC_URBA_20171013.DBF",
     "path" : "30014_DOC_URBA_20171013.DBF",
     "boundingBox" : null,
-    "totalFeatures" : 1
+    "totalFeatures" : 2
   }, {
     "type" : "table",
     "modelName" : "DOC_URBA_COM",
