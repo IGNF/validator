@@ -16,7 +16,7 @@
     "name" : "DOC_URBA_COM.dbf",
     "path" : "DOC_URBA_COM.dbf",
     "boundingBox" : null,
-    "totalFeatures" : 844
+    "totalFeatures" : 1
   }, {
     "type" : "directory",
     "modelName" : "Donnees_geographiques",

@@ -147,8 +147,7 @@ public class CnigValidatorRegressTest {
             /* check errors */
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
-            ReportAssert.assertCount(843, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-            ReportAssert.assertCount(845, ErrorLevel.ERROR, report);
+            ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
 
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
@@ -187,8 +186,8 @@ public class CnigValidatorRegressTest {
             ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
             ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
-            ReportAssert.assertCount(844, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-            ReportAssert.assertCount(848, ErrorLevel.ERROR, report);
+            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+            ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
 
             ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
