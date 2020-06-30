@@ -1,15 +1,11 @@
 package fr.ign.validator.tools;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -92,34 +88,15 @@ public class FileConverter {
     }
 
     /**
-     * True for GDAL 1.x as coordinate precision is broken even with a lot number of
-     * decimals
-     * 
-     * @return
-     */
-    public boolean isBreakingCoordinatePrecision() {
-        return getVersion().getMajor() == 1;
-    }
-
-    /**
-     * Prior to GDAL 2.3, LATIN1 encoded TAB are not converted to UTF-8 encoded CSV.
-     * 
-     * After GDAL 2.3, it seems that there is no way to avoid this behavior.
-     * 
-     * @return
-     */
-    private boolean isConvertingTabToCsvUtf8() {
-        return getVersion().getMajor() >= 2 && getVersion().getMinor() >= 3;
-    }
-
-    /**
      * Récupération de la version de ogr2ogr
      * 
      * @return
      */
     private OgrVersion retrieveAndValidateOgrVersion() {
         String fullVersion = retrieveFullVersion();
-        return new OgrVersion(fullVersion);
+        OgrVersion version = new OgrVersion(fullVersion);
+        version.ensureVersionIsSupported();
+        return version;
     }
 
     /**
@@ -128,7 +105,7 @@ public class FileConverter {
      * @return
      */
     private String retrieveFullVersion() {
-        log.info(MARKER, "ogr2ogr --version");
+        log.info(MARKER, "Run 'ogr2ogr --version' to retrieve GDAL version...");
         String[] args = new String[] {
             getOgr2ogrPath(), "--version"
         };
@@ -192,12 +169,6 @@ public class FileConverter {
         if (!target.exists()) {
             log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
             createFalseCSV(target);
-        }
-        /*
-         * Hack to support GDAL prior to 2.3
-         */
-        if (sourceExtension.equals("tab") && !isConvertingTabToCsvUtf8()) {
-            fixUtf8(target, sourceCharset);
         }
     }
 
@@ -412,40 +383,6 @@ public class FileConverter {
         File backupedFile = new File(source.getPath() + ".backup");
         source.renameTo(backupedFile);
         FixGML.replaceAutoclosedByEmpty(backupedFile, source);
-    }
-
-    /**
-     * ogr2ogr prior to 2.3 doesn't convert TAB encoding to UTF-8
-     * 
-     * TODO remove support for ogr2ogr prior to 2.3.0 to get rid of this patch
-     * 
-     * @param file
-     * @param charset
-     * @throws IOException
-     */
-    private void fixUtf8(File file, Charset charset) throws IOException {
-        log.warn(MARKER, "ogr2ogr prior to 2.3, patching output encoding to UTF-8 for {}", file.getPath());
-        File backupedFile = new File(file.getPath() + ".backup");
-        file.renameTo(backupedFile);
-
-        BufferedReader in = new BufferedReader(
-            new InputStreamReader(
-                new FileInputStream(backupedFile), charset
-            )
-        );
-        BufferedWriter out = new BufferedWriter(
-            new OutputStreamWriter(
-                new FileOutputStream(file),
-                StandardCharsets.UTF_8
-            )
-        );
-        String line;
-        while ((line = in.readLine()) != null) {
-            out.write(line + "\r\n");
-        }
-        in.close();
-        out.close();
-        backupedFile.delete();
     }
 
 }
