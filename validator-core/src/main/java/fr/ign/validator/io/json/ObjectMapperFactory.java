@@ -43,7 +43,7 @@ public class ObjectMapperFactory {
         AttributeTypeFactory attributeTypeFactory = AttributeTypeFactory.getInstance();
         Collection<String> typeNames = attributeTypeFactory.getTypeNames();
         for (String typeName : typeNames) {
-            log.debug(MARKER, "Add AttributeType of type {} to ObjectMapper...", typeName);
+            log.trace(MARKER, "Add AttributeType of type {} to ObjectMapper...", typeName);
             AttributeType<?> prototype = attributeTypeFactory.createAttributeTypeByName(typeName);
             objectMapper.registerSubtypes(prototype.getClass());
         }

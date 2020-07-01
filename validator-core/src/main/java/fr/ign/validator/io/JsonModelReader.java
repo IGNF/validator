@@ -30,9 +30,6 @@ public class JsonModelReader extends AbstractModelReader {
         return "json";
     }
 
-    /**
-     * TODO externalize objectMapper configuration
-     */
     public JsonModelReader() {
         log.debug(MARKER, "Initializing JsonModelReader...");
         this.objectMapper = ObjectMapperFactory.createObjectMapper();
