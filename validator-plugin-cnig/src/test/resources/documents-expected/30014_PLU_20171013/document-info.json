@@ -9,7 +9,7 @@
     "name" : "30014_DOC_URBA_20171013.DBF",
     "path" : "30014_DOC_URBA_20171013.DBF",
     "boundingBox" : null,
-    "totalFeatures" : 1
+    "totalFeatures" : 2
   }, {
     "type" : "table",
     "modelName" : "DOC_URBA_COM",
@@ -212,6 +212,7 @@
   } ],
   "documentExtent" : [ 4.3387357, 43.9760147, 4.3986027, 44.0207913 ],
   "tags" : {
+    "idurba": "30014_PLU_20171013",
     "typeref" : "01"
   },
   "metadata" : {

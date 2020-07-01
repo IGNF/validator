@@ -1,11 +1,13 @@
 package fr.ign.validator.cnig.regress;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -113,10 +115,18 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("41175_PLU_20140603");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
 
+    private void assertEqualsJsonFile(File producedInfosCnigPath, File expectedInfosCnigPath) throws IOException,
+        JSONException {
         String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
         String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        JSONAssert.assertEquals(
+            expected,
+            actual,
+            JSONCompareMode.STRICT
+        );
     }
 
     /**
@@ -135,13 +145,14 @@ public class CnigValidatorRegressTest {
             document.validate(context);
             Assert.assertEquals("50545_CC_20130902", document.getDocumentName());
             /* check errors */
-            ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
+            ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
 
-            ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+            ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+
             // INFO
             ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
         } catch (Exception e) {
@@ -151,9 +162,7 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("50545_CC_20130902");
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
     /**
@@ -173,11 +182,12 @@ public class CnigValidatorRegressTest {
             document.validate(context);
             Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
 
-            ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
             ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
             ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
             ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
             ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
+            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+            ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
 
             ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
             ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
@@ -190,9 +200,7 @@ public class CnigValidatorRegressTest {
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("50545_CC_20140101");
 
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
     /**
@@ -256,9 +264,7 @@ public class CnigValidatorRegressTest {
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("110068012_PM3_28_20161104");
 
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
     /**
@@ -289,9 +295,7 @@ public class CnigValidatorRegressTest {
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("172014607_AC1_2A_20180130");
 
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
     /**
@@ -309,8 +313,12 @@ public class CnigValidatorRegressTest {
         try {
             document.validate(context);
             Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
-            ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
-            ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+            // YYYYMMDD different in tables
+            ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+            ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
+
+            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+            ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());
@@ -318,10 +326,7 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
-
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
     /**
@@ -347,10 +352,7 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
-
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
 }

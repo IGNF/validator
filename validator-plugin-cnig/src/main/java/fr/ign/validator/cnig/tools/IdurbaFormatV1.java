@@ -3,32 +3,35 @@ package fr.ign.validator.cnig.tools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import fr.ign.validator.cnig.model.DocumentName;
 
 /**
  * 
- * Helper to validate IDURBA according to CNIG standards v2013 and v2014
- * 
+ * Helper to validate IDURBA format according to CNIG standards v2013 and v2014.
+ *
  * @author MBorne
  *
  */
-public class IdurbaHelperV1 extends IdurbaHelper {
+public class IdurbaFormatV1 implements IdurbaFormat {
+
+    private static final String REGEXP_HELP = "<INSEE/SIREN><DATAPPRO>";
 
     @Override
-    public boolean isValid(String idurba) {
-        if (null == idurba) {
+    public boolean isValid(String value) {
+        if (null == value) {
             return false;
         }
-        return idurba.matches(getRegexp());
+        return value.matches(getRegexp());
     }
 
     /**
-     * Get generic regexp for validation
+     * Get regexp to validate the format
      * 
      * @return
      */
-    private String getRegexp() {
-        // municipality |
+    public String getRegexp() {
         String result = DocumentName.REGEXP_INSEE_OR_SIREN;
         result += "(_?)";// optional _
         result += DocumentName.REGEXP_YYYYMMDD;
@@ -37,7 +40,7 @@ public class IdurbaHelperV1 extends IdurbaHelper {
 
     @Override
     public boolean isValid(String idurba, String documentName) {
-        if (null == idurba) {
+        if (StringUtils.isEmpty(idurba)) {
             return false;
         }
         return idurba.matches(getRegexp(documentName));
@@ -62,12 +65,12 @@ public class IdurbaHelperV1 extends IdurbaHelper {
     }
 
     @Override
-    public String getHelpFormat() {
-        return "<INSEE/SIREN><DATAPPRO>";
+    public String getRegexpHelp() {
+        return REGEXP_HELP;
     }
 
     @Override
-    public String getHelpExpected(String documentName) {
+    public String getRegexpHelp(String documentName) {
         return getRegexp(documentName);
     }
 

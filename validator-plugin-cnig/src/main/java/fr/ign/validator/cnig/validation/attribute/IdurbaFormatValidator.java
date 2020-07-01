@@ -1,5 +1,7 @@
 package fr.ign.validator.cnig.validation.attribute;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -8,26 +10,23 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.tools.IdurbaFormat;
+import fr.ign.validator.cnig.tools.IdurbaFormatFactory;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.validation.Validator;
 
-public class IdurbaValidator implements Validator<Attribute<String>> {
+/**
+ * 
+ * Dedicated to IDURBA validation in DOC_URBA table. Ensure that the value
+ * matches one of the supported {@link IdurbaFormat}.
+ * 
+ * @author MBorne
+ *
+ */
+public class IdurbaFormatValidator implements Validator<Attribute<String>> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("IdurbaFormatValidator");
 
-    /**
-     * Format corresponding to the version of the DocumentModel
-     */
-    private IdurbaFormat idurbaFormat;
-    /**
-     * The name of the document
-     */
-    private String documentName;
-
-    public IdurbaValidator(IdurbaFormat idurbaFormat, String documentName) {
-        this.idurbaFormat = idurbaFormat;
-        this.documentName = documentName;
-    }
+    private List<IdurbaFormat> idurbaFormats = IdurbaFormatFactory.getFormats();
 
     /**
      * Test if string value is valid
@@ -36,7 +35,12 @@ public class IdurbaValidator implements Validator<Attribute<String>> {
      * @return
      */
     public boolean isValid(String value) {
-        return idurbaFormat.isValid(value, documentName);
+        for (IdurbaFormat idurbaFormat : idurbaFormats) {
+            if (idurbaFormat.isValid(value)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -48,9 +52,9 @@ public class IdurbaValidator implements Validator<Attribute<String>> {
 
         /* valid format not found */
         context.report(
-            context.createError(CnigErrorCodes.CNIG_IDURBA_UNEXPECTED)
+            context.createError(CnigErrorCodes.CNIG_IDURBA_INVALID)
                 .setMessageParam("VALUE", attribute.getBindedValue())
-                .setMessageParam("EXPECTED_VALUE", idurbaFormat.getRegexpHelp(documentName))
         );
     }
+
 }

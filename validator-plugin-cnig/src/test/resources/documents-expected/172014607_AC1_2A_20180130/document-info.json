@@ -652,9 +652,7 @@
     "path" : "SUP-AC1-2A-172014607-20180130.xml"
   } ],
   "documentExtent" : [ 8.5538275, 41.3324541, 9.4118624, 42.2722707 ],
-  "tags" : {
-    "typeref" : null
-  },
+  "tags" : {},
   "metadata" : {
     "fileIdentifier" : "SUP-AC1-2A-172014607-20180130",
     "title" : "Servitude d’Utilité Publique de catégorie AC1 sur le département de CORSE-DU-SUD",
