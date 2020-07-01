@@ -7,10 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +30,8 @@ public class VRT {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker VRT = MarkerManager.getMarker("VRT");
 
+    private static final String EOL = "\n";
+
     /**
      * Creates a vrt corresponding to a sourceFile for a given FeatureType
      * 
@@ -41,12 +40,7 @@ public class VRT {
      * @return
      */
     public static File createFile(File csvFile, FeatureType featureType) {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer;
         try {
-            transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
             File vrtFile = createVRTfile(csvFile, featureType);
             return vrtFile;
         } catch (TransformerConfigurationException e) {
@@ -77,16 +71,16 @@ public class VRT {
         FileWriter writer = new FileWriter(vrtFile);
 
         writer.append("<OGRVRTDataSource>");
-        writer.append('\n');
+        writer.append(EOL);
         writer.append(" <OGRVRTLayer name='" + FilenameUtils.getBaseName(csvFile.getName()) + "'>");
-        writer.append('\n');
-        writer.append("  <SrcDataSource>" + csvFile.getAbsolutePath() + "</SrcDataSource>");
-        writer.append('\n');
+        writer.append(EOL);
+        writer.append("  <SrcDataSource relativeToVRT=\"1\">" + csvFile.getName() + "</SrcDataSource>");
+        writer.append(EOL);
 
         AttributeType<?> geometryAttribute = featureType.getAttribute("WKT");
         if (null != geometryAttribute) {
             writer.append("  <GeometryType>" + "wkb" + geometryAttribute.getTypeName() + "</GeometryType>");
-            writer.append('\n');
+            writer.append(EOL);
         }
 
         /*
@@ -99,16 +93,13 @@ public class VRT {
         List<String> fieldNames = getFieldNamesFromCSV(csvFile);
         for (String fieldName : fieldNames) {
             writer.append("  <Field name=\"" + fieldName + "\" type=\"String\" width=\"254\" />");
-            writer.append('\n');
+            writer.append(EOL);
         }
 
-        // writer.append(" <Field name=\"fichier\" type=\"String\" width=\"254\" />") ;
-        // writer.append('\n') ;
-
         writer.append(" </OGRVRTLayer>");
-        writer.append('\n');
+        writer.append(EOL);
         writer.append("</OGRVRTDataSource>");
-        writer.append('\n');
+        writer.append(EOL);
 
         writer.flush();
         writer.close();
