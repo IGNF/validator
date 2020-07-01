@@ -1,0 +1,19 @@
+<OGRVRTDataSource>
+ <OGRVRTLayer name='DOC_URBA'>
+  <SrcDataSource relativeToVRT="1">DOC_URBA.csv</SrcDataSource>
+  <Field name="IDURBA" type="String" width="254" />
+  <Field name="TYPEDOC" type="String" width="254" />
+  <Field name="DATAPPRO" type="String" width="254" />
+  <Field name="DATEFIN" type="String" width="254" />
+  <Field name="INTERCO" type="String" width="254" />
+  <Field name="SIREN" type="String" width="254" />
+  <Field name="ETAT" type="String" width="254" />
+  <Field name="NOMREG" type="String" width="254" />
+  <Field name="URLREG" type="String" width="254" />
+  <Field name="NOMPLAN" type="String" width="254" />
+  <Field name="URLPLAN" type="String" width="254" />
+  <Field name="SITEWEB" type="String" width="254" />
+  <Field name="TYPEREF" type="String" width="254" />
+  <Field name="DATEREF" type="String" width="254" />
+ </OGRVRTLayer>
+</OGRVRTDataSource>
