@@ -461,7 +461,7 @@
     },
     {
         "name": "CNIG_IDURBA_INVALID",
-        "level": "WARNING",
+        "level": "ERROR",
         "message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",
         "documentation": "Vérification du format de IDURBA dans la table DOC_URBA."
     },
@@ -480,7 +480,7 @@
     {
         "name": "CNIG_IDURBA_MULTIPLE_FOUND",
         "level": "WARNING",
-        "message": "{COUNT_ROWS} lignes correspondant au document trouvées dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
+        "message": "Plusieurs lignes correspondant au document trouvées dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
         "documentation": ""
     },
     {

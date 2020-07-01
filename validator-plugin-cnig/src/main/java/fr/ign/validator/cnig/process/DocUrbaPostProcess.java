@@ -65,7 +65,6 @@ public class DocUrbaPostProcess implements ValidatorListener {
         }else if ( result.count > 1 ) {
             context.report(
                 context.createError(CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND)
-                    .setMessageParam("COUNT_ROWS", ""+result.count)
                     .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
             );
         }
