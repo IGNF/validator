@@ -62,7 +62,7 @@ public class DocUrbaPostProcess implements ValidatorListener {
                 context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
                     .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
             );
-        }else if ( result.count > 1 ) {
+        } else if (result.count > 1) {
             context.report(
                 context.createError(CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND)
                     .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
