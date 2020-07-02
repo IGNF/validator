@@ -6,20 +6,21 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.dgpr.validation.database.InclusionValidator;
-import fr.ign.validator.dgpr.validation.database.ScenarioValidator;
-import fr.ign.validator.model.DocumentModel;
-import fr.ign.validator.dgpr.validation.database.RelationValidator;
-import fr.ign.validator.dgpr.database.ValidatableDatabase;
+import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
 import fr.ign.validator.dgpr.validation.database.IdentifierValidator;
-import fr.ign.validator.ValidatorListener;
+import fr.ign.validator.dgpr.validation.database.InclusionValidator;
+import fr.ign.validator.dgpr.validation.database.RelationValidator;
+import fr.ign.validator.dgpr.validation.database.ScenarioValidator;
+import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.validation.Validator;
 
 /**
- *
+ * Add DGPR specific database validators to the DocumentModel.
  */
-public class LoadDocumentDatabasePostProcess implements ValidatorListener {
+public class CustomizeDatabaseValidation implements ValidatorListener {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("LoadDocumentDatabasePostProcess");
@@ -31,7 +32,7 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
         /*
          * Add standard database validators.
          * 
-         * TODO move to validator-core
+         * TODO move to DocumentModel constructor in validator-core
          */
         documentModel.addDatabaseValidator(new IdentifierValidator());
         documentModel.addDatabaseValidator(new RelationValidator());
@@ -51,17 +52,17 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-        log.info(
-            MARKER,
-            "Load document database"
-        );
-        ValidatableDatabase database = new ValidatableDatabase(context, document);
-        log.info(
-            MARKER,
-            "Validate document database"
-        );
+        log.info(MARKER, "Create validation Database...");
+        Database database = Database.createDatabase(context, true);
+        database.createTables(document.getDocumentModel());
+        database.createIndexes(document.getDocumentModel());
+        database.setProjection(context.getProjection());
+        database.load(context, document);
 
-        database.validate(context);
+        log.info(MARKER, "Validate using database validators...");
+        for (Validator<Database> validator : context.getDocumentModel().getDatabaseValidators()) {
+            validator.validate(context, database);
+        }
     }
 
 }

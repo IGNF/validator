@@ -2,7 +2,7 @@ package fr.ign.validator.dgpr;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.dgpr.validation.attribute.NumericCustomizer;
-import fr.ign.validator.dgpr.process.LoadDocumentDatabasePostProcess;
+import fr.ign.validator.dgpr.process.CustomizeDatabaseValidation;
 import fr.ign.validator.dgpr.validation.document.DocumentPrefixValidator;
 import fr.ign.validator.plugin.Plugin;
 
@@ -23,7 +23,7 @@ public class DgprPlugin implements Plugin {
         /*
          * All database Validation
          */
-        context.addListener(new LoadDocumentDatabasePostProcess());
+        context.addListener(new CustomizeDatabaseValidation());
 
         /*
          * Extends document validation - file name contains directory prefix
