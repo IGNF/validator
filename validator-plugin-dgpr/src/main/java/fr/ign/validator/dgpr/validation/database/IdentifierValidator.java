@@ -61,7 +61,7 @@ public class IdentifierValidator implements Validator<Database> {
             if (!(fileModel instanceof TableModel)) {
                 continue;
             }
-            
+
             // TODO context.beginModel(fileModel)
 
             // Looking for attributes who are identifiers

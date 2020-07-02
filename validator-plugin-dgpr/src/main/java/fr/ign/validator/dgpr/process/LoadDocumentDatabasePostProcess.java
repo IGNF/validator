@@ -9,6 +9,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
 import fr.ign.validator.dgpr.validation.database.ScenarioValidator;
+import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.dgpr.validation.database.RelationValidator;
 import fr.ign.validator.dgpr.database.ValidatableDatabase;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
@@ -25,6 +26,23 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
+        DocumentModel documentModel = document.getDocumentModel();
+
+        /*
+         * Add standard database validators.
+         * 
+         * TODO move to validator-core
+         */
+        documentModel.addDatabaseValidator(new IdentifierValidator());
+        documentModel.addDatabaseValidator(new RelationValidator());
+
+        /*
+         * DGPR specific database validators.
+         */
+        documentModel.addDatabaseValidator(new ScenarioValidator());
+        documentModel.addDatabaseValidator(new InclusionValidator());
+        documentModel.addDatabaseValidator(new GraphTopologyValidator());
+
     }
 
     @Override
@@ -37,26 +55,11 @@ public class LoadDocumentDatabasePostProcess implements ValidatorListener {
             MARKER,
             "Load document database"
         );
-
         ValidatableDatabase database = new ValidatableDatabase(context, document);
-
         log.info(
             MARKER,
             "Validate document database"
         );
-
-        /*
-         * Standard database Validation
-         */
-        database.addValidator(new IdentifierValidator());
-        database.addValidator(new RelationValidator());
-
-        /*
-         * Custom database Validation
-         */
-        database.addValidator(new ScenarioValidator());
-        database.addValidator(new InclusionValidator());
-        database.addValidator(new GraphTopologyValidator());
 
         database.validate(context);
     }

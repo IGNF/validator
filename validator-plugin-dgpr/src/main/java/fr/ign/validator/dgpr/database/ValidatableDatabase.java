@@ -1,8 +1,5 @@
 package fr.ign.validator.dgpr.database;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -29,11 +26,6 @@ public class ValidatableDatabase implements Validatable {
     private Database database;
 
     /**
-     * Validators
-     */
-    private List<Validator<Database>> validators = new ArrayList<>();
-
-    /**
      * Create database from document model and document files
      * 
      * @param context
@@ -41,7 +33,7 @@ public class ValidatableDatabase implements Validatable {
      * @throws Exception
      */
     public ValidatableDatabase(Context context, Document document) throws Exception {
-        log.info(MARKER, "Create ValidatableDatabase...");
+        log.info(MARKER, "Create validation Database...");
         this.database = Database.createDatabase(context, true);
         this.database.createTables(document.getDocumentModel());
         this.database.createIndexes(document.getDocumentModel());
@@ -56,27 +48,9 @@ public class ValidatableDatabase implements Validatable {
         /*
          * Validation at document level
          */
-        for (Validator<Database> validator : getValidators()) {
+        for (Validator<Database> validator : context.getDocumentModel().getDatabaseValidators()) {
             validator.validate(context, database);
         }
-    }
-
-    /**
-     * get list of database validators
-     * 
-     * @return
-     */
-    public List<Validator<Database>> getValidators() {
-        return validators;
-    }
-
-    /**
-     * push a database validator to current list
-     * 
-     * @param validator
-     */
-    public void addValidator(Validator<Database> validator) {
-        validators.add(validator);
     }
 
 }
