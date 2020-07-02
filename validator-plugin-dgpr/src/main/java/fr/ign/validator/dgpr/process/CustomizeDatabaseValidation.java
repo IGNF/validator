@@ -23,7 +23,7 @@ import fr.ign.validator.validation.Validator;
 public class CustomizeDatabaseValidation implements ValidatorListener {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("LoadDocumentDatabasePostProcess");
+    public static final Marker MARKER = MarkerManager.getMarker("CustomizeDatabaseValidation");
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
@@ -40,10 +40,10 @@ public class CustomizeDatabaseValidation implements ValidatorListener {
         /*
          * DGPR specific database validators.
          */
+        log.info(MARKER, "Register custom database validator for DGPR plugin...");
         documentModel.addDatabaseValidator(new ScenarioValidator());
         documentModel.addDatabaseValidator(new InclusionValidator());
         documentModel.addDatabaseValidator(new GraphTopologyValidator());
-
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CustomizeDatabaseValidation implements ValidatorListener {
         database.setProjection(context.getProjection());
         database.load(context, document);
 
-        log.info(MARKER, "Validate using database validators...");
+        log.info(MARKER, "Validate document using database validators...");
         for (Validator<Database> validator : context.getDocumentModel().getDatabaseValidators()) {
             validator.validate(context, database);
         }
