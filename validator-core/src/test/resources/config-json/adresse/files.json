@@ -5,7 +5,7 @@
   "files": [{
     "type": "table",
     "name": "ADRESSE",
-    "path": "ADRESSE(_+[0-9])?]",
+    "path": "ADRESSE(_+[0-9])?",
     "mandatory": "ERROR"
   }]
 }

@@ -107,7 +107,7 @@ public class JsonModelReaderTest {
         FileModel fileModel = documentModel.getFileModelByName("ADRESSE");
         Assert.assertNotNull(fileModel);
         Assert.assertTrue(fileModel instanceof TableModel);
-        Assert.assertEquals("ADRESSE(_+[0-9])?]", fileModel.getPath());
+        Assert.assertEquals("ADRESSE(_+[0-9])?", fileModel.getPath());
 
         /* perform checks on FeatureType "adresse" */
         FeatureType featureType = fileModel.getFeatureType();
