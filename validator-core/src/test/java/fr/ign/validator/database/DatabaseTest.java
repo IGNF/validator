@@ -1,21 +1,25 @@
 package fr.ign.validator.database;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.io.ModelReader;
-import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
@@ -25,30 +29,25 @@ public class DatabaseTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
-
-    Context context;
-
-    @Before
-    public void setUp() {
-        context = new Context();
-    }
-
     /**
-     * @throws Exception
+     * Create an SQLITE database with a specific path and performs basic tests
      */
     @Test
-    public void testEmptyDatabaseFromFile() {
+    public void testCreateDatabaseFile() {
         try {
-            // test database driver
-            File path = new File(folder.getRoot(), "document_database.db");
-            Database database = new Database(path);
+            File databaseFile = new File(folder.getRoot(), "sample.db");
+            Database database = new Database(databaseFile);
+
+            // ensure that file is created
+            assertTrue(databaseFile.exists());
+
+            // ensure that simple select works without any table
             RowIterator it = database.query("SELECT 'test' as test");
-            Assert.assertTrue(it.hasNext());
+            assertTrue(it.hasNext());
             String[] row = it.next();
-            Assert.assertEquals(1, row.length);
-            Assert.assertEquals("test", row[0]);
-            Assert.assertFalse(it.hasNext());
+            assertEquals(1, row.length);
+            assertEquals("test", row[0]);
+            assertFalse(it.hasNext());
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
@@ -56,24 +55,24 @@ public class DatabaseTest {
     }
 
     /**
-     * @throws Exception
+     * Performs basic test with some queries
      */
     @Test
     public void testCreateInsertSelect() {
         try {
-            File path = new File(folder.getRoot(), "document_database.db");
-            Database database = new Database(path);
+            File databaseFile = new File(folder.getRoot(), "sample.db");
+            Database database = new Database(databaseFile);
             database.query("CREATE TABLE TEST(id TEXT, name TEXT);");
             database.query("INSERT INTO TEST(id, name) VALUES ('1', 'name01');");
 
             RowIterator iterator = database.query("SELECT * FROM TEST;");
-            Assert.assertTrue(iterator.hasNext());
+            assertTrue(iterator.hasNext());
             int indexId = iterator.getColumn("id");
             int indexName = iterator.getColumn("name");
 
             String[] feature = iterator.next();
-            Assert.assertEquals("1", feature[indexId]);
-            Assert.assertEquals("name01", feature[indexName]);
+            assertEquals("1", feature[indexId]);
+            assertEquals("name01", feature[indexName]);
 
             iterator.close();
         } catch (Exception e) {
@@ -82,79 +81,11 @@ public class DatabaseTest {
         }
     }
 
-    protected Document getDocument(boolean validate) throws Exception {
-        context.setProjection("EPSG:4326");
-        context.setReportBuilder(reportBuilder);
-
-        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/cnig_PLU_2014/files.xml");
-        ModelReader modelLoader = new XmlModelReader();
-        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
-
-        File documentPath = ResourceHelper.getResourceFile(getClass(), "/documents/41003_PLU_20130903");
-        File copy = folder.newFolder(documentPath.getName());
-        FileUtils.copyDirectory(documentPath, copy);
-
-        Document document = new Document(documentModel, copy);
-
-        File validationDirectory = new File(copy.getParentFile(), "validation");
-        context.setValidationDirectory(validationDirectory);
-
-        if (validate) {
-            document.validate(context);
-        }
-
-        return document;
-    }
-
     /**
+     * Load DUMMY.csv file with A,B,WKT columns in table with A,B columns.
+     * 
      * @throws Exception
      */
-    @Test
-    public void testDatabaseFromNonValidatedDocument() {
-        try {
-            Document document = getDocument(false);
-            Database database = Database.createDatabase(document);
-            database.load(context, document);
-
-            // no data will be load (because no validation, no csv, no file mapping
-            int count = database.getCount("DOC_URBA");
-            Assert.assertEquals(0, count);
-
-            int countPrescription = database.getCount("PRESCRIPTION_SURF");
-            Assert.assertEquals(0, countPrescription);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail();
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    @Test
-    public void testDatabaseFromValidatedDocument() {
-        try {
-            Document document = getDocument(true);
-
-            Database database = Database.createDatabase(document);
-            database.load(context, document);
-
-            // some feature were load
-            // 0 DOC_URBA (because no DOC_URBA table
-            int count = database.getCount("DOC_URBA");
-            Assert.assertEquals(0, count);
-            // 19 PRESCRIPTION_SURF_41003
-            // 19 or 38 ? TODO figure how many...
-            int countPrescription = database.getCount("PRESCRIPTION_SURF");
-            Assert.assertEquals(19, countPrescription);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
-    }
-
     @Test
     public void testLoadSimpleFileWithColumnsAandB() throws Exception {
         Database database = new Database(new File(folder.getRoot(), "test.sqlite"));
@@ -171,7 +102,9 @@ public class DatabaseTest {
     }
 
     /**
-     * Test insert file
+     * Load DUMMY.csv file with A,B,WKT columns in table with C,D columns.
+     * 
+     * @throws Exception
      */
     @Test
     public void testLoadFileWithNoMatchingColumns() throws Exception {
@@ -186,6 +119,57 @@ public class DatabaseTest {
         database.loadFile("test", file, StandardCharsets.UTF_8);
 
         Assert.assertEquals(0, database.getCount("test"));
+    }
+
+    @Test
+    public void testLoadAdresseMultiple() throws Exception {
+        Context context = createTestContext();
+
+        Document document = getSampleDocument("adresse", "adresse-multiple");
+        Database database = Database.createDatabase(context, true);
+        database.createTables(document.getDocumentModel());
+        /*
+         * Note that this line is required to find mapping between DocumentFiles and
+         * FileModels
+         */
+        document.findFileModelForFiles(context);
+        database.load(context, document);
+        assertEquals(8, database.getCount("adresse"));
+    }
+
+    /**
+     * Get sample Document
+     * 
+     * @return
+     * @throws IOException
+     */
+    protected Document getSampleDocument(String documentModelName, String documentName) throws IOException {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-json/" + documentModelName + "/files.json"
+        );
+        ModelReader modelLoader = new JsonModelReader();
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+
+        File documentPath = ResourceHelper.getResourceFile(getClass(), "/documents/" + documentName);
+        File copy = folder.newFolder(documentPath.getName());
+        FileUtils.copyDirectory(documentPath, copy);
+        return new Document(documentModel, copy);
+    }
+
+    /**
+     * Create a test context
+     * 
+     * @return
+     */
+    private Context createTestContext() {
+        InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
+        Context context = new Context();
+        context.setProjection("EPSG:4326");
+        File validationDirectory = new File(folder.getRoot(), "validation");
+        validationDirectory.mkdirs();
+        context.setValidationDirectory(validationDirectory);
+        context.setReportBuilder(reportBuilder);
+        return context;
     }
 
 }

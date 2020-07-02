@@ -1,6 +1,5 @@
 package fr.ign.validator.dgpr.database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +11,12 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
-import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validatable;
 import fr.ign.validator.validation.Validator;
 
 /**
  * 
- * @author sai
+ * @author CBouche
  */
 public class ValidatableDatabase implements Validatable {
 
@@ -31,11 +27,6 @@ public class ValidatableDatabase implements Validatable {
      * Database
      */
     private Database database;
-
-    /**
-     * Document
-     */
-    private Document document;
 
     /**
      * Validators
@@ -50,40 +41,17 @@ public class ValidatableDatabase implements Validatable {
      * @throws Exception
      */
     public ValidatableDatabase(Context context, Document document) throws Exception {
-        this.document = document;
-        this.database = Database.createDatabase(document);
-        createIndexes(document);
+        log.info(MARKER, "Create ValidatableDatabase...");
+        this.database = Database.createDatabase(context, true);
+        this.database.createTables(document.getDocumentModel());
+        this.database.createIndexes(document.getDocumentModel());
         database.setProjection(context.getProjection());
         database.load(context, document);
     }
 
-    /**
-     * create all table indexes on identifier fields
-     * 
-     * @param document
-     * @throws SQLException
-     */
-    private void createIndexes(Document document) throws SQLException {
-        for (FileModel file : document.getDocumentModel().getFileModels()) {
-            if (!(file instanceof TableModel)) {
-                continue;
-            }
-            List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
-            for (AttributeType<?> attributeType : attributes) {
-                if (!attributeType.isIdentifier()) {
-                    continue;
-                }
-                database.createIndex(file.getName(), attributeType.getName());
-            }
-        }
-    }
-
     @Override
     public void validate(Context context) throws Exception {
-        log.info(
-            MARKER, "Validation de la database {}",
-            document.getDocumentModel().getName()
-        );
+        log.info(MARKER, "Validate using database validators...");
 
         /*
          * Validation at document level
@@ -91,7 +59,6 @@ public class ValidatableDatabase implements Validatable {
         for (Validator<Database> validator : getValidators()) {
             validator.validate(context, database);
         }
-
     }
 
     /**
@@ -101,15 +68,6 @@ public class ValidatableDatabase implements Validatable {
      */
     public List<Validator<Database>> getValidators() {
         return validators;
-    }
-
-    /**
-     * set list of database validators
-     * 
-     * @param validators
-     */
-    public void setValidators(List<Validator<Database>> validators) {
-        this.validators = validators;
     }
 
     /**
