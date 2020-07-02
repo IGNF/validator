@@ -8,8 +8,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
@@ -52,6 +50,7 @@ public class ValidateDocumentARegressTest {
             tableModel.setPath("commune");
 
             FeatureType featureType = new FeatureType();
+            featureType.setName("COMMUNE");
             // INSEE
             {
                 StringType attributeType = new StringType();
@@ -97,22 +96,18 @@ public class ValidateDocumentARegressTest {
     }
 
     @Test
-    public void testValidate() throws NoSuchAuthorityCodeException, FactoryException {
+    public void testValidate() throws Exception {
         Context context = new Context();
         context.setCurrentDirectory(documentPath);
         context.setProjection("CRS:84");
         Document document = new Document(documentModel, documentPath);
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
+        validationDirectory.mkdirs();
         context.setValidationDirectory(validationDirectory);
         InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
         context.setReportBuilder(reportBuilder);
 
-        try {
-            document.validate(context);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        document.validate(context);
 
         Assert.assertEquals(2, reportBuilder.getErrorsByLevel(ErrorLevel.ERROR).size());
         Assert.assertEquals(0, reportBuilder.getErrorsByLevel(ErrorLevel.WARNING).size());

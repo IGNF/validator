@@ -166,6 +166,7 @@ public class RelationValidator implements Validator<Database> {
 
         }
 
+        table.close();
     }
 
 }

@@ -1,5 +1,6 @@
 package fr.ign.validator.dgpr.validation.database;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
@@ -190,7 +191,7 @@ public class GraphTopologyValidator implements Validator<Database> {
         return true;
     }
 
-    private String findAllHauteur(SurfaceInondable surface, String tablename) throws SQLException {
+    private String findAllHauteur(SurfaceInondable surface, String tablename) throws IOException, SQLException {
         /*
          * IN postgresql there is no GROUP_CONCAT function we use SELECT id,
          * string_agg(some_column, ',') FROM the_table GROUP BY id
@@ -214,6 +215,7 @@ public class GraphTopologyValidator implements Validator<Database> {
         }
 
         String result = iterator.next()[0];
+        iterator.close();
         return result;
     }
 
