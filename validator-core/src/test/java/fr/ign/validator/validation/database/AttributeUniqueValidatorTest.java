@@ -1,4 +1,4 @@
-package fr.ign.validator.dgpr.validation.database;
+package fr.ign.validator.validation.database;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
-import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
@@ -25,7 +24,7 @@ import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
-public class IdentifierValidatorTest {
+public class AttributeUniqueValidatorTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -103,8 +102,8 @@ public class IdentifierValidatorTest {
         database.query("INSERT INTO RELATION(id) VALUES ('relation_2');");
         database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
 
-        // check that the identifierValidator doesn't send any error
-        IdentifierValidator identifierValidator = new IdentifierValidator();
+        // check that the validator doesn't send any error
+        AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
         identifierValidator.validate(context, database);
 
         Assert.assertEquals(0, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
@@ -132,7 +131,7 @@ public class IdentifierValidatorTest {
         database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
 
         // check that the identifierValidator sends two errors
-        IdentifierValidator identifierValidator = new IdentifierValidator();
+        AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
         identifierValidator.validate(context, database);
 
         Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());

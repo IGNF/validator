@@ -1,4 +1,4 @@
-package fr.ign.validator.dgpr.validation.database;
+package fr.ign.validator.validation.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validator;
 
-public class IdentifierValidator implements Validator<Database> {
+public class AttributeUniqueValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
