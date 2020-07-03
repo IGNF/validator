@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -42,18 +43,16 @@ import fr.ign.validator.tools.TableReader;
 public class Database {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("DocumentDatabase");
+    public static final Marker MARKER = MarkerManager.getMarker("Database");
 
     private static final int batchSize = 100;
 
-    public static final String ENV_DATABASE_URL = "DB_URL";
-    public static final String ENV_DATABASE_USER = "DB_USER";
-    public static final String ENV_DATABASE_PASSWORD = "DB_PASSWORD";
-    public static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
+    private static final String ENV_DATABASE_URL = "DB_URL";
+    private static final String ENV_DATABASE_USER = "DB_USER";
+    private static final String ENV_DATABASE_PASSWORD = "DB_PASSWORD";
+    private static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
 
     public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
-
-    public static final String GEOMETRY_COLUMN = "WKT";
 
     public static final String DEFAULT_SRID = "4326";
 
@@ -67,7 +66,7 @@ public class Database {
     private Connection connection;
 
     /**
-     * Create or open an sqlite database
+     * Create or open an SQLITE database
      * 
      * @param sqlitePath
      */
@@ -85,24 +84,31 @@ public class Database {
         }
     }
 
-    public Database(String url, String user, String password, String schema) {
-        log.info(MARKER, "Create POSTGRESQL database {}...", url);
+    /**
+     * Create or open a PostgreSQL database with a given schema
+     * 
+     * @param url
+     * @param user
+     * @param password
+     * @param schema
+     */
+    private Database(String url, String user, String password, String schema) {
+        log.info(MARKER, "Create PostgreSQL database {} using schema={}...", url, schema);
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
             connection.setAutoCommit(false);
-            // save schema
-            this.setSchema(schema);
+            this.schema = schema;
+            updateCurrentSchema(false);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**
-     * Get database connection
+     * Get SQL connection
      * 
      * @return
      */
@@ -111,71 +117,126 @@ public class Database {
     }
 
     /**
-     * Create database with a schema corresponding to the given document
+     * True if a schema is defined
+     */
+    private boolean hasSchema() {
+        return !StringUtils.isEmpty(this.schema);
+    }
+
+    /**
+     * If defined, ensure that the specified schema exists and set in search_path.
      * 
+     * @param reset true if the schema has to be re-created
+     * @throws SQLException
+     */
+    private void updateCurrentSchema(boolean reset) throws SQLException {
+        if (!hasSchema()) {
+            return;
+        }
+        // recreate schema is reset is set to true
+        if (reset) {
+            update("DROP SCHEMA IF EXISTS " + schema + " CASCADE;");
+        }
+        // ensure that schema exists
+        update("CREATE SCHEMA IF NOT EXISTS " + schema + ";");
+        // set current search path to use current schema
+        update("SET search_path = " + schema + ", public;");
+        connection.commit();
+    }
+
+    public Projection getProjection() {
+        return projection;
+    }
+
+    public void setProjection(Projection projection) {
+        this.projection = projection;
+    }
+
+    /**
+     * Create a validation Database according to environment variables :
+     * 
+     * <ul>
+     * <li>DB_URL (ex : "jdbc:postgresql:validator-test")</li>
+     * <li>DB_USER (ex : "postgis")</li>
+     * <li>DB_PASSWORD (ex : "postgis")</li>
+     * <li>DB_SCHEMA (ex : "validation_{document.id}")</li>
+     * </ul>
+     * 
+     * Note that :
+     * 
+     * <ul>
+     * <li>An SQLITE database is created in validation directory if DB_URL is not
+     * specified</li>
+     * <li>The default schema for PostgreSQL is "validation" and "public" is
+     * forbidden</li>
+     * <li>DB_SCHEMA is set a the default schema (search path)
+     * <li>
+     * </ul>
+     *
      * @param document
+     * @param reset    true if the schema has to be re-created
+     * 
      * @return
      * @throws SQLException
      */
-    public static Database createDatabase(Document document) throws SQLException {
+    public static Database createDatabase(Context context, boolean reset) throws SQLException {
         String url = System.getenv(Database.ENV_DATABASE_URL);
-        if (url != null && !url.isEmpty()) {
-            return createPostgresDatabase(document);
+        if (StringUtils.isEmpty(url)) {
+            return Database.createSqlLiteDatabase(context, reset);
+        } else {
+            return createPostgresDatabase(context, reset);
         }
-        // else
-        return Database.createSqlLiteDatabase(document);
     }
 
-    private static Database createSqlLiteDatabase(Document document) throws SQLException {
-        File parentDirectory = document.getDocumentPath().getParentFile();
-        File databasePath = new File(parentDirectory, "document_database.db");
-        if (databasePath.exists()) {
-            log.info(MARKER, "remove existing database {}...", databasePath);
+    /**
+     * Create an SQLITE database as document_database.db in validation directory.
+     * 
+     * @param context
+     * @param reset
+     * @return
+     * @throws SQLException
+     */
+    private static Database createSqlLiteDatabase(Context context, boolean reset) throws SQLException {
+        File databasePath = new File(context.getValidationDirectory(), "document_database.db");
+        if (databasePath.exists() && reset) {
+            log.info(MARKER, "Remove existing database {}...", databasePath);
             databasePath.delete();
         }
-        Database database = new Database(databasePath);
-        if (database.hasSchema()) {
-            database.createSchema(database.getSchema());
-        }
-        database.createTables(document.getDocumentModel());
-        return database;
+        return new Database(databasePath);
     }
 
-    private static Database createPostgresDatabase(Document document) throws SQLException {
+    /**
+     * Create a PostgreSQL database according to environment variables.
+     * 
+     * @param context
+     * @param reset
+     * @return
+     * @throws SQLException
+     */
+    private static Database createPostgresDatabase(Context context, boolean reset) throws SQLException {
         String url = System.getenv(Database.ENV_DATABASE_URL);
         String user = System.getenv(Database.ENV_DATABASE_USER);
         String password = System.getenv(Database.ENV_DATABASE_PASSWORD);
         String schema = System.getenv(Database.ENV_DATABASE_SCHEMA);
-        Database database = new Database(url, user, password, schema);
-        if (database.hasSchema()) {
-            database.createSchema(database.getSchema());
+        if (StringUtils.isEmpty(schema)) {
+            schema = "validation";
+        } else if (schema.equals("public")) {
+            throw new RuntimeException("The use DB_SCHEMA=public is forbidden");
         }
-        database.createTables(document.getDocumentModel());
+        Database database = new Database(url, user, password, schema);
+        if (reset) {
+            database.updateCurrentSchema(true);
+        }
         return database;
     }
 
-    public void createSchema(String schemaName) throws SQLException {
-        String dropClause = "";
-        if (this.isPostgresqlDriver() && !schemaName.equals("public")) {
-            dropClause = "DROP SCHEMA IF EXISTS " + schemaName + " CASCADE;";
-        }
-        String sql = dropClause
-            + " CREATE SCHEMA IF NOT EXISTS " + schemaName + ";"
-            + " SET search_path = " + schemaName + ", public;";
-
-        // debug SQL
-        log.debug(MARKER, sql);
-        Statement sth = connection.createStatement();
-        sth.executeUpdate(sql);
-        connection.commit();
-    }
-
     /**
-     * Create tables according to documentModel
+     * Create tables according to the TableModels of the DocumentModel
      * 
      * @throws SQLException
      */
     public void createTables(DocumentModel documentModel) throws SQLException {
+        log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
         List<FileModel> fileModels = documentModel.getFileModels();
         for (FileModel fileModel : fileModels) {
             if (fileModel instanceof TableModel) {
@@ -186,12 +247,13 @@ public class Database {
     }
 
     /**
-     * Create table according to tableModel
+     * Create a table according to a TableModel
      * 
      * @param tableModel
      * @throws SQLException
      */
     public void createTable(TableModel tableModel) throws SQLException {
+        log.info(MARKER, "Create table for the TableModel '{}' ...", tableModel.getName());
         if (this.isPostgresqlDriver()) {
             createPostgisTable(tableModel);
         } else {
@@ -200,7 +262,7 @@ public class Database {
     }
 
     /**
-     * Create table
+     * Create a table with a list of text columns.
      * 
      * @param string
      * @param columnNames
@@ -219,10 +281,7 @@ public class Database {
         }
         sql += ");";
 
-        // debug SQL
-        log.debug(MARKER, sql);
-        Statement sth = connection.createStatement();
-        sth.executeUpdate(sql);
+        update(sql);
         connection.commit();
     }
 
@@ -232,13 +291,17 @@ public class Database {
      * @param tableModel
      * @throws SQLException
      */
-    public void createPostgisTable(TableModel tableModel) throws SQLException {
+    private void createPostgisTable(TableModel tableModel) throws SQLException {
         List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
         List<String> columns = new ArrayList<String>(attributes.size());
 
         for (AttributeType<?> attribute : attributes) {
             if (attribute.isGeometry()) {
                 columns.add(attribute.getName() + " TEXT");
+                /*
+                 * TODO clarify "the_geom" (supporting "the_geom" as a default geom instead of
+                 * "WKT" would be better than this "hack")
+                 */
                 columns.add("the_geom geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")");
             } else {
                 columns.add(attribute.getName() + " TEXT");
@@ -249,15 +312,29 @@ public class Database {
             + String.join(",", columns)
             + ");";
 
-        // debug SQL
-        log.debug(MARKER, sql);
-        Statement sth = connection.createStatement();
-        sth.executeUpdate(sql);
+        update(sql);
         connection.commit();
-        /*
-         * -- Add a spatial index CREATE INDEX mydata_geom_idx ON mydata USING gist
-         * (geom);
-         */
+    }
+
+    /**
+     * Create indexes for all tables on unique fields
+     * 
+     * @param document
+     * @throws SQLException
+     */
+    public void createIndexes(DocumentModel documentModel) throws SQLException {
+        for (FileModel file : documentModel.getFileModels()) {
+            if (!(file instanceof TableModel)) {
+                continue;
+            }
+            List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
+            for (AttributeType<?> attributeType : attributes) {
+                if (!attributeType.getConstraints().isUnique()) {
+                    continue;
+                }
+                createIndex(file.getName(), attributeType.getName());
+            }
+        }
     }
 
     /**
@@ -276,10 +353,8 @@ public class Database {
         String indexName = "idx_" + tableName + "_" + columnName;
         String sql = "CREATE INDEX " + ifClause + indexName
             + " ON " + tableName + " (" + columnName + ")";
-        // debug SQL
-        log.debug(MARKER, sql);
-        Statement sth = connection.createStatement();
-        sth.executeUpdate(sql);
+
+        update(sql);
         connection.commit();
     }
 
@@ -342,11 +417,10 @@ public class Database {
                 // must split code
                 srid = this.getProjection().getCode().split(":")[1];
             }
+            // TODO clarify wkt/the_geom
             String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = "
                 + "ST_Multi(ST_Transform(ST_SetSRID(wkt, " + srid + "), 4326));";
-            log.debug(MARKER, updateSQL);
-            Statement sth = connection.createStatement();
-            sth.executeUpdate(updateSQL);
+            update(updateSQL);
             connection.commit();
         }
     }
@@ -435,7 +509,7 @@ public class Database {
     }
 
     /**
-     * Perform any SQL request to DocumentDatabase
+     * Perform any SQL request returning results
      * 
      * @param sql
      * @return
@@ -452,6 +526,19 @@ public class Database {
     }
 
     /**
+     * Perform any SQL request that doesn't returns results
+     * 
+     * @param sql
+     * @return
+     * @throws SQLException
+     */
+    private void update(String sql) throws SQLException {
+        log.debug(MARKER, sql);
+        Statement sth = connection.createStatement();
+        sth.executeUpdate(sql);
+    }
+
+    /**
      * Return an Array of String giving column names for a giving table
      * 
      * @param tablename
@@ -459,7 +546,7 @@ public class Database {
      * @throws SQLException
      * @throws IOException
      */
-    public String[] getTableSchema(String tablename) throws SQLException, IOException {
+    private String[] getTableSchema(String tablename) throws SQLException, IOException {
         RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1");
         String[] header = query.getHeader();
         query.close();
@@ -467,7 +554,7 @@ public class Database {
     }
 
     /**
-     * Return the number of features of a giving table
+     * Return the number of rows for a given table
      * 
      * @param tableName
      * @return
@@ -481,36 +568,12 @@ public class Database {
     }
 
     /**
-     * Return all the feature of a giving table
+     * Returns true if driver is postgresql
      * 
-     * @param tablename
+     * TODO move to private, add helper to retrieve values
+     * 
      * @return
-     * @throws SQLException
      */
-    public RowIterator selectAll(String tablename) throws SQLException {
-        return query("SELECT * FROM " + tablename);
-    }
-
-    public boolean hasSchema() {
-        return this.schema != null && !this.schema.isEmpty();
-    }
-
-    public String getSchema() {
-        return schema;
-    }
-
-    public void setSchema(String schema) {
-        this.schema = schema;
-    }
-
-    public Projection getProjection() {
-        return projection;
-    }
-
-    public void setProjection(Projection projection) {
-        this.projection = projection;
-    }
-
     public boolean isPostgresqlDriver() {
         try {
             return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);

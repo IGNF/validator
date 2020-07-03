@@ -15,7 +15,6 @@ import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validator;
@@ -62,22 +61,25 @@ public class IdentifierValidator implements Validator<Database> {
             if (!(fileModel instanceof TableModel)) {
                 continue;
             }
-
-            FeatureType featureType = fileModel.getFeatureType();
-
-            List<AttributeType<?>> attributesList = featureType.getAttributes();
+            
+            // TODO context.beginModel(fileModel)
 
             // Looking for attributes who are identifiers
-            for (AttributeType<?> attribute : attributesList) {
+            for (AttributeType<?> attribute : fileModel.getFeatureType().getAttributes()) {
                 if (!attribute.isIdentifier()) {
                     continue;
                 }
+                // TODO context.beginModel(attribute)
                 validateOneIdentifier(attribute.getName(), fileModel);
+                // TODO context.endModel(attribute)
             }
+            // TODO context.endModel(fileModel)
         }
     }
 
     private void validateOneIdentifier(String identifier, FileModel fileModel) throws SQLException, IOException {
+        // TODO HAVING count(*) > 1 ORDER BY count(*) DESC
+        // TODO LIMIT 10 ?
         RowIterator table = database.query(
             "SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
                 + " FROM " + fileModel.getName()
@@ -92,6 +94,7 @@ public class IdentifierValidator implements Validator<Database> {
             int compte = Integer.parseInt(row[indexCount]);
 
             // if not unique, send error
+            // remove condition by adding HAVING count(*) > 1
             if (compte > 1) {
                 context.report(
                     context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
