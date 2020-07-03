@@ -9,7 +9,6 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
-import fr.ign.validator.dgpr.validation.database.IdentifierValidator;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
 import fr.ign.validator.dgpr.validation.database.RelationValidator;
 import fr.ign.validator.dgpr.validation.database.ScenarioValidator;
@@ -32,7 +31,6 @@ public class CustomizeDatabaseValidation implements ValidatorListener {
          * 
          * TODO move to DocumentModel constructor in validator-core
          */
-        documentModel.addDatabaseValidator(new IdentifierValidator());
         documentModel.addDatabaseValidator(new RelationValidator());
 
         /*

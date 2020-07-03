@@ -19,6 +19,12 @@ import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validator;
 
+/**
+ * Validate attributes according to "unique" constraints.
+ * 
+ * @author CBouche
+ * @author MBorne
+ */
 public class AttributeUniqueValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
@@ -66,7 +72,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
 
             // Looking for attributes who are identifiers
             for (AttributeType<?> attribute : fileModel.getFeatureType().getAttributes()) {
-                if (!attribute.isIdentifier()) {
+                if (!attribute.getConstraints().isUnique()) {
                     continue;
                 }
                 // TODO context.beginModel(attribute)
@@ -108,7 +114,6 @@ public class AttributeUniqueValidator implements Validator<Database> {
 
         }
         table.close();
-
     }
 
 }

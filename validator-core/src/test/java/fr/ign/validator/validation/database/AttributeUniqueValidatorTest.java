@@ -41,12 +41,11 @@ public class AttributeUniqueValidatorTest {
 
         // creates attribute "id" which is an identifier
         AttributeType<String> attribute = new StringType();
-        attribute.setIdentifier(true);
         attribute.setName("id");
+        attribute.getConstraints().setUnique(true);
 
         // creates attribute "relation_id" which is NOT an identifier
         AttributeType<String> attribute2 = new StringType();
-        attribute2.setIdentifier(false);
         attribute2.setName("relation_id");
 
         // creates list of attributes
