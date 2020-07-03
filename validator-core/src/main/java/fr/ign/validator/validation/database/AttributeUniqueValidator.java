@@ -62,24 +62,24 @@ public class AttributeUniqueValidator implements Validator<Database> {
     private void runValidation() throws SQLException, IOException {
         List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
 
-        // For each table
+        /*
+         * Validate each attribute marked as unique
+         */
         for (FileModel fileModel : fileModelsList) {
             if (!(fileModel instanceof TableModel)) {
                 continue;
             }
 
-            // TODO context.beginModel(fileModel)
-
-            // Looking for attributes who are identifiers
+            context.beginModel(fileModel);
             for (AttributeType<?> attribute : fileModel.getFeatureType().getAttributes()) {
                 if (!attribute.getConstraints().isUnique()) {
                     continue;
                 }
-                // TODO context.beginModel(attribute)
+                context.beginModel(attribute);
                 validateOneIdentifier(attribute.getName(), fileModel);
-                // TODO context.endModel(attribute)
+                context.endModel(attribute);
             }
-            // TODO context.endModel(fileModel)
+            context.endModel(fileModel);
         }
     }
 

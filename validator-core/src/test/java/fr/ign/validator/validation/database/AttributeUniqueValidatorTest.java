@@ -1,5 +1,7 @@
 package fr.ign.validator.validation.database;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -83,7 +86,7 @@ public class AttributeUniqueValidatorTest {
     }
 
     @Test
-    public void testOk() throws Exception {
+    public void testValid() throws Exception {
         // creates an empty database
         File path = new File(folder.getRoot(), "document_database.db");
         Database database = new Database(path);
@@ -109,7 +112,7 @@ public class AttributeUniqueValidatorTest {
     }
 
     @Test
-    public void testUnicityFail() throws Exception {
+    public void testNotValid() throws Exception {
         // creates an empty database
         File path = new File(folder.getRoot(), "document_database.db");
         Database database = new Database(path);
@@ -135,15 +138,29 @@ public class AttributeUniqueValidatorTest {
 
         Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
 
-        ValidatorError idError0 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(0);
-        ValidatorError idError1 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(1);
-
-        Assert.assertEquals(
-            "Problème dans la table TEST : l'identifiant 'test_2' est présent 2 fois.", idError0.getMessage()
-        );
-        Assert.assertEquals(
-            "Problème dans la table RELATION : l'identifiant 'relation_3' est présent 3 fois.", idError1.getMessage()
-        );
+        List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE);
+        int index = 0;
+        // check first error
+        {
+            ValidatorError error = errors.get(index++);
+            assertEquals("id", error.getAttribute());
+            assertEquals("TEST", error.getFileModel());
+            assertEquals(ErrorScope.HEADER, error.getScope());
+            assertEquals(
+                "La valeur 'test_2' est présente 2 fois.",
+                error.getMessage()
+            );
+        }
+        {
+            ValidatorError error = errors.get(index++);
+            assertEquals("id", error.getAttribute());
+            assertEquals("RELATION", error.getFileModel());
+            assertEquals(ErrorScope.HEADER, error.getScope());
+            assertEquals(
+                "La valeur 'relation_3' est présente 3 fois.",
+                error.getMessage()
+            );
+        }
     }
 
 }

@@ -1,25 +1,26 @@
 package fr.ign.validator.error;
 
 /**
- * Error location, stands as the type of the error
+ * Error location. Allows to group errors while displaying validation report.
  * 
  * @author MBorne
  */
 public enum ErrorScope {
     /**
-     * document level (missing files, etc.)
+     * Error reported at document level (missing files, etc.).
      */
     DIRECTORY("DIRECTORY"),
     /**
-     * Metadata file validation
+     * Error reported on metadata file.
      */
     METADATA("METADATA"),
     /**
-     * Table header validation
+     * Error reported at table level (historically, columns definition validation.
+     * Includes now global checks on a table such as "unique")
      */
     HEADER("HEADER"),
     /**
-     * Table row validation
+     * Error reported on a specific row of a table.
      */
     FEATURE("FEATURE");
 
