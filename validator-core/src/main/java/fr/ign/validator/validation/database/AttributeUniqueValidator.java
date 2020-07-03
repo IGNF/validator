@@ -107,10 +107,15 @@ public class AttributeUniqueValidator implements Validator<Database> {
                 );
                 for (DuplicatedValue duplicatedValue : duplicatedValues) {
                     context.report(
+                        /*
+                         * Note that scope DIRECTORY is mainly forced to ease integration in current
+                         * client.
+                         */
                         context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
-                            .setScope(ErrorScope.HEADER)
+                            .setScope(ErrorScope.DIRECTORY)
                             .setFileModel(fileModel.getName())
                             .setMessageParam("TABLE_NAME", fileModel.getName())
+                            .setMessageParam("COLUMN_NAME", attribute.getName())
                             .setMessageParam("ID_NAME", duplicatedValue.value)
                             .setMessageParam("ID_COUNT", "" + duplicatedValue.count)
                     );

@@ -108,7 +108,7 @@
     {
         "name": "ATTRIBUTE_NOT_UNIQUE",
         "level": "ERROR",
-        "message": "La valeur '{ID_NAME}' est présente {ID_COUNT} fois.",
+        "message": "La valeur '{ID_NAME}' est présente {ID_COUNT} fois pour le champ '{COLUMN_NAME}' de la table '{TABLE_NAME}'.",
         "documentation": "Cette erreur se produit lorsqu'un champ « unique » contient plusieurs occurences d'une même valeur."
     },
     {

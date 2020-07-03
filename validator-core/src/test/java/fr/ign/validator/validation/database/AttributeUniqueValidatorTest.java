@@ -44,12 +44,12 @@ public class AttributeUniqueValidatorTest {
 
         // creates attribute "id" which is an identifier
         AttributeType<String> attribute = new StringType();
-        attribute.setName("id");
+        attribute.setName("ID");
         attribute.getConstraints().setUnique(true);
 
         // creates attribute "relation_id" which is NOT an identifier
         AttributeType<String> attribute2 = new StringType();
-        attribute2.setName("relation_id");
+        attribute2.setName("RELATION_ID");
 
         // creates list of attributes
         List<AttributeType<?>> attributes = new ArrayList<>();
@@ -81,6 +81,7 @@ public class AttributeUniqueValidatorTest {
 
         // creates a DocumentModel with the List<FileModel>
         DocumentModel documentModel = new DocumentModel();
+        documentModel.setName("SAMPLE_MODEL");
         documentModel.setFileModels(fileModels);
         context.beginModel(documentModel);
     }
@@ -143,23 +144,25 @@ public class AttributeUniqueValidatorTest {
         // check first error
         {
             ValidatorError error = errors.get(index++);
-            assertEquals("id", error.getAttribute());
+            assertEquals("ID", error.getAttribute());
             assertEquals("TEST", error.getFileModel());
-            assertEquals(ErrorScope.HEADER, error.getScope());
+            assertEquals(ErrorScope.DIRECTORY, error.getScope());
             assertEquals(
-                "La valeur 'test_2' est présente 2 fois.",
+                "La valeur 'test_2' est présente 2 fois pour le champ 'ID' de la table 'TEST'.",
                 error.getMessage()
             );
+            assertEquals("SAMPLE_MODEL",error.getDocumentModel());
         }
         {
             ValidatorError error = errors.get(index++);
-            assertEquals("id", error.getAttribute());
+            assertEquals("ID", error.getAttribute());
             assertEquals("RELATION", error.getFileModel());
-            assertEquals(ErrorScope.HEADER, error.getScope());
+            assertEquals(ErrorScope.DIRECTORY, error.getScope());
             assertEquals(
-                "La valeur 'relation_3' est présente 3 fois.",
+                "La valeur 'relation_3' est présente 3 fois pour le champ 'ID' de la table 'RELATION'.",
                 error.getMessage()
             );
+            assertEquals("SAMPLE_MODEL",error.getDocumentModel());
         }
     }
 
