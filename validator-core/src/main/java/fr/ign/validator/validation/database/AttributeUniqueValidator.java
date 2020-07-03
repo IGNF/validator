@@ -63,12 +63,12 @@ public class AttributeUniqueValidator implements Validator<Database> {
     }
 
     private void doValidate(Context context, Database database) throws SQLException, IOException {
-        List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
+        log.info(MARKER, "Looking for attributes with unique constraints...");
 
         /*
          * Validate each attribute marked as unique
          */
-        for (FileModel fileModel : fileModelsList) {
+        for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
             if (!(fileModel instanceof TableModel)) {
                 continue;
             }
@@ -78,6 +78,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
                 if (!attribute.getConstraints().isUnique()) {
                     continue;
                 }
+
                 context.beginModel(attribute);
 
                 /*

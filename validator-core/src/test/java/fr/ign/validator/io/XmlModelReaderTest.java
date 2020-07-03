@@ -105,6 +105,42 @@ public class XmlModelReaderTest {
     }
 
     /**
+     * Read adresse model and performs regress test
+     * 
+     * @throws JsonProcessingException
+     */
+    @Test
+    public void testLoadDocumentModelAdresse() {
+        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/adresse/files.xml");
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+        assertIsValid(documentModel);
+
+        Assert.assertEquals("adresse", documentModel.getName());
+        Assert.assertEquals(1, documentModel.getFileModels().size());
+
+        FileModel fileModel = documentModel.getFileModels().get(0);
+        Assert.assertEquals("ADRESSE", fileModel.getName());
+
+        FeatureType featureType = fileModel.getFeatureType();
+        Assert.assertNotNull(featureType);
+        Assert.assertEquals(2, featureType.getAttributeCount());
+
+        int index = 0;
+        {
+            AttributeType<?> attribute = featureType.getAttribute(index++);
+            Assert.assertEquals("ID", attribute.getName());
+            Assert.assertEquals("String", attribute.getTypeName());
+            Assert.assertTrue(attribute.getConstraints().isUnique());
+        }
+        {
+            AttributeType<?> attribute = featureType.getAttribute(index++);
+            Assert.assertEquals("ADRESSE", attribute.getName());
+            Assert.assertEquals("String", attribute.getTypeName());
+            Assert.assertFalse(attribute.getConstraints().isUnique());
+        }
+    }
+
+    /**
      * Load DocumentModel /config-xml/sample-document/files.xml and performs checks
      */
     @Test
