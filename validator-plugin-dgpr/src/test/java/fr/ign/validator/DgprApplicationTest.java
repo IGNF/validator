@@ -15,6 +15,7 @@ import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.XmlModelReader;
@@ -218,9 +219,9 @@ public class DgprApplicationTest {
             /*
              * Validation unicite et relation
              */
-            Assert.assertEquals(2, report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
-            ValidatorError error50 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(0);
-            ValidatorError error51 = report.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(1);
+            Assert.assertEquals(2, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
+            ValidatorError error50 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(0);
+            ValidatorError error51 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(1);
             Assert.assertEquals(
                 "Problème dans la table N_prefixTri_ECOUL_S_ddd : l'identifiant 'ZE_2' est présent 2 fois.", error50
                     .getMessage()

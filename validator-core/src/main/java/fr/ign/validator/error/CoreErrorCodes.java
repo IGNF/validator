@@ -181,6 +181,8 @@ public class CoreErrorCodes {
     public static final ErrorCode ATTRIBUTE_UNEXPECTED_VALUE = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_VALUE");
     public static final ErrorCode ATTRIBUTE_UNEXPECTED_NULL = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_NULL");
 
+    public static final ErrorCode ATTRIBUTE_NOT_UNIQUE = ErrorCode.valueOf("ATTRIBUTE_NOT_UNIQUE");
+
     public static final ErrorCode ATTRIBUTE_CHARACTERS_REPLACED = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_REPLACED");
     public static final ErrorCode ATTRIBUTE_CHARACTERS_ILLEGAL = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_ILLEGAL");
 

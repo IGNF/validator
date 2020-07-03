@@ -106,6 +106,12 @@
         "documentation": "Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide"
     },
     {
+        "name": "ATTRIBUTE_NOT_UNIQUE",
+        "level": "ERROR",
+        "message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
+        "documentation": "Cette erreur se produit lorsqu'un champ « unique » contient plusieurs occurences d'une même valeur."
+    },
+    {
         "name": "ATTRIBUTE_CHARACTERS_ILLEGAL",
         "level": "ERROR",
         "message": "La valeur (‘{VALUE}’) contient des caractères interdits qui seront échappés (‘{FIXED_VALUE}’).",
@@ -631,7 +637,7 @@
         "name": "DGPR_IDENTIFIER_UNICITY",
         "level": "ERROR",
         "message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
-        "documentation": ""
+        "documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_NOT_UNIQUE pour migration du contrôle dans validator-core"
     },
     {
         "name": "DGPR_RELATION_ERROR",

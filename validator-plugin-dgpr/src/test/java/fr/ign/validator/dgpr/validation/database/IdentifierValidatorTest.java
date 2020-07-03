@@ -15,6 +15,7 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -106,7 +107,7 @@ public class IdentifierValidatorTest {
         IdentifierValidator identifierValidator = new IdentifierValidator();
         identifierValidator.validate(context, database);
 
-        Assert.assertEquals(0, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
+        Assert.assertEquals(0, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
     }
 
     @Test
@@ -134,10 +135,10 @@ public class IdentifierValidatorTest {
         IdentifierValidator identifierValidator = new IdentifierValidator();
         identifierValidator.validate(context, database);
 
-        Assert.assertEquals(2, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
+        Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
 
-        ValidatorError idError0 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(0);
-        ValidatorError idError1 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(1);
+        ValidatorError idError0 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(0);
+        ValidatorError idError1 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(1);
 
         Assert.assertEquals(
             "Problème dans la table TEST : l'identifiant 'test_2' est présent 2 fois.", idError0.getMessage()

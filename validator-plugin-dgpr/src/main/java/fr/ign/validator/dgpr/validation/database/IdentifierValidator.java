@@ -12,7 +12,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
-import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
@@ -97,7 +97,7 @@ public class IdentifierValidator implements Validator<Database> {
             // remove condition by adding HAVING count(*) > 1
             if (compte > 1) {
                 context.report(
-                    context.createError(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY)
+                    context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
                         .setScope(ErrorScope.HEADER)
                         .setFileModel(fileModel.getName())
                         .setMessageParam("TABLE_NAME", fileModel.getName())
