@@ -223,11 +223,11 @@ public class DgprApplicationTest {
             ValidatorError error50 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(0);
             ValidatorError error51 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(1);
             Assert.assertEquals(
-                "Problème dans la table N_prefixTri_ECOUL_S_ddd : l'identifiant 'ZE_2' est présent 2 fois.", error50
+                "La valeur 'ZE_2' est présente 2 fois.", error50
                     .getMessage()
             );
             Assert.assertEquals(
-                "Problème dans la table N_prefixTri_ENJEU_CRISE_L_ddd : l'identifiant 'SIEXT' est présent 2 fois.",
+                "La valeur 'SIEXT' est présente 2 fois.",
                 error51.getMessage()
             );
 

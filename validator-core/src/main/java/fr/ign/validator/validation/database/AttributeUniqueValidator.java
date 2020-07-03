@@ -2,6 +2,7 @@ package fr.ign.validator.validation.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,17 +29,22 @@ import fr.ign.validator.validation.Validator;
 public class AttributeUniqueValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("IdentifierValidator");
+    public static final Marker MARKER = MarkerManager.getMarker("AttributeUniqueValidator");
 
     /**
-     * Context
+     * A duplicated value with the number of occurence
+     * 
+     * @author MBorne
      */
-    private Context context;
+    private class DuplicatedValue {
+        public String value;
+        public int count;
 
-    /**
-     * Document
-     */
-    private Database database;
+        public DuplicatedValue(String value, int count) {
+            this.value = value;
+            this.count = count;
+        }
+    }
 
     /**
      * Check if there every ID is unique in a given table
@@ -49,17 +55,14 @@ public class AttributeUniqueValidator implements Validator<Database> {
      * @throws Exception
      */
     public void validate(Context context, Database database) {
-        // context
-        this.context = context;
-        this.database = database;
         try {
-            runValidation();
+            doValidate(context, database);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void runValidation() throws SQLException, IOException {
+    private void doValidate(Context context, Database database) throws SQLException, IOException {
         List<FileModel> fileModelsList = context.getDocumentModel().getFileModels();
 
         /*
@@ -76,44 +79,80 @@ public class AttributeUniqueValidator implements Validator<Database> {
                     continue;
                 }
                 context.beginModel(attribute);
-                validateOneIdentifier(attribute.getName(), fileModel);
+
+                /*
+                 * Retrieve duplicated values
+                 */
+                log.info(
+                    MARKER, "Table {}.{} : Looking for duplicated values...",
+                    fileModel.getName(),
+                    attribute.getName()
+                );
+                List<DuplicatedValue> duplicatedValues = findDuplicatedValues(
+                    database,
+                    fileModel.getName(),
+                    attribute.getName()
+                );
+
+                /*
+                 * Report errors for duplicated values
+                 */
+                log.info(
+                    MARKER,
+                    "Table {}.{} : Found {} duplicated value(s) (max : 10)",
+                    fileModel.getName(),
+                    attribute.getName(),
+                    duplicatedValues.size()
+                );
+                for (DuplicatedValue duplicatedValue : duplicatedValues) {
+                    context.report(
+                        context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
+                            .setScope(ErrorScope.HEADER)
+                            .setFileModel(fileModel.getName())
+                            .setMessageParam("TABLE_NAME", fileModel.getName())
+                            .setMessageParam("ID_NAME", duplicatedValue.value)
+                            .setMessageParam("ID_COUNT", "" + duplicatedValue.count)
+                    );
+                }
+
                 context.endModel(attribute);
             }
             context.endModel(fileModel);
         }
     }
 
-    private void validateOneIdentifier(String identifier, FileModel fileModel) throws SQLException, IOException {
-        // TODO HAVING count(*) > 1 ORDER BY count(*) DESC
-        // TODO LIMIT 10 ?
-        RowIterator table = database.query(
-            "SELECT " + identifier + " AS id, Count(" + identifier + ") AS count "
-                + " FROM " + fileModel.getName()
-                + " GROUP BY " + identifier
+    /**
+     * Find duplicated values for a given {tableName}.{columnName}
+     * 
+     * @param database
+     * @param tableName
+     * @param columnName
+     * @return values associated to the number of occurence
+     * @throws SQLException
+     * @throws IOException
+     */
+    private List<DuplicatedValue> findDuplicatedValues(Database database, String tableName, String columnName)
+        throws SQLException, IOException {
+        RowIterator it = database.query(
+            "SELECT " + columnName + " AS id, count(*) AS count"
+                + " FROM " + tableName
+                + " GROUP BY " + columnName
+                + " HAVING count(*) > 1 ORDER BY count(*) DESC"
+                + " LIMIT 10"
         );
-        int indexId = table.getColumn("id");
-        int indexCount = table.getColumn("count");
 
-        while (table.hasNext()) {
-            String[] row = table.next();
-
-            int compte = Integer.parseInt(row[indexCount]);
-
-            // if not unique, send error
-            // remove condition by adding HAVING count(*) > 1
-            if (compte > 1) {
-                context.report(
-                    context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
-                        .setScope(ErrorScope.HEADER)
-                        .setFileModel(fileModel.getName())
-                        .setMessageParam("TABLE_NAME", fileModel.getName())
-                        .setMessageParam("ID_NAME", row[indexId])
-                        .setMessageParam("ID_COUNT", row[indexCount])
-                );
-            }
-
+        List<DuplicatedValue> result = new ArrayList<>();
+        while (it.hasNext()) {
+            String[] row = it.next();
+            result.add(
+                new DuplicatedValue(
+                    row[0],
+                    Integer.parseInt(row[1])
+                )
+            );
         }
-        table.close();
+        it.close();
+        return result;
     }
 
 }
