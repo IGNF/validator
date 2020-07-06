@@ -32,6 +32,11 @@ public class AttributeUniqueValidator implements Validator<Database> {
     public static final Marker MARKER = MarkerManager.getMarker("AttributeUniqueValidator");
 
     /**
+     * hardcoded limit to avoid huge report on massively invalid table.
+     */
+    private static final int LIMIT_PER_ATTRIBUTE = 10;
+
+    /**
      * A duplicated value with the number of occurence
      * 
      * @author MBorne
@@ -144,7 +149,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
                 + " FROM " + tableName
                 + " GROUP BY " + columnName
                 + " HAVING count(*) > 1 ORDER BY count(*) DESC"
-                + " LIMIT 10"
+                + " LIMIT " + LIMIT_PER_ATTRIBUTE
         );
 
         List<DuplicatedValue> result = new ArrayList<>();

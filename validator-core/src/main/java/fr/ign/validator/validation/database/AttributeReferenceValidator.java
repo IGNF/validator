@@ -32,6 +32,11 @@ public class AttributeReferenceValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("RelationValidator");
+    
+    /**
+     * hardcoded limit to avoid huge report on massively invalid table
+     */
+    private static final int LIMIT_PER_ATTRIBUTE = 10;
 
     /**
      * Validate "reference" constraints for each attribute.
@@ -174,7 +179,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
             + " t WHERE s." + sourceColumnName + " = t." + targetColumnName + ")";
 
         sql += " AND NOT s." + sourceColumnName + " IS NULL";
-        sql += " LIMIT 10";
+        sql += " LIMIT "+LIMIT_PER_ATTRIBUTE;
         return sql;
     }
 
