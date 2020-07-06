@@ -15,6 +15,7 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -159,7 +160,7 @@ public class RelationValidatorTest {
         RelationValidator relationValidator = new RelationValidator();
         relationValidator.validate(context, database);
 
-        Assert.assertEquals(0, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
+        Assert.assertEquals(0, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).size());
     }
 
     @Test
@@ -196,13 +197,13 @@ public class RelationValidatorTest {
         RelationValidator relationValidator = new RelationValidator();
         relationValidator.validate(context, database);
 
-        Assert.assertEquals(5, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
+        Assert.assertEquals(5, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).size());
 
-        ValidatorError refError0 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(0);
-        ValidatorError refError1 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(1);
-        ValidatorError refError2 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(2);
-        ValidatorError refError3 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(3);
-        ValidatorError refError4 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(4);
+        ValidatorError refError0 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).get(0);
+        ValidatorError refError1 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).get(1);
+        ValidatorError refError2 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).get(2);
+        ValidatorError refError3 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).get(3);
+        ValidatorError refError4 = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).get(4);
 
         Assert.assertEquals(
             "L'objet test_1 de la table TEST doit faire référence à un objet de la table N_prefixTri_INONDABLE_suffixInond_S_ddd via l'attribut ID_S_INOND. L'attribut n'est pas renseigné (s_inond_1) ou alors la relation n'est pas vérifiée.",

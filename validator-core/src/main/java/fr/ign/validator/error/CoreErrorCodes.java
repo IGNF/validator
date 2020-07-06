@@ -183,6 +183,8 @@ public class CoreErrorCodes {
 
     public static final ErrorCode ATTRIBUTE_NOT_UNIQUE = ErrorCode.valueOf("ATTRIBUTE_NOT_UNIQUE");
 
+    public static final ErrorCode ATTRIBUTE_REFERENCE_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_REFERENCE_NOT_FOUND");
+
     public static final ErrorCode ATTRIBUTE_CHARACTERS_REPLACED = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_REPLACED");
     public static final ErrorCode ATTRIBUTE_CHARACTERS_ILLEGAL = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_ILLEGAL");
 

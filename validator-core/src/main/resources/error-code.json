@@ -112,6 +112,12 @@
         "documentation": "Cette erreur se produit lorsqu'un champ « unique » contient plusieurs occurences d'une même valeur."
     },
     {
+        "name": "ATTRIBUTE_REFERENCE_NOT_FOUND",
+        "level": "ERROR",
+        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
+        "documentation": "Cette erreur se produit lorsque la « reference » d'un champ n'est pas trouvée dans la table cible."
+    },
+    {
         "name": "ATTRIBUTE_CHARACTERS_ILLEGAL",
         "level": "ERROR",
         "message": "La valeur (‘{VALUE}’) contient des caractères interdits qui seront échappés (‘{FIXED_VALUE}’).",
@@ -643,6 +649,6 @@
         "name": "DGPR_RELATION_ERROR",
         "level": "ERROR",
         "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
-        "documentation": ""
+        "documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_REFERENCE_NOT_FOUND pour migration du contrôle dans validator-core"
     }
 ]

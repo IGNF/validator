@@ -14,6 +14,7 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -150,7 +151,7 @@ public class RelationValidator implements Validator<Database> {
                 // if the value {row[indexIdTableRef]} does not exist in the reference table,
                 // send error message
                 context.report(
-                    context.createError(DgprErrorCodes.DGPR_RELATION_ERROR)
+                    context.createError(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND)
                         .setScope(ErrorScope.FEATURE)
                         .setFileModel(fileModel.getName())
                         .setAttribute(attribute.getName())

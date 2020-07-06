@@ -223,16 +223,16 @@ public class DgprApplicationTest {
             ValidatorError error50 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(0);
             ValidatorError error51 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(1);
             Assert.assertEquals(
-                "La valeur 'ZE_2' est présente 2 fois.", error50
+                "La valeur 'ZE_2' est présente 2 fois pour le champ 'ID_ZONE' de la table 'N_prefixTri_ECOUL_S_ddd'.", error50
                     .getMessage()
             );
             Assert.assertEquals(
-                "La valeur 'SIEXT' est présente 2 fois.",
+                "La valeur 'SIEXT' est présente 2 fois pour le champ 'ID_SI_EXT' de la table 'N_prefixTri_ENJEU_CRISE_L_ddd'.",
                 error51.getMessage()
             );
 
-            Assert.assertEquals(15, report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).size());
-            ValidatorError error52 = report.getErrorsByCode(DgprErrorCodes.DGPR_RELATION_ERROR).get(0);
+            Assert.assertEquals(15, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).size());
+            ValidatorError error52 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).get(0);
             Assert.assertEquals(
                 "L'objet CSI_1 de la table N_prefixTri_CARTE_INOND_S_ddd doit faire référence à un objet de la table N_prefixTri_TRI_S_ddd via l'attribut ID_TRI. L'attribut n'est pas renseigné (TRI_ZOB) ou alors la relation n'est pas vérifiée.",
                 error52.getMessage()
