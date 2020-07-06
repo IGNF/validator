@@ -28,7 +28,6 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.TableReader;
 
@@ -57,14 +56,15 @@ public class Database implements Closeable {
 
     public static final String DEFAULT_SRID = "4326";
 
-    private String schema;
-
-    private Projection projection;
-
     /**
      * Database connection
      */
     private Connection connection;
+
+    /**
+     * The SQL schema name (PostGIS only).
+     */
+    private String schema;
 
     /**
      * Create or open an SQLITE database
@@ -152,14 +152,6 @@ public class Database implements Closeable {
         // set current search path to use current schema
         update("SET search_path = " + schema + ", public;");
         connection.commit();
-    }
-
-    public Projection getProjection() {
-        return projection;
-    }
-
-    public void setProjection(Projection projection) {
-        this.projection = projection;
     }
 
     /**
@@ -317,16 +309,7 @@ public class Database implements Closeable {
         List<String> columns = new ArrayList<String>(attributes.size());
 
         for (AttributeType<?> attribute : attributes) {
-            if (attribute.isGeometry()) {
-                columns.add(attribute.getName() + " TEXT");
-                /*
-                 * TODO clarify "the_geom" (supporting "the_geom" as a default geom instead of
-                 * "WKT" would be better than this "hack")
-                 */
-                columns.add("the_geom geometry(" + attribute.getTypeName() + "," + Database.DEFAULT_SRID + ")");
-            } else {
-                columns.add(attribute.getName() + " TEXT");
-            }
+            columns.add(attribute.getName() + " TEXT");
         }
 
         String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
@@ -429,43 +412,6 @@ public class Database implements Closeable {
         FeatureType featureType = documentFile.getFileModel().getFeatureType();
 
         loadFile(featureType.getName(), documentFile.getPath(), context.getEncoding());
-        if (this.isPostgresqlDriver()) {
-            updateGeom(featureType);
-        }
-    }
-
-    /**
-     * TODO review this method with CBouche :
-     * <ul>
-     * <li>move this as a validator-plugin-dpgr specific preprocess</li>
-     * </ul>
-     * 
-     * @param featureType
-     * @throws SQLException
-     */
-    private void updateGeom(FeatureType featureType) throws SQLException {
-        // last commit
-        if (featureType.isSpatial()) {
-            String srid = Database.DEFAULT_SRID;
-
-            /*
-             * TODO clarify code bellow replaced as it crashes on CRS:84 which is the
-             * equivalent of 4326 in postgis
-             */
-//            if (this.getProjection() != null && this.getProjection().getCode().split(":").length > 1) {
-//                // must split code
-//                srid = this.getProjection().getCode().split(":")[1];
-//            }
-            if (this.getProjection() != null) {
-                srid = this.getProjection().getSrid();
-            }
-
-            // TODO clarify wkt/the_geom, why ST_Multi instead of binding values
-            String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = "
-                + "ST_Multi(ST_Transform(ST_SetSRID(wkt, " + srid + "), 4326));";
-            update(updateSQL);
-            connection.commit();
-        }
     }
 
     /**

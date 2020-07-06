@@ -208,7 +208,6 @@ public class Document implements Validatable {
             Database database = Database.createDatabase(context, true);
             database.createTables(getDocumentModel());
             database.createIndexes(getDocumentModel());
-            database.setProjection(context.getProjection());
             database.load(context, this);
 
             log.info(MARKER, "Validate document using database validators...");
