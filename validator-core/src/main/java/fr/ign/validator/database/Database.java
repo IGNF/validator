@@ -134,6 +134,22 @@ public class Database implements Closeable {
     }
 
     /**
+     * Returns true the database supports geometry type.
+     * 
+     * Note that it currently assume that postgis is always enabled for postgresql
+     * database.
+     * 
+     * @return
+     */
+    public boolean hasGeometrySupport() {
+        try {
+            return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    /**
      * If defined, ensure that the specified schema exists and set in search_path.
      * 
      * @param reset true if the schema has to be re-created
@@ -262,11 +278,19 @@ public class Database implements Closeable {
      */
     public void createTable(TableModel tableModel) throws SQLException {
         log.info(MARKER, "Create table for the TableModel '{}' ...", tableModel.getName());
-        if (this.isPostgresqlDriver()) {
-            createPostgisTable(tableModel);
-        } else {
-            createTable(tableModel.getName(), getColumnNames(tableModel));
+        List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
+        List<String> columns = new ArrayList<String>(attributes.size());
+
+        for (AttributeType<?> attribute : attributes) {
+            columns.add(attribute.getName() + " TEXT");
         }
+
+        String sql = "CREATE TABLE " + tableModel.getName() + " ("
+            + String.join(",", columns)
+            + ");";
+
+        update(sql);
+        connection.commit();
     }
 
     /**
@@ -281,11 +305,7 @@ public class Database implements Closeable {
             "Create table for the TableModel '{}' with text columns...",
             tableName
         );
-        String ifClause = "";
-        if (this.isPostgresqlDriver()) {
-            ifClause = "IF NOT EXISTS ";
-        }
-        String sql = "CREATE TABLE " + ifClause + tableName + " (";
+        String sql = "CREATE TABLE " + tableName + " (";
         for (int i = 0; i < columnNames.size(); i++) {
             if (i != 0) {
                 sql += ",";
@@ -293,28 +313,6 @@ public class Database implements Closeable {
             sql += columnNames.get(i) + " TEXT";
         }
         sql += ");";
-
-        update(sql);
-        connection.commit();
-    }
-
-    /**
-     * Create postgis Table with geometry column
-     * 
-     * @param tableModel
-     * @throws SQLException
-     */
-    private void createPostgisTable(TableModel tableModel) throws SQLException {
-        List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
-        List<String> columns = new ArrayList<String>(attributes.size());
-
-        for (AttributeType<?> attribute : attributes) {
-            columns.add(attribute.getName() + " TEXT");
-        }
-
-        String sql = "CREATE TABLE IF NOT EXISTS " + tableModel.getName() + " ("
-            + String.join(",", columns)
-            + ");";
 
         update(sql);
         connection.commit();
@@ -352,34 +350,12 @@ public class Database implements Closeable {
      * @param columnName
      */
     public void createIndex(String tableName, String columnName) throws SQLException {
-        String ifClause = "";
-        if (this.isPostgresqlDriver()) {
-            ifClause = "IF NOT EXISTS ";
-        }
-        // format : idx_N_prefixTri_CARTE_INOND_S_ddd_ID_CARTE,
-        // idx_N_prefixTri_ENJEU_CRISE_P_ddd_ID_SI
         String indexName = "idx_" + tableName + "_" + columnName;
-        String sql = "CREATE INDEX " + ifClause + indexName
+        String sql = "CREATE INDEX " + indexName
             + " ON " + tableName + " (" + columnName + ")";
 
         update(sql);
         connection.commit();
-    }
-
-    /**
-     * Get column names for a given tableModel
-     * 
-     * @param fileModel
-     * @return
-     */
-    private List<String> getColumnNames(TableModel tableModel) {
-        List<AttributeType<?>> attributes = tableModel.getFeatureType().getAttributes();
-
-        List<String> columnNames = new ArrayList<>(attributes.size());
-        for (AttributeType<?> attribute : attributes) {
-            columnNames.add(attribute.getName());
-        }
-        return columnNames;
     }
 
     /**
@@ -555,21 +531,6 @@ public class Database implements Closeable {
         ResultSet rs = sth.executeQuery();
         rs.next();
         return rs.getInt(1);
-    }
-
-    /**
-     * Returns true if driver is postgresql
-     * 
-     * TODO move to private, add helper to retrieve values
-     * 
-     * @return
-     */
-    public boolean isPostgresqlDriver() {
-        try {
-            return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);
-        } catch (SQLException e) {
-            return false;
-        }
     }
 
 }

@@ -191,13 +191,24 @@ public class GraphTopologyValidator implements Validator<Database> {
         return true;
     }
 
+    /**
+     * 
+     * TODO avoid the use of engine depend string_agg or GROUP_CONCAT (iterate over
+     * results to build a List of Strings)
+     * 
+     * @param surface
+     * @param tablename
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
     private String findAllHauteur(SurfaceInondable surface, String tablename) throws IOException, SQLException {
         /*
          * IN postgresql there is no GROUP_CONCAT function we use SELECT id,
          * string_agg(some_column, ',') FROM the_table GROUP BY id
          */
         String sql;
-        if (database.isPostgresqlDriver()) {
+        if (database.hasGeometrySupport()) {
             sql = " SELECT string_agg(ID_ZONE, ', ') as result" +
                 " FROM " + tablename +
                 " WHERE ID_S_INOND LIKE '" + surface.getId() + "' ";

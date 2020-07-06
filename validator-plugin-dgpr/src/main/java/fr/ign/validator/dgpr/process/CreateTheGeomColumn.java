@@ -41,7 +41,7 @@ public class CreateTheGeomColumn implements ValidatorListener {
     public void afterValidate(Context context, Document document) throws Exception {
         String sourceSrid = context.getProjection().getSrid();
         Database database = Database.createDatabase(context, false);
-        if (!database.isPostgresqlDriver()) {
+        if (!database.hasGeometrySupport()) {
             log.info(MARKER, "skipped for non postgis database");
             database.close();
             return;
