@@ -83,20 +83,36 @@ public class AttributeReferenceValidator implements Validator<Database> {
                 String sql = getSqlFindInvalidRows(
                     sourceTableName, sourceColumnName, targetTableName, targetColumnName
                 );
-                RowIterator table = database.query(sql);
+                RowIterator it = database.query(sql);
 
+                /*
+                 * Prepare reporting
+                 */
                 int count = 0;
-                int indexValue = table.getColumn(sourceColumnName);
+                int indexValue = it.getColumn(sourceColumnName);
+                AttributeType<?> attributeFeatureId = featureType.getIdentifier();
+                int indexFeatureId = attributeFeatureId != null ? it.getColumn(attributeFeatureId.getName()) : -1;
                 // TODO add support for different column name (kept for validator-plugin-dgpr)
-                int indexGeom = table.getColumn("WKT");
+                int indexGeom = it.getColumn("WKT");
 
-                while (table.hasNext()) {
+                while (it.hasNext()) {
                     count++;
-                    String[] row = table.next();
+                    String[] row = it.next();
 
-                    Envelope envelope = null;
+                    /*
+                     * retrieve the id of the feature (kept for validator-plugin-dgpr)
+                     */
+                    String featureId = "";
+                    if (indexFeatureId >= 0) {
+                        featureId = row[indexFeatureId];
+                    }
+
+                    /*
+                     * retrieve the bounding box of the feature (kept for validator-plugin-dgpr)
+                     */
+                    Envelope featureBoundingBox = null;
                     if (indexGeom >= 0 && !StringUtils.isEmpty(row[indexGeom])) {
-                        envelope = EnvelopeUtils.getEnvelope(row[indexGeom], context.getProjection());
+                        featureBoundingBox = EnvelopeUtils.getEnvelope(row[indexGeom], context.getProjection());
                     }
 
                     context.report(
@@ -108,9 +124,8 @@ public class AttributeReferenceValidator implements Validator<Database> {
                             .setScope(ErrorScope.DIRECTORY)
                             .setFileModel(fileModel.getName())
                             .setAttribute(attribute.getName())
-                            // TODO retrieve ID
-                            // .setFeatureId(idObject)
-                            .setFeatureBbox(envelope)
+                            .setFeatureId(featureId)
+                            .setFeatureBbox(featureBoundingBox)
                             .setMessageParam("REF_VALUE", row[indexValue])
                             .setMessageParam("SOURCE_TABLE", sourceTableName)
                             .setMessageParam("SOURCE_COLUMN", sourceColumnName)
@@ -133,7 +148,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
                     targetColumnName
                 );
 
-                table.close();
+                it.close();
                 context.endModel(attribute);
             }
             context.endModel(fileModel);

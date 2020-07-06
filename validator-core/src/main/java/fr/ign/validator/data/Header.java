@@ -47,10 +47,10 @@ public class Header implements Validatable {
          * Attribute in data but not defined
          */
         for (String name : mapping.getUnexpectedAttributes()) {
+            /*
+             * Skipping "WKT" field (artificially created by conversion from dbf to csv)
+             */
             if (name.equals("WKT")) {
-                /*
-                 * Skipping "WKT" field (artificially created by conversion from dbf to csv)
-                 */
                 continue;
             }
             context.report(
@@ -71,7 +71,7 @@ public class Header implements Validatable {
                     context.createError(CoreErrorCodes.TABLE_MISSING_GEOMETRY)
                         .setMessageParam("FILEPATH", context.relativize(matchingFile))
                 );
-            } else if (missingAttribute.isNullable()) {
+            } else if (!missingAttribute.getConstraints().isRequired()) {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE)
                         .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())

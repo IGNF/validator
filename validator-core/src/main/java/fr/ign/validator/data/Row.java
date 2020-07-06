@@ -35,10 +35,13 @@ public class Row implements Validatable {
     private FeatureTypeMapper mapping;
 
     /**
-     * Feature BBOX if a WKT geometry is available
+     * The CRS:84 bounding box of the default geometry (retrieved to create error)
      */
     private Envelope featureBbox;
 
+    /**
+     * The value of the feature identifier (retrieved to create error)
+     */
     private String featureId;
 
     /**
@@ -88,15 +91,11 @@ public class Row implements Validatable {
         /*
          * Looking for featureId if exist
          */
-        for (int i = 0; i < featureType.getAttributeCount(); i++) {
-            AttributeType<?> attributeType = featureType.getAttribute(i);
-            // TODO rely on primary key
-            if (attributeType.isIdentifier()) {
-                // update row feature id
-                // can be retrieve from context (row in datastack)
-                if (mapping.getAttributeIndex(i) >= 0) {
-                    this.featureId = values[mapping.getAttributeIndex(i)];
-                }
+        AttributeType<?> attributeFeatureId = featureType.getIdentifier();
+        if (attributeFeatureId != null) {
+            int indexFeatureId = mapping.getColumnIndex(attributeFeatureId.getName());
+            if (indexFeatureId >= 0) {
+                this.featureId = values[indexFeatureId];
             }
         }
 
@@ -114,7 +113,7 @@ public class Row implements Validatable {
                 }
                 try {
                     // depends on geometry
-                    Geometry geom = new ProjectionTransform(context.getCoordinateReferenceSystem()).transformWKT(wkt);
+                    Geometry geom = new ProjectionTransform(context.getProjection()).transformWKT(wkt);
                     setFeatureBbox(geom.getEnvelopeInternal());
                 } catch (Exception e) {
                     // TODO logger une info ou un avertissement mineur

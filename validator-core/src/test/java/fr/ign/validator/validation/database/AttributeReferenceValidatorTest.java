@@ -109,14 +109,14 @@ public class AttributeReferenceValidatorTest {
 
         // add the table TEST into the database
         database.query("CREATE TABLE TEAM(id TEXT, name TEXT);");
-        database.query("INSERT INTO TEAM(id, name) VALUES ('1', 'team_1');");
-        database.query("INSERT INTO TEAM(id, name) VALUES ('2', 'team_2');");
+        database.query("INSERT INTO TEAM(id, name) VALUES ('t1', 'team_1');");
+        database.query("INSERT INTO TEAM(id, name) VALUES ('t2', 'team_2');");
 
         // add the table TEST_B into the database
         database.query("CREATE TABLE USER(id TEXT, team_id TEXT, name TEXT);");
-        database.query("INSERT INTO USER(id, team_id, name) VALUES ('1', '1', 'user_1');");
-        database.query("INSERT INTO USER(id, team_id, name) VALUES ('2', '1', 'user_2');");
-        database.query("INSERT INTO USER(id, team_id, name) VALUES ('3', '2', 'user_3');");
+        database.query("INSERT INTO USER(id, team_id, name) VALUES ('u1', 't1', 'user_1');");
+        database.query("INSERT INTO USER(id, team_id, name) VALUES ('u2', 't1', 'user_2');");
+        database.query("INSERT INTO USER(id, team_id, name) VALUES ('u3', 't2', 'user_3');");
         database.getConnection().commit();
 
         // check that the relationValidator doesn't send any error
@@ -134,14 +134,14 @@ public class AttributeReferenceValidatorTest {
 
         // add the table TEST into the database
         database.query("CREATE TABLE TEAM(id TEXT, name TEXT);");
-        database.query("INSERT INTO TEAM(id, name) VALUES ('1', 'team_1');");
-        database.query("INSERT INTO TEAM(id, name) VALUES ('2', 'team_2');");
+        database.query("INSERT INTO TEAM(id, name) VALUES ('t1', 'team_1');");
+        database.query("INSERT INTO TEAM(id, name) VALUES ('t2', 'team_2');");
 
         // add the table TEST_B into the database
         database.query("CREATE TABLE USER(id TEXT, team_id TEXT, name TEXT);");
-        database.query("INSERT INTO USER(id, team_id, name) VALUES ('1', '1', 'user_1');");
-        database.query("INSERT INTO USER(id, team_id, name) VALUES ('2', '6', 'user_2');");
-        database.query("INSERT INTO USER(id, team_id, name) VALUES ('3', '2', 'user_3');");
+        database.query("INSERT INTO USER(id, team_id, name) VALUES ('u1', 't1', 'user_1');");
+        database.query("INSERT INTO USER(id, team_id, name) VALUES ('u2', 't6', 'user_2');");
+        database.query("INSERT INTO USER(id, team_id, name) VALUES ('u3', 't2', 'user_3');");
         database.getConnection().commit();
 
         // check that the relationValidator doesn't send any error
@@ -155,8 +155,12 @@ public class AttributeReferenceValidatorTest {
         {
             ValidatorError error = errors.get(index++);
             assertEquals(
-                "La référence USER.TEAM_ID n'est pas validée. Le champ TEAM.ID ne prend pas la valeur '6'.",
+                "La référence USER.TEAM_ID n'est pas validée. Le champ TEAM.ID ne prend pas la valeur 't6'.",
                 error.getMessage()
+            );
+            assertEquals(
+                "u2",
+                error.getFeatureId()
             );
         }
     }
