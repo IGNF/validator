@@ -10,8 +10,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import fr.ign.validator.exception.InvalidCharsetException;
-
 /**
  * Test TableReader with ESRI Shapefiles
  * 
@@ -42,8 +40,6 @@ public class TableReaderSHPTest {
 
         } catch (IOException e) {
             fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
-            fail(e.getMessage());
         }
 
     }
@@ -71,8 +67,6 @@ public class TableReaderSHPTest {
 
         } catch (IOException e) {
             fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
-            fail(e.getMessage());
         }
 
     }
@@ -99,8 +93,6 @@ public class TableReaderSHPTest {
             }
 
         } catch (IOException e) {
-            fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
             fail(e.getMessage());
         }
 
@@ -134,8 +126,6 @@ public class TableReaderSHPTest {
             assertEquals(85, count);
         } catch (IOException e) {
             fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
-            fail(e.getMessage());
         }
     }
 
@@ -162,8 +152,6 @@ public class TableReaderSHPTest {
             assertEquals("IDSUP", header[0]);
 
         } catch (IOException e) {
-            fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
             fail(e.getMessage());
         }
     }

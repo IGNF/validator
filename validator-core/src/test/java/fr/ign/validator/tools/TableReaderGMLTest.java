@@ -13,8 +13,6 @@ import java.util.Arrays;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.ign.validator.exception.InvalidCharsetException;
-
 /**
  * 
  * Test CSV file reading with TableReader
@@ -61,8 +59,6 @@ public class TableReaderGMLTest {
 
         } catch (IOException e) {
             fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
-            fail(e.getMessage());
         }
     }
 
@@ -91,8 +87,6 @@ public class TableReaderGMLTest {
             assertTrue(Arrays.asList(row).contains("20140123"));
         } catch (IOException e) {
             fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
-            fail(e.getMessage());
         }
     }
 
@@ -115,8 +109,6 @@ public class TableReaderGMLTest {
             assertTrue(Arrays.asList(header).contains("NOMFIC"));
 
         } catch (IOException e) {
-            fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
             fail(e.getMessage());
         }
     }

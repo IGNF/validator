@@ -10,8 +10,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import fr.ign.validator.exception.InvalidCharsetException;
-
 public class TableReaderTABTest {
 
     @Test
@@ -36,8 +34,6 @@ public class TableReaderTABTest {
             }
 
         } catch (IOException e) {
-            fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
             fail(e.getMessage());
         }
 
@@ -66,8 +62,6 @@ public class TableReaderTABTest {
 
         } catch (IOException e) {
             fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
-            fail(e.getMessage());
         }
     }
 
@@ -89,8 +83,6 @@ public class TableReaderTABTest {
             }
             assertEquals(36, count);
         } catch (IOException e) {
-            fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
             fail(e.getMessage());
         }
     }

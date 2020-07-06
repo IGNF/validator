@@ -23,7 +23,6 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.file.TableFile;
-import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
@@ -362,10 +361,9 @@ public class Database implements Closeable {
      * Load an entire document to the database (insert mode)
      * 
      * @throws IOException
-     * @throws InvalidCharsetException
      * @throws SQLException
      */
-    public void load(Context context, Document document) throws IOException, InvalidCharsetException, SQLException {
+    public void load(Context context, Document document) throws IOException, SQLException {
         List<DocumentFile> files = document.getDocumentFiles();
         for (DocumentFile file : files) {
             if (file instanceof TableFile) {
@@ -380,11 +378,10 @@ public class Database implements Closeable {
      * @param file
      * @param fileModel
      * @throws IOException
-     * @throws InvalidCharsetException
      * @throws SQLException
      */
     public void load(Context context, DocumentFile documentFile)
-        throws IOException, InvalidCharsetException, SQLException {
+        throws IOException, SQLException {
         FeatureType featureType = documentFile.getFileModel().getFeatureType();
 
         loadFile(featureType.getName(), documentFile.getPath(), context.getEncoding());
@@ -397,16 +394,15 @@ public class Database implements Closeable {
      * @param path
      * @param charset
      * @throws IOException
-     * @throws InvalidCharsetException
      * @throws SQLException
      */
     public void loadFile(String tableName, File path, Charset charset)
-        throws IOException, InvalidCharsetException, SQLException {
+        throws IOException, SQLException {
         log.info(MARKER, "loadFile({},{},{})...", tableName, path.getAbsolutePath(), charset.toString());
         /*
          * Create table reader
          */
-        TableReader reader = TableReader.createTableReaderPreferedCharset(path, charset);
+        TableReader reader = TableReader.createTableReader(path, charset);
 
         String[] header = reader.getHeader();
         String[] columnNames = getTableSchema(tableName);

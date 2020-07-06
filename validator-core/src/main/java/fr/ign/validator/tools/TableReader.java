@@ -17,8 +17,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.exception.InvalidCharsetException;
-
 /**
  * SHP/TAB file reader
  * 
@@ -43,6 +41,10 @@ public class TableReader implements Iterator<String[]> {
      * File header
      */
     private String[] header;
+    /**
+     * true if the charset is valid, false if detected
+     */
+    private boolean charsetValid = true;
 
     /**
      * 
@@ -53,10 +55,24 @@ public class TableReader implements Iterator<String[]> {
      * @param charset
      * @throws IOException
      */
-    private TableReader(File csvFile, Charset charset) throws IOException {
+    private TableReader(File csvFile, Charset preferedCharset) throws IOException {
+        Charset charset = preferedCharset;
+        if (!CharsetDetector.isValidCharset(csvFile, preferedCharset)) {
+            charsetValid = false;
+            charset = CharsetDetector.detectCharset(csvFile);
+        }
         CSVParser parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180);
         this.iterator = parser.iterator();
         readHeader();
+    }
+
+    /**
+     * Indicate if charset used to open file is valid.
+     * 
+     * @return
+     */
+    public boolean isCharsetValid() {
+        return charsetValid;
     }
 
     /**
@@ -156,84 +172,27 @@ public class TableReader implements Iterator<String[]> {
     }
 
     /**
-     * Creates a reader from a file and a charset (throws exception if charset is
-     * invalid)
+     * Creates a reader from a file and a charset. If preferedCharset is invalid, a
+     * valid charset is detected to read the file.
      * 
      * @param file
-     * @param charset
+     * @param preferedCharset
      * @return
      * @throws IOException
-     * @throws InvalidCharsetException
      */
-    public static TableReader createTableReader(File file, Charset charset) throws IOException,
-        InvalidCharsetException {
+    public static TableReader createTableReader(File file, Charset preferedCharset) throws IOException {
         if (FilenameUtils.getExtension(file.getName()).toLowerCase().equals("csv")) {
-            if (!CharsetDetector.isValidCharset(file, charset)) {
-                throw new InvalidCharsetException(
-                    String.format(
-                        "Le fichier %s n'est pas valide pour la charset %s",
-                        file.toString(),
-                        charset.toString()
-                    )
-                );
-            }
-            return new TableReader(file, charset);
+            return new TableReader(file, preferedCharset);
         }
 
-        /* convert to CSV */
+        // Convert to CSV on first read
         File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
-        FileConverter converter = FileConverter.getInstance();
-        converter.convertToCSV(file, csvFile, charset);
-        if (!CharsetDetector.isValidCharset(csvFile, StandardCharsets.UTF_8)) {
-            throw new InvalidCharsetException(
-                String.format(
-                    "Le fichier %s n'est pas valide pour la charset %s",
-                    file.toString(),
-                    charset.toString()
-                )
-            );
+        if (!csvFile.exists()) {
+            FileConverter converter = FileConverter.getInstance();
+            converter.convertToCSV(file, csvFile, preferedCharset);
         }
+        // ogr2ogr is supposed to always produced UTF-8 encoded CSV file
         return new TableReader(csvFile, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * Create TableReader with a given charset. If the given charset is invalid,
-     * redirect to createTableReaderDetectCharset
-     * 
-     * @param file
-     * @param charset
-     * @return
-     * @throws IOException
-     */
-    public static TableReader createTableReaderPreferedCharset(File file, Charset charset) throws IOException {
-        try {
-            return TableReader.createTableReader(file, charset);
-        } catch (InvalidCharsetException e) {
-            log.info(
-                MARKER, "Charset invalide, tentative d'autodétection de la charset pour la validation de {}", file
-            );
-            return TableReader.createTableReaderDetectCharset(file);
-        }
-    }
-
-    /**
-     * Create TableReader with charset autodetection
-     * 
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    public static TableReader createTableReaderDetectCharset(File file) throws IOException {
-        if (FilenameUtils.getExtension(file.getName()).toLowerCase().equals("csv")) {
-            Charset charset = CharsetDetector.detectCharset(file);
-            return new TableReader(file, charset);
-        }
-
-        File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
-        FileConverter converter = FileConverter.getInstance();
-        converter.convertToCSV(file, csvFile, StandardCharsets.UTF_8);
-        Charset charset = CharsetDetector.detectCharset(csvFile);
-        return new TableReader(csvFile, charset);
     }
 
 }

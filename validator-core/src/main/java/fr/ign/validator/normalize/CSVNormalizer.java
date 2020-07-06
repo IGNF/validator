@@ -85,7 +85,7 @@ public class CSVNormalizer implements Closeable {
             targetCRS
         );
 
-        TableReader reader = TableReader.createTableReaderPreferedCharset(
+        TableReader reader = TableReader.createTableReader(
             csvFile,
             context.getEncoding()
         );

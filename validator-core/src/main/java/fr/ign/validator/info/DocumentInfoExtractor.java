@@ -9,17 +9,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.locationtech.jts.geom.Envelope;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
-
-import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.CoreErrorCodes;
-import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.info.model.DocumentFileInfo;
 import fr.ign.validator.info.model.DocumentInfo;
@@ -117,7 +115,7 @@ public class DocumentInfoExtractor {
                 }
             }
 
-        } catch (IOException | InvalidCharsetException e) {
+        } catch (IOException e) {
             log.error(MARKER, "Fail to extract infos from " + fileModel.getName() + ".csv");
             return;
         }

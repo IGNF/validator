@@ -2,6 +2,7 @@ package fr.ign.validator.cnig.process.internal;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +39,7 @@ public class IdgestExtractor {
 
         TableReader reader = null;
         try {
-            reader = TableReader.createTableReaderDetectCharset(servitudeFile);
+            reader = TableReader.createTableReader(servitudeFile, StandardCharsets.UTF_8);
         } catch (IOException e) {
             log.error(MARKER, "error reading table");
             return null;
