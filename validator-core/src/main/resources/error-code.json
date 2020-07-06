@@ -114,7 +114,7 @@
     {
         "name": "ATTRIBUTE_REFERENCE_NOT_FOUND",
         "level": "ERROR",
-        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
+        "message": "La référence {SOURCE_TABLE}.{SOURCE_COLUMN} n'est pas validée. Le champ {TARGET_TABLE}.{TARGET_COLUMN} ne prend pas la valeur '{REF_VALUE}'.",
         "documentation": "Cette erreur se produit lorsque la « reference » d'un champ n'est pas trouvée dans la table cible."
     },
     {

@@ -8,6 +8,9 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
+import fr.ign.validator.model.Projection;
+import fr.ign.validator.repository.ProjectionRepository;
+
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
 
@@ -19,33 +22,61 @@ import org.locationtech.jts.io.WKTReader;
  */
 public class ProjectionTransform {
 
-    private MathTransform transform;
+    private static final Projection CRS84 = ProjectionRepository.getInstance().findByCode("CRS:84");
 
-    /**
-     * Default Coordinate Reference System Used when target source CRS is not
-     * EPSG:4326
-     */
-    private CoordinateReferenceSystem defaultTargetCRS;
+    private MathTransform transform;
 
     /**
      * WKT Reader Enable projection transform to WKT Geometries
      */
     public static WKTReader format = new WKTReader();
 
-    public ProjectionTransform(CoordinateReferenceSystem sourceCRS, CoordinateReferenceSystem targetCRS)
-        throws FactoryException {
-        this.transform = CRS.findMathTransform(sourceCRS, targetCRS);
+    /**
+     * Create a ProjectionTransform from source projection to target projection.
+     * 
+     * @param source
+     * @param target
+     */
+    public ProjectionTransform(Projection source, Projection target) {
+        this(source.getCRS(), target.getCRS());
     }
 
     /**
-     * Projection Transform Use the default "CRS:84" CRS as target CRS
+     * Create a ProjectionTransform from source projection to CRS:84 (lon,lat).
+     * 
+     * @param source
+     */
+    public ProjectionTransform(Projection source) {
+        this(source.getCRS(), CRS84.getCRS());
+    }
+
+    /**
+     * 
+     * Create a ProjectionTransform from sourceCRS to targetCRS.
+     * 
+     * @deprecated prefer type Projection to CoordinateReferenceSystem.
+     * 
+     * @param sourceCRS
+     * @param targetCRS
+     */
+    public ProjectionTransform(CoordinateReferenceSystem sourceCRS, CoordinateReferenceSystem targetCRS) {
+        try {
+            this.transform = CRS.findMathTransform(sourceCRS, targetCRS);
+        } catch (FactoryException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Create a ProjectionTransform from sourceCRS to CRS:84
+     * 
+     * @deprecated prefer type Projection to CoordinateReferenceSystem.
      * 
      * @param sourceCRS
      * @throws FactoryException
      */
     public ProjectionTransform(CoordinateReferenceSystem sourceCRS) throws FactoryException {
-        this.defaultTargetCRS = CRS.decode("CRS:84");
-        this.transform = CRS.findMathTransform(sourceCRS, this.defaultTargetCRS);
+        this.transform = CRS.findMathTransform(sourceCRS, CRS84.getCRS());
     }
 
     public Geometry transform(Geometry geometry) throws MismatchedDimensionException, TransformException {

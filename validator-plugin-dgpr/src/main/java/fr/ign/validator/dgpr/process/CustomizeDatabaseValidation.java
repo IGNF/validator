@@ -10,7 +10,6 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.validation.database.GraphTopologyValidator;
 import fr.ign.validator.dgpr.validation.database.InclusionValidator;
-import fr.ign.validator.dgpr.validation.database.RelationValidator;
 import fr.ign.validator.dgpr.validation.database.ScenarioValidator;
 import fr.ign.validator.model.DocumentModel;
 
@@ -25,13 +24,6 @@ public class CustomizeDatabaseValidation implements ValidatorListener {
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
         DocumentModel documentModel = document.getDocumentModel();
-
-        /*
-         * Add standard database validators.
-         * 
-         * TODO move to DocumentModel constructor in validator-core
-         */
-        documentModel.addDatabaseValidator(new RelationValidator());
 
         /*
          * DGPR specific database validators.

@@ -349,7 +349,11 @@ public class Database implements Closeable {
                 continue;
             }
             List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
+            /*
+             * create indexes according to constraints
+             */
             for (AttributeType<?> attributeType : attributes) {
+                // TODO create index for referenced values
                 if (!attributeType.getConstraints().isUnique()) {
                     continue;
                 }

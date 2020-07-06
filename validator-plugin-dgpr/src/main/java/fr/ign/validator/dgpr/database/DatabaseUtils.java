@@ -17,7 +17,16 @@ import org.locationtech.jts.simplify.TopologyPreservingSimplifier;
 
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.geometry.ProjectionTransform;
+import fr.ign.validator.tools.EnvelopeUtils;
 
+/**
+ * Helpers developed for DGPR plugin.
+ * 
+ * TODO split class moving helpers in existing classes.
+ * 
+ * @author CBouche
+ *
+ */
 public class DatabaseUtils {
 
     /**
@@ -112,6 +121,9 @@ public class DatabaseUtils {
 
     /**
      * Return enveloppe of giving Wkt Geometry
+     * 
+     * @deprecated moved to validator-core
+     * @see EnvelopeUtils#getEnvelope(String, fr.ign.validator.model.Projection)
      * 
      * @param wkt
      * @param crs

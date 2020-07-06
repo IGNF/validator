@@ -3,8 +3,14 @@ package fr.ign.validator.tools;
 import java.util.Locale;
 
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
+import org.opengis.geometry.MismatchedDimensionException;
+import org.opengis.referencing.operation.TransformException;
+
+import fr.ign.validator.geometry.ProjectionTransform;
+import fr.ign.validator.model.Projection;
 
 /**
  * Manipulates Bounding Boxes (envelope or bbox)
@@ -12,15 +18,15 @@ import org.locationtech.jts.io.WKTReader;
  * @author MBorne
  *
  */
-public class EnveloppeUtils {
+public class EnvelopeUtils {
 
     /**
-     * Get bounding box from WKT string
+     * Get bounding box from WKT string.
      * 
      * @param wkt
      * @return
      */
-    public static Envelope getBoundingBoxFromWKT(String wkt) {
+    public static Envelope getEnvelope(String wkt) {
         if (wkt == null || wkt.isEmpty()) {
             return new Envelope();
         }
@@ -29,6 +35,24 @@ public class EnveloppeUtils {
             org.locationtech.jts.geom.Geometry geometry = reader.read(wkt);
             return geometry.getEnvelopeInternal();
         } catch (ParseException e) {
+            return new Envelope();
+        }
+    }
+
+    /**
+     * Get CRS:84 envelope from WKT string with a given projection.
+     * 
+     * @param wkt
+     * @param projection
+     * @return
+     */
+    public static Envelope getEnvelope(String wkt, Projection projection) {
+        try {
+            Geometry geom = new ProjectionTransform(projection).transformWKT(wkt);
+            return geom.getEnvelopeInternal();
+        } catch (MismatchedDimensionException e) {
+            return new Envelope();
+        } catch (TransformException e) {
             return new Envelope();
         }
     }
