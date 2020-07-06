@@ -151,7 +151,7 @@ public class AttributeUniqueValidatorTest {
                 "La valeur 'test_2' est présente 2 fois pour le champ 'ID' de la table 'TEST'.",
                 error.getMessage()
             );
-            assertEquals("SAMPLE_MODEL",error.getDocumentModel());
+            assertEquals("SAMPLE_MODEL", error.getDocumentModel());
         }
         {
             ValidatorError error = errors.get(index++);
@@ -162,7 +162,7 @@ public class AttributeUniqueValidatorTest {
                 "La valeur 'relation_3' est présente 3 fois pour le champ 'ID' de la table 'RELATION'.",
                 error.getMessage()
             );
-            assertEquals("SAMPLE_MODEL",error.getDocumentModel());
+            assertEquals("SAMPLE_MODEL", error.getDocumentModel());
         }
     }
 
