@@ -23,8 +23,6 @@ public class DgprErrorCodes {
     );
     public static final ErrorCode DGPR_ISO_HT_INTERSECTS = ErrorCode.valueOf("DGPR_ISO_HT_INTERSECTS");
     public static final ErrorCode DGPR_UNMATCHED_SCENARIO = ErrorCode.valueOf("DGPR_UNMATCHED_SCENARIO");
-    public static final ErrorCode DGPR_IDENTIFIER_UNICITY = ErrorCode.valueOf("DGPR_IDENTIFIER_UNICITY");
-    public static final ErrorCode DGPR_RELATION_ERROR = ErrorCode.valueOf("DGPR_RELATION_ERROR");
     public static final ErrorCode DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY = ErrorCode.valueOf(
         "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY"
     );;

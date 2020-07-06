@@ -106,6 +106,18 @@
         "documentation": "Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide"
     },
     {
+        "name": "ATTRIBUTE_NOT_UNIQUE",
+        "level": "ERROR",
+        "message": "La valeur '{ID_NAME}' est présente {ID_COUNT} fois pour le champ '{COLUMN_NAME}' de la table '{TABLE_NAME}'.",
+        "documentation": "Cette erreur se produit lorsqu'un champ « unique » contient plusieurs occurences d'une même valeur."
+    },
+    {
+        "name": "ATTRIBUTE_REFERENCE_NOT_FOUND",
+        "level": "ERROR",
+        "message": "La référence {SOURCE_TABLE}.{SOURCE_COLUMN} n'est pas validée. Le champ {TARGET_TABLE}.{TARGET_COLUMN} ne prend pas la valeur '{REF_VALUE}'.",
+        "documentation": "Cette erreur se produit lorsque la « reference » d'un champ n'est pas trouvée dans la table cible."
+    },
+    {
         "name": "ATTRIBUTE_CHARACTERS_ILLEGAL",
         "level": "ERROR",
         "message": "La valeur (‘{VALUE}’) contient des caractères interdits qui seront échappés (‘{FIXED_VALUE}’).",
@@ -631,12 +643,12 @@
         "name": "DGPR_IDENTIFIER_UNICITY",
         "level": "ERROR",
         "message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
-        "documentation": ""
+        "documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_NOT_UNIQUE pour migration du contrôle dans validator-core"
     },
     {
         "name": "DGPR_RELATION_ERROR",
         "level": "ERROR",
         "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
-        "documentation": ""
+        "documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_REFERENCE_NOT_FOUND pour migration du contrôle dans validator-core"
     }
 ]

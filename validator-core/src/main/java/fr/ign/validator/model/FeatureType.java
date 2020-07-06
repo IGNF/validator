@@ -195,6 +195,22 @@ public class FeatureType implements Model {
     }
 
     /**
+     * Retreive the attribute providing the featureId.
+     * 
+     * TODO rely on primaryKey definition.
+     * 
+     * @return
+     */
+    public AttributeType<?> getIdentifier() {
+        for (AttributeType<?> attribute : attributes) {
+            if (attribute.getConstraints().isUnique()) {
+                return attribute;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Finds the position of an attribute by its name (manages inheritance)
      * 
      * @param name

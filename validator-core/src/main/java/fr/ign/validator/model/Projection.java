@@ -109,13 +109,16 @@ public class Projection {
     /**
      * Get SRID code (used in postgis command)
      * 
+     * TODO handle coordinate flip for postgis transform (EPSG:4326 is lat,lon for
+     * the validator to match official conventions)
+     * 
      * @return
      */
     public String getSrid() {
-        String srid = getCodeGeotool();
+        String code = StringUtils.isEmpty(codeGeotool) ? this.code : codeGeotool;
         // check namespace
-        if (srid.startsWith("EPSG:")) {
-            return srid.substring(5);
+        if (code.startsWith("EPSG:")) {
+            return code.substring(5);
         }
         return "4326";
     }

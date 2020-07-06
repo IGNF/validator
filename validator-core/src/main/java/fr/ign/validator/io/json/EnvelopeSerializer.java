@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import org.locationtech.jts.geom.Envelope;
 
-import fr.ign.validator.tools.EnveloppeUtils;
+import fr.ign.validator.tools.EnvelopeUtils;
 
 /**
  * Serialize BoundingBox to JSON format [xmin,ymin,xmax,ymax]
@@ -26,10 +26,10 @@ public class EnvelopeSerializer extends JsonSerializer<Envelope> {
             return;
         }
         gen.writeStartArray();
-        gen.writeNumber(EnveloppeUtils.formatDouble(value.getMinX()));
-        gen.writeNumber(EnveloppeUtils.formatDouble(value.getMinY()));
-        gen.writeNumber(EnveloppeUtils.formatDouble(value.getMaxX()));
-        gen.writeNumber(EnveloppeUtils.formatDouble(value.getMaxY()));
+        gen.writeNumber(EnvelopeUtils.formatDouble(value.getMinX()));
+        gen.writeNumber(EnvelopeUtils.formatDouble(value.getMinY()));
+        gen.writeNumber(EnvelopeUtils.formatDouble(value.getMaxX()));
+        gen.writeNumber(EnvelopeUtils.formatDouble(value.getMaxY()));
         gen.writeEndArray();
     }
 

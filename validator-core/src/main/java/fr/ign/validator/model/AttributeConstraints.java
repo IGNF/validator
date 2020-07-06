@@ -31,8 +31,8 @@ public class AttributeConstraints {
      * 
      * @since 4.0 previously "identifier" supported only by dgpr plugin
      * 
-     * @see fr.ign.validator.dgpr.validation.database.IdentifierValidator
-     * @see fr.ign.validator.dgpr.DgprErrorCodes#DGPR_IDENTIFIER_UNICITY
+     * @see fr.ign.validator.validation.database.AttributeUniqueValidator
+     * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_NOT_UNIQUE
      */
     private boolean unique;
 

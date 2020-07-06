@@ -1,4 +1,6 @@
-package fr.ign.validator.dgpr.validation.database;
+package fr.ign.validator.validation.database;
+
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +16,8 @@ import org.opengis.referencing.NoSuchAuthorityCodeException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
-import fr.ign.validator.dgpr.error.DgprErrorCodes;
+import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -24,7 +27,7 @@ import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
-public class IdentifierValidatorTest {
+public class AttributeUniqueValidatorTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -41,13 +44,12 @@ public class IdentifierValidatorTest {
 
         // creates attribute "id" which is an identifier
         AttributeType<String> attribute = new StringType();
-        attribute.setIdentifier(true);
-        attribute.setName("id");
+        attribute.setName("ID");
+        attribute.getConstraints().setUnique(true);
 
         // creates attribute "relation_id" which is NOT an identifier
         AttributeType<String> attribute2 = new StringType();
-        attribute2.setIdentifier(false);
-        attribute2.setName("relation_id");
+        attribute2.setName("RELATION_ID");
 
         // creates list of attributes
         List<AttributeType<?>> attributes = new ArrayList<>();
@@ -79,12 +81,13 @@ public class IdentifierValidatorTest {
 
         // creates a DocumentModel with the List<FileModel>
         DocumentModel documentModel = new DocumentModel();
+        documentModel.setName("SAMPLE_MODEL");
         documentModel.setFileModels(fileModels);
         context.beginModel(documentModel);
     }
 
     @Test
-    public void testOk() throws Exception {
+    public void testValid() throws Exception {
         // creates an empty database
         File path = new File(folder.getRoot(), "document_database.db");
         Database database = new Database(path);
@@ -102,15 +105,15 @@ public class IdentifierValidatorTest {
         database.query("INSERT INTO RELATION(id) VALUES ('relation_2');");
         database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
 
-        // check that the identifierValidator doesn't send any error
-        IdentifierValidator identifierValidator = new IdentifierValidator();
+        // check that the validator doesn't send any error
+        AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
         identifierValidator.validate(context, database);
 
-        Assert.assertEquals(0, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
+        Assert.assertEquals(0, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
     }
 
     @Test
-    public void testUnicityFail() throws Exception {
+    public void testNotValid() throws Exception {
         // creates an empty database
         File path = new File(folder.getRoot(), "document_database.db");
         Database database = new Database(path);
@@ -131,20 +134,36 @@ public class IdentifierValidatorTest {
         database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
 
         // check that the identifierValidator sends two errors
-        IdentifierValidator identifierValidator = new IdentifierValidator();
+        AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
         identifierValidator.validate(context, database);
 
-        Assert.assertEquals(2, reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).size());
+        Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
 
-        ValidatorError idError0 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(0);
-        ValidatorError idError1 = reportBuilder.getErrorsByCode(DgprErrorCodes.DGPR_IDENTIFIER_UNICITY).get(1);
-
-        Assert.assertEquals(
-            "Problème dans la table TEST : l'identifiant 'test_2' est présent 2 fois.", idError0.getMessage()
-        );
-        Assert.assertEquals(
-            "Problème dans la table RELATION : l'identifiant 'relation_3' est présent 3 fois.", idError1.getMessage()
-        );
+        List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE);
+        int index = 0;
+        // check first error
+        {
+            ValidatorError error = errors.get(index++);
+            assertEquals("ID", error.getAttribute());
+            assertEquals("TEST", error.getFileModel());
+            assertEquals(ErrorScope.DIRECTORY, error.getScope());
+            assertEquals(
+                "La valeur 'test_2' est présente 2 fois pour le champ 'ID' de la table 'TEST'.",
+                error.getMessage()
+            );
+            assertEquals("SAMPLE_MODEL", error.getDocumentModel());
+        }
+        {
+            ValidatorError error = errors.get(index++);
+            assertEquals("ID", error.getAttribute());
+            assertEquals("RELATION", error.getFileModel());
+            assertEquals(ErrorScope.DIRECTORY, error.getScope());
+            assertEquals(
+                "La valeur 'relation_3' est présente 3 fois pour le champ 'ID' de la table 'RELATION'.",
+                error.getMessage()
+            );
+            assertEquals("SAMPLE_MODEL", error.getDocumentModel());
+        }
     }
 
 }

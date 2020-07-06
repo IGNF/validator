@@ -28,7 +28,7 @@ import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.TableModel;
-import fr.ign.validator.tools.EnveloppeUtils;
+import fr.ign.validator.tools.EnvelopeUtils;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -113,7 +113,7 @@ public class DocumentInfoExtractor {
                 // compute bounding box
                 if (indexWktColumn >= 0) {
                     String wkt = row[indexWktColumn];
-                    boundingBox.expandToInclude(EnveloppeUtils.getBoundingBoxFromWKT(wkt));
+                    boundingBox.expandToInclude(EnvelopeUtils.getEnvelope(wkt));
                 }
             }
 

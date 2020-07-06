@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.tools.HeaderHelper;
 
 /**
  * Maps header with attributes of a FeatureType
@@ -13,11 +14,11 @@ import fr.ign.validator.model.FeatureType;
  */
 public class FeatureTypeMapper {
     /**
-     * table header (input)
+     * Input table header
      */
     private String[] columns;
     /**
-     * data model (output)
+     * Output table description
      */
     private FeatureType featureType;
     /**
@@ -31,7 +32,6 @@ public class FeatureTypeMapper {
     private List<String> unexpectedAttributes = new ArrayList<String>();
 
     /**
-     * 
      * @param columns
      * @param featureType
      */
@@ -53,17 +53,27 @@ public class FeatureTypeMapper {
     }
 
     /**
-     * @return the featureType
-     */
-    public FeatureType getFeatureType() {
-        return featureType;
-    }
-
-    /**
      * @return the header
      */
     public String[] getColumns() {
         return columns;
+    }
+
+    /**
+     * Returns the index of a input column.
+     * 
+     * @param name
+     * @return
+     */
+    public int getColumnIndex(String name) {
+        return HeaderHelper.findColumn(columns, name);
+    }
+
+    /**
+     * @return the featureType
+     */
+    public FeatureType getFeatureType() {
+        return featureType;
     }
 
     /**

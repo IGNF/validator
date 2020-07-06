@@ -31,54 +31,52 @@ public class DatabaseTest {
 
     /**
      * Create an SQLITE database with a specific path and performs basic tests
+     * 
+     * @throws Exception
      */
     @Test
-    public void testCreateDatabaseFile() {
-        try {
-            File databaseFile = new File(folder.getRoot(), "sample.db");
-            Database database = new Database(databaseFile);
+    public void testCreateDatabaseFile() throws Exception {
+        File databaseFile = new File(folder.getRoot(), "sample.db");
+        Database database = new Database(databaseFile);
 
-            // ensure that file is created
-            assertTrue(databaseFile.exists());
+        // ensure that file is created
+        assertTrue(databaseFile.exists());
 
-            // ensure that simple select works without any table
-            RowIterator it = database.query("SELECT 'test' as test");
-            assertTrue(it.hasNext());
-            String[] row = it.next();
-            assertEquals(1, row.length);
-            assertEquals("test", row[0]);
-            assertFalse(it.hasNext());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail();
-        }
+        // ensure that simple select works without any table
+        RowIterator it = database.query("SELECT 'test' as test");
+        assertTrue(it.hasNext());
+        String[] row = it.next();
+        assertEquals(1, row.length);
+        assertEquals("test", row[0]);
+        assertFalse(it.hasNext());
+
+        it.close();
+        database.close();
     }
 
     /**
      * Performs basic test with some queries
+     * 
+     * @throws Exception
      */
     @Test
-    public void testCreateInsertSelect() {
-        try {
-            File databaseFile = new File(folder.getRoot(), "sample.db");
-            Database database = new Database(databaseFile);
-            database.query("CREATE TABLE TEST(id TEXT, name TEXT);");
-            database.query("INSERT INTO TEST(id, name) VALUES ('1', 'name01');");
+    public void testCreateInsertSelect() throws Exception {
+        File databaseFile = new File(folder.getRoot(), "sample.db");
+        Database database = new Database(databaseFile);
+        database.query("CREATE TABLE TEST(id TEXT, name TEXT);");
+        database.query("INSERT INTO TEST(id, name) VALUES ('1', 'name01');");
 
-            RowIterator iterator = database.query("SELECT * FROM TEST;");
-            assertTrue(iterator.hasNext());
-            int indexId = iterator.getColumn("id");
-            int indexName = iterator.getColumn("name");
+        RowIterator iterator = database.query("SELECT * FROM TEST;");
+        assertTrue(iterator.hasNext());
+        int indexId = iterator.getColumn("id");
+        int indexName = iterator.getColumn("name");
 
-            String[] feature = iterator.next();
-            assertEquals("1", feature[indexId]);
-            assertEquals("name01", feature[indexName]);
+        String[] feature = iterator.next();
+        assertEquals("1", feature[indexId]);
+        assertEquals("name01", feature[indexName]);
 
-            iterator.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail();
-        }
+        iterator.close();
+        database.close();
     }
 
     /**
@@ -99,6 +97,8 @@ public class DatabaseTest {
         database.loadFile("test", file, StandardCharsets.UTF_8);
 
         Assert.assertEquals(1, database.getCount("test"));
+
+        database.close();
     }
 
     /**
@@ -119,6 +119,8 @@ public class DatabaseTest {
         database.loadFile("test", file, StandardCharsets.UTF_8);
 
         Assert.assertEquals(0, database.getCount("test"));
+
+        database.close();
     }
 
     @Test
@@ -135,6 +137,8 @@ public class DatabaseTest {
         document.findFileModelForFiles(context);
         database.load(context, document);
         assertEquals(8, database.getCount("adresse"));
+
+        database.close();
     }
 
     /**

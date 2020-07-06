@@ -14,6 +14,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
+import fr.ign.validator.database.Database;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
@@ -183,12 +184,42 @@ public class Document implements Validatable {
         }
 
         /*
+         * Validation at database level (unicity, references,...)
+         */
+        runDatabaseValidators(context);
+
+        /*
          * executing process after validation
          */
         triggerAfterValidate(context);
 
         context.endModel(documentModel);
         context.endData(this);
+    }
+
+    /**
+     * Create a validation Database for the Document and apply validators
+     * 
+     * @param context
+     */
+    private void runDatabaseValidators(Context context) {
+        try {
+            log.info(MARKER, "Create validation Database...");
+            Database database = Database.createDatabase(context, true);
+            database.createTables(getDocumentModel());
+            database.createIndexes(getDocumentModel());
+            database.setProjection(context.getProjection());
+            database.load(context, this);
+
+            log.info(MARKER, "Validate document using database validators...");
+            for (Validator<Database> validator : context.getDocumentModel().getDatabaseValidators()) {
+                validator.validate(context, database);
+            }
+
+            database.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

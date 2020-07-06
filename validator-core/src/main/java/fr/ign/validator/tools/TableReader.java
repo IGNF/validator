@@ -152,13 +152,7 @@ public class TableReader implements Iterator<String[]> {
      * @return
      */
     public int findColumn(String name) {
-        String regexp = "(?i)" + name;
-        for (int index = 0; index < header.length; index++) {
-            if (header[index].matches(regexp)) {
-                return index;
-            }
-        }
-        return -1;
+        return HeaderHelper.findColumn(header, name);
     }
 
     /**

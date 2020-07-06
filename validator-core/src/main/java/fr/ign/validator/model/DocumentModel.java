@@ -19,7 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.data.Document;
+import fr.ign.validator.database.Database;
 import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.database.AttributeReferenceValidator;
+import fr.ign.validator.validation.database.AttributeUniqueValidator;
 import fr.ign.validator.validation.document.DocumentFolderNameValidator;
 import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
@@ -57,11 +60,20 @@ public class DocumentModel implements Model {
     private List<Validator<Document>> validators = new ArrayList<Validator<Document>>();
 
     /**
+     * Validators applied on validation database dedicated to the Document (unicity,
+     * references,...)
+     */
+    private List<Validator<Database>> databaseValidators = new ArrayList<>();
+
+    /**
      * Constructs a DocumentModel with default constraints
      */
     public DocumentModel() {
         addValidator(new DocumentFolderNameValidator());
         addValidator(new DocumentMandatoryFileValidator());
+        // validators relying on the validation Database
+        addDatabaseValidator(new AttributeUniqueValidator());
+        addDatabaseValidator(new AttributeReferenceValidator());
     }
 
     /**
@@ -179,23 +191,22 @@ public class DocumentModel implements Model {
         return result;
     }
 
-    /**
-     * Add a validator to the document
-     * 
-     * @param validator
-     */
+    @JsonIgnore
+    public List<Validator<Document>> getValidators() {
+        return this.validators;
+    }
+
     public void addValidator(Validator<Document> validator) {
         this.validators.add(validator);
     }
 
-    /**
-     * Get validators on document
-     * 
-     * @return
-     */
     @JsonIgnore
-    public List<Validator<Document>> getValidators() {
-        return this.validators;
+    public List<Validator<Database>> getDatabaseValidators() {
+        return databaseValidators;
+    }
+
+    public void addDatabaseValidator(Validator<Database> validator) {
+        databaseValidators.add(validator);
     }
 
 }

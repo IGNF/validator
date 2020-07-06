@@ -1,5 +1,6 @@
 package fr.ign.validator.database;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -40,7 +41,7 @@ import fr.ign.validator.tools.TableReader;
  * @author MBorne
  *
  */
-public class Database {
+public class Database implements Closeable {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("Database");
@@ -81,6 +82,15 @@ public class Database {
             throw new RuntimeException(e);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            this.connection.close();
+        } catch (SQLException e) {
+            throw new IOException(e);
         }
     }
 
@@ -197,7 +207,13 @@ public class Database {
      * @throws SQLException
      */
     private static Database createSqlLiteDatabase(Context context, boolean reset) throws SQLException {
-        File databasePath = new File(context.getValidationDirectory(), "document_database.db");
+        // Ensure that validation directory exists
+        File validationDirectory = context.getValidationDirectory();
+        if (!validationDirectory.exists()) {
+            validationDirectory.mkdirs();
+        }
+        // Open or create sqlite database file in validation directory
+        File databasePath = new File(validationDirectory, "document_database.db");
         if (databasePath.exists() && reset) {
             log.info(MARKER, "Remove existing database {}...", databasePath);
             databasePath.delete();
@@ -268,6 +284,11 @@ public class Database {
      * @param columnNames
      */
     public void createTable(String tableName, List<String> columnNames) throws SQLException {
+        log.info(
+            MARKER,
+            "Create table for the TableModel '{}' with text columns...",
+            tableName
+        );
         String ifClause = "";
         if (this.isPostgresqlDriver()) {
             ifClause = "IF NOT EXISTS ";
@@ -328,7 +349,11 @@ public class Database {
                 continue;
             }
             List<AttributeType<?>> attributes = file.getFeatureType().getAttributes();
+            /*
+             * create indexes according to constraints
+             */
             for (AttributeType<?> attributeType : attributes) {
+                // TODO create index for referenced values
                 if (!attributeType.getConstraints().isUnique()) {
                     continue;
                 }
@@ -409,15 +434,33 @@ public class Database {
         }
     }
 
+    /**
+     * TODO review this method with CBouche :
+     * <ul>
+     * <li>move this as a validator-plugin-dpgr specific preprocess</li>
+     * </ul>
+     * 
+     * @param featureType
+     * @throws SQLException
+     */
     private void updateGeom(FeatureType featureType) throws SQLException {
         // last commit
         if (featureType.isSpatial()) {
             String srid = Database.DEFAULT_SRID;
-            if (this.getProjection() != null && this.getProjection().getCode().split(":").length > 1) {
-                // must split code
-                srid = this.getProjection().getCode().split(":")[1];
+
+            /*
+             * TODO clarify code bellow replaced as it crashes on CRS:84 which is the
+             * equivalent of 4326 in postgis
+             */
+//            if (this.getProjection() != null && this.getProjection().getCode().split(":").length > 1) {
+//                // must split code
+//                srid = this.getProjection().getCode().split(":")[1];
+//            }
+            if (this.getProjection() != null) {
+                srid = this.getProjection().getSrid();
             }
-            // TODO clarify wkt/the_geom
+
+            // TODO clarify wkt/the_geom, why ST_Multi instead of binding values
             String updateSQL = "UPDATE " + featureType.getName() + " SET the_geom = "
                 + "ST_Multi(ST_Transform(ST_SetSRID(wkt, " + srid + "), 4326));";
             update(updateSQL);
@@ -437,6 +480,7 @@ public class Database {
      */
     public void loadFile(String tableName, File path, Charset charset)
         throws IOException, InvalidCharsetException, SQLException {
+        log.info(MARKER, "loadFile({},{},{})...", tableName, path.getAbsolutePath(), charset.toString());
         /*
          * Create table reader
          */
