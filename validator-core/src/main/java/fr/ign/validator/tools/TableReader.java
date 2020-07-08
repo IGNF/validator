@@ -18,12 +18,15 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 /**
- * SHP/TAB file reader
+ * Read spatial and non spatial tables from different formats (CSV, Shapefile,
+ * MapInfo, GML, GeoJSON,...).
  * 
- * Note :
+ * Note that :
+ * 
  * <ul>
- * <li>Based on a csv conversion made by ogr2ogr</li>
- * <li>Puts csv file next to the original file</li>
+ * <li>CSV files are read using apache-common-csv</li>
+ * <li>Other formats are converted to CSV files (.vrows) using "ogr2ogr"</li>
+ * <li>reader.charsetValid is set to false when charset is invalid</li>
  * </ul>
  * 
  * @author MBorne
@@ -32,6 +35,11 @@ public class TableReader implements Iterator<String[]> {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("TableReader");
+
+    /**
+     * A validator specific extension for the CSV files produced by TableReader.
+     */
+    public static final String TMP_EXTENSION = "vrows";
 
     /**
      * CSV file reader
@@ -181,18 +189,29 @@ public class TableReader implements Iterator<String[]> {
      * @throws IOException
      */
     public static TableReader createTableReader(File file, Charset preferedCharset) throws IOException {
+        log.info(MARKER, "createTableReader('{}','{}')...", file.getAbsoluteFile(), preferedCharset);
         if (FilenameUtils.getExtension(file.getName()).toLowerCase().equals("csv")) {
             return new TableReader(file, preferedCharset);
         }
 
-        // Convert to CSV on first read
-        File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
-        if (!csvFile.exists()) {
+        /*
+         * Convert to CSV with a validator specific extension on first read
+         */
+        File tempFile = CompanionFileUtils.getCompanionFile(file, TMP_EXTENSION);
+        if (!tempFile.exists()) {
+            File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
             FileConverter converter = FileConverter.getInstance();
             converter.convertToCSV(file, csvFile, preferedCharset);
+            if (!csvFile.exists()) {
+                String message = String.format("Fail to convert %1s to CSV", file.getAbsolutePath());
+                log.error(MARKER, message);
+                throw new IOException(message);
+            }
+            log.info(MARKER, "{} -> {}", csvFile.getAbsolutePath(), tempFile.getAbsolutePath());
+            csvFile.renameTo(tempFile);
         }
         // ogr2ogr is supposed to always produced UTF-8 encoded CSV file
-        return new TableReader(csvFile, StandardCharsets.UTF_8);
+        return new TableReader(tempFile, StandardCharsets.UTF_8);
     }
 
 }
