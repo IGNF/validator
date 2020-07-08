@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import fr.ign.validator.model.type.GeometryType;
+
 /**
  * Describe the content of a table
  * 
@@ -97,6 +99,21 @@ public class FeatureType implements Model {
             }
         }
         return false;
+    }
+
+    /**
+     * Get default geometry (the first one if multiple geometry are defined to match
+     * GeoServer behavior).
+     * 
+     * @return
+     */
+    public GeometryType getDefaultGeometry() {
+        for (AttributeType<?> attribute : attributes) {
+            if (attribute.isGeometry()) {
+                return (GeometryType) attribute;
+            }
+        }
+        return null;
     }
 
     public String getDescription() {
