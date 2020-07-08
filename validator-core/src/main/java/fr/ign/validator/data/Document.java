@@ -217,6 +217,7 @@ public class Document implements Validatable {
 
             database.close();
         } catch (Exception e) {
+        	log.error(MARKER, "Fail to create validation database");
             throw new RuntimeException(e);
         }
     }
