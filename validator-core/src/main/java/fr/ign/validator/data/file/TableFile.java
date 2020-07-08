@@ -8,7 +8,6 @@ import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.Header;
 import fr.ign.validator.data.Row;
 import fr.ign.validator.error.CoreErrorCodes;
-import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.TableReader;
@@ -42,19 +41,14 @@ public class TableFile extends DocumentFile {
         /*
          * csv file validation
          */
-        log.debug(MARKER, "Lecture des données de la table {}...", matchingFile);
         try {
-            TableReader reader;
-            try {
-                reader = TableReader.createTableReader(matchingFile, context.getEncoding());
-            } catch (InvalidCharsetException e) {
-                log.error(MARKER, "Charset invalide détectée pour {}", matchingFile);
+            TableReader reader = TableReader.createTableReader(matchingFile, context.getEncoding());
+            if (!reader.isCharsetValid()) {
+                log.error(MARKER, "Invalid charset '{}' for '{}'", context.getEncoding(), matchingFile);
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_UNEXPECTED_ENCODING)
                         .setMessageParam("ENCODING", context.getEncoding().toString())
                 );
-                log.info(MARKER, "Tentative d'autodétection de la charset pour la validation de {}", matchingFile);
-                reader = TableReader.createTableReaderDetectCharset(matchingFile);
             }
 
             /*
@@ -74,6 +68,9 @@ public class TableFile extends DocumentFile {
 
                 Row row = new Row(count, reader.next(), mapping);
                 row.validate(context);
+                if (count % 10000 == 0) {
+                    log.debug(MARKER, "'{}' : {} rows processed...", matchingFile, count);
+                }
             }
 
             /*
@@ -86,8 +83,9 @@ public class TableFile extends DocumentFile {
                 );
             }
 
-            log.info(MARKER, "{} objet validé(s)", count);
+            log.info(MARKER, "'{}' : {} row(s) processed", matchingFile, count);
         } catch (IOException e) {
+            log.error(MARKER, "Fail to read file '{}'!", matchingFile);
             context.report(
                 context.createError(CoreErrorCodes.FILE_NOT_OPENED)
                     .setMessageParam("FILEPATH", context.relativize(matchingFile))

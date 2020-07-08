@@ -144,7 +144,7 @@ public class Document implements Validatable {
     @Override
     public void validate(Context context) throws Exception {
         log.info(
-            MARKER, "Validation de {} avec le modèle {}",
+            MARKER, "Validate document '{}' with '{}'...",
             documentPath,
             documentModel.getName()
         );
@@ -162,7 +162,7 @@ public class Document implements Validatable {
         /*
          * matching files with model
          */
-        findFileModelForFiles(context);
+        findDocumentFiles(context);
 
         /*
          * executing process before validation
@@ -217,6 +217,7 @@ public class Document implements Validatable {
 
             database.close();
         } catch (Exception e) {
+            log.error(MARKER, "Fail to create validation database");
             throw new RuntimeException(e);
         }
     }
@@ -228,6 +229,7 @@ public class Document implements Validatable {
      * @throws Exception
      */
     protected void triggerBeforeMatching(Context context) throws Exception {
+        log.info(MARKER, "Run 'beforeMatching' pre-processes...");
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.beforeMatching(context, this);
         }
@@ -240,6 +242,7 @@ public class Document implements Validatable {
      * @throws Exception
      */
     protected void triggerBeforeValidate(Context context) throws Exception {
+        log.info(MARKER, "Run 'beforeValidate' pre-processes...");
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.beforeValidate(context, this);
         }
@@ -252,6 +255,7 @@ public class Document implements Validatable {
      * @throws Exception
      */
     protected void triggerAfterValidate(Context context) throws Exception {
+        log.info(MARKER, "Run 'afterValidate' pre-processes...");
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.afterValidate(context, this);
         }
@@ -262,23 +266,23 @@ public class Document implements Validatable {
      * 
      * @param documentPath
      */
-    public void findFileModelForFiles(Context context) {
+    public void findDocumentFiles(Context context) {
         clearFiles();
 
         File documentPath = getDocumentPath();
-
+        log.info(MARKER, "findDocumentFiles('{}')...", documentPath);
         Collection<File> files = FileUtils.listFilesAndDirs(documentPath, allowedExtensions);
 
         /*
          * find match with FileModel
          */
         for (File file : files) {
-            log.info(MARKER, "Recherche du FileModel pour le fichier {}...", file);
+            log.info(MARKER, "Looking for a FileModel for '{}'...", file);
 
             FileModel fileModel = documentModel.findFileModelByPath(file);
 
             if (fileModel != null) {
-                log.info(MARKER, "[MATCH]{} => {}", file, fileModel.getName());
+                log.info(MARKER, "Found FileModel '{}' by path for '{}'", fileModel.getName(), file);
                 addDocumentFile(fileModel, file);
                 continue;
             }
@@ -287,8 +291,8 @@ public class Document implements Validatable {
              */
             fileModel = documentModel.findFileModelByFilename(file);
             if (fileModel != null) {
-                log.info(MARKER, "[FILE_MISPLACED]{} ~> {} (Mal placé)", file, fileModel.getName());
 
+                log.info(MARKER, "Found FileModel '{}' by name for '{}' (FILE_MISPLACED)", fileModel.getName(), file);
                 if (context.isFlatValidation()) {
                     addDocumentFile(fileModel, file);
                 } else {
@@ -304,12 +308,14 @@ public class Document implements Validatable {
             /*
              * not covered by model
              */
-            log.error(MARKER, "[FILE_UNEXPECTED] {} => null", file);
+            log.info(MARKER, "FileModel not found for '{}' (FILE_UNEXPECTED)!", file);
             context.report(
                 context.createError(CoreErrorCodes.FILE_UNEXPECTED)
                     .setMessageParam("FILEPATH", context.relativize(file))
             );
         }
+
+        log.info(MARKER, "findDocumentFiles('{}') complete, found {} files.", documentPath, documentFiles.size());
     }
 
     private void addDocumentFile(FileModel fileModel, File path) {

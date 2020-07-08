@@ -6,12 +6,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 public class CharsetDetector {
+
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("CharsetDetector");
 
     /**
      * Detects character encoding from data source between UTF-8 and LATIN1.
@@ -28,9 +35,12 @@ public class CharsetDetector {
      * @throws IOException
      */
     public static Charset detectCharset(File file) throws IOException {
+        log.debug(MARKER, "detectCharset('{}')...", file.getAbsolutePath());
         if (isValidUTF8(file)) {
+            log.debug(MARKER, "detectCharset('{}') : UTF-8", file.getAbsolutePath());
             return StandardCharsets.UTF_8;
         } else {
+            log.debug(MARKER, "detectCharset('{}') : LATIN-1", file.getAbsolutePath());
             return StandardCharsets.ISO_8859_1;
         }
     }
@@ -54,6 +64,7 @@ public class CharsetDetector {
      * @return
      */
     public static boolean isValidCharset(File file, Charset charset) {
+        log.debug(MARKER, "isValidCharset('{}','{}')...", file.getAbsolutePath(), charset);
         try {
             CharsetDecoder cs = charset.newDecoder();
             BufferedReader in = new BufferedReader(
@@ -66,13 +77,11 @@ public class CharsetDetector {
 
             }
             in.close();
-        } catch (UnsupportedEncodingException e) {
-            return false;
-        } catch (FileNotFoundException e) {
-            return false;
-        } catch (IOException e) {
+        } catch (Exception e) {
+            log.debug(MARKER, "isValidCharset('{}','{}') : false", file.getAbsolutePath(), charset);
             return false;
         }
+        log.debug(MARKER, "isValidCharset('{}','{}') : true", file.getAbsolutePath(), charset);
         return true;
     }
 

@@ -44,6 +44,7 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
         File dataDirectory = context.getDataDirectory();
+        log.info(MARKER, "Create shapefiles from normalized CSV files in '{}'...", dataDirectory);
 
         FileConverter fileConverter = FileConverter.getInstance();
 
@@ -66,7 +67,6 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
             File shpFile = new File(
                 csvFile.getParent(), FilenameUtils.getBaseName(csvFile.getName()) + "." + shpExtension
             );
-            log.info(MARKER, "Conversion de {} en {}", vrtFile, shpFile);
             fileConverter.convertToShapefile(vrtFile, shpFile);
         }
     }

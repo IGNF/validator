@@ -23,7 +23,6 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.file.TableFile;
-import fr.ign.validator.exception.InvalidCharsetException;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
@@ -285,9 +284,7 @@ public class Database implements Closeable {
             columns.add(attribute.getName() + " TEXT");
         }
 
-        String sql = "CREATE TABLE " + tableModel.getName() + " ("
-            + String.join(",", columns)
-            + ");";
+        String sql = "CREATE TABLE " + tableModel.getName() + " (" + String.join(",", columns) + ");";
 
         update(sql);
         connection.commit();
@@ -300,11 +297,7 @@ public class Database implements Closeable {
      * @param columnNames
      */
     public void createTable(String tableName, List<String> columnNames) throws SQLException {
-        log.info(
-            MARKER,
-            "Create table for the TableModel '{}' with text columns...",
-            tableName
-        );
+        log.info(MARKER, "Create table for the TableModel '{}' with text columns...", tableName);
         String sql = "CREATE TABLE " + tableName + " (";
         for (int i = 0; i < columnNames.size(); i++) {
             if (i != 0) {
@@ -351,8 +344,7 @@ public class Database implements Closeable {
      */
     public void createIndex(String tableName, String columnName) throws SQLException {
         String indexName = "idx_" + tableName + "_" + columnName;
-        String sql = "CREATE INDEX " + indexName
-            + " ON " + tableName + " (" + columnName + ")";
+        String sql = "CREATE INDEX " + indexName + " ON " + tableName + " (" + columnName + ")";
 
         update(sql);
         connection.commit();
@@ -362,10 +354,10 @@ public class Database implements Closeable {
      * Load an entire document to the database (insert mode)
      * 
      * @throws IOException
-     * @throws InvalidCharsetException
      * @throws SQLException
      */
-    public void load(Context context, Document document) throws IOException, InvalidCharsetException, SQLException {
+    public void load(Context context, Document document) throws IOException, SQLException {
+        log.info(MARKER, "Load document '{}'...", document.getDocumentPath());
         List<DocumentFile> files = document.getDocumentFiles();
         for (DocumentFile file : files) {
             if (file instanceof TableFile) {
@@ -380,14 +372,11 @@ public class Database implements Closeable {
      * @param file
      * @param fileModel
      * @throws IOException
-     * @throws InvalidCharsetException
      * @throws SQLException
      */
-    public void load(Context context, DocumentFile documentFile)
-        throws IOException, InvalidCharsetException, SQLException {
-        FeatureType featureType = documentFile.getFileModel().getFeatureType();
-
-        loadFile(featureType.getName(), documentFile.getPath(), context.getEncoding());
+    public void load(Context context, DocumentFile documentFile) throws IOException, SQLException {
+        FileModel fileModel = documentFile.getFileModel();
+        loadFile(fileModel.getName(), documentFile.getPath(), context.getEncoding());
     }
 
     /**
@@ -397,16 +386,14 @@ public class Database implements Closeable {
      * @param path
      * @param charset
      * @throws IOException
-     * @throws InvalidCharsetException
      * @throws SQLException
      */
-    public void loadFile(String tableName, File path, Charset charset)
-        throws IOException, InvalidCharsetException, SQLException {
+    public void loadFile(String tableName, File path, Charset charset) throws IOException, SQLException {
         log.info(MARKER, "loadFile({},{},{})...", tableName, path.getAbsolutePath(), charset.toString());
         /*
          * Create table reader
          */
-        TableReader reader = TableReader.createTableReaderPreferedCharset(path, charset);
+        TableReader reader = TableReader.createTableReader(path, charset);
 
         String[] header = reader.getHeader();
         String[] columnNames = getTableSchema(tableName);
@@ -434,20 +421,14 @@ public class Database implements Closeable {
         /* no matching ? */
         if (indexes.isEmpty()) {
             log.warn(
-                MARKER, "No matching column found in {} for {} with {}",
-                tableName,
-                path,
+                MARKER, "No matching column found in {} for {} with {}", tableName, path,
                 String.join(",", header)
             );
             return;
         }
 
-        String sql = "INSERT INTO " + tableName
-            + " ("
-            + String.join(", ", columnParts)
-            + ") VALUES ("
-            + String.join(", ", valueParts)
-            + ");";
+        String sql = "INSERT INTO " + tableName + " (" + String.join(", ", columnParts) + ") VALUES ("
+            + String.join(", ", valueParts) + ");";
 
         /* Create prepared statement... */
         PreparedStatement sth = connection.prepareStatement(sql);

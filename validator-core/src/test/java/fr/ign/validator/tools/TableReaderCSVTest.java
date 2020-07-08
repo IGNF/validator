@@ -8,13 +8,10 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.Test;
-
-import fr.ign.validator.exception.InvalidCharsetException;
 
 /**
  * 
@@ -26,36 +23,76 @@ import fr.ign.validator.exception.InvalidCharsetException;
 public class TableReaderCSVTest {
 
     @Test
-    public void testReadCsvUtf8() throws IOException, InvalidCharsetException {
+    public void testReadCsvUtf8() throws IOException {
         File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
-        checkExpectedSampleContent(srcFile, StandardCharsets.UTF_8);
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
+        assertTrue(reader.isCharsetValid());
+        checkExpectedSampleContent(reader);
     }
 
     @Test
-    public void testReadCsvLatin1() throws IOException, InvalidCharsetException {
-        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-latin1.csv");
-        checkExpectedSampleContent(srcFile, StandardCharsets.ISO_8859_1);
+    public void testReadCsvUtf8BadCharset() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.ISO_8859_1);
+        // this problem can't be detected
+        assertTrue(reader.isCharsetValid());
+        checkExpectedSampleContentBadInterpretation(reader);
     }
 
-    private void checkExpectedSampleContent(File srcFile, Charset charset) throws IOException, InvalidCharsetException {
-        TableReader csv = TableReader.createTableReader(srcFile, charset);
-        String[] header = csv.getHeader();
+    @Test
+    public void testReadCsvLatin1() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-latin1.csv");
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.ISO_8859_1);
+        assertTrue(reader.isCharsetValid());
+        checkExpectedSampleContent(reader);
+    }
+
+    @Test
+    public void testReadCsvLatin1BadCharset() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-latin1.csv");
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
+        assertFalse(reader.isCharsetValid());
+        checkExpectedSampleContent(reader);
+    }
+
+    private void checkExpectedSampleContent(TableReader reader) throws IOException {
+        String[] header = reader.getHeader();
         assertEquals(header.length, 3);
         assertEquals(header[0], "a");
         assertEquals(header[1], "b");
         assertEquals(header[2], "c");
 
-        String[] line1 = csv.next();
+        String[] line1 = reader.next();
         assertEquals(line1[0], "a1");
         assertEquals(line1[1], "b1");
         assertEquals(line1[2], "c1");
 
-        String[] line2 = csv.next();
+        String[] line2 = reader.next();
         assertEquals(line2[0], "aé2");
         assertEquals(line2[1], "bé2");
         assertEquals(line2[2], "cé2");
 
-        assertFalse(csv.hasNext());
+        assertFalse(reader.hasNext());
+    }
+
+    private void checkExpectedSampleContentBadInterpretation(TableReader reader) throws IOException {
+        String[] header = reader.getHeader();
+        assertEquals(header.length, 3);
+        assertEquals(header[0], "a");
+        assertEquals(header[1], "b");
+        assertEquals(header[2], "c");
+
+        String[] line1 = reader.next();
+        assertEquals(line1[0], "a1");
+        assertEquals(line1[1], "b1");
+        assertEquals(line1[2], "c1");
+
+        String[] line2 = reader.next();
+        assertEquals(line2[0], "aÃ©2");
+        assertEquals(line2[1], "bÃ©2");
+        assertEquals(line2[2], "cÃ©2");
+
+        assertFalse(reader.hasNext());
     }
 
     @Test
@@ -76,7 +113,7 @@ public class TableReaderCSVTest {
             assertNull(row[2]);
 
             assertFalse(csv.hasNext());
-        } catch (InvalidCharsetException | IOException e) {
+        } catch (IOException e) {
             fail(e.getMessage());
         }
     }
@@ -99,8 +136,6 @@ public class TableReaderCSVTest {
             assertEquals("valeur B", row[1]);
 
         } catch (IOException e) {
-            fail(e.getMessage());
-        } catch (InvalidCharsetException e) {
             fail(e.getMessage());
         }
     }

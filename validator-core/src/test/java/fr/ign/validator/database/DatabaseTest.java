@@ -134,7 +134,7 @@ public class DatabaseTest {
          * Note that this line is required to find mapping between DocumentFiles and
          * FileModels
          */
-        document.findFileModelForFiles(context);
+        document.findDocumentFiles(context);
         database.load(context, document);
         assertEquals(8, database.getCount("adresse"));
 

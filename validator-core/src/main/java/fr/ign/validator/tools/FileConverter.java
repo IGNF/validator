@@ -137,6 +137,7 @@ public class FileConverter {
      * @throws IOException
      */
     public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
+        log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
         if (target.exists()) {
             target.delete();
         }
@@ -152,9 +153,6 @@ public class FileConverter {
          */
         CompanionFileUtils.removeCompanionFile(source, "cpg");
         CompanionFileUtils.removeCompanionFile(source, "CPG");
-
-        OgrVersion version = getVersion();
-        log.info(MARKER, "{} => {} (gdal {})", source, target, version);
 
         String[] args = getArguments(source, target, "CSV");
         Map<String, String> envs = new HashMap<String, String>();
@@ -193,6 +191,7 @@ public class FileConverter {
      * @throws IOException
      */
     public void convertToShapefile(File source, File target) throws IOException {
+        log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
         if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
             fixGML(source);
         }
@@ -205,6 +204,7 @@ public class FileConverter {
          * Controls that output file is created
          */
         if (!target.exists()) {
+            // TODO throw IOException
             log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
             createFalseCSV(target);
         }
@@ -330,28 +330,23 @@ public class FileConverter {
                 builder.environment().put(envName, envs.get(envName));
             }
 
-            /* run process */
+            /*
+             * Run process ignoring outputs (previous method seams to cause deadlocks).
+             * 
+             * TODO redirect output to log4j logs
+             */
+            builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
+            builder.redirectError(ProcessBuilder.Redirect.DISCARD);
             process = builder.start();
             process.waitFor();
-
-            /* read errors from process */
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            try {
-                String line = null;
-                while ((line = errorReader.readLine()) != null) {
-                    log.error(MARKER, line);
-                }
-            } finally {
-                errorReader.close();
-            }
 
             if (process.exitValue() != 0) {
                 log.error(MARKER, "command fail!");
             }
         } catch (IOException e1) {
-            throw new RuntimeException("Echec dans l'appel de ogr2ogr");
+            throw new RuntimeException("ogr2ogr command fails", e1);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException("ogr2ogr command fails", e);
         }
     }
 

@@ -51,10 +51,13 @@ public abstract class DocumentFile implements Validatable {
      * @param context
      */
     public final void validate(Context context) {
-        /*
-         * File validation
-         */
-        log.debug(MARKER, "Validation du fichier {} avec le modèle {}...", path, getFileModel().getName());
+        log.info(
+            MARKER,
+            "Validate {} '{}' with '{}'...",
+            getFileModel().getType(),
+            path,
+            getFileModel().getName()
+        );
         context.beginModel(getFileModel());
         context.beginData(this);
         validateContent(context);

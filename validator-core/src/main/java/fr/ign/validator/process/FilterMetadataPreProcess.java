@@ -38,7 +38,7 @@ public class FilterMetadataPreProcess implements ValidatorListener {
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-        log.info(MARKER, "Filtrage des fichiers xml qui ne sont pas des métadonnées...");
+        log.info(MARKER, "Filter non Metadata XML files...");
 
         for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
             if (!(fileModel instanceof MetadataModel)) {
@@ -54,11 +54,11 @@ public class FilterMetadataPreProcess implements ValidatorListener {
             for (DocumentFile documentFile : documentFiles) {
                 File xmlFile = documentFile.getPath();
                 if (!MetadataISO19115.isMetadataFile(xmlFile)) {
+                    log.info(MARKER, "Exclude file '{}' from validation (METADATA_IGNORED_FILE).", documentFile);
                     context.report(
                         context.createError(CoreErrorCodes.METADATA_IGNORED_FILE)
                             .setMessageParam("FILEPATH", context.relativize(xmlFile))
                     );
-                    log.info(MARKER, "Suppression du fichier XML {}...", documentFile);
                     document.removeDocumentFile(documentFile);
                 }
             }
