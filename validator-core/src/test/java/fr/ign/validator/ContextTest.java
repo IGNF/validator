@@ -11,6 +11,7 @@ import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.process.ProjectionPreProcess;
+import fr.ign.validator.process.RemovePreviousFilesPreProcess;
 
 public class ContextTest {
 
@@ -30,13 +31,14 @@ public class ContextTest {
     public void testDefaultListeners() {
         Context context = new Context();
         List<ValidatorListener> listeners = context.getValidatorListeners();
-        Assert.assertEquals(5, listeners.size());
+        Assert.assertEquals(6, listeners.size());
         // order is important between FilterMetadataPreProcess and CharsetPreProcess
-        Assert.assertEquals(FilterMetadataPreProcess.class, listeners.get(0).getClass());
-        Assert.assertEquals(MetadataPreProcess.class, listeners.get(1).getClass());
-        Assert.assertEquals(ProjectionPreProcess.class, listeners.get(2).getClass());
-        Assert.assertEquals(NormalizePostProcess.class, listeners.get(3).getClass());
-        Assert.assertEquals(DocumentInfoExtractorPostProcess.class, listeners.get(4).getClass());
+        Assert.assertEquals(RemovePreviousFilesPreProcess.class, listeners.get(0).getClass());
+        Assert.assertEquals(FilterMetadataPreProcess.class, listeners.get(1).getClass());
+        Assert.assertEquals(MetadataPreProcess.class, listeners.get(2).getClass());
+        Assert.assertEquals(ProjectionPreProcess.class, listeners.get(3).getClass());
+        Assert.assertEquals(NormalizePostProcess.class, listeners.get(4).getClass());
+        Assert.assertEquals(DocumentInfoExtractorPostProcess.class, listeners.get(5).getClass());
     }
 
     /**
@@ -49,13 +51,14 @@ public class ContextTest {
         context.addListenerBefore(fakeListener, NormalizePostProcess.class);
 
         List<ValidatorListener> listeners = context.getValidatorListeners();
-        Assert.assertEquals(6, listeners.size());
+        Assert.assertEquals(7, listeners.size());
+        Assert.assertEquals(RemovePreviousFilesPreProcess.class, listeners.get(0).getClass());
         // order is important between FilterMetadataPreProcess and CharsetPreProcess
-        Assert.assertEquals(FilterMetadataPreProcess.class, listeners.get(0).getClass());
-        Assert.assertEquals(MetadataPreProcess.class, listeners.get(1).getClass());
-        Assert.assertEquals(ProjectionPreProcess.class, listeners.get(2).getClass());
-        Assert.assertSame(fakeListener, listeners.get(3));
-        Assert.assertEquals(NormalizePostProcess.class, listeners.get(4).getClass());
-        Assert.assertEquals(DocumentInfoExtractorPostProcess.class, listeners.get(5).getClass());
+        Assert.assertEquals(FilterMetadataPreProcess.class, listeners.get(1).getClass());
+        Assert.assertEquals(MetadataPreProcess.class, listeners.get(2).getClass());
+        Assert.assertEquals(ProjectionPreProcess.class, listeners.get(3).getClass());
+        Assert.assertSame(fakeListener, listeners.get(4));
+        Assert.assertEquals(NormalizePostProcess.class, listeners.get(5).getClass());
+        Assert.assertEquals(DocumentInfoExtractorPostProcess.class, listeners.get(6).getClass());
     }
 }
