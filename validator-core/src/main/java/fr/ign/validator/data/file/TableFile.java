@@ -68,7 +68,7 @@ public class TableFile extends DocumentFile {
 
                 Row row = new Row(count, reader.next(), mapping);
                 row.validate(context);
-                if ( count % 10000 == 0 ) {
+                if (count % 10000 == 0) {
                     log.debug(MARKER, "'{}' : {} rows processed...", matchingFile, count);
                 }
             }
