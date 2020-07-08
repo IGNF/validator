@@ -63,9 +63,9 @@ public class VRT {
         File vrtFile = new File(csvFile.getParent(), FilenameUtils.getBaseName(csvFile.getName()) + ".vrt");
 
         log.info(
-            VRT, "Ecriture Fichier vrt {} - {}",
-            vrtFile.getName(),
-            vrtFile.getPath()
+            VRT, "Create VRT '{}' for '{}'...",
+            vrtFile,
+            csvFile
         );
 
         FileWriter writer = new FileWriter(vrtFile);

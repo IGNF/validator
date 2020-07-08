@@ -41,11 +41,10 @@ public class TableFile extends DocumentFile {
         /*
          * csv file validation
          */
-        log.debug(MARKER, "Lecture des données de la table {}...", matchingFile);
         try {
             TableReader reader = TableReader.createTableReader(matchingFile, context.getEncoding());
             if (!reader.isCharsetValid()) {
-                log.error(MARKER, "Charset {} invalide pour {}", context.getEncoding(), matchingFile);
+                log.error(MARKER, "Invalid charset '{}' for '{}'", context.getEncoding(), matchingFile);
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_UNEXPECTED_ENCODING)
                         .setMessageParam("ENCODING", context.getEncoding().toString())
@@ -69,6 +68,9 @@ public class TableFile extends DocumentFile {
 
                 Row row = new Row(count, reader.next(), mapping);
                 row.validate(context);
+                if ( count % 10000 == 0 ) {
+                    log.debug(MARKER, "'{}' : {} rows processed...", matchingFile, count);
+                }
             }
 
             /*
@@ -81,8 +83,9 @@ public class TableFile extends DocumentFile {
                 );
             }
 
-            log.info(MARKER, "{} objet validé(s)", count);
+            log.info(MARKER, "'{}' : {} row(s) processed", matchingFile, count);
         } catch (IOException e) {
+            log.error(MARKER, "Fail to read file '{}'!", matchingFile);
             context.report(
                 context.createError(CoreErrorCodes.FILE_NOT_OPENED)
                     .setMessageParam("FILEPATH", context.relativize(matchingFile))

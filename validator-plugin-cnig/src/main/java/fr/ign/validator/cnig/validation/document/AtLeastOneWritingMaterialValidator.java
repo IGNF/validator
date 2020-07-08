@@ -27,13 +27,14 @@ public class AtLeastOneWritingMaterialValidator implements Validator<Document>, 
 
     @Override
     public void validate(Context context, Document document) {
+        log.info(MARKER, "Ensure that document contains at least one pdf file...");
         int count = 0;
         for (DocumentFile documentFile : document.getDocumentFiles()) {
             if (documentFile.getFileModel() instanceof PdfModel) {
                 count++;
             }
         }
-        log.info(MARKER, "{} pièces écrites trouvées", count);
+        log.info(MARKER, "Found {} pdf file(s).", count);
         if (count == 0) {
             context.report(CnigErrorCodes.CNIG_DOCUMENT_NO_PDF);
         }
