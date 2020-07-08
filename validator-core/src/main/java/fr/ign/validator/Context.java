@@ -31,6 +31,7 @@ import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.MetadataPreProcess;
 import fr.ign.validator.process.NormalizePostProcess;
 import fr.ign.validator.process.ProjectionPreProcess;
+import fr.ign.validator.process.RemovePreviousFilesPreProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
 import fr.ign.validator.repository.ProjectionRepository;
@@ -181,6 +182,8 @@ public class Context {
      * Load defaults validation listeners
      */
     private void registerDefaultListeners() {
+        addListener(new RemovePreviousFilesPreProcess());
+
         // Filter XML files
         addListener(new FilterMetadataPreProcess());
         // Extract informations such as charset from metadata (after
