@@ -13,11 +13,19 @@
     },
     {
       "name": "ADRESSE",
-      "description": "Une adresse dans une ville",
+      "description": "Le libellé de l'adresse",
       "type": "String",
       "constraints": {
         "required": false,
         "maxLength": 254
+      }
+    },
+    {
+      "name": "HOMEPAGE",
+      "description": "Page de présentation",
+      "type": "Url",
+      "constraints": {
+        "required": false
       }
     }
   ]
