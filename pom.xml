@@ -27,10 +27,31 @@
 		 -->
 		<geotools.version>21.5</geotools.version>
 		<log4j.version>2.13.3</log4j.version>
+		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
 		<jackson.version>2.9.10</jackson.version>
 		<jackson.databind.version>2.9.10.5</jackson.databind.version>
-		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+
 		<maven-formatter-plugin.version>2.11.0</maven-formatter-plugin.version>
+		<jaxen.version>1.2.0</jaxen.version>
+		<jdom.version>1.0</jdom.version>
+		<apache-common-io.version>2.6</apache-common-io.version>
+		<apache-common-cli.version>1.4</apache-common-cli.version>
+		<apache-commons-csv.version>1.8</apache-commons-csv.version>
+		<apache-commons-lang.version>2.6</apache-commons-lang.version>
+		<jaxb.version>2.3.0</jaxb.version>
+		<!-- JDBC -->
+		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
+		<!-- Testing -->
+		<junit.version>4.13</junit.version>
+		<jsonassert.version>1.5.0</jsonassert.version>
+		<mockito.version>3.0.0</mockito.version>
+		<!-- Build and deploy -->
+		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+		<!-- JDK 8 features -->
+		<javax.annotation.version>1.3.2</javax.annotation.version>
+		<javax.activation.version>1.1.1</javax.activation.version>
 	</properties>
 	<organization>
 		<name>IGN - Service RDS</name>
@@ -86,7 +107,7 @@
 		<dependency>
 			<groupId>org.codehaus.woodstox</groupId>
 			<artifactId>woodstox-core-asl</artifactId>
-			<version>4.4.1</version>
+			<version>${woodstox-core-asl.version}</version>
 		</dependency>
 
 		<!-- Jackson -->
@@ -106,50 +127,41 @@
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<!-- jdom -->
-		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>1.0</version>
-		</dependency>
-
-		<!-- jaxen (XPath) -->
-		<dependency>
-			<groupId>jaxen</groupId>
-			<artifactId>jaxen</artifactId>
-			<version>1.2.0</version>
-		</dependency>
-
 		<!-- Apache common-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.6</version>
+			<version>${apache-common-io.version}</version>
 		</dependency>
 
 		<!-- Apache common cli -->
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
-			<version>1.4</version>
+			<version>${apache-common-cli.version}</version>
 		</dependency>
 
 		<!-- Apache common csv -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<!-- TODO upgrade to 1.8 (end of line) -->
-			<version>1.8</version>
+			<version>${apache-commons-csv.version}</version>
 		</dependency>
 
 		<!-- org.apache.commons.lang -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
+			<version>${apache-commons-lang.version}</version>
 		</dependency>
 
-		<!-- geotools -->
+		<!--
+		################################################################
+			Spatial libraries (projections and geometries)
+		################################################################
+		-->
+
+		<!-- shapefile (TODO remove as ogr2ogr is used) -->
 		<dependency>
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-shapefile</artifactId>
@@ -170,21 +182,41 @@
 			<version>${geotools.version}</version>
 		</dependency>
 
+		<!--
+		################################################################
+			XML parsing
+		################################################################
+		-->
+
+		<!-- jdom -->
+		<dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>${jdom.version}</version>
+		</dependency>
+
+		<!-- jaxen (XPath) -->
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>${jaxen.version}</version>
+		</dependency>
+
 		<!-- jaxb -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>2.3.0</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
-			<version>2.3.0</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.3.0</version>
+			<version>${jaxb.version}</version>
 		</dependency>
 
 		<!--
@@ -197,7 +229,7 @@
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.28.0</version>
+			<version>${sqlite-jdbc.version}</version>
 		</dependency>
 		<!-- Drive postgresql -->
 		<dependency>
@@ -214,12 +246,12 @@
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
-			<version>1.3.2</version>
+			<version>${javax.annotation.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
-			<version>1.1.1</version>
+			<version>${javax.activation.version}</version>
 		</dependency>
 
 		<!--
@@ -231,22 +263,22 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
+<!--
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
 			<version>2.6.3</version>
 			<scope>test</scope>
 		</dependency>
-
+ -->
 		<!-- mockito -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>3.0.0</version>
+			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -254,7 +286,7 @@
 		<dependency>
 			<groupId>org.skyscreamer</groupId>
 			<artifactId>jsonassert</artifactId>
-			<version>1.5.0</version>
+			<version>${jsonassert.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -287,7 +319,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.1</version>
+				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
 					<argLine> --illegal-access=permit
@@ -306,7 +338,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.0</version>
+					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
 						<source>${java.version}</source>
 						<target>${java.version}</target>
