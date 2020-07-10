@@ -51,6 +51,10 @@ public class NormalizePostProcess implements ValidatorListener {
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
+        if (!context.isNormalizeEnabled()) {
+            log.info(MARKER, "Skipped as normalize is disabled (use --normalize)");
+            return;
+        }
         /*
          * Creating DATA directory
          */

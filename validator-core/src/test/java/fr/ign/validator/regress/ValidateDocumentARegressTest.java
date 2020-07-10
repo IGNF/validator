@@ -98,6 +98,7 @@ public class ValidateDocumentARegressTest {
     @Test
     public void testValidate() throws Exception {
         Context context = new Context();
+        context.setNormalizeEnabled(true);
         context.setCurrentDirectory(documentPath);
         context.setProjection("CRS:84");
         Document document = new Document(documentModel, documentPath);

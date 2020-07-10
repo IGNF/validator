@@ -34,6 +34,9 @@ public class CnigPlugin implements Plugin {
 
     @Override
     public void setup(Context context) {
+        // --normalize is required with CNIG plugin
+        context.setNormalizeEnabled(true);
+
         // Join SUP files to add a column "fichiers" (must be done before
         // CreateShapefilesPostProcess)
         context.addListener(new ReferenceActeSupPostProcess());

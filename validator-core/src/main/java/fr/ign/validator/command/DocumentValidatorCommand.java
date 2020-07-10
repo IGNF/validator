@@ -109,6 +109,11 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected boolean flat = false;
 
     /**
+     * option - produce normalized data in validation/DATA directory?
+     */
+    protected boolean normalize = false;
+
+    /**
      * option - plugins used for validation
      */
     protected List<Plugin> plugins = new ArrayList<>();
@@ -155,6 +160,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         buildValidationDirectoryOption(options);
         buildReportBuilderOptions(options);
+        buildNormalizeOption(options);
 
         /*
          * validation options
@@ -186,6 +192,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         parseValidationDirectory(commandLine);
         parseReportBuilder(commandLine);
+        parseNormalizeOption(commandLine);
 
         /*
          * Config and version
@@ -225,6 +232,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         context.setValidationDirectory(validationDirectory);
         context.setReportBuilder(reportBuilder);
+
+        context.setNormalizeEnabled(normalize);
 
         /*
          * forward validation options
@@ -474,6 +483,31 @@ public class DocumentValidatorCommand extends AbstractCommand {
             option.setRequired(false);
             options.addOption(option);
         }
+    }
+
+    /**
+     * Add option --normalize to the command line.
+     * 
+     * @param options
+     */
+    protected void buildNormalizeOption(Options options) {
+        {
+            Option option = new Option(
+                null, "normalize", false,
+                "Enable normalized data production in validation directory (required for validation/document-info.json)."
+            );
+            option.setRequired(false);
+            options.addOption(option);
+        }
+    }
+
+    /**
+     * Retrieve --normalize option.
+     * 
+     * @param commandLine
+     */
+    protected void parseNormalizeOption(CommandLine commandLine) {
+        this.normalize = commandLine.hasOption("normalize") ? true : false;
     }
 
     /**

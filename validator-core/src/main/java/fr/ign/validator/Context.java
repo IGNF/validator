@@ -88,6 +88,12 @@ public class Context {
     private File validationDirectory;
 
     /**
+     * Output - allow to enable/disable data normalization in validation/DATA
+     * directory
+     */
+    private boolean normalizeEnabled = false;
+
+    /**
      * Execution context - modelStack
      */
     private List<Model> modelStack = new ArrayList<Model>();
@@ -607,8 +613,16 @@ public class Context {
         this.validationDirectory = validationDirectory;
     }
 
+    public boolean isNormalizeEnabled() {
+        return normalizeEnabled;
+    }
+
+    public void setNormalizeEnabled(boolean normalizeEnabled) {
+        this.normalizeEnabled = normalizeEnabled;
+    }
+
     /**
-     * Get DATA directory ({validation_dir}/DATA)
+     * Get DATA directory for normalized data ({validation_dir}/DATA)
      * 
      * @return
      */
