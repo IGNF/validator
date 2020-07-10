@@ -370,7 +370,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         try {
             if (!StringUtils.isEmpty(config) && !StringUtils.isEmpty(version)) {
                 File configDir = new File(config);
-                this.documentModelUrl = (new File(configDir, version + "/files.xml")).toURI().toURL();
+                this.documentModelUrl = findDocumentModelUrl(configDir, version);
             } else {
                 String modelUri = commandLine.getOptionValue("model");
                 if (StringUtils.isEmpty(modelUri)) {
@@ -379,8 +379,34 @@ public class DocumentValidatorCommand extends AbstractCommand {
                 this.documentModelUrl = new URL(modelUri);
             }
         } catch (MalformedURLException e) {
-            throw new ParseException("invalid model URL");
+            throw new ParseException("Invalid model URL");
         }
+    }
+
+    /**
+     * Locate either files.json or files.xml in configDir.
+     * 
+     * @param configDir
+     * @param version
+     * @return
+     * @throws ParseException
+     * @throws MalformedURLException
+     */
+    private URL findDocumentModelUrl(File configDir, String version) throws ParseException, MalformedURLException {
+        if (!configDir.exists()) {
+            String message = String.format("Config directory '%1s' not found!", configDir.getAbsolutePath());
+            log.error(MARKER, message);
+            throw new ParseException(message);
+        }
+        File jsonPath = new File(configDir, version + "/files.json");
+        if (jsonPath.exists()) {
+            return jsonPath.toURI().toURL();
+        }
+        File xmlPath = new File(configDir, version + "/files.xml");
+        if (xmlPath.exists()) {
+            return xmlPath.toURI().toURL();
+        }
+        throw new ParseException(String.format("Model '%1s' not found", version));
     }
 
     /**
@@ -436,7 +462,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected void buildReportBuilderOptions(Options options) {
         {
             Option option = new Option(
-                null, "report-format", true, "report format (DEPRECATED, jsonl default and required)"
+                null, "report-format", true,
+                "report format (DEPRECATED, jsonl default and required)"
             );
             option.setRequired(false);
             option.setArgName("FORMAT");
@@ -710,7 +737,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
             this.dgprTolerance = tolerance;
         } catch (NumberFormatException e) {
             String message = String.format(
-                "Paramètre invalide 'dgpr-tolerance' : '%1s' n'est pas un double", toleranceString
+                "Paramètre invalide 'dgpr-tolerance' : '%1s' n'est pas un double",
+                toleranceString
             );
             throw new ParseException(message);
         }
