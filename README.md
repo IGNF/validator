@@ -59,6 +59,7 @@ Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](h
 
 ## Dépendances
 
+* java >= 11
 * [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
 
 ## Compilation
