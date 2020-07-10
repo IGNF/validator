@@ -3,6 +3,8 @@ package fr.ign.validator.model.type;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import fr.ign.validator.model.AttributeType;
 
 /**
@@ -10,7 +12,10 @@ import fr.ign.validator.model.AttributeType;
  * 
  * @author MBorne
  */
+@JsonTypeName(UrlType.TYPE)
 public class UrlType extends AttributeType<URL> {
+
+    public static final String TYPE = "Url";
 
     public UrlType() {
         super(URL.class);
@@ -18,7 +23,7 @@ public class UrlType extends AttributeType<URL> {
 
     @Override
     public String getTypeName() {
-        return "Url";
+        return TYPE;
     }
 
     /**

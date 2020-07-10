@@ -130,7 +130,7 @@ public class JsonModelReaderTest {
     private void assertExceptedFeatureTypeAdresse(FeatureType featureType) {
         Assert.assertEquals("ADRESSE", featureType.getName());
         Assert.assertEquals("Table d'identifiant et adresse", featureType.getDescription());
-        Assert.assertEquals(2, featureType.getAttributeCount());
+        Assert.assertEquals(3, featureType.getAttributeCount());
         Assert.assertFalse(featureType.isSpatial());
 
         int index = 0;
@@ -151,7 +151,7 @@ public class JsonModelReaderTest {
             AttributeType<?> attribute = featureType.getAttribute(index++);
             Assert.assertEquals("ADRESSE", attribute.getName());
             Assert.assertEquals("String", attribute.getTypeName());
-            Assert.assertEquals("Une adresse dans une ville", attribute.getDescription());
+            Assert.assertEquals("Le libellé de l'adresse", attribute.getDescription());
             Assert.assertFalse(
                 attribute.getConstraints().isRequired()
             );
@@ -161,6 +161,19 @@ public class JsonModelReaderTest {
             Assert.assertEquals(
                 Integer.valueOf(254),
                 attribute.getConstraints().getMaxLength()
+            );
+        }
+
+        {
+            AttributeType<?> attribute = featureType.getAttribute(index++);
+            Assert.assertEquals("HOMEPAGE", attribute.getName());
+            Assert.assertEquals("Url", attribute.getTypeName());
+            Assert.assertEquals("Page de présentation", attribute.getDescription());
+            Assert.assertFalse(
+                attribute.getConstraints().isRequired()
+            );
+            Assert.assertFalse(
+                attribute.getConstraints().isUnique()
             );
         }
     }
