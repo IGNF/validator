@@ -21,6 +21,9 @@ public class DgprPlugin implements Plugin {
 
     @Override
     public void setup(Context context) {
+        // --normalize is enabled by default with DGPR plugin
+        context.setNormalizeEnabled(true);
+
         /*
          * All database Validation
          */
