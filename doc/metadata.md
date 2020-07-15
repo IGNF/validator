@@ -1,39 +1,46 @@
-# Metadata
+# Metadata modelization
+
+The following Metadata model is dedicated to validation according to INSPIRE and CNIG profiles. XML parsing is partial and based on XPath.
+
+## Class diagram
+
+The following profile is used to store metadata parsed from ISO 19915. Metadata attributes are based on INSPIRE requirements.
+
+![Class diagram](uml/metadata.png)
+
+## Metadata properties
 
 Metadata "attributes" with INSPIRE multiplicity for datasets according to INSPIRE_GUIDELINE_2017.
 
+| name                      | type                            | title                                | multiplicity |
+|---------------------------|---------------------------------|--------------------------------------|--------------|
+| contraints                | `Contraint[]`                   | Resource constraints                 | [0..*]       |
+| distributionFormats       | `Format`                        | Encoding                             | [0..*]       |
+| spatialResolutions        | `Resolution`                    | Spatial resolution                   | [0..*]       |
+| language                  | `LanguageCode`                  | Resource langage                     | [0..*] (1)   |
+| referenceSystemIdentifier | `ReferenceSystemIdentifier`     | Coordinate Reference System          | [0..*] (1)   |
+| dateOfPublication         | `Date`                          | Date of publication                  | [0..*] (1)   |
+| contact                   | `ResponsibleParty`              | Responsible party                    | [0..*] (1)   |
+| fileIdentifier            | `String`                        | File identifier                      | [0..1]       |
+| dateOfLastRevision        | `Date`                          | Date of last revision                | [0..1]       |
+| dateOfCreation            | `Date`                          | Date of creation                     | [0..1]       |
+| locators                  | `OnlineResource[]`              | Resource locator                     | [1..*]       |
+| identifiers               | `String[]`                      | Unique resource identifier           | [1..*]       |
+| keywords                  | `Keywords`                      | Keyword                              | [1..*]       |
+| extents                   | `Extent[]`                      | Extents with geographic bounding box | [1..*]       |
+| specifications            | `Specification`                 | Specification title and degree       | [1..*]       |
+| topicCategory             | `TopicCategoryCode`             | Topic category                       | [1..*] (1)   |
+| characterSet              | `CharacterSetCode`              | Character Encoding                   | [1..*] (1)   |
+| spatialRepresentationType | `SpatialRepresentationTypeCode` | Spatial representation type          | [1..*] (1)   |
+| metadataContact           | `ResponsibleParty`              | Metadata point of contact            | [1..*] (1)   |
+| title                     | `String`                        | Resource title                       | [1]          |
+| abstract                  | `String`                        | Resource abstract                    | [1]          |
+| type                      | `ScopeCode`                     | Resource type                        | [1]          |
+| lineage                   | `String`                        | Lineage                              | [1]          |
+| metadataDate              | `Date`                          | Metadata date                        | [1]          |
+| metadataLanguage          | `LanguageCode`                  | Metadata langage                     | [1]          |
 
-| name                      | type                          | title                                | multiplicity |
-| ------------------------- | ----------------------------- | ------------------------------------ | ------------ |
-| fileIdentifier            | String                        | File identifier                      | [0..1]       |
-| title                     | String                        | Resource title                       | [1]          |
-| abstract                  | String                        | Resource abstract                    | [1]          |
-| type                      | ScopeCode                     | Resource type                        | [1]          |
-| locators                  | OnlineResource[]              | Resource locator                     | [1..*]       |
-| identifiers               | String[]                      | Unique resource identifier           | [1..*]       |
-| language                  | LanguageCode                  | Resource langage                     | [0..*] (1)   |
-| topicCategory             | TopicCategoryCode             | Topic category                       | [1..*] (1)   |
-| keywords                  | Keywords                      | Keyword                              | [1..*]       |
-| extents                   | Extent[]                      | Extents with geographic bounding box | [1..*]       |
-| referenceSystemIdentifier | ReferenceSystemIdentifier     | Coordinate Reference System          | [0..*] (1)   |
-| dateOfPublication         | Date                          | Date of publication                  | [0..*] (1)   |
-| dateOfLastRevision        | Date                          | Date of last revision                | [0..1]       |
-| dateOfCreation            | Date                          | Date of creation                     | [0..1]       |
-| characterSet              | CharacterSetCode              | Character Encoding                   | [1..*] (1)   |
-| contraints                | Contraint[]                   | Resource constraints                 | [0..*]       |
-| distributionFormats       | Format                        | Encoding                             | [0..*]       |
-| spatialRepresentationType | SpatialRepresentationTypeCode | Spatial representation type          | [1..*] (1)   |
-| lineage                   | String                        | Lineage                              | [1]          |
-| spatialResolutions        | Resolution                    | Spatial resolution                   | [0..*]       |
-| specifications            | Specification                 | Specification title and degree       | [1..*]       |
-| contact                   | ResponsibleParty              | Responsible party                    | [0..*] (1)   |
-| metadataContact           | ResponsibleParty              | Metadata point of contact            | [1..*] (1)   |
-| metadataDate              | Date                          | Metadata date                        | [1]          |
-| metadataLanguage          | LanguageCode                  | Metadata langage                     | [1]          |
-
-
-(1) multiplicity is adapted, only the first element is parsed
-
+> (1) multiplicity is adapted, only the first element is parsed
 
 ## fileIdentifier
 
@@ -75,7 +82,7 @@ identificationInfo[1]/*/citation/*/title
 ### References
 
 * INSPIRE_GUIDELINE_2017 - 2.3 Identification info section / 2.3.1 Resource title (p14)
-* INSPIRE_GUIDELINE_2013 - 2.2 Identification / 2.2.1 Resource title (p17)
+* INSPIRE_GUIDELINE_2013 - 2.2 Identification / 2.2.1 Resource title (p17)
 * CNIG_MD_DU - 1) Identification des données / Intitulé de la resource (p4)
 
 
@@ -595,3 +602,49 @@ language
 
 * INSPIRE_GUIDELINE_2013 - 2.11.3 Metadata language / 2.11.3 Metadata langage (p60)
 * CNIG_MD_DU - 10) Métadonnées concernant les métadonnées / Langue des métadonnées (p15)
+
+
+## Resources
+
+### Documents (english)
+
+* INSPIRE_GUIDELINE_2017 : [Technical Guidance for the implementation of
+INSPIRE dataset and service metadata based
+on ISO/TS 19139:2007](https://inspire.ec.europa.eu/id/document/tg/metadata-iso19139)
+
+https://inspire.ec.europa.eu/id/document/tg/metadata-iso19139
+
+* INSPIRE_GUIDELINE_2013: [INSPIRE Metadata Implementing
+Rules: Technical Guidelines based
+on EN ISO 19115 and EN ISO 19119](https://inspire.ec.europa.eu/documents/inspire-metadata-implementing-rules-technical-guidelines-based-en-iso-19115-and-en-iso-1)
+
+### Documents (french)
+
+* CNIG_MD_INSPIRE - [Guide de saisie des éléments
+de métadonnées INSPIRE - juillet 2014](http://inspire.ec.europa.eu/documents/Metadata/MD_IR_and_ISO_20131029.pdf)
+
+* CNIG_MD_DU - [CNIG - Consignes de saisie des
+Métadonnées INSPIRE pour les
+documents d’urbanisme - septembre 2017](http://cnig.gouv.fr/wp-content/uploads/2017/09/170914_consignes_saisie_metadonnees_DU_vprojet.pdf)
+
+* CNIG_MD_SUP - [CNIG - Consignes de saisie des
+Métadonnées INSPIRE pour les
+servitudes d’utilité publique](http://cnig.gouv.fr/wp-content/uploads/2017/09/170914_consignes_saisie_metadonnees_SUP_vprojet.pdf)
+
+### Normative references
+
+* [ISO 19115-1:2014 - Geographic information -- Metadata -- Part 1: Fundamentals](https://www.iso.org/fr/standard/53798.html)
+* [ISO/TS 19139:2007 - Geographic information -- Metadata -- XML schema implementation](https://www.iso.org/standard/32557.html)
+
+### XSD schemas and resources
+
+* [http://www.isotc211.org/2005/](http://www.isotc211.org/2005/)
+* [http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml](http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml)
+
+* [http://inspire.ec.europa.eu/metadata-codelist/](INSPIRE metadata code list register)
+* [ISO 19115 and 19115-2 CodeList Dictionaries](https://geo-ide.noaa.gov/wiki/index.php?title=ISO_19115_and_19115-2_CodeList_Dictionaries)
+
+### Third part tools
+
+* [http://www.isotc211.org/2005/gmd - schema explorer](http://www.datypic.com/sc/niem21/ns-gmd.html)
+* [INSPIRE metadata validator](http://inspire-geoportal.ec.europa.eu/validator2/)
