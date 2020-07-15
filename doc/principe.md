@@ -3,7 +3,7 @@
 
 ## 1) Chargement du modèle de document
 
-Le modèle de document est chargé en fonction des options `--config/--version`.
+Le modèle de document (`DocumentModel`) est chargé à partir de son URL renseignée par l'option `--model`.
 
 ## 2) Préparation d'un dossier de validation
 
@@ -12,21 +12,25 @@ Le validateur prépare un répertoire de travail pour la validation où il écri
 * Le rapport de validation (`validation/validation.jsonl`)
 * Un répertoire contenant les fichiers normalisés (`validation/DATA`)
 
-## 3) Enumération des fichiers (`DocumentFile`) avec des extensions supportées
+## 3) Enumération des fichiers avec des extensions supportées
 
-## 4) Recherche des modèles de fichier (`FileModel`) correspondant aux fichiers (`DocumentFile`)
+Le validateur liste les fichiers (`DocumentFile`) ayant des extensions connues dans le document à valider (dossier `--input`).
 
-Le validateur signale les fichiers sans correspondance avec le modèle et les fichiers non trouvés.
+## 4) Recherche des modèles de fichier correspondant aux fichiers (`DocumentFile`)
+
+Le validateur recherche le modèle de fichier (`FileModel`) correspondant aux `DocumentFile` trouvés à l'étape précédente.
 
 ## 5) Validation des fichiers en fonction des modèles
 
-Pour chaque fichier trouvé (`DocumentFile`), le validateur valide en fonction du `FileModel` trouvé. Dans le cas des tables, le validateur valide le contenu en fonction du `FeatureType` décrivant la table.
+Le validateur effectue une validation sur chaque `DocumentFile` ayant un `FileModel` associé.
 
-Remarque : La validation des types d'attributs repose sur la possibilité de convertir une valeur dans le type décrit. Pour résumer : `false`, `f` et `0` sont des booléens, `tutu` n'est pas un booléen.
+Dans le cas des tables (`FileModel` de type `TableModel`), le validateur valide le contenu en fonction du `FeatureType` décrivant la table.
+
+On soulignera que la validation des types d'attributs repose sur la possibilité de convertir une valeur dans le type décrit. Pour résumer : `false`, `f` et `0` sont des booléens, `tutu` n'est pas un booléen.
 
 ## 6) Création d'une base de données de validation
 
-Les données sont chargées dans une base de validation pour les contrôles d'ensemble sur les données.
+Les tables sont chargées dans une base de validation pour les contrôles d'ensemble sur les données.
 
 ## 7) Validation des contraintes d'ensemble à l'aide de la base de validation
 
