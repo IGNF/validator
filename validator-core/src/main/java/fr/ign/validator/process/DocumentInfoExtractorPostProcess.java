@@ -28,8 +28,8 @@ import fr.ign.validator.info.model.DocumentInfo;
  *
  */
 public class DocumentInfoExtractorPostProcess implements ValidatorListener {
-    public static final Logger log = LogManager.getRootLogger();
-    public static final Marker POSTPROCESS_INFO_EXTRACTOR = MarkerManager.getMarker("DocumentInfoExtractorPostProcess");
+    private static final Logger log = LogManager.getRootLogger();
+    private static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractorPostProcess");
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
@@ -42,29 +42,19 @@ public class DocumentInfoExtractorPostProcess implements ValidatorListener {
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-        File directory = context.getCurrentDirectory();
-        File validationDirectory = context.getValidationDirectory();
+        if (!context.isNormalizeEnabled()) {
+            log.warn(MARKER, "skip document-info.json generation (--normalize is required)");
+            return;
+        }
 
-        /*
-         * Getting infos
-         */
-        log.info(
-            POSTPROCESS_INFO_EXTRACTOR,
-            "Extraction des informations de {} dans {}",
-            directory, validationDirectory
-        );
-
-        /*
-         * Extracting cnig informations
-         */
+        log.info(MARKER, "Retrieve informations to build document-info.json...");
         DocumentInfoExtractor infoExtractor = new DocumentInfoExtractor();
         DocumentInfo documentInfo = infoExtractor.parseDocument(context, document);
-        /*
-         * Writing in infos-cnig.xml file
-         */
-        File outputInfoCnig = new File(validationDirectory, "document-info.json");
+
+        File documentInfoPath = new File(context.getValidationDirectory(), "document-info.json");
+        log.info(MARKER, "Save {}...", documentInfoPath);
         DocumentInfoWriter infowriter = new DocumentInfoWriter();
-        infowriter.write(documentInfo, outputInfoCnig);
+        infowriter.write(documentInfo, documentInfoPath);
     }
 
 }
