@@ -3,13 +3,13 @@
 
 ## 1) Chargement du modèle de document
 
-Le modèle de document (`DocumentModel`) est chargé à partir de son URL renseignée par l'option `--model`.
+Le modèle de document (`DocumentModel`) est chargé à partir de son URL renseignée par l'option `--model=<DOCUMENT_MODEL_URL>`.
 
 ## 2) Préparation d'un dossier de validation
 
 Le validateur prépare un répertoire de travail pour la validation où il écrira :
 
-* Le rapport de validation (`validation/validation.jsonl`)
+* Le rapport de validation (`validation/validation.jsonl`) avec une erreur au format JSON par ligne (voir [JSON Lines](http://jsonlines.org/))
 * Un répertoire contenant les fichiers normalisés (`validation/DATA`)
 
 ## 3) Enumération des fichiers avec des extensions supportées
