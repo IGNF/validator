@@ -14,16 +14,15 @@ Ce programme permet de valider et de normaliser les données présentes dans une
 * Des fichiers PDF
 * Des dossiers (principalement pour contrôle de présence)
 
-Le paramétrage s'effectue à l'aide de fichiers XML décrivant :
-
-* Des modèles de table (FeatureCatalogue : FeatureType/AttributeType)
-* Un mapping de fichiers (chemin d'accès, obligatoire/conseillé/optionel, type: pdf, table, dossier, etc.)
+Le paramétrage s'effectue à l'aide de [fichiers JSON décrivant des arborescences de fichiers et des tables](https://github.com/IGNF/validator-schema#ignfvalidator-schema).
 
 Il a été développé dans le cadre du [géoportail de l'urbanisme](https://www.geoportail-urbanisme.gouv.fr) pour la validation des [standards CNIG](https://www.geoportail-urbanisme.gouv.fr/standard/).
 
 ## Principe de fonctionnement
 
-![Working principle](doc/principe.jpg)
+Le schéma suivant illustre le [Principe de fonctionnement du validateur de document](doc/principe.md) :
+
+![Working principle](doc/img/principe.jpg)
 
 ## Principales fonctionnalités
 
@@ -49,9 +48,13 @@ Voir [LICENCE.md](LICENCE.md)
 
 ## Documentation technique
 
-* [Modélisation des documents](doc/model.md)
-* [Metadata validation](doc/metadata.md)
-* [Validation des caractères](doc/characters/index.md)
+* [Modélisation des documents (french)](doc/model.md)
+* [Liste des codes d'erreurs (json)](validator-core/src/main/resources/error-code.json)
+* [Projection supportées (json)](validator-core/src/main/resources/projection.json)
+* [Metadata modelization (english)](doc/metadata.md)
+* [Characters validation (english)](doc/characters/index.md)
+* [plugin-cnig - validation des champs IDURBA](doc/plugin-cnig/idurba.md)
+
 
 ## Cas d'utilisation
 
@@ -61,6 +64,7 @@ Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](h
 
 * java >= 11
 * [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
+* [geotools](doc/dependencies/geotools.md)
 
 ## Compilation
 
@@ -108,4 +112,13 @@ java -jar validator-cli/target/validator-cli.jar metadata_to_json \
 ```
 
 Exemple : [01.xml](validator-core/src/test/resources/metadata/01.xml) -> [01.json](validator-core/src/test/resources/metadata/01-expected.json)
+
+
+## Extensibilité
+
+Le validateur permet l'ajout qui plugin qui vont exécuter des tâches à différentes étapes de la validation :
+
+* Avant la mise en correspondance des fichiers et du modèle (ex : modification d'extension)
+* Avant la validation (ex : détection de l'encodage des fichiers à partir des métadonnées)
+* Après la validation (ex : receuil de métadonnées sur les données validées, contrôles supplémentaires, etc.)
 

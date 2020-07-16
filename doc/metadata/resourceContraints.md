@@ -1,11 +1,11 @@
 # Constraints
 
-Implementation notes about ```gmd:resourceConstraints``` parsing.
+Implementation notes about `gmd:resourceConstraints` parsing.
 
 ## resourceConstraints
 
-* ```identificationInfo[1]/*/resourceConstraints``` provides different categories of constraints applicable to the resource (or its metadata)
-* Each ```resourceConstraints``` contains either a ```MD_Constraints```, a ```MD_LegalConstraints``` or a ```MD_SecurityConstraints```
+* `identificationInfo[1]/*/resourceConstraints` provides different categories of constraints applicable to the resource (or its metadata)
+* Each `resourceConstraints` contains either a `MD_Constraints`, a `MD_LegalConstraints` or a `MD_SecurityConstraints`
 
 
 ### MD_Constraints
