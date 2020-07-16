@@ -4,7 +4,7 @@
 ## Principaux concepts
 
 | Concept                                                       | Description                                                        | Implémentation  |
-|---------------------------------------------------------------|--------------------------------------------------------------------|-----------------|
+| ------------------------------------------------------------- | ------------------------------------------------------------------ | --------------- |
 | [Document](https://github.com/IGNF/validator-schema#document) | Description d'une arborescence de fichier/du contenu d'une archive | `DocumentModel` |
 | [File](https://github.com/IGNF/validator-schema#file)         | Description d'un fichier (chemin, type, présence obligatoire,...)  | `FileModel`     |
 | [Table](https://github.com/IGNF/validator-schema#table)       | Description d'une table                                            | `FeatureType`   |
@@ -18,7 +18,7 @@ Le schéma ci-après illustre les relations entre les modèles :
 
 ## Format de table supportés
 
-On nottera que :
+On notera que :
 
 * La lecture des tables est effectuée à l'aide d'une conversion GDAL (ogr2ogr) en format CSV.
 * Les formats suivants sont supportés :
@@ -28,4 +28,4 @@ On nottera que :
   * GML (Simple Feature, i.e. une seule table dans le GML)
 * Le champ géométrique doit être décrit sous le nom "WKT"
 
-Remarque : Ce dernier point est lié au comportement par défaut de ogr2ogr lors de la conversion en CSV. Une prochaine version du validateur apportera de la souplesse sur ce point.
+Remarque : Ce dernier point est lié au comportement par défaut de ogr2ogr lors de la conversion en CSV. Une prochaine version du validateur apportera de la souplesse sur ce point (c.f. [#192](https://github.com/IGNF/validator/issues/192)).
