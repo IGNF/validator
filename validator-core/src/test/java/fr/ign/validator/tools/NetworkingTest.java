@@ -44,11 +44,11 @@ public class NetworkingTest {
     public void testReadUrl() throws MalformedURLException, IOException {
         Networking.configureHttpClient();
 
-        String url = "https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json";
+        String url = "https://raw.githubusercontent.com/IGNF/validator/master/README.md";
         InputStream in = new URL(url).openStream();
         try {
             String content = IOUtils.toString(in, StandardCharsets.UTF_8);
-            assertTrue(content.contains("cnig_PLU_2017"));
+            assertTrue(content.contains("# Validator"));
         } finally {
             in.close();
         }
