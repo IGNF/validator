@@ -44,12 +44,8 @@ public class TableReaderGMLTest {
             // assertTrue(Arrays.asList(header).contains("DATECOG")) ;
 
             String[] row = reader.next();
-            // WKT (regression in ogr2ogr between 1.x and 2.x)
-            if (FileConverter.getInstance().getVersion().getFullVersion().startsWith("GDAL 2.")) {
-                assertEquals("POINT (225499.742202533 6755725.59042703)", row[wktIndex]);
-            } else {
-                assertEquals("POINT (225499.742202532826923 6755725.590427031740546)", row[wktIndex]);
-            }
+            // WKT (regression in ogr2ogr between 1.x and 2.x, >= 2.3 is now required)
+            assertEquals("POINT (225499.742202533 6755725.59042703)", row[wktIndex]);
 
             assertTrue(Arrays.asList(row).contains("DOC_URBA_COM.13")); // gml_id
             assertTrue(Arrays.asList(row).contains("5611820140612")); // IDURBA

@@ -9,6 +9,11 @@ matrix:
     env:
       - GDAL_VERSION: 2.4.*
       - GDAL_PPA: "ppa:ubuntugis/ppa"
+  - os: linux
+    dist: bionic
+    env:
+      - GDAL_VERSION: 3.0.*
+      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
 notifications:
   email: false

@@ -265,10 +265,12 @@ public class FileConverter {
             }
 
             // avoid useless quotes (GDAL 2.3 or more)
-            if (version.getMajor() >= 2 && version.getMinor() >= 3) {
-                arguments.add("-lco");
-                arguments.add("STRING_QUOTING=IF_NEEDED");
-            }
+            arguments.add("-lco");
+            arguments.add("STRING_QUOTING=IF_NEEDED");
+
+            // avoid coordinate rounding
+            arguments.add("-lco");
+            arguments.add("OGR_WKT_ROUND=NO");
 
             // force "\r\n"
             arguments.add("-lco");
@@ -280,6 +282,7 @@ public class FileConverter {
         arguments.add(target.getAbsolutePath());
         arguments.add(source.getAbsolutePath());
 
+        // force 2d output (to be removed, related to old JTS versions)
         arguments.add("-dim");
         arguments.add("2");
 
