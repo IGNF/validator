@@ -191,20 +191,13 @@ public class FileConverterTest {
     /**
      * Find expected CSV POINT file according to the GDAL current version
      * 
+     * @deprecated GDAL >= 2.3 is now required (POINT_EXPECTED_1.10.x.csv and
+     *             POINT_EXPECTED_1.11.x.csv kept for trace)
+     * 
      * @return
      */
     private String getExpectedPointName() {
-        OgrVersion version = FileConverter.getInstance().getVersion();
-        if (version.getFullVersion().startsWith("GDAL 1.10.")) {
-            return "/data/POINT_EXPECTED_1.10.x.csv";
-        } else if (version.getFullVersion().startsWith("GDAL 1.11.")) {
-            return "/data/POINT_EXPECTED_1.11.x.csv";
-        } else if (version.getMajor() >= 2) {
-            return "/data/POINT_EXPECTED_2.2.x.csv";
-        } else {
-            System.err.println("GDAL version is not supported for this test : " + version);
-            return null;
-        }
+        return "/data/POINT_EXPECTED_2.2.x.csv";
     }
 
     /**
@@ -235,7 +228,6 @@ public class FileConverterTest {
      */
     @Test
     public void testRegressBugBackslash02() throws IOException {
-        Assume.assumeFalse(isOgrVersionKnownToHaveBackslashBug());
         File source = ResourceHelper.getResourceFile(getClass(), "/data/bug-backslash/source.csv");
         File targetDbf = folder.newFile("output.dbf");
         File targetCsv = folder.newFile("output.csv");
@@ -257,19 +249,6 @@ public class FileConverterTest {
             e.printStackTrace();
             Assert.fail();
         }
-    }
-
-    /**
-     * Allows to skip backslash test if ogr2ogr is known to have problems with
-     * fields ending with backslash
-     * 
-     * @return
-     */
-    public boolean isOgrVersionKnownToHaveBackslashBug() {
-        if (FileConverter.getInstance().getVersion().getFullVersion().startsWith("GDAL 1.10.1")) {
-            return true;
-        }
-        return false;
     }
 
 }
