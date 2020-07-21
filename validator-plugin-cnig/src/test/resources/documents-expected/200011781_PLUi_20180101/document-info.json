@@ -188,6 +188,10 @@
       "keywords" : [ "PLUI" ],
       "thesaurusName" : "Types de document d’urbanisme",
       "thesaurusDate" : null
+    }, {
+      "keywords" : [ "200011781" ],
+      "thesaurusName" : "Répertoire SIRENE",
+      "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {
       "code" : "EPSG:2154",

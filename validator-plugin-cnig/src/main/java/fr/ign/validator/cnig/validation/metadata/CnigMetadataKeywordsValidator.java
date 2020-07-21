@@ -32,9 +32,19 @@ import fr.ign.validator.metadata.Metadata;
  *
  */
 public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator {
+    private static final Logger log = LogManager.getRootLogger();
+    private static final Marker MARKER = MarkerManager.getMarker("CnigMetadataKeywordsValidator");
 
-    public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("CnigMetadataKeywordsValidator");
+    static final String THESAURUS_TYPE_DOC = "Types de document d’urbanisme";
+    static final String THESAURUS_CATEGORIE_SUP = "nomenclature nationale des SUP";
+    /**
+     * Warning : used both for "manager" (SUP,SCOT) and "territory" (PLUi)
+     */
+    static final String THESAURUS_SIREN = "Répertoire SIRENE";
+
+    static final String THESAURUS_COG = "Code officiel géographique au 1er janvier 20[0-9]{2}";
+
+    static final String THESAURUS_CODE_DU = "Sous-code de documents d’urbanisme";
 
     /**
      * Provide the list of required keywords according to document name.
@@ -53,7 +63,7 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
             result.add(
                 new RequiredKeyword(
                     "CATEGORIE_SUP",
-                    "nomenclature nationale des SUP",
+                    THESAURUS_CATEGORIE_SUP,
                     documentName.getCategory()
                 )
             );
@@ -61,8 +71,54 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
             result.add(
                 new RequiredKeyword(
                     "TYPE_DOC",
-                    "Types de document d’urbanisme",
+                    THESAURUS_TYPE_DOC,
                     documentType.toString().toUpperCase()
+                )
+            );
+        }
+
+        /*
+         * GESTIONNAIRE for SUP and SCoT
+         */
+        if (DocumentType.SCoT == documentType || DocumentType.SUP == documentType) {
+            result.add(
+                new RequiredKeyword(
+                    "SIREN_GESTIONNAIRE",
+                    THESAURUS_SIREN,
+                    documentName.getManager()
+                )
+            );
+        }
+
+        /**
+         * EMPRISE except for SCoT
+         */
+        if (DocumentType.SCoT != documentType) {
+            if (DocumentType.PLUi == documentType) {
+                result.add(
+                    new RequiredKeyword(
+                        "EMPRISE",
+                        THESAURUS_SIREN,
+                        documentName.getTerritory()
+                    )
+                );
+            } else {
+                result.add(
+                    new RequiredKeyword(
+                        "EMPRISE",
+                        THESAURUS_COG,
+                        documentName.getTerritory()
+                    )
+                );
+            }
+        }
+
+        if (!StringUtils.isEmpty(documentName.getPart())) {
+            result.add(
+                new RequiredKeyword(
+                    "CodeDU",
+                    THESAURUS_CODE_DU,
+                    documentName.getPart()
                 )
             );
         }

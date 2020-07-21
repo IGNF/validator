@@ -263,6 +263,10 @@
       "keywords" : [ "PLU" ],
       "thesaurusName" : "Types de document d’urbanisme",
       "thesaurusDate" : null
+    }, {
+      "keywords" : [ "30014" ],
+      "thesaurusName" : "Code officiel géographique au 1er janvier 2017",
+      "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {
       "code" : "EPSG:2154",
