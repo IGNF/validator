@@ -555,6 +555,22 @@
         "message": "L'URI du \"Référentiel de coordonnées\" ({URI}) n'est pas reconnue par le validateur.",
         "documentation": ""
     },
+    
+    {
+        "name": "CNIG_METADATA_KEYWORD_NOT_FOUND",
+        "level": "WARNING",
+        "message": "Le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'a pas été trouvé.",
+        "documentation": "Mot clé attendu non trouvé"
+    },
+
+    {
+        "name": "CNIG_METADATA_KEYWORD_INVALID",
+        "level": "WARNING",
+        "message": "La valeur '{VALUE} pour le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'est pas valide (valeur attendue : '{EXPECTED_VALUE}').",
+        "documentation": "Mot clé attendu non trouvé"
+    },
+    
+    
     {
         "name": "DGPR_DOCUMENT_PREFIX_ERROR",
         "level": "WARNING",

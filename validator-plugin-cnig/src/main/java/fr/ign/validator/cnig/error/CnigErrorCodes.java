@@ -56,4 +56,11 @@ public class CnigErrorCodes {
     public static final ErrorCode CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED = ErrorCode.valueOf(
         "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED"
     );
+
+    public static final ErrorCode CNIG_METADATA_KEYWORD_NOT_FOUND = ErrorCode.valueOf(
+        "CNIG_METADATA_KEYWORD_NOT_FOUND"
+    );
+    public static final ErrorCode CNIG_METADATA_KEYWORD_INVALID = ErrorCode.valueOf(
+        "CNIG_METADATA_KEYWORD_INVALID"
+    );
 }

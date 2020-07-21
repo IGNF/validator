@@ -1,229 +1,303 @@
 {
-  "name" : "19182_CC_20150517",
-  "documentModel" : {
-    "name" : "cnig_CC_2017"
-  },
-  "files" : [ {
-    "type" : "table",
-    "modelName" : "DOC_URBA",
-    "name" : "19182_DOC_URBA_20150517.dbf",
-    "path" : "19182_DOC_URBA_20150517.dbf",
-    "boundingBox" : null,
-    "totalFeatures" : 1
-  }, {
-    "type" : "table",
-    "modelName" : "DOC_URBA_COM",
-    "name" : "19182_DOC_URBA_COM_20150517.dbf",
-    "path" : "19182_DOC_URBA_COM_20150517.dbf",
-    "boundingBox" : null,
-    "totalFeatures" : 1
-  }, {
-    "type" : "directory",
-    "modelName" : "Donnees_geographiques",
-    "name" : "Donnees_geographiques",
-    "path" : "Donnees_geographiques"
-  }, {
-    "type" : "table",
-    "modelName" : "SECTEUR_CC",
-    "name" : "19182_SECTEUR_CC_20150517.TAB",
-    "path" : "Donnees_geographiques/19182_SECTEUR_CC_20150517.TAB",
-    "boundingBox" : [ 1.3550602, 45.2199213, 1.4226516, 45.2535966 ],
-    "totalFeatures" : 19
-  }, {
-    "type" : "directory",
-    "modelName" : "Pieces_ecrites",
-    "name" : "Pieces_ecrites",
-    "path" : "Pieces_ecrites"
-  }, {
-    "type" : "directory",
-    "modelName" : "Procedures",
-    "name" : "0_Procedure",
-    "path" : "Pieces_ecrites/0_Procedure"
-  }, {
-    "type" : "pdf",
-    "modelName" : "PROCEDURE",
-    "name" : "19182_procedure_20150517.pdf",
-    "path" : "Pieces_ecrites/0_Procedure/19182_procedure_20150517.pdf"
-  }, {
-    "type" : "directory",
-    "modelName" : "Rapport_de_presentation",
-    "name" : "1_Rapport_de_presentation",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation"
-  }, {
-    "type" : "pdf",
-    "modelName" : "RAPPORT",
-    "name" : "19182_rapport_1_20150517.pdf",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation/19182_rapport_1_20150517.pdf"
-  }, {
-    "type" : "pdf",
-    "modelName" : "RAPPORT",
-    "name" : "19182_rapport_2_20150517.pdf",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation/19182_rapport_2_20150517.pdf"
-  }, {
-    "type" : "pdf",
-    "modelName" : "RAPPORT",
-    "name" : "19182_rapport_3_20150517.pdf",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation/19182_rapport_3_20150517.pdf"
-  }, {
-    "type" : "directory",
-    "modelName" : "Annexes",
-    "name" : "4_Annexes",
-    "path" : "Pieces_ecrites/4_Annexes"
-  }, {
-    "type" : "pdf",
-    "modelName" : "ANNEXE",
-    "name" : "19182_liste_sup_20150517.pdf",
-    "path" : "Pieces_ecrites/4_Annexes/19182_liste_sup_20150517.pdf"
-  }, {
-    "type" : "pdf",
-    "modelName" : "ANNEXE",
-    "name" : "19182_plan_sup_20150517.pdf",
-    "path" : "Pieces_ecrites/4_Annexes/19182_plan_sup_20150517.pdf"
-  }, {
-    "type" : "pdf",
-    "modelName" : "ANNEXE",
-    "name" : "19182_sectorisation_graphique_20150517.pdf",
-    "path" : "Pieces_ecrites/4_Annexes/19182_sectorisation_graphique_20150517.pdf"
-  }, {
-    "type" : "metadata",
-    "modelName" : "METADONNEES",
-    "name" : "fr-000019182-CC20150517.xml",
-    "path" : "fr-000019182-CC20150517.xml"
-  } ],
-  "documentExtent" : [ 1.3550602, 45.2199213, 1.4226516, 45.2535966 ],
-  "tags" : {
-    "idurba": "19182_CC_20150517",
-    "typeref" : "04"
-  },
-  "metadata" : {
-    "fileIdentifier" : "fr-000019182-CC20150517",
-    "title" : "Carte Communale de la commune de SAINT-AULAIRE",
-    "abstract" : "Carte Communale (CC) numérisée. Ce lot informe du droit à bâtir sur la commune de SAINT-AULAIRE. Cette CC est numérisée conformément aux prescriptions nationales du CNIG.",
-    "type" : "dataset",
-    "locators" : [ {
-      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE%3DWMS%26VERSION%3D1.3.0%26REQUEST%3DGetCapabilities",
-      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
-      "protocol" : null,
-      "protocolUrl" : null,
-      "applicationProfile" : null,
-      "applicationProfileUrl" : null,
-      "description" : null
-    }, {
-      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE%3DWFS%26VERSION%3D1.1.0%26REQUEST%3DGetCapabilities",
-      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
-      "protocol" : null,
-      "protocolUrl" : null,
-      "applicationProfile" : null,
-      "applicationProfileUrl" : null,
-      "description" : null
-    }, {
-      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
-      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
-      "protocol" : null,
-      "protocolUrl" : null,
-      "applicationProfile" : null,
-      "applicationProfileUrl" : null,
-      "description" : null
-    }, {
-      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
-      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
-      "protocol" : "Information",
-      "protocolUrl" : null,
-      "applicationProfile" : null,
-      "applicationProfileUrl" : null,
-      "description" : null
-    }, {
-      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
-      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
-      "protocol" : "Download",
-      "protocolUrl" : null,
-      "applicationProfile" : null,
-      "applicationProfileUrl" : null,
-      "description" : null
-    }, {
-      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
-      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
-      "protocol" : "Download",
-      "protocolUrl" : null,
-      "applicationProfile" : null,
-      "applicationProfileUrl" : null,
-      "description" : null
-    } ],
-    "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/19182_CC_20150517" ],
-    "language" : "fre",
-    "topicCategory" : "planningCadastre",
-    "keywords" : [ {
-      "keywords" : [ "usage des sols" ],
-      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
-      "thesaurusDate" : "2008-06-01"
-    }, {
-      "keywords" : [ "Document d'urbanisme" ],
-      "thesaurusName" : "GEMET - Concepts, version 2.4",
-      "thesaurusDate" : "2010-01-13"
-    }, {
-      "keywords" : [ "planification", "CC", "Carte communale", "données ouvertes" ],
-      "thesaurusDate" : null
-    } ],
-    "referenceSystemIdentifier" : {
-      "code" : "EPSG:2154",
-      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
+    "documentExtent": [
+        1.3550602,
+        45.2199213,
+        1.4226516,
+        45.2535966
+    ],
+    "documentModel": {
+        "name": "cnig_CC_2017"
     },
-    "dateOfPublication" : null,
-    "dateOfLastRevision" : "2015-05-17",
-    "dateOfCreation" : "2018-05-03",
-    "characterSet" : "8859part1",
-    "spatialRepresentationType" : "vector",
-    "lineage" : "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 08/12/2017. Ce lot de données produit en 2015 a été numérisé à partir du Référentiel local.",
-    "spatialResolutions" : [ {
-      "denominator" : "5000"
-    } ],
-    "specifications" : [ {
-      "title" : "CNIG CC v2017",
-      "date" : "2017-12-08",
-      "dateType" : "publication",
-      "degree" : "true"
-    }, {
-      "title" : "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
-      "date" : "2014-04-07",
-      "dateType" : "publication",
-      "degree" : "true"
-    } ],
-    "contact" : {
-      "organisationName" : "Mairie de Saint-Aulaire",
-      "electronicMailAddress" : "mairie.staulaire@gmail.com",
-      "role" : "owner",
-      "phone" : "None",
-      "deliveryPoint" : "None",
-      "city" : "None",
-      "postalCode" : "00000",
-      "country" : "France",
-      "onlineResourceUrl" : null,
-      "hoursOfService" : null
+    "files": [
+        {
+            "boundingBox": null,
+            "modelName": "DOC_URBA",
+            "name": "19182_DOC_URBA_20150517.dbf",
+            "path": "19182_DOC_URBA_20150517.dbf",
+            "totalFeatures": 1,
+            "type": "table"
+        },
+        {
+            "boundingBox": null,
+            "modelName": "DOC_URBA_COM",
+            "name": "19182_DOC_URBA_COM_20150517.dbf",
+            "path": "19182_DOC_URBA_COM_20150517.dbf",
+            "totalFeatures": 1,
+            "type": "table"
+        },
+        {
+            "modelName": "Donnees_geographiques",
+            "name": "Donnees_geographiques",
+            "path": "Donnees_geographiques",
+            "type": "directory"
+        },
+        {
+            "boundingBox": [
+                1.3550602,
+                45.2199213,
+                1.4226516,
+                45.2535966
+            ],
+            "modelName": "SECTEUR_CC",
+            "name": "19182_SECTEUR_CC_20150517.TAB",
+            "path": "Donnees_geographiques/19182_SECTEUR_CC_20150517.TAB",
+            "totalFeatures": 19,
+            "type": "table"
+        },
+        {
+            "modelName": "Pieces_ecrites",
+            "name": "Pieces_ecrites",
+            "path": "Pieces_ecrites",
+            "type": "directory"
+        },
+        {
+            "modelName": "Procedures",
+            "name": "0_Procedure",
+            "path": "Pieces_ecrites/0_Procedure",
+            "type": "directory"
+        },
+        {
+            "modelName": "PROCEDURE",
+            "name": "19182_procedure_20150517.pdf",
+            "path": "Pieces_ecrites/0_Procedure/19182_procedure_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "Rapport_de_presentation",
+            "name": "1_Rapport_de_presentation",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation",
+            "type": "directory"
+        },
+        {
+            "modelName": "RAPPORT",
+            "name": "19182_rapport_1_20150517.pdf",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation/19182_rapport_1_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "RAPPORT",
+            "name": "19182_rapport_2_20150517.pdf",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation/19182_rapport_2_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "RAPPORT",
+            "name": "19182_rapport_3_20150517.pdf",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation/19182_rapport_3_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "Annexes",
+            "name": "4_Annexes",
+            "path": "Pieces_ecrites/4_Annexes",
+            "type": "directory"
+        },
+        {
+            "modelName": "ANNEXE",
+            "name": "19182_liste_sup_20150517.pdf",
+            "path": "Pieces_ecrites/4_Annexes/19182_liste_sup_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "ANNEXE",
+            "name": "19182_plan_sup_20150517.pdf",
+            "path": "Pieces_ecrites/4_Annexes/19182_plan_sup_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "ANNEXE",
+            "name": "19182_sectorisation_graphique_20150517.pdf",
+            "path": "Pieces_ecrites/4_Annexes/19182_sectorisation_graphique_20150517.pdf",
+            "type": "pdf"
+        },
+        {
+            "modelName": "METADONNEES",
+            "name": "fr-000019182-CC20150517.xml",
+            "path": "fr-000019182-CC20150517.xml",
+            "type": "metadata"
+        }
+    ],
+    "metadata": {
+        "abstract": "Carte Communale (CC) numérisée. Ce lot informe du droit à bâtir sur la commune de SAINT-AULAIRE. Cette CC est numérisée conformément aux prescriptions nationales du CNIG.",
+        "characterSet": "8859part1",
+        "constraints": [
+            {
+                "type": "MD_Constraints",
+                "useLimitations": [
+                    "useLimitations"
+                ]
+            }
+        ],
+        "contact": {
+            "city": "None",
+            "country": "France",
+            "deliveryPoint": "None",
+            "electronicMailAddress": "mairie.staulaire@gmail.com",
+            "hoursOfService": null,
+            "onlineResourceUrl": null,
+            "organisationName": "Mairie de Saint-Aulaire",
+            "phone": "None",
+            "postalCode": "00000",
+            "role": "owner"
+        },
+        "dateOfCreation": "2018-05-03",
+        "dateOfLastRevision": "2015-05-17",
+        "dateOfPublication": null,
+        "distributionFormats": [
+            {
+                "name": "MAPINFO",
+                "version": "1.0"
+            }
+        ],
+        "extents": [
+            {
+                "boundingBox": [
+                    1.3551979596777899,
+                    45.2202797505162,
+                    1.4227525515645199,
+                    45.253532416693105
+                ]
+            }
+        ],
+        "fileIdentifier": "fr-000019182-CC20150517",
+        "identifiers": [
+            "https://www.geoportail-urbanisme.gouv.fr/document/19182_CC_20150517"
+        ],
+        "keywords": [
+            {
+                "keywords": [
+                    "usage des sols"
+                ],
+                "thesaurusDate": "2008-06-01",
+                "thesaurusName": "GEMET - INSPIRE themes, version 1.0"
+            },
+            {
+                "keywords": [
+                    "Document d'urbanisme"
+                ],
+                "thesaurusDate": "2010-01-13",
+                "thesaurusName": "GEMET - Concepts, version 2.4"
+            },
+            {
+                "keywords": [
+                    "planification",
+                    "CC",
+                    "Carte communale",
+                    "données ouvertes"
+                ],
+                "thesaurusDate": null
+            },
+            {
+                "keywords": [
+                    "CC"
+                ],
+                "thesaurusDate": null,
+                "thesaurusName": "Types de document d’urbanisme"
+            }
+        ],
+        "language": "fre",
+        "lineage": "Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG du 08/12/2017. Ce lot de données produit en 2015 a été numérisé à partir du Référentiel local.",
+        "locators": [
+            {
+                "applicationProfile": null,
+                "applicationProfileUrl": null,
+                "description": null,
+                "name": "Lien vers le service WMS du Géoportail de l'urbanisme",
+                "protocol": null,
+                "protocolUrl": null,
+                "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE%3DWMS%26VERSION%3D1.3.0%26REQUEST%3DGetCapabilities"
+            },
+            {
+                "applicationProfile": null,
+                "applicationProfileUrl": null,
+                "description": null,
+                "name": "Lien vers le service WFS du Géoportail de l'urbanisme",
+                "protocol": null,
+                "protocolUrl": null,
+                "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE%3DWFS%26VERSION%3D1.1.0%26REQUEST%3DGetCapabilities"
+            },
+            {
+                "applicationProfile": null,
+                "applicationProfileUrl": null,
+                "description": null,
+                "name": "Lien vers le service ATOM du Géoportail de l'urbanisme",
+                "protocol": null,
+                "protocolUrl": null,
+                "url": "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/"
+            },
+            {
+                "applicationProfile": null,
+                "applicationProfileUrl": null,
+                "description": null,
+                "name": "Lien vers le service WMS du Géoportail de l'urbanisme",
+                "protocol": "Information",
+                "protocolUrl": null,
+                "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
+            },
+            {
+                "applicationProfile": null,
+                "applicationProfileUrl": null,
+                "description": null,
+                "name": "Lien vers le service WFS du Géoportail de l'urbanisme",
+                "protocol": "Download",
+                "protocolUrl": null,
+                "url": "https://wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities"
+            },
+            {
+                "applicationProfile": null,
+                "applicationProfileUrl": null,
+                "description": null,
+                "name": "Lien vers le service ATOM du Géoportail de l'urbanisme",
+                "protocol": "Download",
+                "protocolUrl": null,
+                "url": "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/"
+            }
+        ],
+        "metadataContact": {
+            "city": "None",
+            "country": "France",
+            "deliveryPoint": "None",
+            "electronicMailAddress": "mairie.staulaire@gmail.com",
+            "hoursOfService": null,
+            "onlineResourceUrl": null,
+            "organisationName": "Mairie de Saint-Aulaire",
+            "phone": "None",
+            "postalCode": "00000",
+            "role": "pointOfContact"
+        },
+        "metadataDate": "2018-05-03",
+        "metadataLanguage": "fre",
+        "referenceSystemIdentifier": {
+            "code": "EPSG:2154",
+            "uri": "http://www.opengis.net/def/crs/EPSG/0/2154"
+        },
+        "spatialRepresentationType": "vector",
+        "spatialResolutions": [
+            {
+                "denominator": "5000"
+            }
+        ],
+        "specifications": [
+            {
+                "date": "2017-12-08",
+                "dateType": "publication",
+                "degree": "true",
+                "title": "CNIG CC v2017"
+            },
+            {
+                "date": "2014-04-07",
+                "dateType": "publication",
+                "degree": "true",
+                "title": "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1"
+            }
+        ],
+        "title": "Carte Communale de la commune de SAINT-AULAIRE",
+        "topicCategory": "planningCadastre",
+        "type": "dataset"
     },
-    "metadataContact" : {
-      "organisationName" : "Mairie de Saint-Aulaire",
-      "electronicMailAddress" : "mairie.staulaire@gmail.com",
-      "role" : "pointOfContact",
-      "phone" : "None",
-      "deliveryPoint" : "None",
-      "city" : "None",
-      "postalCode" : "00000",
-      "country" : "France",
-      "onlineResourceUrl" : null,
-      "hoursOfService" : null
-    },
-    "metadataDate" : "2018-05-03",
-    "metadataLanguage" : "fre",
-    "extents" : [ {
-      "boundingBox" : [ 1.3551979596777899, 45.2202797505162, 1.4227525515645199, 45.253532416693105 ]
-    } ],
-    "constraints" : [ {
-      "type" : "MD_Constraints",
-      "useLimitations" : [ "useLimitations" ]
-    } ],
-    "distributionFormats" : [ {
-      "name" : "MAPINFO",
-      "version" : "1.0"
-    } ]
-  }
+    "name": "19182_CC_20150517",
+    "tags": {
+        "idurba": "19182_CC_20150517",
+        "typeref": "04"
+    }
 }
