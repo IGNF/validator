@@ -6,17 +6,17 @@ Les informations contenues dans le nom de dossier sont désormais disponibles so
 
 Le plugin CNIG du validateur contrôle la présence de ces mots clés et la cohérence avec le nom de dossier d'un document.
 
-## Documents de référence
+## Documents de référence
 
 * [DU - Mots clés](http://cnig.gouv.fr/wp-content/uploads/2019/03/190308_Consignes_saisie_metadonnees_DU_v2019-03.pdf#page=8&zoom=auto,-45,753)
 * [SUP - Mots clés](http://cnig.gouv.fr/wp-content/uploads/2019/03/190308_Consignes_saisie_metadonnees_SUP_v2019-03.pdf#page=8&zoom=auto,-45,763)
 * [SCOT - Mots clés](http://cnig.gouv.fr/wp-content/uploads/2019/03/190308_Consignes_saisie_metadonnees_SCOT_v2019-03.pdf#page=7&zoom=auto,-45,555)
 
-## Méthode de validation
+## Méthode de validation
 
 Le validateur procède comme suit :
 
-* Calcul de la liste des mots clés attendus en fonction du nom de dossier 
+* Calcul de la liste des mots clés attendus en fonction du nom de dossier
 
 > Par exemple, pour 25349_PLU_20010101_B, on attend un mot clé "PLU" pour le type de document, un mot clé "25349" pour l'emprise, un mot clé "B" pour le code DU.
 

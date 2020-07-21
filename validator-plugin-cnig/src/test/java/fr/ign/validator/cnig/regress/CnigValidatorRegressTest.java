@@ -120,17 +120,17 @@ public class CnigValidatorRegressTest {
          * Uncomment to update the regress test (then, review change, refresh eclipse
          * project and comment back)
          */
-//        {
-//            String originalPath = expectedInfosCnigPath.getAbsolutePath().replaceAll("/target/test-classes/", "/src/test/resources/");
-//            FileUtils.writeStringToFile(
-//                new File(originalPath),
-//                FileUtils.readFileToString(
-//                    producedInfosCnigPath,
-//                    StandardCharsets.UTF_8
-//                ),
-//                StandardCharsets.UTF_8
-//            );
-//        }
+    //    {
+    //        String originalPath = expectedInfosCnigPath.getAbsolutePath().replaceAll("/target/test-classes/", "/src/test/resources/");
+    //        FileUtils.writeStringToFile(
+    //            new File(originalPath),
+    //            FileUtils.readFileToString(
+    //                producedInfosCnigPath,
+    //                StandardCharsets.UTF_8
+    //            ),
+    //            StandardCharsets.UTF_8
+    //        );
+    //    }
 
         String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
         JSONAssert.assertEquals(
