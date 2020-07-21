@@ -13,17 +13,21 @@ public class CnigMetadataKeywordsValidatorTest {
 
     @Test
     public void testGetRequiredKeywordsPlu() {
-        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(new DocumentName("25349_PLU_20200101"));
+        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(
+            new DocumentName("25349_PLU_20200101")
+        );
         assertEquals(2, requiredKeywords.size());
         int index = 0;
         {
             RequiredKeyword item = requiredKeywords.get(index++);
             assertEquals("TYPE_DOC", item.name);
+            assertEquals(CnigMetadataKeywordsValidator.THESAURUS_TYPE_DOC, item.thesaurusName);
             assertEquals("PLU", item.expectedValue);
         }
         {
             RequiredKeyword item = requiredKeywords.get(index++);
             assertEquals("EMPRISE", item.name);
+            assertEquals(CnigMetadataKeywordsValidator.THESAURUS_COG, item.thesaurusName);
             assertEquals("25349", item.expectedValue);
         }
     }
@@ -57,7 +61,9 @@ public class CnigMetadataKeywordsValidatorTest {
 
     @Test
     public void testGetRequiredKeywordsPos() {
-        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(new DocumentName("25349_POS_20200101"));
+        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(
+            new DocumentName("25349_POS_20200101")
+        );
         assertEquals(2, requiredKeywords.size());
         int index = 0;
         {
@@ -76,7 +82,9 @@ public class CnigMetadataKeywordsValidatorTest {
 
     @Test
     public void testGetRequiredKeywordsCc() {
-        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(new DocumentName("25349_CC_20200101"));
+        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(
+            new DocumentName("25349_CC_20200101")
+        );
         assertEquals(2, requiredKeywords.size());
         int index = 0;
         {
@@ -95,7 +103,9 @@ public class CnigMetadataKeywordsValidatorTest {
 
     @Test
     public void testGetRequiredKeywordsPsmv() {
-        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(new DocumentName("25349_PSMV_20200101"));
+        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(
+            new DocumentName("25349_PSMV_20200101")
+        );
         assertEquals(2, requiredKeywords.size());
         int index = 0;
         {
@@ -135,7 +145,9 @@ public class CnigMetadataKeywordsValidatorTest {
 
     @Test
     public void testGetRequiredKeywordsScot() {
-        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(new DocumentName("123456789_scot"));
+        List<RequiredKeyword> requiredKeywords = CnigMetadataKeywordsValidator.getRequiredKeywords(
+            new DocumentName("123456789_scot")
+        );
         assertEquals(2, requiredKeywords.size());
         int index = 0;
         {

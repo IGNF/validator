@@ -145,7 +145,7 @@ public class DocumentName {
         this.manager = parts[0];
         this.documentType = DocumentType.SCoT;
         this.date = parts.length >= 3 ? parts[2] : null;
-        this.part = parts.length >= 4 ? parts[3] : null ;
+        this.part = parts.length >= 4 ? parts[3] : null;
     }
 
     private void parseSUP() {
