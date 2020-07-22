@@ -9,6 +9,10 @@ echo "VERSION=$VERSION"
 
 rm -rf *.rpm
 fpm -s dir -t rpm -n ign-validator -v $VERSION \
-    --license "Cecill-B" \
+    --architecture all \
     --description "IGNF/validator - validate and load data according to models" \
+    --url "https://github.com/IGNF/validator#validator" \
+    --license "Cecill-B" \
+    --vendor "IGNF" \
+    --maintainer "MBorne@users.noreply.github.com" \
     --prefix /opt/ign-validator validator-cli.jar
