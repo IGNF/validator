@@ -35,7 +35,7 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
     private static final Logger log = LogManager.getRootLogger();
     private static final Marker MARKER = MarkerManager.getMarker("CnigMetadataKeywordsValidator");
 
-    static final String THESAURUS_TYPE_DOC = "Types de document d’urbanisme";
+    static final String THESAURUS_TYPE_DOC = "Types de documents d’urbanisme";
     static final String THESAURUS_CATEGORIE_SUP = "nomenclature nationale des SUP";
     /**
      * Warning : used both for "manager" (SUP,SCOT) and "territory" (PLUi)
