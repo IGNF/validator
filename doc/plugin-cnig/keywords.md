@@ -2,7 +2,7 @@
 
 Le nom de dossier du document n'est plus obligatoirement fourni sous forme d'un identifiant dans la fiche de métadonnées ( https://www.geoportail-urbanisme.gouv.fr/document/{NomDeDossier} ).
 
-Les informations contenues dans le nom de dossier sont désormais disponibles sous forme de mots clés associés à des thésaurus de sorte qu'il soit possible, par exemple dans le cadre du moissonnage ATOM du GpU, de récupérer les informations et reconstituer le nom de dossier à partir des fiches de métadonnées.
+Les informations contenues dans le nom de dossier doivent être fournies sous forme de mots clés associés à des thésaurus de sorte qu'il soit possible, par exemple dans le cadre du moissonnage ATOM du GpU, de reconstituer le nom de dossier à partir des fiches de métadonnées.
 
 Le plugin CNIG du validateur contrôle la présence de ces mots clés et la cohérence avec le nom de dossier d'un document.
 
