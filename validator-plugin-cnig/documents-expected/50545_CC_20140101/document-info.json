@@ -117,11 +117,7 @@
       "thesaurusDate" : null
     }, {
       "keywords" : [ "CC" ],
-      "thesaurusName" : "Types de documents d’urbanisme",
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "50545" ],
-      "thesaurusName" : "Code officiel géographique au 1er janvier 2013",
+      "thesaurusName" : "Types de document d’urbanisme",
       "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {

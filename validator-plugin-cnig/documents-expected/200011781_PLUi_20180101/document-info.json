@@ -186,11 +186,7 @@
       "thesaurusDate" : null
     }, {
       "keywords" : [ "PLUI" ],
-      "thesaurusName" : "Types de documents d’urbanisme",
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "200011781" ],
-      "thesaurusName" : "Répertoire SIRENE",
+      "thesaurusName" : "Types de document d’urbanisme",
       "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {

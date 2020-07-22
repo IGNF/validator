@@ -96,22 +96,16 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("41175_PLU_20140603", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("41175_PLU_20140603", document.getDocumentName());
+        document.validate(context);
+        Assert.assertEquals("41175_PLU_20140603", document.getDocumentName());
 
-            ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
 
-            /* check ERRORS */
-            ReportAssert.assertCount(1, CoreErrorCodes.METADATA_CHARACTERSET_INVALID, report);
-            ReportAssert.assertCount(1, CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR, report);
-            // relative to DOC_URBA.DATEREF
-            ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        /* check ERRORS */
+        ReportAssert.assertCount(1, CoreErrorCodes.METADATA_CHARACTERSET_INVALID, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR, report);
+        // relative to DOC_URBA.DATEREF
+        ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("41175_PLU_20140603");
@@ -121,6 +115,25 @@ public class CnigValidatorRegressTest {
     private void assertEqualsJsonFile(File producedInfosCnigPath, File expectedInfosCnigPath) throws IOException,
         JSONException {
         String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
+
+        /*
+         * Uncomment to update the regress test (then, review change, refresh eclipse
+         * project and comment back)
+         */
+        // {
+        // String originalPath =
+        // expectedInfosCnigPath.getAbsolutePath().replaceAll("/target/test-classes/",
+        // "/src/test/resources/");
+        // FileUtils.writeStringToFile(
+        // new File(originalPath),
+        // FileUtils.readFileToString(
+        // producedInfosCnigPath,
+        // StandardCharsets.UTF_8
+        // ),
+        // StandardCharsets.UTF_8
+        // );
+        // }
+
         String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
         JSONAssert.assertEquals(
             expected,
@@ -141,24 +154,20 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20130902", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("50545_CC_20130902", document.getDocumentName());
-            /* check errors */
-            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
-            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
-            ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
 
-            ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
-            ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-            ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+        document.validate(context);
+        Assert.assertEquals("50545_CC_20130902", document.getDocumentName());
+        /* check errors */
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
+        ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
 
-            // INFO
-            ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
+        ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+        ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+
+        // INFO
+        ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("50545_CC_20130902");
@@ -178,28 +187,23 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("50545_CC_20140101", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
 
-            ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
-            ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
-            ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
-            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
-            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-            ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
+        document.validate(context);
+        Assert.assertEquals("50545_CC_20140101", document.getDocumentName());
 
-            ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
-            ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-            ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+        ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
+
+        ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+        ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("50545_CC_20140101");
-
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
@@ -215,29 +219,22 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("19182_CC_20150517", document.getDocumentName());
-            /* check errors */
-            ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
-            // DOC_URBA.DATEREF = 2010 (bad regexp)
-            ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
 
-            ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
+        document.validate(context);
+        Assert.assertEquals("19182_CC_20150517", document.getDocumentName());
+        /* check errors */
+        ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+        // DOC_URBA.DATEREF = 2010 (bad regexp)
+        ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
 
-            ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-            ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
+
+        ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+        ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("19182_CC_20150517");
-
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
     /**
@@ -251,19 +248,14 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("110068012_PM3_28_20161104", document.getDocumentName());
-            ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
-            ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+
+        document.validate(context);
+        Assert.assertEquals("110068012_PM3_28_20161104", document.getDocumentName());
+        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("110068012_PM3_28_20161104");
-
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
@@ -281,20 +273,14 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("172014607_AC1_2A_20180130", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("172014607_AC1_2A_20180130", document.getDocumentName());
-            ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
-            ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
-            ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        document.validate(context);
+        Assert.assertEquals("172014607_AC1_2A_20180130", document.getDocumentName());
+        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("172014607_AC1_2A_20180130");
-
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
@@ -310,19 +296,14 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
-            // YYYYMMDD different in tables
-            ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-            ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
+        document.validate(context);
+        Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+        // YYYYMMDD different in tables
+        ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+        ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
 
-            ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
-            ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
@@ -339,16 +320,11 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("200011781_PLUi_20180101", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
-        try {
-            document.validate(context);
-            Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
+        document.validate(context);
+        Assert.assertEquals("200011781_PLUi_20180101", document.getDocumentName());
 
-            ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
-            ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.fail(e.getMessage());
-        }
+        ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");

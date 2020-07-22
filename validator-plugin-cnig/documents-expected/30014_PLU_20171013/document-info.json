@@ -261,11 +261,7 @@
       "thesaurusDate" : null
     }, {
       "keywords" : [ "PLU" ],
-      "thesaurusName" : "Types de documents d’urbanisme",
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "30014" ],
-      "thesaurusName" : "Code officiel géographique au 1er janvier 2017",
+      "thesaurusName" : "Types de document d’urbanisme",
       "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {
