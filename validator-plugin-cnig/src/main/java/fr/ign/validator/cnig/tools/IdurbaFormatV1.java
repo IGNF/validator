@@ -53,7 +53,7 @@ public class IdurbaFormatV1 implements IdurbaFormat {
      * @return
      */
     private String getRegexp(String documentName) {
-        Pattern pattern = Pattern.compile("(?i)" + DocumentName.getRegexpDU());
+        Pattern pattern = Pattern.compile(DocumentName.getRegexpDU());
         Matcher matcher = pattern.matcher(documentName);
 
         if (matcher.matches()) {

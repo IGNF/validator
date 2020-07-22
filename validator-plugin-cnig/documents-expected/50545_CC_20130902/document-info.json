@@ -1,7 +1,7 @@
 {
-  "name" : "50545_CC_20140101",
+  "name" : "50545_CC_20130902",
   "documentModel" : {
-    "name" : "cnig_CC_2014"
+    "name" : "cnig_CC_2013"
   },
   "files" : [ {
     "type" : "table",
@@ -9,7 +9,7 @@
     "name" : "DOC_URBA.dbf",
     "path" : "DOC_URBA.dbf",
     "boundingBox" : null,
-    "totalFeatures" : 0
+    "totalFeatures" : 1
   }, {
     "type" : "table",
     "modelName" : "DOC_URBA_COM",
@@ -25,10 +25,10 @@
   }, {
     "type" : "table",
     "modelName" : "SECTEUR_CC",
-    "name" : "SECTEUR_CC.csv",
-    "path" : "Donnees_geographiques/SECTEUR_CC.csv",
-    "boundingBox" : null,
-    "totalFeatures" : 1
+    "name" : "SECTEUR_CC.dbf",
+    "path" : "Donnees_geographiques/SECTEUR_CC.dbf",
+    "boundingBox" : [ -1.1257418, 49.0219104, -1.0474823, 49.0552970 ],
+    "totalFeatures" : 3
   }, {
     "type" : "directory",
     "modelName" : "Pieces_ecrites",
@@ -36,33 +36,33 @@
     "path" : "Pieces_ecrites"
   }, {
     "type" : "directory",
-    "modelName" : "Rapport_de_presentation",
-    "name" : "1_Rapport_de_presentation",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation"
-  }, {
-    "type" : "pdf",
-    "modelName" : "RAPPORT",
-    "name" : "50545_rapport_20130902.pdf",
-    "path" : "Pieces_ecrites/1_Rapport_de_presentation/50545_rapport_20130902.pdf"
-  }, {
-    "type" : "directory",
     "modelName" : "Annexes",
-    "name" : "4_Annexes",
-    "path" : "Pieces_ecrites/4_Annexes"
+    "name" : "Annexes",
+    "path" : "Pieces_ecrites/Annexes"
   }, {
     "type" : "pdf",
     "modelName" : "ANNEXE",
     "name" : "50545_plan_1_20130902.pdf",
-    "path" : "Pieces_ecrites/4_Annexes/50545_plan_1_20130902.pdf"
+    "path" : "Pieces_ecrites/Annexes/50545_plan_1_20130902.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "Rapport_de_presentation",
+    "name" : "Rapport_de_presentation",
+    "path" : "Pieces_ecrites/Rapport_de_presentation"
+  }, {
+    "type" : "pdf",
+    "modelName" : "RAPPORT",
+    "name" : "50545_rapport_20130902.pdf",
+    "path" : "Pieces_ecrites/Rapport_de_presentation/50545_rapport_20130902.pdf"
   }, {
     "type" : "metadata",
     "modelName" : "METADONNEES",
     "name" : "fr-000050545-cc20130902.xml",
     "path" : "fr-000050545-cc20130902.xml"
   } ],
-  "documentExtent" : null,
+  "documentExtent" : [ -1.1257418, 49.0219104, -1.0474823, 49.0552970 ],
   "tags" : {
-    "idurba" : null,
+    "idurba" : "50545_20130902",
     "typeref" : "01"
   },
   "metadata" : {
@@ -117,16 +117,12 @@
       "thesaurusDate" : null
     }, {
       "keywords" : [ "CC" ],
-      "thesaurusName" : "Types de documents d’urbanisme",
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "50545" ],
-      "thesaurusName" : "Code officiel géographique au 1er janvier 2013",
+      "thesaurusName" : "Types de document d’urbanisme",
       "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {
-      "code" : "EPSG:2154",
-      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
+      "code" : "RGF93 / Lambert 93 (EPSG:2154)",
+      "uri" : null
     },
     "dateOfPublication" : null,
     "dateOfLastRevision" : "2013-09-02",
@@ -138,7 +134,7 @@
       "denominator" : "5000"
     } ],
     "specifications" : [ {
-      "title" : "CNIG CC v2013",
+      "title" : "CNIG Carte Communale v2013",
       "date" : "2013-04-19",
       "dateType" : "publication",
       "degree" : "true"

@@ -92,7 +92,7 @@
   } ],
   "documentExtent" : [ 1.3550602, 45.2199213, 1.4226516, 45.2535966 ],
   "tags" : {
-    "idurba": "19182_CC_20150517",
+    "idurba" : "19182_CC_20150517",
     "typeref" : "04"
   },
   "metadata" : {
@@ -162,6 +162,14 @@
       "thesaurusDate" : "2010-01-13"
     }, {
       "keywords" : [ "planification", "CC", "Carte communale", "données ouvertes" ],
+      "thesaurusDate" : null
+    }, {
+      "keywords" : [ "CC" ],
+      "thesaurusName" : "Types de documents d’urbanisme",
+      "thesaurusDate" : null
+    }, {
+      "keywords" : [ "19182" ],
+      "thesaurusName" : "Code officiel géographique au 1er janvier 2015",
       "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {

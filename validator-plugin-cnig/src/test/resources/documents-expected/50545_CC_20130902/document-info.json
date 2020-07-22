@@ -62,7 +62,7 @@
   } ],
   "documentExtent" : [ -1.1257418, 49.0219104, -1.0474823, 49.0552970 ],
   "tags" : {
-    "idurba": "50545_20130902",
+    "idurba" : "50545_20130902",
     "typeref" : "01"
   },
   "metadata" : {
@@ -114,6 +114,14 @@
       "thesaurusDate" : null
     }, {
       "keywords" : [ "données ouvertes" ],
+      "thesaurusDate" : null
+    }, {
+      "keywords" : [ "CC" ],
+      "thesaurusName" : "Types de documents d’urbanisme",
+      "thesaurusDate" : null
+    }, {
+      "keywords" : [ "50545" ],
+      "thesaurusName" : "Code officiel géographique au 1er janvier 2013",
       "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {

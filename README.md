@@ -54,7 +54,7 @@ Voir [LICENCE.md](LICENCE.md)
 * [Metadata modelization (english)](doc/metadata.md)
 * [Characters validation (english)](doc/characters/index.md)
 * [plugin-cnig - validation des champs IDURBA](doc/plugin-cnig/idurba.md)
-
+* [plugin-cnig - Validation des mots clés en fonction des CSMD CNIG](doc/plugin-cnig/keywords.md)
 
 ## Cas d'utilisation
 

@@ -7,6 +7,7 @@ import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
 import fr.ign.validator.cnig.process.DocUrbaPostProcess;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
+import fr.ign.validator.cnig.validation.metadata.CnigMetadataKeywordsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataReferenceSystemIdentifierValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigSpecificationsValidator;
@@ -65,6 +66,7 @@ public class CnigPlugin implements Plugin {
         context.addListener(new CnigSpecificationsValidator());
         context.addListener(new CnigMetadataDateOfLastRevisionValidator());
         context.addListener(new CnigMetadataReferenceSystemIdentifierValidator());
+        context.addListener(new CnigMetadataKeywordsValidator());
     }
 
 }

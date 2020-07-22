@@ -16,7 +16,7 @@ import fr.ign.validator.validation.Validator;
  * @author MBorne
  *
  */
-public class CnigTypeValidator implements Validator<Metadata>, ValidatorListener {
+public class CnigTypeValidator extends AbstractCnigMetadataValidator {
 
     @Override
     public void validate(Context context, Metadata metadata) {
@@ -31,26 +31,6 @@ public class CnigTypeValidator implements Validator<Metadata>, ValidatorListener
                     .setMessageParam("VALUE", code.getValue())
             );
         }
-    }
-
-    @Override
-    public void beforeMatching(Context context, Document document) throws Exception {
-
-    }
-
-    @Override
-    public void beforeValidate(Context context, Document document) throws Exception {
-        for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof MetadataModel)) {
-                continue;
-            }
-            ((MetadataModel) fileModel).addMetadataValidator(this);
-        }
-    }
-
-    @Override
-    public void afterValidate(Context context, Document document) throws Exception {
-
     }
 
 }

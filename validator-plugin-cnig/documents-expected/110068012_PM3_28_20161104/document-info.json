@@ -123,14 +123,6 @@
       "keywords" : [ "PM3" ],
       "thesaurusName" : "nomenclature nationale des SUP",
       "thesaurusDate" : null
-    }, {
-      "keywords" : [ "28" ],
-      "thesaurusName" : "Code officiel géographique au 1er janvier 2013",
-      "thesaurusDate" : null
-    }, {
-      "keywords" : [ "110068012" ],
-      "thesaurusName" : "Répertoire SIRENE",
-      "thesaurusDate" : null
     } ],
     "referenceSystemIdentifier" : {
       "code" : "EPSG:2154",
