@@ -567,7 +567,7 @@
         "name": "CNIG_METADATA_KEYWORD_INVALID",
         "level": "WARNING",
         "message": "La valeur '{VALUE} pour le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'est pas valide (valeur attendue : '{EXPECTED_VALUE}').",
-        "documentation": "Mot clé attendu non trouvé"
+        "documentation": "Mot clé trouvé mais ne correspondant pas à la valeur présente dans le nom de dossier du document."
     },
     
     
