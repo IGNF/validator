@@ -35,7 +35,11 @@ public class IdurbaFormatFactory {
         String documentModelName = documentModel.getName();
 
         String documentType = DocumentModelName.getDocumentType(documentModelName);
-        if (documentType == null || documentType.equalsIgnoreCase("SUP") || documentType.equalsIgnoreCase("SCOT")) {
+        if (documentType == null || documentType.equalsIgnoreCase("SUP")) {
+            return null;
+        }
+        // exclude cnig_SCOT_2013
+        if (documentModelName.equalsIgnoreCase("cnig_SCOT_2013")){
             return null;
         }
 
