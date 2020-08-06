@@ -19,8 +19,8 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  *
- * Filter table DOC_URBA to keep rows with the expected IDURBA and outputs
- * the number of rows, idurba and typeref (cadastral reference) if available.
+ * Filter table DOC_URBA to keep rows with the expected IDURBA and outputs the
+ * number of rows, idurba and typeref (cadastral reference) if available.
  *
  * @author MBorne
  *
