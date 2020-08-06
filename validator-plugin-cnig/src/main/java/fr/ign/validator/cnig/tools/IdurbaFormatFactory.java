@@ -39,7 +39,7 @@ public class IdurbaFormatFactory {
             return null;
         }
         // exclude cnig_SCOT_2013
-        if (documentModelName.equalsIgnoreCase("cnig_SCOT_2013")){
+        if (documentModelName.equalsIgnoreCase("cnig_SCOT_2013")) {
             return null;
         }
 
