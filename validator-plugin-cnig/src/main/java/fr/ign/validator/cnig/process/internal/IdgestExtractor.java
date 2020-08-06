@@ -68,15 +68,12 @@ public class IdgestExtractor {
         }
 
         /*
-         * Deleting temporary csv file
+         * Deleting temporary vrows file to allow further read with a different charset
          */
-        if (!FilenameUtils.getExtension(servitudeFile.getName()).equals("csv")) {
-            File csvFile = CompanionFileUtils.getCompanionFile(servitudeFile, "csv");
-            if (!csvFile.delete()) {
-                log.error(MARKER, "Delete operation has failed.");
-            }
+        File tempFile = CompanionFileUtils.getCompanionFile(servitudeFile, "vrows");
+        if (!tempFile.delete()) {
+            log.error(MARKER, "Delete operation has failed.");
         }
-
         return idGest;
     }
 
