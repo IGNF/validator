@@ -18,11 +18,12 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
- * Extracts typeref (cadastral reference) from DOC_URBA table
- * 
+ *
+ * Filter table DOC_URBA to keep rows with the expected IDURBA and outputs the
+ * number of rows, idurba and typeref (cadastral reference) if available.
+ *
  * @author MBorne
- * 
+ *
  */
 public class DocUrbaFilter {
     private static final String DEFAULT_TYPEREF = "01";
@@ -45,7 +46,6 @@ public class DocUrbaFilter {
     private String documentName;
 
     /**
-     * 
      * @param idurbaFormat
      */
     public DocUrbaFilter(IdurbaFormat idurbaFormat, String documentName) {
@@ -55,7 +55,7 @@ public class DocUrbaFilter {
 
     /**
      * Finds a typeref in docUrbaFile according to documentName
-     * 
+     *
      * @param documentName
      * @return
      */
@@ -80,8 +80,7 @@ public class DocUrbaFilter {
 
             int indexTyperef = reader.findColumn("TYPEREF");
             if (indexTyperef < 0) {
-                log.error(MARKER, "TYPEREF not found in DOC_URBA");
-                return result;
+                log.warn(MARKER, "TYPEREF not found in DOC_URBA");
             }
 
             /*
@@ -114,15 +113,19 @@ public class DocUrbaFilter {
                     continue;
                 }
 
-                // retreive IDURBA and TYPEREF
                 result.count++;
+                // retrieve IDURBA
+                log.info(MARKER, "Found IDURBA={}", idurba);
                 result.idurba = idurba;
-                String typeref = row[indexTyperef];
-                if (!StringUtils.isEmpty(typeref)) {
-                    result.typeref = typeref;
+                // retreive TYPEREF if available
+                if (indexTyperef >= 0) {
+                    String typeref = row[indexTyperef];
+                    log.info(MARKER, "Found TYPEREF={} for IDURBA={}", typeref, idurba);
+                    if (!StringUtils.isEmpty(typeref)) {
+                        result.typeref = typeref;
+                    }
                 }
 
-                log.info(MARKER, "Found IDURBA={}, TYPEREF={}", idurba, result.typeref);
                 printer.printRecord(row);
             }
 
