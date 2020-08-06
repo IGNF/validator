@@ -23,7 +23,7 @@ public class IdurbaFormatFactoryTest {
     }
 
     @Test
-    public void testGetInstanceSCOT() {
+    public void testGetInstanceSCOT2013() {
         assertNull(IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_SCOT_2013")));
     }
 
@@ -57,6 +57,11 @@ public class IdurbaFormatFactoryTest {
         assertTrue(IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_POS_2017")) instanceof IdurbaFormatV2);
         assertTrue(IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_CC_2017")) instanceof IdurbaFormatV2);
         assertTrue(IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_PSMV_2017")) instanceof IdurbaFormatV2);
+    }
+
+    @Test
+    public void testGetInstanceSCOT2018() {
+        assertTrue(IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_SCOT_2018")) instanceof IdurbaFormatV2);
     }
 
 }
