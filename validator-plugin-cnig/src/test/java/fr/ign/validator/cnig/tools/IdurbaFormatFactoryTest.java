@@ -61,7 +61,9 @@ public class IdurbaFormatFactoryTest {
 
     @Test
     public void testGetInstanceSCOT2018() {
-        assertTrue(IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_SCOT_2018")) instanceof IdurbaFormatV2);
+        assertTrue(
+            IdurbaFormatFactory.getFormat(createMockDocumentModel("cnig_SCOT_2018")) instanceof IdurbaFormatSCOT
+        );
     }
 
 }

@@ -19,9 +19,10 @@ public class IdurbaFormatFactory {
      * @return
      */
     public static List<IdurbaFormat> getFormats() {
-        List<IdurbaFormat> result = new ArrayList<IdurbaFormat>(2);
+        List<IdurbaFormat> result = new ArrayList<IdurbaFormat>(3);
         result.add(new IdurbaFormatV1());
         result.add(new IdurbaFormatV2());
+        result.add(new IdurbaFormatSCOT());
         return result;
     }
 
@@ -38,9 +39,13 @@ public class IdurbaFormatFactory {
         if (documentType == null || documentType.equalsIgnoreCase("SUP")) {
             return null;
         }
-        // exclude cnig_SCOT_2013
-        if (documentModelName.equalsIgnoreCase("cnig_SCOT_2013")) {
-            return null;
+
+        if (documentType.equalsIgnoreCase("SCOT")) {
+            if (documentModelName.equalsIgnoreCase("cnig_SCOT_2013")) {
+                return null;
+            } else {
+                return new IdurbaFormatSCOT();
+            }
         }
 
         String version = DocumentModelName.getVersion(documentModelName);

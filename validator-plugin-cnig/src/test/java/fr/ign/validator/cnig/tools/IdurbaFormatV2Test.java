@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class IdurbaHelperV2Test {
+public class IdurbaFormatV2Test {
 
     private IdurbaFormatV2 format;
 
