@@ -650,6 +650,12 @@
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
     },
     {
+        "name": "DGPR_ISO_HT_GEOM_ERROR",
+        "level": "ERROR",
+        "message": "Une ou plusieurs géométries sont invalides. Il n'est pas possible de tester le partitionnement des surfaces inondables par les iso_ht / iso_db. Erreur complète : {POSTGIS_ERROR}",
+        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
+    },
+    {
         "name": "DGPR_UNMATCHED_SCENARIO",
         "level": "ERROR",
         "message": "L'objet {ID} de la classe {TABLE_NAME} a un scénario ({VALUE_SCENARIO}) différent de celui de la surface inondable {ID_S_INOND} ({EXPECTED_SCENARIO}) à laquelle il est rattaché.",

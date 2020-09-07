@@ -22,6 +22,9 @@ public class DgprErrorCodes {
         "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND"
     );
     public static final ErrorCode DGPR_ISO_HT_INTERSECTS = ErrorCode.valueOf("DGPR_ISO_HT_INTERSECTS");
+    public static final ErrorCode DGPR_ISO_HT_GEOM_ERROR = ErrorCode.valueOf(
+        "DGPR_ISO_HT_GEOM_ERROR"
+    );
     public static final ErrorCode DGPR_UNMATCHED_SCENARIO = ErrorCode.valueOf("DGPR_UNMATCHED_SCENARIO");
     public static final ErrorCode DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY = ErrorCode.valueOf(
         "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY"

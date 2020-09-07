@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import org.postgresql.util.PSQLException;
+
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
@@ -50,6 +52,10 @@ public class GraphTopologyValidator implements Validator<Database> {
         this.database = database;
         try {
             runValidation();
+            // org.postgresql.util.PSQLException:
+        } catch (PSQLException e) {
+            // psql exception throw if a geometry is invalid
+            reportException(e.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -240,6 +246,19 @@ public class GraphTopologyValidator implements Validator<Database> {
                 .setMessageParam("TABLE_NAME", getShortName(tablename))
                 .setMessageParam("ID_S_INOND", surfaceId)
                 .setMessageParam("LIST_ID_ISO_HT", zones)
+        );
+    }
+
+    private void reportException(String errorMessage) {
+        // TODO retablir la BBOX ??
+        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
+        // context.getCoordinateReferenceSystem()))
+        context.report(
+            context.createError(DgprErrorCodes.DGPR_ISO_HT_GEOM_ERROR)
+                .setScope(ErrorScope.FEATURE)
+                .setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+                .setAttribute("WKT")
+                .setMessageParam("POSTGIS_ERROR", errorMessage)
         );
     }
 
