@@ -31,12 +31,10 @@ public class GraphTopologyValidator implements Validator<Database> {
      */
     private Context context;
 
-
     /**
      * Document
      */
     private Database database;
-
 
     /**
      * Iso classe de hauteur et débit respectent une topologie de graphe
@@ -55,7 +53,8 @@ public class GraphTopologyValidator implements Validator<Database> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            // en cas d'exception ou a la fin des traitement on retablie les parametres postgres par default
+            // en cas d'exception ou a la fin des traitement on retablie les parametres
+            // postgres par default
             // SET enable_seqscan TO on;
             toggleGistScanMode(true);
         }
@@ -113,64 +112,62 @@ public class GraphTopologyValidator implements Validator<Database> {
         dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
     }
 
-
     private void createSourceGeometry(String tablename) throws SQLException {
         String srid = this.getSrid();
         Double simplify = this.getDistanceSimplification();
-        // "ALTER TABLE " + tablename + "  DROP COLUMN IF EXISTS source_geometry;",
+        // "ALTER TABLE " + tablename + " DROP COLUMN IF EXISTS source_geometry;",
         String[] queries = new String[] {
             "ALTER TABLE " + tablename + " ADD COLUMN source_geometry geometry(MultiPolygon, " + srid + ");",
             "CREATE INDEX " + tablename + "_geom_idx ON " + tablename + " USING GIST (source_geometry);",
-            "UPDATE " + tablename + " SET source_geometry = ST_Buffer(ST_Simplify(ST_SetSRID(wkt, " + srid + "), " + simplify + "), 0);"
+            "UPDATE " + tablename + " SET source_geometry = ST_Buffer(ST_Simplify(ST_SetSRID(wkt, " + srid + "), "
+                + simplify + "), 0);"
         };
 
-        for(int i = 0; i < queries.length; i++) {
+        for (int i = 0; i < queries.length; i++) {
             String query = queries[i];
             RowIterator result = database.query(query);
         }
     }
-
 
     private void dropSourceGeometry(String tablename) throws SQLException {
         String[] queries = new String[] {
             "ALTER TABLE " + tablename + "  DROP COLUMN IF EXISTS source_geometry;",
         };
 
-        for(int i = 0; i < queries.length; i++) {
+        for (int i = 0; i < queries.length; i++) {
             String query = queries[i];
             RowIterator result = database.query(query);
         }
     }
 
-
     private void validSurfaceTopology(String tablename) throws SQLException, IOException {
         String surfaceTablename = "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD";
 
         String query = " SELECT query.ID_S_INOND,"
-                    + "    query.list_zones"
-                    + " FROM"
-                    + " ("
-                    + " SELECT inond.ID_S_INOND,"
-                    + "     inond.source_geometry AS the_geom_zone,"
-                    + "     ST_Buffer("
-                    + "         inond.source_geometry"
-                    + "     , " + this.getDistanceBuffer() + ") AS the_geom_buffer_zone,"
-                    + "     string_agg(feature.ID_ZONE, ', ') as list_zones,"
-                    + "     ST_Multi(ST_Union("
-                    + "         feature.source_geometry"
-                    + "     )) AS the_geom_union,"
-                    + "     ST_Buffer(ST_Multi(ST_Union("
-                    + "         feature.source_geometry"
-                    + "     )), " + this.getDistanceBuffer() + ") AS the_geom_buffer_union"
-                    + "     FROM " + tablename +" AS feature"
-                    + "     JOIN " + surfaceTablename + " AS inond"
-                    + "     ON feature.ID_S_INOND LIKE inond.ID_S_INOND"
-                    + "     GROUP BY inond.ID_S_INOND, inond.source_geometry"
-                    + " ) query"
-                    + " WHERE NOT ST_Contains(query.the_geom_buffer_union, query.the_geom_zone)"
-                    + " OR NOT ST_Contains(query.the_geom_buffer_zone, query.the_geom_union)"
-                    + " ;";
-    
+            + "    query.list_zones"
+            + " FROM"
+            + " ("
+            + " SELECT inond.ID_S_INOND,"
+            + "     inond.source_geometry AS the_geom_zone,"
+            + "     ST_Buffer("
+            + "         inond.source_geometry"
+            + "     , " + this.getDistanceBuffer() + ") AS the_geom_buffer_zone,"
+            + "     string_agg(feature.ID_ZONE, ', ') as list_zones,"
+            + "     ST_Multi(ST_Union("
+            + "         feature.source_geometry"
+            + "     )) AS the_geom_union,"
+            + "     ST_Buffer(ST_Multi(ST_Union("
+            + "         feature.source_geometry"
+            + "     )), " + this.getDistanceBuffer() + ") AS the_geom_buffer_union"
+            + "     FROM " + tablename + " AS feature"
+            + "     JOIN " + surfaceTablename + " AS inond"
+            + "     ON feature.ID_S_INOND LIKE inond.ID_S_INOND"
+            + "     GROUP BY inond.ID_S_INOND, inond.source_geometry"
+            + " ) query"
+            + " WHERE NOT ST_Contains(query.the_geom_buffer_union, query.the_geom_zone)"
+            + " OR NOT ST_Contains(query.the_geom_buffer_zone, query.the_geom_union)"
+            + " ;";
+
         RowIterator errorIterator = database.query(query);
 
         int indexId = errorIterator.getColumn("ID_S_INOND");
@@ -183,24 +180,23 @@ public class GraphTopologyValidator implements Validator<Database> {
         errorIterator.close();
     }
 
-
     private void validNoIntersection(String tablename) throws SQLException, IOException {
         String query = " SELECT "
-                    + "   query.id_s_inond, query.id_zone, query.id_compare"
-                    + " FROM ("
-                    + "   SELECT "
-                    + "     f.id_s_inond, f.id_zone, c.id_zone as id_compare,"
-                    + "     ST_Buffer(f.source_geometry, -" + this.getDistanceBuffer() + ") as geom,"
-                    + "     c.source_geometry as geom_compare"
-                    + "   FROM " + tablename + " AS f"
-                    + "   LEFT JOIN " + tablename + " as c"
-                    + "   ON f.id_s_inond = c.id_s_inond"
-                    + "   WHERE f.id_zone > c.id_zone"
-                    + "   ORDER BY f.id_s_inond, f.id_zone"
-                    + " ) query"
-                    + " WHERE ST_Intersects(query.geom, query.geom_compare)"
-                    + " ;";
-    
+            + "   query.id_s_inond, query.id_zone, query.id_compare"
+            + " FROM ("
+            + "   SELECT "
+            + "     f.id_s_inond, f.id_zone, c.id_zone as id_compare,"
+            + "     ST_Buffer(f.source_geometry, -" + this.getDistanceBuffer() + ") as geom,"
+            + "     c.source_geometry as geom_compare"
+            + "   FROM " + tablename + " AS f"
+            + "   LEFT JOIN " + tablename + " as c"
+            + "   ON f.id_s_inond = c.id_s_inond"
+            + "   WHERE f.id_zone > c.id_zone"
+            + "   ORDER BY f.id_s_inond, f.id_zone"
+            + " ) query"
+            + " WHERE ST_Intersects(query.geom, query.geom_compare)"
+            + " ;";
+
         RowIterator errorIterator = database.query(query);
 
         int indexId = errorIterator.getColumn("ID_S_INOND");
@@ -217,7 +213,8 @@ public class GraphTopologyValidator implements Validator<Database> {
 
     private void report(String tablename, String surfaceId, String zones) {
         // TODO retablir la BBOX ??
-        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
+        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
+        // context.getCoordinateReferenceSystem()))
         context.report(
             context.createError(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
                 .setScope(ErrorScope.FEATURE)
@@ -232,7 +229,8 @@ public class GraphTopologyValidator implements Validator<Database> {
 
     private void reportIntersection(String tablename, String surfaceId, String zones) {
         // TODO retablir la BBOX ??
-        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(), context.getCoordinateReferenceSystem()))
+        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
+        // context.getCoordinateReferenceSystem()))
         context.report(
             context.createError(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS)
                 .setScope(ErrorScope.FEATURE)
@@ -254,7 +252,6 @@ public class GraphTopologyValidator implements Validator<Database> {
         }
         return "NULL";
     }
-
 
     private void toggleGistScanMode(Boolean mode) {
         String query = "SET enable_seqscan TO off;";
