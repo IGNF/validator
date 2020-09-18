@@ -30,8 +30,8 @@ public class CustomizeDatabaseValidation implements ValidatorListener {
          */
         log.info(MARKER, "Register custom database validator for DGPR plugin...");
         documentModel.addDatabaseValidator(new ScenarioValidator());
-        documentModel.addDatabaseValidator(new InclusionValidator());
         documentModel.addDatabaseValidator(new GraphTopologyValidator());
+        documentModel.addDatabaseValidator(new InclusionValidator());
     }
 
     @Override

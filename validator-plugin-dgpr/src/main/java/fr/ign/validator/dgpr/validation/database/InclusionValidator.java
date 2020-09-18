@@ -1,6 +1,10 @@
 package fr.ign.validator.dgpr.validation.database;
 
 import java.util.List;
+import java.io.IOException;
+import java.sql.SQLException;
+
+import org.postgresql.util.PSQLException;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +26,7 @@ import fr.ign.validator.validation.Validator;
 public class InclusionValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("InclusionDatabaseValidator");
+    public static final Marker MARKER = MarkerManager.getMarker("InclusionValidator");
 
     /**
      * Context
@@ -53,103 +57,180 @@ public class InclusionValidator implements Validator<Database> {
         this.database = database;
         try {
             runValidation();
+        } catch (PSQLException e) {
+            // org.postgresql.util.PSQLException:
+            // psql exception throw if a geometry is invalid
+            reportException(e.toString());
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            // en cas d'exception ou a la fin des traitement on retablie les parametres
+            // postgres par default
+            // SET enable_seqscan TO on;
+            toggleGistScanMode(true);
         }
     }
 
     private void runValidation() throws Exception {
-        // check feature(01Forcc_ct) -> union(03Mcc_ct)
-        validInclusion("01Forcc_ct", "03Mcc_ct");
-        // check feature(03Mcc_ct) -> union(04Faicc_ct)
-        validInclusion("03Mcc_ct", "04Faicc_ct");
-
-        // check feature(01Forcc_100) -> union(04Faicc_ct)
-        validInclusion("01Forcc_100", "03Mcc");
-
-        // check feature(moy) -> union(FAIBLE)
-        boolean moyIncludeFaibleError = validInclusion("02Moy", "04Fai");
-
-        // check feature(fort) -> union(MOY)
-        boolean fortIncludeMoyError = validInclusion("01For", "02Moy");
-
-        if (moyIncludeFaibleError || fortIncludeMoyError) {
-            // check feature(fort) -> union(FAIBLE)
-            validInclusion("01For", "04Fai");
+        if (!database.hasGeometrySupport()) {
+            log.info(MARKER, "skipped for non postgis database");
+            database.close();
+            return;
         }
+
+        // force geom gist usage
+        // SET enable_seqscan TO off;
+        toggleGistScanMode(false);
+
+        // TODO : creer les geometries dans un processus à part
+        // - pour la creation voir GraphTopologyValidator - exécuter avant cf.
+        // CustomizeDatabaseValidation
+        // creation des geometries dans le systeme sources
+        // createSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
+        // createSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
+        // createSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
+
+        // validation des surfaces de N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD
+        validInclusion();
+
+        // suppressions des geometries dans le systeme source
+        dropSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
+        dropSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
+        dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
     }
 
-    /**
-     * Detect that each feature of a given SCENARIO is include in the UNION of a
-     * given scenario
-     * 
-     * @param scenarioValueFort
-     * @param scenarioValueFaible
-     * @return
-     * @throws Exception
-     */
-    private boolean validInclusion(String scenarioValueFort, String scenarioValueFaible) throws Exception {
-        RowIterator unionIterator = database.query(
-            "SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-                + " WHERE scenario LIKE '" + scenarioValueFaible + "'"
-        );
-        Geometry union = DatabaseUtils.getUnion(unionIterator);
-        if (union == null) {
-            // list of invalid geometry for a unique message
-            reportInvalidGeometryError(scenarioValueFort, scenarioValueFaible);
-            return false;
+    private void validInclusion() throws SQLException, IOException {
+        String surfaceTablename = "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD";
+
+        double distanceBuffer = context.getDgprTolerance();
+
+        String query = " SELECT "
+            + "   sc_fort.id_s_inond as id_fort"
+            + " FROM "
+            + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
+            + "   JOIN " + surfaceTablename + " AS sc_faible"
+            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For'"
+            + "     AND sc_faible.scenario LIKE '02Moy'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy'"
+            + "     AND sc_faible.scenario LIKE '04Fai'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct'"
+            + "     AND sc_faible.scenario LIKE '03Mcc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct'"
+            + "     AND sc_faible.scenario LIKE '04Faicc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100'"
+            + "     AND sc_faible.scenario LIKE '03Mcc'"
+            + " WHERE ST_Contains("
+            + "         ST_Buffer(sc_faible.source_geometry, " + distanceBuffer + "),"
+            + "         sc_fort.source_geometry"
+            + "     );";
+
+        // TODO examiner la liste avec la liste complète des 'scenario fort'
+        // chaque 'scenario fort' doit être inclus dans <au moin> un 'scenario faible
+        // correpondant'
+        RowIterator inclusionIterator = database.query(query);
+
+        int inclusionId = inclusionIterator.getColumn("id_fort");
+
+        String candidate = "";
+        while (inclusionIterator.hasNext()) {
+            String[] row = inclusionIterator.next();
+            candidate += row[inclusionId] + ", ";
         }
+        inclusionIterator.close();
 
-        RowIterator featureIterator = database.query(
-            "SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-                + " WHERE scenario LIKE '" + scenarioValueFort + "'"
-        );
-        int wktIndex = featureIterator.getColumn("WKT");
-        int idIndex = featureIterator.getColumn("ID_S_INOND");
+        String querySurface = " SELECT "
+            + "   sc_fort.id_s_inond as id_fort,"
+            + "   sc_fort.scenario as scenario,"
+            + "   sc_faible.scenario as scenario_faible,"
+            + "   string_agg(sc_faible.id_s_inond, ', ') as list_id"
+            + " FROM "
+            + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
+            + "   JOIN " + surfaceTablename + " AS sc_faible"
+            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For' "
+            + "      AND sc_faible.scenario LIKE '02Moy'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy' "
+            + "      AND sc_faible.scenario LIKE '04Fai'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct' "
+            + "      AND sc_faible.scenario LIKE '03Mcc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct' "
+            + "      AND sc_faible.scenario LIKE '04Faicc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100' "
+            + "      AND sc_faible.scenario LIKE '03Mcc'"
+            + " GROUP BY sc_fort.id_s_inond, sc_fort.scenario, sc_faible.scenario"
+            + " ;";
 
-        boolean atLeastOneError = false;
-        while (featureIterator.hasNext()) {
-            String[] row = featureIterator.next();
-            String wkt = row[wktIndex];
+        // TODO examiner la liste avec la liste complète des 'scenario fort'
+        // chaque 'scenario fort' doit être inclus dans <au moin> un 'scenario faible
+        // correpondant'
+        RowIterator inondableIterator = database.query(querySurface);
 
-            Geometry geometry = format.read(wkt);
-            if (DatabaseUtils.isValid(geometry) && !union.contains(geometry)) {
-                context.report(
-                    context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
-                        .setScope(ErrorScope.FEATURE)
-                        .setFileModel("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD")
-                        .setFeatureId(row[idIndex])
-                        .setFeatureBbox(DatabaseUtils.getEnveloppe(wkt, context.getCoordinateReferenceSystem()))
-                        .setAttribute("WKT")
-                        .setMessageParam("ID_S_INOND", row[idIndex])
-                        .setMessageParam("SCENARIO_VALUE_FORT", scenarioValueFort)
-                        .setMessageParam("SCENARIO_VALUE_FAIBLE", scenarioValueFaible)
-                );
-                atLeastOneError = true;
+        int inondableId = inondableIterator.getColumn("id_fort");
+        int inondableFort = inondableIterator.getColumn("scenario");
+        int inondableFaible = inondableIterator.getColumn("scenario_faible");
+        int inondableListe = inondableIterator.getColumn("list_id");
+
+        while (inondableIterator.hasNext()) {
+            String[] row = inondableIterator.next();
+            // if list of candidate contains the current id
+            // then the surface is good to go
+            if (candidate.contains(row[inondableId])) {
+                continue;
             }
+            report(row[inondableId], row[inondableFort], row[inondableFaible], row[inondableListe]);
         }
-        featureIterator.close();
-
-        return atLeastOneError;
+        inondableIterator.close();
     }
 
-    private void reportInvalidGeometryError(String scenarioValueFort, String scenarioValueFaible) throws Exception {
-        RowIterator rowIterator = database.query(
-            "SELECT * FROM N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD "
-                + " WHERE scenario LIKE '" + scenarioValueFort + "' "
-                + " OR scenario LIKE '" + scenarioValueFaible + "' "
-        );
-
-        List<String> list = DatabaseUtils.getInvalidGeometries(rowIterator, "ID_S_INOND");
-
+    private void report(String id, String scenarioFort, String ScenarioFaible, String listFaible) {
+        // TODO retablir la BBOX ??
+        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
+        // context.getCoordinateReferenceSystem()))
         context.report(
-            context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_INVALID_GEOM)
-                .setScope(ErrorScope.HEADER)
+            context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
+                .setScope(ErrorScope.FEATURE)
                 .setFileModel("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD")
-                .setMessageParam("LIST_ID_S_INOND", ArrayUtils.toString(list.toArray()))
-                .setMessageParam("SCENARIO_VALUE_FORT", scenarioValueFort)
-                .setMessageParam("SCENARIO_VALUE_FAIBLE", scenarioValueFaible)
+                .setFeatureId(id)
+                .setAttribute("WKT")
+                .setMessageParam("ID_S_INOND", id)
+                .setMessageParam("SCENARIO_VALUE_FORT", scenarioFort)
+                .setMessageParam("SCENARIO_VALUE_FAIBLE", ScenarioFaible + " - " + listFaible)
         );
+    }
+
+    private void reportException(String errorMessage) {
+        // TODO retablir la BBOX ??
+        // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
+        // context.getCoordinateReferenceSystem()))
+        context.report(
+            context.createError(DgprErrorCodes.DGPR_ISO_HT_GEOM_ERROR)
+                .setScope(ErrorScope.FEATURE)
+                .setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
+                .setAttribute("WKT")
+                .setMessageParam("POSTGIS_ERROR", errorMessage)
+        );
+    }
+
+    private void dropSourceGeometry(String tablename) throws SQLException {
+        String[] queries = new String[] {
+            "ALTER TABLE " + tablename + "  DROP COLUMN IF EXISTS source_geometry;",
+        };
+
+        for (int i = 0; i < queries.length; i++) {
+            String query = queries[i];
+            RowIterator result = database.query(query);
+        }
+    }
+
+    private void toggleGistScanMode(Boolean mode) {
+        String query = "SET enable_seqscan TO off;";
+        if (mode) {
+            query = "SET enable_seqscan TO on;";
+        }
+        try {
+            RowIterator result = database.query(query);
+        } catch (Exception e) {
+            //
+        }
     }
 
 }

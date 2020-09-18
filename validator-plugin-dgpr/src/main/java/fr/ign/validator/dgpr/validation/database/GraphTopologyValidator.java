@@ -26,7 +26,7 @@ import fr.ign.validator.validation.Validator;
 public class GraphTopologyValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("TopologicalGraphValidator");
+    public static final Marker MARKER = MarkerManager.getMarker("GraphTopologyValidator");
 
     /**
      * Context
@@ -52,8 +52,8 @@ public class GraphTopologyValidator implements Validator<Database> {
         this.database = database;
         try {
             runValidation();
-            // org.postgresql.util.PSQLException:
         } catch (PSQLException e) {
+            // org.postgresql.util.PSQLException:
             // psql exception throw if a geometry is invalid
             reportException(e.toString());
         } catch (Exception e) {
@@ -112,16 +112,18 @@ public class GraphTopologyValidator implements Validator<Database> {
         validSurfaceTopology("N_PREFIXTRI_ISO_DEB_S_DDD");
         validNoIntersection("N_PREFIXTRI_ISO_DEB_S_DDD");
 
+        // TODO : supprimer les geometries dans un processus à part
+        // - pour la suppression voir InclusionValidator - exécuter après cf.
+        // CustomizeDatabaseValidation
         // suppressions des geometries dans le systeme source
-        dropSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
-        dropSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
-        dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
+        // dropSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
+        // dropSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
+        // dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
     }
 
     private void createSourceGeometry(String tablename) throws SQLException {
         String srid = this.getSrid();
         Double simplify = this.getDistanceSimplification();
-        // "ALTER TABLE " + tablename + " DROP COLUMN IF EXISTS source_geometry;",
         String[] queries = new String[] {
             "ALTER TABLE " + tablename + " ADD COLUMN source_geometry geometry(MultiPolygon, " + srid + ");",
             "CREATE INDEX " + tablename + "_geom_idx ON " + tablename + " USING GIST (source_geometry);",
@@ -131,17 +133,6 @@ public class GraphTopologyValidator implements Validator<Database> {
             "UPDATE " + tablename + " SET source_geometry = ST_Multi("
                 + " ST_CollectionExtract(ST_makevalid(source_geometry),3))"
                 + " WHERE NOT ST_isValid(source_geometry);"
-        };
-
-        for (int i = 0; i < queries.length; i++) {
-            String query = queries[i];
-            RowIterator result = database.query(query);
-        }
-    }
-
-    private void dropSourceGeometry(String tablename) throws SQLException {
-        String[] queries = new String[] {
-            "ALTER TABLE " + tablename + "  DROP COLUMN IF EXISTS source_geometry;",
         };
 
         for (int i = 0; i < queries.length; i++) {
