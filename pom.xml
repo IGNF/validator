@@ -43,7 +43,7 @@
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 		<sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
 		<!-- Testing -->
-		<junit.version>4.13</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<jsonassert.version>1.5.0</jsonassert.version>
 		<mockito.version>3.0.0</mockito.version>
 		<!-- Build and deploy -->
