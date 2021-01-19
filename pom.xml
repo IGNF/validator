@@ -336,7 +336,6 @@
 			<plugin>
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
-				<version>${maven-formatter-plugin.version}</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>
