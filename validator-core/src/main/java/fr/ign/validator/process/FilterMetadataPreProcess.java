@@ -54,7 +54,9 @@ public class FilterMetadataPreProcess implements ValidatorListener {
             for (DocumentFile documentFile : documentFiles) {
                 File xmlFile = documentFile.getPath();
                 if (!MetadataISO19115.isMetadataFile(xmlFile)) {
-                    log.info(MARKER, "Exclude file '{}' from validation (METADATA_IGNORED_FILE).", documentFile);
+                    log.info(
+                        MARKER, "Exclude file '{}' from validation (METADATA_IGNORED_FILE).", documentFile.getPath()
+                    );
                     context.report(
                         context.createError(CoreErrorCodes.METADATA_IGNORED_FILE)
                             .setMessageParam("FILEPATH", context.relativize(xmlFile))

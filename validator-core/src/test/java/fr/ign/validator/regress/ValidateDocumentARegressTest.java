@@ -76,7 +76,7 @@ public class ValidateDocumentARegressTest {
         {
             MetadataModel metadata = new MetadataModel();
             metadata.setName("metadata");
-            metadata.setPath("metadata");
+            metadata.setPath(".*");
             fileModels.add(metadata);
         }
         {
@@ -110,11 +110,18 @@ public class ValidateDocumentARegressTest {
 
         document.validate(context);
 
+        /* check errors */
         Assert.assertEquals(2, reportBuilder.getErrorsByLevel(ErrorLevel.ERROR).size());
-        Assert.assertEquals(0, reportBuilder.getErrorsByLevel(ErrorLevel.WARNING).size());
-
         Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPATIALRESOLUTIONS_EMPTY).size());
         Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_SPECIFICATIONS_EMPTY).size());
+
+        /* check warnings */
+        Assert.assertEquals(0, reportBuilder.getErrorsByLevel(ErrorLevel.WARNING).size());
+
+        /* check infos */
+        Assert.assertEquals(2, reportBuilder.getErrorsByLevel(ErrorLevel.INFO).size());
+        Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.METADATA_IGNORED_FILE).size());
+        Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.VALIDATOR_PROJECTION_INFO).size());
 
         File expectedNormalized = new File(context.getDataDirectory(), "COMMUNE.csv");
         Assert.assertTrue(expectedNormalized.exists());
