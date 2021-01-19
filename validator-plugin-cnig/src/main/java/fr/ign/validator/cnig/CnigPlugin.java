@@ -3,6 +3,7 @@ package fr.ign.validator.cnig;
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.CustomizeIdurbaPreProcess;
+import fr.ign.validator.cnig.process.DocUrbaComPostProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
 import fr.ign.validator.cnig.process.DocUrbaPostProcess;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
@@ -51,6 +52,11 @@ public class CnigPlugin implements Plugin {
             new DocUrbaPostProcess(),
             DocumentInfoExtractorPostProcess.class
         );
+        
+        /*
+         * extends DOC_URBA_COM validation
+         */
+        context.addListener(new DocUrbaComPostProcess());
 
         /*
          * extends attribute validation

@@ -1,13 +1,13 @@
 package fr.ign.validator.cnig.regress;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -112,34 +112,35 @@ public class CnigValidatorRegressTest {
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
-    private void assertEqualsJsonFile(File producedInfosCnigPath, File expectedInfosCnigPath) throws IOException,
-        JSONException {
-        String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
-
+    private void assertEqualsJsonFile(File producedInfosCnigPath, File expectedInfosCnigPath) throws Exception {
         /*
-         * Uncomment to update the regress test (then, review change, refresh eclipse
+         * switch to true (temporary) to update the regress test (then, review change, refresh eclipse
          * project and comment back)
          */
-        // {
-        // String originalPath =
-        // expectedInfosCnigPath.getAbsolutePath().replaceAll("/target/test-classes/",
-        // "/src/test/resources/");
-        // FileUtils.writeStringToFile(
-        // new File(originalPath),
-        // FileUtils.readFileToString(
-        // producedInfosCnigPath,
-        // StandardCharsets.UTF_8
-        // ),
-        // StandardCharsets.UTF_8
-        // );
-        // }
-
-        String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-        JSONAssert.assertEquals(
-            expected,
-            actual,
-            JSONCompareMode.STRICT
-        );
+        boolean updateDocumentInfos = false;
+        if (updateDocumentInfos){
+            String originalPath = expectedInfosCnigPath.getAbsolutePath().replaceAll(
+                "/target/test-classes/",
+                "/src/test/resources/"
+            );
+            FileUtils.writeStringToFile(
+                new File(originalPath),
+                FileUtils.readFileToString(
+                    producedInfosCnigPath,
+                    StandardCharsets.UTF_8
+                ),
+                StandardCharsets.UTF_8
+            );
+            fail("restart test switching updateDocumentInfos to false in assertEqualsJsonFile");
+        }else {
+            String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
+            String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
+            JSONAssert.assertEquals(
+                expected,
+                actual,
+                JSONCompareMode.STRICT
+            );
+        }
     }
 
     /**
@@ -328,6 +329,31 @@ public class CnigValidatorRegressTest {
 
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200011781_PLUi_20180101");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * Test CNIG_DOC_URBA_COM_UNEXPECTED_SIZE with 241800432_PLUi_20200128
+     */
+    @Test
+    public void test241800432_PLUi_20200128() throws Exception {
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLUi_2017");
+
+        File documentPath = CnigRegressHelper.getSampleDocument("241800432_PLUi_20200128", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+        Assert.assertEquals("241800432_PLUi_20200128", document.getDocumentName());
+
+        ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+
+        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE, report);
+
+        // TODO
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("241800432_PLUi_20200128");
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
