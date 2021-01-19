@@ -114,11 +114,11 @@ public class CnigValidatorRegressTest {
 
     private void assertEqualsJsonFile(File producedInfosCnigPath, File expectedInfosCnigPath) throws Exception {
         /*
-         * switch to true (temporary) to update the regress test (then, review change, refresh eclipse
-         * project and comment back)
+         * switch to true (temporary) to update the regress test (then, review change,
+         * refresh eclipse project and comment back)
          */
         boolean updateDocumentInfos = false;
-        if (updateDocumentInfos){
+        if (updateDocumentInfos) {
             String originalPath = expectedInfosCnigPath.getAbsolutePath().replaceAll(
                 "/target/test-classes/",
                 "/src/test/resources/"
@@ -132,7 +132,7 @@ public class CnigValidatorRegressTest {
                 StandardCharsets.UTF_8
             );
             fail("restart test switching updateDocumentInfos to false in assertEqualsJsonFile");
-        }else {
+        } else {
             String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
             String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
             JSONAssert.assertEquals(

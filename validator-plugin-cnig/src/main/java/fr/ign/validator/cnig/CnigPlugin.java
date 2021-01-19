@@ -52,7 +52,7 @@ public class CnigPlugin implements Plugin {
             new DocUrbaPostProcess(),
             DocumentInfoExtractorPostProcess.class
         );
-        
+
         /*
          * extends DOC_URBA_COM validation
          */
