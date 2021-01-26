@@ -1,6 +1,6 @@
 # Validator
 
-[![Build Status](https://travis-ci.org/IGNF/validator.svg?branch=master)](https://travis-ci.org/IGNF/validator)
+[![Build Status](https://api.travis-ci.com/IGNF/validator.svg?branch=master)](https://travis-ci.com/github/IGNF/validator)
 
 ## Description
 
