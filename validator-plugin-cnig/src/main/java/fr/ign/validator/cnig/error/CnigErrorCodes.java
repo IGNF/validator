@@ -31,6 +31,12 @@ public class CnigErrorCodes {
      * DOC_URBA
      */
     public static final ErrorCode CNIG_IDURBA_MULTIPLE_FOUND = ErrorCode.valueOf("CNIG_IDURBA_MULTIPLE_FOUND");
+    /**
+     * DU/PLUi- Reported when less than one row are found in DOC_URBA_COM
+     */
+    public static final ErrorCode CNIG_DOC_URBA_COM_UNEXPECTED_SIZE = ErrorCode.valueOf(
+        "CNIG_DOC_URBA_COM_UNEXPECTED_SIZE"
+    );
 
     public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND = ErrorCode.valueOf(
         "CNIG_METADATA_SPECIFICATION_NOT_FOUND"
