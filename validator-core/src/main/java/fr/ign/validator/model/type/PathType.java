@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.PathExistsValidator;
+import fr.ign.validator.validation.attribute.MaxLengthValidator;
 
 /**
  * 
@@ -21,6 +22,7 @@ public class PathType extends AttributeType<File> {
 
     public PathType() {
         super(File.class);
+        addValidator(new MaxLengthValidator<File>());
         addValidator(new PathExistsValidator());
     }
 

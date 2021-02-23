@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.StringEnumValuesValidator;
 import fr.ign.validator.validation.attribute.StringPatternValidator;
-import fr.ign.validator.validation.attribute.StringMaxLengthValidator;
+import fr.ign.validator.validation.attribute.MaxLengthValidator;
 
 /**
  * Represents a character string
@@ -20,7 +20,7 @@ public class StringType extends AttributeType<String> {
 
     public StringType() {
         super(String.class);
-        addValidator(new StringMaxLengthValidator());
+        addValidator(new MaxLengthValidator<String>());
         addValidator(new StringPatternValidator());
         addValidator(new StringEnumValuesValidator());
     }

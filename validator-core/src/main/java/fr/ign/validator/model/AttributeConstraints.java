@@ -53,7 +53,7 @@ public class AttributeConstraints {
      * 
      * @since 4.0 previously "size"
      * 
-     * @see fr.ign.validator.validation.attribute.StringMaxLengthValidator
+     * @see fr.ign.validator.validation.attribute.MaxLengthValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_EXCEEDED
      */
     private Integer maxLength;
