@@ -13,11 +13,11 @@ import fr.ign.validator.validation.Validator;
  * @author MBorne
  *
  */
-public class StringMaxLengthValidator implements Validator<Attribute<String>> {
+public class MaxLengthValidator<T> implements Validator<Attribute<T>> {
 
     @Override
-    public void validate(Context context, Attribute<String> attribute) {
-        String value = attribute.getBindedValue();
+    public void validate(Context context, Attribute<T> attribute) {
+        T value = attribute.getBindedValue();
 
         if (value == null) {
             return;
@@ -29,10 +29,11 @@ public class StringMaxLengthValidator implements Validator<Attribute<String>> {
             return;
         }
 
-        if (value.length() > maxLength) {
+        int length = value.toString().length();
+        if (length > maxLength) {
             context.report(
                 context.createError(CoreErrorCodes.ATTRIBUTE_SIZE_EXCEEDED)
-                    .setMessageParam("VALUE_LENGTH", String.valueOf(value.length()))
+                    .setMessageParam("VALUE_LENGTH", String.valueOf(length))
                     .setMessageParam("EXPECTED_LENGTH", maxLength.toString())
             );
         }
