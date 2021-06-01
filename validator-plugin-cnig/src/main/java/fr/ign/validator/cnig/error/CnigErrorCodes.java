@@ -38,6 +38,13 @@ public class CnigErrorCodes {
         "CNIG_DOC_URBA_COM_UNEXPECTED_SIZE"
     );
 
+    /**
+     * DU/PLUi- Reported when number of rows in PERIMETRE_SCOT is not 1
+     */
+    public static final ErrorCode CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE = ErrorCode.valueOf(
+        "CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE"
+    );
+
     public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND = ErrorCode.valueOf(
         "CNIG_METADATA_SPECIFICATION_NOT_FOUND"
     );

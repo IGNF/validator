@@ -6,6 +6,7 @@ import fr.ign.validator.cnig.process.CustomizeIdurbaPreProcess;
 import fr.ign.validator.cnig.process.DocUrbaComPostProcess;
 import fr.ign.validator.cnig.process.ReferenceActeSupPostProcess;
 import fr.ign.validator.cnig.process.DocUrbaPostProcess;
+import fr.ign.validator.cnig.process.PerimetreScotPostProcess;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataKeywordsValidator;
@@ -57,6 +58,11 @@ public class CnigPlugin implements Plugin {
          * extends DOC_URBA_COM validation
          */
         context.addListener(new DocUrbaComPostProcess());
+
+        /*
+         * extends PERIMETRE_SCOT validation
+         */
+        context.addListener(new PerimetreScotPostProcess());
 
         /*
          * extends attribute validation

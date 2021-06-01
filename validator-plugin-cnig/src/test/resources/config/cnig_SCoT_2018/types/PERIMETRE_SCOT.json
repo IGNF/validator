@@ -1,0 +1,32 @@
+{
+    "id": "a4f9d209294be8a98bb1da3512019085",
+    "name": "PERIMETRE_SCOT",
+    "title": "PERIMETRE_SCOT",
+    "description": "Table géographique portant la géométrie du périmètre du SCOT approuvé",
+    "columns": [
+        {
+            "id": "16c703a7151c97451c514e3355dadda2",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du SCOT (cf table DOC_URBA)",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[0-9]{9}_SCOT_[0-9]{8}(_[a-zA-Z])?",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "f71549633ecf4e345b9c8118aa832ec6",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

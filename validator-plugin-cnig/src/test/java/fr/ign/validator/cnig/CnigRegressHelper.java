@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
@@ -30,11 +31,30 @@ public class CnigRegressHelper {
      * @throws Exception
      */
     public static DocumentModel getDocumentModel(String documentModelName) {
+        try {
+            return getDocumentModelXML(documentModelName);
+        } catch (Exception e) {
+            return getDocumentModelJSON(documentModelName);
+        }
+    }
+
+    private static DocumentModel getDocumentModelXML(String documentModelName) {
         File documentModelPath = ResourceHelper.getResourceFile(
             CnigRegressHelper.class,
             "/config/" + documentModelName + "/files.xml"
         );
         ModelReader loader = new XmlModelReader();
+        DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
+        documentModel.setName(documentModelName);
+        return documentModel;
+    }
+
+    private static DocumentModel getDocumentModelJSON(String documentModelName) {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            CnigRegressHelper.class,
+            "/config/" + documentModelName + "/files.json"
+        );
+        ModelReader loader = new JsonModelReader();
         DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
         documentModel.setName(documentModelName);
         return documentModel;
