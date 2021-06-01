@@ -1,0 +1,209 @@
+{
+  "name" : "200078244_SCOT_20180218",
+  "documentModel" : {
+    "name" : "cnig_SCoT_2018"
+  },
+  "files" : [ {
+    "type" : "table",
+    "modelName" : "DOC_URBA",
+    "name" : "200078244_DOC_URBA_20180218.dbf",
+    "path" : "200078244_DOC_URBA_20180218.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "DOC_URBA_COM",
+    "name" : "200078244_DOC_URBA_COM_20180218.dbf",
+    "path" : "200078244_DOC_URBA_COM_20180218.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 146
+  }, {
+    "type" : "directory",
+    "modelName" : "Donnees_geographiques",
+    "name" : "Donnees_geographiques",
+    "path" : "Donnees_geographiques"
+  }, {
+    "type" : "table",
+    "modelName" : "PERIMETRE_SCOT",
+    "name" : "200078244_PERIMETRE_SCOT_20180218.dbf",
+    "path" : "Donnees_geographiques/200078244_PERIMETRE_SCOT_20180218.dbf",
+    "boundingBox" : [ 2.4591245, 49.6799345, 3.2027693, 50.0784749 ],
+    "totalFeatures" : 2
+  }, {
+    "type" : "directory",
+    "modelName" : "Pieces_ecrites",
+    "name" : "Pieces_ecrites",
+    "path" : "Pieces_ecrites"
+  }, {
+    "type" : "directory",
+    "modelName" : "0_Procedure",
+    "name" : "0_Procedure",
+    "path" : "Pieces_ecrites/0_Procedure"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PROCEDURE",
+    "name" : "200078244_procedure_20180218.pdf",
+    "path" : "Pieces_ecrites/0_Procedure/200078244_procedure_20180218.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "1_SCOT",
+    "name" : "1_SCOT",
+    "path" : "Pieces_ecrites/1_SCOT"
+  }, {
+    "type" : "pdf",
+    "modelName" : "DOO",
+    "name" : "200078244_doo_20180218.pdf",
+    "path" : "Pieces_ecrites/1_SCOT/200078244_doo_20180218.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "PADD",
+    "name" : "200078244_padd_20180218.pdf",
+    "path" : "Pieces_ecrites/1_SCOT/200078244_padd_20180218.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "RAPPORT",
+    "name" : "200078244_rapport_1_20180218.pdf",
+    "path" : "Pieces_ecrites/1_SCOT/200078244_rapport_1_20180218.pdf"
+  }, {
+    "type" : "pdf",
+    "modelName" : "RAPPORT",
+    "name" : "200078244_rapport_2_20180218.pdf",
+    "path" : "Pieces_ecrites/1_SCOT/200078244_rapport_2_20180218.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "2_Autres_documents",
+    "name" : "2_Autres_documents",
+    "path" : "Pieces_ecrites/2_Autres_documents"
+  }, {
+    "type" : "pdf",
+    "modelName" : "AUTRE_DOCUMENT",
+    "name" : "empty.pdf",
+    "path" : "Pieces_ecrites/2_Autres_documents/empty.pdf"
+  }, {
+    "type" : "metadata",
+    "modelName" : "METADONNEES",
+    "name" : "fr-200078244-SCOT20180218.xml",
+    "path" : "fr-200078244-SCOT20180218.xml"
+  } ],
+  "documentExtent" : [ 2.4591245, 49.6799345, 3.2027693, 50.0784749 ],
+  "tags" : {
+    "idurba" : "200078244_SCOT_20180218",
+    "typeref" : "01"
+  },
+  "metadata" : {
+    "fileIdentifier" : "fr-200078244-scot20180218",
+    "title" : "Schéma de cohérence territoriale du PAYS DU SANTERRE HAUTE SOMME",
+    "abstract" : "Schéma de cohérence territoriale approuvé. Ce lot est un document d’urbanisme et de planification stratégique du PAYS DU SANTERRE HAUTE SOMME. Ce lot est numérisé conformément aux prescriptions nationales du CNIG. Le périmètre du SCOT est le seul objet géographique présent dans cette série de données. Les objets représentés sur les plans du document d’orientation et d’objectifs (DOO) n'ont pas été numérisés en tant qu'objets géographiques mais le DOO est bien consultable en tant que fichier pdf.",
+    "type" : "dataset",
+    "locators" : [ {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/39wtxmgtn23okfbbs1al2lz3/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
+      "protocol" : "OGC Web Map Service",
+      "protocolUrl" : "http://www.opengis.net/def/serviceType/ogc/wms",
+      "applicationProfile" : "INSPIRE View Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/view",
+      "description" : "Lien vers le service WMS du Géoportail de l'urbanisme"
+    }, {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/39wtxmgtn23okfbbs1al2lz3/wfs/v?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
+      "protocol" : "OGC Web Feature Service",
+      "protocolUrl" : "http://www.opengis.net/def/serviceType/ogc/wfs",
+      "applicationProfile" : "INSPIRE Download Network Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/download",
+      "description" : "Lien vers le service WFS du Géoportail de l'urbanisme"
+    }, {
+      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
+      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
+      "protocol" : "ATOM Syndication Format",
+      "protocolUrl" : "http://tools.ietf.org/html/rfc5023",
+      "applicationProfile" : "INSPIRE Download Network Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/view",
+      "description" : "Lien vers le service ATOM du Géoportail de l'urbanisme"
+    } ],
+    "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/200078244_SCoT_20180218" ],
+    "language" : "fre",
+    "topicCategory" : "planningCadastre",
+    "keywords" : [ {
+      "keywords" : [ "Usage des sols" ],
+      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+      "thesaurusDate" : "2008-06-01"
+    }, {
+      "keywords" : [ "200078244" ],
+      "thesaurusName" : "Répertoire SIRENE",
+      "thesaurusDate" : "2018-02-18"
+    }, {
+      "keywords" : [ "SCOT" ],
+      "thesaurusName" : "Types de documents d’urbanisme",
+      "thesaurusDate" : "2018-02-18"
+    } ],
+    "referenceSystemIdentifier" : {
+      "code" : "EPSG:2154",
+      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
+    },
+    "dateOfPublication" : null,
+    "dateOfLastRevision" : "2018-02-18",
+    "dateOfCreation" : null,
+    "characterSet" : "utf8",
+    "spatialRepresentationType" : "vector",
+    "lineage" : "Généalogie non renseignée",
+    "spatialResolutions" : [ {
+      "denominator" : "5000"
+    } ],
+    "specifications" : [ {
+      "title" : "CNIG SCoT v2018",
+      "date" : "2018-06-29",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
+      "date" : "2014-04-07",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
+      "date" : "2010-12-08",
+      "dateType" : "publication",
+      "degree" : "true"
+    } ],
+    "contact" : {
+      "organisationName" : "PETR Coeur des Hauts de France",
+      "electronicMailAddress" : "contact@coeurdeshautsdefrance.fr",
+      "role" : "owner",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
+    },
+    "metadataContact" : {
+      "organisationName" : "PETR Coeur des Hauts de France",
+      "electronicMailAddress" : "contact@coeurdeshautsdefrance.fr",
+      "role" : "pointOfContact",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
+    },
+    "metadataDate" : "2020-07-27T16:40:55+02:00",
+    "metadataLanguage" : "fre",
+    "extents" : [ {
+      "boundingBox" : [ 2.5421143346143005, 49.560772786851004, 3.2989504024994, 50.14710347439001 ]
+    } ],
+    "constraints" : [ {
+      "type" : "MD_LegalConstraints",
+      "useLimitations" : [ "Aucune condition ne s'applique", "Licence Ouverte 2.0" ],
+      "accessConstraints" : [ "otherRestrictions" ],
+      "useConstraints" : [ "license" ],
+      "otherConstraints" : [ "Pas de restriction d’accès public" ]
+    } ],
+    "distributionFormats" : [ {
+      "name" : "SHP",
+      "version" : "1.0"
+    } ]
+  }
+}

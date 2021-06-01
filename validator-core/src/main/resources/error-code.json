@@ -502,6 +502,12 @@
         "documentation": "Dans le cas d'un document de type PLUi, la table DOC_URBA_COM doit contenir la liste des communes sur lesquelles le document s'applique. Un PLUi couvrant au moins deux communes logiquement, le validateur lève un avertissement s'il y a moins de 2 lignes dans cette table." 
     },
     {
+        "name": "CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE",
+        "level": "ERROR",
+        "message": "La table PERIMETRE_SCOT doit contenir une seule ligne.",
+        "documentation": "Dans le cas d'un SCOT, la table PERIMETRE_SCOT doit contenir une seule ligne." 
+    },
+    {
         "name": "NO_SPATIAL_DATA",
         "level": "ERROR",
         "message": "Aucune donnée géographique trouvée dans le document.",

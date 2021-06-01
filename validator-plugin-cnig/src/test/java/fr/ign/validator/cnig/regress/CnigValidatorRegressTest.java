@@ -357,4 +357,28 @@ public class CnigValidatorRegressTest {
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
+    /**
+     * Test 200078244_SCOT_20180218 with CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE error
+     */
+    @Test
+    public void test200078244_SCOT_20180218() throws Exception {
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SCoT_2018");
+
+        File documentPath = CnigRegressHelper.getSampleDocument("200078244_SCOT_20180218", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+        Assert.assertEquals("200078244_SCOT_20180218", document.getDocumentName());
+
+        ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE, report);
+
+        ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE, report);
+
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200078244_SCOT_20180218");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
 }

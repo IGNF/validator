@@ -1,0 +1,219 @@
+{
+    "id": "67fab1004f7688afc5427edc19d845b5",
+    "name": "DOC_URBA",
+    "title": "DOC_URBA",
+    "description": "Table décrivant le SCOT",
+    "columns": [
+        {
+            "id": "01024af971c7eea829eabb9070f2cb0f",
+            "name": "DATEFIN",
+            "title": "DATEFIN",
+            "description": "Date de fin de validité du SCOT. Si le SCOT est remplacé, cette date correspond à la date d'approbation du SCOT qui le remplace.Si le SCOT est annulé, cette date correspond à la date d'annulation.",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "1298e6bb3c6896478c543053cc1f51f3",
+            "name": "DOO",
+            "title": "DOO",
+            "description": "om du fichier contenant le document d’orientation et d’objectifs",
+            "type": "Filename",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "1a159ec13e68105b2fce302745c44774",
+            "name": "RAPPORT",
+            "title": "RAPPORT",
+            "description": "Nom du fichier contenant le rapport de présentation",
+            "type": "Filename",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "1ad73c143b8b94026a6f0fcf91c93459",
+            "name": "SIREN",
+            "title": "SIREN",
+            "description": "Code SIREN de l'organisme responsable et porteur du SCOT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[0-9]{9}",
+                "maxLength": 9
+            }
+        },
+        {
+            "id": "1dce46eda511ad031cc637a5b89da25c",
+            "name": "TYPEPROC",
+            "title": "TYPEPROC",
+            "description": "Nature de la procédure administrative engagée pour aboutir au document opposable",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "03",
+                    "04",
+                    "05",
+                    "06"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "2c184fb5294a5d21769ff74a1f456e53",
+            "name": "URLPE",
+            "title": "URLPE",
+            "description": "Lien d’accès à l’archive zip comprenant l’ensemble des pièces écrites",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "40e75667d644c24d3a4ccba5c4190a99",
+            "name": "URLPADD",
+            "title": "URLPADD",
+            "description": "Lien d'accès au fichier du PADD",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "55f872ce1fe5f822401717226532b206",
+            "name": "TYPEDOC",
+            "title": "TYPEDOC",
+            "description": "Type de document d’urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "SCOT"
+                ],
+                "maxLength": 4
+            }
+        },
+        {
+            "id": "765c6421c876385835d2d05d7e89eb8c",
+            "name": "ETAT",
+            "title": "ETAT",
+            "description": "État du SCOT au regard de sa procédure",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "03",
+                    "04",
+                    "05",
+                    "06",
+                    "07",
+                    "09"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "8c3855bb2ebb1ed6c1c3fff423c1e07a",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du SCOTConstitue une clé externe dans les autres tables du lot de données",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[0-9]{9}_SCOT_[0-9]{8}(_[a-zA-Z])?",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "924337a795422c60fc127070da2985b8",
+            "name": "URLDOO",
+            "title": "URLDOO",
+            "description": "Lien d'accès au fichier du document d’orientation et d’objectifs",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "941e9f8bdb763953c5bcfa9d88eebb93",
+            "name": "DATAPPRO",
+            "title": "DATAPPRO",
+            "description": "Date d'approbation du SCOT par délibération de l'EPCI après enquête publique",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "aa2ebceab1f7bea4173087ac705f93db",
+            "name": "NOM",
+            "title": "NOM",
+            "description": "Dénomination du SCOT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "b37e660494679587c12e4773695f09a3",
+            "name": "SITEWEB",
+            "title": "SITEWEB",
+            "description": "Page web du service de consultation du SCOT offert par l’autorité compétente",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "e1eb68941914510c6a52b832f58f7fa2",
+            "name": "URLRAPPORT",
+            "title": "URLRAPPORT",
+            "description": "Lien d'accès au fichier du rapport de présentation sous forme numérique",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "ef58f1dbcece31e2fac509b597c0a211",
+            "name": "PADD",
+            "title": "PADD",
+            "description": "Nom du fichier contenant le projet d'aménagement et de développement durables",
+            "type": "Filename",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        }
+    ]
+}

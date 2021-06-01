@@ -16,12 +16,11 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.model.DocumentModel;
 
 /**
- * Post-process DOC_URBA_COM table ensuring that it contains at least 2 rows for
- * PLUi
+ * Post-process PERIMETRE_SCOT table ensuring that it contains 1 row for SCOT
  */
-public class DocUrbaComPostProcess implements ValidatorListener {
+public class PerimetreScotPostProcess implements ValidatorListener {
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("DocUrbaComPostProcess");
+    public static final Marker MARKER = MarkerManager.getMarker("PerimetreScotPostProcess");
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
@@ -37,23 +36,23 @@ public class DocUrbaComPostProcess implements ValidatorListener {
     public void afterValidate(Context context, Document document) throws Exception {
         DocumentModel documentModel = context.getDocumentModel();
         String documentType = DocumentModelName.getDocumentType(documentModel.getName());
-        if (!documentType.equalsIgnoreCase("PLUi")) {
-            log.info(MARKER, "Skipped - document is not a PLUi");
+        if (!documentType.equalsIgnoreCase("SCOT")) {
+            log.info(MARKER, "Skipped - document is not a SCOT");
             return;
         }
 
-        File docUrbaComFile = new File(context.getDataDirectory(), "DOC_URBA_COM.csv");
-        if (!docUrbaComFile.exists()) {
-            log.warn(MARKER, "Skipped - DOC_URBA_COM not found");
+        File perimetreScotFile = new File(context.getDataDirectory(), "PERIMETRE_SCOT.csv");
+        if (!perimetreScotFile.exists()) {
+            log.warn(MARKER, "Skipped - PERIMETRE_SCOT not found");
             return;
         }
-        int numRows = CSV.countRows(docUrbaComFile);
-        log.info(MARKER, "Found {} row(s) in DOC_URBA_COM", numRows);
-        if (numRows < 2) {
-            log.info(MARKER, "Add CNIG_DOC_URBA_COM_UNEXPECTED_SIZE to report");
+        int numRows = CSV.countRows(perimetreScotFile);
+        log.info(MARKER, "Found {} row(s) in PERIMETRE_SCOT", numRows);
+        if (numRows != 1) {
+            log.info(MARKER, "Add CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE to report");
             context.report(
                 context.createError(
-                    CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE
+                    CnigErrorCodes.CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE
                 )
             );
         }
