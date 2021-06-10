@@ -1,10 +1,9 @@
-package fr.ign.validator.cnig.process.internal;
+package fr.ign.validator.cnig.sup;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
