@@ -1,9 +1,15 @@
 package fr.ign.validator.cnig.regress;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +32,7 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.tools.TableReader;
 
 /**
  * 
@@ -280,9 +287,85 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 
+        /* check document-info.json */
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("172014607_AC1_2A_20180130");
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+
+        /* check CSV files */
+        File dataDirectory = context.getDataDirectory();
+        ac1CheckNormalizedFiles(dataDirectory);
+    }
+
+    /**
+     * Controls normalized files for SUP
+     * 
+     * @param dataDirectory
+     * @throws IOException
+     */
+    private void ac1CheckNormalizedFiles(File dataDirectory) throws IOException {
+        List<File> csvFiles = new ArrayList<File>(FileUtils.listFiles(dataDirectory, new String[] {
+            "csv"
+        }, false));
+        assertEquals(8, csvFiles.size());
+        Collections.sort(csvFiles);
+        int index = 0;
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("AC1_ASSIETTE_SUP_S.csv", file.getName());
+            TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
+            int indexFichier = reader.findColumn("fichier");
+            int indexNomSupLitt = reader.findColumn("nomsuplitt");
+            assertTrue("Column 'fichier' not found!", indexFichier >= 0);
+            assertTrue("Column 'nomsuplitt' not found!", indexNomSupLitt >= 0);
+            /* check first value */
+            String[] row = reader.next();
+            assertEquals("AC1_EglisedeSantaMariaFiganiella_19270829_act.pdf", row[indexFichier]);
+            assertEquals("Eglise de Santa Maria Figaniella", row[indexNomSupLitt]);
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("AC1_GENERATEUR_SUP_L.csv", file.getName());
+            TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
+            int indexFichier = reader.findColumn("fichier");
+            int indexNomSupLitt = reader.findColumn("nomsuplitt");
+            assertTrue("Column 'fichier' not found!", indexFichier >= 0);
+            assertTrue("Column 'nomsuplitt' not found!", indexNomSupLitt >= 0);
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("AC1_GENERATEUR_SUP_P.csv", file.getName());
+            TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
+            int indexFichier = reader.findColumn("fichier");
+            int indexNomSupLitt = reader.findColumn("nomsuplitt");
+            assertTrue("Column 'fichier' not found!", indexFichier >= 0);
+            assertTrue("Column 'nomsuplitt' not found!", indexNomSupLitt >= 0);
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("AC1_GENERATEUR_SUP_S.csv", file.getName());
+            TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
+            int indexFichier = reader.findColumn("fichier");
+            int indexNomSupLitt = reader.findColumn("nomsuplitt");
+            assertTrue("Column 'fichier' not found!", indexFichier >= 0);
+            assertTrue("Column 'nomsuplitt' not found!", indexNomSupLitt >= 0);
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("ACTE_SUP.csv", file.getName());
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("GESTIONNAIRE_SUP.csv", file.getName());
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("SERVITUDE.csv", file.getName());
+        }
+        {
+            File file = csvFiles.get(index++);
+            assertEquals("SERVITUDE_ACTE_SUP.csv", file.getName());
+        }
     }
 
     /**
