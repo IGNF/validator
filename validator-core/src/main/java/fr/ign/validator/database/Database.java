@@ -25,7 +25,6 @@ import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.file.TableFile;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
-import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.TableReader;
@@ -327,11 +326,16 @@ public class Database implements Closeable {
              * create indexes according to constraints
              */
             for (AttributeType<?> attributeType : attributes) {
-                // TODO create index for referenced values
-                if (!attributeType.getConstraints().isUnique()) {
-                    continue;
+                // create index for unique values
+                if (attributeType.getConstraints().isUnique()) {
+                    createIndex(file.getName(), attributeType.getName());
                 }
-                createIndex(file.getName(), attributeType.getName());
+                // create index for referenced values
+                if (!StringUtils.isEmpty(attributeType.getConstraints().getReference())) {
+                    String targetTableName = attributeType.getTableReference();
+                    String targetColumnName = attributeType.getAttributeReference();
+                    createIndex(targetTableName, targetColumnName);
+                }
             }
         }
     }
@@ -344,7 +348,7 @@ public class Database implements Closeable {
      */
     public void createIndex(String tableName, String columnName) throws SQLException {
         String indexName = "idx_" + tableName + "_" + columnName;
-        String sql = "CREATE INDEX " + indexName + " ON " + tableName + " (" + columnName + ")";
+        String sql = "CREATE INDEX IF NOT EXISTS " + indexName + " ON " + tableName + " (" + columnName + ")";
 
         update(sql);
         connection.commit();

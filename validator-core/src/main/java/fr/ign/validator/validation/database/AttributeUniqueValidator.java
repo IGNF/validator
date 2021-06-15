@@ -13,6 +13,8 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.database.internal.DuplicatedValuesFinder;
+import fr.ign.validator.database.internal.DuplicatedValuesFinder.DuplicatedValue;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
@@ -31,25 +33,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("AttributeUniqueValidator");
 
-    /**
-     * hardcoded limit to avoid huge report on massively invalid table.
-     */
-    private static final int LIMIT_PER_ATTRIBUTE = 10;
-
-    /**
-     * A duplicated value with the number of occurence
-     * 
-     * @author MBorne
-     */
-    private class DuplicatedValue {
-        public String value;
-        public int count;
-
-        public DuplicatedValue(String value, int count) {
-            this.value = value;
-            this.count = count;
-        }
-    }
+    private DuplicatedValuesFinder duplicatedValuesFinder = new DuplicatedValuesFinder();
 
     /**
      * Check if there every ID is unique in a given table
@@ -94,7 +78,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
                     fileModel.getName(),
                     attribute.getName()
                 );
-                List<DuplicatedValue> duplicatedValues = findDuplicatedValues(
+                List<DuplicatedValue> duplicatedValues = duplicatedValuesFinder.findDuplicatedValues(
                     database,
                     fileModel.getName(),
                     attribute.getName()
@@ -105,10 +89,11 @@ public class AttributeUniqueValidator implements Validator<Database> {
                  */
                 log.info(
                     MARKER,
-                    "Table {}.{} : Found {} duplicated value(s) (max : 10)",
+                    "Table {}.{} : Found {} duplicated value(s) (max : {})",
                     fileModel.getName(),
                     attribute.getName(),
-                    duplicatedValues.size()
+                    duplicatedValues.size(),
+                    DuplicatedValuesFinder.LIMIT_PER_ATTRIBUTE
                 );
                 for (DuplicatedValue duplicatedValue : duplicatedValues) {
                     context.report(
@@ -130,40 +115,6 @@ public class AttributeUniqueValidator implements Validator<Database> {
             }
             context.endModel(fileModel);
         }
-    }
-
-    /**
-     * Find duplicated values for a given {tableName}.{columnName}
-     * 
-     * @param database
-     * @param tableName
-     * @param columnName
-     * @return values associated to the number of occurence
-     * @throws SQLException
-     * @throws IOException
-     */
-    private List<DuplicatedValue> findDuplicatedValues(Database database, String tableName, String columnName)
-        throws SQLException, IOException {
-        RowIterator it = database.query(
-            "SELECT " + columnName + " AS id, count(*) AS count"
-                + " FROM " + tableName
-                + " GROUP BY " + columnName
-                + " HAVING count(*) > 1 ORDER BY count(*) DESC"
-                + " LIMIT " + LIMIT_PER_ATTRIBUTE
-        );
-
-        List<DuplicatedValue> result = new ArrayList<>();
-        while (it.hasNext()) {
-            String[] row = it.next();
-            result.add(
-                new DuplicatedValue(
-                    row[0],
-                    Integer.parseInt(row[1])
-                )
-            );
-        }
-        it.close();
-        return result;
     }
 
 }
