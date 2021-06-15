@@ -29,6 +29,7 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -283,7 +284,65 @@ public class CnigValidatorRegressTest {
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
         Assert.assertEquals("172014607_AC1_2A_20180130", document.getDocumentName());
-        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+
+        /*
+         * check errors : {CNIG_SUP_IDASS_NOT_UNIQUE=2, CNIG_SUP_IDGEN_NOT_UNIQUE=2,
+         * CNIG_SUP_IDGEN_NOT_FOUND=1}
+         */
+        ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(2, CnigErrorCodes.CNIG_SUP_IDASS_NOT_UNIQUE, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_IDASS_NOT_UNIQUE);
+            int index = 0;
+            {
+                ValidatorError error = errors.get(index++);
+                assertEquals(
+                    "IDASS='AC1-172014607-00099077-153' n'est pas unique dans les tables ASSIETTE_SUP_P/L/S",
+                    error.getMessage()
+                );
+            }
+            {
+                ValidatorError error = errors.get(index++);
+                assertEquals(
+                    "IDASS='AC1-172014607-00099080-191' n'est pas unique dans les tables ASSIETTE_SUP_P/L/S",
+                    error.getMessage()
+                );
+            }
+        }
+        ReportAssert.assertCount(2, CnigErrorCodes.CNIG_SUP_IDGEN_NOT_UNIQUE, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_IDGEN_NOT_UNIQUE);
+            int index = 0;
+            {
+                ValidatorError error = errors.get(index++);
+                assertEquals(
+                    "IDGEN='AC1-172014607-00099077' n'est pas unique dans les tables GENERATEUR_SUP_P/L/S",
+                    error.getMessage()
+                );
+            }
+            {
+                ValidatorError error = errors.get(index++);
+                assertEquals(
+                    "IDGEN='AC1-172014607-00099080' n'est pas unique dans les tables GENERATEUR_SUP_P/L/S",
+                    error.getMessage()
+                );
+            }
+        }
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_IDGEN_NOT_FOUND, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_IDGEN_NOT_FOUND);
+            {
+                ValidatorError error = errors.get(0);
+                assertEquals(
+                    "IDGEN='AC1-172014607-0009076' référencé par l'assiette IDASS='AC1-172014607-0009076-121' n'existe pas dans les tables GENERATEUR_SUP_P/L/S",
+                    error.getMessage()
+                );
+            }
+        }
+
+        /*
+         * check warnings
+         */
         ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
 

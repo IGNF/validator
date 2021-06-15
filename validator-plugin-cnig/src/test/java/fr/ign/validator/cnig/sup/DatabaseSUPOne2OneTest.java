@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.cnig.sup.DatabaseSUP.AssietteSup;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
@@ -110,4 +111,19 @@ public class DatabaseSUPOne2OneTest {
         }
     }
 
+    @Test
+    public void testFindDuplicatedValuesForIDASS() throws Exception {
+        assertEquals(0, db.findDuplicatedValuesForIDASS().size());
+    }
+
+    @Test
+    public void testFindDuplicatedValuesForIDGEN() throws Exception {
+        assertEquals(0, db.findDuplicatedValuesForIDGEN().size());
+    }
+
+    @Test
+    public void testFindAssiettesWithInvalidIDGEN() throws Exception {
+        List<AssietteSup> assiettes = db.findAssiettesWithInvalidIDGEN(100);
+        assertEquals(0, assiettes.size());
+    }
 }
