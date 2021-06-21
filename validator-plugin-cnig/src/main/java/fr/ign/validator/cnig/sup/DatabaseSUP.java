@@ -17,6 +17,8 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.database.Database;
+import fr.ign.validator.database.internal.DuplicatedValuesFinder;
+import fr.ign.validator.database.internal.DuplicatedValuesFinder.DuplicatedValue;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -86,6 +88,14 @@ public class DatabaseSUP {
     public class Servitude {
         public String idsup;
         public String nomsuplitt;
+    }
+
+    /**
+     * Lightweight model for AssietteSup
+     */
+    public class AssietteSup {
+        public String idass;
+        public String idgen;
     }
 
     /**
@@ -563,4 +573,65 @@ public class DatabaseSUP {
         return new ArrayList<>(result);
     }
 
+    /**
+     * Validation - Find non unique IDGEN values.
+     * 
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
+    public List<DuplicatedValue> findDuplicatedValuesForIDGEN() throws SQLException, IOException {
+        DuplicatedValuesFinder duplicatedValuesFinder = new DuplicatedValuesFinder();
+        return duplicatedValuesFinder.findDuplicatedValues(database, TABLE_GENERATEUR, COLUMN_IDGEN);
+    }
+
+    /**
+     * Validation - Find non unique IDASS values.
+     * 
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
+    public List<DuplicatedValue> findDuplicatedValuesForIDASS() throws SQLException, IOException {
+        DuplicatedValuesFinder duplicatedValuesFinder = new DuplicatedValuesFinder();
+        return duplicatedValuesFinder.findDuplicatedValues(database, TABLE_ASSIETTE, COLUMN_IDASS);
+    }
+
+    /**
+     * Validation - find AssietteSup with invalid IDGEN
+     * 
+     * @param limit maximum number of results.
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
+    public List<AssietteSup> findAssiettesWithInvalidIDGEN(int limit) throws SQLException, IOException {
+        String sql = "SELECT a.* FROM assiette a ";
+        sql += " WHERE NOT EXISTS (SELECT * FROM generateur g WHERE g.idgen = a.idgen ) LIMIT ?";
+        try {
+            PreparedStatement sth = getConnection().prepareStatement(sql);
+            sth.setInt(1, limit);
+            return fetchAssietteSup(sth.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Fetch unique AssietteSup from ResultSet.
+     * 
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
+    private List<AssietteSup> fetchAssietteSup(ResultSet rs) throws SQLException {
+        List<AssietteSup> result = new ArrayList<AssietteSup>();
+        while (rs.next()) {
+            AssietteSup assiette = new AssietteSup();
+            assiette.idass = rs.getString(COLUMN_IDASS);
+            assiette.idgen = rs.getString(COLUMN_IDGEN);
+            result.add(assiette);
+        }
+        return result;
+    }
 }

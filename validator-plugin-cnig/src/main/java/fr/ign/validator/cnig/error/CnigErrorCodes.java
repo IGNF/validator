@@ -39,10 +39,30 @@ public class CnigErrorCodes {
     );
 
     /**
-     * DU/PLUi- Reported when number of rows in PERIMETRE_SCOT is not 1
+     * SCOT - Reported when number of rows in PERIMETRE_SCOT is not 1
      */
     public static final ErrorCode CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE = ErrorCode.valueOf(
         "CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE"
+    );
+
+    /**
+     * SUP - Reported when IDGEN is not unique in GENERATEUR_SUP_P/L/S tables
+     */
+    public static final ErrorCode CNIG_SUP_IDGEN_NOT_UNIQUE = ErrorCode.valueOf(
+        "CNIG_SUP_IDGEN_NOT_UNIQUE"
+    );
+    /**
+     * SUP - Reported when IDASS is not unique in ASSIETTE_SUP_P/L/S tables
+     */
+    public static final ErrorCode CNIG_SUP_IDASS_NOT_UNIQUE = ErrorCode.valueOf(
+        "CNIG_SUP_IDASS_NOT_UNIQUE"
+    );
+    /**
+     * SUP - Reported when IDGEN referenced by an ASSIETTE_SUP_P/L/S table is not
+     * found in GENERATEUR_SUP_P/L/S table.
+     */
+    public static final ErrorCode CNIG_SUP_IDGEN_NOT_FOUND = ErrorCode.valueOf(
+        "CNIG_SUP_IDGEN_NOT_FOUND"
     );
 
     public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND = ErrorCode.valueOf(

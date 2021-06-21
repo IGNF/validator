@@ -1,688 +1,702 @@
 [
-    {
-        "name": "VALIDATOR_INFO",
-        "level": "INFO",
-        "message": "{MESSAGE}",
-        "documentation": "Message d'information générique"
-    },
-    {
-        "name": "VALIDATOR_PROJECTION_INFO",
-        "level": "INFO",
-        "message": "La projection {CODE_PROJECTION} ({URI_PROJECTION}) est utilisée pour la validation"
-    },
-    {
-        "name": "VALIDATOR_PROJECTION_LATLON",
-        "level": "WARNING",
-        "message": "Attention : Les coordonnées sont interprétées dans l'ordre lat,lon pour la projection ESPG:4326 conformément à la norme"
-    },
-    {
-        "name": "VALIDATOR_EXCEPTION",
-        "level": "FATAL",
-        "message": "La validation a rencontré une erreur grave liée au fonctionnement du validateur.",
-        "documentation": "Cette erreur correspond à un problème profond dans la validateur (absence d'outil système,  problème dans les configurations,  etc.)"
-    },
-    {
-        "name": "DIRECTORY_UNEXPECTED_NAME",
-        "level": "ERROR",
-        "message": "Le nom du dossier contenant le document n'est pas valide.",
-        "documentation": "Cette erreur se produit lorsque le nom du dossier contenant le document ne correspond pas à celui spécifié dans l'expression régulière du DocumentModel"
-    },
-    {
-        "name": "FILE_MISPLACED",
-        "level": "WARNING",
-        "message": "Le fichier '{FILEPATH}' est mal nommé ou mal placé dans l'arborescence du dossier.",
-        "documentation": "Cette erreur se produit lorsque le nom d'un fichier respecte partiellement le modèle. Le nom du fichier est correct,  mais pas son chemin complet"
-    },
-    {
-        "name": "FILE_UNEXPECTED",
-        "level": "WARNING",
-        "message": "Le fichier '{FILEPATH}' est mal nommé ou n'est pas prévu dans le standard.",
-        "documentation": "Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un fichier"
-    },
-    {
-        "name": "FILE_MISSING_MANDATORY",
-        "level": "ERROR",
-        "message": "Le fichier obligatoire '{FILEMODEL_NAME}' est absent du document.",
-        "documentation": "Cette erreur se produit lorsqu'un fichier marqué comme mandatory=ERROR est absent"
-    },
-    {
-        "name": "FILE_MISSING_MANDATORY_DIRECTORY",
-        "level": "ERROR",
-        "message": "Le répertoire obligatoire '{FILEMODEL_NAME}' est absent du document.",
-        "documentation": "Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=ERROR est absent"
-    },
-    {
-        "name": "FILE_MISSING_RECOMMANDED",
-        "level": "INFO",
-        "message": "Le fichier optionnel '{FILEMODEL_NAME}' est absent du document.",
-        "documentation": "Cette erreur se produit lorsqu'un fichier marqué comme mandatory=WARNING est absent"
-    },
-    {
-        "name": "FILE_MISSING_RECOMMANDED_DIRECTORY",
-        "level": "INFO",
-        "message": "Le répertoire optionnel '{FILEMODEL_NAME}' est absent du document.",
-        "documentation": "Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=WARNING est absent"
-    },
-    {
-        "name": "FILE_EMPTY",
-        "level": "ERROR",
-        "message": "La table '{FILEPATH}' ne contient pas de données.",
-        "documentation": "Cette erreur se produit lorsqu'une table (csv,  shp,  etc.) est vide"
-    },
-    {
-        "name": "TABLE_MISSING_ATTRIBUTE",
-        "level": "ERROR",
-        "message": "L'attribut obligatoire '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
-        "documentation": "Cette erreur se produit lorsqu'un champ spécifié dans le modèle n'est pas présent dans la table"
-    },
-    {
-        "name": "TABLE_MISSING_NULLABLE_ATTRIBUTE",
-        "level": "INFO",
-        "message": "L'attribut optionnel '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
-        "documentation": "Cette erreur se produit lorsqu'un champ spécifié comme nullable dans le modèle n'est pas présent dans la table"
-    },
-    {
-        "name": "TABLE_UNEXPECTED_ATTRIBUTE",
-        "level": "WARNING",
-        "message": "L'attribut '{ATTRIBUTE_NAME}' n'est pas prévu dans le standard.",
-        "documentation": "Cette erreur se produit lorsqu'un champ est présent dans la table mais pas dans le modèle"
-    },
-    {
-        "name": "TABLE_UNEXPECTED_ENCODING",
-        "level": "WARNING",
-        "message": "L'encodage déclaré dans la balise MD_CharacterSetCode du fichier de métadonnées '{ENCODING}' ne correspond pas à l'encodage des données.",
-        "documentation": "Cette erreur se produit lorsque l'encodage déclaré dans la balise MD_CharacterSetCode de la fiche de métadonnées ne correspond pas à l'encodage détecté des données"
-    },
-    {
-        "name": "TABLE_MISSING_GEOMETRY",
-        "level": "ERROR",
-        "message": "Le fichier '{FILEPATH}' n'a pas d'attribut contenant la géométrie.",
-        "documentation": ""
-    },
-    {
-        "name": "ATTRIBUTE_UNEXPECTED_NULL",
-        "level": "ERROR",
-        "message": "Une valeur vide n'est pas autorisée pour ce champ.",
-        "documentation": "Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide"
-    },
-    {
-        "name": "ATTRIBUTE_NOT_UNIQUE",
-        "level": "ERROR",
-        "message": "La valeur '{ID_NAME}' est présente {ID_COUNT} fois pour le champ '{COLUMN_NAME}' de la table '{TABLE_NAME}'.",
-        "documentation": "Cette erreur se produit lorsqu'un champ « unique » contient plusieurs occurences d'une même valeur."
-    },
-    {
-        "name": "ATTRIBUTE_REFERENCE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "La référence {SOURCE_TABLE}.{SOURCE_COLUMN} n'est pas validée. Le champ {TARGET_TABLE}.{TARGET_COLUMN} ne prend pas la valeur '{REF_VALUE}'.",
-        "documentation": "Cette erreur se produit lorsque la « reference » d'un champ n'est pas trouvée dans la table cible."
-    },
-    {
-        "name": "ATTRIBUTE_CHARACTERS_ILLEGAL",
-        "level": "ERROR",
-        "message": "La valeur (‘{VALUE}’) contient des caractères interdits qui seront échappés (‘{FIXED_VALUE}’).",
-        "documentation": ""
-    },
-    {
-        "name": "ATTRIBUTE_CHARACTERS_REPLACED",
-        "level": "INFO",
-        "message": "La valeur (‘{VALUE}’) sera remplacée par (‘{FIXED_VALUE}’) pour l’intégration des données.",
-        "documentation": ""
-    },
-    {
-        "name": "ATTRIBUTE_INVALID_FORMAT",
-        "level": "ERROR",
-        "message": "Le type de la valeur '{VALUE}' ne correspond pas au type attendu '{EXPECTED_TYPE}'.",
-        "documentation": "Cette erreur se produit lorsqu'un champ contient une valeur de type non autorisé par le modèle"
-    },
-    {
-        "name": "ATTRIBUTE_INVALID_REGEXP",
-        "level": "ERROR",
-        "message": "La valeur ({VALUE}) ne correspond pas à l'expression régulière ({REGEXP}).",
-        "documentation": "Cette erreur se produit lorsqu'un champ contient une chaine de caractère qui ne correspond pas à la règle d'écriture du modèle."
-    },
-    {
-        "name": "ATTRIBUTE_SIZE_EXCEEDED",
-        "level": "ERROR",
-        "message": "La taille de l'attribut ({VALUE_LENGTH}) dépasse la taille limite autorisée ({EXPECTED_LENGTH}).",
-        "documentation": "Cette erreur se produit lorsqu'un champ contient une valeur dont la longueur dépasse la taille limite autorisée par le modèle"
-    },
-    {
-        "name": "ATTRIBUTE_GEOMETRY_INVALID",
-        "level": "ERROR",
-        "message": "La géométrie de l'objet n'est pas topologiquement correcte. {TYPE_ERROR}",
-        "documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
-    },
-    {
-        "name": "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",
-        "level": "ERROR",
-        "message": "Les coordonnées de la géométrie de l'objet ne correspondent pas à la zone attendue.",
-        "documentation": ""
-    },
-    {
-        "name": "ATTRIBUTE_PATH_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le chemin ({VALUE}) renseigné renvoie vers un document absent du dossier.",
-        "documentation": "Cette erreur se produit lorsqu'un champ de type « path » référence un fichier non présent dans l'arborescence (ex : pièce écrite)"
-    },
-    {
-        "name": "ATTRIBUTE_FILE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le fichier '{VALUE}' renseigné renvoie vers un document absent du dossier. Veuillez vérifier que le nom de fichier indiqué contient bien l’extension (par exemple : « .pdf »).",
-        "documentation": "Cette erreur se produit lorsqu'un champ de type « file name » référence un fichier non présent dans l'arborescence (ex : pièce écrite)"
-    },
-    {
-        "name": "ATTRIBUTE_UNEXPECTED_VALUE",
-        "level": "ERROR",
-        "message": "La valeur renseignée ({VALUE}) ne correspond pas à une valeur autorisée ({EXPECTED_VALUES}).",
-        "documentation": "Cette erreur se produit lorsqu'un champ ne respecte pas la liste spécifiée dans le modèle"
-    },
-    {
-        "name": "METADATA_IGNORED_FILE",
-        "level": "INFO",
-        "message": "Le fichier XML '{FILEPATH}' n'a pas été reconnu comme une fiche de métadonnée (absence de balise MD_Metadata). Il sera ignoré.",
-        "documentation": "Cette erreur se produit lorsqu'un fichier xml détecté comme métadonnée dans l'arborescence ne contient pas de balise MD_Metadata"
-    },
-    {
-        "name": "METADATA_MULTIPLE_FILES",
-        "level": "ERROR",
-        "message": "Plusieurs fichiers de métadonnées sont présents dans le document {FILENAME_LIST}.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_INVALID_FILE",
-        "level": "ERROR",
-        "message": "Le fichier de métadonnée '{FILEPATH}' est corrompu.",
-        "documentation": "Ce cas ne devrait jamais se produire. Il intervient en cas d'erreur dans la lecture de l'XML d'une fiche de métadonnée. Seulement, ces fiches sont filtrées en amont (METADATA_IGNORED_FILE)"
-    },
-    {
-        "name": "METADATA_FILEIDENTIFIER_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"fileIdentifier\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_FILEIDENTIFIER_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"fileIdentifier\" ({VALUE}) ne correspond pas aux caractères autorisés.",
-        "documentation": "Ce contrôle permet de s'assurer que fileIdentifier peut bien être dérivé en un nom de fichier (moissonnage FTP geosource par exemple)."
-    },
-    {
-        "name": "METADATA_IDENTIFIER_NOT_FOUND",
-        "level": "WARNING",
-        "message": "Le champ \"identificateur de ressource unique\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_TITLE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"intitulé de la ressource\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_ABSTRACT_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"résumé de la ressource\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_TYPE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"type de la ressource\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_TYPE_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"type de la ressource\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LOCATORS_EMPTY",
-        "level": "ERROR",
-        "message": "Aucun \"localisateur de la ressource\" renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LOCATOR_NAME_NOT_FOUND",
-        "level": "WARNING",
-        "message": "Localisateur de ressource ({NUMBER}/{COUNT}) : le champ \"nom\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LOCATOR_PROTOCOL_NOT_FOUND",
-        "level": "WARNING",
-        "message": "Localisateur de ressource ({NUMBER}/{COUNT}) : le champ \"protocole\" n'est pas renseigné (ex : \"OGC:WMS\", \"OGC:WFS\", \"ATOM\", etc.)",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LOCATOR_URL_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Localisateur de ressource ({NUMBER}/{COUNT}) : le champ \"url\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LANGUAGE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"langue de la ressource\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LANGUAGE_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"langue de la ressource\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_TOPICCATEGORY_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"catégorie thématique\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_TOPICCATEGORY_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"catégorie thématique\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_EXTENTS_EMPTY",
-        "level": "ERROR",
-        "message": "Aucun \"rectangle de délimitation géographique\" renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_EXTENT_INVALID",
-        "level": "ERROR",
-        "message": "Rectangle de délimitation géographique ({NUMBER}/{COUNT}) : les coordonnées ne sont pas valides ({BBOX}).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_DATES_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Au moins l'un des champs \"date de publication\", \"date de dernière révision\" et \"date de création\" doit être renseigné. ",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_DATEOFPUBLICATION_INVALID",
-        "level": "ERROR",
-        "message": "La valeur \"date de publication\" ({VALUE}) n'est pas dans un format valide.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_DATEOFLASTREVISION_INVALID",
-        "level": "ERROR",
-        "message": "La valeur \"date de dernière révision\" ({VALUE}) n'est pas dans un format valide.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_DATEOFCREATION_INVALID",
-        "level": "ERROR",
-        "message": "La valeur \"date de création\" ({VALUE}) n'est pas dans un format valide.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_CHARACTERSET_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"encodage des caractères\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_CHARACTERSET_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"encodage des caractères\" ({CHARSET_CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CHARSETS}).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_DISTRIBUTIONFORMATS_EMPTY",
-        "level": "ERROR",
-        "message": "Aucun \"encodage\" renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Encodage ({NUMBER}/{COUNT}) : le champ \"nom\" n'est pas renseigné",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"type de représentation géographique\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPATIALREPRESENTATIONTYPE_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"type de représentation géographique\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_LINEAGE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"généalogie\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPATIALRESOLUTIONS_EMPTY",
-        "level": "ERROR",
-        "message": "Aucune \"résolution spatiale\" renseignée.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR",
-        "level": "ERROR",
-        "message": "Résolution spatiale ({NUMBER}/{COUNT}) : le dénominateur ({VALUE}) n'est pas valide (entier attendu)",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPATIALRESOLUTION_INVALID_DISTANCE",
-        "level": "ERROR",
-        "message": "Résolution spatiale ({NUMBER}/{COUNT}) : la distance ({VALUE}) n'est pas valide (nombre décimal attendu)",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPECIFICATIONS_EMPTY",
-        "level": "ERROR",
-        "message": "Aucune \"spécification\" renseignée.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPECIFICATION_TITLE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Spécification ({NUMBER}/{COUNT}) : le titre n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPECIFICATION_DATE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Spécification ({NUMBER}/{COUNT}) : la date n'est pas renseignée.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPECIFICATION_DATE_INVALID",
-        "level": "ERROR",
-        "message": "Spécification ({NUMBER}/{COUNT}) : la date ({VALUE}) n'est pas valide.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_SPECIFICATION_DEGREE_INVALID",
-        "level": "ERROR",
-        "message": "Spécification ({NUMBER}/{COUNT}) : la degré correspondant ({VALUE}) n'est pas valide (true, false ou valeur vide attendue).",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_CONTACT_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"organisme responsable de la ressource\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_METADATACONTACT_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"point de contact de la métadonnée\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_METADATADATE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"date des métadonnées\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_METADATADATE_INVALID",
-        "level": "ERROR",
-        "message": "La valeur \"date des métadonnées\" ({VALUE}) n'est pas dans un format valide.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_METADATALANGUAGE_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"langue des métadonnées\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "METADATA_METADATALANGUAGE_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"langue des métadonnées\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
-        "documentation": ""
-    },
-    {
-        "name": "FILE_NOT_OPENED",
-        "level": "ERROR",
-        "message": "Le fichier '{FILEPATH}' n'est pas lisible.",
-        "documentation": "Impossible d'ouvrir un fichier (shp, dbf, tab, etc.) en lecture"
-    },
-    {
-        "name": "CNIG_INSEE_INVALID",
-        "level": "ERROR",
-        "message": "La valeur du champ \"INSEE\" ({VALUE}) ne respecte pas le format \"DDCCC\" où \"DD\" est le numéro du département et \"CCC\" le numéro de la commune.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_SIREN_INVALID",
-        "level": "ERROR",
-        "message": "La valeur du champ \"SIREN\" (%1$s) est mal formatée.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_DOCUMENT_NO_PDF",
-        "level": "ERROR",
-        "message": "Aucun fichier PDF respectant les règles de nommage trouvé dans le dossier.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_IDURBA_INVALID",
-        "level": "ERROR",
-        "message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",
-        "documentation": "Vérification du format de IDURBA dans la table DOC_URBA."
-    },
-    {
-        "name": "CNIG_IDURBA_UNEXPECTED",
-        "level": "ERROR",
-        "message": "La valeur du champ \"IDURBA\" ({VALUE}) ne correspond pas à la valeur attendue ({EXPECTED_VALUE}).",
-        "documentation": "Vérification de la cohérence entre IDURBA et {NomDeDossier} sur les tables autres que DOC_URBA."
-    },
-    {
-        "name": "CNIG_IDURBA_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Aucune ligne correspondant au document n’a été trouvée dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_IDURBA_MULTIPLE_FOUND",
-        "level": "WARNING",
-        "message": "Plusieurs lignes correspondant au document trouvées dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_DOC_URBA_COM_UNEXPECTED_SIZE",
-        "level": "WARNING",
-        "message": "Nombre de communes insuffisant dans la table DOC_URBA_COM pour un PLUi",
-        "documentation": "Dans le cas d'un document de type PLUi, la table DOC_URBA_COM doit contenir la liste des communes sur lesquelles le document s'applique. Un PLUi couvrant au moins deux communes logiquement, le validateur lève un avertissement s'il y a moins de 2 lignes dans cette table." 
-    },
-    {
-        "name": "CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE",
-        "level": "ERROR",
-        "message": "La table PERIMETRE_SCOT doit contenir une seule ligne.",
-        "documentation": "Dans le cas d'un SCOT, la table PERIMETRE_SCOT doit contenir une seule ligne." 
-    },
-    {
-        "name": "NO_SPATIAL_DATA",
-        "level": "ERROR",
-        "message": "Aucune donnée géographique trouvée dans le document.",
-        "documentation": "Calcul de la bbox impossible"
-    },
-    {
-        "name": "CNIG_METADATA_IDENTIFIER_INVALID",
-        "level": "INFO",
-        "message": "Le champ \"identificateur de ressource unique\" ({VALUE}) n'est pas égal à \"https://www.geoportail-urbanisme.gouv.fr/document/{DOCUMENT_NAME}\"",
-        "documentation": "Contrainte supprimée des CSMD PLU et SUP"
-    },
-    {
-        "name": "CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"date de dernière révision\" est requis pour les documents d'urbanisme et les SUP.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_SPECIFICATION_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Aucune \"spécification\" conforme aux consignes CNIG trouvée.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_TYPE_INVALID",
-        "level": "ERROR",
-        "message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" pour les PLU, POS, CC, PSMV et les SUP.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_NOT_FOUND",
-        "level": "ERROR",
-        "message": "Le champ \"Référentiel de coordonnées\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND",
-        "level": "WARNING",
-        "message": "Le code du \"Référentiel de coordonnées\" n'est pas renseigné.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID",
-        "level": "WARNING",
-        "message": "Le code de projection ({CODE}) du \"Référentiel de coordonnées\" ne correspond pas à la valeur attendue ({EXPECTED_CODE}) pour l'URI ({URI}).",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND",
-        "level": "ERROR",
-        "message": "L'URI du \"Référentiel de coordonnées\" n'est pas renseignée.",
-        "documentation": ""
-    },
-    {
-        "name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED",
-        "level": "ERROR",
-        "message": "L'URI du \"Référentiel de coordonnées\" ({URI}) n'est pas reconnue par le validateur.",
-        "documentation": ""
-    },
-    
-    {
-        "name": "CNIG_METADATA_KEYWORD_NOT_FOUND",
-        "level": "WARNING",
-        "message": "Le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'a pas été trouvé.",
-        "documentation": "Mot clé attendu non trouvé"
-    },
-
-    {
-        "name": "CNIG_METADATA_KEYWORD_INVALID",
-        "level": "WARNING",
-        "message": "La valeur '{VALUE} pour le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'est pas valide (valeur attendue : '{EXPECTED_VALUE}').",
-        "documentation": "Mot clé trouvé mais ne correspondant pas à la valeur présente dans le nom de dossier du document."
-    },
-    
-    
-    {
-        "name": "DGPR_DOCUMENT_PREFIX_ERROR",
-        "level": "WARNING",
-        "message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
-        "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
-    },
-    {
-        "name": "DGPR_FILENAME_PREFIX_ERROR",
-        "level": "ERROR",
-        "message": "Le nom du fichier {FILENAME} ne contient pas le prefixe TRI du répertoire {DOCUMENT_NAME}.",
-        "documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
-    },
-    {
-        "name": "DGPR_VITESSE_MIN_ERROR",
-        "level": "ERROR",
-        "message": "La vitesse MIN {VALUE_MIN} est supérieure à la vitesse MAX {VALUE_MAX}.",
-        "documentation": ""
-    },
-    {
-        "name": "DGPR_TX_HAB_SAI_ERROR",
-        "level": "ERROR",
-        "message": "La valeur de TX_HAB_SAI {VALUE} n'est pas comprise entre 0 et 100.",
-        "documentation": ""
-    },
-    {
-        "name": "DGPR_AZIMUTH_ERROR",
-        "level": "ERROR",
-        "message": "La vitesse ({VALUE_VITESSE}) et/ou le débit linéique ({VALUE_DEBLIN}) est renseigné, mais l’azimuth est null.",
-        "documentation": "Standard DI v2 - B.3.8. Classe d'objets <Point_remarquable_cote_vitesse_debit> : Si la vitesse ou le débit linéique est renseigné, alors l’azimuth doit aussi être renseigné."
-    },
-    {
-        "name": "DGPR_DEBLIN_ERROR",
-        "level": "ERROR",
-        "message": "La valeur DEBLIN ({VALUE_MIN}) doit être non renseignée ou supérieure à 0.",
-        "documentation": ""
-    },
-    {
-        "name": "DGPR_DEBLIN_MIN_ERROR",
-        "level": "ERROR",
-        "message": "La valeur DEBLIN_MIN ({VALUE_MIN}) doit être supérieure à 0.",
-        "documentation": ""
-    },
-    {
-        "name": "DGPR_DEBLIN_MAX_ERROR",
-        "level": "ERROR",
-        "message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure à la valeur DEBLIN_MIN ({VALUE_MIN})",
-        "documentation": ""
-    },
-    {
-        "name": "DGPR_INOND_INCLUSION_ERROR",
-        "level": "ERROR",
-        "message": "La surface {ID_S_INOND} du scénario {SCENARIO_VALUE_FORT} n'est pas incluse dans le scénario {SCENARIO_VALUE_FAIBLE}.",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
-    },
-    {
-        "name": "DGPR_INOND_INCLUSION_INVALID_GEOM",
-        "level": "ERROR",
-        "message": "Une ou plusieurs géométries sont invalides {LIST_ID_S_INOND}. Il n'est pas possible de tester l'inclusion du scénario {SCENARIO_VALUE_FORT} dans le scénario {SCENARIO_VALUE_FAIBLE}.",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
-    },
-    {
-        "name": "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND",
-        "level": "ERROR",
-        "message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND} à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
-    },
-    {
-        "name": "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY",
-        "level": "WARNING",
-        "message": "Le validateur n'a pas déterminé si les {TABLE_NAME} constituent une partition de {ID_S_INOND}. Les géométries sont trop volumineuses ou complexes.",
-        "documentation": "Ce message intervient lorsque le validateur n’a pas assez de ressource mémoire pour effectuer les tests des partitionnement des surfaces inondables. Il faut voir si la géométrie des surfaces incriminées ne peuvent pas être simplifiées."
-    },
-    {
-        "name": "DGPR_ISO_HT_INTERSECTS",
-        "level": "ERROR",
-        "message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND}. Leurs périmètres s'intersectent.",
-        "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
-    },
+	{
+		"name": "VALIDATOR_INFO",
+		"level": "INFO",
+		"message": "{MESSAGE}",
+		"documentation": "Message d'information générique"
+	},
+	{
+		"name": "VALIDATOR_PROJECTION_INFO",
+		"level": "INFO",
+		"message": "La projection {CODE_PROJECTION} ({URI_PROJECTION}) est utilisée pour la validation"
+	},
+	{
+		"name": "VALIDATOR_PROJECTION_LATLON",
+		"level": "WARNING",
+		"message": "Attention : Les coordonnées sont interprétées dans l'ordre lat,lon pour la projection ESPG:4326 conformément à la norme"
+	},
+	{
+		"name": "VALIDATOR_EXCEPTION",
+		"level": "FATAL",
+		"message": "La validation a rencontré une erreur grave liée au fonctionnement du validateur.",
+		"documentation": "Cette erreur correspond à un problème profond dans la validateur (absence d'outil système,  problème dans les configurations,  etc.)"
+	},
+	{
+		"name": "DIRECTORY_UNEXPECTED_NAME",
+		"level": "ERROR",
+		"message": "Le nom du dossier contenant le document n'est pas valide.",
+		"documentation": "Cette erreur se produit lorsque le nom du dossier contenant le document ne correspond pas à celui spécifié dans l'expression régulière du DocumentModel"
+	},
+	{
+		"name": "FILE_MISPLACED",
+		"level": "WARNING",
+		"message": "Le fichier '{FILEPATH}' est mal nommé ou mal placé dans l'arborescence du dossier.",
+		"documentation": "Cette erreur se produit lorsque le nom d'un fichier respecte partiellement le modèle. Le nom du fichier est correct,  mais pas son chemin complet"
+	},
+	{
+		"name": "FILE_UNEXPECTED",
+		"level": "WARNING",
+		"message": "Le fichier '{FILEPATH}' est mal nommé ou n'est pas prévu dans le standard.",
+		"documentation": "Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un fichier"
+	},
+	{
+		"name": "FILE_MISSING_MANDATORY",
+		"level": "ERROR",
+		"message": "Le fichier obligatoire '{FILEMODEL_NAME}' est absent du document.",
+		"documentation": "Cette erreur se produit lorsqu'un fichier marqué comme mandatory=ERROR est absent"
+	},
+	{
+		"name": "FILE_MISSING_MANDATORY_DIRECTORY",
+		"level": "ERROR",
+		"message": "Le répertoire obligatoire '{FILEMODEL_NAME}' est absent du document.",
+		"documentation": "Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=ERROR est absent"
+	},
+	{
+		"name": "FILE_MISSING_RECOMMANDED",
+		"level": "INFO",
+		"message": "Le fichier optionnel '{FILEMODEL_NAME}' est absent du document.",
+		"documentation": "Cette erreur se produit lorsqu'un fichier marqué comme mandatory=WARNING est absent"
+	},
+	{
+		"name": "FILE_MISSING_RECOMMANDED_DIRECTORY",
+		"level": "INFO",
+		"message": "Le répertoire optionnel '{FILEMODEL_NAME}' est absent du document.",
+		"documentation": "Cette erreur se produit lorsqu'un repertoire marqué comme mandatory=WARNING est absent"
+	},
+	{
+		"name": "FILE_EMPTY",
+		"level": "ERROR",
+		"message": "La table '{FILEPATH}' ne contient pas de données.",
+		"documentation": "Cette erreur se produit lorsqu'une table (csv,  shp,  etc.) est vide"
+	},
+	{
+		"name": "TABLE_MISSING_ATTRIBUTE",
+		"level": "ERROR",
+		"message": "L'attribut obligatoire '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
+		"documentation": "Cette erreur se produit lorsqu'un champ spécifié dans le modèle n'est pas présent dans la table"
+	},
+	{
+		"name": "TABLE_MISSING_NULLABLE_ATTRIBUTE",
+		"level": "INFO",
+		"message": "L'attribut optionnel '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
+		"documentation": "Cette erreur se produit lorsqu'un champ spécifié comme nullable dans le modèle n'est pas présent dans la table"
+	},
+	{
+		"name": "TABLE_UNEXPECTED_ATTRIBUTE",
+		"level": "WARNING",
+		"message": "L'attribut '{ATTRIBUTE_NAME}' n'est pas prévu dans le standard.",
+		"documentation": "Cette erreur se produit lorsqu'un champ est présent dans la table mais pas dans le modèle"
+	},
+	{
+		"name": "TABLE_UNEXPECTED_ENCODING",
+		"level": "WARNING",
+		"message": "L'encodage déclaré dans la balise MD_CharacterSetCode du fichier de métadonnées '{ENCODING}' ne correspond pas à l'encodage des données.",
+		"documentation": "Cette erreur se produit lorsque l'encodage déclaré dans la balise MD_CharacterSetCode de la fiche de métadonnées ne correspond pas à l'encodage détecté des données"
+	},
+	{
+		"name": "TABLE_MISSING_GEOMETRY",
+		"level": "ERROR",
+		"message": "Le fichier '{FILEPATH}' n'a pas d'attribut contenant la géométrie.",
+		"documentation": ""
+	},
+	{
+		"name": "ATTRIBUTE_UNEXPECTED_NULL",
+		"level": "ERROR",
+		"message": "Une valeur vide n'est pas autorisée pour ce champ.",
+		"documentation": "Cette erreur se produit lorsqu'un champ non « nullable » contient une valeur vide"
+	},
+	{
+		"name": "ATTRIBUTE_NOT_UNIQUE",
+		"level": "ERROR",
+		"message": "La valeur '{ID_NAME}' est présente {ID_COUNT} fois pour le champ '{COLUMN_NAME}' de la table '{TABLE_NAME}'.",
+		"documentation": "Cette erreur se produit lorsqu'un champ « unique » contient plusieurs occurences d'une même valeur."
+	},
+	{
+		"name": "ATTRIBUTE_REFERENCE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "La référence {SOURCE_TABLE}.{SOURCE_COLUMN} n'est pas validée. Le champ {TARGET_TABLE}.{TARGET_COLUMN} ne prend pas la valeur '{REF_VALUE}'.",
+		"documentation": "Cette erreur se produit lorsque la « reference » d'un champ n'est pas trouvée dans la table cible."
+	},
+	{
+		"name": "ATTRIBUTE_CHARACTERS_ILLEGAL",
+		"level": "ERROR",
+		"message": "La valeur (‘{VALUE}’) contient des caractères interdits qui seront échappés (‘{FIXED_VALUE}’).",
+		"documentation": ""
+	},
+	{
+		"name": "ATTRIBUTE_CHARACTERS_REPLACED",
+		"level": "INFO",
+		"message": "La valeur (‘{VALUE}’) sera remplacée par (‘{FIXED_VALUE}’) pour l’intégration des données.",
+		"documentation": ""
+	},
+	{
+		"name": "ATTRIBUTE_INVALID_FORMAT",
+		"level": "ERROR",
+		"message": "Le type de la valeur '{VALUE}' ne correspond pas au type attendu '{EXPECTED_TYPE}'.",
+		"documentation": "Cette erreur se produit lorsqu'un champ contient une valeur de type non autorisé par le modèle"
+	},
+	{
+		"name": "ATTRIBUTE_INVALID_REGEXP",
+		"level": "ERROR",
+		"message": "La valeur ({VALUE}) ne correspond pas à l'expression régulière ({REGEXP}).",
+		"documentation": "Cette erreur se produit lorsqu'un champ contient une chaine de caractère qui ne correspond pas à la règle d'écriture du modèle."
+	},
+	{
+		"name": "ATTRIBUTE_SIZE_EXCEEDED",
+		"level": "ERROR",
+		"message": "La taille de l'attribut ({VALUE_LENGTH}) dépasse la taille limite autorisée ({EXPECTED_LENGTH}).",
+		"documentation": "Cette erreur se produit lorsqu'un champ contient une valeur dont la longueur dépasse la taille limite autorisée par le modèle"
+	},
+	{
+		"name": "ATTRIBUTE_GEOMETRY_INVALID",
+		"level": "ERROR",
+		"message": "La géométrie de l'objet n'est pas topologiquement correcte. {TYPE_ERROR}",
+		"documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
+	},
+	{
+		"name": "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",
+		"level": "ERROR",
+		"message": "Les coordonnées de la géométrie de l'objet ne correspondent pas à la zone attendue.",
+		"documentation": ""
+	},
+	{
+		"name": "ATTRIBUTE_PATH_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le chemin ({VALUE}) renseigné renvoie vers un document absent du dossier.",
+		"documentation": "Cette erreur se produit lorsqu'un champ de type « path » référence un fichier non présent dans l'arborescence (ex : pièce écrite)"
+	},
+	{
+		"name": "ATTRIBUTE_FILE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le fichier '{VALUE}' renseigné renvoie vers un document absent du dossier. Veuillez vérifier que le nom de fichier indiqué contient bien l’extension (par exemple : « .pdf »).",
+		"documentation": "Cette erreur se produit lorsqu'un champ de type « file name » référence un fichier non présent dans l'arborescence (ex : pièce écrite)"
+	},
+	{
+		"name": "ATTRIBUTE_UNEXPECTED_VALUE",
+		"level": "ERROR",
+		"message": "La valeur renseignée ({VALUE}) ne correspond pas à une valeur autorisée ({EXPECTED_VALUES}).",
+		"documentation": "Cette erreur se produit lorsqu'un champ ne respecte pas la liste spécifiée dans le modèle"
+	},
+	{
+		"name": "METADATA_IGNORED_FILE",
+		"level": "INFO",
+		"message": "Le fichier XML '{FILEPATH}' n'a pas été reconnu comme une fiche de métadonnée (absence de balise MD_Metadata). Il sera ignoré.",
+		"documentation": "Cette erreur se produit lorsqu'un fichier xml détecté comme métadonnée dans l'arborescence ne contient pas de balise MD_Metadata"
+	},
+	{
+		"name": "METADATA_MULTIPLE_FILES",
+		"level": "ERROR",
+		"message": "Plusieurs fichiers de métadonnées sont présents dans le document {FILENAME_LIST}.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_INVALID_FILE",
+		"level": "ERROR",
+		"message": "Le fichier de métadonnée '{FILEPATH}' est corrompu.",
+		"documentation": "Ce cas ne devrait jamais se produire. Il intervient en cas d'erreur dans la lecture de l'XML d'une fiche de métadonnée. Seulement, ces fiches sont filtrées en amont (METADATA_IGNORED_FILE)"
+	},
+	{
+		"name": "METADATA_FILEIDENTIFIER_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"fileIdentifier\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_FILEIDENTIFIER_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"fileIdentifier\" ({VALUE}) ne correspond pas aux caractères autorisés.",
+		"documentation": "Ce contrôle permet de s'assurer que fileIdentifier peut bien être dérivé en un nom de fichier (moissonnage FTP geosource par exemple)."
+	},
+	{
+		"name": "METADATA_IDENTIFIER_NOT_FOUND",
+		"level": "WARNING",
+		"message": "Le champ \"identificateur de ressource unique\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_TITLE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"intitulé de la ressource\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_ABSTRACT_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"résumé de la ressource\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_TYPE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"type de la ressource\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_TYPE_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"type de la ressource\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LOCATORS_EMPTY",
+		"level": "ERROR",
+		"message": "Aucun \"localisateur de la ressource\" renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LOCATOR_NAME_NOT_FOUND",
+		"level": "WARNING",
+		"message": "Localisateur de ressource ({NUMBER}/{COUNT}) : le champ \"nom\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LOCATOR_PROTOCOL_NOT_FOUND",
+		"level": "WARNING",
+		"message": "Localisateur de ressource ({NUMBER}/{COUNT}) : le champ \"protocole\" n'est pas renseigné (ex : \"OGC:WMS\", \"OGC:WFS\", \"ATOM\", etc.)",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LOCATOR_URL_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Localisateur de ressource ({NUMBER}/{COUNT}) : le champ \"url\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LANGUAGE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"langue de la ressource\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LANGUAGE_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"langue de la ressource\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_TOPICCATEGORY_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"catégorie thématique\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_TOPICCATEGORY_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"catégorie thématique\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_EXTENTS_EMPTY",
+		"level": "ERROR",
+		"message": "Aucun \"rectangle de délimitation géographique\" renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_EXTENT_INVALID",
+		"level": "ERROR",
+		"message": "Rectangle de délimitation géographique ({NUMBER}/{COUNT}) : les coordonnées ne sont pas valides ({BBOX}).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_DATES_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Au moins l'un des champs \"date de publication\", \"date de dernière révision\" et \"date de création\" doit être renseigné. ",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_DATEOFPUBLICATION_INVALID",
+		"level": "ERROR",
+		"message": "La valeur \"date de publication\" ({VALUE}) n'est pas dans un format valide.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_DATEOFLASTREVISION_INVALID",
+		"level": "ERROR",
+		"message": "La valeur \"date de dernière révision\" ({VALUE}) n'est pas dans un format valide.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_DATEOFCREATION_INVALID",
+		"level": "ERROR",
+		"message": "La valeur \"date de création\" ({VALUE}) n'est pas dans un format valide.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_CHARACTERSET_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"encodage des caractères\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_CHARACTERSET_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"encodage des caractères\" ({CHARSET_CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CHARSETS}).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_DISTRIBUTIONFORMATS_EMPTY",
+		"level": "ERROR",
+		"message": "Aucun \"encodage\" renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Encodage ({NUMBER}/{COUNT}) : le champ \"nom\" n'est pas renseigné",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"type de représentation géographique\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPATIALREPRESENTATIONTYPE_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"type de représentation géographique\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_LINEAGE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"généalogie\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPATIALRESOLUTIONS_EMPTY",
+		"level": "ERROR",
+		"message": "Aucune \"résolution spatiale\" renseignée.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR",
+		"level": "ERROR",
+		"message": "Résolution spatiale ({NUMBER}/{COUNT}) : le dénominateur ({VALUE}) n'est pas valide (entier attendu)",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPATIALRESOLUTION_INVALID_DISTANCE",
+		"level": "ERROR",
+		"message": "Résolution spatiale ({NUMBER}/{COUNT}) : la distance ({VALUE}) n'est pas valide (nombre décimal attendu)",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPECIFICATIONS_EMPTY",
+		"level": "ERROR",
+		"message": "Aucune \"spécification\" renseignée.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPECIFICATION_TITLE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Spécification ({NUMBER}/{COUNT}) : le titre n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPECIFICATION_DATE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Spécification ({NUMBER}/{COUNT}) : la date n'est pas renseignée.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPECIFICATION_DATE_INVALID",
+		"level": "ERROR",
+		"message": "Spécification ({NUMBER}/{COUNT}) : la date ({VALUE}) n'est pas valide.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_SPECIFICATION_DEGREE_INVALID",
+		"level": "ERROR",
+		"message": "Spécification ({NUMBER}/{COUNT}) : la degré correspondant ({VALUE}) n'est pas valide (true, false ou valeur vide attendue).",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_CONTACT_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"organisme responsable de la ressource\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATACONTACT_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"point de contact de la métadonnée\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATADATE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"date des métadonnées\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATADATE_INVALID",
+		"level": "ERROR",
+		"message": "La valeur \"date des métadonnées\" ({VALUE}) n'est pas dans un format valide.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATALANGUAGE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"langue des métadonnées\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATALANGUAGE_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"langue des métadonnées\" ({CODE}) ne correspond pas à une valeur autorisée ({EXPECTED_CODES}).",
+		"documentation": ""
+	},
+	{
+		"name": "FILE_NOT_OPENED",
+		"level": "ERROR",
+		"message": "Le fichier '{FILEPATH}' n'est pas lisible.",
+		"documentation": "Impossible d'ouvrir un fichier (shp, dbf, tab, etc.) en lecture"
+	},
+	{
+		"name": "CNIG_INSEE_INVALID",
+		"level": "ERROR",
+		"message": "La valeur du champ \"INSEE\" ({VALUE}) ne respecte pas le format \"DDCCC\" où \"DD\" est le numéro du département et \"CCC\" le numéro de la commune.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_SIREN_INVALID",
+		"level": "ERROR",
+		"message": "La valeur du champ \"SIREN\" (%1$s) est mal formatée.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_DOCUMENT_NO_PDF",
+		"level": "ERROR",
+		"message": "Aucun fichier PDF respectant les règles de nommage trouvé dans le dossier.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_IDURBA_INVALID",
+		"level": "ERROR",
+		"message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",
+		"documentation": "Vérification du format de IDURBA dans la table DOC_URBA."
+	},
+	{
+		"name": "CNIG_IDURBA_UNEXPECTED",
+		"level": "ERROR",
+		"message": "La valeur du champ \"IDURBA\" ({VALUE}) ne correspond pas à la valeur attendue ({EXPECTED_VALUE}).",
+		"documentation": "Vérification de la cohérence entre IDURBA et {NomDeDossier} sur les tables autres que DOC_URBA."
+	},
+	{
+		"name": "CNIG_IDURBA_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Aucune ligne correspondant au document n’a été trouvée dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_IDURBA_MULTIPLE_FOUND",
+		"level": "WARNING",
+		"message": "Plusieurs lignes correspondant au document trouvées dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_DOC_URBA_COM_UNEXPECTED_SIZE",
+		"level": "WARNING",
+		"message": "Nombre de communes insuffisant dans la table DOC_URBA_COM pour un PLUi",
+		"documentation": "Dans le cas d'un document de type PLUi, la table DOC_URBA_COM doit contenir la liste des communes sur lesquelles le document s'applique. Un PLUi couvrant au moins deux communes logiquement, le validateur lève un avertissement s'il y a moins de 2 lignes dans cette table."
+	},
+	{
+		"name": "CNIG_PERIMETRE_SCOT_UNEXPECTED_SIZE",
+		"level": "ERROR",
+		"message": "La table PERIMETRE_SCOT doit contenir une seule ligne.",
+		"documentation": "Dans le cas d'un SCOT, la table PERIMETRE_SCOT doit contenir une seule ligne."
+	},
+	{
+		"name": "CNIG_SUP_IDGEN_NOT_UNIQUE",
+		"level": "ERROR",
+		"message": "IDGEN='{IDGEN}' n'est pas unique dans les tables GENERATEUR_SUP_P/L/S",
+		"documentation": "Dans le cas d'une SUP, IDGEN doit être unique dans les tables GENERATEUR_SUP_P/L/S"
+	},
+	{
+		"name": "CNIG_SUP_IDASS_NOT_UNIQUE",
+		"level": "ERROR",
+		"message": "IDASS='{IDASS}' n'est pas unique dans les tables ASSIETTE_SUP_P/L/S",
+		"documentation": "Dans le cas d'une SUP, IDASS doit être unique dans les tables ASSIETTE_SUP_P/L/S"
+	},
+	{
+		"name": "CNIG_SUP_IDGEN_NOT_FOUND",
+		"level": "ERROR",
+		"message": "IDGEN='{IDGEN}' référencé par l'assiette IDASS='{IDASS}' n'existe pas dans les tables GENERATEUR_SUP_P/L/S",
+		"documentation": "Dans le cas d'une SUP, les valeurs IDGEN référencées par les tables ASSIETTE_SUP_P/L/S doivent exister dans GENERATEUR_SUP_P/L/S"
+	},
+	{
+		"name": "NO_SPATIAL_DATA",
+		"level": "ERROR",
+		"message": "Aucune donnée géographique trouvée dans le document.",
+		"documentation": "Calcul de la bbox impossible"
+	},
+	{
+		"name": "CNIG_METADATA_IDENTIFIER_INVALID",
+		"level": "INFO",
+		"message": "Le champ \"identificateur de ressource unique\" ({VALUE}) n'est pas égal à \"https://www.geoportail-urbanisme.gouv.fr/document/{DOCUMENT_NAME}\"",
+		"documentation": "Contrainte supprimée des CSMD PLU et SUP"
+	},
+	{
+		"name": "CNIG_METADATA_DATEOFLASTREVISION_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"date de dernière révision\" est requis pour les documents d'urbanisme et les SUP.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_SPECIFICATION_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Aucune \"spécification\" conforme aux consignes CNIG trouvée.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_TYPE_INVALID",
+		"level": "ERROR",
+		"message": "Le champ \"type de la ressource\" ({VALUE}) doit être égal à \"dataset\" pour les PLU, POS, CC, PSMV et les SUP.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Le champ \"Référentiel de coordonnées\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_NOT_FOUND",
+		"level": "WARNING",
+		"message": "Le code du \"Référentiel de coordonnées\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_CODE_INVALID",
+		"level": "WARNING",
+		"message": "Le code de projection ({CODE}) du \"Référentiel de coordonnées\" ne correspond pas à la valeur attendue ({EXPECTED_CODE}) pour l'URI ({URI}).",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND",
+		"level": "ERROR",
+		"message": "L'URI du \"Référentiel de coordonnées\" n'est pas renseignée.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED",
+		"level": "ERROR",
+		"message": "L'URI du \"Référentiel de coordonnées\" ({URI}) n'est pas reconnue par le validateur.",
+		"documentation": ""
+	},
+	{
+		"name": "CNIG_METADATA_KEYWORD_NOT_FOUND",
+		"level": "WARNING",
+		"message": "Le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'a pas été trouvé.",
+		"documentation": "Mot clé attendu non trouvé"
+	},
+	{
+		"name": "CNIG_METADATA_KEYWORD_INVALID",
+		"level": "WARNING",
+		"message": "La valeur '{VALUE} pour le mot clé '{NAME}' avec le thésaurus '{THESAURUS_NAME}' n'est pas valide (valeur attendue : '{EXPECTED_VALUE}').",
+		"documentation": "Mot clé trouvé mais ne correspondant pas à la valeur présente dans le nom de dossier du document."
+	},
+	{
+		"name": "DGPR_DOCUMENT_PREFIX_ERROR",
+		"level": "WARNING",
+		"message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
+		"documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
+	},
+	{
+		"name": "DGPR_FILENAME_PREFIX_ERROR",
+		"level": "ERROR",
+		"message": "Le nom du fichier {FILENAME} ne contient pas le prefixe TRI du répertoire {DOCUMENT_NAME}.",
+		"documentation": "Veuillez vérifier le nom du répertoire et des fichiers."
+	},
+	{
+		"name": "DGPR_VITESSE_MIN_ERROR",
+		"level": "ERROR",
+		"message": "La vitesse MIN {VALUE_MIN} est supérieure à la vitesse MAX {VALUE_MAX}.",
+		"documentation": ""
+	},
+	{
+		"name": "DGPR_TX_HAB_SAI_ERROR",
+		"level": "ERROR",
+		"message": "La valeur de TX_HAB_SAI {VALUE} n'est pas comprise entre 0 et 100.",
+		"documentation": ""
+	},
+	{
+		"name": "DGPR_AZIMUTH_ERROR",
+		"level": "ERROR",
+		"message": "La vitesse ({VALUE_VITESSE}) et/ou le débit linéique ({VALUE_DEBLIN}) est renseigné, mais l’azimuth est null.",
+		"documentation": "Standard DI v2 - B.3.8. Classe d'objets <Point_remarquable_cote_vitesse_debit> : Si la vitesse ou le débit linéique est renseigné, alors l’azimuth doit aussi être renseigné."
+	},
+	{
+		"name": "DGPR_DEBLIN_ERROR",
+		"level": "ERROR",
+		"message": "La valeur DEBLIN ({VALUE_MIN}) doit être non renseignée ou supérieure à 0.",
+		"documentation": ""
+	},
+	{
+		"name": "DGPR_DEBLIN_MIN_ERROR",
+		"level": "ERROR",
+		"message": "La valeur DEBLIN_MIN ({VALUE_MIN}) doit être supérieure à 0.",
+		"documentation": ""
+	},
+	{
+		"name": "DGPR_DEBLIN_MAX_ERROR",
+		"level": "ERROR",
+		"message": "La valeur DEBLIN_MAX ({VALUE_MAX}) doit être nulle ou supérieure à la valeur DEBLIN_MIN ({VALUE_MIN})",
+		"documentation": ""
+	},
+	{
+		"name": "DGPR_INOND_INCLUSION_ERROR",
+		"level": "ERROR",
+		"message": "La surface {ID_S_INOND} du scénario {SCENARIO_VALUE_FORT} n'est pas incluse dans le scénario {SCENARIO_VALUE_FAIBLE}.",
+		"documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
+	},
+	{
+		"name": "DGPR_INOND_INCLUSION_INVALID_GEOM",
+		"level": "ERROR",
+		"message": "Une ou plusieurs géométries sont invalides {LIST_ID_S_INOND}. Il n'est pas possible de tester l'inclusion du scénario {SCENARIO_VALUE_FORT} dans le scénario {SCENARIO_VALUE_FAIBLE}.",
+		"documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie d'inclusion."
+	},
+	{
+		"name": "DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND",
+		"level": "ERROR",
+		"message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND} à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable.",
+		"documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
+	},
+	{
+		"name": "DGPR_GRAPH_VALIDATION_OUT_OF_MEMORY",
+		"level": "WARNING",
+		"message": "Le validateur n'a pas déterminé si les {TABLE_NAME} constituent une partition de {ID_S_INOND}. Les géométries sont trop volumineuses ou complexes.",
+		"documentation": "Ce message intervient lorsque le validateur n’a pas assez de ressource mémoire pour effectuer les tests des partitionnement des surfaces inondables. Il faut voir si la géométrie des surfaces incriminées ne peuvent pas être simplifiées."
+	},
+	{
+		"name": "DGPR_ISO_HT_INTERSECTS",
+		"level": "ERROR",
+		"message": "Les {TABLE_NAME} {LIST_ID_ISO_HT} ne constituent pas une partition de {ID_S_INOND}. Leurs périmètres s'intersectent.",
+		"documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
+	},
     {
         "name": "DGPR_ISO_HT_GEOM_ERROR",
         "level": "ERROR",
         "message": "Une ou plusieurs géométries sont invalides. Il n'est pas possible de tester le partitionnement des surfaces inondables par les iso_ht / iso_db. Erreur complète : {POSTGIS_ERROR}",
         "documentation": "Cf. standard DI 2.0. Contrainte B.1.3 Topologie de graphe."
     },
-    {
-        "name": "DGPR_UNMATCHED_SCENARIO",
-        "level": "ERROR",
-        "message": "L'objet {ID} de la classe {TABLE_NAME} a un scénario ({VALUE_SCENARIO}) différent de celui de la surface inondable {ID_S_INOND} ({EXPECTED_SCENARIO}) à laquelle il est rattaché.",
-        "documentation": "Cf. standard DI 2.0. B.3.1 Classe d'objets <Carte_surfaces_inondables>"
-    },
-    {
-        "name": "DGPR_IDENTIFIER_UNICITY",
-        "level": "ERROR",
-        "message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
-        "documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_NOT_UNIQUE pour migration du contrôle dans validator-core"
-    },
-    {
-        "name": "DGPR_RELATION_ERROR",
-        "level": "ERROR",
-        "message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
-        "documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_REFERENCE_NOT_FOUND pour migration du contrôle dans validator-core"
-    }
+	{
+		"name": "DGPR_UNMATCHED_SCENARIO",
+		"level": "ERROR",
+		"message": "L'objet {ID} de la classe {TABLE_NAME} a un scénario ({VALUE_SCENARIO}) différent de celui de la surface inondable {ID_S_INOND} ({EXPECTED_SCENARIO}) à laquelle il est rattaché.",
+		"documentation": "Cf. standard DI 2.0. B.3.1 Classe d'objets <Carte_surfaces_inondables>"
+	},
+	{
+		"name": "DGPR_IDENTIFIER_UNICITY",
+		"level": "ERROR",
+		"message": "Problème dans la table {TABLE_NAME} : l'identifiant '{ID_NAME}' est présent {ID_COUNT} fois.",
+		"documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_NOT_UNIQUE pour migration du contrôle dans validator-core"
+	},
+	{
+		"name": "DGPR_RELATION_ERROR",
+		"level": "ERROR",
+		"message": "L'objet {ID_OBJECT} de la table {ORIGIN_TABLE} doit faire référence à un objet de la table {REFERENCE_TABLE} via l'attribut {REFERENCE_NAME}. L'attribut n'est pas renseigné ({REF_VALUE}) ou alors la relation n'est pas vérifiée.",
+		"documentation": "[DEPRECATED] Remplacé par ATTRIBUTE_REFERENCE_NOT_FOUND pour migration du contrôle dans validator-core"
+	}
 ]
