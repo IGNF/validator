@@ -58,11 +58,20 @@ public class DatabaseSUP {
      * GENERATEUR_SUP_(P/L/S) / GenerateurSup in CNIG standard ("idgen","idsup")
      */
     public static final String TABLE_GENERATEUR = "generateur";
+    /**
+     * Regex to find and merge GENERATEUR_SUP tables.
+     */
+    public static final String REGEX_TABLE_GENERATEUR = "(?i).*_GENERATEUR_SUP_.*";
 
     /**
      * ASSIETTE_SUP_(P/L/S) / AssietteSup in CNIG standard ("idass","idgen")
      */
     public static final String TABLE_ASSIETTE = "assiette";
+
+    /**
+     * Regex to find and merge ASSIETTE_SUP tables.
+     */
+    public static final String REGEX_TABLE_ASSIETTE = "(?i).*_ASSIETTE_SUP_.*";
 
     public static final String COLUMN_IDSUP = "idsup";
     public static final String COLUMN_NOMSUPLITT = "nomsuplitt";
@@ -109,11 +118,8 @@ public class DatabaseSUP {
      * @param tempDirectory
      * @throws SQLException
      */
-    public DatabaseSUP(File tempDirectory) throws SQLException {
-        File databasePath = new File(tempDirectory, "jointure_sup.db");
-        log.info(MARKER, "Create DatabaseSUP ...");
-        this.database = new Database(databasePath);
-        createSchema();
+    public DatabaseSUP(Database database) throws SQLException {
+        this.database = database;
     }
 
     /**
@@ -130,8 +136,9 @@ public class DatabaseSUP {
      * 
      * @throws SQLException
      */
-    private void createSchema() throws SQLException {
-        log.info(MARKER, "Create schema ...");
+    @Deprecated
+    void createFullSchema() throws SQLException {
+        log.info(MARKER, "Create full schema ...");
         createTableServitude();
         createTableActe();
         createTableServitudeActe();
@@ -146,6 +153,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #loadTableServitude(File)}
      */
+    @Deprecated
     private void createTableServitude() throws SQLException {
         List<String> columns = new ArrayList<>();
         columns.add(COLUMN_IDSUP);
@@ -161,6 +169,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #loadTableActe(File)}
      */
+    @Deprecated
     private void createTableActe() throws SQLException {
         List<String> columns = new ArrayList<>();
         columns.add(COLUMN_IDACTE);
@@ -176,6 +185,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #loadTableServitudeActe(File)}
      */
+    @Deprecated
     private void createTableServitudeActe() throws SQLException {
         List<String> columns = new ArrayList<>();
         columns.add(COLUMN_IDSUP);
@@ -191,7 +201,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #loadTableGenerateur(File)}
      */
-    private void createTableGenerateur() throws SQLException {
+    void createTableGenerateur() throws SQLException {
         List<String> columns = new ArrayList<>();
         columns.add(COLUMN_IDGEN);
         columns.add(COLUMN_IDSUP);
@@ -206,7 +216,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #loadTableAssiette(File)}
      */
-    private void createTableAssiete() throws SQLException {
+    void createTableAssiete() throws SQLException {
         List<String> columns = new ArrayList<>();
         columns.add(COLUMN_IDASS);
         columns.add(COLUMN_IDGEN);
@@ -222,6 +232,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #createTableServitude()}
      */
+    @Deprecated
     public void loadTableServitude(File servitudeFile) throws Exception {
         log.info(MARKER, "load table SERVITUDE from {}...", servitudeFile);
         TableReader reader = TableReader.createTableReader(servitudeFile, StandardCharsets.UTF_8);
@@ -259,6 +270,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #createTableActe()}
      */
+    @Deprecated
     public void loadTableActe(File acteSupFile) throws Exception {
         log.info(MARKER, "load table ACTE_SUP from {}...", acteSupFile);
         TableReader reader = TableReader.createTableReader(acteSupFile, StandardCharsets.UTF_8);
@@ -293,6 +305,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #createTableServitudeActe()}
      */
+    @Deprecated
     public void loadTableServitudeActe(File servitudeActeSupFile) throws Exception {
         log.info(MARKER, "load table SERVITUDE_ACTE_SUP from {}...", servitudeActeSupFile);
         TableReader reader = TableReader.createTableReader(servitudeActeSupFile, StandardCharsets.UTF_8);
@@ -320,6 +333,20 @@ public class DatabaseSUP {
     }
 
     /**
+     * Insert rows from tableName into TABLE_GENERATEUR.
+     * 
+     * @param tableName
+     * @throws SQLException
+     */
+    void loadGenerateursFromTable(String tableName) throws SQLException {
+        log.info(MARKER, "Merge {} into {} ...", tableName, TABLE_GENERATEUR);
+        String sql = "INSERT INTO " + TABLE_GENERATEUR + "(" + COLUMN_IDGEN + "," + COLUMN_IDSUP + ") ";
+        sql += " SELECT " + COLUMN_IDGEN + "," + COLUMN_IDSUP + " FROM " + tableName;
+        database.update(sql);
+        getConnection().commit();
+    }
+
+    /**
      * Load a CSV file into TABLE_GENERATEUR.
      * 
      * @param generateurSupFile
@@ -327,6 +354,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #createTableGenerateur()}
      */
+    @Deprecated
     public void loadTableGenerateur(File generateurSupFile) throws Exception {
         log.info(MARKER, "load table GENERATEUR from {}...", generateurSupFile);
         TableReader reader = TableReader.createTableReader(generateurSupFile, StandardCharsets.UTF_8);
@@ -354,6 +382,20 @@ public class DatabaseSUP {
     }
 
     /**
+     * Insert rows from tableName into TABLE_ASSIETTE.
+     * 
+     * @param tableName
+     * @throws SQLException
+     */
+    void loadAssiettesFromTable(String tableName) throws SQLException {
+        log.info(MARKER, "Merge {} into {} ...", tableName, TABLE_ASSIETTE);
+        String sql = "INSERT INTO " + TABLE_ASSIETTE + "(" + COLUMN_IDASS + "," + COLUMN_IDGEN + ") ";
+        sql += " SELECT " + COLUMN_IDASS + "," + COLUMN_IDGEN + " FROM " + tableName;
+        database.update(sql);
+        getConnection().commit();
+    }
+
+    /**
      * Load a CSV file into TABLE_ASSIETTE.
      * 
      * @param path
@@ -361,6 +403,7 @@ public class DatabaseSUP {
      * 
      * @see {@link #createTableAssiete()}
      */
+    @Deprecated
     public void loadTableAssiette(File assietteSupFile) throws Exception {
         log.info(MARKER, "load table GENERATEUR from {}...", assietteSupFile);
         TableReader reader = TableReader.createTableReader(assietteSupFile, StandardCharsets.UTF_8);
@@ -388,7 +431,7 @@ public class DatabaseSUP {
     }
 
     /**
-     * Return the number of rows in TABLE_ACTE.
+     * Return the number of rows in a given table.
      * 
      * @return
      * @throws SQLException
@@ -404,7 +447,7 @@ public class DatabaseSUP {
      * @return
      */
     public List<ActeServitude> findActesByGenerateur(String idGen) {
-        String sql = "SELECT DISTINCT a.* FROM acte_sup a "
+        String sql = "SELECT DISTINCT a.idacte,a.fichier FROM acte_sup a "
             + " LEFT JOIN servitude_acte_sup sa ON a.idacte = sa.idacte "
             + " LEFT JOIN generateur ON generateur.idsup = sa.idsup "
             + " WHERE generateur.idgen = ?";
@@ -424,7 +467,7 @@ public class DatabaseSUP {
      * @return
      */
     public List<ActeServitude> findActesByAssiette(String idAss) {
-        String sql = "SELECT DISTINCT a.* FROM acte_sup a "
+        String sql = "SELECT DISTINCT a.idacte,a.fichier FROM acte_sup a "
             + " LEFT JOIN servitude_acte_sup sa ON a.idacte = sa.idacte "
             + " LEFT JOIN generateur ON generateur.idsup = sa.idsup "
             + " LEFT JOIN assiette ON assiette.idgen = generateur.idgen "
@@ -477,7 +520,7 @@ public class DatabaseSUP {
      * @return
      */
     public List<Servitude> findServitudesByGenerateur(String idGen) {
-        String sql = "SELECT DISTINCT s.* FROM generateur g "
+        String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt FROM generateur g "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE g.idgen = ?";
         try {
@@ -496,7 +539,7 @@ public class DatabaseSUP {
      * @return
      */
     public List<Servitude> findServitudesByAssiette(String idAss) {
-        String sql = "SELECT DISTINCT s.* FROM assiette a "
+        String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt FROM assiette a "
             + " LEFT JOIN generateur g ON a.idgen = g.idgen "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE a.idass = ?";
@@ -574,7 +617,7 @@ public class DatabaseSUP {
      * @throws IOException
      */
     public List<AssietteSup> findAssiettesWithInvalidIDGEN(int limit) throws SQLException, IOException {
-        String sql = "SELECT a.* FROM assiette a ";
+        String sql = "SELECT a.idass,a.idgen FROM assiette a ";
         sql += " WHERE NOT EXISTS (SELECT * FROM generateur g WHERE g.idgen = a.idgen ) LIMIT ?";
         try {
             PreparedStatement sth = getConnection().prepareStatement(sql);
@@ -602,4 +645,5 @@ public class DatabaseSUP {
         }
         return result;
     }
+
 }

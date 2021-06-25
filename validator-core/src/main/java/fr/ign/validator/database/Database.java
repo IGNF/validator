@@ -483,7 +483,7 @@ public class Database implements Closeable {
      * @return
      * @throws SQLException
      */
-    private void update(String sql) throws SQLException {
+    public void update(String sql) throws SQLException {
         log.debug(MARKER, sql);
         Statement sth = connection.createStatement();
         sth.executeUpdate(sql);

@@ -89,7 +89,7 @@ public class SupRelationsPostProcess implements ValidatorListener {
          */
         File tempDirectory = getTempDirectory(context);
         DatabaseSUPFactory databaseFactory = new DatabaseSUPFactory(tempDirectory);
-        DatabaseSUP database = databaseFactory.createFromDataDirectory(context.getDataDirectory());
+        DatabaseSUP database = databaseFactory.createFromValidationDatabase(context);
         if (database == null) {
             log.warn(MARKER, "skipped due to failure in DatabaseSUP creation");
             return;
@@ -128,7 +128,11 @@ public class SupRelationsPostProcess implements ValidatorListener {
      * Get temp directory
      */
     private File getTempDirectory(Context context) {
-        return new File(context.getDataDirectory(), "tmp");
+        File tempDirectory = new File(context.getDataDirectory(), "tmp");
+        if (!tempDirectory.exists()) {
+            tempDirectory.mkdirs();
+        }
+        return tempDirectory;
     }
 
 }
