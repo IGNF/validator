@@ -92,10 +92,8 @@ public class ProjectionTransformTest {
 
         File reference = ResourceHelper.getResourceFile(getClass(), "/projection/reference_postgis.csv");
         TableReader reader = TableReader.createTableReader(reference, StandardCharsets.UTF_8);
-        int indexSource = reader.findColumn(sourceSRID);
-        int indexTarget = reader.findColumn(targetSRID);
-        Assert.assertTrue(indexSource >= 0);
-        Assert.assertTrue(indexTarget >= 0);
+        int indexSource = reader.findColumnRequired(sourceSRID);
+        int indexTarget = reader.findColumnRequired(targetSRID);
 
         WKTReader wktReader = new WKTReader();
         while (reader.hasNext()) {

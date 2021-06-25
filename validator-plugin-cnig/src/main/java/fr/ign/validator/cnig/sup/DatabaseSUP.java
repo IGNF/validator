@@ -226,11 +226,7 @@ public class DatabaseSUP {
         log.info(MARKER, "load table SERVITUDE from {}...", servitudeFile);
         TableReader reader = TableReader.createTableReader(servitudeFile, StandardCharsets.UTF_8);
 
-        int indexIdSup = reader.findColumn(COLUMN_IDSUP);
-        if (indexIdSup < 0) {
-            throw new IOException("Column IDSUP not found");
-        }
-
+        int indexIdSup = reader.findColumnRequired(COLUMN_IDSUP);
         int indexNomSupLitt = reader.findColumn(COLUMN_NOMSUPLITT);
         if (indexNomSupLitt < 0) {
             log.warn(MARKER, "Column NOMSUPLITT not found, using empty values (optional)");
@@ -267,15 +263,8 @@ public class DatabaseSUP {
         log.info(MARKER, "load table ACTE_SUP from {}...", acteSupFile);
         TableReader reader = TableReader.createTableReader(acteSupFile, StandardCharsets.UTF_8);
 
-        int indexIdActe = reader.findColumn(COLUMN_IDACTE);
-        if (indexIdActe < 0) {
-            throw new IOException("Column IDACTE not found");
-        }
-
-        int indexFichier = reader.findColumn(COLUMN_FICHIER);
-        if (indexFichier < 0) {
-            throw new IOException("Colonne FICHIER non trouvée");
-        }
+        int indexIdActe = reader.findColumnRequired(COLUMN_IDACTE);
+        int indexFichier = reader.findColumnRequired(COLUMN_FICHIER);
 
         PreparedStatement sth = getConnection().prepareStatement(
             "INSERT INTO acte_sup (idacte,fichier) VALUES (?,?)"
@@ -308,15 +297,8 @@ public class DatabaseSUP {
         log.info(MARKER, "load table SERVITUDE_ACTE_SUP from {}...", servitudeActeSupFile);
         TableReader reader = TableReader.createTableReader(servitudeActeSupFile, StandardCharsets.UTF_8);
 
-        int indexIdSup = reader.findColumn(COLUMN_IDSUP);
-        if (indexIdSup < 0) {
-            throw new IOException("Colonne idSup non trouvée");
-        }
-
-        int indexIdActe = reader.findColumn(COLUMN_IDACTE);
-        if (indexIdActe < 0) {
-            throw new IOException("Colonne idActe non trouvée");
-        }
+        int indexIdSup = reader.findColumnRequired(COLUMN_IDSUP);
+        int indexIdActe = reader.findColumnRequired(COLUMN_IDACTE);
 
         PreparedStatement sth = getConnection().prepareStatement(
             "INSERT INTO servitude_acte_sup (idsup,idacte) VALUES (?,?)"
@@ -349,15 +331,8 @@ public class DatabaseSUP {
         log.info(MARKER, "load table GENERATEUR from {}...", generateurSupFile);
         TableReader reader = TableReader.createTableReader(generateurSupFile, StandardCharsets.UTF_8);
 
-        int indexIdGen = reader.findColumn(COLUMN_IDGEN);
-        if (indexIdGen < 0) {
-            throw new IOException("Colonne IDGEN non trouvée");
-        }
-
-        int indexIdSup = reader.findColumn(COLUMN_IDSUP);
-        if (indexIdSup < 0) {
-            throw new IOException("Colonne idSup non trouvée");
-        }
+        int indexIdGen = reader.findColumnRequired(COLUMN_IDGEN);
+        int indexIdSup = reader.findColumnRequired(COLUMN_IDSUP);
 
         PreparedStatement sth = getConnection().prepareStatement(
             "INSERT INTO generateur (idgen,idsup) VALUES (?,?)"
@@ -390,15 +365,8 @@ public class DatabaseSUP {
         log.info(MARKER, "load table GENERATEUR from {}...", assietteSupFile);
         TableReader reader = TableReader.createTableReader(assietteSupFile, StandardCharsets.UTF_8);
 
-        int indexIdAss = reader.findColumn(COLUMN_IDASS);
-        if (indexIdAss < 0) {
-            throw new IOException("Colonne IDASS non trouvée");
-        }
-
-        int indexIdGen = reader.findColumn(COLUMN_IDGEN);
-        if (indexIdGen < 0) {
-            throw new IOException("Colonne IDGEN non trouvée");
-        }
+        int indexIdAss = reader.findColumnRequired(COLUMN_IDASS);
+        int indexIdGen = reader.findColumnRequired(COLUMN_IDGEN);
 
         PreparedStatement sth = getConnection().prepareStatement(
             "INSERT INTO assiette (idass,idgen) VALUES (?,?)"
