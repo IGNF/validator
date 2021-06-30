@@ -1,0 +1,8 @@
+[
+	{
+		"name": "VALIDATOR_PROJECTION_INFO",
+		"level": "INFO",
+		"message": "The projection {CODE_PROJECTION} ({URI_PROJECTION}) is configured for the validation."
+	}
+]
+

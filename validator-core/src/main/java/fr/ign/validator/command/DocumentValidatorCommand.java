@@ -84,6 +84,11 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected ReportBuilder reportBuilder;
 
     /**
+     * Optional path to overwrite error code configuration.
+     */
+    protected File errorConfig;
+
+    /**
      * data projection
      */
     protected Projection projection;
@@ -160,6 +165,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         buildValidationDirectoryOption(options);
         buildReportBuilderOptions(options);
+        buildErrorConfigOption(options);
         buildNormalizeOption(options);
 
         /*
@@ -192,6 +198,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         parseValidationDirectory(commandLine);
         parseReportBuilder(commandLine);
+        parseErrorConfigOption(commandLine);
         parseNormalizeOption(commandLine);
 
         /*
@@ -233,6 +240,16 @@ public class DocumentValidatorCommand extends AbstractCommand {
         context.setValidationDirectory(validationDirectory);
         context.setReportBuilder(reportBuilder);
 
+        /*
+         * configure error codes
+         */
+        if (this.errorConfig != null) {
+            context.getErrorFactory().loadErrorCodes(this.errorConfig);
+        }
+
+        /*
+         * configure output mode
+         */
         context.setNormalizeEnabled(normalize);
 
         /*
@@ -482,6 +499,48 @@ public class DocumentValidatorCommand extends AbstractCommand {
             Option option = new Option(null, "max-errors", true, "Maximum number of error reported for a same code");
             option.setRequired(false);
             options.addOption(option);
+        }
+    }
+
+    /**
+     * Add option --error-config to the command line.
+     * 
+     * @param options
+     */
+    protected void buildErrorConfigOption(Options options) {
+        {
+            Option option = new Option(
+                null, "error-config", true, "Custom error-config.json file to overwrite some error code configuration (message, level,...)"
+            );
+            option.setRequired(true);
+            options.addOption(option);
+        }
+    }
+
+    /**
+     * Retrieve --normalize option.
+     * 
+     * @param commandLine
+     */
+    protected void parseErrorConfigOption(CommandLine commandLine) throws ParseException {
+        if (!commandLine.hasOption("error-config")) {
+            this.errorConfig = null;
+            return;
+        }
+        this.errorConfig = new File(commandLine.getOptionValue("error-config"));
+        if (!documentPath.exists()) {
+            String message = String.format(
+                "Invalid parameter 'error-config' : '%1s' (file not found)", this.errorConfig
+            );
+            log.error(MARKER, message);
+            throw new ParseException(message);
+        }
+        if (documentPath.isDirectory()) {
+            String message = String.format(
+                "Invalid parameter 'error-config' : '%1s' (file is a directory)", this.errorConfig
+            );
+            log.error(MARKER, message);
+            throw new ParseException(message);
         }
     }
 
