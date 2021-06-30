@@ -17,6 +17,7 @@
       "type": "String",
       "constraints": {
         "required": false,
+        "minLength": 5,
         "maxLength": 254
       }
     },

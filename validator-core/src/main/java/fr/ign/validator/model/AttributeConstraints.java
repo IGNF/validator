@@ -46,7 +46,15 @@ public class AttributeConstraints {
      */
     private String pattern;
 
-    // TODO add private Integer minLength
+    /**
+     * Minimum length of the value
+     * 
+     * @see fr.ign.validator.validation.attribute.MinLengthValidator
+     * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_TOO_SHORT
+     * 
+     * @since 4.1
+     */
+    private Integer minLength;
 
     /**
      * Maximum length of the value
@@ -111,6 +119,14 @@ public class AttributeConstraints {
 
     public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
+    }
+
+    public Integer getMinLength() {
+        return minLength;
+    }
+
+    public void setMinLength(Integer minLength) {
+        this.minLength = minLength;
     }
 
     /**

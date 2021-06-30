@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.FilenameExistsValidator;
 import fr.ign.validator.validation.attribute.MaxLengthValidator;
+import fr.ign.validator.validation.attribute.MinLengthValidator;
 
 /**
  * 
@@ -24,6 +25,7 @@ public class FilenameType extends AttributeType<File> {
 
     public FilenameType() {
         super(File.class);
+        addValidator(new MinLengthValidator<File>());
         addValidator(new MaxLengthValidator<File>());
         addValidator(new FilenameExistsValidator());
     }

@@ -176,7 +176,9 @@ public class CoreErrorCodes {
      * ErrorCode for error in Features and Attributes
      */
     public static final ErrorCode ATTRIBUTE_INVALID_FORMAT = ErrorCode.valueOf("ATTRIBUTE_INVALID_FORMAT");
+    public static final ErrorCode ATTRIBUTE_SIZE_TOO_SHORT = ErrorCode.valueOf("ATTRIBUTE_SIZE_TOO_SHORT");
     public static final ErrorCode ATTRIBUTE_SIZE_EXCEEDED = ErrorCode.valueOf("ATTRIBUTE_SIZE_EXCEEDED");
+
     public static final ErrorCode ATTRIBUTE_INVALID_REGEXP = ErrorCode.valueOf("ATTRIBUTE_INVALID_REGEXP");
     public static final ErrorCode ATTRIBUTE_UNEXPECTED_VALUE = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_VALUE");
     public static final ErrorCode ATTRIBUTE_UNEXPECTED_NULL = ErrorCode.valueOf("ATTRIBUTE_UNEXPECTED_NULL");
