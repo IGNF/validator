@@ -1,9 +1,14 @@
 package fr.ign.validator.error;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +17,8 @@ import org.apache.logging.log4j.MarkerManager;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.ign.validator.exception.InvalidErrorConfigException;
 
 /**
  * 
@@ -28,19 +35,10 @@ public class ErrorFactory {
     /**
      * ValidatorError prototypes with template messages
      */
-    private List<ValidatorError> prototypes = new ArrayList<ValidatorError>();
+    private Map<ErrorCode, ValidatorError> prototypes = new LinkedHashMap<ErrorCode, ValidatorError>();
 
     public ErrorFactory() {
         loadDefaultErrors();
-    }
-
-    /**
-     * Gets loaded prototypes
-     * 
-     * @return
-     */
-    public List<ValidatorError> getPrototypes() {
-        return prototypes;
     }
 
     /**
@@ -63,34 +61,77 @@ public class ErrorFactory {
     }
 
     /**
+     * Gets loaded prototypes
+     * 
+     * @return
+     */
+    public Collection<ValidatorError> getPrototypes() {
+        return prototypes.values();
+    }
+
+    /**
      * Finds prototype for the given code
      * 
      * @param code
      * @return
      */
     private ValidatorError findPrototype(ErrorCode code) {
-        for (ValidatorError validatorError : prototypes) {
-            if (validatorError.getCode().equals(code)) {
-                return validatorError;
-            }
+        return prototypes.get(code);
+    }
+
+    /**
+     * Add or replace a prototype
+     * 
+     * @param validatorError
+     */
+    private void addOrReplacePrototype(ValidatorError validatorError) {
+        log.trace(MARKER, "Register template for code '{}' ...", validatorError.getCode());
+        prototypes.put(validatorError.getCode(), validatorError);
+    }
+
+    /**
+     * Load error codes from a given file.
+     * 
+     * @param errorConfigPath
+     * @throws FileNotFoundException
+     */
+    public void loadErrorCodes(File errorConfigPath) {
+        log.info(MARKER, "Loading errors from {} ...", errorConfigPath);
+        try {
+            InputStream is = new FileInputStream(errorConfigPath);
+            loadErrorCodes(is);
+        } catch (FileNotFoundException e) {
+            String message = String.format("file '%1s' not found", errorConfigPath);
+            throw new InvalidErrorConfigException(message, e);
         }
-        return null;
     }
 
     /**
      * Loads default error templates from
      * validator-core/src/main/resources/error-code.json
-     * 
-     * @throws IOException
      */
     private void loadDefaultErrors() {
+        log.trace(MARKER, "Loading errors from validator-core/src/main/resources/error-code.json ...");
+        InputStream is = getClass().getResourceAsStream("/error-code.json");
+        loadErrorCodes(is);
+    }
+
+    /**
+     * Load error codes from an input stream.
+     * 
+     * @param is
+     */
+    private void loadErrorCodes(InputStream is) {
         try {
-            InputStream is = getClass().getResourceAsStream("/error-code.json");
             ObjectMapper mapper = new ObjectMapper();
-            this.prototypes = mapper.readValue(is, new TypeReference<List<ValidatorError>>() {
+            List<ValidatorError> validatorErrors = mapper.readValue(is, new TypeReference<List<ValidatorError>>() {
             });
+            for (ValidatorError validatorError : validatorErrors) {
+                addOrReplacePrototype(validatorError);
+            }
         } catch (IOException e) {
-            throw new RuntimeException("Fail to load error-code.json", e);
+            String message = String.format("Fail to read error templates");
+            throw new InvalidErrorConfigException(message, e);
         }
     }
 
