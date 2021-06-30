@@ -510,7 +510,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected void buildErrorConfigOption(Options options) {
         {
             Option option = new Option(
-                null, "error-config", true, "Custom error-config.json file to overwrite some error code configuration (message, level,...)"
+                null, "error-config", true,
+                "Custom error-config.json file to overwrite some error code configuration (message, level,...)"
             );
             option.setRequired(true);
             options.addOption(option);
