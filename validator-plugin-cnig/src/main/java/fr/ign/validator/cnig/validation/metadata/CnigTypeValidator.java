@@ -1,14 +1,9 @@
 package fr.ign.validator.cnig.validation.metadata;
 
 import fr.ign.validator.Context;
-import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.data.Document;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.code.ScopeCode;
-import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.MetadataModel;
-import fr.ign.validator.validation.Validator;
 
 /**
  * Ensures that "type" is defined to "dataset"

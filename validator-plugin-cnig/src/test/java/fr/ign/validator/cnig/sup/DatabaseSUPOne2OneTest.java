@@ -33,7 +33,7 @@ public class DatabaseSUPOne2OneTest {
 
     @Before
     public void setUp() throws Exception {
-        DatabaseSUPFactory factory = new DatabaseSUPFactory(folder.getRoot());
+        TestDatabaseFactory factory = new TestDatabaseFactory(folder.getRoot());
         File dataDirectory = ResourceHelper.getResourceFile(getClass(), "/jointure_sup/one2one/DATA");
         db = factory.createFromDataDirectory(dataDirectory);
     }

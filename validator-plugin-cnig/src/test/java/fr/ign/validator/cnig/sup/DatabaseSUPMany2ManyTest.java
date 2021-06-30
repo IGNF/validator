@@ -35,7 +35,7 @@ public class DatabaseSUPMany2ManyTest {
 
     @Before
     public void setUp() throws Exception {
-        DatabaseSUPFactory factory = new DatabaseSUPFactory(folder.getRoot());
+        TestDatabaseFactory factory = new TestDatabaseFactory(folder.getRoot());
         File dataDirectory = ResourceHelper.getResourceFile(getClass(), "/jointure_sup/many2many/DATA");
         db = factory.createFromDataDirectory(dataDirectory);
     }

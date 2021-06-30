@@ -8,6 +8,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import fr.ign.validator.cnig.sup.DatabaseSUP;
+
 /**
  * Helper to locate CSV files in output directory.
  * 
@@ -35,11 +37,11 @@ public class FileLocator {
     }
 
     public List<File> findGenerateurSupFiles() {
-        return findByRegex("(?i).*_GENERATEUR_SUP_.*");
+        return findByRegex(DatabaseSUP.REGEX_TABLE_GENERATEUR);
     }
 
     public List<File> findAssietteSupFiles() {
-        return findByRegex("(?i).*_ASSIETTE_SUP_.*");
+        return findByRegex(DatabaseSUP.REGEX_TABLE_ASSIETTE);
     }
 
     /**

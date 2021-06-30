@@ -17,6 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.exception.ColumnNotFoundException;
+
 /**
  * Read spatial and non spatial tables from different formats (CSV, Shapefile,
  * MapInfo, GML, GeoJSON,...).
@@ -177,6 +179,22 @@ public class TableReader implements Iterator<String[]> {
      */
     public int findColumn(String name) {
         return HeaderHelper.findColumn(header, name);
+    }
+
+    /**
+     * Same as {@link #findColumn(String)} throwing exception when column is not
+     * found.
+     * 
+     * @param name
+     * @return
+     * @throws ColumnNotFoundException
+     */
+    public int findColumnRequired(String name) throws ColumnNotFoundException {
+        int index = findColumn(name);
+        if (index < 0) {
+            throw new ColumnNotFoundException(name);
+        }
+        return index;
     }
 
     /**
