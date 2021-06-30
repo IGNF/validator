@@ -15,7 +15,6 @@ import fr.ign.validator.cnig.model.DocumentModelName;
 import fr.ign.validator.cnig.model.DocumentType;
 import fr.ign.validator.cnig.sup.AdditionalColumnsBuilder;
 import fr.ign.validator.cnig.sup.DatabaseSUP;
-import fr.ign.validator.cnig.sup.DatabaseSUPFactory;
 import fr.ign.validator.cnig.validation.database.IdassIsUniqueValidator;
 import fr.ign.validator.cnig.validation.database.IdgenExistsValidator;
 import fr.ign.validator.cnig.validation.database.IdgenIsUniqueValidator;
@@ -88,8 +87,7 @@ public class SupRelationsPostProcess implements ValidatorListener {
          * Create DatabaseSUP instance to explore relations.
          */
         File tempDirectory = getTempDirectory(context);
-        DatabaseSUPFactory databaseFactory = new DatabaseSUPFactory(tempDirectory);
-        DatabaseSUP database = databaseFactory.createFromValidationDatabase(context);
+        DatabaseSUP database = DatabaseSUP.createFromValidationDatabase(context);
         if (database == null) {
             log.warn(MARKER, "skipped due to failure in DatabaseSUP creation");
             return;

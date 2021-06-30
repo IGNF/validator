@@ -34,7 +34,7 @@ public class DatabaseSUPDuplicatedIdgenTest {
 
     @Before
     public void setUp() throws Exception {
-        DatabaseSUPFactory factory = new DatabaseSUPFactory(folder.getRoot());
+        TestDatabaseFactory factory = new TestDatabaseFactory(folder.getRoot());
         File dataDirectory = ResourceHelper.getResourceFile(getClass(), "/jointure_sup/idgen_not_unique/DATA");
         db = factory.createFromDataDirectory(dataDirectory);
     }

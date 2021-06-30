@@ -24,17 +24,14 @@ public class FileLocator {
         this.dataDirectory = dataDirectory;
     }
 
-    @Deprecated
     public File findServitudeFile() {
         return findByName("SERVITUDE");
     }
 
-    @Deprecated
     public File findActeSupFile() {
         return findByName("ACTE_SUP");
     }
 
-    @Deprecated
     public File findServitudeActeSupFile() {
         return findByName("SERVITUDE_ACTE_SUP");
     }

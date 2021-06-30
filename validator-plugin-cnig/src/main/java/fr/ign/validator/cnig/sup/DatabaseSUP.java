@@ -2,7 +2,6 @@ package fr.ign.validator.cnig.sup;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,17 +15,18 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.internal.DuplicatedValuesFinder;
 import fr.ign.validator.database.internal.DuplicatedValuesFinder.DuplicatedValue;
-import fr.ign.validator.tools.TableReader;
+import fr.ign.validator.model.FileModel;
 
 /**
  * 
  * Helper class to manipulate relations between ACTE, SERVITUDE, GENERATEUR and
  * ASSIETTE files.
  * 
- * @warning relies on utf-8 encoded CSV files in data directory.
+ * @warning it relies on merged GENERATEUR and ASSIETTE tables.
  * 
  * @see http://cnig.gouv.fr/wp-content/uploads/2014/09/20140930_STANDARD_SUP_V2013.pdf#page=20&zoom=auto,-260,773
  * @see https://github.com/IGNF/validator/issues/176 (except TABLE_GENERATEUR
@@ -123,75 +123,45 @@ public class DatabaseSUP {
     }
 
     /**
+     * Create DatabaseSUP merging GENERATEUR and ASSIETTE tables in the validation
+     * database.
+     * 
+     * @param validationDatabase
+     * @return
+     */
+    public static DatabaseSUP createFromValidationDatabase(Context context) {
+        try {
+            /*
+             * open previously created validation database
+             */
+            Database validationDatabase = Database.createDatabase(context, false);
+            DatabaseSUP database = new DatabaseSUP(validationDatabase);
+            /* create merged tables */
+            database.createTableGenerateur();
+            database.createTableAssiete();
+            /* fill merged tables */
+            for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
+                String tableName = fileModel.getName();
+                if (tableName.matches(DatabaseSUP.REGEX_TABLE_ASSIETTE)) {
+                    database.loadAssiettesFromTable(tableName);
+                } else if (tableName.matches(DatabaseSUP.REGEX_TABLE_GENERATEUR)) {
+                    database.loadGenerateursFromTable(tableName);
+                }
+            }
+            return database;
+        } catch (SQLException e) {
+            log.error(MARKER, "Fail to create DatabaseSUP from ValidationDatabase", e);
+            return null;
+        }
+    }
+
+    /**
      * Get database connection
      * 
      * @return
      */
     private Connection getConnection() {
         return database.getConnection();
-    }
-
-    /**
-     * Create SQL schema for DatabaseJointureSUP
-     * 
-     * @throws SQLException
-     */
-    @Deprecated
-    void createFullSchema() throws SQLException {
-        log.info(MARKER, "Create full schema ...");
-        createTableServitude();
-        createTableActe();
-        createTableServitudeActe();
-        createTableGenerateur();
-        createTableAssiete();
-    }
-
-    /**
-     * Create SQL table "servitude".
-     *
-     * @throws SQLException
-     * 
-     * @see {@link #loadTableServitude(File)}
-     */
-    @Deprecated
-    private void createTableServitude() throws SQLException {
-        List<String> columns = new ArrayList<>();
-        columns.add(COLUMN_IDSUP);
-        columns.add(COLUMN_NOMSUPLITT);
-        database.createTable(TABLE_SERVITUDE, columns);
-        database.createIndex(TABLE_SERVITUDE, COLUMN_IDSUP);
-    }
-
-    /**
-     * Create SQL table "acte_sup".
-     *
-     * @throws SQLException
-     * 
-     * @see {@link #loadTableActe(File)}
-     */
-    @Deprecated
-    private void createTableActe() throws SQLException {
-        List<String> columns = new ArrayList<>();
-        columns.add(COLUMN_IDACTE);
-        columns.add(COLUMN_FICHIER);
-        database.createTable(TABLE_ACTE, columns);
-        database.createIndex(TABLE_ACTE, COLUMN_IDACTE);
-    }
-
-    /**
-     * Create SQL table "servitude_acte_sup".
-     * 
-     * @throws SQLException
-     * 
-     * @see {@link #loadTableServitudeActe(File)}
-     */
-    @Deprecated
-    private void createTableServitudeActe() throws SQLException {
-        List<String> columns = new ArrayList<>();
-        columns.add(COLUMN_IDSUP);
-        columns.add(COLUMN_IDACTE);
-        database.createTable(TABLE_SERVITUDE_ACTE, columns);
-        database.createIndex(TABLE_SERVITUDE_ACTE, COLUMN_IDSUP);
     }
 
     /**
@@ -225,114 +195,6 @@ public class DatabaseSUP {
     }
 
     /**
-     * Load a CSV file into TABLE_SERVITUDE.
-     * 
-     * @param servitudeFile
-     * @throws Exception
-     * 
-     * @see {@link #createTableServitude()}
-     */
-    @Deprecated
-    public void loadTableServitude(File servitudeFile) throws Exception {
-        log.info(MARKER, "load table SERVITUDE from {}...", servitudeFile);
-        TableReader reader = TableReader.createTableReader(servitudeFile, StandardCharsets.UTF_8);
-
-        int indexIdSup = reader.findColumnRequired(COLUMN_IDSUP);
-        int indexNomSupLitt = reader.findColumn(COLUMN_NOMSUPLITT);
-        if (indexNomSupLitt < 0) {
-            log.warn(MARKER, "Column NOMSUPLITT not found, using empty values (optional)");
-        }
-
-        PreparedStatement sth = getConnection().prepareStatement(
-            "INSERT INTO servitude (idsup,nomsuplitt) VALUES (?,?)"
-        );
-
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-
-            String idSup = row[indexIdSup];
-            String nomSupLitt = indexNomSupLitt < 0 ? "" : row[indexNomSupLitt];
-
-            sth.setString(1, idSup);
-            sth.setString(2, nomSupLitt);
-
-            sth.addBatch();
-        }
-        sth.executeBatch();
-        getConnection().commit();
-    }
-
-    /**
-     * Load a CSV file into TABLE_ACTE.
-     * 
-     * @param acteSupFile
-     * @throws Exception
-     * 
-     * @see {@link #createTableActe()}
-     */
-    @Deprecated
-    public void loadTableActe(File acteSupFile) throws Exception {
-        log.info(MARKER, "load table ACTE_SUP from {}...", acteSupFile);
-        TableReader reader = TableReader.createTableReader(acteSupFile, StandardCharsets.UTF_8);
-
-        int indexIdActe = reader.findColumnRequired(COLUMN_IDACTE);
-        int indexFichier = reader.findColumnRequired(COLUMN_FICHIER);
-
-        PreparedStatement sth = getConnection().prepareStatement(
-            "INSERT INTO acte_sup (idacte,fichier) VALUES (?,?)"
-        );
-
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-
-            String idActe = row[indexIdActe];
-            String fichier = row[indexFichier];
-
-            sth.setString(1, idActe);
-            sth.setString(2, fichier);
-
-            sth.addBatch();
-        }
-        sth.executeBatch();
-        getConnection().commit();
-    }
-
-    /**
-     * Load a CSV file into TABLE_SERVITUDE_ACTE.
-     * 
-     * @param servitudeActeSupFile
-     * @throws Exception
-     * 
-     * @see {@link #createTableServitudeActe()}
-     */
-    @Deprecated
-    public void loadTableServitudeActe(File servitudeActeSupFile) throws Exception {
-        log.info(MARKER, "load table SERVITUDE_ACTE_SUP from {}...", servitudeActeSupFile);
-        TableReader reader = TableReader.createTableReader(servitudeActeSupFile, StandardCharsets.UTF_8);
-
-        int indexIdSup = reader.findColumnRequired(COLUMN_IDSUP);
-        int indexIdActe = reader.findColumnRequired(COLUMN_IDACTE);
-
-        PreparedStatement sth = getConnection().prepareStatement(
-            "INSERT INTO servitude_acte_sup (idsup,idacte) VALUES (?,?)"
-        );
-
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-
-            String idSup = row[indexIdSup];
-            String idActe = row[indexIdActe];
-
-            sth.setString(1, idSup);
-            sth.setString(2, idActe);
-
-            sth.addBatch();
-        }
-        sth.executeBatch();
-        getConnection().commit();
-    }
-
-    /**
      * Insert rows from tableName into TABLE_GENERATEUR.
      * 
      * @param tableName
@@ -347,41 +209,6 @@ public class DatabaseSUP {
     }
 
     /**
-     * Load a CSV file into TABLE_GENERATEUR.
-     * 
-     * @param generateurSupFile
-     * @throws Exception
-     * 
-     * @see {@link #createTableGenerateur()}
-     */
-    @Deprecated
-    public void loadTableGenerateur(File generateurSupFile) throws Exception {
-        log.info(MARKER, "load table GENERATEUR from {}...", generateurSupFile);
-        TableReader reader = TableReader.createTableReader(generateurSupFile, StandardCharsets.UTF_8);
-
-        int indexIdGen = reader.findColumnRequired(COLUMN_IDGEN);
-        int indexIdSup = reader.findColumnRequired(COLUMN_IDSUP);
-
-        PreparedStatement sth = getConnection().prepareStatement(
-            "INSERT INTO generateur (idgen,idsup) VALUES (?,?)"
-        );
-
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-
-            String idGen = row[indexIdGen];
-            String idSup = row[indexIdSup];
-
-            sth.setString(1, idGen);
-            sth.setString(2, idSup);
-
-            sth.addBatch();
-        }
-        sth.executeBatch();
-        getConnection().commit();
-    }
-
-    /**
      * Insert rows from tableName into TABLE_ASSIETTE.
      * 
      * @param tableName
@@ -392,41 +219,6 @@ public class DatabaseSUP {
         String sql = "INSERT INTO " + TABLE_ASSIETTE + "(" + COLUMN_IDASS + "," + COLUMN_IDGEN + ") ";
         sql += " SELECT " + COLUMN_IDASS + "," + COLUMN_IDGEN + " FROM " + tableName;
         database.update(sql);
-        getConnection().commit();
-    }
-
-    /**
-     * Load a CSV file into TABLE_ASSIETTE.
-     * 
-     * @param path
-     * @throws Exception
-     * 
-     * @see {@link #createTableAssiete()}
-     */
-    @Deprecated
-    public void loadTableAssiette(File assietteSupFile) throws Exception {
-        log.info(MARKER, "load table GENERATEUR from {}...", assietteSupFile);
-        TableReader reader = TableReader.createTableReader(assietteSupFile, StandardCharsets.UTF_8);
-
-        int indexIdAss = reader.findColumnRequired(COLUMN_IDASS);
-        int indexIdGen = reader.findColumnRequired(COLUMN_IDGEN);
-
-        PreparedStatement sth = getConnection().prepareStatement(
-            "INSERT INTO assiette (idass,idgen) VALUES (?,?)"
-        );
-
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-
-            String idAss = row[indexIdAss];
-            String idGen = row[indexIdGen];
-
-            sth.setString(1, idAss);
-            sth.setString(2, idGen);
-
-            sth.addBatch();
-        }
-        sth.executeBatch();
         getConnection().commit();
     }
 

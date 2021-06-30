@@ -2,7 +2,6 @@ package fr.ign.validator.validation.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +11,6 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
-import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.database.internal.DuplicatedValuesFinder;
 import fr.ign.validator.database.internal.DuplicatedValuesFinder.DuplicatedValue;
 import fr.ign.validator.error.CoreErrorCodes;
