@@ -49,6 +49,9 @@ public class AttributeConstraints {
     /**
      * Minimum length of the value
      * 
+     * @see fr.ign.validator.validation.attribute.MinLengthValidator
+     * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_TOO_SHORT
+     * 
      * @since 4.1
      */
     private Integer minLength;
