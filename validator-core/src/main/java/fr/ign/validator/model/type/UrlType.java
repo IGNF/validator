@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.MaxLengthValidator;
+import fr.ign.validator.validation.attribute.MinLengthValidator;
 
 /**
  * Location of a file
@@ -20,6 +21,7 @@ public class UrlType extends AttributeType<URL> {
 
     public UrlType() {
         super(URL.class);
+        addValidator(new MinLengthValidator<URL>());
         addValidator(new MaxLengthValidator<URL>());
     }
 

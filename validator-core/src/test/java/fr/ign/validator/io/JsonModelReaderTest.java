@@ -159,6 +159,10 @@ public class JsonModelReaderTest {
                 attribute.getConstraints().isUnique()
             );
             Assert.assertEquals(
+                Integer.valueOf(5),
+                attribute.getConstraints().getMinLength()
+            );
+            Assert.assertEquals(
                 Integer.valueOf(254),
                 attribute.getConstraints().getMaxLength()
             );
