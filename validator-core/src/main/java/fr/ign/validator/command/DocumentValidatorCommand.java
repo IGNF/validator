@@ -521,7 +521,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
                 null, "error-config", true,
                 "Custom error-config.json file to overwrite some error code configuration (message, level,...)"
             );
-            option.setRequired(true);
+            option.setRequired(false);
             options.addOption(option);
         }
     }
