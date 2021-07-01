@@ -8,10 +8,11 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
+import fr.ign.validator.exception.GeometryTransformException;
 import fr.ign.validator.model.Projection;
-import fr.ign.validator.repository.ProjectionRepository;
 
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
 /**
@@ -20,9 +21,9 @@ import org.locationtech.jts.io.WKTReader;
  * @author MBorne
  *
  */
-public class ProjectionTransform {
+public class ProjectionTransform implements GeometryTransform {
 
-    private static final Projection CRS84 = ProjectionRepository.getInstance().findByCode("CRS:84");
+    private static final Projection CRS84 = ProjectionList.getCRS84();
 
     private MathTransform transform;
 
@@ -51,15 +52,12 @@ public class ProjectionTransform {
     }
 
     /**
-     * 
      * Create a ProjectionTransform from sourceCRS to targetCRS.
-     * 
-     * @deprecated prefer type Projection to CoordinateReferenceSystem.
      * 
      * @param sourceCRS
      * @param targetCRS
      */
-    public ProjectionTransform(CoordinateReferenceSystem sourceCRS, CoordinateReferenceSystem targetCRS) {
+    private ProjectionTransform(CoordinateReferenceSystem sourceCRS, CoordinateReferenceSystem targetCRS) {
         try {
             this.transform = CRS.findMathTransform(sourceCRS, targetCRS);
         } catch (FactoryException e) {
@@ -68,19 +66,20 @@ public class ProjectionTransform {
     }
 
     /**
-     * Create a ProjectionTransform from sourceCRS to CRS:84
+     * Transform a given geometry from source to target projection.
      * 
-     * @deprecated prefer type Projection to CoordinateReferenceSystem.
-     * 
-     * @param sourceCRS
-     * @throws FactoryException
+     * @param geometry
+     * @return
+     * @throws MismatchedDimensionException
+     * @throws TransformException
      */
-    public ProjectionTransform(CoordinateReferenceSystem sourceCRS) throws FactoryException {
-        this.transform = CRS.findMathTransform(sourceCRS, CRS84.getCRS());
-    }
-
-    public Geometry transform(Geometry geometry) throws MismatchedDimensionException, TransformException {
-        return JTS.transform(geometry, transform);
+    @Override
+    public Geometry transform(Geometry geometry) throws GeometryTransformException {
+        try {
+            return JTS.transform(geometry, transform);
+        } catch (MismatchedDimensionException | TransformException e) {
+            throw new GeometryTransformException("fail to apply transform", e);
+        }
     }
 
     /**
@@ -88,17 +87,13 @@ public class ProjectionTransform {
      * 
      * @param wkt
      * @return
-     * @throws MismatchedDimensionException
-     * @throws TransformException
+     * @throws GeometryTransformException
+     * @throws ParseException
      */
-    public Geometry transformWKT(String wkt) throws MismatchedDimensionException, TransformException {
-        Geometry geom;
-        try {
-            geom = format.read(wkt);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(String.format("Format de géométrie invalide : {}", wkt));
-        }
-        return JTS.transform(geom, transform);
+    @Deprecated
+    public Geometry transformWKT(String wkt) throws GeometryTransformException, ParseException {
+        Geometry geom = format.read(wkt);
+        return transform(geom);
     }
 
 }

@@ -19,6 +19,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -35,7 +36,7 @@ public class AttributeReferenceValidatorTest {
     @Before
     public void setUp() throws NoSuchAuthorityCodeException, FactoryException {
         context = new Context();
-        context.setProjection("CRS:84");
+        context.setProjection(Projection.CODE_CRS84);
         context.setReportBuilder(reportBuilder);
         DocumentModel documentModel = createTestDocumentModel();
         context.beginModel(documentModel);

@@ -73,7 +73,9 @@ public class NormalizePostProcess implements ValidatorListener {
 
         log.info(MARKER, "Create normalized files in {}", dataDirectory);
 
-        /* Pour chaque fileModel, on aggrège les données dans un CSV normalisé */
+        /*
+         * Create a normalized CSV file for each FileModel.
+         */
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
         for (FileModel fileModel : fileModels) {
             if (fileModel instanceof TableModel) {

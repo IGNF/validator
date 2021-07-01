@@ -3,8 +3,7 @@ package fr.ign.validator.dgpr.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
+import org.geotools.geometry.jts.JTS;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
@@ -17,6 +16,7 @@ import org.locationtech.jts.simplify.TopologyPreservingSimplifier;
 
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.geometry.ProjectionTransform;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.tools.EnvelopeUtils;
 
 /**
@@ -126,13 +126,13 @@ public class DatabaseUtils {
      * @see EnvelopeUtils#getEnvelope(String, fr.ign.validator.model.Projection)
      * 
      * @param wkt
-     * @param crs
+     * @param wktProjection
      * @return
      * @throws Exception
      */
-    public static Envelope getEnveloppe(String wkt, CoordinateReferenceSystem crs) throws Exception {
+    public static Envelope getEnveloppe(String wkt, Projection wktProjection) throws Exception {
         // depends on geometry
-        Geometry geom = new ProjectionTransform(crs).transformWKT(wkt);
+        Geometry geom = new ProjectionTransform(wktProjection).transformWKT(wkt);
         return geom.getEnvelopeInternal();
     }
 

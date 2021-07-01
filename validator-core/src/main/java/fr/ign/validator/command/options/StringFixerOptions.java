@@ -8,6 +8,11 @@ import org.apache.commons.cli.Options;
 
 import fr.ign.validator.string.StringFixer;
 
+/**
+ * Manage command lines options to build StringFixer.
+ *
+ * @author MBorne
+ */
 public class StringFixerOptions {
 
     /**

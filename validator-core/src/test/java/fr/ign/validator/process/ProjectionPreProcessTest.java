@@ -12,9 +12,9 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.report.InMemoryReportBuilder;
-import fr.ign.validator.repository.ProjectionRepository;
 
 public class ProjectionPreProcessTest {
 
@@ -31,7 +31,7 @@ public class ProjectionPreProcessTest {
 
     @Test
     public void testCRS84() throws Exception {
-        Context context = createContext("CRS:84");
+        Context context = createContext(Projection.CODE_CRS84);
         process.beforeValidate(context, document);
         {
             List<ValidatorError> errors = report.getErrorsByCode(CoreErrorCodes.VALIDATOR_PROJECTION_INFO);
@@ -78,7 +78,7 @@ public class ProjectionPreProcessTest {
      * @return
      */
     private Context createContext(String crs) {
-        Projection projection = ProjectionRepository.getInstance().findByCode(crs);
+        Projection projection = ProjectionList.getInstance().findByCode(crs);
         Context context = new Context();
         context.setReportBuilder(report);
         context.setProjection(projection);

@@ -4,14 +4,12 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang.StringUtils;
-import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Test;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
 
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.tools.ResourceHelper;
 import fr.ign.validator.tools.TableReader;
 
@@ -30,52 +28,52 @@ public class ProjectionTransformTest {
 
     @Test
     public void test2154toCRS84() throws Exception {
-        runTestFromTo("EPSG:2154", "CRS:84", 1.0e-7);
+        runTestFromTo("EPSG:2154", Projection.CODE_CRS84, 1.0e-7);
     }
 
     @Test
     public void testCRS84to2154() throws Exception {
-        runTestFromTo("CRS:84", "EPSG:2154", 1.0e-3);
+        runTestFromTo(Projection.CODE_CRS84, "EPSG:2154", 1.0e-3);
     }
 
     @Test
     public void test32620toCRS84() throws Exception {
-        runTestFromTo("EPSG:32620", "CRS:84", 1.0e-7);
+        runTestFromTo("EPSG:32620", Projection.CODE_CRS84, 1.0e-7);
     }
 
     @Test
     public void testCRS84to32620() throws Exception {
-        runTestFromTo("CRS:84", "EPSG:32620", 1.0e-3);
+        runTestFromTo(Projection.CODE_CRS84, "EPSG:32620", 1.0e-3);
     }
 
     @Test
     public void test2972toCRS84() throws Exception {
-        runTestFromTo("EPSG:2972", "CRS:84", 1.0e-7);
+        runTestFromTo("EPSG:2972", Projection.CODE_CRS84, 1.0e-7);
     }
 
     @Test
     public void testCRS84to2972() throws Exception {
-        runTestFromTo("CRS:84", "EPSG:2972", 1.0e-3);
+        runTestFromTo(Projection.CODE_CRS84, "EPSG:2972", 1.0e-3);
     }
 
     @Test
     public void test2975toCRS84() throws Exception {
-        runTestFromTo("EPSG:2975", "CRS:84", 1.0e-7);
+        runTestFromTo("EPSG:2975", Projection.CODE_CRS84, 1.0e-7);
     }
 
     @Test
     public void testCRS84to2975() throws Exception {
-        runTestFromTo("CRS:84", "EPSG:2975", 1.0e-3);
+        runTestFromTo(Projection.CODE_CRS84, "EPSG:2975", 1.0e-3);
     }
 
     @Test
     public void test4471toCRS84() throws Exception {
-        runTestFromTo("EPSG:4471", "CRS:84", 1.0e-7);
+        runTestFromTo("EPSG:4471", Projection.CODE_CRS84, 1.0e-7);
     }
 
     @Test
     public void testCRS84to4471() throws Exception {
-        runTestFromTo("CRS:84", "EPSG:4471", 1.0e-3);
+        runTestFromTo(Projection.CODE_CRS84, "EPSG:4471", 1.0e-3);
     }
 
     /**
@@ -86,9 +84,10 @@ public class ProjectionTransformTest {
      * @throws Exception
      */
     private void runTestFromTo(String sourceSRID, String targetSRID, double tolerance) throws Exception {
-        CoordinateReferenceSystem sourceCRS = CRS.decode(sourceSRID);
-        CoordinateReferenceSystem targetCRS = CRS.decode(targetSRID);
-        ProjectionTransform transformProjection = new ProjectionTransform(sourceCRS, targetCRS);
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection sourceProjection = projectionRepository.findByCode(sourceSRID);
+        Projection targetProjection = projectionRepository.findByCode(targetSRID);
+        GeometryTransform transformProjection = new ProjectionTransform(sourceProjection, targetProjection);
 
         File reference = ResourceHelper.getResourceFile(getClass(), "/projection/reference_postgis.csv");
         TableReader reader = TableReader.createTableReader(reference, StandardCharsets.UTF_8);

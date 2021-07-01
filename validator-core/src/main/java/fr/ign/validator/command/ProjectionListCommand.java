@@ -17,8 +17,8 @@ import org.apache.logging.log4j.MarkerManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
-import fr.ign.validator.repository.ProjectionRepository;
 
 /**
  * 
@@ -62,7 +62,7 @@ public class ProjectionListCommand extends AbstractCommand {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        List<Projection> projections = ProjectionRepository.getInstance().findAll();
+        List<Projection> projections = ProjectionList.getInstance().findAll();
         objectMapper.writeValue(getOutputStream(), projections);
     }
 

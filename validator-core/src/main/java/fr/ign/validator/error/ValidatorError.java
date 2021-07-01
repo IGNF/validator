@@ -66,18 +66,17 @@ public class ValidatorError implements Cloneable {
     private String id;
 
     /**
-     * Bounding box of the concerned feature (if context == Feature and a geometry
-     * is available)
+     * The CRS:84 bounding box of the concerned feature.
      */
     private Envelope featureBbox;
 
     /**
-     * WKT geometry error
+     * The CRS:84 WKT locating the geometry error.
      */
     private String errorGeometry;
 
     /**
-     * Feature identifiant is available
+     * Feature identifier is available.
      */
     private String featureId;
 
