@@ -1,0 +1,124 @@
+{
+    "id": "ba55e6257981c6db51b9bb1c68f6bcf4",
+    "name": "EL1_ASSIETTE_SUP_S",
+    "title": "EL1_ASSIETTE_SUP_S",
+    "description": "Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT",
+    "columns": [
+        {
+            "id": "16cb5914fd03e3537143180e3e38f70a",
+            "name": "TYPEASS",
+            "title": "TYPEASS",
+            "description": "Nature de l'assiette selon sa vocation principale et la catégorie de SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "56b6d7b14fc3a248e632d83f7a87f704",
+            "name": "IDASS",
+            "title": "IDASS",
+            "description": "Identifiant de l'assiette",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "7427ab389841fc55e516b81a481d2939",
+            "name": "IDGEN",
+            "title": "IDGEN",
+            "description": "Identifiant du générateur de l'assiette",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "89ecc28e1d7fde0cbd77d0798b496dd9",
+            "name": "DATESRCASS",
+            "title": "DATESRCASS",
+            "description": "Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "8b81ee4d2c2a6765894e9e0d0fa9cdda",
+            "name": "MODEGEOASS",
+            "title": "MODEGEOASS",
+            "description": "Description de la méthode utilisée pour générer la géométrie de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Egal au générateur",
+                    "Zone tampon",
+                    "Digitalisation",
+                    "Duplication",
+                    "Liste de coordonnées",
+                    "Secteur angulaire",
+                    "Calculée",
+                    "Liste de parcelles",
+                    "Fictive"
+                ],
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "9647e0dff490bc52af36ef874ce440b6",
+            "name": "PARAMCALC",
+            "title": "PARAMCALC",
+            "description": "Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "cf3618713c7ac76f3739f4eaaab392b2",
+            "name": "SRCGEOASS",
+            "title": "SRCGEOASS",
+            "description": "Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "efc4d73337d1cabd3e5a8f66d88238f0",
+            "name": "NOMASS",
+            "title": "NOMASS",
+            "description": "Nom abrégé de l'assiette, respectant les règles de nommage nationales des SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+(_gen[0-9]+)?_(mh|abor|ass|zpr1|zpr2|ziso|pepi|pepr|pepe|zhlg|zmcp|zpro|zgar|zpri|zsec|zspe|sect|zatt|zsur)",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "e53bb4eb2b409a42eba7849741aa8209",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

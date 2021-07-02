@@ -1,0 +1,140 @@
+{
+    "id": "8bacabfa1aa091b1acb7aa8a02de4885",
+    "name": "ACTE_SUP",
+    "title": "ACTE_SUP",
+    "description": "Table contenant la liste des actes instituant une servitude d'utilité publique",
+    "columns": [
+        {
+            "id": "372a2ae5a0be525684435b5bf7202dcf",
+            "name": "APLAN",
+            "title": "APLAN",
+            "description": "Existence d'un ou plusieurs plans annexés à l'acte",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "T",
+                    "F"
+                ],
+                "maxLength": 1
+            }
+        },
+        {
+            "id": "38ef89f7dee63d5d0d0254039d4f02bb",
+            "name": "DECISION",
+            "title": "DECISION",
+            "description": "Nature de la décision prise dans l'acte : l'autorité compétente prend une décision qui crée ou modifie l'état de la servitude",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Création",
+                    "Modification",
+                    "Substitution",
+                    "Annulation",
+                    "Abrogation"
+                ],
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "57967eb687c1300d5cfa308134457467",
+            "name": "TYPEACTE",
+            "title": "TYPEACTE",
+            "description": "Description de la nature de l'acte",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Texte de loi",
+                    "Décret en Conseil d'Etat",
+                    "Arrêté ministériel",
+                    "Arrêté interministériel",
+                    "Arrêté préfectoral",
+                    "Arrêté préfet de Région",
+                    "Décret Premier Ministre",
+                    "Décret",
+                    "Arrêté de SUP",
+                    "Convention amiable",
+                    "Arrêté municipal",
+                    "Autre",
+                    "Non renseigné"
+                ],
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "a1ed509fa03fb1cb683ad1bc4ee64d04",
+            "name": "DATEPUB",
+            "title": "DATEPUB",
+            "description": "Date de parution au Journal Officiel ou de publicité dans la presse",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "a8833ccb9cc32ac1d6279678de4d6ac0",
+            "name": "NOMACTE",
+            "title": "NOMACTE",
+            "description": "Nom abrégé de l'acte, respectant les règles de nommage nationales des SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+(_[0-9]+)?_act",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "c6d46cb2b78e5800f7822c84ad28132f",
+            "name": "IDACTE",
+            "title": "IDACTE",
+            "description": "Identifiant de l'acte",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "d463b500b048983f9b000e8dded11951",
+            "name": "DATEDECIS",
+            "title": "DATEDECIS",
+            "description": "Date à laquelle la décision a été prise. Il s'agit de la date de signature de l'acte",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "f84224b7dd622513260e6cc8a3bb2e0d",
+            "name": "FICHIER",
+            "title": "FICHIER",
+            "description": "Nom ou référence du ficher contenant l'acte instituant la servitude. Ce fichier contient le cas échéant les plans annexés à l'acte",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "fcc4e2f9187897acbf4fd14f43eb42a5",
+            "name": "REFERENCE",
+            "title": "REFERENCE",
+            "description": "Référence de l'acte ayant créé ou modifié la servitude",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 50
+            }
+        }
+    ]
+}

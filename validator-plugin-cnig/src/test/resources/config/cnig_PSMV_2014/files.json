@@ -1,0 +1,261 @@
+{
+    "id": "5bdd8b50ab8a3337ac408a106afee415",
+    "name": "cnig_PSMV_2014",
+    "title": "cnig_PSMV_2014",
+    "description": "maillage_PSMV_datappro",
+    "constraints": {
+        "folderName": "[a-zA-Z0-9]+_PSMV_[0-9]{8}(_[a-zA-Z])?"
+    },
+    "files": [
+        {
+            "id": "a72fc7dc57c07ae75daf1fbad72c7745",
+            "name": "DOC_URBA_COM",
+            "title": "DOC_URBA_COM",
+            "path": "DOC_URBA_COM(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "61fd81030c5aaf06799fb653d2140adb",
+            "name": "DOC_URBA",
+            "title": "DOC_URBA",
+            "path": "DOC_URBA(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "dd63f9a94449ac17a401ce3be147e563",
+            "name": "Donnees_geographiques",
+            "title": "Donnees_geographiques",
+            "path": "Donnees_geographiques",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "f663996e7bb17fc78f8bba2f5bf47664",
+            "name": "HABILLAGE_LIN",
+            "title": "HABILLAGE_LIN",
+            "path": "Donnees_geographiques/HABILLAGE_LIN(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "89045c662cacf3e3093a7336de38d9c2",
+            "name": "HABILLAGE_PCT",
+            "title": "HABILLAGE_PCT",
+            "path": "Donnees_geographiques/HABILLAGE_PCT(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "7752fb09001b92dfaaa2ebc9ad76345e",
+            "name": "HABILLAGE_SURF",
+            "title": "HABILLAGE_SURF",
+            "path": "Donnees_geographiques/HABILLAGE_SURF(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "dea96098fced0bf7b972275039ddc4a0",
+            "name": "HABILLAGE_TXT",
+            "title": "HABILLAGE_TXT",
+            "path": "Donnees_geographiques/HABILLAGE_TXT(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "3124c1f865b0e83806bf7599a0c09b3f",
+            "name": "INFO_LIN",
+            "title": "INFO_LIN",
+            "path": "Donnees_geographiques/INFO_LIN(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "1a0a92ed64e61fe362375d0979a7da90",
+            "name": "INFO_PCT",
+            "title": "INFO_PCT",
+            "path": "Donnees_geographiques/INFO_PCT(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "5db280e73ad191cb8f6d7f7eff9ec4ce",
+            "name": "INFO_SURF",
+            "title": "INFO_SURF",
+            "path": "Donnees_geographiques/INFO_SURF(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "a17eecaaf733805547f6b7ef0887c292",
+            "name": "PRESCRIPTION_LIN",
+            "title": "PRESCRIPTION_LIN",
+            "path": "Donnees_geographiques/PRESCRIPTION_LIN(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "de41da3998c2a0c10ad6ad9361e135dd",
+            "name": "PRESCRIPTION_PCT",
+            "title": "PRESCRIPTION_PCT",
+            "path": "Donnees_geographiques/PRESCRIPTION_PCT(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "90dc73dddc619c8161682774ee5b2d99",
+            "name": "PRESCRIPTION_SURF",
+            "title": "PRESCRIPTION_SURF",
+            "path": "Donnees_geographiques/PRESCRIPTION_SURF(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "77747f439c4f620197e2c0807a4f449c",
+            "name": "ZONE_URBA",
+            "title": "ZONE_URBA",
+            "path": "Donnees_geographiques/ZONE_URBA(_[AB0-9]{5})?(_[AB0-9]{3})?",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "a77351da327aed070bdaa8f67d596e76",
+            "name": "METADONNEES",
+            "title": "METADONNEES",
+            "path": "[^\\/]*",
+            "type": "metadata",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "8457f3e2655fa18847ca510a11b1a31b",
+            "name": "Pieces_ecrites",
+            "title": "Pieces_ecrites",
+            "path": "Pieces_ecrites",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "ce4a98b2dc31d999f4ab6e1d8bcd82fd",
+            "name": "0_Procedure",
+            "title": "0_Procedure",
+            "path": "Pieces_ecrites/0_Procedure",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "4b0c7f13a8d14082c01bd837916ab49e",
+            "name": "PROCEDURE",
+            "title": "PROCEDURE",
+            "path": "Pieces_ecrites/0_Procedure/[AB0-9]{5}_procedure_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "6f25106902c2c2016efc39bc9dc070d1",
+            "name": "1_Rapport_de_presentation",
+            "title": "1_Rapport_de_presentation",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "8e662866851f15f3cf6088781fa31880",
+            "name": "EVALUATION_ENVIRONNEMENTALE",
+            "title": "EVALUATION_ENVIRONNEMENTALE",
+            "description": "L'évaluation environnementale",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation/[AB0-9]{5}_eval_environnement_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "bb082cae8f433e75f8099937ec3323ea",
+            "name": "RAPPORT",
+            "title": "RAPPORT",
+            "path": "Pieces_ecrites/1_Rapport_de_presentation/[AB0-9]{5}_rapport(_[0-9]+)?_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "62712f971d9466084d66e78d4ec4cb7a",
+            "name": "2_PADD",
+            "title": "2_PADD",
+            "path": "Pieces_ecrites/2_PADD",
+            "type": "directory",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "5277cb977bd34c33a28b8b2be49986e9",
+            "name": "PADD",
+            "title": "PADD",
+            "path": "Pieces_ecrites/2_PADD/[AB0-9]{5}_(PADD|padd)_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "337923b651e387915d254c11e852ca91",
+            "name": "3_Reglement",
+            "title": "3_Reglement",
+            "path": "Pieces_ecrites/3_Reglement",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "9d0c2f65b4e39ba64aae9ef51a7d2294",
+            "name": "PRESCRIPTION",
+            "title": "PRESCRIPTION",
+            "path": "Pieces_ecrites/3_Reglement/[AB0-9]{5}_prescription_(lin|pct|surf)(_[0-9]+)?(_[0-9]+)?_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "38a0d558dcd5ca95e95bd1d287b9f2a0",
+            "name": "REGLEMENT_GRAPHIQUE",
+            "title": "REGLEMENT_GRAPHIQUE",
+            "description": "Le règlement graphique",
+            "path": "Pieces_ecrites/3_Reglement/[AB0-9]{5}_reglement_graphique(_[0-9]+)?_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "69d0a10b9d542df162bdb204435833c6",
+            "name": "REGLEMENT",
+            "title": "REGLEMENT",
+            "path": "Pieces_ecrites/3_Reglement/[AB0-9]{5}_reglement_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "ed02440fd858247c7acbf83d169d6ab7",
+            "name": "4_Annexes",
+            "title": "4_Annexes",
+            "path": "Pieces_ecrites/4_Annexes",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "e8c9d2a0166b8253647109a5b9d6a51a",
+            "name": "ANNEXE",
+            "title": "ANNEXE",
+            "path": "Pieces_ecrites/4_Annexes/[^\\/]*",
+            "type": "pdf",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "638ff5b4d2e7994cfa1e0838014a3673",
+            "name": "5_Orientations_amenagement",
+            "title": "5_Orientations_amenagement",
+            "path": "Pieces_ecrites/5_Orientations_amenagement",
+            "type": "directory",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "003f31417ad9cc3f530ac3583ddeb38b",
+            "name": "ORIENTATIONS_AMENAGEMENT",
+            "title": "ORIENTATIONS_AMENAGEMENT",
+            "path": "Pieces_ecrites/5_Orientations_amenagement/[AB0-9]{5}_orientations(_amenagement)?(_[0-9]+)?_[0-9]{8}(_[a-zA-Z])?",
+            "type": "pdf",
+            "mandatory": "OPTIONAL"
+        }
+    ]
+}

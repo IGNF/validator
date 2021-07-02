@@ -1,0 +1,95 @@
+{
+    "id": "280f8519bdf75e9acf30a5e1c6a05c4c",
+    "name": "INFO_PCT",
+    "title": "INFO_PCT",
+    "description": "Table contenant les informations ponctuelle à reporter à titre d'information",
+    "columns": [
+        {
+            "id": "2cf361939243e4f68a4a0a94c8a333ec",
+            "name": "TYPEINF",
+            "title": "TYPEINF",
+            "description": "Type d'information ponctuelle dans une liste prédéfinie",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "16",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "678b51e2d0344a16e6628422f044e9bd",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "9fc3e3c64d9cf129e45dffb947d77e41",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "abdd2716a18fc449f319566c68c45b95",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant le texte décrivant l'information reportée",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "b582048feb69fd00d7e4bde713cd6bdf",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "URL ou URI qui pointe sur le fichier de règlement de l'information",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "bc4a538984aa5104e2a64b83f825176c",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom complet de l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "f413273feca9d4c70daade21c7ef38c7",
+            "name": "TXT",
+            "title": "TXT",
+            "description": "Nom court de l'information servant à faire une étiquette",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 10
+            }
+        }
+    ]
+}

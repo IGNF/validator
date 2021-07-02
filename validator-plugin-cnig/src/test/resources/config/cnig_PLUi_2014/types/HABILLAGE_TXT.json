@@ -1,0 +1,114 @@
+{
+    "id": "44e2862a7b2ebc12e85fd3e54bbeef47",
+    "name": "HABILLAGE_TXT",
+    "title": "HABILLAGE_TXT",
+    "description": "Table des objets textuels (étiquettes) figurant sur le plan du document d'urbanisme à des fins d'ha",
+    "columns": [
+        {
+            "id": "0a8131b549f6e6de26be1bd889e4d149",
+            "name": "IDHAB",
+            "title": "IDHAB",
+            "description": "Identifiant unique de l’objet",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "HT([0-9]+)?",
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "14590b676f8cf4d9d095f926234e7f51",
+            "name": "NATECR",
+            "title": "NATECR",
+            "description": "Nature de l'écriture",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "3a4272d2119c3429c419cde5c797948e",
+            "name": "TXT",
+            "title": "TXT",
+            "description": "Libellé de l'étiquette attachée au point d'habillage",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "530a5999ccf2e3f3ce62913e1ec0228b",
+            "name": "TAILLE",
+            "title": "TAILLE",
+            "description": "Taille des caractères",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "678bb4abdd75523b58729f0fec4cebba",
+            "name": "ANGLE",
+            "title": "ANGLE",
+            "description": "Angle de l'écriture exprimé endegré, par rapport à l'horizontale,dans le sens trigonométrique",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "76e91b83ebe3e546d972791e9147ffb4",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'élément d'habillage",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "f0c5829b67b97f1e659a64368a4ddf5a",
+            "name": "STYLE",
+            "title": "STYLE",
+            "description": "Style d'écriture",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "f83ce6d4ab3d0c21baef51cc3eb62587",
+            "name": "POLICE",
+            "title": "POLICE",
+            "description": "Police d'écriture",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "fd9eddf0a1c62eb8d1533b0505a67a3e",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

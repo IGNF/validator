@@ -1,0 +1,110 @@
+{
+    "id": "35a3679e7af27e7317340e0c9b9a6dd1",
+    "name": "INFO_PCT",
+    "title": "INFO_PCT",
+    "description": "Table contenant les informations ponctuelles à reporter à titre  d'information",
+    "columns": [
+        {
+            "id": "284dab5cf7e64e5b383ae5a9ac10ba11",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant le texte décrivant l'information reportée",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "3aa474aa1a02b9359d4a6b8dc113d07b",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom complet de l’information reportée",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "49da5270571d02ad1d6cf275b74598db",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "Lien URL d’accès au fichier contenant le texte décrivant l'information",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "563509056cbdc09ca4fef1d81dcf72b8",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8e7247c0a97962a194c64b60094de628",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "a62cb55e4dfde383ce2afc86999bb568",
+            "name": "TYPEINF",
+            "title": "TYPEINF",
+            "description": "Type de l’information. Les valeurs mentionnées sont celles qui ont une justification au regard du code de l’urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "16",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "c994485d3fddc1f3faabbb09e65c0c2b",
+            "name": "TYPEP",
+            "title": "TYPEP",
+            "description": "Type complémentaire qualifiant l’information selon la classification utilisée pour les prescriptions",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "d03ac449768e0c84bcd089875fe82f20",
+            "name": "TXT",
+            "title": "TXT",
+            "description": "Nom court servant à faire une étiquette",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 10
+            }
+        }
+    ]
+}

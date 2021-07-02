@@ -1,0 +1,209 @@
+{
+    "id": "0e843b3a6e70b81d2661936d61a794bb",
+    "name": "DOC_URBA",
+    "title": "DOC_URBA",
+    "description": "Table contenant la liste des documents d'Urbanisme PLU ou POS dont la numérisation ou l'élaboration sous fourme numérique est engagée",
+    "columns": [
+        {
+            "id": "013a1dfbf1323174f0b4802173e2da77",
+            "name": "SITEWEB",
+            "title": "SITEWEB",
+            "description": "Page web du service de consultation du PSMV",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "01b090187067822ef24ba702ed1d3bd8",
+            "name": "DATEREF",
+            "title": "DATEREF",
+            "description": "Date d'actualité ou de mise à jour du référentiel cadastral utilisé pour la création ou la numérisation des documents graphiques.",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "4eb71c8a17e2a34090f5955564ce53dc",
+            "name": "TYPEREF",
+            "title": "TYPEREF",
+            "description": "Nom du référentiel cadastral utilisé pour la numérisation",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "03",
+                    "04"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "6734db1f5b85aeaab5d69a3a6d6833d3",
+            "name": "URLPE",
+            "title": "URLPE",
+            "description": "Lien d’accès à l’archive zip comprenant l’ensemble des pièces écrites",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "6bc699f8ded127e80b26419ec8fc57ed",
+            "name": "SIREN",
+            "title": "SIREN",
+            "description": "Le cas échéant, numéro SIREN de l'intercommunalité compétente en matière d'urbanisme ayant pris part à l’élaboration du PSMV",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 9
+            }
+        },
+        {
+            "id": "7899f941da35b4661854600974100f64",
+            "name": "TYPEDOC",
+            "title": "TYPEDOC",
+            "description": "Type du document",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "PSMV"
+                ],
+                "maxLength": 4
+            }
+        },
+        {
+            "id": "80f8bb52995fdd326849bbad07063829",
+            "name": "URLREG",
+            "title": "URLREG",
+            "description": "URL ou URI qui pointe sur le fichier du règlement papier complet scanné",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "8db6275d933b968c345981ce13053e83",
+            "name": "URLPLAN",
+            "title": "URLPLAN",
+            "description": "URL ou URI qui pointe sur le fichier du plan scanné",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "94e86babb495e92e1efe530a1d27d4f3",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du document d'urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "963be4ba8bc5624a4d1d1d5603935987",
+            "name": "NOMREG",
+            "title": "NOMREG",
+            "description": "Nom du fichier contentant le document complet du règlement",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "([0-9]{9}|(2A|2B|[0-9]{2})[0-9]{3})_reglement_[0-9]{8}.pdf",
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "c0eac3ecef8880e70f17feec0e4e4afa",
+            "name": "DATAPPRO",
+            "title": "DATAPPRO",
+            "description": "Date de la dernière approbation administrative du document d'urbanisme",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "c8c6b176dd826ab19cb5ea8f25a6983b",
+            "name": "ETAT",
+            "title": "ETAT",
+            "description": "Etat juridique du document d'urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "03",
+                    "04",
+                    "05",
+                    "06",
+                    "07",
+                    "08",
+                    "09"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "cea6c783226937cd94a1eae1b2b6dcf6",
+            "name": "NOMPLAN",
+            "title": "NOMPLAN",
+            "description": "Nom du fichier contenant le plan origine scanné. Il s'agit du plan sur lequel figure le tampon juridique",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "([0-9]{9}|(2A|2B|[0-9]{2})[0-9]{3})_reglement_graphique(_[0-9]+)?_[0-9]{8}(_[a-zA-Z])?(.pdf|.zip)",
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "d70cd6880d898967b11de846c71ebb0d",
+            "name": "DATEFIN",
+            "title": "DATEFIN",
+            "description": "Date de fin de validité du document d'urbanisme",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e1534b79f23a3c3b544399e3aa368ac6",
+            "name": "NOMPROC",
+            "title": "NOMPROC",
+            "description": "Nom de la dernière procédure",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "(E|R|A|MC[0-9]+|MJ[0-9]+|M[0-9]+|MS[0-9]+|RS[0-9]+)",
+                "maxLength": 10
+            }
+        }
+    ]
+}

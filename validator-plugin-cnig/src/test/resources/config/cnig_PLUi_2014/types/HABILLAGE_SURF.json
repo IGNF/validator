@@ -1,0 +1,56 @@
+{
+    "id": "6f7d4fd11ffe0f4ae95346a5513f9559",
+    "name": "HABILLAGE_SURF",
+    "title": "HABILLAGE_SURF",
+    "description": "Table des tracés surfaciques indicatifs figurant sur le plan du document d'urbanisme à des fins d'ha",
+    "columns": [
+        {
+            "id": "0346ec460cccb6e0ca696cdb3b096cc5",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "22d05ee1af1c855b8e20c08336ae6371",
+            "name": "NATTRAC",
+            "title": "NATTRAC",
+            "description": "Nature du polygon",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "39c4422de1c41f489efeec0e73dba57b",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'élément d'habillage",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "7294d898e4f406955b6114c017ca1417",
+            "name": "IDHAB",
+            "title": "IDHAB",
+            "description": "Identifiant unique de l’objet",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "HS([0-9]+)?",
+                "maxLength": 10
+            }
+        }
+    ]
+}

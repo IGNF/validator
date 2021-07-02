@@ -34,10 +34,6 @@ public class CnigErrorCodesTest {
 
         Field[] fields = CnigErrorCodes.class.getDeclaredFields();
         for (Field field : fields) {
-            // Filtrage sur les champs en majuscules...
-            if (!field.getName().equals(field.getName().toUpperCase())) {
-                continue;
-            }
             ErrorCode code = ErrorCode.valueOf(field.getName());
             assertEquals(code.toString(), field.getName());
             try {

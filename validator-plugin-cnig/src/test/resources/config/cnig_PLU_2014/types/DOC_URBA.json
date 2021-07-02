@@ -1,0 +1,197 @@
+{
+    "id": "205eca1b2044a921dbac103d5fcf0d08",
+    "name": "DOC_URBA",
+    "title": "DOC_URBA",
+    "description": "Table contenant la liste des documents d'Urbanisme PLU ou POS dont la numérisation ou l'élaboration sous fourme numérique est engagée",
+    "columns": [
+        {
+            "id": "00f76d2c413ce610f800bb6f4983b5e2",
+            "name": "TYPEDOC",
+            "title": "TYPEDOC",
+            "description": "Type du document",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "PLU",
+                    "POS",
+                    "CC",
+                    "PSMV"
+                ],
+                "maxLength": 4
+            }
+        },
+        {
+            "id": "0d7b0df2bf4cdd729564cb51088f850d",
+            "name": "URLREG",
+            "title": "URLREG",
+            "description": "URL ou URI qui pointe sur le fichier du règlement papier complet scanné",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "1fade0ff7214518c077ac4ff0dfecc43",
+            "name": "ETAT",
+            "title": "ETAT",
+            "description": "Etat juridique du document d'urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "03",
+                    "04",
+                    "05",
+                    "06",
+                    "07"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "30a3e2766365644aa32dcecc56c8586e",
+            "name": "INTERCO",
+            "title": "INTERCO",
+            "description": "Indique si le document d'urbanisme est intercommunal",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "T",
+                    "F"
+                ],
+                "maxLength": 1
+            }
+        },
+        {
+            "id": "36712f364f03614076085c3a8ab024ef",
+            "name": "NOMREG",
+            "title": "NOMREG",
+            "description": "Nom du fichier contentant le document complet du règlement",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "3f1c13456a973dbee0d4c9ca0e8cce3b",
+            "name": "TYPEREF",
+            "title": "TYPEREF",
+            "description": "Nom du référentiel cadastral utilisé pour la numérisation",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "45e9546221d3c62031155c07ac079194",
+            "name": "NOMPLAN",
+            "title": "NOMPLAN",
+            "description": "Nom du fichier contenant le plan origine scanné. Il s'agit du plan sur lequel figure le tampon juridique",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "64ab3e72aff3e5ddb155e943c9093cf2",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du document d'urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 20
+            }
+        },
+        {
+            "id": "88b8ffe6394fd3938a99454a21540b90",
+            "name": "SITEWEB",
+            "title": "SITEWEB",
+            "description": "Page web du service de consultation du PLU offert par la collectivité locale",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "8e44a0bf8a2c4320e2274d9d565d154f",
+            "name": "URLPLAN",
+            "title": "URLPLAN",
+            "description": "URL ou URI qui pointe sur le fichier du plan scanné",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "8f92993c402b6847086f59aa93d5afff",
+            "name": "DATEFIN",
+            "title": "DATEFIN",
+            "description": "Date de fin de validité du document d'urbanisme",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "c83461113e9140b61084141ccad953aa",
+            "name": "DATEREF",
+            "title": "DATEREF",
+            "description": "Date d'actualité ou de mise à jour du référentiel cadastral utilisé pour la création ou la numérisation des documents graphiques.",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "ca28fcf3fdda6c32b67846d74bd1fd80",
+            "name": "SIREN",
+            "title": "SIREN",
+            "description": "Indique le numéro SIREN de l'intercommunalité ayant approuvé le PLU. Clé externe permettant de faire le lien avec la table des EPCI",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 9
+            }
+        },
+        {
+            "id": "ddfaee1317a16639be4fdd0315ae74ae",
+            "name": "DATAPPRO",
+            "title": "DATAPPRO",
+            "description": "Date de la dernière approbation administrative du document d'urbanisme",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        }
+    ]
+}

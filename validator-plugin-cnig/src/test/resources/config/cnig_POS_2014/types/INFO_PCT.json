@@ -1,0 +1,110 @@
+{
+    "id": "b93b5dc245a7e73fa9f612fc162a098e",
+    "name": "INFO_PCT",
+    "title": "INFO_PCT",
+    "description": "Table contenant les informations ponctuelle à reporter à titre d'information",
+    "columns": [
+        {
+            "id": "17f44d7ae44611d444560953fb230892",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom complet de l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "1e855998148c3291805b052b1c42c3f1",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant le texte décrivant l'information reportée",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "35040f415766546954c7d4762444f487",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "URL ou URI qui pointe sur le fichier de règlement de l'information",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "5ebe3239e112109b50c2982f8542770f",
+            "name": "TXT",
+            "title": "TXT",
+            "description": "Nom court de l'information servant à faire une étiquette",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "690cce18899195d17d7a7389709be005",
+            "name": "TYPEINF",
+            "title": "TYPEINF",
+            "description": "Type d'information ponctuelle dans une liste prédéfinie",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "16",
+                    "19",
+                    "27",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "8836c9ab5a6319655b9e170406749984",
+            "name": "IDINFO",
+            "title": "IDINFO",
+            "description": "Identifiant unique de l’objet",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "POIN([0-9]+)?",
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "92190c97d1afcd247404125ddba2c26f",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "e328e846ddfac6ad054a6fc4475a6825",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

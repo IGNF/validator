@@ -1,0 +1,128 @@
+{
+    "id": "8a1cdad7c2f1328fdda6db56ee972b8b",
+    "name": "T9_ASSIETTE_SUP_S",
+    "title": "T9_ASSIETTE_SUP_S",
+    "columns": [
+        {
+            "id": "0023559dbbddf1de2ba179594527e8bd",
+            "name": "IDASS",
+            "title": "IDASS",
+            "description": "Identifiant de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "03269ee3b188584738d51d38c542437c",
+            "name": "IDGEN",
+            "title": "IDGEN",
+            "description": "Identifiant du générateur de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "103d375653943c30dc6f6c45e4c326d6",
+            "name": "SRCGEOASS",
+            "title": "SRCGEOASS",
+            "description": "Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "1b9a55e805706f3155f9f4acd1131438",
+            "name": "DATESRCASS",
+            "title": "DATESRCASS",
+            "description": "Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "49af99b76af6e56c80ae2280e13ffbec",
+            "name": "MODEGEOASS",
+            "title": "MODEGEOASS",
+            "description": "Description de la méthode utilisée pour générer la géométrie de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Égale au générateur",
+                    "Zone tampon",
+                    "Digitalisation",
+                    "Duplication",
+                    "Liste de coordonnées",
+                    "Secteur angulaire",
+                    "Calculée",
+                    "Liste de parcelles",
+                    "Géométrie fictive"
+                ],
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "5ebeb3ba2af08776854483e3a86134dc",
+            "name": "PARAMCALC",
+            "title": "PARAMCALC",
+            "description": "Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "837ebe86e8a3ad8dd6d7ccf8f13d0527",
+            "name": "WKT",
+            "title": "Géométrie",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "976d9d1903144e766bd956dc3e348b1d",
+            "name": "TYPEASS",
+            "title": "TYPEASS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Zone d’atterrage",
+                    "Zone de survol"
+                ],
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "d62e690d3d54d7ac0bc1e7d0a1813bf4",
+            "name": "NOMASS",
+            "title": "NOMASS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+(_gen[0-9]+)?_(zatt|zsur)",
+                "maxLength": 100
+            }
+        }
+    ]
+}

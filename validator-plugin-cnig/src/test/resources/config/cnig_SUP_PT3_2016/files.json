@@ -1,0 +1,91 @@
+{
+    "id": "6ff336e2af9ca64f74639921120c5ae8",
+    "name": "cnig_SUP_PT3_2016",
+    "title": "cnig_SUP_PT3_2016",
+    "description": "idgest_PT3_ddd_yyyymmdd ",
+    "constraints": {
+        "folderName": "[0-9]{9}_PT3_[a-zA-Z0-9]+_[0-9]{8}"
+    },
+    "files": [
+        {
+            "id": "0912d1d5f0a2f7c345f736a8c81389e6",
+            "name": "Actes",
+            "title": "Actes",
+            "path": "Actes",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "ba1bf50c7eb67650678a2f7f4e550c8f",
+            "name": "ACTE",
+            "title": "ACTE",
+            "path": "Actes/[^\\/]*",
+            "type": "pdf",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "8308bbc7a31b055e2b4387e8fa9740a1",
+            "name": "Donnees_geographiques",
+            "title": "Donnees_geographiques",
+            "path": "Donnees_geographiques",
+            "type": "directory",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "f843636fbd4907cc7fdcf46320919a78",
+            "name": "ACTE_SUP",
+            "title": "ACTE_SUP",
+            "path": "Donnees_geographiques/(.*_)?ACTE_SUP",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "47ff80e66586361ded3b89408bd55c8b",
+            "name": "GESTIONNAIRE_SUP",
+            "title": "GESTIONNAIRE_SUP",
+            "path": "Donnees_geographiques/(.*_)?GESTIONNAIRE_SUP",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "1e852b52de3618b68c5518a50886df2c",
+            "name": "SERVITUDE",
+            "title": "SERVITUDE",
+            "path": "Donnees_geographiques/(.*_)?SERVITUDE",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "afcaba63eca4d22f9db8f0894bca12c8",
+            "name": "SERVITUDE_ACTE_SUP",
+            "title": "SERVITUDE_ACTE_SUP",
+            "path": "Donnees_geographiques/(.*_)?SERVITUDE_ACTE_SUP",
+            "type": "table",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "5f2a30e79dd6adfc45deaaca400a4e67",
+            "name": "METADONNEES",
+            "title": "METADONNEES",
+            "path": "[^\\/]*",
+            "type": "metadata",
+            "mandatory": "ERROR"
+        },
+        {
+            "id": "52e9c238cfe2af0011e443c1c2b0f017",
+            "name": "PT3_ASSIETTE_SUP_S",
+            "title": "PT3_ASSIETTE_SUP_S",
+            "path": "Donnees_geographiques/PT3_ASSIETTE_SUP_S",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "855a88a1a17007e338aefaf15d1cd607",
+            "name": "PT3_GENERATEUR_SUP_L",
+            "title": "PT3_GENERATEUR_SUP_L",
+            "path": "Donnees_geographiques/PT3_GENERATEUR_SUP_L",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "id": "34ac41b6d62e11e9bb652a2ae2dbcce4",
+    "name": "cnig_SCoT_2013",
+    "title": "cnig_SCoT_2013",
+    "description": "maillage_SCoT_datappro(_part)",
+    "constraints": {
+        "folderName": "[0-9]{9}_SCOT"
+    },
+    "files": [
+        {
+            "id": "d202a4cf49183a7d705ddc0e5c9b4559",
+            "name": "SCOT",
+            "title": "SCOT",
+            "path": "SCOT",
+            "type": "table",
+            "mandatory": "OPTIONAL"
+        },
+        {
+            "id": "8a315610d2b0f482f8dfb8c5d532de6e",
+            "name": "DOO",
+            "title": "DOO",
+            "path": "[0-9]{9}_doo_[0-9]{8}",
+            "type": "pdf",
+            "mandatory": "WARN"
+        },
+        {
+            "id": "9f29e5d6dc283479ee2a282ff283ed90",
+            "name": "PADD",
+            "title": "PADD",
+            "path": "[0-9]{9}_padd_[0-9]{8}",
+            "type": "pdf",
+            "mandatory": "WARN"
+        },
+        {
+            "id": "6376c47acf5938873936806f05e5df1b",
+            "name": "RAPPORT",
+            "title": "RAPPORT",
+            "path": "[0-9]{9}_rapport_[0-9]{8}",
+            "type": "pdf",
+            "mandatory": "WARN"
+        }
+    ]
+}

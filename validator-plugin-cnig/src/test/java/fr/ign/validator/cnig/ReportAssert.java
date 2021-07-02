@@ -9,6 +9,12 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
+/**
+ * Helper class to write test counting errors in report.
+ * 
+ * @author MBorne
+ *
+ */
 public class ReportAssert {
 
     /**
@@ -22,7 +28,7 @@ public class ReportAssert {
         List<ValidatorError> errors = report.getErrorsByLevel(level);
         if (errors.size() != expected) {
             String message = "Expecting " + expected + " " + level.toString() + "(s), found " + errors.size() + " "
-                + getStatsMessages(errors);
+                + getStatsByCode(errors);
             throw new AssertionError(message);
         }
     }
@@ -38,7 +44,7 @@ public class ReportAssert {
         List<ValidatorError> errors = report.getErrorsByCode(code);
         if (errors.size() != expected) {
             String message = "Expecting " + expected + " " + code.toString() + " error(s), found " + errors.size() + " "
-                + getStatsMessages(report.getErrors());
+                + getStatsByCode(report.getErrors());
             throw new AssertionError(message);
         }
     }
@@ -49,7 +55,7 @@ public class ReportAssert {
      * @param errors
      * @return
      */
-    private static String getStatsMessages(List<ValidatorError> errors) {
+    private static String getStatsByCode(List<ValidatorError> errors) {
         Map<ErrorCode, Integer> counts = new HashMap<>();
         for (ValidatorError error : errors) {
             Integer current = counts.get(error.getCode());

@@ -65,7 +65,7 @@ public class CnigMetadataReferenceSystemIdentifierValidatorTest extends CnigVali
     }
 
     @Test
-    public void testUriNotFound() {
+    public void testUriNotFoundInMetadata() {
         Metadata metadata = mock(Metadata.class);
         ReferenceSystemIdentifier rsi = new ReferenceSystemIdentifier();
         rsi.setCode("EPSG:2154");
@@ -78,6 +78,24 @@ public class CnigMetadataReferenceSystemIdentifierValidatorTest extends CnigVali
         assertEquals(1, report.getErrors().size());
         assertEquals(
             CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND,
+            report.getErrors().get(0).getCode()
+        );
+    }
+
+    @Test
+    public void testUriNotSupported() {
+        Metadata metadata = mock(Metadata.class);
+        ReferenceSystemIdentifier rsi = new ReferenceSystemIdentifier();
+        rsi.setCode("EPSG:20135");
+        rsi.setUri("http://www.opengis.net/def/crs/EPSG/0/20135");
+        when(metadata.getReferenceSystemIdentifier()).thenReturn(rsi);
+
+        CnigMetadataReferenceSystemIdentifierValidator validator = new CnigMetadataReferenceSystemIdentifierValidator();
+        validator.validate(context, metadata);
+
+        assertEquals(1, report.getErrors().size());
+        assertEquals(
+            CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_UNEXPECTED,
             report.getErrors().get(0).getCode()
         );
     }

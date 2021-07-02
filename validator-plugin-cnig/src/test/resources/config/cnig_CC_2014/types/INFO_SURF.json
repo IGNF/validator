@@ -1,0 +1,112 @@
+{
+    "id": "737762203a0bc2d6371c23d577491fea",
+    "name": "INFO_SURF",
+    "title": "INFO_SURF",
+    "description": "Table contenant les périmètres à reporter à titre d'information",
+    "columns": [
+        {
+            "id": "06d5d06a616f64c3035b80d400fc27f1",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "1e6c3eabb6e09b4004f8f8c8e43a9592",
+            "name": "TYPEINF",
+            "title": "TYPEINF",
+            "description": "Type de l’information. Les valeurs mentionnées sont celles qui ont une justification au regard du code de l’urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "22",
+                    "23",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "6bfc707c8c9db7dcff5e89eb82d3c3ec",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "872b227df6e80b7d31353826d5624b7d",
+            "name": "TYPEP",
+            "title": "TYPEP",
+            "description": "Type complémentaire qualifiant l’information selon la classification utilisée pour les prescriptions",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "11",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "893fc03f8d959190b9556a968de33222",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom complet du périmètre",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "dbb0132600ec4da5c640bcdf1f5e1d15",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant le texte décrivant l'information reportée",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "e5bfd62d21ab018735fe1c0bd67f3d4d",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "Lien URL d’accès au fichier contenant le texte décrivant l'information",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "f14734472015dd822f08900af59789ce",
+            "name": "TXT",
+            "title": "TXT",
+            "description": "Nom court du périmètre servant à faire une étiquette",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 10
+            }
+        }
+    ]
+}

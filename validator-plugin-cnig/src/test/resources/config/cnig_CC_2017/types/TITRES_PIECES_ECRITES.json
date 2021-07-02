@@ -1,0 +1,29 @@
+{
+    "id": "608c3f896123e5adf5b42923305097da",
+    "name": "TITRES_PIECES_ECRITES",
+    "title": "TITRES_PIECES_ECRITES",
+    "columns": [
+        {
+            "id": "2a499dc846de906050b1bf346aae5686",
+            "name": "FICHIER",
+            "title": "FICHIER",
+            "type": "Filename",
+            "constraints": {
+                "required": true,
+                "unique": true,
+                "maxLength": 255
+            }
+        },
+        {
+            "id": "ad3fc36fbac1015a616f4d1cb58f62a9",
+            "name": "TITRE",
+            "title": "TITRE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 80
+            }
+        }
+    ]
+}

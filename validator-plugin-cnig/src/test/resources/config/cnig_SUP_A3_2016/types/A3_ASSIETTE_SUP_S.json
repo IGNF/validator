@@ -1,0 +1,129 @@
+{
+    "id": "682a651623b3bf0c04c87302d0209416",
+    "name": "A3_ASSIETTE_SUP_S",
+    "title": "A3_ASSIETTE_SUP_S",
+    "description": "Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT",
+    "columns": [
+        {
+            "id": "0023559dbbddf1de2ba179594527e8bd",
+            "name": "IDASS",
+            "title": "IDASS",
+            "description": "Identifiant de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "03269ee3b188584738d51d38c542437c",
+            "name": "IDGEN",
+            "title": "IDGEN",
+            "description": "Identifiant du générateur de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "103d375653943c30dc6f6c45e4c326d6",
+            "name": "SRCGEOASS",
+            "title": "SRCGEOASS",
+            "description": "Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "1b9a55e805706f3155f9f4acd1131438",
+            "name": "DATESRCASS",
+            "title": "DATESRCASS",
+            "description": "Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "49af99b76af6e56c80ae2280e13ffbec",
+            "name": "MODEGEOASS",
+            "title": "MODEGEOASS",
+            "description": "Description de la méthode utilisée pour générer la géométrie de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Égale au générateur",
+                    "Zone tampon",
+                    "Digitalisation",
+                    "Duplication",
+                    "Liste de coordonnées",
+                    "Secteur angulaire",
+                    "Calculée",
+                    "Liste de parcelles",
+                    "Géométrie fictive"
+                ],
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "5ebeb3ba2af08776854483e3a86134dc",
+            "name": "PARAMCALC",
+            "title": "PARAMCALC",
+            "description": "Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "914ecb7c658a5b4ec7326359f97dacd8",
+            "name": "NOMASS",
+            "title": "NOMASS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+(_gen[0-9]+)?_ass",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "e7970caf74a2a0faec60576ab849a776",
+            "name": "TYPEASS",
+            "title": "TYPEASS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Zone de protection"
+                ],
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "f73b8f96a74f77c900b8a56ac0ac4bed",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

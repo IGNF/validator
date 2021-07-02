@@ -1,0 +1,54 @@
+{
+    "id": "4c7141fe87f91ef0399b9a54dc2a79b9",
+    "name": "SCOT",
+    "title": "SCOT",
+    "columns": [
+        {
+            "id": "11da565748a19e83b3e7f6fba2170b43",
+            "name": "NAME",
+            "title": "NAME",
+            "description": "Nom du Scot",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 32
+            }
+        },
+        {
+            "id": "19f4652bf44a0bf9a32b48a898913f2e",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "226f98fd928c5d0454b9888812021f0b",
+            "name": "TITLE",
+            "title": "TITLE",
+            "description": "Titre du Scot",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "3de32f59c4decd3eea54074e08c59548",
+            "name": "GPU_ID",
+            "title": "GPU_ID",
+            "description": "Identifiant du document sur le GPU",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 32
+            }
+        }
+    ]
+}

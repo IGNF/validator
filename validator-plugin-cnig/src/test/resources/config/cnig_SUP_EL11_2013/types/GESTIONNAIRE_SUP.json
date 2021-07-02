@@ -1,0 +1,79 @@
+{
+    "id": "8f571ed925c3b46df46e54600416a202",
+    "name": "GESTIONNAIRE_SUP",
+    "title": "GESTIONNAIRE_SUP",
+    "description": "Table contenant la liste des gestionnaires de servitude d'utilité publique",
+    "columns": [
+        {
+            "id": "11705e3cf63b79fc3074e959ce5b9e23",
+            "name": "COURRIEL",
+            "title": "COURRIEL",
+            "description": "Adresse électronique du point de contact chez le service gestionnaire",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "1410003ae9ad469e68c3b2cd08822420",
+            "name": "ADRESSE",
+            "title": "ADRESSE",
+            "description": "Adresse de l'organisme servant aux envois postaux",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "894cbf20492a679965e1e6d77ebc96ee",
+            "name": "NOMCORRES",
+            "title": "NOMCORRES",
+            "description": "Correspondant à contacter chez le gestionnaire",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "c6c523a356edc7b8a0b5246ca088802b",
+            "name": "IDGEST",
+            "title": "IDGEST",
+            "description": "Identifiant du gestionnaire",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "cfa66833f54d04c2ec5408efbf6351e7",
+            "name": "NOMGEST",
+            "title": "NOMGEST",
+            "description": "Nom de l'organisme gestionnaire",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "fdf05aad1613a29da12fcd0119c0e298",
+            "name": "NUMTEL",
+            "title": "NUMTEL",
+            "description": "Numéro de téléphone du point de contact chez le service gestionnaire",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 10
+            }
+        }
+    ]
+}

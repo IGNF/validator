@@ -24,6 +24,7 @@ public class IdurbaFormatValidatorTest extends CnigValidatorTestBase {
         assertTrue(validator.isValid("123456789_PLUI_20010101"));
     }
 
+    @Test
     public void testNotValid() {
         IdurbaFormatValidator validator = new IdurbaFormatValidator();
         assertFalse(validator.isValid("something"));

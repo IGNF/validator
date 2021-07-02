@@ -1,0 +1,161 @@
+{
+    "id": "6db9d4021363fb98467e3ab42c50a3f4",
+    "name": "ZONE_URBA",
+    "title": "ZONE_URBA",
+    "description": "Table contenant les zones d'un document PLU ou POS",
+    "columns": [
+        {
+            "id": "13c5bc2c656dfcda53c237e956fefbe3",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "URL ou URI qui pointe sur le fichier de règlement de la zone ou à défaut du règlement intégral indexé",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "1be47e333c4be63269d0b12e8f66f62e",
+            "name": "LIBELONG",
+            "title": "LIBELONG",
+            "description": "Nom complet littéral de la zone tel qu’il apparaît dans le chapitre du règlement écrit",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "43ad4bb47e36e63491d46edef03578f3",
+            "name": "DESTDOMI",
+            "title": "DESTDOMI",
+            "description": "Vocation dominante de la zone, concerne l’usage de la zone",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "00",
+                    "01",
+                    "02",
+                    "03",
+                    "04",
+                    "05",
+                    "07",
+                    "08",
+                    "09",
+                    "10",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "460bf52d64f19a58e83edf285a0e7a83",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom court de la zone tel qu’il apparaît sur le plan de zonage",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 12
+            }
+        },
+        {
+            "id": "66eba41f9eeea557550a430d0948ba8a",
+            "name": "DATAPPRO",
+            "title": "DATAPPRO",
+            "description": "Date de la dernière approbation de la zone",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "7472b22019c498f72049e71f9bd63bbe",
+            "name": "IDZONE",
+            "title": "IDZONE",
+            "description": "Identifiant unique de l’objet",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "Z([0-9]+)?",
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "751f59b952e2f5896feebbafe0ba7f46",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier du règlement de la zone",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "801cc4a3fe03a682b8405b429706e467",
+            "name": "TYPEZONE",
+            "title": "TYPEZONE",
+            "description": "Type de la zone dans une nomenclature simplifiée",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "U",
+                    "AUc",
+                    "AUs",
+                    "A",
+                    "N",
+                    "Nh",
+                    "Nd",
+                    "Ah"
+                ],
+                "maxLength": 3
+            }
+        },
+        {
+            "id": "b69261753bad9fc24c61e5575982f395",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "bce0e959857a55837ee148fbbacefb8c",
+            "name": "DATVALID",
+            "title": "DATVALID",
+            "description": "Date de la dernière validation de la zone ou de son règlement",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e6f86ffd869f4d812bc408fe4ae8b0f8",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune couverte par la zone",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        }
+    ]
+}

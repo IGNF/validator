@@ -1,0 +1,183 @@
+{
+    "id": "d0f80f8b51da8c2ed4ad0976ee6ffacb",
+    "name": "T1_GENERATEUR_SUP_L",
+    "title": "T1_GENERATEUR_SUP_L",
+    "description": "Table contenant les générateurs ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT",
+    "columns": [
+        {
+            "id": "202073fb00f6049f7ca061907feeecd8",
+            "name": "IDBDEXT",
+            "title": "IDBDEXT",
+            "description": "Identifiant référençant l'objet correspondant au générateur dans le référentiel ou la base de données externe",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "45f70d6a6b1277b4e57236f160d1f347",
+            "name": "SRCGEOGEN",
+            "title": "SRCGEOGEN",
+            "description": "Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "53a064decb952b57296d15a4129c84dd",
+            "name": "IDGEN",
+            "title": "IDGEN",
+            "description": "Identifiant du générateur",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "6df265cfe2e5843c327bcd3c8656c299",
+            "name": "NOMGEN",
+            "title": "NOMGEN",
+            "description": "Nom abrégé du générateur, respectant les règles de nommage nationales des SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+_gen([0-9]+)?",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "bf6cc359b24ea217a012564d48e5cb77",
+            "name": "REFBDEXT",
+            "title": "REFBDEXT",
+            "description": "Nom du référentiel ou de la source de données externes qui contient la géométrie du générateur obtenue par duplication",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "cd6f1e74c85a9107aee7db667ccb297d",
+            "name": "DATESRCGEN",
+            "title": "DATESRCGEN",
+            "description": "Date d'actualité du référentiel utilisé lors de la digitalisation de l'objet. Il s'agit d'indiquer le millésime des données référentielles source",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "d0347f4b396894b92734634b2971c82b",
+            "name": "MODEGENERE",
+            "title": "MODEGENERE",
+            "description": "Description du moyen utilisé pour obtenir la géométrie du générateur",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Digitalisation",
+                    "Duplication",
+                    "Liste de coordonnées",
+                    "Géométrie fictive"
+                ],
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "ec9419301ce9b53b55bd9e0ce94ca2cb",
+            "name": "IDSUP",
+            "title": "IDSUP",
+            "description": "Identifiant de la SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "69c410062e9e6e56a66c80e31315857c",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "a9ce338d94917f146c1cfe81b96ed222",
+            "name": "TYPE_GEST",
+            "title": "TYPE_GEST",
+            "description": "type de gestionnaire de l'infrastructure",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Etat",
+                    "Département",
+                    "Commune",
+                    "RFF"
+                ],
+                "maxLength": 15
+            }
+        },
+        {
+            "id": "aa8d76578b032b87fb38f574c1b171df",
+            "name": "CROISEMENT",
+            "title": "CROISEMENT",
+            "description": "Indique s'il y a un croisement",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "bade3df744ab345c8b880638f3c313ca",
+            "name": "TYPE_VOIE",
+            "title": "TYPE_VOIE",
+            "description": "type de la voie",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Voie publique",
+                    "Voie privée"
+                ],
+                "maxLength": 15
+            }
+        },
+        {
+            "id": "dca602045bedcf73f940874f8d93f5e9",
+            "name": "TYPEGEN",
+            "title": "TYPEGEN",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Emprise chemin de fer"
+                ],
+                "maxLength": 40
+            }
+        }
+    ]
+}

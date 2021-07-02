@@ -1,0 +1,267 @@
+{
+    "id": "aa1a5447b1c501c77f343efd00737323",
+    "name": "SERVITUDE",
+    "title": "SERVITUDE",
+    "description": "Table contenant la liste des servitudes d'utilité publique",
+    "columns": [
+        {
+            "id": "117abb6d4dfbd3dfbbfa4e203aa266fb",
+            "name": "MODEPROD",
+            "title": "MODEPROD",
+            "description": "Mode d'obtention de la SUP : import de données échangées avec les gestionnaires ; numérisation (digitalisation) de la SUP annexée au document d'urbanisme ; ou reconstitution à partir de l'acte l'instituant",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "import",
+                    "numérisation",
+                    "reconstitution"
+                ],
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "12ce35e905b8d0930c13b6b734819c77",
+            "name": "IDGEST",
+            "title": "IDGEST",
+            "description": "Identifiant du gestionnaire de la SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[0-9]{9}",
+                "maxLength": 9
+            }
+        },
+        {
+            "id": "153b3786e425d79800557ea9ec1eba5e",
+            "name": "NOMSUPLITT",
+            "title": "NOMSUPLITT",
+            "description": "Nom littéral de la servitude, figurant dans l'acte l'ayant instaurée",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "247760333ef95b0b3a15b71b30d54d4f",
+            "name": "VALIDEGEST",
+            "title": "VALIDEGEST",
+            "description": "Les données numérisées de la servitude ont été validées ou pas par le gestionnaire",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "T",
+                    "F"
+                ],
+                "maxLength": 1
+            }
+        },
+        {
+            "id": "2ba1e993fe419d951ac5f28ef3de56db",
+            "name": "OBSVALIDAT",
+            "title": "OBSVALIDAT",
+            "description": "Observation relative à la validation de la servitude formulée soit par le gestionnaire, soit par le service de l'État administrant les données",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "312007f69801fdeef57ed9cf03d9173a",
+            "name": "IDINTGEST",
+            "title": "IDINTGEST",
+            "description": "Identifiant créé et entretenu par l'organisme gestionnaire de la servitude",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "315c5f41febeef3fe93be6ed250f2a14",
+            "name": "DATEMAJ",
+            "title": "DATEMAJ",
+            "description": "Date de la dernière modification apportée à la servitude",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "726e30853c23e1d077596a81cd55d179",
+            "name": "CATEGORIE",
+            "title": "CATEGORIE",
+            "description": "Catégorie de la servitude dans la nomenclature nationale",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "A1",
+                    "A2",
+                    "A3",
+                    "A4",
+                    "A5",
+                    "A6",
+                    "A7",
+                    "A8",
+                    "A9",
+                    "AC1",
+                    "AC2",
+                    "AC3",
+                    "AC4",
+                    "AR1",
+                    "AR2",
+                    "AR3",
+                    "AR4",
+                    "AR5",
+                    "AR6",
+                    "AS1",
+                    "AS2",
+                    "EL1",
+                    "EL2",
+                    "EL2bis",
+                    "EL3",
+                    "EL4",
+                    "EL5",
+                    "EL6",
+                    "EL7",
+                    "EL8",
+                    "EL9",
+                    "EL10",
+                    "EL11",
+                    "EL12",
+                    "I1",
+                    "I1bis",
+                    "I2",
+                    "I3",
+                    "I4",
+                    "I5",
+                    "I6",
+                    "I7",
+                    "I8",
+                    "I9",
+                    "INT1",
+                    "JS1",
+                    "PM1",
+                    "PM1bis",
+                    "PM2",
+                    "PM3",
+                    "PM4",
+                    "PM5",
+                    "PM6",
+                    "PT1",
+                    "PT2",
+                    "PT3",
+                    "PT4",
+                    "T1",
+                    "T2",
+                    "T3",
+                    "T4",
+                    "T5",
+                    "T6",
+                    "T7",
+                    "T8"
+                ],
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "73ab1c52127904229ee9dff021acbcc5",
+            "name": "IDSUP",
+            "title": "IDSUP",
+            "description": "Identifiant de la SUP",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "8c23de7b3ab57a82fe4e0df1ca870219",
+            "name": "ESTABROGE",
+            "title": "ESTABROGE",
+            "description": "Attribut dérivé renseignant sur l'état de validité de la servitude : cet attribut prend la valeur 'oui' si un acte ou une décision administrative a abrogé ou annulé la servitude",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "T",
+                    "F"
+                ],
+                "maxLength": 1
+            }
+        },
+        {
+            "id": "a30491be7fff04a4dc4cadc8baa9fb58",
+            "name": "NOMSUP",
+            "title": "NOMSUP",
+            "description": "Nom abrégé de la servitude, respectant les règles de nommage nationales des SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+_sup",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "a72e1e8421ae357ca588bf7ca38bbd2e",
+            "name": "ECHNUM",
+            "title": "ECHNUM",
+            "description": "Dénominateur de l'échelle à laquelle a été numérisée la servitude",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "ac8f1009572ca850c49f8316ac9ff3e3",
+            "name": "QUIPROD",
+            "title": "QUIPROD",
+            "description": "Organisme ayant numérisé la servitude",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "b71c71c6b344b1d8836438ead7512f24",
+            "name": "DESCRIPTIO",
+            "title": "DESCRIPTIO",
+            "description": "Description détaillée de la servitude",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 150
+            }
+        },
+        {
+            "id": "da25bd69e765ef48232da0e3c4a8e3e9",
+            "name": "DOCSOURCE",
+            "title": "DOCSOURCE",
+            "description": "Document graphique ayant été numérisé",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        }
+    ]
+}

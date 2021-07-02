@@ -1,0 +1,237 @@
+{
+    "id": "4ba1590d35fa445d7d10291597a92c5e",
+    "name": "PT2_ASSIETTE_SUP_S",
+    "title": "PT2_ASSIETTE_SUP_S",
+    "description": "Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT",
+    "columns": [
+        {
+            "id": "0023559dbbddf1de2ba179594527e8bd",
+            "name": "IDASS",
+            "title": "IDASS",
+            "description": "Identifiant de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "03269ee3b188584738d51d38c542437c",
+            "name": "IDGEN",
+            "title": "IDGEN",
+            "description": "Identifiant du générateur de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+",
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "103d375653943c30dc6f6c45e4c326d6",
+            "name": "SRCGEOASS",
+            "title": "SRCGEOASS",
+            "description": "Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "1b9a55e805706f3155f9f4acd1131438",
+            "name": "DATESRCASS",
+            "title": "DATESRCASS",
+            "description": "Date d'actualité du référentiel utilisé lors du géoréférencement de l'objet. Il s'agit d'indiquer le millésime des données référentielles source",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "49af99b76af6e56c80ae2280e13ffbec",
+            "name": "MODEGEOASS",
+            "title": "MODEGEOASS",
+            "description": "Description de la méthode utilisée pour générer la géométrie de l'assiette",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Égale au générateur",
+                    "Zone tampon",
+                    "Digitalisation",
+                    "Duplication",
+                    "Liste de coordonnées",
+                    "Secteur angulaire",
+                    "Calculée",
+                    "Liste de parcelles",
+                    "Géométrie fictive"
+                ],
+                "maxLength": 25
+            }
+        },
+        {
+            "id": "5ebeb3ba2af08776854483e3a86134dc",
+            "name": "PARAMCALC",
+            "title": "PARAMCALC",
+            "description": "Valeur du paramètre ayant permis de calculer l'assiette lorsque celle-ci correspond à un objet tampon",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "1b7ddd554984f31be8fd33b45cc45992",
+            "name": "LARGEUR",
+            "title": "LARGEUR",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "2b57dd419d8424972a64792175b17047",
+            "name": "H",
+            "title": "H",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "309424a0c3a6aeafc42462ca40c03cc2",
+            "name": "NOMASS",
+            "title": "NOMASS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+(_gen[0-9]+)?_(zpri|zsec|zspe|sect)",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "4f76fa9f1f08e43523ab1ea46c0aa0a2",
+            "name": "XFINAL",
+            "title": "XFINAL",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "6a6eb672a0b494c462365ad93c75df63",
+            "name": "ANGLE2",
+            "title": "ANGLE2",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "70c4ac057002e5424940547bdf5b7ba7",
+            "name": "YFINAL",
+            "title": "YFINAL",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "7d4df22d175f1b72ff339ee3a57350fa",
+            "name": "TYPEASS",
+            "title": "TYPEASS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "Zone primaire de dégagement",
+                    "Zone secondaire de dégagement",
+                    "Zone spéciale de dégagement",
+                    "Secteur de dégagement"
+                ],
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "88213cfa9685b351f9d254fdb44dd59c",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8cff145aebc45afbcc49a39fdf3c767b",
+            "name": "HREF",
+            "title": "HREF",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "SOL",
+                    "NGF"
+                ],
+                "maxLength": 3
+            }
+        },
+        {
+            "id": "a55423f052eadce54a638fc387c708bd",
+            "name": "XDEBUT",
+            "title": "XDEBUT",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "aa5bd1cb3e02b9277e9855afcf7fcc49",
+            "name": "RAYON",
+            "title": "RAYON",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d962dd6096e065187c7bfa027168da04",
+            "name": "YDEBUT",
+            "title": "YDEBUT",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "ea4fcd0d6eaef1f521c82bab6fcad5e8",
+            "name": "ANGLE1",
+            "title": "ANGLE1",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

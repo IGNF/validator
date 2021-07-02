@@ -1,0 +1,142 @@
+{
+    "id": "c2a0782dd2345c251bc4cec34aa061d2",
+    "name": "SECTEUR_CC",
+    "title": "SECTEUR_CC",
+    "description": "Table contenant les secteurs de la carte communale",
+    "columns": [
+        {
+            "id": "1be6d48973d1556d4fb7cf7865b6db79",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Libellé du secteur tel que le définit la carte communale",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "373616397ac309e873c7d2a78ae2eb9d",
+            "name": "TYPESECT",
+            "title": "TYPESECT",
+            "description": "Type du secteur dans une nomenclature simplifiée",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "03",
+                    "99"
+                ],
+                "maxLength": 3
+            }
+        },
+        {
+            "id": "400695c3cd8bdbd7d0558cd0328fb513",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "Lien URL ou URI d’accès aux dispositions particulières du secteur, contenues dans le rapport de présentation de la carte communale",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "40ba67f5cfe57750d97119510da3fad8",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune couverte par le secteur",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "510e003f6396e19bdbf253af8b754475",
+            "name": "DATVALID",
+            "title": "DATVALID",
+            "description": "Date de la dernière validation du secteur ou de ses dispositions particulières",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "59fe911e35aa4cfdacb2ea740ddc95c3",
+            "name": "FERMRECO",
+            "title": "FERMRECO",
+            "description": "Le secteur est fermé à la reconstruction à l'identique si la carte communale le précise",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "",
+                    "Oui"
+                ],
+                "maxLength": 3
+            }
+        },
+        {
+            "id": "86c3a04f71630bc8f1526911e172a10e",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d2f112a50a240e8f28bde7f776460cd6",
+            "name": "DESTDOMI",
+            "title": "DESTDOMI",
+            "description": "Vocation dominante de la zone, concerne l’usage de la zone",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "07",
+                    "08",
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "d4907b570dfa7338cb66c27bff77947b",
+            "name": "DATAPPRO",
+            "title": "DATAPPRO",
+            "description": "Date d'approbation du document d'urbanisme auquel appartient la zone",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e6c11af585d920be3328cabc69420a81",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant les dispositions particulières du secteur",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        }
+    ]
+}

@@ -1,0 +1,109 @@
+{
+    "id": "6290167e09ed0236b6db532f24590863",
+    "name": "INFO_LIN",
+    "title": "INFO_LIN",
+    "description": "Table contenant les informations linéaires à reporter à titre d'information",
+    "columns": [
+        {
+            "id": "0a8f6893b4b8cbcfe55666ccb8c3d701",
+            "name": "TXT",
+            "title": "TXT",
+            "description": "Nom court servant à faire une étiquette",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "1f2a8c400da470cf6a4f9e522d52ec06",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "54ad7969fa70b29272f2787172e1ef04",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "Lien URL d’accès au fichier contenant le texte décrivant l'information",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "82eecb58a542cb86d78cfdd62a5d6233",
+            "name": "TYPEINF",
+            "title": "TYPEINF",
+            "description": "Type de l’information. Les valeurs mentionnées sont celles qui ont une justification au regard du code de l’urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        },
+        {
+            "id": "9475c197b1202ab1359aefeea6cd42aa",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Nom complet de l’information reportée",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "94df488f77b52aed9b8ecf2b09665224",
+            "name": "INSEE",
+            "title": "INSEE",
+            "description": "Code INSEE de la commune concernée par l'information",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "95de29cecffa972b72de57da81bab66f",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant le texte décrivant l'information reportée",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "c23256e7fbad03a29ed1976e7571f4d1",
+            "name": "TYPEP",
+            "title": "TYPEP",
+            "description": "Type complémentaire qualifiant l’information selon la classification utilisée pour les prescriptions",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "99"
+                ],
+                "maxLength": 2
+            }
+        }
+    ]
+}

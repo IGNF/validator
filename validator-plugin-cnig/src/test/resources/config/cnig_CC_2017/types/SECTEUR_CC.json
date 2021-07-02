@@ -1,0 +1,141 @@
+{
+    "id": "f963b627c319db8efc519b8f5f6cfb5f",
+    "name": "SECTEUR_CC",
+    "title": "SECTEUR_CC",
+    "description": "Table contenant les secteurs de la carte communale",
+    "columns": [
+        {
+            "id": "0890e2ac16a43ae3bcd9d96ad2d7e6c9",
+            "name": "LIBELONG",
+            "title": "LIBELONG",
+            "description": "Nom complet littéral du secteur",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "5b45c0789a77d1ffc6531d24595725bd",
+            "name": "TYPESECT",
+            "title": "TYPESECT",
+            "description": "Type du secteur dans une nomenclature simplifiée",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "02",
+                    "03",
+                    "99"
+                ],
+                "maxLength": 3
+            }
+        },
+        {
+            "id": "5e0c889292e4514a6f31cd51e44c3a6f",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "745cbd0f6528d197b7f31f48d1d64821",
+            "name": "LIB_IDZONE",
+            "description": "identifiant d'objets",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "79e915fa7f56d3c48994427c8bd5d3ba",
+            "name": "LIBELLE",
+            "title": "LIBELLE",
+            "description": "Libellé du secteur tel que le définit la carte communale",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "ZC",
+                    "ZCa",
+                    "ZnC",
+                    "RNU"
+                ],
+                "maxLength": 12
+            }
+        },
+        {
+            "id": "b59b05a7fee4a0acd19c3eb5b91d86da",
+            "name": "NOMFIC",
+            "title": "NOMFIC",
+            "description": "Nom du fichier contenant les dispositions particulières du secteur",
+            "type": "Filename",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "c8f765ecf3489734e6a799237de386d2",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du document d'urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "cbffea186f2c6674654d25b684abd162",
+            "name": "FERMRECO",
+            "title": "FERMRECO",
+            "description": "Le secteur est fermé à la reconstruction à l'identique si la carte communale le précise",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "",
+                    "oui"
+                ],
+                "maxLength": 3
+            }
+        },
+        {
+            "id": "d689c039139178c19f9a3e9c8ec42908",
+            "name": "DATVALID",
+            "title": "DATVALID",
+            "description": "Date de la dernière validation du secteur ou de ses dispositions particulières",
+            "type": "Date",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e9137d86fd96e47847398ccb1aa267e9",
+            "name": "URLFIC",
+            "title": "URLFIC",
+            "description": "Lien URL ou URI d’accès aux dispositions particulières du secteur, contenues dans le rapport de présentation de la carte communale",
+            "type": "Url",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        }
+    ]
+}

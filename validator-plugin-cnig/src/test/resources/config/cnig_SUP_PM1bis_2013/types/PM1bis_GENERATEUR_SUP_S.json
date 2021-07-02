@@ -1,0 +1,131 @@
+{
+    "id": "5c70e483e6e101540d575cb44720dfb4",
+    "name": "PM1bis_GENERATEUR_SUP_S",
+    "title": "PM1bis_GENERATEUR_SUP_S",
+    "description": "Table contenant les générateurs ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT",
+    "columns": [
+        {
+            "id": "2d9eb4d1ca95b693d32f09e6dfe61a71",
+            "name": "TYPEGEN",
+            "title": "TYPEGEN",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "3410d2ec8cbd5c201be662b4cf6fe79b",
+            "name": "IDGEN",
+            "title": "IDGEN",
+            "description": "Identifiant du générateur",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "id": "39c93912ba5bf0afbad95db9ed66e78a",
+            "name": "IDBDEXT",
+            "title": "IDBDEXT",
+            "description": "Identifiant référençant l'objet correspondant au générateur dans le référentiel ou la base de données externe",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "42cd1e3145f31264de0e3bc881ff3655",
+            "name": "DATESRCGEN",
+            "title": "DATESRCGEN",
+            "description": "Date d'actualité du référentiel utilisé lors de la digitalisation de l'objet. Il s'agit d'indiquer le millésime des données référentielles source",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{8}"
+            }
+        },
+        {
+            "id": "46a1e08c752e490bb51b205d640d4a42",
+            "name": "MODEGENERE",
+            "title": "MODEGENERE",
+            "description": "Description du moyen utilisé pour obtenir la géométrie du générateur",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Digitalisation",
+                    "Duplication",
+                    "Liste de coordonnées",
+                    "Géométrie fictive"
+                ],
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "91e4e0e9674e7d3aaef322bdd1374c71",
+            "name": "IDSUP",
+            "title": "IDSUP",
+            "description": "Identifiant de la SUP",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "b6ea4308f6cb543b9b8d197a0a312357",
+            "name": "REFBDEXT",
+            "title": "REFBDEXT",
+            "description": "Nom du référentiel ou de la source de données externes qui contient la géométrie du générateur obtenue par duplication",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "ca794cb677257564b31f6828f348dabe",
+            "name": "SRCGEOGEN",
+            "title": "SRCGEOGEN",
+            "description": "Type de carte, de référentiel géographique utilisé en tant que source de géoréférencement lors de la digitalisation de la géométrie",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "dbff3aecc6bba23c7b9d6ab419537b04",
+            "name": "NOMGEN",
+            "title": "NOMGEN",
+            "description": "Nom abrégé du générateur, respectant les règles de nommage nationales des SUP",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+_gen([0-9]+)?",
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "6ffb2cefb4b6a7efd9640f2e9f3c121d",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}
