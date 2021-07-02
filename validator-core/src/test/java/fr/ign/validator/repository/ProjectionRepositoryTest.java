@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
 
 /**
@@ -18,14 +19,14 @@ public class ProjectionRepositoryTest {
 
     @Test
     public void testFindAll() {
-        ProjectionRepository repository = ProjectionRepository.getInstance();
+        ProjectionList repository = ProjectionList.getInstance();
         List<Projection> projections = repository.findAll();
         Assert.assertTrue(projections.size() > 5);
     }
 
     @Test
     public void testFindByName() {
-        ProjectionRepository repository = ProjectionRepository.getInstance();
+        ProjectionList repository = ProjectionList.getInstance();
         Projection projection = repository.findByCode("EPSG:2154");
         Assert.assertEquals("EPSG:2154", projection.getCode());
         Assert.assertEquals("http://www.opengis.net/def/crs/EPSG/0/2154", projection.getUri());
@@ -33,7 +34,7 @@ public class ProjectionRepositoryTest {
 
     @Test
     public void testFindByUri() {
-        ProjectionRepository repository = ProjectionRepository.getInstance();
+        ProjectionList repository = ProjectionList.getInstance();
         Projection projection = repository.findByUri("http://www.opengis.net/def/crs/EPSG/0/2154");
         Assert.assertEquals("EPSG:2154", projection.getCode());
         Assert.assertEquals("http://www.opengis.net/def/crs/EPSG/0/2154", projection.getUri());
@@ -44,7 +45,7 @@ public class ProjectionRepositoryTest {
      */
     @Test
     public void testGetCRS() {
-        ProjectionRepository repository = ProjectionRepository.getInstance();
+        ProjectionList repository = ProjectionList.getInstance();
         List<Projection> projections = repository.findAll();
         for (Projection projection : projections) {
             Assert.assertNotNull(

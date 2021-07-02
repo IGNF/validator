@@ -111,8 +111,8 @@ public class Row implements Validatable {
                 } else {
                     continue;
                 }
+                /* Get bounding box transformed in CRS:84 */
                 try {
-                    // depends on geometry
                     Geometry geom = new ProjectionTransform(context.getProjection()).transformWKT(wkt);
                     setFeatureBbox(geom.getEnvelopeInternal());
                 } catch (Exception e) {

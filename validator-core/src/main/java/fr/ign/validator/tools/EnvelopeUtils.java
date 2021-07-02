@@ -9,6 +9,7 @@ import org.locationtech.jts.io.WKTReader;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.operation.TransformException;
 
+import fr.ign.validator.exception.GeometryTransformException;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.Projection;
 
@@ -50,9 +51,9 @@ public class EnvelopeUtils {
         try {
             Geometry geom = new ProjectionTransform(projection).transformWKT(wkt);
             return geom.getEnvelopeInternal();
-        } catch (MismatchedDimensionException e) {
+        } catch (ParseException e) {
             return new Envelope();
-        } catch (TransformException e) {
+        } catch (GeometryTransformException e) {
             return new Envelope();
         }
     }

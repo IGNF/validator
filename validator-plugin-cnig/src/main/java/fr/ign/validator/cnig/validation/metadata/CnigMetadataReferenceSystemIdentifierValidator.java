@@ -4,10 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
+import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.ReferenceSystemIdentifier;
 import fr.ign.validator.model.Projection;
-import fr.ign.validator.repository.ProjectionRepository;
 
 /**
  * Ensures that ReferenceSystemIdentifier is defined according to guidelines :
@@ -19,7 +19,7 @@ import fr.ign.validator.repository.ProjectionRepository;
  */
 public class CnigMetadataReferenceSystemIdentifierValidator extends AbstractCnigMetadataValidator {
 
-    private ProjectionRepository projectionRepository = ProjectionRepository.getInstance();
+    private ProjectionList projectionRepository = ProjectionList.getInstance();
 
     @Override
     public void validate(Context context, Metadata metadata) {

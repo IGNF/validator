@@ -16,6 +16,7 @@ import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
 
@@ -35,7 +36,7 @@ public class CSVNormalizerTest {
         context = new Context();
         // ATTENTION dépendance à sourceCRS (ne doit pas être nul du point de vu de
         // CSVNormalizer)
-        context.setProjection("CRS:84");
+        context.setProjection(Projection.CODE_CRS84);
         context.setReportBuilder(reportBuilder);
 
         File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/adresse/files.xml");

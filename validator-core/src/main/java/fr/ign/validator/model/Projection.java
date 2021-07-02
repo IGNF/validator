@@ -19,6 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Projection {
 
     /**
+     * Code for CRS:84 (lon,lat)
+     */
+    public static final String CODE_CRS84 = "CRS:84";
+
+    /**
      * Code name ("EPSG:2154", "IGNF:RGF93LAMB93", etc.)
      */
     private String code;

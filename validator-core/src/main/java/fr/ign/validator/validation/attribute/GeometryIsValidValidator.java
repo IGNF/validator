@@ -35,7 +35,7 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
             TopologyValidationError topologyValidationError = isValidOp.getValidationError();
             Geometry point = new GeometryFactory().createPoint(topologyValidationError.getCoordinate());
             try {
-                Geometry transformPoint = new ProjectionTransform(context.getCoordinateReferenceSystem()).transform(
+                Geometry transformPoint = new ProjectionTransform(context.getProjection()).transform(
                     point
                 );
 

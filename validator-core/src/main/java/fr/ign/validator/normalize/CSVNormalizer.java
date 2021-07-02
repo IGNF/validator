@@ -14,12 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.geotools.referencing.CRS;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.geometry.GeometryTransform;
+import fr.ign.validator.geometry.NullTransform;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -47,9 +46,9 @@ public class CSVNormalizer implements Closeable {
     private FeatureType featureType;
 
     /**
-     * Target CRS
+     * Target projection
      */
-    private CoordinateReferenceSystem targetCRS;
+    private GeometryTransform geometryTransform = new NullTransform();
 
     /**
      * CSV writer
@@ -59,12 +58,27 @@ public class CSVNormalizer implements Closeable {
     public CSVNormalizer(Context context, FeatureType featureType, File targetFile) throws IOException {
         this.context = context;
         this.featureType = featureType;
-        try {
-            this.targetCRS = CRS.decode("CRS:84");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+        /*
+         * Optionally create projection transform for normalized data
+         */
+        if (context.getProjection() != null && context.getOutputProjection() != null) {
+            log.info(
+                MARKER, "Projection transform from {} to {}",
+                context.getProjection().getCode(),
+                context.getOutputProjection().getCode()
+            );
+            this.geometryTransform = new ProjectionTransform(
+                context.getProjection(),
+                context.getOutputProjection()
+            );
+        } else {
+            log.info(MARKER, "Projection transform is disabled");
         }
-        /* init CSV with a given header */
+
+        /*
+         * Create CSV file with an header given by the model.
+         */
         String[] outputHeader = featureType.getAttributeNames();
         BufferedWriter fileWriter = new BufferedWriter(
             new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8)
@@ -80,11 +94,6 @@ public class CSVNormalizer implements Closeable {
      * @throws Exception
      */
     public void append(File csvFile) throws Exception {
-        ProjectionTransform transform = new ProjectionTransform(
-            context.getCoordinateReferenceSystem(),
-            targetCRS
-        );
-
         TableReader reader = TableReader.createTableReader(
             csvFile,
             context.getEncoding()
@@ -108,7 +117,7 @@ public class CSVNormalizer implements Closeable {
                 try {
                     bindedValue = attribute.bind(inputRow[i]);
                     if (bindedValue instanceof Geometry) {
-                        bindedValue = transform.transform((Geometry) bindedValue);
+                        bindedValue = geometryTransform.transform((Geometry) bindedValue);
                     }
                 } catch (IllegalArgumentException e) {
                     log.warn(

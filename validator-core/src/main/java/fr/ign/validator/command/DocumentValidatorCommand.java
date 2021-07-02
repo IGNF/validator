@@ -23,10 +23,12 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.command.options.OutputProjectionOption;
 import fr.ign.validator.command.options.StringFixerOptions;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.ModelNotFoundException;
+import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.ModelReaderFactory;
 import fr.ign.validator.model.DocumentModel;
@@ -36,7 +38,6 @@ import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.FilteredReportBuilder;
 import fr.ign.validator.report.JsonReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.repository.ProjectionRepository;
 import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.tools.FileConverter;
 
@@ -119,6 +120,11 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected boolean normalize = false;
 
     /**
+     * option - output projection for the normalized data
+     */
+    protected Projection outputProjection = ProjectionList.getCRS84();
+
+    /**
      * option - plugins used for validation
      */
     protected List<Plugin> plugins = new ArrayList<>();
@@ -167,6 +173,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         buildReportBuilderOptions(options);
         buildErrorConfigOption(options);
         buildNormalizeOption(options);
+        OutputProjectionOption.buildOptions(options);
 
         /*
          * validation options
@@ -174,7 +181,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         buildCoordinateReferenceSystemOptions(options);
         buildDataExtentOption(options);
         buildEncodingOption(options);
-        buildStringFixerOptions(options);
+        StringFixerOptions.buildOptions(options);
         buildFlatOption(options);
         buildPluginsOption(options);
 
@@ -200,6 +207,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         parseReportBuilder(commandLine);
         parseErrorConfigOption(commandLine);
         parseNormalizeOption(commandLine);
+        this.outputProjection = OutputProjectionOption.parseCommandLine(commandLine);
 
         /*
          * Config and version
@@ -211,7 +219,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         parseCoordinateReferenceSystem(commandLine);
         parseEncoding(commandLine);
-        parseStringFixerOptions(commandLine);
+        this.stringFixer = StringFixerOptions.parseCommandLine(commandLine);
         parseDataExtent(commandLine);
         parseFlatOption(commandLine);
         parseTopologicalToleranceOption(commandLine);
@@ -513,7 +521,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
                 null, "error-config", true,
                 "Custom error-config.json file to overwrite some error code configuration (message, level,...)"
             );
-            option.setRequired(true);
+            option.setRequired(false);
             options.addOption(option);
         }
     }
@@ -609,9 +617,9 @@ public class DocumentValidatorCommand extends AbstractCommand {
      * @return
      */
     protected void parseCoordinateReferenceSystem(CommandLine commandLine) throws ParseException {
-        String srsString = commandLine.getOptionValue("srs", "CRS:84");
+        String srsString = commandLine.getOptionValue("srs", Projection.CODE_CRS84);
 
-        ProjectionRepository projectionRepository = ProjectionRepository.getInstance();
+        ProjectionList projectionRepository = ProjectionList.getInstance();
         Projection projection = projectionRepository.findByCode(srsString);
         if (projection == null) {
             String message = String.format("Paramètre invalide 'srs' : '%1s' non supporté", srsString);
@@ -686,25 +694,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
         } catch (Exception e) {
             throw new ParseException("invalid parameter 'encoding' : " + encoding + " (charset not found)");
         }
-    }
-
-    /**
-     * Build options corresponding to StringFixer
-     * 
-     * @param options
-     */
-    protected void buildStringFixerOptions(Options options) {
-        StringFixerOptions.buildOptions(options);
-    }
-
-    /**
-     * Parse command line arguments
-     * 
-     * @param commandLine
-     * @return
-     */
-    protected void parseStringFixerOptions(CommandLine commandLine) {
-        stringFixer = StringFixerOptions.parseCommandLine(commandLine);
     }
 
     /**

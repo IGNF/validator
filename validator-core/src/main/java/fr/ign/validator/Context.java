@@ -6,8 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 
@@ -21,6 +19,7 @@ import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
@@ -34,7 +33,6 @@ import fr.ign.validator.process.ProjectionPreProcess;
 import fr.ign.validator.process.RemovePreviousFilesPreProcess;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.report.ReportBuilder;
-import fr.ign.validator.repository.ProjectionRepository;
 import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.validation.Validatable;
 
@@ -55,18 +53,18 @@ public class Context {
     private Charset encoding = StandardCharsets.UTF_8;
 
     /**
-     * Data CoordinateReferenceSystem (provided as a command line option)
+     * Input - Data projection provided as a command line option.
      */
-    private Projection projection = ProjectionRepository.getInstance().findByCode("CRS:84");
+    private Projection projection = ProjectionList.getInstance().findByCode(Projection.CODE_CRS84);
 
     /**
-     * Expected data extent (same CoordinateReferenceSystem than data)
+     * Expected data extent provided with data projection.
      */
     private Geometry nativeDataExtent;
 
     /**
-     * Allows to disable strict file hierarchy validation (find files by name
-     * instead of path)
+     * Allows to disable strict file hierarchy validation matching DocumentFile to
+     * FileModel by name instead of path.
      */
     private boolean flatValidation;
 
@@ -94,11 +92,18 @@ public class Context {
     private boolean normalizeEnabled = false;
 
     /**
-     * Execution context - modelStack
+     * Output - output projection for normalized DATA
+     */
+    private Projection outputProjection = ProjectionList.getInstance().findByCode(Projection.CODE_CRS84);
+
+    /**
+     * Execution context - modelStack providing current model informations while
+     * reporting errors.
      */
     private List<Model> modelStack = new ArrayList<Model>();
     /**
-     * Execution context - dataStack
+     * Execution context - dataStack providing current data informations while
+     * reporting errors.
      */
     private List<Validatable> dataStack = new ArrayList<Validatable>();
 
@@ -238,20 +243,11 @@ public class Context {
      * @param code
      */
     public void setProjection(String code) {
-        Projection projection = ProjectionRepository.getInstance().findByCode(code);
+        Projection projection = ProjectionList.getInstance().findByCode(code);
         if (projection == null) {
             throw new RuntimeException("projection " + code + " non reconnue");
         }
         this.projection = projection;
-    }
-
-    /**
-     * Get CRS corresponding to projection
-     * 
-     * @return
-     */
-    public CoordinateReferenceSystem getCoordinateReferenceSystem() {
-        return projection.getCRS();
     }
 
     /**
@@ -619,6 +615,14 @@ public class Context {
 
     public void setNormalizeEnabled(boolean normalizeEnabled) {
         this.normalizeEnabled = normalizeEnabled;
+    }
+
+    public Projection getOutputProjection() {
+        return outputProjection;
+    }
+
+    public void setOutputProjection(Projection outputProjection) {
+        this.outputProjection = outputProjection;
     }
 
     /**

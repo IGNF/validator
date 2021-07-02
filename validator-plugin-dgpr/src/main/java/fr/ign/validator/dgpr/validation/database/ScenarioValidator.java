@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-
 import org.locationtech.jts.geom.Envelope;
 
 import fr.ign.validator.Context;
@@ -81,7 +80,7 @@ public class ScenarioValidator implements Validator<Database> {
 
             Envelope envelope = null;
             if (indexWtk != -1) {
-                envelope = DatabaseUtils.getEnveloppe(row[indexWtk], context.getCoordinateReferenceSystem());
+                envelope = DatabaseUtils.getEnveloppe(row[indexWtk], context.getProjection());
             }
 
             context.report(

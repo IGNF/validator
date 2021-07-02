@@ -1,4 +1,4 @@
-package fr.ign.validator.repository;
+package fr.ign.validator.geometry;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,13 +10,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ign.validator.model.Projection;
 
-public class ProjectionRepository {
+/**
+ * Helper class to find supported projections embedded in resources.
+ * 
+ * @see validator-core/src/main/resources/projection.json
+ * 
+ * @author MBorne
+ */
+public class ProjectionList {
 
-    private static ProjectionRepository instance = new ProjectionRepository();
+    private static ProjectionList instance = new ProjectionList();
 
     private List<Projection> projections = new ArrayList<>();
 
-    private ProjectionRepository() {
+    private ProjectionList() {
         try {
             this.loadFromResources();
         } catch (IOException e) {
@@ -28,8 +35,17 @@ public class ProjectionRepository {
      * 
      * @return
      */
-    public static ProjectionRepository getInstance() {
-        return ProjectionRepository.instance;
+    public static ProjectionList getInstance() {
+        return ProjectionList.instance;
+    }
+
+    /**
+     * Get CRS:84 projection.
+     * 
+     * @return
+     */
+    public static Projection getCRS84() {
+        return getInstance().findByCode(Projection.CODE_CRS84);
     }
 
     /**

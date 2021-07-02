@@ -16,6 +16,7 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
@@ -100,7 +101,7 @@ public class ValidateDocumentARegressTest {
         Context context = new Context();
         context.setNormalizeEnabled(true);
         context.setCurrentDirectory(documentPath);
-        context.setProjection("CRS:84");
+        context.setProjection(Projection.CODE_CRS84);
         Document document = new Document(documentModel, documentPath);
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         validationDirectory.mkdirs();
