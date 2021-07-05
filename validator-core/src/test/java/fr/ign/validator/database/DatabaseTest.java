@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,14 @@ public class DatabaseTest {
         assertFalse(it.hasNext());
 
         it.close();
+        database.close();
+    }
+
+    @Test(expected = SQLException.class)
+    public void testUpdateFail() throws SQLException, IOException {
+        File databaseFile = new File(folder.getRoot(), "sample.db");
+        Database database = new Database(databaseFile);
+        database.update("UPDATE NOT_FOUND SET test='meuh'");
         database.close();
     }
 

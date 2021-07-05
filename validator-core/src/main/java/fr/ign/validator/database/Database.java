@@ -485,8 +485,15 @@ public class Database implements Closeable {
      */
     public void update(String sql) throws SQLException {
         log.debug(MARKER, sql);
-        Statement sth = connection.createStatement();
-        sth.executeUpdate(sql);
+        Statement sth = null;
+        try {
+            sth = connection.createStatement();
+            sth.executeUpdate(sql);
+        } finally {
+            if (sth != null) {
+                sth.close();
+            }
+        }
     }
 
     /**
