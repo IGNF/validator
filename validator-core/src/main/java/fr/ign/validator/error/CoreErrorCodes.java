@@ -42,6 +42,8 @@ public class CoreErrorCodes {
     public static final ErrorCode FILE_MISPLACED = ErrorCode.valueOf("FILE_MISPLACED");
     public static final ErrorCode FILE_EMPTY = ErrorCode.valueOf("FILE_EMPTY");
 
+    public static final ErrorCode XSD_SCHEMA_ERROR = ErrorCode.valueOf("XSD_SCHEMA_ERROR");
+
     /*
      * ErrorCode for error in Metadata Files
      */

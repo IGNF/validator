@@ -10,6 +10,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.validation.Validatable;
+import fr.ign.validator.validation.Validator;
 
 /**
  * Represents a file linked to a model
@@ -60,6 +61,11 @@ public abstract class DocumentFile implements Validatable {
         );
         context.beginModel(getFileModel());
         context.beginData(this);
+        /* invoke validators */
+        for (Validator<DocumentFile> validator : getFileModel().getValidators()) {
+            validator.validate(context, this);
+        }
+        /* invoke custom validators */
         validateContent(context);
         context.endData(this);
         context.endModel(getFileModel());

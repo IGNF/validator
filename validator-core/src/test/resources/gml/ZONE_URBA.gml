@@ -4,9 +4,7 @@
 	xmlns:wfs="http://www.opengis.net/wfs/2.0" 
 	xmlns:gml="http://www.opengis.net/gml/3.2" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="unknown" numberReturned="66" timeStamp="2015-07-20T08:53:29.227Z" 
-	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ../xsd/zone_urba.xsd 
-	http://www.opengis.net/gml/3.2 ../xsd/gml.xsd 
-	http://www.opengis.net/wfs/2.0 ../xsd/wfs.xsd">
+	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ./xsd/zone_urba.xsd">
   <wfs:member>
     <gp-urba:ZONE_URBA gml:id="ZONE_URBA.4075">
       <gp-urba:the_geom>

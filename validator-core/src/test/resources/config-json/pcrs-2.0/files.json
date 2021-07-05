@@ -1,0 +1,21 @@
+{
+	"name": "pcrs-2.0",
+	"title": "PCRS 2.0",
+	"description": "Modèle de test pour PCRS v2.0",
+	"files": [
+		{
+			"name": "DONNEES",
+			"type": "multi_table",
+			"path": "[^\\/]*",
+			"mandatory": "ERROR",
+			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd"
+		},
+		{
+			"title": "METADONNEES",
+			"name": "METADONNEES",
+			"path": "[^\\/]*",
+			"type": "metadata",
+			"mandatory": "OPTIONAL"
+		}
+	]
+}

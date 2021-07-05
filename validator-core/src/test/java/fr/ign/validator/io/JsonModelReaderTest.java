@@ -1,5 +1,8 @@
 package fr.ign.validator.io;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,6 +18,8 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.ResourceHelper;
 
@@ -70,26 +75,6 @@ public class JsonModelReaderTest {
         }
         Assert.assertTrue("ModelNotFoundException excepted", thrown);
     }
-
-    /**
-     * Ensure that ModelNotFoundException are thrown if a FeatureType is missing
-     * 
-     * @throws MalformedURLException
-     */
-//    @Test
-//    public void testLoadDocumentModelFeatureTypeNotFound() throws MalformedURLException {
-//        File documentModelPath = ResourceHelper.getResourceFile(
-//            getClass(), "/config-xml/missing_feature_type/files.json"
-//        );
-//        boolean thrown = false;
-//        try {
-//            modelLoader.loadDocumentModel(documentModelPath);
-//        } catch (ModelNotFoundException e) {
-//            Assert.assertTrue(e.getMessage().contains("/missing_feature_type/types/MY_TABLE.json' not found"));
-//            thrown = true;
-//        }
-//        Assert.assertTrue("ModelNotFoundException excepted", thrown);
-//    }
 
     /**
      * Read config-json/adresse and performs regress test
@@ -180,6 +165,37 @@ public class JsonModelReaderTest {
                 attribute.getConstraints().isUnique()
             );
         }
+    }
+
+    /**
+     * Read config-json/pcrs-2.0 and performs regress test
+     */
+    @Test
+    public void testLoadDocumentModelPCRS() {
+        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-json/pcrs-2.0/files.json");
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+        assertIsValid(documentModel);
+
+        Assert.assertEquals(2, documentModel.getFileModels().size());
+
+        // check METADONNEES
+        {
+            FileModel fileModel = documentModel.getFileModelByName("METADONNEES");
+            assertNotNull(fileModel);
+            assertTrue(fileModel instanceof MetadataModel);
+        }
+
+        // check METADONNEES
+        {
+            FileModel fileModel = documentModel.getFileModelByName("DONNEES");
+            assertNotNull(fileModel);
+            assertTrue(fileModel instanceof MultiTableModel);
+            Assert.assertEquals(
+                "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
+                fileModel.getXsdSchema().toString()
+            );
+        }
+
     }
 
     /**
