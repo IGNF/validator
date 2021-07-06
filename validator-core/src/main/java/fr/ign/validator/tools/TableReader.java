@@ -65,7 +65,7 @@ public class TableReader implements Iterator<String[]> {
      * @param charset
      * @throws IOException
      */
-    private TableReader(File csvFile, Charset preferedCharset) throws IOException {
+    TableReader(File csvFile, Charset preferedCharset) throws IOException {
         Charset charset = preferedCharset;
         if (!CharsetDetector.isValidCharset(csvFile, preferedCharset)) {
             charsetValid = false;
@@ -208,7 +208,7 @@ public class TableReader implements Iterator<String[]> {
      */
     public static TableReader createTableReader(File file, Charset preferedCharset) throws IOException {
         log.info(MARKER, "createTableReader('{}','{}')...", file.getAbsoluteFile(), preferedCharset);
-        if (FilenameUtils.getExtension(file.getName()).toLowerCase().equals("csv")) {
+        if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("csv")) {
             return new TableReader(file, preferedCharset);
         }
 
