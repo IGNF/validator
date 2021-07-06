@@ -53,7 +53,7 @@ public class Document implements Validatable {
     /**
      * Files related to Document (defined after matching step)
      */
-    private List<DocumentFile> documentFiles = new ArrayList<DocumentFile>();
+    private List<DocumentFile> documentFiles = new ArrayList<>();
 
     /**
      * Additional informations
@@ -109,7 +109,7 @@ public class Document implements Validatable {
      * @return
      */
     public <T extends FileModel> List<DocumentFile> getDocumentFiles(Class<T> type) {
-        List<DocumentFile> result = new ArrayList<DocumentFile>();
+        List<DocumentFile> result = new ArrayList<>();
         for (DocumentFile documentFile : documentFiles) {
             if (type.isAssignableFrom(documentFile.getFileModel().getClass())) {
                 result.add(documentFile);
@@ -132,7 +132,7 @@ public class Document implements Validatable {
      * @return
      */
     public List<DocumentFile> getDocumentFilesByModel(FileModel fileModel) {
-        List<DocumentFile> result = new ArrayList<DocumentFile>();
+        List<DocumentFile> result = new ArrayList<>();
         for (DocumentFile documentFile : documentFiles) {
             if (documentFile.getFileModel() == fileModel) {
                 result.add(documentFile);
@@ -233,6 +233,7 @@ public class Document implements Validatable {
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.beforeMatching(context, this);
         }
+        log.info(MARKER, "Run 'BeforeMatching' pre-processes : completed");
     }
 
     /**
@@ -246,6 +247,7 @@ public class Document implements Validatable {
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.beforeValidate(context, this);
         }
+        log.info(MARKER, "Run 'beforeValidate' pre-processes : completed");
     }
 
     /**
@@ -259,6 +261,7 @@ public class Document implements Validatable {
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.afterValidate(context, this);
         }
+        log.info(MARKER, "Run 'afterValidate' pre-processes : completed");
     }
 
     /**
@@ -269,9 +272,9 @@ public class Document implements Validatable {
     public void findDocumentFiles(Context context) {
         clearFiles();
 
-        File documentPath = getDocumentPath();
-        log.info(MARKER, "findDocumentFiles('{}')...", documentPath);
+        log.info(MARKER, "findDocumentFiles('{}') : list files and directories...", documentPath);
         Collection<File> files = FileUtils.listFilesAndDirs(documentPath, allowedExtensions);
+        log.info(MARKER, "findDocumentFiles('{}') : {} file(s) found", documentPath, files.size());
 
         /*
          * find match with FileModel
@@ -315,7 +318,11 @@ public class Document implements Validatable {
             );
         }
 
-        log.info(MARKER, "findDocumentFiles('{}') complete, found {} files.", documentPath, documentFiles.size());
+        log.info(
+            MARKER, "findDocumentFiles('{}') : completed, {} file(s) found.",
+            documentPath,
+            documentFiles.size()
+        );
     }
 
     private void addDocumentFile(FileModel fileModel, File path) {

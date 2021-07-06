@@ -20,7 +20,7 @@ public abstract class DocumentFile implements Validatable {
     public static final Marker MARKER = MarkerManager.getMarker("DocumentFile");
 
     /**
-     * filepath
+     * Path to the given file.
      */
     private File path;
 
@@ -37,7 +37,7 @@ public abstract class DocumentFile implements Validatable {
     /**
      * @return the fileModel
      */
-    abstract public FileModel getFileModel();
+    public abstract FileModel getFileModel();
 
     /**
      * @return the path

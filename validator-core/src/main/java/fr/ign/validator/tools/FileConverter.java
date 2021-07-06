@@ -32,13 +32,22 @@ import fr.ign.validator.tools.ogr.OgrVersion;
  * 
  */
 public class FileConverter {
+
     public static final Marker MARKER = MarkerManager.getMarker("FileConverter");
     public static final Logger log = LogManager.getRootLogger();
+
+    private static final String DRIVER_CSV = "CSV";
+    private static final String DRIVER_SHAPEFILE = "ESRI Shapefile";
 
     public static final String ENCODING_UTF8 = "UTF-8";
     public static final String ENCODING_LATIN1 = "ISO-8859-1";
 
     private static FileConverter instance = new FileConverter();
+
+    /**
+     * Path to ogr2ogr
+     */
+    private String ogr2ogrPath;
 
     /**
      * ogr2ogr version
@@ -49,6 +58,8 @@ public class FileConverter {
      * Default constructor
      */
     private FileConverter() {
+        log.info(MARKER, "Instanciate FileConverter ensuring that ogr2ogr version is supported...");
+        this.ogr2ogrPath = retrieveOgr2ogrPath();
         this.version = retrieveAndValidateOgrVersion();
     }
 
@@ -62,69 +73,12 @@ public class FileConverter {
     }
 
     /**
-     * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
-     * <ul>
-     * <li>Environment variable OGR2OGR_PATH</li>
-     * <li>System property ogr2ogr_path</li>
-     * </ul>
-     * 
-     * @return
-     */
-    private String getOgr2ogrPath() {
-        String result = System.getenv("OGR2OGR_PATH");
-        if (result != null) {
-            return result;
-        }
-        return System.getProperty("ogr2ogr_path", "ogr2ogr");
-    }
-
-    /**
      * returns ogr2ogr version
      * 
      * @return null if command `ogr2ogr --version` fails
      */
     public OgrVersion getVersion() {
         return this.version;
-    }
-
-    /**
-     * Récupération de la version de ogr2ogr
-     * 
-     * @return
-     */
-    private OgrVersion retrieveAndValidateOgrVersion() {
-        String fullVersion = retrieveFullVersion();
-        OgrVersion version = new OgrVersion(fullVersion);
-        version.ensureVersionIsSupported();
-        return version;
-    }
-
-    /**
-     * Call `ogr2ogr --version` to get GDAL version
-     * 
-     * @return
-     */
-    private String retrieveFullVersion() {
-        log.info(MARKER, "Run 'ogr2ogr --version' to retrieve GDAL version...");
-        String[] args = new String[] {
-            getOgr2ogrPath(), "--version"
-        };
-        ProcessBuilder builder = new ProcessBuilder(args);
-        try {
-            Process process = builder.start();
-
-            process.waitFor();
-
-            InputStream stdout = process.getInputStream();
-            BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(stdout));
-            String version = stdoutReader.readLine();
-            stdoutReader.close();
-            return version;
-        } catch (IOException e) {
-            return null;
-        } catch (InterruptedException e) {
-            return null;
-        }
     }
 
     /**
@@ -154,9 +108,9 @@ public class FileConverter {
         CompanionFileUtils.removeCompanionFile(source, "cpg");
         CompanionFileUtils.removeCompanionFile(source, "CPG");
 
-        String[] args = getArguments(source, target, "CSV");
-        Map<String, String> envs = new HashMap<String, String>();
-        // encoding is specified in UTF-8 so that ogr2ogr doesn't convert
+        String[] args = getArguments(source, target, DRIVER_CSV);
+        Map<String, String> envs = new HashMap<>();
+
         if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
             envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));
         }
@@ -167,20 +121,6 @@ public class FileConverter {
         if (!target.exists()) {
             log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
             createFalseCSV(target);
-        }
-    }
-
-    /**
-     * Convert java charset to GDAL encoding
-     * 
-     * @param sourceCharset
-     * @return
-     */
-    private String toEncoding(Charset sourceCharset) {
-        if (sourceCharset.equals(StandardCharsets.ISO_8859_1)) {
-            return ENCODING_LATIN1;
-        } else {
-            return ENCODING_UTF8;
         }
     }
 
@@ -196,7 +136,7 @@ public class FileConverter {
             fixGML(source);
         }
 
-        String[] args = getArguments(source, target, "ESRI Shapefile");
+        String[] args = getArguments(source, target, DRIVER_SHAPEFILE);
         Map<String, String> envs = new HashMap<String, String>();
         envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
         runCommand(args, envs);
@@ -213,6 +153,78 @@ public class FileConverter {
          */
         File cpgFile = CompanionFileUtils.getCompanionFile(target, "cpg");
         FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Get path to ogr2ogr. Default is ogr2ogr, it can be specified with :
+     * <ul>
+     * <li>Environment variable OGR2OGR_PATH</li>
+     * <li>System property ogr2ogr_path</li>
+     * </ul>
+     * 
+     * @return
+     */
+    private String retrieveOgr2ogrPath() {
+        String result = System.getenv("OGR2OGR_PATH");
+        if (result != null) {
+            return result;
+        }
+        return System.getProperty("ogr2ogr_path", "ogr2ogr");
+    }
+
+    /**
+     * Récupération de la version de ogr2ogr
+     * 
+     * @return
+     */
+    private OgrVersion retrieveAndValidateOgrVersion() {
+        String fullVersion = retrieveFullVersion();
+        log.info(MARKER, "ogr2ogr --version : {}", fullVersion);
+        OgrVersion result = new OgrVersion(fullVersion);
+        result.ensureVersionIsSupported();
+        return result;
+    }
+
+    /**
+     * Call `ogr2ogr --version` to get GDAL version
+     * 
+     * @return
+     */
+    private String retrieveFullVersion() {
+        log.info(MARKER, "Run 'ogr2ogr --version' to retrieve GDAL version...");
+        String[] args = new String[] {
+            ogr2ogrPath, "--version"
+        };
+        ProcessBuilder builder = new ProcessBuilder(args);
+        try {
+            Process process = builder.start();
+
+            process.waitFor();
+
+            InputStream stdout = process.getInputStream();
+            BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(stdout));
+            String result = stdoutReader.readLine();
+            stdoutReader.close();
+            return result;
+        } catch (IOException e) {
+            return null;
+        } catch (InterruptedException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Convert java charset to GDAL encoding
+     * 
+     * @param sourceCharset
+     * @return
+     */
+    private String toEncoding(Charset sourceCharset) {
+        if (sourceCharset.equals(StandardCharsets.ISO_8859_1)) {
+            return ENCODING_LATIN1;
+        } else {
+            return ENCODING_UTF8;
+        }
     }
 
     /**
@@ -243,7 +255,7 @@ public class FileConverter {
      */
     private String[] getArguments(File source, File target, String driver) {
         List<String> arguments = new ArrayList<String>();
-        arguments.add(getOgr2ogrPath());
+        arguments.add(ogr2ogrPath);
 
         // Otherwise, some ogr2ogr versions transforms 01 to 1...
         if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
@@ -257,7 +269,7 @@ public class FileConverter {
         /*
          * Getting format-specific parameters
          */
-        if (driver.equals("CSV")) {
+        if (driver.equals(DRIVER_CSV)) {
             if (hasSpatialColumn(source)) {
                 // unsure conversion to WKT
                 arguments.add("-lco");
@@ -346,9 +358,7 @@ public class FileConverter {
             if (process.exitValue() != 0) {
                 log.error(MARKER, "command fail!");
             }
-        } catch (IOException e1) {
-            throw new RuntimeException("ogr2ogr command fails", e1);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException("ogr2ogr command fails", e);
         }
     }
