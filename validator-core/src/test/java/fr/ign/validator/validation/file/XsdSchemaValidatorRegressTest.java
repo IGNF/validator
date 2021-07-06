@@ -28,7 +28,7 @@ import fr.ign.validator.tools.ResourceHelper;
 public class XsdSchemaValidatorRegressTest {
     protected Context context;
     protected InMemoryReportBuilder report;
-    
+
     TemporaryFolder folder;
 
     @Before
