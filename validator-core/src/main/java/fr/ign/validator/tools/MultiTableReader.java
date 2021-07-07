@@ -36,12 +36,16 @@ public class MultiTableReader {
     private File csvDirectory;
 
     /**
+     * Create a {@link MultiTableReader} with a source gmlPath and a csvDirectory
+     * produced by an ogr2ogr conversion.
      * 
+     * @param gmlPath
+     * @param csvDirectory
      */
-    private MultiTableReader(File path, File csvDirectory) {
+    private MultiTableReader(File gmlPath, File csvDirectory) {
         assert csvDirectory.exists();
         if (!csvDirectory.isDirectory()) {
-            throw new RuntimeException("fail to read " + path + "(" + csvDirectory + " is not a directory)");
+            throw new RuntimeException("fail to read " + gmlPath + "(" + csvDirectory + " is not a directory)");
         }
         this.csvDirectory = csvDirectory;
     }
@@ -71,8 +75,18 @@ public class MultiTableReader {
      * @throws IOException
      */
     public TableReader getTableReader(String tableName) throws IOException {
-        File tablePath = new File(csvDirectory, tableName + ".csv");
+        File tablePath = getTablePath(tableName);
         return new TableReader(tablePath, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Get path to the table converted to CSV.
+     * 
+     * @param tableName
+     * @return
+     */
+    public File getTablePath(String tableName) {
+        return new File(csvDirectory, tableName + ".csv");
     }
 
     /**

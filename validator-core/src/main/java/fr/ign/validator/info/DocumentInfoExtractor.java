@@ -3,6 +3,7 @@ package fr.ign.validator.info;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,8 +26,10 @@ import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
+import fr.ign.validator.tools.FileUtils;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -40,6 +43,17 @@ import fr.ign.validator.tools.TableReader;
 public class DocumentInfoExtractor {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractor");
+
+    /**
+     * Stats about a given table.
+     * 
+     * @author mborne
+     *
+     */
+    private class TableStats {
+        Envelope boundingBox = new Envelope();
+        int totalFeatures = 0;
+    }
 
     /**
      * Gets informations on directory
@@ -82,46 +96,94 @@ public class DocumentInfoExtractor {
             documentFileInfo.setName(documentFile.getPath().getName());
             documentFileInfo.setPath(context.relativize(documentFile.getPath()));
             if (fileModel instanceof TableModel) {
-                parseTable(context, fileModel, documentFileInfo);
+                parseTable(context, (TableModel) fileModel, documentFileInfo);
+            } else if (fileModel instanceof MultiTableModel) {
+                parseTables(context, (MultiTableModel) fileModel, documentFileInfo);
             }
             documentInfo.addFile(documentFileInfo);
         }
     }
 
     /**
-     * Retreive boundingBox and featureCount from normalized file
+     * Retrieve boundingBox and featureCount from normalized file
      * 
      * @param context
      * @param fileModel
      * @param documentFileInfo
      */
-    private void parseTable(Context context, FileModel fileModel, DocumentFileInfo documentFileInfo) {
+    private void parseTable(Context context, TableModel fileModel, DocumentFileInfo documentFileInfo) {
         File csvFile = new File(context.getDataDirectory(), fileModel.getName() + ".csv");
+        TableStats stats = getTableStatsFromNormalizedCSV(csvFile);
+        if (stats != null) {
+            documentFileInfo.setTotalFeatures(stats.totalFeatures);
+            documentFileInfo.setBoundingBox(stats.boundingBox);
+        }
+    }
 
-        Envelope boundingBox = new Envelope();
-        int totalFeatures = 0;
+    /**
+     * Retrieve boundingBox and featureCount from normalized file
+     * 
+     * @param context
+     * @param fileModel
+     * @param documentFileInfo
+     */
+    private void parseTables(Context context, MultiTableModel fileModel, DocumentFileInfo documentFileInfo) {
+        File csvDirectory = new File(context.getDataDirectory(), fileModel.getName());
+
+        // stats for all tables
+        TableStats result = new TableStats();
+
+        String[] extensions = {
+            "csv"
+        };
+        Collection<File> csvFiles = FileUtils.listFilesAndDirs(csvDirectory, extensions);
+        if (csvFiles.isEmpty()) {
+            log.warn(MARKER, "normalized CSV files for {} not found", fileModel.getName());
+            return;
+        }
+
+        for (File csvFile : csvFiles) {
+            TableStats tableStats = getTableStatsFromNormalizedCSV(csvFile);
+            if (tableStats == null) {
+                continue;
+            }
+            // TODO save stats for each table in multi_table.
+            result.totalFeatures += tableStats.totalFeatures;
+            result.boundingBox.expandToInclude(tableStats.boundingBox);
+        }
+
+        documentFileInfo.setTotalFeatures(result.totalFeatures);
+        documentFileInfo.setBoundingBox(result.boundingBox);
+    }
+
+    /**
+     * Get {@link TableStats} from a normalized CSV file.
+     * 
+     * @param csvFile
+     * @return
+     */
+    private TableStats getTableStatsFromNormalizedCSV(File csvFile) {
+        TableStats result = new TableStats();
         try {
             TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
-            // retreive geometry column
+
             int indexWktColumn = reader.findColumn("WKT");
             while (reader.hasNext()) {
                 String[] row = reader.next();
                 // count features
-                totalFeatures++;
+                result.totalFeatures++;
                 // compute bounding box
                 if (indexWktColumn >= 0) {
                     String wkt = row[indexWktColumn];
-                    boundingBox.expandToInclude(EnvelopeUtils.getEnvelope(wkt));
+                    result.boundingBox.expandToInclude(EnvelopeUtils.getEnvelope(wkt));
                 }
             }
 
         } catch (IOException e) {
-            log.error(MARKER, "Fail to extract infos from " + fileModel.getName() + ".csv");
-            return;
+            log.error(MARKER, "fail to compute stats for {}", csvFile);
+            return null;
         }
-
-        documentFileInfo.setTotalFeatures(totalFeatures);
-        documentFileInfo.setBoundingBox(boundingBox);
+        return result;
     }
 
     /**

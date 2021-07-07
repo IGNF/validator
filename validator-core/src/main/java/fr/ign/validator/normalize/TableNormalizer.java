@@ -26,12 +26,12 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  * 
- * Normalize CSV file according to FeatureType
+ * Normalize table file producing a CSV according to FeatureType columns.
  * 
  * @author MBorne
  *
  */
-public class CSVNormalizer implements Closeable {
+public class TableNormalizer implements Closeable {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("CSVNormalizer");
 
@@ -55,7 +55,15 @@ public class CSVNormalizer implements Closeable {
      */
     private CSVPrinter printer;
 
-    public CSVNormalizer(Context context, FeatureType featureType, File targetFile) throws IOException {
+    /**
+     * Create table normalizer with a given FeatureType.
+     * 
+     * @param context
+     * @param featureType
+     * @param targetFile
+     * @throws IOException
+     */
+    public TableNormalizer(Context context, FeatureType featureType, File targetFile) throws IOException {
         this.context = context;
         this.featureType = featureType;
 
@@ -91,9 +99,10 @@ public class CSVNormalizer implements Closeable {
      * Append rows corresponding to a document file
      * 
      * @param documentFile
+     * @throws IOException
      * @throws Exception
      */
-    public void append(File csvFile) throws Exception {
+    public void append(File csvFile) throws IOException {
         TableReader reader = TableReader.createTableReader(
             csvFile,
             context.getEncoding()
@@ -111,7 +120,9 @@ public class CSVNormalizer implements Closeable {
                 if (position < 0) {
                     continue;
                 }
-                // binding
+                /*
+                 * bind value to the expected type
+                 */
                 AttributeType<?> attribute = featureType.getAttribute(position);
                 Object bindedValue = null;
                 try {
@@ -121,12 +132,15 @@ public class CSVNormalizer implements Closeable {
                     }
                 } catch (IllegalArgumentException e) {
                     log.warn(
-                        MARKER, "{}.{} : {} transformé en valeur nulle (type non valide)", inputRow[i],
-                        featureType.getName(), attribute.getName()
+                        MARKER, "{}.{} : {} converted to null (bad type).",
+                        inputRow[i],
+                        featureType.getName(),
+                        attribute.getName()
                     );
                 }
-                // formatting
+                // format binded value to get normalized output.
                 String outputValue = attribute.formatObject(bindedValue);
+                // apply string fixer to remove bad chars.
                 outputValue = context.getStringFixer().transform(outputValue);
                 outputRow[position] = outputValue;
             }
@@ -135,8 +149,12 @@ public class CSVNormalizer implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
-        printer.close();
+    public void close() {
+        try {
+            printer.close();
+        } catch (IOException e) {
+            throw new RuntimeException("fail to close CSV printer", e);
+        }
     }
 
 }

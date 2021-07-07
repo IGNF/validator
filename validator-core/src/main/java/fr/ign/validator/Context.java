@@ -631,7 +631,11 @@ public class Context {
      * @return
      */
     public File getDataDirectory() {
-        return new File(validationDirectory, getCurrentDirectory().getName() + "/DATA");
+        File result = new File(validationDirectory, getCurrentDirectory().getName() + "/DATA");
+        if (!result.exists()) {
+            result.mkdirs();
+        }
+        return result;
     }
 
     /**
@@ -640,7 +644,11 @@ public class Context {
      * @return
      */
     public File getMetadataDirectory() {
-        return new File(validationDirectory, getCurrentDirectory().getName() + "/METADATA");
+        File result = new File(validationDirectory, getCurrentDirectory().getName() + "/METADATA");
+        if (!result.exists()) {
+            result.mkdirs();
+        }
+        return result;
     }
 
     /**

@@ -20,7 +20,7 @@ import fr.ign.validator.model.Projection;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
 
-public class CSVNormalizerTest {
+public class TableNormalizerTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -59,7 +59,7 @@ public class CSVNormalizerTest {
         Assert.assertNotNull(fileModel);
 
         File targetFile = new File(document.getDocumentPath(), "adresse_normalized.csv");
-        CSVNormalizer csvNormalizer = new CSVNormalizer(context, fileModel.getFeatureType(), targetFile);
+        TableNormalizer csvNormalizer = new TableNormalizer(context, fileModel.getFeatureType(), targetFile);
 
         File csvFile1 = new File(document.getDocumentPath(), "adresse_1.csv");
         Assert.assertTrue(csvFile1.exists());

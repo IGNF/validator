@@ -20,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import fr.ign.validator.tools.internal.FixGML;
 import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
@@ -83,7 +82,7 @@ public class FileConverter {
 
     /**
      * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV
-     * target
+     * target.
      * 
      * @param source
      * @param target
@@ -95,30 +94,33 @@ public class FileConverter {
         if (target.exists()) {
             target.delete();
         }
-        String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
+
         /*
-         * patch on GML files
+         * Prepare command arguments.
          */
-        if (sourceExtension.equals("gml")) {
-            fixGML(source);
-        }
+        String[] args = getArguments(source, target, DRIVER_CSV);
+        Map<String, String> envs = new HashMap<>();
+
         /*
-         * Removing cpg
+         * Remove CPG files as they may contains non portable values such as system.
          */
         CompanionFileUtils.removeCompanionFile(source, "cpg");
         CompanionFileUtils.removeCompanionFile(source, "CPG");
 
-        String[] args = getArguments(source, target, DRIVER_CSV);
-        Map<String, String> envs = new HashMap<>();
-
+        /*
+         * Configure charset for shapefiles
+         */
+        String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
         if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
             envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));
         }
         runCommand(args, envs);
+
         /*
-         * Controls that output file is created
+         * Ensure that output file is created
          */
         if (!target.exists()) {
+            // TODO throw IOException instead.
             log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
             createFalseCSV(target);
         }
@@ -132,12 +134,9 @@ public class FileConverter {
      */
     public void convertToShapefile(File source, File target) throws IOException {
         log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
-        if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
-            fixGML(source);
-        }
 
         String[] args = getArguments(source, target, DRIVER_SHAPEFILE);
-        Map<String, String> envs = new HashMap<String, String>();
+        Map<String, String> envs = new HashMap<>();
         envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
         runCommand(args, envs);
         /*
@@ -254,7 +253,7 @@ public class FileConverter {
      * @return
      */
     private String[] getArguments(File source, File target, String driver) {
-        List<String> arguments = new ArrayList<String>();
+        List<String> arguments = new ArrayList<>();
         arguments.add(ogr2ogrPath);
 
         // Otherwise, some ogr2ogr versions transforms 01 to 1...
@@ -379,18 +378,6 @@ public class FileConverter {
             }
         }
         return message;
-    }
-
-    /**
-     * ogr2ogr ignores self-closing tags. They are changed to empty tags
-     * 
-     * @param source
-     * @throws IOException
-     */
-    private void fixGML(File source) throws IOException {
-        File backupedFile = new File(source.getPath() + ".backup");
-        source.renameTo(backupedFile);
-        FixGML.replaceAutoclosedByEmpty(backupedFile, source);
     }
 
 }

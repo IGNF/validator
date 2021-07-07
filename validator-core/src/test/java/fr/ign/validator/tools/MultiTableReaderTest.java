@@ -18,7 +18,7 @@ public class MultiTableReaderTest {
         );
         MultiTableReader reader = MultiTableReader.createMultiTableReader(srcFile);
         List<String> tableNames = reader.getTableNames();
-        assertEquals(6, tableNames.size());
+        assertEquals(11, tableNames.size());
         // HabillageLignesPCRS
         {
             TableReader tableReader = reader.getTableReader("HabillageLignesPCRS");

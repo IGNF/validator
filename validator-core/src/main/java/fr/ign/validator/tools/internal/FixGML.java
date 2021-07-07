@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
  * @author MBorne
  *
  */
+@Deprecated
 public class FixGML {
 
     /**
