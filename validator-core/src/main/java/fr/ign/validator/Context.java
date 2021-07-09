@@ -30,6 +30,7 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Model;
 import fr.ign.validator.model.Projection;
+import fr.ign.validator.process.CheckFeatureTypesPreProcess;
 import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 import fr.ign.validator.process.FilterMetadataPreProcess;
 import fr.ign.validator.process.MetadataPreProcess;
@@ -207,6 +208,9 @@ public class Context {
         addListener(new MetadataPreProcess());
         // Info and warning about CRS
         addListener(new ProjectionPreProcess());
+
+        // Check and complete FeatureType definitions
+        addListener(new CheckFeatureTypesPreProcess());
 
         // generate CSV
         addListener(new NormalizePostProcess());

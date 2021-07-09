@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
@@ -19,6 +23,9 @@ import fr.ign.validator.model.type.StringType;
  *
  */
 public class AutoFeatureType {
+
+    public static final Logger log = LogManager.getRootLogger();
+    private static final Marker MARKER = MarkerManager.getMarker("AutoFeatureType");
 
     private AutoFeatureType() {
         // helper class grouping static helpers
@@ -37,6 +44,7 @@ public class AutoFeatureType {
      * @throws IOException
      */
     public static FeatureType createFeatureTypeFromTable(File path) throws IOException {
+        log.info(MARKER, "Create FeatureType reading data from {}", path);
         FeatureType result = new FeatureType();
         result.setName(FilenameUtils.getBaseName(path.getName()));
 

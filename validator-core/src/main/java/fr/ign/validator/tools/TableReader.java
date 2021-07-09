@@ -207,7 +207,7 @@ public class TableReader implements Iterator<String[]> {
      * @throws IOException
      */
     public static TableReader createTableReader(File file, Charset preferedCharset) throws IOException {
-        log.info(
+        log.debug(
             MARKER, "Create TableReader for '{}' (preferedCharset={})...",
             file.getAbsoluteFile(),
             preferedCharset

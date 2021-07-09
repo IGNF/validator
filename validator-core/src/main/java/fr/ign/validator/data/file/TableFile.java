@@ -38,9 +38,6 @@ public class TableFile extends DocumentFile {
      * @param matchingFile
      */
     protected void validateTable(Context context, TableModel tableModel, File matchingFile) {
-        /*
-         * csv file validation
-         */
         try {
             TableReader reader = TableReader.createTableReader(matchingFile, context.getEncoding());
             if (!reader.isCharsetValid()) {
@@ -90,7 +87,6 @@ public class TableFile extends DocumentFile {
                 context.createError(CoreErrorCodes.FILE_NOT_OPENED)
                     .setMessageParam("FILEPATH", context.relativize(matchingFile))
             );
-            return;
         }
     }
 

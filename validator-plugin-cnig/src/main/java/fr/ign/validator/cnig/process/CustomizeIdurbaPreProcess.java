@@ -57,7 +57,7 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
         for (FileModel fileModel : fileModels) {
             if (fileModel instanceof TableModel) {
-                FeatureType featureType = fileModel.getFeatureType();
+                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 AttributeType<?> attribute = featureType.getAttribute("IDURBA");
                 if (attribute == null) {
                     continue;

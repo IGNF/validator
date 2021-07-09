@@ -23,6 +23,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -57,7 +58,11 @@ public class SupRelationsPostProcess implements ValidatorListener {
 
         log.info(MARKER, "Disable unique constraint validation for IDGEN and IDASS");
         for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
-            FeatureType featureType = fileModel.getFeatureType();
+            if (!(fileModel instanceof TableModel)) {
+                continue;
+            }
+
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
             if (featureType == null) {
                 continue;
             }

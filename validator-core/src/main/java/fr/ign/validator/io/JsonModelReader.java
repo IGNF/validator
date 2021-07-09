@@ -17,8 +17,15 @@ import fr.ign.validator.io.json.ObjectMapperFactory;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.TableModel;
 
+/**
+ * Helper class to load {@link DocumentModel} and {@link FeatureType} from JSON.
+ * 
+ * @author MBorne
+ *
+ */
 public class JsonModelReader extends AbstractModelReader {
     private static final Logger log = LogManager.getRootLogger();
     private static final Marker MARKER = MarkerManager.getMarker("JsonModelReader");
@@ -41,17 +48,20 @@ public class JsonModelReader extends AbstractModelReader {
         InputStream is = getInputStream(documentModelUrl);
         try {
             DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
-            /*
-             * load feature types for TableModel
-             */
-            for (FileModel documentFile : documentModel.getFileModels()) {
-                if (!(documentFile instanceof TableModel)) {
-                    continue;
+            log.info(MARKER, "Loading FeatureTypes for {} ...", documentModel);
+            for (FileModel fileModel : documentModel.getFileModels()) {
+                if (fileModel instanceof TableModel) {
+                    log.info(MARKER, "Loading FeatureType for {} ...", fileModel);
+                    TableModel tableModel = (TableModel) fileModel;
+                    URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
+                    FeatureType featureType = loadFeatureType(featureTypeUrl);
+                    tableModel.setFeatureType(featureType);
+                } else if (fileModel instanceof MultiTableModel) {
+                    log.warn(MARKER, "Loading MultiTableModel for {} is not yet supported!", fileModel);
+                    // TODO allows to specify FeatureType for each table in MultiTableModel
                 }
-                URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, documentFile);
-                FeatureType featureType = loadFeatureType(featureTypeUrl);
-                documentFile.setFeatureType(featureType);
             }
+            log.info(MARKER, "Loading FeatureTypes for {} : completed.", documentModel);
             return documentModel;
         } catch (IOException e) {
             String message = String.format("Fail to parse DocumentModel : %1s : %2s", documentModelUrl, e.getMessage());

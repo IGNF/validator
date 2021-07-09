@@ -34,7 +34,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
@@ -42,7 +42,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
         for (FileModel fileModel : fileModels) {
             if (fileModel instanceof TableModel) {
-                FeatureType featureType = fileModel.getFeatureType();
+                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 AttributeType<?> attributeType = featureType.getAttribute(ATTRIBUTE_INSEE);
                 if (null != attributeType && attributeType instanceof StringType) {
                     log.info(MARKER, "Ajout de InseeValidator à {}", attributeType.getName());
@@ -54,7 +54,7 @@ public class InseeValidator implements Validator<Attribute<String>>, ValidatorLi
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override

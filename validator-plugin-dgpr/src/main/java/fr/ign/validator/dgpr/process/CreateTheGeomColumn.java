@@ -53,7 +53,7 @@ public class CreateTheGeomColumn implements ValidatorListener {
                 continue;
             }
             String tableName = fileModel.getName();
-            GeometryType geometryAttribute = fileModel.getFeatureType().getDefaultGeometry();
+            GeometryType geometryAttribute = ((TableModel) fileModel).getFeatureType().getDefaultGeometry();
             if (geometryAttribute == null) {
                 log.info(MARKER, "skip {} (not spatial)", tableName);
                 continue;

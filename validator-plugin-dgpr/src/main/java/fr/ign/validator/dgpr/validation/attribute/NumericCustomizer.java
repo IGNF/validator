@@ -28,18 +28,19 @@ public class NumericCustomizer implements ValidatorListener {
             if (!(fileModel instanceof TableModel)) {
                 continue;
             }
+            TableModel tableModel = (TableModel) fileModel;
             switch (fileModel.getName()) {
             case "N_prefixTri_COTE_VIT_DEB_P_ddd":
-                addDebLinValidator(fileModel);
-                addAzimuthValidator(fileModel);
+                addDebLinValidator(tableModel);
+                addAzimuthValidator(tableModel);
                 break;
             case "N_prefixTri_CHAMP_VIT_P_ddd":
-                addVitesseMinValidator(fileModel);
+                addVitesseMinValidator(tableModel);
                 break;
 
             case "N_prefixTri_ISO_DEB_S_ddd":
-                addDebLinMinValidator(fileModel);
-                addDebLinMaxValidator(fileModel);
+                addDebLinMinValidator(tableModel);
+                addDebLinMaxValidator(tableModel);
                 break;
 
             default:
@@ -57,7 +58,7 @@ public class NumericCustomizer implements ValidatorListener {
     public void afterValidate(Context context, Document document) throws Exception {
     }
 
-    private void addDebLinMaxValidator(FileModel fileModel) {
+    private void addDebLinMaxValidator(TableModel fileModel) {
         // looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MAX
         AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("DEBLIN_MAX");
         if (attribute == null) {
@@ -74,7 +75,7 @@ public class NumericCustomizer implements ValidatorListener {
         }
     }
 
-    private void addDebLinMinValidator(FileModel fileModel) {
+    private void addDebLinMinValidator(TableModel fileModel) {
         // looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or
         // N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
 
@@ -92,7 +93,7 @@ public class NumericCustomizer implements ValidatorListener {
         }
     }
 
-    private void addDebLinValidator(FileModel fileModel) {
+    private void addDebLinValidator(TableModel fileModel) {
         // looking for N_prefixTri_ISO_DEB_S_ddd.DEBLIN_MIN or
         // N_prefixTri_COTE_VIT_DEB_P_ddd.DEBLIN
 
@@ -110,7 +111,7 @@ public class NumericCustomizer implements ValidatorListener {
         }
     }
 
-    private void addAzimuthValidator(FileModel fileModel) {
+    private void addAzimuthValidator(TableModel fileModel) {
         // looking for N_prefixTri_COTE_VIT_DEB_P_ddd
         AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("AZIMUTH");
         if (attribute == null) {
@@ -126,7 +127,7 @@ public class NumericCustomizer implements ValidatorListener {
         }
     }
 
-    private void addVitesseMinValidator(FileModel fileModel) {
+    private void addVitesseMinValidator(TableModel fileModel) {
         // looking for N_prefixTri_COTE_VIT_DEB_P_ddd.VITESS_MIN
         AttributeType<?> attribute = fileModel.getFeatureType().getAttribute("VITESS_MIN");
         if (attribute == null) {

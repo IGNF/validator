@@ -18,6 +18,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.TableModel;
@@ -91,11 +92,11 @@ public class JsonModelReaderTest {
         /* perform checks on FileModel "adresse" */
         FileModel fileModel = documentModel.getFileModelByName("ADRESSE");
         Assert.assertNotNull(fileModel);
-        Assert.assertTrue(fileModel instanceof TableModel);
         Assert.assertEquals("ADRESSE(_+[0-9])?", fileModel.getPath());
 
         /* perform checks on FeatureType "adresse" */
-        FeatureType featureType = fileModel.getFeatureType();
+        Assert.assertTrue(fileModel instanceof TableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
         Assert.assertNotNull(featureType);
         assertExceptedFeatureTypeAdresse(featureType);
     }
@@ -185,7 +186,7 @@ public class JsonModelReaderTest {
             assertTrue(fileModel instanceof MetadataModel);
         }
 
-        // check METADONNEES
+        // check DONNEES
         {
             FileModel fileModel = documentModel.getFileModelByName("DONNEES");
             assertNotNull(fileModel);
@@ -194,8 +195,12 @@ public class JsonModelReaderTest {
                 "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
                 fileModel.getXsdSchema().toString()
             );
-        }
 
+            // check embedded tables
+            MultiTableModel multiTableModel = (MultiTableModel) fileModel;
+            List<EmbeddedTableModel> tableModels = multiTableModel.getTableModels();
+            Assert.assertEquals(17, tableModels.size());
+        }
     }
 
     /**
@@ -211,7 +216,7 @@ public class JsonModelReaderTest {
             Assert.assertNotNull(fileModel.getName());
             Assert.assertNotNull(fileModel.getMandatory());
             if (fileModel instanceof TableModel) {
-                FeatureType featureType = fileModel.getFeatureType();
+                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 Assert.assertNotNull(featureType);
                 assertIsValid(featureType);
             }

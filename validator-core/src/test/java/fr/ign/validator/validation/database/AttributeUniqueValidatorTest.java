@@ -65,12 +65,12 @@ public class AttributeUniqueValidatorTest {
         featureType2.addAttribute(attribute);
 
         // creates a FileModel with the first Feature Type
-        FileModel fileModel = new TableModel();
+        TableModel fileModel = new TableModel();
         fileModel.setName("TEST");
         fileModel.setFeatureType(featureType);
 
         // reates a FileModel with the second Feature Type
-        FileModel fileModel2 = new TableModel();
+        TableModel fileModel2 = new TableModel();
         fileModel2.setName("RELATION");
         fileModel2.setFeatureType(featureType2);
 

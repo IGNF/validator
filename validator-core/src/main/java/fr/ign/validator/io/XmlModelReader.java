@@ -33,6 +33,7 @@ public class XmlModelReader extends AbstractModelReader {
     private Unmarshaller unmarshaller;
 
     public XmlModelReader() {
+        log.trace(MARKER, "Initializing XmlModelReader...");
         try {
             this.context = JAXBContext.newInstance(FeatureType.class, DocumentModel.class);
             this.unmarshaller = context.createUnmarshaller();
@@ -48,7 +49,7 @@ public class XmlModelReader extends AbstractModelReader {
 
     @Override
     public DocumentModel loadDocumentModel(URL documentModelUrl) {
-        log.info(MARKER, "loadDocumentModel({}) ...", documentModelUrl);
+        log.info(MARKER, "Loading DocumentModel from {} ...", documentModelUrl);
 
         /*
          * loading documentModel
@@ -59,13 +60,13 @@ public class XmlModelReader extends AbstractModelReader {
             /*
              * load feature types for TableModel
              */
-            for (FileModel documentFile : documentModel.getFileModels()) {
-                if (!(documentFile instanceof TableModel)) {
-                    continue;
+            for (FileModel fileModel : documentModel.getFileModels()) {
+                if (fileModel instanceof TableModel) {
+                    TableModel tableModel = (TableModel) fileModel;
+                    URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
+                    FeatureType featureType = loadFeatureType(featureTypeUrl);
+                    tableModel.setFeatureType(featureType);
                 }
-                URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, documentFile);
-                FeatureType featureType = loadFeatureType(featureTypeUrl);
-                documentFile.setFeatureType(featureType);
             }
             return documentModel;
         } catch (JAXBException e) {

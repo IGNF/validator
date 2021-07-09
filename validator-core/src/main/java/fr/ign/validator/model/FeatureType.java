@@ -146,6 +146,13 @@ public class FeatureType implements Model {
     }
 
     /**
+     * True if no {@link FeatureType} is empty.
+     */
+    public boolean isEmpty() {
+        return getAttributeCount() == 0;
+    }
+
+    /**
      * Gets number of attributes (manages inheritance)
      * 
      * @return

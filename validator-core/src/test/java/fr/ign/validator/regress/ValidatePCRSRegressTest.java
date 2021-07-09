@@ -42,6 +42,8 @@ public class ValidatePCRSRegressTest {
         /* create report */
         report = new InMemoryReportBuilder();
         context.setReportBuilder(report);
+        context.setNormalizeEnabled(true);
+
         /* load document model */
         {
             JsonModelReader modelReader = new JsonModelReader();
@@ -62,7 +64,6 @@ public class ValidatePCRSRegressTest {
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         validationDirectory.mkdirs();
         context.setValidationDirectory(validationDirectory);
-        context.setReportBuilder(report);
 
         document.validate(context);
 

@@ -9,7 +9,6 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.logging.log4j.LogManager;
@@ -87,11 +86,6 @@ public abstract class FileModel implements Model {
     private MandatoryMode mandatory = MandatoryMode.WARN;
 
     /**
-     * Table model (optional, for tables only)
-     */
-    private FeatureType featureType = null;
-
-    /**
      * XSD schema (optional, for XML/GML files only)
      * 
      * @see {@link XsdSchemaValidator}
@@ -146,16 +140,6 @@ public abstract class FileModel implements Model {
 
     public void setMandatory(MandatoryMode mandatory) {
         this.mandatory = mandatory;
-    }
-
-    @JsonIgnore
-    public FeatureType getFeatureType() {
-        return featureType;
-    }
-
-    @XmlTransient
-    public void setFeatureType(FeatureType featureType) {
-        this.featureType = featureType;
     }
 
     public URL getXsdSchema() {

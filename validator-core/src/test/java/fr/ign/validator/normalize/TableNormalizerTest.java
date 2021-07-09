@@ -15,8 +15,10 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Projection;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
 
@@ -57,9 +59,11 @@ public class TableNormalizerTest {
     public void testNormalise() throws Exception {
         FileModel fileModel = document.getDocumentModel().getFileModelByName("ADRESSE");
         Assert.assertNotNull(fileModel);
+        Assert.assertTrue(fileModel instanceof TableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
 
         File targetFile = new File(document.getDocumentPath(), "adresse_normalized.csv");
-        TableNormalizer csvNormalizer = new TableNormalizer(context, fileModel.getFeatureType(), targetFile);
+        TableNormalizer csvNormalizer = new TableNormalizer(context, featureType, targetFile);
 
         File csvFile1 = new File(document.getDocumentPath(), "adresse_1.csv");
         Assert.assertTrue(csvFile1.exists());

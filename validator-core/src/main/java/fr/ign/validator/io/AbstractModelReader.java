@@ -10,7 +10,7 @@ import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.TableModel;
 
 /**
  * Common implementation for JSON and XML ModelReader.
@@ -40,28 +40,28 @@ abstract class AbstractModelReader implements ModelReader {
     /**
      * Resolve FeatureType URL for a given FileModel
      * 
-     * TODO support explicit featureType reference in FileModel
+     * TODO support explicit featureType reference in TableModel
      *
      * @param documentModelUrl
      * @param documentModel
-     * @param documentFile
+     * @param tableModel
      * @return
      * @throws MalformedURLException
      */
-    protected URL resolveFeatureTypeUrl(URL documentModelUrl, DocumentModel documentModel, FileModel documentFile)
+    protected URL resolveFeatureTypeUrl(URL documentModelUrl, DocumentModel documentModel, TableModel tableModel)
         throws MalformedURLException {
         String parentUrl = getParentURL(documentModelUrl);
         if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.xml
             // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.xml
-            return new URL(parentUrl + "/types/" + documentFile.getName() + "." + getFormat());
+            return new URL(parentUrl + "/types/" + tableModel.getName() + "." + getFormat());
         } else {
             /* URL convention */
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.xml
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.xml
             return new URL(
-                parentUrl + "/" + documentModel.getName() + "/types/" + documentFile.getName() + "." + getFormat()
+                parentUrl + "/" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
             );
         }
     }

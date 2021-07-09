@@ -20,9 +20,12 @@ public class MultiTableFile extends DocumentFile {
         return fileModel;
     }
 
+    /**
+     * TODO complete to validate according to {@link MultiTableModel}
+     */
     @Override
     protected void validateContent(Context context) {
-        // TODO complete
+
     }
 
 }

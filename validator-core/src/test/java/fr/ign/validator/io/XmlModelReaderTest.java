@@ -121,7 +121,8 @@ public class XmlModelReaderTest {
         FileModel fileModel = documentModel.getFileModels().get(0);
         Assert.assertEquals("ADRESSE", fileModel.getName());
 
-        FeatureType featureType = fileModel.getFeatureType();
+        Assert.assertTrue(fileModel instanceof TableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
         Assert.assertNotNull(featureType);
         Assert.assertEquals(2, featureType.getAttributeCount());
 
@@ -166,23 +167,27 @@ public class XmlModelReaderTest {
         {
             FileModel fileModel = documentModel.getFileModels().get(index++);
             Assert.assertEquals("SIMPLE", fileModel.getName());
-            Assert.assertNotNull(fileModel.getFeatureType());
+            Assert.assertTrue(fileModel instanceof TableModel);
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+            Assert.assertNotNull(featureType);
             Assert.assertEquals(MandatoryMode.WARN, fileModel.getMandatory());
-            Assert.assertEquals("SIMPLE", fileModel.getFeatureType().getName());
+            Assert.assertEquals("SIMPLE", featureType.getName());
         }
         {
             FileModel fileModel = documentModel.getFileModels().get(index++);
             Assert.assertEquals("Donnees_geographiques", fileModel.getName());
             Assert.assertEquals(MandatoryMode.ERROR, fileModel.getMandatory());
-            Assert.assertNull(fileModel.getFeatureType());
         }
         {
             FileModel fileModel = documentModel.getFileModels().get(index++);
             Assert.assertEquals("COMMUNE", fileModel.getName());
             Assert.assertEquals(MandatoryMode.WARN, fileModel.getMandatory());
-            Assert.assertNotNull(fileModel.getFeatureType());
-            Assert.assertEquals("COMMUNE", fileModel.getFeatureType().getName());
-            assertExceptedFeatureTypeCommune(fileModel.getFeatureType());
+
+            Assert.assertTrue(fileModel instanceof TableModel);
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+            Assert.assertNotNull(featureType);
+            Assert.assertEquals("COMMUNE", featureType.getName());
+            assertExceptedFeatureTypeCommune(featureType);
         }
     }
 
@@ -290,7 +295,7 @@ public class XmlModelReaderTest {
             Assert.assertNotNull(fileModel.getName());
             Assert.assertNotNull(fileModel.getMandatory());
             if (fileModel instanceof TableModel) {
-                FeatureType featureType = fileModel.getFeatureType();
+                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 Assert.assertNotNull(featureType);
                 assertIsValid(featureType);
             }

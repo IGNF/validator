@@ -15,11 +15,11 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.model.file.TableModel;
-import fr.ign.validator.tools.AutoFeatureType;
 import fr.ign.validator.tools.MultiTableReader;
 
 /**
@@ -102,7 +102,6 @@ public class DocumentNormalizer {
 
         FeatureType featureType = fileModel.getFeatureType();
         if (featureType == null) {
-            // TODO detect featureType to ensure consistency with MultiTableModel
             log.warn(MARKER, "Skip normalization for {} (no FeatureType provided)", fileModel);
             return;
         }
@@ -126,13 +125,18 @@ public class DocumentNormalizer {
      */
     private void normalizeMultiTable(Context context, MultiTableModel fileModel, List<DocumentFile> documentFiles)
         throws IOException {
-        if (documentFiles.isEmpty() && documentFiles.size() > 1) {
+        if (documentFiles.size() != 1) {
             log.warn(
-                MARKER, "{} - skipped (found {} files, normalization not supported for MultiTable)",
-                fileModel.getName(),
+                MARKER, "Skip normalization for {} (found {} files, normalization supported only for one DocumentFile)",
+                fileModel,
                 documentFiles.size()
             );
             return;
+        }
+
+        File outputDir = new File(context.getDataDirectory(), fileModel.getName());
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
         }
 
         DocumentFile documentFile = documentFiles.get(0);
@@ -142,25 +146,27 @@ public class DocumentNormalizer {
              * Retrieve source path for CSV converted table.
              */
             File sourceFile = reader.getTablePath(tableName);
-            /*
-             * Detected FeatureType from CSV.
-             * 
-             * TODO allow user to provide featureTypes.
-             */
-            FeatureType featureType = AutoFeatureType.createFeatureTypeFromTable(sourceFile);
+            EmbeddedTableModel tableModel = fileModel.getTableModelByName(tableName);
+            if (tableModel == null) {
+                log.warn(
+                    MARKER, "Skip table {} in '{}' (table model not found in {})",
+                    tableName,
+                    documentFile.getPath(),
+                    fileModel
+                );
+                continue;
+            }
 
             /*
-             * Prepare output directory for the FileModel DATA/{fileModel.name}
-             */
-            File outputDir = new File(context.getDataDirectory(), fileModel.getName());
-            if (!outputDir.exists()) {
-                outputDir.mkdirs();
-            }
-            /*
-             * Create normalized CSV file.
+             * 
+             * /* Create normalized CSV file.
              */
             File outputFile = new File(outputDir, tableName + ".csv");
-            TableNormalizer normalizer = new TableNormalizer(context, featureType, outputFile);
+            TableNormalizer normalizer = new TableNormalizer(
+                context,
+                tableModel.getFeatureType(),
+                outputFile
+            );
             normalizer.append(sourceFile);
             normalizer.close();
         }

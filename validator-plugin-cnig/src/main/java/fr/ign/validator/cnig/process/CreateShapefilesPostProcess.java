@@ -16,6 +16,7 @@ import fr.ign.validator.cnig.tools.VRT;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.FileConverter;
 
 /**
@@ -56,7 +57,7 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
             // get FeatureType
             String typeName = FilenameUtils.getBaseName(csvFile.getName());
             FileModel fileModel = context.getDocumentModel().getFileModelByName(typeName);
-            FeatureType featureType = fileModel.getFeatureType();
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
 
             // create vrt file
             File vrtFile = new File(csvFile.getParent(), FilenameUtils.getBaseName(csvFile.getName()) + ".vrt");

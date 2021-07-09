@@ -2,8 +2,13 @@ package fr.ign.validator.model.file;
 
 import java.io.File;
 
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.file.TableFile;
+import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 
 /**
@@ -15,6 +20,11 @@ import fr.ign.validator.model.FileModel;
 public class TableModel extends FileModel {
     public static final String TYPE = "table";
 
+    /**
+     * Table model (optional, for tables only)
+     */
+    private FeatureType featureType = null;
+
     public TableModel() {
         super();
     }
@@ -22,6 +32,16 @@ public class TableModel extends FileModel {
     @Override
     public String getType() {
         return TYPE;
+    }
+
+    @JsonIgnore
+    public FeatureType getFeatureType() {
+        return featureType;
+    }
+
+    @XmlTransient
+    public void setFeatureType(FeatureType featureType) {
+        this.featureType = featureType;
     }
 
     @Override

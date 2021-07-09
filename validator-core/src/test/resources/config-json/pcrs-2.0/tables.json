@@ -1,0 +1,59 @@
+[
+    {
+        "name": "AffleurantPCRS"
+    },
+    {
+        "name": "AffleurantGeometriquePCRS"
+    },
+    {
+        "name": "AffleurantEnveloppePCRS"
+    },
+    {
+        "name": "AffleurantSymbolePCRS"
+    },
+    {
+        "name": "AffleurantPointPCRS"
+    },
+    {
+        "name": "ArbrePCRS"
+    },
+    {
+        "name": "EmpriseEchangePCRS"
+    },
+    {
+        "name": "EmpriseEchangePCRS"
+    },
+    {
+        "name": "FacadePCRS"
+    },
+    {
+        "name": "LimiteVoiriePCRS"
+    },
+    {
+        "name": "MurPCRS"
+    },
+    {
+        "name": "NomVoiriePCRS"
+    },
+    {
+        "name": "NumeroVoiriePCRS"
+    },
+    {
+        "name": "PilierParticulierPCRS"
+    },
+    {
+        "name": "ProeminenceBatiPCRS"
+    },
+    {
+        "name": "RailPCRS"
+    },
+    {
+        "name": "RasterPCRS"
+    },
+    {
+        "name": "SeuilPCRS"
+    }
+},
+{
+    "name": "FacadePCRS"
+]

@@ -1,21 +1,74 @@
 {
-	"name": "pcrs-2.0",
-	"title": "PCRS 2.0",
+	"name": "prcs-2.0",
+	"title": "PCRS version 2.0 -21 septembre 2017",
 	"description": "Modèle de test pour PCRS v2.0",
 	"files": [
-		{
-			"name": "DONNEES",
-			"type": "multi_table",
-			"path": "[^\\/]*",
-			"mandatory": "ERROR",
-			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd"
-		},
 		{
 			"title": "METADONNEES",
 			"name": "METADONNEES",
 			"path": "[^\\/]*",
 			"type": "metadata",
 			"mandatory": "OPTIONAL"
+		},
+		{
+			"name": "DONNEES",
+			"type": "multi_table",
+			"path": "[^\\/]*",
+			"mandatory": "ERROR",
+			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
+			"tables": [
+				{
+					"name": "AffleurantPCRS"
+				},
+				{
+					"name": "AffleurantGeometriquePCRS"
+				},
+				{
+					"name": "AffleurantEnveloppePCRS"
+				},
+				{
+					"name": "AffleurantSymbolePCRS"
+				},
+				{
+					"name": "AffleurantPointPCRS"
+				},
+				{
+					"name": "ArbrePCRS"
+				},
+				{
+					"name": "EmpriseEchangePCRS"
+				},
+				{
+					"name": "FacadePCRS"
+				},
+				{
+					"name": "LimiteVoiriePCRS"
+				},
+				{
+					"name": "MurPCRS"
+				},
+				{
+					"name": "NomVoiriePCRS"
+				},
+				{
+					"name": "NumeroVoiriePCRS"
+				},
+				{
+					"name": "PilierParticulierPCRS"
+				},
+				{
+					"name": "ProeminenceBatiPCRS"
+				},
+				{
+					"name": "RailPCRS"
+				},
+				{
+					"name": "RasterPCRS"
+				},
+				{
+					"name": "SeuilPCRS"
+				}
+			]
 		}
 	]
 }

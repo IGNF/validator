@@ -18,6 +18,7 @@ import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
 import fr.ign.validator.validation.Validator;
@@ -49,6 +50,15 @@ public class AttributeReferenceValidator implements Validator<Database> {
         }
     }
 
+    /**
+     * 
+     * TODO add support for {@link MultiTableModel}
+     * 
+     * @param context
+     * @param database
+     * @throws SQLException
+     * @throws IOException
+     */
     private void doValidate(Context context, Database database) throws SQLException, IOException {
         log.info(MARKER, "Looking for attributes with reference constraints...");
 
@@ -60,8 +70,9 @@ public class AttributeReferenceValidator implements Validator<Database> {
                 continue;
             }
 
+            TableModel tableModel = (TableModel) fileModel;
             context.beginModel(fileModel);
-            FeatureType featureType = fileModel.getFeatureType();
+            FeatureType featureType = tableModel.getFeatureType();
             for (AttributeType<?> attribute : featureType.getAttributes()) {
                 String reference = attribute.getConstraints().getReference();
                 if (StringUtils.isEmpty(reference)) {

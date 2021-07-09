@@ -17,6 +17,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.TableModel;
 import fr.ign.validator.validation.Validator;
 
@@ -49,6 +50,15 @@ public class AttributeUniqueValidator implements Validator<Database> {
         }
     }
 
+    /**
+     * 
+     * TODO add support for {@link MultiTableModel}
+     * 
+     * @param context
+     * @param database
+     * @throws SQLException
+     * @throws IOException
+     */
     private void doValidate(Context context, Database database) throws SQLException, IOException {
         log.info(MARKER, "Looking for attributes with unique constraints...");
 
@@ -60,8 +70,9 @@ public class AttributeUniqueValidator implements Validator<Database> {
                 continue;
             }
 
+            TableModel tableModel = (TableModel) fileModel;
             context.beginModel(fileModel);
-            for (AttributeType<?> attribute : fileModel.getFeatureType().getAttributes()) {
+            for (AttributeType<?> attribute : tableModel.getFeatureType().getAttributes()) {
                 if (!attribute.getConstraints().isUnique()) {
                     continue;
                 }

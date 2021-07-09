@@ -98,7 +98,7 @@ public class MultiTableReader {
      * @throws IOException
      */
     public static MultiTableReader createMultiTableReader(File file) throws IOException {
-        log.info(
+        log.debug(
             MARKER, "Create MultiTableReader for '{}' (charset={})...",
             file.getAbsoluteFile(),
             StandardCharsets.UTF_8
