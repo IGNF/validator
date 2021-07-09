@@ -1,8 +1,12 @@
 # CHANGELOG
 
-## 4.0.x (ROADMAP)
+## 4.1.x
 
-[See milestone](https://github.com/IGNF/validator/milestone/8)
+[See milestone](https://github.com/IGNF/validator/milestone/10?closed=1)
+
+## 4.0.x
+
+[See milestone](https://github.com/IGNF/validator/milestone/8?closed=1)
 
 ## Core
 
