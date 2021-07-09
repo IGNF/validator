@@ -40,7 +40,7 @@ public class NormalizePostProcess implements ValidatorListener {
         log.info(MARKER, "Normalize input data...");
         DocumentNormalizer normalizer = new DocumentNormalizer();
         normalizer.normalize(context, document);
-        log.info(MARKER, "Normalize input data : completed...");
+        log.info(MARKER, "Normalize input data : completed.");
     }
 
 }

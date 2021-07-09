@@ -279,6 +279,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         /*
          * load plugins
          */
+        log.info(MARKER, "Setup plugins...");
         for (Plugin plugin : plugins) {
             plugin.setup(context);
         }

@@ -247,4 +247,9 @@ public class FeatureType implements Model {
         }
     }
 
+    @Override
+    public String toString() {
+        return name + " (" + getClass().getSimpleName() + ")";
+    }
+
 }

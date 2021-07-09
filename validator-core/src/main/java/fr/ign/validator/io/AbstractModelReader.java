@@ -93,7 +93,7 @@ abstract class AbstractModelReader implements ModelReader {
         try {
             return url.openStream();
         } catch (IOException e) {
-            throw new ModelNotFoundException(url);
+            throw new ModelNotFoundException(url, e);
         }
     }
 

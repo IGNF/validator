@@ -98,7 +98,11 @@ public class MultiTableReader {
      * @throws IOException
      */
     public static MultiTableReader createMultiTableReader(File file) throws IOException {
-        log.info(MARKER, "Create MultiTableReader for '{}'...", file.getAbsoluteFile());
+        log.info(
+            MARKER, "Create MultiTableReader for '{}' (charset={})...",
+            file.getAbsoluteFile(),
+            StandardCharsets.UTF_8
+        );
 
         /*
          * Get path to the directory where GML is convert into a set of CSV files

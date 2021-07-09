@@ -128,4 +128,9 @@ public class Projection {
         return "4326";
     }
 
+    @Override
+    public String toString() {
+        return code;
+    }
+
 }

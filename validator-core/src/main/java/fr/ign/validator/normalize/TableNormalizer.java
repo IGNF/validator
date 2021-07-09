@@ -33,7 +33,7 @@ import fr.ign.validator.tools.TableReader;
  */
 public class TableNormalizer implements Closeable {
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("CSVNormalizer");
+    public static final Marker MARKER = MarkerManager.getMarker("TableNormalizer");
 
     /**
      * Context providing StringFixer
@@ -72,7 +72,7 @@ public class TableNormalizer implements Closeable {
          */
         if (context.getProjection() != null && context.getOutputProjection() != null) {
             log.info(
-                MARKER, "Projection transform from {} to {}",
+                MARKER, "Configure projection transform from {} to {}",
                 context.getProjection().getCode(),
                 context.getOutputProjection().getCode()
             );
@@ -88,6 +88,7 @@ public class TableNormalizer implements Closeable {
          * Create CSV file with an header given by the model.
          */
         String[] outputHeader = featureType.getAttributeNames();
+        log.info(MARKER, "Create CSV file {}...", targetFile);
         BufferedWriter fileWriter = new BufferedWriter(
             new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8)
         );
@@ -103,6 +104,7 @@ public class TableNormalizer implements Closeable {
      * @throws Exception
      */
     public void append(File csvFile) throws IOException {
+        log.info(MARKER, "Append data from {}...", csvFile);
         TableReader reader = TableReader.createTableReader(
             csvFile,
             context.getEncoding()

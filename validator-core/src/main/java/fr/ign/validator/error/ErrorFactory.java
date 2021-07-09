@@ -96,7 +96,7 @@ public class ErrorFactory {
      * @throws FileNotFoundException
      */
     public void loadErrorCodes(File errorConfigPath) {
-        log.info(MARKER, "Loading errors from {} ...", errorConfigPath);
+        log.info(MARKER, "Load error codes from {} ...", errorConfigPath);
         try {
             InputStream is = new FileInputStream(errorConfigPath);
             loadErrorCodes(is);

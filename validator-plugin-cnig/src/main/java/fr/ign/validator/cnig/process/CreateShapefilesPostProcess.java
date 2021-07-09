@@ -33,18 +33,18 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
         File dataDirectory = context.getDataDirectory();
-        log.info(MARKER, "Create shapefiles from normalized CSV files in '{}'...", dataDirectory);
+        log.info(MARKER, "Convert normalized CSV files to shapefile ...");
 
         FileConverter fileConverter = FileConverter.getInstance();
 
@@ -69,6 +69,8 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
             );
             fileConverter.convertToShapefile(vrtFile, shpFile);
         }
+
+        log.info(MARKER, "Convert normalized CSV files to shapefile : completed.");
     }
 
 }

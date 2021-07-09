@@ -20,12 +20,6 @@ import fr.ign.validator.tools.Networking;
 public abstract class AbstractCommand implements Command {
 
     /**
-     * Command option for network proxy management (required to access remote XSD
-     * schemas)
-     */
-    private String proxy = "";
-
-    /**
      * Append custom CLI options to default ones
      * 
      * @param options
@@ -117,10 +111,9 @@ public abstract class AbstractCommand implements Command {
      * Parse proxy option and define proxy
      * 
      * @param commandLine
-     * @throws ParseException
      */
-    protected void configureNetworkingAndProxy(CommandLine commandLine) throws ParseException {
-        proxy = commandLine.getOptionValue("proxy", "");
+    protected void configureNetworkingAndProxy(CommandLine commandLine) {
+        String proxy = commandLine.getOptionValue("proxy", "");
         Networking.configureHttpClient(proxy);
     }
 

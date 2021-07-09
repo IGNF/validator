@@ -54,10 +54,9 @@ public abstract class DocumentFile implements Validatable {
     public final void validate(Context context) {
         log.info(
             MARKER,
-            "Validate {} '{}' with '{}'...",
-            getFileModel().getType(),
+            "Validate '{}' according to {}...",
             path,
-            getFileModel().getName()
+            getFileModel()
         );
         context.beginModel(getFileModel());
         context.beginData(this);
@@ -69,6 +68,12 @@ public abstract class DocumentFile implements Validatable {
         validateContent(context);
         context.endData(this);
         context.endModel(getFileModel());
+        log.info(
+            MARKER,
+            "Validate '{}' according to {} : completed",
+            path,
+            getFileModel()
+        );
     }
 
     /**

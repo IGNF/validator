@@ -207,7 +207,11 @@ public class TableReader implements Iterator<String[]> {
      * @throws IOException
      */
     public static TableReader createTableReader(File file, Charset preferedCharset) throws IOException {
-        log.info(MARKER, "createTableReader('{}','{}')...", file.getAbsoluteFile(), preferedCharset);
+        log.info(
+            MARKER, "Create TableReader for '{}' (preferedCharset={})...",
+            file.getAbsoluteFile(),
+            preferedCharset
+        );
         if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("csv")) {
             return new TableReader(file, preferedCharset);
         }

@@ -51,12 +51,11 @@ public class SupRelationsPostProcess implements ValidatorListener {
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
         if (!isSupDocument(context.getDocumentModel())) {
-            log.info(MARKER, "beforeMatching skipped (document is not a SUP)");
+            log.info(MARKER, "Skipped - document is not a SUP");
             return;
         }
-        /*
-         * disable default validation for unique constraint IDGEN and IDASS
-         */
+
+        log.info(MARKER, "Disable unique constraint validation for IDGEN and IDASS");
         for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
             FeatureType featureType = fileModel.getFeatureType();
             if (featureType == null) {
@@ -64,7 +63,8 @@ public class SupRelationsPostProcess implements ValidatorListener {
             }
             for (String idName : PATCHED_ATTRIBUTES) {
                 AttributeType<?> attribute = featureType.getAttribute(idName);
-                if (attribute != null) {
+                if (attribute != null && attribute.getConstraints().isUnique()) {
+                    log.info(MARKER, "Disable unique constraint for {}", attribute);
                     attribute.getConstraints().setUnique(false);
                 }
             }
@@ -73,42 +73,42 @@ public class SupRelationsPostProcess implements ValidatorListener {
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
         if (!isSupDocument(context.getDocumentModel())) {
-            log.info(MARKER, "afterValidate skipped (document is not a SUP)");
+            log.info(MARKER, "Skipped - document is not a SUP");
             return;
         }
 
-        /*
-         * Create DatabaseSUP instance to explore relations.
-         */
-        File tempDirectory = getTempDirectory(context);
+        log.info(MARKER, "Post-process GENERATEUR and ASSIETTE tables...");
+
+        log.info(MARKER, "Merge GENERATEUR and ASSIETTE tables in validation database to explore relations...");
         DatabaseSUP database = DatabaseSUP.createFromValidationDatabase(context);
         if (database == null) {
-            log.warn(MARKER, "skipped due to failure in DatabaseSUP creation");
+            log.error(MARKER, "Skipped - fail to create DatabaseSUP.");
             return;
         }
 
-        /*
-         * Add columns to GENERATEUR and ASSIETTE in DATA directory
-         * ('fichier','nomsuplitt',...)
-         */
+        log.info(
+            MARKER,
+            "Perform joins to add columns 'fichier' and 'nomsuplitt' to normalized GENERATEUR and ASSIETTE tables..."
+        );
+        File tempDirectory = getTempDirectory(context);
         AdditionalColumnsBuilder builder = new AdditionalColumnsBuilder(
             database,
             tempDirectory
         );
         builder.addColumnsToGenerateurAndAssietteFiles(context.getDataDirectory());
 
-        /*
-         * Apply custom validators on DatabaseSUP
-         */
+        log.info(MARKER, "Validate IDGEN and IDASS on merged GENERATEUR and ASSIETTE tables...");
         for (Validator<DatabaseSUP> validator : validators) {
             validator.validate(context, database);
         }
+
+        log.info(MARKER, "Post-process GENERATEUR and ASSIETTE tables : completed.");
     }
 
     /**

@@ -403,10 +403,8 @@ public class Database implements Closeable {
         String[] columnNames = getTableSchema(tableName);
 
         /*
-         * Generate insert into template according to columns INSERT INTO TABLE (att1,
-         * att2, ...) VALUES (?, ?, ..);
+         * Generate insert into template according to columns
          */
-
         List<String> columnParts = new ArrayList<>();
         List<String> valueParts = new ArrayList<>();
         List<Integer> indexes = new ArrayList<Integer>();

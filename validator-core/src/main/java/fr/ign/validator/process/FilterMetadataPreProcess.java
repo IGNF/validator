@@ -33,7 +33,7 @@ public class FilterMetadataPreProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
@@ -53,6 +53,7 @@ public class FilterMetadataPreProcess implements ValidatorListener {
 
             for (DocumentFile documentFile : documentFiles) {
                 File xmlFile = documentFile.getPath();
+                log.info(MARKER, "Ensure that '{}' is a metadata ...", xmlFile);
                 if (!MetadataISO19115.isMetadataFile(xmlFile)) {
                     log.info(
                         MARKER, "Exclude file '{}' from validation (METADATA_IGNORED_FILE).", documentFile.getPath()
@@ -62,14 +63,18 @@ public class FilterMetadataPreProcess implements ValidatorListener {
                             .setMessageParam("FILEPATH", context.relativize(xmlFile))
                     );
                     document.removeDocumentFile(documentFile);
+                } else {
+                    log.info(MARKER, "Ensure that '{}' is a metadata : SUCCESS", xmlFile);
                 }
             }
         }
+
+        log.info(MARKER, "Filter non Metadata XML files : completed");
     }
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
 }

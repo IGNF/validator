@@ -49,6 +49,8 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
             return;
         }
 
+        log.info(MARKER, "Customize IDURBA field validation...");
+
         /*
          * Customize IDURBA fields validation.
          */
@@ -72,15 +74,10 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
                 }
                 StringType idurbaAttribute = (StringType) attribute;
                 if (fileModel.getName().equalsIgnoreCase("DOC_URBA")) {
-                    /*
-                     * Ensure any format is respected for DOC_URBA
-                     */
+                    log.info(MARKER, "Add validator to ensure that IDURBA format is valid for {}", fileModel);
                     idurbaAttribute.addValidator(new IdurbaFormatValidator());
                 } else {
-                    /*
-                     * Check value according to document name and IdurbaFormat associated to the
-                     * standard version
-                     */
+                    log.info(MARKER, "Add validator to ensure that IDURBA matches document name for {}", fileModel);
                     idurbaAttribute.addValidator(
                         new IdurbaValidator(
                             idurbaFormat,
@@ -90,16 +87,18 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
                 }
             }
         }
+
+        log.info(MARKER, "Customize IDURBA field validation : completed.");
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
 }

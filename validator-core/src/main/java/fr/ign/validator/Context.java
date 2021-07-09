@@ -6,6 +6,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 
@@ -19,6 +23,7 @@ import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -44,6 +49,8 @@ import fr.ign.validator.validation.Validatable;
  *
  */
 public class Context {
+    private static final Logger log = LogManager.getRootLogger();
+    private static final Marker MARKER = MarkerManager.getMarker("Context");
 
     /**
      * Data charset (overridden by metadata provided charset)
@@ -75,8 +82,6 @@ public class Context {
 
     /**
      * Input - Current data directory (equivalent to documentPath)
-     * 
-     * TODO remove this variable and rely on documentPath
      */
     private File currentDirectory;
 
@@ -220,6 +225,7 @@ public class Context {
      * @param encoding the encoding to set
      */
     public void setEncoding(Charset encoding) {
+        log.info(MARKER, "Set encoding to {}", encoding);
         this.encoding = encoding;
     }
 
@@ -234,6 +240,7 @@ public class Context {
      * @param projection
      */
     public void setProjection(Projection projection) {
+        log.info(MARKER, "Set projection to {}", projection);
         this.projection = projection;
     }
 
@@ -243,11 +250,12 @@ public class Context {
      * @param code
      */
     public void setProjection(String code) {
-        Projection projection = ProjectionList.getInstance().findByCode(code);
-        if (projection == null) {
-            throw new RuntimeException("projection " + code + " non reconnue");
+        Projection result = ProjectionList.getInstance().findByCode(code);
+        if (result == null) {
+            String message = String.format("Projection '%1s' not found", code);
+            throw new IllegalArgumentException(message);
         }
-        this.projection = projection;
+        setProjection(result);
     }
 
     /**
@@ -268,6 +276,7 @@ public class Context {
      * @param extent
      */
     public void setNativeDataExtent(Geometry extent) {
+        log.info(MARKER, "Set native data extent to {}", extent);
         this.nativeDataExtent = extent;
     }
 
@@ -279,11 +288,10 @@ public class Context {
     }
 
     /**
-     * TODO remove and rely on dataStack
-     * 
      * @param currentDirectory the currentDirectory to set
      */
     public void setCurrentDirectory(File currentDirectory) {
+        log.info(MARKER, "Set current directory to {}", currentDirectory);
         this.currentDirectory = currentDirectory;
     }
 
@@ -311,6 +319,7 @@ public class Context {
      * @param model
      */
     public void beginModel(Model model) {
+        log.trace(MARKER, "begin model {}...", model);
         modelStack.add(model);
     }
 
@@ -394,9 +403,10 @@ public class Context {
      * Pop given model from stack
      */
     public void endModel(Model model) {
+        log.trace(MARKER, "end model {}", model);
         int position = modelStack.size() - 1;
-        if (position < 0) {
-            throw new RuntimeException("inconsistent beginModel/endModel management");
+        if (position < 0 || modelStack.get(position) != model) {
+            throw new ValidatorFatalError("Unconsistent usage of beginModel/endModel");
         }
         modelStack.remove(position);
     }
@@ -411,16 +421,7 @@ public class Context {
     }
 
     /**
-     * Get data stack
-     * 
-     * @return
-     */
-    public List<Validatable> getDataStack() {
-        return dataStack;
-    }
-
-    /**
-     * Get data by type
+     * Get data by type from data stack
      * 
      * @param clazz
      * @return
@@ -436,7 +437,7 @@ public class Context {
     }
 
     /**
-     * Get current scope according to data stack
+     * Get current scope from data stack
      * 
      * @return
      */
@@ -453,7 +454,7 @@ public class Context {
     }
 
     /**
-     * Get current fileName according to data stack
+     * Get current fileName from data stack
      * 
      * @param context
      * @return
@@ -471,7 +472,7 @@ public class Context {
     }
 
     /**
-     * Get current line number
+     * Get current line number from data stack
      * 
      * @param context
      * @return
@@ -485,7 +486,7 @@ public class Context {
     }
 
     /**
-     * Get current feature bouding box
+     * Get current feature bounding box from data stack
      * 
      * @return string
      */
@@ -518,13 +519,13 @@ public class Context {
     public void endData(Validatable data) {
         int position = dataStack.size() - 1;
         if (position < 0 || dataStack.get(position) != data) {
-            throw new RuntimeException("gestion inconsistente de beginModel/endModel");
+            throw new ValidatorFatalError("Unconsistent usage of beginData/endData");
         }
         dataStack.remove(position);
     }
 
     /**
-     * Relativize path
+     * Get relative path according to current directory.
      * 
      * @param path
      * @return
@@ -567,7 +568,6 @@ public class Context {
      * @param messageParams
      */
     public ValidatorError createError(ErrorCode code) {
-        // TODO remove messageParams
         ValidatorError validatorError = errorFactory.newError(code);
         validatorError.setScope(getScope());
 
@@ -606,6 +606,7 @@ public class Context {
      * @return
      */
     public void setValidationDirectory(File validationDirectory) {
+        log.info(MARKER, "set validation directory to {}", validationDirectory);
         this.validationDirectory = validationDirectory;
     }
 
@@ -613,15 +614,32 @@ public class Context {
         return normalizeEnabled;
     }
 
+    /**
+     * Enable or disable data normalization.
+     * 
+     * @param normalizeEnabled
+     */
     public void setNormalizeEnabled(boolean normalizeEnabled) {
+        log.info(MARKER, "set normalize enabled to {}", normalizeEnabled);
         this.normalizeEnabled = normalizeEnabled;
     }
 
+    /**
+     * Get output projection for normalized data.
+     * 
+     * @return
+     */
     public Projection getOutputProjection() {
         return outputProjection;
     }
 
+    /**
+     * Set output projection for normalized data.
+     * 
+     * @param outputProjection
+     */
     public void setOutputProjection(Projection outputProjection) {
+        log.info(MARKER, "set output projection to {}", outputProjection);
         this.outputProjection = outputProjection;
     }
 
@@ -652,8 +670,6 @@ public class Context {
     }
 
     /**
-     * Get report builder
-     * 
      * @return
      */
     public ReportBuilder getReportBuilder() {
@@ -661,8 +677,6 @@ public class Context {
     }
 
     /**
-     * Set report builder
-     * 
      * @param reportBuilder
      */
     public void setReportBuilder(ReportBuilder reportBuilder) {
@@ -670,7 +684,6 @@ public class Context {
     }
 
     /**
-     * 
      * @return
      */
     public boolean isFlatValidation() {
@@ -678,10 +691,10 @@ public class Context {
     }
 
     /**
-     * 
-     * @param flexibleValidation
+     * @param flatValidation
      */
     public void setFlatValidation(boolean flatValidation) {
+        log.info(MARKER, "set flat validation to {}", flatValidation);
         this.flatValidation = flatValidation;
     }
 

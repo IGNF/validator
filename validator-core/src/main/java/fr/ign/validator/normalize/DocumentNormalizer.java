@@ -51,7 +51,7 @@ public class DocumentNormalizer {
      * @param context
      */
     public void normalize(Context context, Document document) throws IOException {
-        log.info(MARKER, "Create normalized files in {} ...", context.getDataDirectory());
+        log.info(MARKER, "Normalize document data in {} ...", context.getDataDirectory());
 
         /*
          * Create a normalized CSV file for each FileModel.
@@ -61,6 +61,12 @@ public class DocumentNormalizer {
             // Retrieve document files corresponding to the FileModel
             List<DocumentFile> documentFiles = document.getDocumentFilesByModel(fileModel);
 
+            log.info(
+                MARKER,
+                "Normalize input data according to {} ({} file(s))...",
+                fileModel,
+                documentFiles.size()
+            );
             if (fileModel instanceof TableModel) {
                 normalizeTable(context, (TableModel) fileModel, documentFiles);
             } else if (fileModel instanceof MultiTableModel) {
@@ -69,10 +75,18 @@ public class DocumentNormalizer {
                 createFlatCopyInTargetDirectory(fileModel, documentFiles, context.getDataDirectory());
             } else if (fileModel instanceof MetadataModel) {
                 createFlatCopyInTargetDirectory(fileModel, documentFiles, context.getMetadataDirectory());
+            } else {
+                log.error(MARKER, "Normalization is not supported for {}!", fileModel);
             }
+            log.info(
+                MARKER,
+                "Normalize input data according to {} ({} file(s)) : completed",
+                fileModel,
+                documentFiles.size()
+            );
         }
 
-        log.info(MARKER, "Create normalized files in {} : completed.", context.getDataDirectory());
+        log.info(MARKER, "Normalize document data in {} : completed", context.getDataDirectory());
     }
 
     /**
@@ -85,17 +99,17 @@ public class DocumentNormalizer {
      */
     private void normalizeTable(Context context, TableModel fileModel, List<DocumentFile> documentFiles)
         throws IOException {
+
         FeatureType featureType = fileModel.getFeatureType();
         if (featureType == null) {
-            log.warn(MARKER, "Skip {} (no FeatureType provided)", fileModel.getName());
+            // TODO detect featureType to ensure consistency with MultiTableModel
+            log.warn(MARKER, "Skip normalization for {} (no FeatureType provided)", fileModel);
             return;
         }
 
         File csvFile = new File(context.getDataDirectory(), fileModel.getName() + ".csv");
-        log.warn(MARKER, "Create {} (no FeatureType provided)", fileModel.getName());
         TableNormalizer normalizer = new TableNormalizer(context, featureType, csvFile);
         for (DocumentFile documentFile : documentFiles) {
-            log.info(MARKER, "Append {} to CSV file {}...", documentFile.getPath(), csvFile);
             normalizer.append(documentFile.getPath());
         }
         normalizer.close();
@@ -120,6 +134,7 @@ public class DocumentNormalizer {
             );
             return;
         }
+
         DocumentFile documentFile = documentFiles.get(0);
         MultiTableReader reader = MultiTableReader.createMultiTableReader(documentFile.getPath());
         for (String tableName : reader.getTableNames()) {

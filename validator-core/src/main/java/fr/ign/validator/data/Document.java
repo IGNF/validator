@@ -144,9 +144,9 @@ public class Document implements Validatable {
     @Override
     public void validate(Context context) throws Exception {
         log.info(
-            MARKER, "Validate document '{}' with '{}'...",
+            MARKER, "Validate '{}' according to {}...",
             documentPath,
-            documentModel.getName()
+            documentModel
         );
 
         context.setCurrentDirectory(documentPath);
@@ -272,9 +272,9 @@ public class Document implements Validatable {
     public void findDocumentFiles(Context context) {
         clearFiles();
 
-        log.info(MARKER, "findDocumentFiles('{}') : list files and directories...", documentPath);
+        log.info(MARKER, "List files and directories in '{}'...", documentPath);
         Collection<File> files = FileUtils.listFilesAndDirs(documentPath, allowedExtensions);
-        log.info(MARKER, "findDocumentFiles('{}') : {} file(s) found", documentPath, files.size());
+        log.info(MARKER, "{} file(s) found in '{}'.", files.size(), documentPath);
 
         /*
          * find match with FileModel
@@ -285,7 +285,7 @@ public class Document implements Validatable {
             FileModel fileModel = documentModel.findFileModelByPath(file);
 
             if (fileModel != null) {
-                log.info(MARKER, "Found FileModel '{}' by path for '{}'", fileModel.getName(), file);
+                log.info(MARKER, "Found {} by path for '{}'", fileModel, file);
                 addDocumentFile(fileModel, file);
                 continue;
             }
@@ -295,7 +295,7 @@ public class Document implements Validatable {
             fileModel = documentModel.findFileModelByFilename(file);
             if (fileModel != null) {
 
-                log.info(MARKER, "Found FileModel '{}' by name for '{}' (FILE_MISPLACED)", fileModel.getName(), file);
+                log.info(MARKER, "Found {} by name for '{}' (FILE_MISPLACED)", fileModel, file);
                 if (context.isFlatValidation()) {
                     addDocumentFile(fileModel, file);
                 } else {
@@ -319,8 +319,7 @@ public class Document implements Validatable {
         }
 
         log.info(
-            MARKER, "findDocumentFiles('{}') : completed, {} file(s) found.",
-            documentPath,
+            MARKER, "List files and directories : completed, {} document file(s) found.",
             documentFiles.size()
         );
     }

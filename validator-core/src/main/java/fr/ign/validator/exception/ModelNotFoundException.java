@@ -14,4 +14,12 @@ public class ModelNotFoundException extends RuntimeException {
         super("Model '" + modelUri.toString() + "' not found");
     }
 
+    public ModelNotFoundException(String documentModelName, Throwable e) {
+        super("Model '" + documentModelName + "' not found", e);
+    }
+
+    public ModelNotFoundException(URL modelUri, Throwable e) {
+        super("Model '" + modelUri.toString() + "' not found", e);
+    }
+
 }

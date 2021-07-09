@@ -37,9 +37,10 @@ public class JsonModelReader extends AbstractModelReader {
 
     @Override
     public DocumentModel loadDocumentModel(URL documentModelUrl) throws ModelNotFoundException, InvalidModelException {
+        log.info(MARKER, "Loading DocumentModel from {} ...", documentModelUrl);
         InputStream is = getInputStream(documentModelUrl);
         try {
-            DocumentModel documentModel = (DocumentModel) objectMapper.readValue(is, DocumentModel.class);
+            DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
             /*
              * load feature types for TableModel
              */
@@ -54,19 +55,20 @@ public class JsonModelReader extends AbstractModelReader {
             return documentModel;
         } catch (IOException e) {
             String message = String.format("Fail to parse DocumentModel : %1s : %2s", documentModelUrl, e.getMessage());
-            e.printStackTrace(System.err);
+            log.error(MARKER, message, e);
             throw new InvalidModelException(message, e);
         }
     }
 
     @Override
     public FeatureType loadFeatureType(URL featureTypeUrl) throws ModelNotFoundException, InvalidModelException {
+        log.info(MARKER, "Loading FeatureType from {} ...", featureTypeUrl);
         InputStream is = getInputStream(featureTypeUrl);
         try {
-            return (FeatureType) objectMapper.readValue(is, FeatureType.class);
+            return objectMapper.readValue(is, FeatureType.class);
         } catch (IOException e) {
             String message = String.format("Fail to parse FeatureType : %1s : %2s", featureTypeUrl, e.getMessage());
-            e.printStackTrace(System.err);
+            log.error(MARKER, message, e);
             throw new InvalidModelException(message, e);
         }
     }

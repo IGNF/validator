@@ -33,7 +33,7 @@ public class RemovePreviousFilesPreProcess implements ValidatorListener {
      * @param documentPath
      */
     public void run(File documentPath) {
-        log.info(MARKER, "Remove temp files from {} ...", documentPath);
+        log.info(MARKER, "Remove temp files from previous run ...");
 
         Collection<File> files = FileUtils.listFilesAndDirs(documentPath, null);
         for (File file : files) {
@@ -46,7 +46,7 @@ public class RemovePreviousFilesPreProcess implements ValidatorListener {
             }
         }
 
-        log.info(MARKER, "Remove temp files from {} : completed.", documentPath);
+        log.info(MARKER, "Remove temp files from previous run : completed.");
     }
 
     /**
