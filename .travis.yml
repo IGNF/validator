@@ -2,18 +2,27 @@ language: java
 jdk:
   - openjdk11
 
+addons:
+  apt:
+    packages:
+      - language-pack-fr
+env:
+  global:
+    - LANG=fr_FR.UTF-8
+    - LC_ALL=fr_FR.UTF-8
+
 matrix:
   include:
-  - os: linux
-    dist: bionic
-    env:
-      - GDAL_VERSION: 2.4.*
-      - GDAL_PPA: "ppa:ubuntugis/ppa"
-  - os: linux
-    dist: bionic
-    env:
-      - GDAL_VERSION: 3.0.*
-      - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
+    - os: linux
+      dist: bionic
+      env:
+        - GDAL_VERSION: 2.4.*
+        - GDAL_PPA: "ppa:ubuntugis/ppa"
+    - os: linux
+      dist: bionic
+      env:
+        - GDAL_VERSION: 3.0.*
+        - GDAL_PPA: "ppa:ubuntugis/ubuntugis-unstable"
 
 notifications:
   email: false
@@ -31,4 +40,4 @@ script:
 
 cache:
   directories:
-  - $HOME/.m2
+    - $HOME/.m2
