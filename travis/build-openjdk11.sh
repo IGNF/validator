@@ -4,6 +4,9 @@ echo "-----------------------------------------------------------------------"
 echo "-- Display informations"
 echo "-----------------------------------------------------------------------"
 
+# XSD validation errors
+export LANG=fr_FR.UTF-8
+
 export OGR2OGR_PATH=${OGR2OGR_PATH:-ogr2ogr}
 echo "-- OGR2OGR_PATH : ${OGR2OGR_PATH}"
 echo "-- GDAL_VERSION : $($OGR2OGR_PATH --version)"
