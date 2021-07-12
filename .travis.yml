@@ -2,12 +2,6 @@ language: java
 jdk:
   - openjdk11
 
-addons:
-  apt:
-    packages:
-      - locales
-      - language-pack-fr
-
 matrix:
   include:
     - os: linux

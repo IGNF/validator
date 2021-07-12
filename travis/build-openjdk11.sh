@@ -5,8 +5,8 @@ echo "-- Display informations"
 echo "-----------------------------------------------------------------------"
 
 # XSD validation errors
-export LANG=fr_FR.UTF-8
-export LC_ALL=fr_FR.UTF-8
+export LANG=en_EN.UTF-8
+export LC_ALL=en_EN.UTF-8
 
 export OGR2OGR_PATH=${OGR2OGR_PATH:-ogr2ogr}
 echo "-- OGR2OGR_PATH : ${OGR2OGR_PATH}"

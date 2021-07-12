@@ -1,7 +1,5 @@
 package fr.ign.validator.data;
 
-import java.io.File;
-
 import fr.ign.validator.Context;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.mapping.FeatureTypeMapper;
@@ -19,9 +17,9 @@ import fr.ign.validator.validation.Validatable;
 public class Header implements Validatable {
 
     /**
-     * TODO rely on Context
+     * Relative path for the table in order to report errors.
      */
-    private File matchingFile;
+    private String relativePath;
 
     /**
      * mapping columns/FeatureType
@@ -32,8 +30,8 @@ public class Header implements Validatable {
      * @param columns
      * @param mapping
      */
-    public Header(File matchingFile, FeatureTypeMapper mapping) {
-        this.matchingFile = matchingFile;
+    public Header(String relativePath, FeatureTypeMapper mapping) {
+        this.relativePath = relativePath;
         this.mapping = mapping;
     }
 
@@ -69,19 +67,19 @@ public class Header implements Validatable {
             if (missingAttribute.getName().equals("WKT")) {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_MISSING_GEOMETRY)
-                        .setMessageParam("FILEPATH", context.relativize(matchingFile))
+                        .setMessageParam("FILEPATH", relativePath)
                 );
             } else if (!missingAttribute.getConstraints().isRequired()) {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE)
                         .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                        .setMessageParam("FILEPATH", context.relativize(matchingFile))
+                        .setMessageParam("FILEPATH", relativePath)
                 );
             } else {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_MISSING_ATTRIBUTE)
                         .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                        .setMessageParam("FILEPATH", context.relativize(matchingFile))
+                        .setMessageParam("FILEPATH", relativePath)
                 );
             }
             context.endModel(missingAttribute);

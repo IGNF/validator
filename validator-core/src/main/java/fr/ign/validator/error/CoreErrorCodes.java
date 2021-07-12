@@ -192,6 +192,15 @@ public class CoreErrorCodes {
     public static final ErrorCode ATTRIBUTE_CHARACTERS_REPLACED = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_REPLACED");
     public static final ErrorCode ATTRIBUTE_CHARACTERS_ILLEGAL = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_ILLEGAL");
 
+    /**
+     * Fail to parse field as a JTS Geometry.
+     */
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_FORMAT = ErrorCode.valueOf(
+        "ATTRIBUTE_GEOMETRY_INVALID_FORMAT"
+    );
+    /**
+     * Topology problem for the geometry.
+     */
     public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID");
     public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf(
         "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT"

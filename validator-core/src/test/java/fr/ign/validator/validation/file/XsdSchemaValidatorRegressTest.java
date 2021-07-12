@@ -1,6 +1,7 @@
 package fr.ign.validator.validation.file;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -94,9 +95,10 @@ public class XsdSchemaValidatorRegressTest {
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.XSD_SCHEMA_ERROR).get(0);
             assertEquals(ErrorLevel.ERROR, error.getLevel());
-            assertEquals(
-                "#26 : cvc-complex-type.2.4.d : Contenu non valide trouvé à partir de l'élément 'gp-urba:CUSTOM'. Aucun élément enfant n'est attendu à cet endroit.",
-                error.getMessage()
+            // see https://wiki.xmldation.com/Support/Validator/cvc-complex-type-2-4-d
+            assertTrue(
+                "unexpected message : " + error.getMessage(),
+                error.getMessage().startsWith("#26 : cvc-complex-type.2.4.d")
             );
         }
     }

@@ -1,6 +1,7 @@
 package fr.ign.validator.regress;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,9 @@ import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -67,7 +70,19 @@ public class ValidatePCRSRegressTest {
 
         document.validate(context);
 
-        assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
+        for (ValidatorError error : report.getErrorsByLevel(ErrorLevel.ERROR)) {
+            System.out.println(error);
+        }
+
+        /*
+         * WKT with CURVEPOLYGON is not supported by current JTS version.
+         */
+        assertEquals(14, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
+        for (ValidatorError error : report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT)) {
+            assertTrue(error.getMessage().contains("CURVEPOLYGON"));
+        }
+
+        assertEquals(14, report.getErrorsByLevel(ErrorLevel.ERROR).size());
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.WARNING).size());
     }
 
