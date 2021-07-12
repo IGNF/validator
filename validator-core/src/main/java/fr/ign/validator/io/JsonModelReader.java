@@ -45,8 +45,8 @@ public class JsonModelReader extends AbstractModelReader {
     @Override
     public DocumentModel loadDocumentModel(URL documentModelUrl) throws ModelNotFoundException, InvalidModelException {
         log.info(MARKER, "Loading DocumentModel from {} ...", documentModelUrl);
-        InputStream is = getInputStream(documentModelUrl);
         try {
+            InputStream is = getInputStream(documentModelUrl);
             DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
             log.info(MARKER, "Loading FeatureTypes for {} ...", documentModel);
             for (FileModel fileModel : documentModel.getFileModels()) {
@@ -57,14 +57,18 @@ public class JsonModelReader extends AbstractModelReader {
                     FeatureType featureType = loadFeatureType(featureTypeUrl);
                     tableModel.setFeatureType(featureType);
                 } else if (fileModel instanceof MultiTableModel) {
-                    log.warn(MARKER, "Loading MultiTableModel for {} is not yet supported!", fileModel);
+                    log.warn(MARKER, "Loading FeatureTypes for {} is not yet supported!", fileModel);
                     // TODO allows to specify FeatureType for each table in MultiTableModel
                 }
             }
             log.info(MARKER, "Loading FeatureTypes for {} : completed.", documentModel);
             return documentModel;
         } catch (IOException e) {
-            String message = String.format("Fail to parse DocumentModel : %1s : %2s", documentModelUrl, e.getMessage());
+            String message = String.format(
+                "Fail to load DocumentModel from %1s : %2s",
+                documentModelUrl,
+                e.getMessage()
+            );
             log.error(MARKER, message, e);
             throw new InvalidModelException(message, e);
         }
@@ -73,11 +77,15 @@ public class JsonModelReader extends AbstractModelReader {
     @Override
     public FeatureType loadFeatureType(URL featureTypeUrl) throws ModelNotFoundException, InvalidModelException {
         log.info(MARKER, "Loading FeatureType from {} ...", featureTypeUrl);
-        InputStream is = getInputStream(featureTypeUrl);
         try {
+            InputStream is = getInputStream(featureTypeUrl);
             return objectMapper.readValue(is, FeatureType.class);
         } catch (IOException e) {
-            String message = String.format("Fail to parse FeatureType : %1s : %2s", featureTypeUrl, e.getMessage());
+            String message = String.format(
+                "Fail to load FeatureType from %1s : %2s",
+                featureTypeUrl,
+                e.getMessage()
+            );
             log.error(MARKER, message, e);
             throw new InvalidModelException(message, e);
         }

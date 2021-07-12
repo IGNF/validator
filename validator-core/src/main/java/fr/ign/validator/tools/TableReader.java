@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -96,7 +97,7 @@ public class TableReader implements Iterator<String[]> {
      */
     private void readHeader() throws IOException {
         if (!hasNext()) {
-            throw new IOException("Impossible de lire l'entête");
+            throw new IOException("Fail to read header");
         }
         String[] fields = next();
         List<String> filteredFields = new ArrayList<String>();
@@ -164,7 +165,7 @@ public class TableReader implements Iterator<String[]> {
      * @param value
      */
     private String nullifyEmptyString(String value) {
-        if (null == value || value.isEmpty()) {
+        if (StringUtils.isEmpty(value)) {
             return null;
         } else {
             return value;

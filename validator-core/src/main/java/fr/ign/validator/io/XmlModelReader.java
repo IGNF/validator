@@ -1,7 +1,7 @@
 package fr.ign.validator.io;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.xml.bind.JAXBContext;
@@ -15,6 +15,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
+import fr.ign.validator.exception.ReadUrlException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -48,14 +49,14 @@ public class XmlModelReader extends AbstractModelReader {
     }
 
     @Override
-    public DocumentModel loadDocumentModel(URL documentModelUrl) {
+    public DocumentModel loadDocumentModel(URL documentModelUrl) throws ModelNotFoundException, InvalidModelException {
         log.info(MARKER, "Loading DocumentModel from {} ...", documentModelUrl);
 
         /*
          * loading documentModel
          */
+        InputStream is = getInputStream(documentModelUrl);
         try {
-            InputStream is = getInputStream(documentModelUrl);
             DocumentModel documentModel = (DocumentModel) unmarshaller.unmarshal(is);
             /*
              * load feature types for TableModel
@@ -69,22 +70,20 @@ public class XmlModelReader extends AbstractModelReader {
                 }
             }
             return documentModel;
-        } catch (JAXBException e) {
-            String message = String.format("Fail to parse DocumentModel : %1s", documentModelUrl);
+        } catch (JAXBException | IOException e) {
+            String message = String.format("Fail to load FeatureType from %1s", documentModelUrl);
             throw new InvalidModelException(message, e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
         }
     }
 
     @Override
     public FeatureType loadFeatureType(URL featureTypeUrl) throws ModelNotFoundException, InvalidModelException {
         log.info(MARKER, "loadFeatureType({}) ...", featureTypeUrl);
+        InputStream is = getInputStream(featureTypeUrl);
         try {
-            InputStream is = getInputStream(featureTypeUrl);
             return (FeatureType) unmarshaller.unmarshal(is);
         } catch (JAXBException e) {
-            String message = String.format("Fail to parse FeatureType : %1s", featureTypeUrl);
+            String message = String.format("Fail to load FeatureType from %1s", featureTypeUrl);
             throw new InvalidModelException(message, e);
         }
     }

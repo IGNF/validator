@@ -23,6 +23,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.InvalidModelException;
+import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -99,11 +100,11 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
         } catch (SAXException e) {
             String message = String.format("SAXParseException not catched for %1s", xmlFile);
             log.fatal(MARKER, message, e);
-            throw new RuntimeException(message, e);
+            throw new ValidatorFatalError(message, e);
         } catch (IOException e) {
             String message = String.format("Fail to read %1s", xmlFile);
             log.fatal(MARKER, message);
-            throw new RuntimeException(message, e);
+            throw new ValidatorFatalError(message, e);
         }
     }
 

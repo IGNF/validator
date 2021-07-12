@@ -30,7 +30,7 @@ public class ProjectionTransform implements GeometryTransform {
     /**
      * WKT Reader Enable projection transform to WKT Geometries
      */
-    public static WKTReader format = new WKTReader();
+    private static WKTReader format = new WKTReader();
 
     /**
      * Create a ProjectionTransform from source projection to target projection.
@@ -61,7 +61,12 @@ public class ProjectionTransform implements GeometryTransform {
         try {
             this.transform = CRS.findMathTransform(sourceCRS, targetCRS);
         } catch (FactoryException e) {
-            throw new RuntimeException(e);
+            String message = String.format(
+                "fail to find transform from '%1s' to '%2s'",
+                sourceCRS.getName(),
+                targetCRS.getName()
+            );
+            throw new GeometryTransformException(message, e);
         }
     }
 

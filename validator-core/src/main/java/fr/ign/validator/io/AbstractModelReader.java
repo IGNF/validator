@@ -8,6 +8,7 @@ import java.net.URL;
 
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
+import fr.ign.validator.exception.ReadUrlException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.file.TableModel;
@@ -53,13 +54,13 @@ abstract class AbstractModelReader implements ModelReader {
         String parentUrl = getParentURL(documentModelUrl);
         if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
-            // validator-config-cnig/config/cnig_PLU_2017/files.xml
-            // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.xml
+            // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
+            // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(parentUrl + "/types/" + tableModel.getName() + "." + getFormat());
         } else {
             /* URL convention */
-            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.xml
-            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.xml
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.(xml|json)
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(
                 parentUrl + "/" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
             );
@@ -89,7 +90,7 @@ abstract class AbstractModelReader implements ModelReader {
      * @param url
      * @return
      */
-    protected InputStream getInputStream(URL url) {
+    protected InputStream getInputStream(URL url) throws ModelNotFoundException {
         try {
             return url.openStream();
         } catch (IOException e) {

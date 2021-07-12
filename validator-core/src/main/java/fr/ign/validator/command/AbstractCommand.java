@@ -1,5 +1,7 @@
 package fr.ign.validator.command;
 
+import java.io.PrintStream;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -18,6 +20,16 @@ import fr.ign.validator.tools.Networking;
  *
  */
 public abstract class AbstractCommand implements Command {
+
+    /**
+     * Standard output stream
+     */
+    protected PrintStream stdout = System.out;
+
+    @Override
+    public void setStdout(PrintStream stdout) {
+        this.stdout = stdout;
+    }
 
     /**
      * Append custom CLI options to default ones

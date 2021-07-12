@@ -166,9 +166,16 @@ public class FileConverter {
     private String retrieveOgr2ogrPath() {
         String result = System.getenv("OGR2OGR_PATH");
         if (result != null) {
+            log.info(MARKER, "Found env OGR2OGR_PATH={}", result);
             return result;
         }
-        return System.getProperty("ogr2ogr_path", "ogr2ogr");
+        result = System.getProperty("ogr2ogr_path", null);
+        if (result != null) {
+            log.info(MARKER, "Found -Dogr2ogr_path={}", result);
+            return result;
+        }
+        log.info(MARKER, "Env OGR2OGR_PATH not found, using OGR2OGR_PATH=ogr2ogr");
+        return "ogr2ogr";
     }
 
     /**

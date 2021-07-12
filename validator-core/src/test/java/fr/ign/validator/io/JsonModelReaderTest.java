@@ -1,6 +1,7 @@
 package fr.ign.validator.io;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -44,18 +45,11 @@ public class JsonModelReaderTest {
      * Ensure that ModelNotFoundException are thrown if DocumentModel file doesn't
      * exists
      */
-    @Test
+    @Test(expected = ModelNotFoundException.class)
     public void testLoadDocumentModelFileNotFound() {
         File configDir = ResourceHelper.getResourceFile(getClass(), "/config-json");
         File documentModelPath = new File(configDir, "/not-found/files.json");
-        boolean thrown = false;
-        try {
-            modelLoader.loadDocumentModel(documentModelPath);
-        } catch (ModelNotFoundException e) {
-            Assert.assertTrue(e.getMessage().contains("/not-found/files.json"));
-            thrown = true;
-        }
-        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+        modelLoader.loadDocumentModel(documentModelPath);
     }
 
     /**
@@ -64,17 +58,10 @@ public class JsonModelReaderTest {
      * 
      * @throws MalformedURLException
      */
-    @Test
+    @Test(expected = ModelNotFoundException.class)
     public void testLoadDocumentModelUrlNotFound() throws MalformedURLException {
         URL documentModelUrl = new URL("https://example.local/not-found/files.json");
-        boolean thrown = false;
-        try {
-            modelLoader.loadDocumentModel(documentModelUrl);
-        } catch (ModelNotFoundException e) {
-            Assert.assertEquals("Model 'https://example.local/not-found/files.json' not found", e.getMessage());
-            thrown = true;
-        }
-        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+        modelLoader.loadDocumentModel(documentModelUrl);
     }
 
     /**

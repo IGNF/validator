@@ -155,7 +155,7 @@ public class TableNormalizer implements Closeable {
         try {
             printer.close();
         } catch (IOException e) {
-            throw new RuntimeException("fail to close CSV printer", e);
+            log.error(MARKER, "fail to close CSV printer!");
         }
     }
 

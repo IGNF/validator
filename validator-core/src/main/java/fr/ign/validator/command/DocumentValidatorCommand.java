@@ -28,6 +28,7 @@ import fr.ign.validator.command.options.StringFixerOptions;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.ModelNotFoundException;
+import fr.ign.validator.exception.PluginNotFoundException;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.ModelReaderFactory;
@@ -150,6 +151,11 @@ public class DocumentValidatorCommand extends AbstractCommand {
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Validate a document according to a model";
     }
 
     @Override
@@ -751,7 +757,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
                 if (plugin == null) {
                     String message = String.format("fail to load plugin '%1s'", pluginName);
                     log.error(MARKER, message);
-                    System.exit(1);
+                    throw new PluginNotFoundException(pluginName);
                 }
                 log.info(MARKER, String.format("setup plugin '%1s'...", pluginName));
                 plugins.add(plugin);
