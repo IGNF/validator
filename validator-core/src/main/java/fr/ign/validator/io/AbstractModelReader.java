@@ -11,6 +11,7 @@ import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.exception.ReadUrlException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.FeatureTypeRef;
 import fr.ign.validator.model.file.TableModel;
 
 /**
@@ -51,7 +52,18 @@ abstract class AbstractModelReader implements ModelReader {
      */
     protected URL resolveFeatureTypeUrl(URL documentModelUrl, DocumentModel documentModel, TableModel tableModel)
         throws MalformedURLException {
+
         String parentUrl = getParentURL(documentModelUrl);
+
+        FeatureTypeRef ref = tableModel.getFeatureTypeRef();
+        if (ref != null && !ref.isEmpty()) {
+            if (ref.isURL()) {
+                return new URL(ref.getValue());
+            } else {
+                return new URL(parentUrl + "/" + ref.getValue());
+            }
+        }
+
         if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)

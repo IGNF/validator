@@ -90,7 +90,7 @@ public class JsonModelReaderTest {
 
     @Test
     public void testLoadFeatureTypeAdresse() {
-        File srcFile = ResourceHelper.getResourceFile(getClass(), "/config-json/adresse/types/ADRESSE.json");
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/config-json/adresse/table-models/ADRESSE.json");
         FeatureType featureType = modelLoader.loadFeatureType(srcFile);
         assertExceptedFeatureTypeAdresse(featureType);
     }
