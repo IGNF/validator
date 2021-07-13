@@ -1,10 +1,12 @@
 package fr.ign.validator.error;
 
+import java.io.File;
 import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import fr.ign.validator.exception.InvalidErrorConfigException;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
@@ -20,6 +22,12 @@ public class ErrorFactoryTest {
     public void testNewFromResourceFactory() {
         ErrorFactory factory = new ErrorFactory();
         Assert.assertFalse(factory.getPrototypes().isEmpty());
+    }
+
+    @Test(expected = InvalidErrorConfigException.class)
+    public void testLoadFileNotFound() {
+        ErrorFactory factory = new ErrorFactory();
+        factory.loadErrorCodes(new File("not-found.json'"));
     }
 
     @Test

@@ -16,6 +16,7 @@ import fr.ign.validator.cnig.tools.VRT;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.FileConverter;
 
 /**
@@ -33,18 +34,18 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
         File dataDirectory = context.getDataDirectory();
-        log.info(MARKER, "Create shapefiles from normalized CSV files in '{}'...", dataDirectory);
+        log.info(MARKER, "Convert normalized CSV files to shapefile ...");
 
         FileConverter fileConverter = FileConverter.getInstance();
 
@@ -56,7 +57,7 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
             // get FeatureType
             String typeName = FilenameUtils.getBaseName(csvFile.getName());
             FileModel fileModel = context.getDocumentModel().getFileModelByName(typeName);
-            FeatureType featureType = fileModel.getFeatureType();
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
 
             // create vrt file
             File vrtFile = new File(csvFile.getParent(), FilenameUtils.getBaseName(csvFile.getName()) + ".vrt");
@@ -69,6 +70,8 @@ public class CreateShapefilesPostProcess implements ValidatorListener {
             );
             fileConverter.convertToShapefile(vrtFile, shpFile);
         }
+
+        log.info(MARKER, "Convert normalized CSV files to shapefile : completed.");
     }
 
 }

@@ -64,7 +64,7 @@ public class CharsetDetector {
      * @return
      */
     public static boolean isValidCharset(File file, Charset charset) {
-        log.debug(MARKER, "isValidCharset('{}','{}')...", file.getAbsolutePath(), charset);
+        log.trace(MARKER, "isValidCharset('{}','{}')...", file.getAbsolutePath(), charset);
         try {
             CharsetDecoder cs = charset.newDecoder();
             BufferedReader in = new BufferedReader(
@@ -81,7 +81,7 @@ public class CharsetDetector {
             log.debug(MARKER, "isValidCharset('{}','{}') : false", file.getAbsolutePath(), charset);
             return false;
         }
-        log.debug(MARKER, "isValidCharset('{}','{}') : true", file.getAbsolutePath(), charset);
+        log.trace(MARKER, "isValidCharset('{}','{}') : true", file.getAbsolutePath(), charset);
         return true;
     }
 

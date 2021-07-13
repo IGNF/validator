@@ -55,6 +55,7 @@ public class DocumentInfoExtractorPostProcess implements ValidatorListener {
         log.info(MARKER, "Save {}...", documentInfoPath);
         DocumentInfoWriter infowriter = new DocumentInfoWriter();
         infowriter.write(documentInfo, documentInfoPath);
+        log.info(MARKER, "Retrieve informations to build document-info.json : completed.");
     }
 
 }

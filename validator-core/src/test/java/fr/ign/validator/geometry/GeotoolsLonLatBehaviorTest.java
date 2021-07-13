@@ -9,7 +9,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 
 /**
- * Test geotool behavior with lat,lon order for EPSG codes.
+ * Test geotools behavior with lat,lon order for EPSG codes.
  * 
  * Note that gt-epsg-hsql provides a different behavior than gt-epsg-wkt
  * 

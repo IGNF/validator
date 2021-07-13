@@ -37,12 +37,12 @@ public class DocUrbaPostProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
@@ -53,11 +53,22 @@ public class DocUrbaPostProcess implements ValidatorListener {
             return;
         }
 
+        log.info(
+            MARKER,
+            "Filter DOC_URBA table and retrieve metadata..."
+        );
+
         String documentName = document.getDocumentName();
         DocUrbaFilter docUrbaFilter = new DocUrbaFilter(idurbaFormat, documentName);
         File docUrbaFile = new File(context.getDataDirectory(), "DOC_URBA.csv");
         DocUrbaFilter.Result result = docUrbaFilter.process(docUrbaFile);
+
+        /*
+         * check number of rows in filtered DOC_URBA
+         */
+        log.info(MARKER, "{} row(s) found in filtered DOC_URBA.", result.count);
         if (result.count == 0) {
+            log.info(MARKER, "Report CNIG_IDURBA_NOT_FOUND as DOC_URBA is empty.");
             context.report(
                 context.createError(CnigErrorCodes.CNIG_IDURBA_NOT_FOUND)
                     .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
@@ -68,8 +79,19 @@ public class DocUrbaPostProcess implements ValidatorListener {
                     .setMessageParam("EXPECTED_IDURBA", idurbaFormat.getRegexpHelp(documentName))
             );
         }
+
+        /*
+         * Add idurba and typeref to document tags.
+         */
+        log.info(MARKER, "Found idurba={} in filtered DOC_URBA.", result.idurba);
         document.setTag(TAG_IDURBA, result.idurba);
+        log.info(MARKER, "Found typeref={} in filtered DOC_URBA.", result.typeref);
         document.setTag(TAG_TYPEREF, result.typeref);
+
+        log.info(
+            MARKER,
+            "Filter DOC_URBA table and retrieve metadata : completed"
+        );
     }
 
 }

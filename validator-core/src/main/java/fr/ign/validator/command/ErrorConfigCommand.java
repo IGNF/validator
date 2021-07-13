@@ -34,6 +34,11 @@ public class ErrorConfigCommand extends AbstractCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Export error templates (JSON)";
+    }
+
+    @Override
     protected void buildCustomOptions(Options options) {
         // output
         {
@@ -63,7 +68,7 @@ public class ErrorConfigCommand extends AbstractCommand {
 
     private PrintStream getOutputStream() throws FileNotFoundException {
         if (this.outputFile == null) {
-            return System.out;
+            return stdout;
         }
         if (this.outputFile.exists()) {
             this.outputFile.delete();

@@ -17,7 +17,8 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.StringType;
 
 /**
@@ -49,13 +50,15 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
             return;
         }
 
+        log.info(MARKER, "Customize IDURBA field validation...");
+
         /*
          * Customize IDURBA fields validation.
          */
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
         for (FileModel fileModel : fileModels) {
-            if (fileModel instanceof TableModel) {
-                FeatureType featureType = fileModel.getFeatureType();
+            if (fileModel instanceof SingleTableModel) {
+                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 AttributeType<?> attribute = featureType.getAttribute("IDURBA");
                 if (attribute == null) {
                     continue;
@@ -72,15 +75,10 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
                 }
                 StringType idurbaAttribute = (StringType) attribute;
                 if (fileModel.getName().equalsIgnoreCase("DOC_URBA")) {
-                    /*
-                     * Ensure any format is respected for DOC_URBA
-                     */
+                    log.info(MARKER, "Add validator to ensure that IDURBA format is valid for {}", fileModel);
                     idurbaAttribute.addValidator(new IdurbaFormatValidator());
                 } else {
-                    /*
-                     * Check value according to document name and IdurbaFormat associated to the
-                     * standard version
-                     */
+                    log.info(MARKER, "Add validator to ensure that IDURBA matches document name for {}", fileModel);
                     idurbaAttribute.addValidator(
                         new IdurbaValidator(
                             idurbaFormat,
@@ -90,16 +88,18 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
                 }
             }
         }
+
+        log.info(MARKER, "Customize IDURBA field validation : completed.");
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
 }

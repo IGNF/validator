@@ -13,7 +13,6 @@ public class Application {
 
     public static void main(String[] args) {
         CommandApplication application = new CommandApplication();
-        application.loadRegistredCommands();
         int result = application.run(args);
         LogManager.shutdown();
         System.exit(result);

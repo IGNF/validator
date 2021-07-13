@@ -189,10 +189,10 @@ public class GeometryIsValidValidatorTest {
         String wkt = "POLYGON ((0 0))";
         Geometry geometry = bindValidate(wkt);
         Assert.assertNull(geometry);
-        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
         Assert.assertEquals(
-            "La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL) (RING_NOT_CLOSED, INVALID_COORDINATE, TOO_FEW_POINTS, INVALID_WKT).",
-            report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage()
+            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : POLYGON ((0 0))",
+            report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).get(0).getMessage()
         );
     }
 
@@ -201,10 +201,10 @@ public class GeometryIsValidValidatorTest {
         String wkt = "POLYGON ((0 0, 2 0, 2 2, 0 NaN, null 0))";
         Geometry geometry = bindValidate(wkt);
         Assert.assertNull(geometry);
-        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
         Assert.assertEquals(
-            "La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL) (RING_NOT_CLOSED, INVALID_COORDINATE, TOO_FEW_POINTS, INVALID_WKT).",
-            report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage()
+            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : POLYGON ((0 0, 2 0, 2 2, 0 NaN, null 0))",
+            report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).get(0).getMessage()
         );
     }
 
@@ -213,10 +213,10 @@ public class GeometryIsValidValidatorTest {
         String wkt = "POLYGON ((0 0, 2 0, 2 2, 0 2))";
         Geometry geometry = bindValidate(wkt);
         Assert.assertNull(geometry);
-        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
         Assert.assertEquals(
-            "La géométrie de l'objet n'est pas topologiquement correcte. La géométrie ne contient pas assez de points (au moins 2 pour une ligne, 3 pour un polygone), contient un contour non-fermé, ou bien contient des coordonnées invalides (valeur NULL) (RING_NOT_CLOSED, INVALID_COORDINATE, TOO_FEW_POINTS, INVALID_WKT).",
-            report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage()
+            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : POLYGON ((0 0, 2 0, 2 2, 0 2))",
+            report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).get(0).getMessage()
         );
     }
 

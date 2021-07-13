@@ -1,5 +1,7 @@
 package fr.ign.validator.command;
 
+import java.io.PrintStream;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -20,10 +22,14 @@ import fr.ign.validator.tools.Networking;
 public abstract class AbstractCommand implements Command {
 
     /**
-     * Command option for network proxy management (required to access remote XSD
-     * schemas)
+     * Standard output stream
      */
-    private String proxy = "";
+    protected PrintStream stdout = System.out;
+
+    @Override
+    public void setStdout(PrintStream stdout) {
+        this.stdout = stdout;
+    }
 
     /**
      * Append custom CLI options to default ones
@@ -117,10 +123,9 @@ public abstract class AbstractCommand implements Command {
      * Parse proxy option and define proxy
      * 
      * @param commandLine
-     * @throws ParseException
      */
-    protected void configureNetworkingAndProxy(CommandLine commandLine) throws ParseException {
-        proxy = commandLine.getOptionValue("proxy", "");
+    protected void configureNetworkingAndProxy(CommandLine commandLine) {
+        String proxy = commandLine.getOptionValue("proxy", "");
         Networking.configureHttpClient(proxy);
     }
 

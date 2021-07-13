@@ -19,7 +19,6 @@ public class GeometryErrorCode extends CodeListValue {
     public static GeometryErrorCode TOO_FEW_POINTS = GeometryErrorCode.valueOf("TOO_FEW_POINTS");
     public static GeometryErrorCode INVALID_COORDINATE = GeometryErrorCode.valueOf("INVALID_COORDINATE");
     public static GeometryErrorCode RING_NOT_CLOSED = GeometryErrorCode.valueOf("RING_NOT_CLOSED");
-    public static GeometryErrorCode INVALID_WKT = GeometryErrorCode.valueOf("INVALID_WKT");
     public static GeometryErrorCode UNKNOWN = GeometryErrorCode.valueOf("UNKNOWN");
 
     private GeometryErrorCode(String value) {

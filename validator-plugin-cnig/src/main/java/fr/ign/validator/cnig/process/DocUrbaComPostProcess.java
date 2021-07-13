@@ -25,12 +25,12 @@ public class DocUrbaComPostProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
@@ -41,6 +41,8 @@ public class DocUrbaComPostProcess implements ValidatorListener {
             log.info(MARKER, "Skipped - document is not a PLUi");
             return;
         }
+
+        log.info(MARKER, "PLUi - Ensure that DOC_URBA_COM contains more that one row ...");
 
         File docUrbaComFile = new File(context.getDataDirectory(), "DOC_URBA_COM.csv");
         if (!docUrbaComFile.exists()) {
@@ -57,6 +59,8 @@ public class DocUrbaComPostProcess implements ValidatorListener {
                 )
             );
         }
+
+        log.info(MARKER, "PLUi - Ensure that DOC_URBA_COM contains more that one row : completed");
     }
 
 }

@@ -20,7 +20,7 @@ import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.Projection;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
@@ -53,7 +53,7 @@ public class AttributeReferenceValidatorTest {
 
         // TEAM
         {
-            TableModel tableModel = new TableModel();
+            SingleTableModel tableModel = new SingleTableModel();
             tableModel.setName("TEAM");
             FeatureType featureType = new FeatureType();
             featureType.setName("TEAM");
@@ -74,7 +74,7 @@ public class AttributeReferenceValidatorTest {
 
         // USER
         {
-            TableModel tableModel = new TableModel();
+            SingleTableModel tableModel = new SingleTableModel();
             tableModel.setName("USER");
             FeatureType featureType = new FeatureType();
             featureType.setName("USER");

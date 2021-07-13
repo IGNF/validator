@@ -35,6 +35,11 @@ public class CnigExtractIdgestCommand extends AbstractCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Extracts IDGEST from SERVITUDE file (CNIG SUP harvesting)";
+    }
+
+    @Override
     protected void buildCustomOptions(Options options) {
         // input
         {

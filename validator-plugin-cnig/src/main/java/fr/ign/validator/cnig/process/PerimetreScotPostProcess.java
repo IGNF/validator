@@ -24,12 +24,12 @@ public class PerimetreScotPostProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-
+        // nothing to do
     }
 
     @Override

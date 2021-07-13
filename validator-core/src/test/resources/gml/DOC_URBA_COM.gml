@@ -5,9 +5,7 @@
 	xmlns:gml="http://www.opengis.net/gml/3.2" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	numberMatched="unknown" numberReturned="1" timeStamp="2015-07-20T08:53:12.008Z" 
-	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ../xsd/doc_urba_com.xsd
-	http://www.opengis.net/gml/3.2 ../xsd/gml.xsd 
-	http://www.opengis.net/wfs/2.0 ../xsd/wfs.xsd">
+	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ./xsd/doc_urba_com.xsd">
   <wfs:member>
     <gp-urba:DOC_URBA_COM gml:id="DOC_URBA_COM.13">
       <gp-urba:the_geom>

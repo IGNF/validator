@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import fr.ign.validator.io.json.EnvelopeSerializer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.locationtech.jts.geom.Envelope;
 
 /**
@@ -39,6 +42,10 @@ public class DocumentFileInfo {
      * Feature count (only for tables)
      */
     private Integer totalFeatures = null;
+    /**
+     * Stats about sub tables
+     */
+    private Map<String, TableStats> tables = new HashMap<>();
 
     public String getType() {
         return type;
@@ -93,6 +100,15 @@ public class DocumentFileInfo {
 
     public void setTotalFeatures(Integer totalFeatures) {
         this.totalFeatures = totalFeatures;
+    }
+
+    @JsonInclude(value = Include.NON_EMPTY)
+    public Map<String, TableStats> getTables() {
+        return tables;
+    }
+
+    public void setTables(Map<String, TableStats> tables) {
+        this.tables = tables;
     }
 
 }

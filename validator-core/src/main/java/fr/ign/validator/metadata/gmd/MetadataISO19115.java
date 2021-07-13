@@ -86,14 +86,12 @@ public class MetadataISO19115 implements Metadata {
      * @return
      */
     public static boolean isMetadataFile(File file) {
-        // TODO check presence of ./gmd:identificationInfo (MD_Metadata could be renamed
-        // in profiles)
         try {
             MetadataISO19115 reader = MetadataISO19115.readFile(file);
             Element rootElement = reader.getMetadataElement();
             return rootElement.getName().equals("MD_Metadata");
         } catch (Exception e) {
-            // e.printStackTrace();
+            // exception is ignored
         }
         return false;
     }

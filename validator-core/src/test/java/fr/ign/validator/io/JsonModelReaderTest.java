@@ -1,9 +1,14 @@
 package fr.ign.validator.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -15,7 +20,11 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.EmbeddedTableModel;
+import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.model.file.MultiTableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
@@ -38,18 +47,11 @@ public class JsonModelReaderTest {
      * Ensure that ModelNotFoundException are thrown if DocumentModel file doesn't
      * exists
      */
-    @Test
+    @Test(expected = ModelNotFoundException.class)
     public void testLoadDocumentModelFileNotFound() {
         File configDir = ResourceHelper.getResourceFile(getClass(), "/config-json");
         File documentModelPath = new File(configDir, "/not-found/files.json");
-        boolean thrown = false;
-        try {
-            modelLoader.loadDocumentModel(documentModelPath);
-        } catch (ModelNotFoundException e) {
-            Assert.assertTrue(e.getMessage().contains("/not-found/files.json"));
-            thrown = true;
-        }
-        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+        modelLoader.loadDocumentModel(documentModelPath);
     }
 
     /**
@@ -58,38 +60,62 @@ public class JsonModelReaderTest {
      * 
      * @throws MalformedURLException
      */
-    @Test
+    @Test(expected = ModelNotFoundException.class)
     public void testLoadDocumentModelUrlNotFound() throws MalformedURLException {
         URL documentModelUrl = new URL("https://example.local/not-found/files.json");
-        boolean thrown = false;
-        try {
-            modelLoader.loadDocumentModel(documentModelUrl);
-        } catch (ModelNotFoundException e) {
-            Assert.assertEquals("Model 'https://example.local/not-found/files.json' not found", e.getMessage());
-            thrown = true;
-        }
-        Assert.assertTrue("ModelNotFoundException excepted", thrown);
+        modelLoader.loadDocumentModel(documentModelUrl);
     }
 
     /**
-     * Ensure that ModelNotFoundException are thrown if a FeatureType is missing
+     * Read DocumentModel from GpU
      * 
      * @throws MalformedURLException
      */
-//    @Test
-//    public void testLoadDocumentModelFeatureTypeNotFound() throws MalformedURLException {
-//        File documentModelPath = ResourceHelper.getResourceFile(
-//            getClass(), "/config-xml/missing_feature_type/files.json"
-//        );
-//        boolean thrown = false;
-//        try {
-//            modelLoader.loadDocumentModel(documentModelPath);
-//        } catch (ModelNotFoundException e) {
-//            Assert.assertTrue(e.getMessage().contains("/missing_feature_type/types/MY_TABLE.json' not found"));
-//            thrown = true;
-//        }
-//        Assert.assertTrue("ModelNotFoundException excepted", thrown);
-//    }
+    @Test
+    public void testLoadDocumentModelFromGpU() throws MalformedURLException {
+        URL documentModelUrl = new URL("https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json");
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelUrl);
+        assertEquals("cnig_PLU_2017", documentModel.getName());
+        assertIsValid(documentModel);
+
+        List<SingleTableModel> tableModels = documentModel.getFileModels().stream()
+            .filter((fileModel) -> {
+                return (fileModel instanceof SingleTableModel);
+            }).map((fileModel) -> {
+                return (SingleTableModel) fileModel;
+            }).collect(Collectors.toList());
+
+        assertEquals(13, tableModels.size());
+        for (TableModel tableModel : tableModels) {
+            // FeatureType is defined
+            assertNotNull(tableModel.getFeatureType());
+            // FeatureType name matches tableModel name
+            assertEquals(tableModel.getName(), tableModel.getFeatureType().getName());
+        }
+    }
+
+    /**
+     * Read DocumentModel from GpU
+     * 
+     * @throws MalformedURLException
+     */
+    @Test
+    public void testLoadDocumentModelWithExternalFeatureType() throws MalformedURLException {
+        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-json/external-type/document.json");
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+        assertIsValid(documentModel);
+        assertEquals(1, documentModel.getFileModels().size());
+
+        FileModel fileModel = documentModel.getFileModels().get(0);
+        assertTrue(fileModel instanceof SingleTableModel);
+        TableModel tableModel = (TableModel) fileModel;
+        assertEquals("ZONE_URBA", fileModel.getName());
+
+        FeatureType featureType = tableModel.getFeatureType();
+        assertNotNull(featureType);
+        assertEquals(fileModel.getName(), featureType.getName());
+        assertEquals(9, featureType.getAttributeCount());
+    }
 
     /**
      * Read config-json/adresse and performs regress test
@@ -106,18 +132,18 @@ public class JsonModelReaderTest {
         /* perform checks on FileModel "adresse" */
         FileModel fileModel = documentModel.getFileModelByName("ADRESSE");
         Assert.assertNotNull(fileModel);
-        Assert.assertTrue(fileModel instanceof TableModel);
         Assert.assertEquals("ADRESSE(_+[0-9])?", fileModel.getPath());
 
         /* perform checks on FeatureType "adresse" */
-        FeatureType featureType = fileModel.getFeatureType();
+        Assert.assertTrue(fileModel instanceof SingleTableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
         Assert.assertNotNull(featureType);
         assertExceptedFeatureTypeAdresse(featureType);
     }
 
     @Test
     public void testLoadFeatureTypeAdresse() {
-        File srcFile = ResourceHelper.getResourceFile(getClass(), "/config-json/adresse/types/ADRESSE.json");
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/config-json/adresse/table-models/ADRESSE.json");
         FeatureType featureType = modelLoader.loadFeatureType(srcFile);
         assertExceptedFeatureTypeAdresse(featureType);
     }
@@ -183,6 +209,43 @@ public class JsonModelReaderTest {
     }
 
     /**
+     * Read config-json/pcrs-2.0 and performs regress test
+     */
+    @Test
+    public void testLoadDocumentModelPCRS() {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-json/CNIG_PCRS_v2.0/document.json"
+        );
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+        assertIsValid(documentModel);
+
+        Assert.assertEquals(2, documentModel.getFileModels().size());
+
+        // check METADONNEES
+        {
+            FileModel fileModel = documentModel.getFileModelByName("METADONNEES");
+            assertNotNull(fileModel);
+            assertTrue(fileModel instanceof MetadataModel);
+        }
+
+        // check DONNEES
+        {
+            FileModel fileModel = documentModel.getFileModelByName("DONNEES");
+            assertNotNull(fileModel);
+            assertTrue(fileModel instanceof MultiTableModel);
+            Assert.assertEquals(
+                "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
+                fileModel.getXsdSchema().toString()
+            );
+
+            // check embedded tables
+            MultiTableModel multiTableModel = (MultiTableModel) fileModel;
+            List<EmbeddedTableModel> tableModels = multiTableModel.getTableModels();
+            Assert.assertEquals(22, tableModels.size());
+        }
+    }
+
+    /**
      * Performs basic consistency checks on DocumentModel
      * 
      * TODO avoid code duplication with XmlModelReaderTest
@@ -194,8 +257,8 @@ public class JsonModelReaderTest {
         for (FileModel fileModel : fileModels) {
             Assert.assertNotNull(fileModel.getName());
             Assert.assertNotNull(fileModel.getMandatory());
-            if (fileModel instanceof TableModel) {
-                FeatureType featureType = fileModel.getFeatureType();
+            if (fileModel instanceof SingleTableModel) {
+                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 Assert.assertNotNull(featureType);
                 assertIsValid(featureType);
             }

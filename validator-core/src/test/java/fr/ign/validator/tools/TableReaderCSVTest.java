@@ -3,6 +3,7 @@ package fr.ign.validator.tools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -12,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.Test;
+
+import fr.ign.validator.exception.ColumnNotFoundException;
 
 /**
  * 
@@ -23,11 +26,49 @@ import org.junit.Test;
 public class TableReaderCSVTest {
 
     @Test
+    public void testReadEmpty() {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/empty.csv");
+        assertThrows(IOException.class, () -> {
+            TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
+        });
+    }
+
+    @Test
     public void testReadCsvUtf8() throws IOException {
         File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
         TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
         assertTrue(reader.isCharsetValid());
         checkExpectedSampleContent(reader);
+    }
+
+    @Test
+    public void testFindColumn() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
+        assertTrue(reader.isCharsetValid());
+        assertEquals(1, reader.findColumn("b"));
+        assertEquals(1, reader.findColumn("B"));
+        // not found
+        assertEquals(-1, reader.findColumn("Z"));
+    }
+
+    @Test
+    public void testFindColumnRequired() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
+        assertTrue(reader.isCharsetValid());
+        assertEquals(1, reader.findColumnRequired("b"));
+        assertEquals(1, reader.findColumnRequired("B"));
+    }
+
+    @Test
+    public void testFindColumnRequiredNotFound() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
+        TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8);
+        assertTrue(reader.isCharsetValid());
+        assertThrows(ColumnNotFoundException.class, () -> {
+            reader.findColumnRequired("Z");
+        });
     }
 
     @Test
@@ -55,22 +96,28 @@ public class TableReaderCSVTest {
         checkExpectedSampleContent(reader);
     }
 
+    /**
+     * Performs basic feature checks
+     * 
+     * @param reader
+     * @throws IOException
+     */
     private void checkExpectedSampleContent(TableReader reader) throws IOException {
         String[] header = reader.getHeader();
-        assertEquals(header.length, 3);
-        assertEquals(header[0], "a");
-        assertEquals(header[1], "b");
-        assertEquals(header[2], "c");
+        assertEquals(3, header.length);
+        assertEquals("a", header[0]);
+        assertEquals("b", header[1]);
+        assertEquals("c", header[2]);
 
         String[] line1 = reader.next();
-        assertEquals(line1[0], "a1");
-        assertEquals(line1[1], "b1");
-        assertEquals(line1[2], "c1");
+        assertEquals("a1", line1[0]);
+        assertEquals("b1", line1[1]);
+        assertEquals("c1", line1[2]);
 
         String[] line2 = reader.next();
-        assertEquals(line2[0], "aé2");
-        assertEquals(line2[1], "bé2");
-        assertEquals(line2[2], "cé2");
+        assertEquals("aé2", line2[0]);
+        assertEquals("bé2", line2[1]);
+        assertEquals("cé2", line2[2]);
 
         assertFalse(reader.hasNext());
     }
@@ -78,19 +125,19 @@ public class TableReaderCSVTest {
     private void checkExpectedSampleContentBadInterpretation(TableReader reader) throws IOException {
         String[] header = reader.getHeader();
         assertEquals(header.length, 3);
-        assertEquals(header[0], "a");
-        assertEquals(header[1], "b");
-        assertEquals(header[2], "c");
+        assertEquals("a", header[0]);
+        assertEquals("b", header[1]);
+        assertEquals("c", header[2]);
 
         String[] line1 = reader.next();
-        assertEquals(line1[0], "a1");
-        assertEquals(line1[1], "b1");
-        assertEquals(line1[2], "c1");
+        assertEquals("a1", line1[0]);
+        assertEquals("b1", line1[1]);
+        assertEquals("c1", line1[2]);
 
         String[] line2 = reader.next();
-        assertEquals(line2[0], "aÃ©2");
-        assertEquals(line2[1], "bÃ©2");
-        assertEquals(line2[2], "cÃ©2");
+        assertEquals("aÃ©2", line2[0]);
+        assertEquals("bÃ©2", line2[1]);
+        assertEquals("cÃ©2", line2[2]);
 
         assertFalse(reader.hasNext());
     }

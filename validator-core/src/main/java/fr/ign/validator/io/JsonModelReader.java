@@ -4,11 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ign.validator.exception.InvalidModelException;
@@ -16,13 +11,14 @@ import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.io.json.ObjectMapperFactory;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
 
+/**
+ * Helper class to load {@link DocumentModel} and {@link FeatureType} from JSON.
+ * 
+ * @author MBorne
+ *
+ */
 public class JsonModelReader extends AbstractModelReader {
-    private static final Logger log = LogManager.getRootLogger();
-    private static final Marker MARKER = MarkerManager.getMarker("JsonModelReader");
-
     private ObjectMapper objectMapper;
 
     @Override
@@ -37,36 +33,36 @@ public class JsonModelReader extends AbstractModelReader {
 
     @Override
     public DocumentModel loadDocumentModel(URL documentModelUrl) throws ModelNotFoundException, InvalidModelException {
-        InputStream is = getInputStream(documentModelUrl);
+        log.info(MARKER, "Loading DocumentModel from {} ...", documentModelUrl);
         try {
-            DocumentModel documentModel = (DocumentModel) objectMapper.readValue(is, DocumentModel.class);
-            /*
-             * load feature types for TableModel
-             */
-            for (FileModel documentFile : documentModel.getFileModels()) {
-                if (!(documentFile instanceof TableModel)) {
-                    continue;
-                }
-                URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, documentFile);
-                FeatureType featureType = loadFeatureType(featureTypeUrl);
-                documentFile.setFeatureType(featureType);
-            }
+            InputStream is = getInputStream(documentModelUrl);
+            DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
+            loadFeatureTypes(documentModel, documentModelUrl);
             return documentModel;
         } catch (IOException e) {
-            String message = String.format("Fail to parse DocumentModel : %1s : %2s", documentModelUrl, e.getMessage());
-            e.printStackTrace(System.err);
+            String message = String.format(
+                "Fail to load DocumentModel from %1s : %2s",
+                documentModelUrl,
+                e.getMessage()
+            );
+            log.error(MARKER, message, e);
             throw new InvalidModelException(message, e);
         }
     }
 
     @Override
     public FeatureType loadFeatureType(URL featureTypeUrl) throws ModelNotFoundException, InvalidModelException {
-        InputStream is = getInputStream(featureTypeUrl);
+        log.info(MARKER, "Loading FeatureType from {} ...", featureTypeUrl);
         try {
-            return (FeatureType) objectMapper.readValue(is, FeatureType.class);
+            InputStream is = getInputStream(featureTypeUrl);
+            return objectMapper.readValue(is, FeatureType.class);
         } catch (IOException e) {
-            String message = String.format("Fail to parse FeatureType : %1s : %2s", featureTypeUrl, e.getMessage());
-            e.printStackTrace(System.err);
+            String message = String.format(
+                "Fail to load FeatureType from %1s : %2s",
+                featureTypeUrl,
+                e.getMessage()
+            );
+            log.error(MARKER, message, e);
             throw new InvalidModelException(message, e);
         }
     }

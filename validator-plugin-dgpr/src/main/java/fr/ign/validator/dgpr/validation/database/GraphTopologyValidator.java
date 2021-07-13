@@ -7,18 +7,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-
 import org.postgresql.util.PSQLException;
-
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Polygon;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
-import fr.ign.validator.dgpr.database.DatabaseUtils;
-import fr.ign.validator.dgpr.database.model.SurfaceInondable;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;

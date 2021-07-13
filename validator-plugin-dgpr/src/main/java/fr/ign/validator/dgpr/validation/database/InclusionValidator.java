@@ -1,24 +1,18 @@
 package fr.ign.validator.dgpr.validation.database;
 
-import java.util.List;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.postgresql.util.PSQLException;
-
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
+import org.postgresql.util.PSQLException;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
-import fr.ign.validator.dgpr.database.DatabaseUtils;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.validation.Validator;

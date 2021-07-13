@@ -70,6 +70,12 @@
 		"documentation": "Cette erreur se produit lorsqu'une table (csv,  shp,  etc.) est vide"
 	},
 	{
+		"name": "XSD_SCHEMA_ERROR",
+		"level": "ERROR",
+		"message": "{LINE_NUMBER} : {MESSAGE}",
+		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD"
+	},
+	{
 		"name": "TABLE_MISSING_ATTRIBUTE",
 		"level": "ERROR",
 		"message": "L'attribut obligatoire '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
@@ -154,13 +160,19 @@
 		"documentation": "Cette erreur se produit lorsqu'un champ contient une valeur dont la longueur dépasse la taille limite autorisée par le modèle"
 	},
 	{
+		"name": "ATTRIBUTE_GEOMETRY_INVALID_FORMAT",
+		"level": "ERROR",
+		"message": "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : {VALUE}",
+		"documentation": "Cette erreur se produit lorsque le validateur ne parvient pas à lire une géométrie. Ce cas peut se produire sur des WKT invalides ou sur des courbes."
+	},
+	{
 		"name": "ATTRIBUTE_GEOMETRY_INVALID",
 		"level": "ERROR",
 		"message": "La géométrie de l'objet n'est pas topologiquement correcte. {TYPE_ERROR}",
 		"documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
-	},
-	{
-		"name": "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",
+	},{"name":
+	"ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT"
+,
 		"level": "ERROR",
 		"message": "Les coordonnées de la géométrie de l'objet ne correspondent pas à la zone attendue.",
 		"documentation": ""

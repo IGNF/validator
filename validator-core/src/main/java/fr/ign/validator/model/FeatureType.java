@@ -125,6 +125,13 @@ public class FeatureType implements Model {
         this.description = description;
     }
 
+    /**
+     * True if no {@link FeatureType} is empty.
+     */
+    public boolean isEmpty() {
+        return getAttributeCount() == 0;
+    }
+
     public List<AttributeType<?>> getAttributes() {
         return attributes;
     }
@@ -203,10 +210,10 @@ public class FeatureType implements Model {
      * 
      * @return
      */
-    public String[] getAttributeNames() {
-        String[] result = new String[getAttributeCount()];
+    public List<String> getAttributeNames() {
+        List<String> result = new ArrayList<>(getAttributeCount());
         for (int i = 0; i < getAttributeCount(); i++) {
-            result[i] = getAttribute(i).getName();
+            result.add(getAttribute(i).getName());
         }
         return result;
     }
@@ -245,6 +252,11 @@ public class FeatureType implements Model {
         } else {
             return -1;
         }
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + getClass().getSimpleName() + ")";
     }
 
 }

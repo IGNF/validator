@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +16,7 @@ import org.apache.logging.log4j.MarkerManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import fr.ign.validator.command.options.OutputFileOption;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
 
@@ -42,19 +42,18 @@ public class ProjectionListCommand extends AbstractCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Export supported projections (JSON).";
+    }
+
+    @Override
     protected void buildCustomOptions(Options options) {
-        // output
-        {
-            Option option = new Option("o", "output", true, "Output file (json)");
-            option.setRequired(false);
-            option.setType(File.class);
-            options.addOption(option);
-        }
+        OutputFileOption.buildOptions(options);
     }
 
     @Override
     protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-        outputFile = (File) commandLine.getParsedOptionValue("output");
+        outputFile = OutputFileOption.parseCustomOptions(commandLine);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ProjectionListCommand extends AbstractCommand {
 
     private PrintStream getOutputStream() throws FileNotFoundException {
         if (outputFile == null) {
-            return System.out;
+            return stdout;
         }
         if (outputFile.exists()) {
             outputFile.delete();

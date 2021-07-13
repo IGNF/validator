@@ -41,6 +41,11 @@ public class UnicodeTableCommand extends AbstractCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Export a unicode table to document optional transforms (CSV)";
+    }
+
+    @Override
     protected void buildCustomOptions(Options options) {
         // output
         {
@@ -73,7 +78,7 @@ public class UnicodeTableCommand extends AbstractCommand {
         simplifierLatin1.loadCommon();
         simplifierLatin1.loadCharset(StandardCharsets.ISO_8859_1);
 
-        OutputStream os = outputFile != null ? new FileOutputStream(outputFile) : System.out;
+        OutputStream os = outputFile != null ? new FileOutputStream(outputFile) : stdout;
         BufferedWriter fileWriter = new BufferedWriter(
             new OutputStreamWriter(os, StandardCharsets.UTF_8)
         );

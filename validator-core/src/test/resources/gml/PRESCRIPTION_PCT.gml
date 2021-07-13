@@ -4,9 +4,7 @@
 	xmlns:wfs="http://www.opengis.net/wfs/2.0" 
 	xmlns:gml="http://www.opengis.net/gml/3.2" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="unknown" numberReturned="201" timeStamp="2015-07-20T08:53:13.913Z" 
-	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ../xsd/prescription_pct.xsd
-	http://www.opengis.net/gml/3.2 ../xsd/gml.xsd 
-	http://www.opengis.net/wfs/2.0 ../xsd/wfs.xsd">
+	xsi:schemaLocation="http://geobretagne.fr/ns/gp-urba ./xsd/prescription_pct.xsd">
   <wfs:member>
     <gp-urba:PRESCRIPTION_PCT gml:id="PRESCRIPTION_PCT.49">
       <gp-urba:the_geom>

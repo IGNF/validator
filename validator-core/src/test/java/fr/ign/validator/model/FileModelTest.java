@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ign.validator.io.json.ObjectMapperFactory;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 
 public class FileModelTest {
 
@@ -20,7 +20,7 @@ public class FileModelTest {
      */
     @Test
     public void testJsonIO() throws IOException {
-        FileModel model = new TableModel();
+        FileModel model = new SingleTableModel();
         model.setName("TEST");
         model.setPath("sample/path/to/file");
 

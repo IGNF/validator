@@ -5,6 +5,10 @@ import java.util.Properties;
 
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 
 /**
  * Helper class to configure networking options (SSL, proxy,...)
@@ -13,6 +17,12 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public class Networking {
+    public static final Logger log = LogManager.getRootLogger();
+    public static final Marker MARKER = MarkerManager.getMarker("Networking");
+
+    private Networking() {
+        // disabled, class with static helpers
+    }
 
     /**
      * Configure networking options (ssl, proxy,...) using environment variables for

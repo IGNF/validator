@@ -279,7 +279,9 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         } else {
             throw new IllegalArgumentException(
                 String.format(
-                    "Invalid type {} for value"
+                    "Invalid type '%1s' for value '%2s'",
+                    name,
+                    value
                 )
             );
         }
@@ -287,8 +289,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     @Override
     public String toString() {
-        String result = name + " (" + getClass().getSimpleName() + ")";
-        return result;
+        return name + " (" + getClass().getSimpleName() + ")";
     }
 
     @SuppressWarnings("unchecked")

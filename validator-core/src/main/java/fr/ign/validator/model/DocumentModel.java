@@ -209,4 +209,9 @@ public class DocumentModel implements Model {
         databaseValidators.add(validator);
     }
 
+    @Override
+    public String toString() {
+        return name + " (" + getClass().getSimpleName() + ")";
+    }
+
 }

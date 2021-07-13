@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 
 public class DocumentModelTest {
 
@@ -20,13 +20,13 @@ public class DocumentModelTest {
         DocumentModel documentModel = new DocumentModel();
         List<FileModel> fileModels = new ArrayList<>();
         {
-            FileModel fileModel = new TableModel();
+            FileModel fileModel = new SingleTableModel();
             fileModel.setName("ACTE_SUP");
             fileModel.setPath("Donnees_geographiques/([a-zA-Z0-9]*_)?ACTE_SUP");
             fileModels.add(fileModel);
         }
         {
-            FileModel fileModel = new TableModel();
+            FileModel fileModel = new SingleTableModel();
             fileModel.setName("SERVITUDE_ACTE_SUP");
             fileModel.setPath("Donnees_geographiques/([a-zA-Z0-9]*_)?SERVITUDE_ACTE_SUP");
             fileModels.add(fileModel);

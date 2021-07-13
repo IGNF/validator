@@ -51,6 +51,11 @@ public class MetadataToJsonCommand extends AbstractCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Convert XML metadata (ISO19115) to a JSON profile.";
+    }
+
+    @Override
     public void execute() throws Exception {
         if (inputFile.isDirectory()) {
             String[] extensions = {
@@ -83,7 +88,7 @@ public class MetadataToJsonCommand extends AbstractCommand {
 
     private PrintStream getOutputStream(File targetFile) throws FileNotFoundException {
         if (targetFile == null) {
-            return System.out;
+            return stdout;
         }
         if (targetFile.exists()) {
             targetFile.delete();

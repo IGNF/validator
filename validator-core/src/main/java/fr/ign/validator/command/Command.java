@@ -1,5 +1,7 @@
 package fr.ign.validator.command;
 
+import java.io.PrintStream;
+
 import org.apache.commons.cli.Options;
 
 /**
@@ -17,6 +19,13 @@ public interface Command {
      * @return
      */
     public String getName();
+
+    /**
+     * Get command description (ex : validate a document according to a model)
+     * 
+     * @return
+     */
+    public String getDescription();
 
     /**
      * Get command line options for CLI interpreter
@@ -39,5 +48,12 @@ public interface Command {
      * @return
      */
     public void execute() throws Exception;
+
+    /**
+     * Allows to replace writes to out.
+     * 
+     * @param out
+     */
+    public void setStdout(PrintStream out);
 
 }

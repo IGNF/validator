@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.ign.validator.exception.InvalidErrorConfigException;
+import fr.ign.validator.exception.ValidatorFatalError;
 
 /**
  * 
@@ -50,13 +51,15 @@ public class ErrorFactory {
     public ValidatorError newError(ErrorCode code) {
         ValidatorError validatorError = findPrototype(code);
         if (null == validatorError) {
-            throw new RuntimeException(String.format("L'erreur %1s n'est pas configurée", code.toString()));
+            String message = String.format("Error with code='%1s' is not configured", code.toString());
+            log.fatal(MARKER, message);
+            throw new ValidatorFatalError(message);
         }
         try {
             ValidatorError result = (ValidatorError) validatorError.clone();
             return result;
         } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
+            throw new ValidatorFatalError("clone is not implemented on ValidatorError!", e);
         }
     }
 
@@ -96,7 +99,7 @@ public class ErrorFactory {
      * @throws FileNotFoundException
      */
     public void loadErrorCodes(File errorConfigPath) {
-        log.info(MARKER, "Loading errors from {} ...", errorConfigPath);
+        log.info(MARKER, "Load error codes from {} ...", errorConfigPath);
         try {
             InputStream is = new FileInputStream(errorConfigPath);
             loadErrorCodes(is);

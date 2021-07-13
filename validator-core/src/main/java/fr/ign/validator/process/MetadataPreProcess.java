@@ -34,7 +34,7 @@ public class MetadataPreProcess implements ValidatorListener {
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-        // RAS
+        // nothing to do
     }
 
     /**
@@ -42,32 +42,48 @@ public class MetadataPreProcess implements ValidatorListener {
      */
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
+        log.info(MARKER, "Retreive validation parameters from metadata files...");
         /*
          * Find first metadata file
          */
         log.info(MARKER, "Locate metadata files...");
         List<DocumentFile> metadataFiles = document.getDocumentFiles(MetadataModel.class);
+
+        /*
+         * Stop process is metadata is not found.
+         */
         if (metadataFiles.isEmpty()) {
-            // already reported if metadata is expected
-            log.warn(MARKER, "Metadata file not found");
+            // note that an error is already reported if metadata is expected
+            log.warn(MARKER, "Retrieve validation parameters from metadata files : completed (no metadata found)");
             return;
         }
+
+        /*
+         * Report error when multiple metadata files are provided for the dataset
+         */
         if (metadataFiles.size() > 1) {
+            log.warn(MARKER, "Found {} metadata files (read first one)!", metadataFiles.size());
             context
                 .report(
                     context.createError(CoreErrorCodes.METADATA_MULTIPLE_FILES)
                         .setMessageParam("FILENAME_LIST", formatFiles(context, metadataFiles))
                 );
         }
+
+        /*
+         * Read first file to retrieve the charset
+         */
         File metadataFile = metadataFiles.get(0).getPath();
-        log.info(MARKER, "Search data charset in metadata files...");
-        Charset charset = readCharsetFromMetadata(context, metadataFile);
+        log.info(MARKER, "Try to retrieve charset from {}...", metadataFile);
+        Charset charset = readCharsetFromMetadata(metadataFile);
         if (null == charset) {
-            log.warn(MARKER, "Charset not found in metadata files!");
+            log.warn(MARKER, "Charset not found in metadata files (keep {})", context.getEncoding());
         } else {
+            log.info(MARKER, "Charset found : {}", context.getEncoding());
             context.setEncoding(charset);
         }
-        log.info(MARKER, "Charset : {}", context.getEncoding());
+
+        log.info(MARKER, "Retrieve validation parameters from metadata files. : completed");
     }
 
     /**
@@ -77,14 +93,14 @@ public class MetadataPreProcess implements ValidatorListener {
      * @param document
      * @return
      */
-    private Charset readCharsetFromMetadata(Context context, File metadataFile) {
+    private Charset readCharsetFromMetadata(File metadataFile) {
         try {
             Metadata reader = MetadataISO19115.readFile(metadataFile);
             CharacterSetCode characterSet = reader.getCharacterSet();
             if (characterSet == null) {
                 log.info(
                     MARKER,
-                    "{} - characterSet is not defined in metadata file ",
+                    "characterSet is not defined in '{}'",
                     metadataFile
                 );
                 return null;
@@ -92,10 +108,9 @@ public class MetadataPreProcess implements ValidatorListener {
             Charset dataEncoding = characterSet.getCharset();
             log.info(
                 MARKER,
-                "{} - characterSet : {} converted to java value {}",
-                metadataFile,
+                "characterSet={} found in '{}'",
                 characterSet.getValue(),
-                dataEncoding
+                metadataFile
             );
             return dataEncoding;
         } catch (InvalidMetadataException e) {
@@ -131,7 +146,7 @@ public class MetadataPreProcess implements ValidatorListener {
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-        // RAS
+        // nothing to do
     }
 
 }

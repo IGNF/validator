@@ -10,6 +10,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.validation.Validatable;
+import fr.ign.validator.validation.Validator;
 
 /**
  * Represents a file linked to a model
@@ -19,7 +20,7 @@ public abstract class DocumentFile implements Validatable {
     public static final Marker MARKER = MarkerManager.getMarker("DocumentFile");
 
     /**
-     * filepath
+     * Path to the given file.
      */
     private File path;
 
@@ -36,7 +37,7 @@ public abstract class DocumentFile implements Validatable {
     /**
      * @return the fileModel
      */
-    abstract public FileModel getFileModel();
+    public abstract FileModel getFileModel();
 
     /**
      * @return the path
@@ -53,16 +54,26 @@ public abstract class DocumentFile implements Validatable {
     public final void validate(Context context) {
         log.info(
             MARKER,
-            "Validate {} '{}' with '{}'...",
-            getFileModel().getType(),
+            "Validate '{}' according to {}...",
             path,
-            getFileModel().getName()
+            getFileModel()
         );
         context.beginModel(getFileModel());
         context.beginData(this);
+        /* invoke validators */
+        for (Validator<DocumentFile> validator : getFileModel().getValidators()) {
+            validator.validate(context, this);
+        }
+        /* invoke custom validators */
         validateContent(context);
         context.endData(this);
         context.endModel(getFileModel());
+        log.info(
+            MARKER,
+            "Validate '{}' according to {} : completed",
+            path,
+            getFileModel()
+        );
     }
 
     /**
