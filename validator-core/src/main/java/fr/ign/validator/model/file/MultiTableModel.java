@@ -45,6 +45,10 @@ public class MultiTableModel extends FileModel {
         return new MultiTableFile(this, path);
     }
 
+    public void setTableModels(List<EmbeddedTableModel> tableModels) {
+        this.tableModels = tableModels;
+    }
+
     @XmlElementWrapper(name = "tables")
     @XmlElement(name = "table")
     @JsonProperty("tables")
@@ -65,10 +69,6 @@ public class MultiTableModel extends FileModel {
             }
         }
         return null;
-    }
-
-    public void setTableModels(List<EmbeddedTableModel> tableModels) {
-        this.tableModels = tableModels;
     }
 
 }

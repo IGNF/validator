@@ -213,7 +213,9 @@ public class JsonModelReaderTest {
      */
     @Test
     public void testLoadDocumentModelPCRS() {
-        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-json/pcrs-2.0/files.json");
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-json/CNIG_PCRS_v2.0/document.json"
+        );
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
         assertIsValid(documentModel);
 
@@ -239,7 +241,7 @@ public class JsonModelReaderTest {
             // check embedded tables
             MultiTableModel multiTableModel = (MultiTableModel) fileModel;
             List<EmbeddedTableModel> tableModels = multiTableModel.getTableModels();
-            Assert.assertEquals(20, tableModels.size());
+            Assert.assertEquals(22, tableModels.size());
         }
     }
 

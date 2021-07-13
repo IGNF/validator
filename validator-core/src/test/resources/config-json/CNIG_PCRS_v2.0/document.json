@@ -1,7 +1,7 @@
 {
-	"name": "prcs-2.0",
+	"name": "CNIG_PCRS_v2.0",
 	"title": "PCRS version 2.0 -21 septembre 2017",
-	"description": "Modèle de test pour PCRS v2.0",
+	"description": "Modèle de démonstration pour valider une archive PCRS v2.0 avec un fichier GML et une fiche de métadonées XML optionnelle",
 	"files": [
 		{
 			"title": "METADONNEES",
@@ -95,6 +95,14 @@
 				},
 				{
 					"name": "PointCanevasPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageTextePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "TronconVoirie",
 					"tableModel": "auto"
 				}
 			]

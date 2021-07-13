@@ -135,11 +135,6 @@ public class DocumentNormalizer {
             return;
         }
 
-        File outputDir = new File(context.getDataDirectory(), fileModel.getName());
-        if (!outputDir.exists()) {
-            outputDir.mkdirs();
-        }
-
         DocumentFile documentFile = documentFiles.get(0);
         MultiTableReader reader = MultiTableReader.createMultiTableReader(documentFile.getPath());
         for (String tableName : reader.getTableNames()) {
@@ -162,14 +157,21 @@ public class DocumentNormalizer {
              * 
              * /* Create normalized CSV file.
              */
-            File outputFile = new File(outputDir, tableName + ".csv");
-            TableNormalizer normalizer = new TableNormalizer(
-                context,
-                tableModel.getFeatureType(),
-                outputFile
-            );
-            normalizer.append(sourceFile);
-            normalizer.close();
+            File outputFile = new File(context.getDataDirectory(), tableName + ".csv");
+            TableNormalizer normalizer = null;
+            try {
+                normalizer = new TableNormalizer(
+                    context,
+                    tableModel.getFeatureType(),
+                    outputFile
+                );
+                normalizer.append(sourceFile);
+            } finally {
+                if (normalizer != null) {
+                    normalizer.close();
+                }
+            }
+
         }
     }
 

@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,10 +31,9 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.TableModel;
-import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MultiTableModel;
-import fr.ign.validator.model.file.SingleTableModel;
-import fr.ign.validator.normalize.DocumentNormalizer;
+import fr.ign.validator.tools.ModelHelper;
+import fr.ign.validator.tools.MultiTableReader;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -228,7 +229,7 @@ public class Database implements Closeable {
         File databasePath = new File(validationDirectory, "document_database.db");
         if (databasePath.exists() && reset) {
             log.info(MARKER, "Remove existing database {}...", databasePath);
-            databasePath.delete();
+            FileUtils.deleteQuietly(databasePath);
         }
         return new Database(databasePath);
     }
@@ -249,7 +250,7 @@ public class Database implements Closeable {
         if (StringUtils.isEmpty(schema)) {
             schema = "validation";
         } else if (schema.equals("public")) {
-            throw new RuntimeException("The use DB_SCHEMA=public is forbidden");
+            throw new RuntimeException("The use of DB_SCHEMA=public is forbidden");
         }
         Database database = new Database(url, user, password, schema);
         if (reset) {
@@ -265,13 +266,8 @@ public class Database implements Closeable {
      */
     public void createTables(DocumentModel documentModel) throws SQLException {
         log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
-        List<FileModel> fileModels = documentModel.getFileModels();
-        for (FileModel fileModel : fileModels) {
-            if (fileModel instanceof SingleTableModel) {
-                createTable((TableModel) fileModel);
-            } else if (fileModel instanceof MultiTableModel) {
-                createTables((MultiTableModel) fileModel);
-            }
+        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
+            createTable(tableModel);
         }
     }
 
@@ -283,31 +279,9 @@ public class Database implements Closeable {
      */
     private void createTable(TableModel tableModel) throws SQLException {
         log.info(MARKER, "Create table for {} ...", tableModel);
-
         String tableName = tableModel.getName();
         FeatureType featureType = tableModel.getFeatureType();
         createTable(tableName, featureType);
-    }
-
-    /**
-     * Create tables according to MultiTableModel.
-     * 
-     * TODO ensure table naming consistency with {@link DocumentNormalizer}
-     * 
-     * @param fileModel
-     */
-    private void createTables(MultiTableModel fileModel) throws SQLException {
-        log.info(MARKER, "Create tables for {} ...", fileModel);
-        for (EmbeddedTableModel tableModel : fileModel.getTableModels()) {
-            String tableName = fileModel.getName() + "_" + tableModel.getName();
-            log.info(
-                MARKER, "Create table {} for {} in {} ...",
-                tableName,
-                tableModel,
-                fileModel
-            );
-            createTable(tableName, tableModel.getFeatureType());
-        }
     }
 
     /**
@@ -322,14 +296,7 @@ public class Database implements Closeable {
             log.warn(MARKER, "Create table {} skipped (empty FeatureType)", tableName);
             return;
         }
-
-        List<String> columns = new ArrayList<>(featureType.getAttributeCount());
-        for (AttributeType<?> attribute : featureType.getAttributes()) {
-            columns.add(attribute.getName() + " TEXT");
-        }
-        String sql = "CREATE TABLE " + tableName + " (" + String.join(",", columns) + ");";
-        update(sql);
-        connection.commit();
+        createTable(tableName, featureType.getAttributeNames());
     }
 
     /**
@@ -340,35 +307,31 @@ public class Database implements Closeable {
      */
     public void createTable(String tableName, List<String> columnNames) throws SQLException {
         log.info(MARKER, "Create table for the TableModel '{}' with text columns...", tableName);
-        String sql = "CREATE TABLE " + tableName + " (";
+
+        StringBuilder query = new StringBuilder();
+        query.append("CREATE TABLE " + tableName + " (");
         for (int i = 0; i < columnNames.size(); i++) {
             if (i != 0) {
-                sql += ",";
+                query.append(",");
             }
-            sql += columnNames.get(i) + " TEXT";
+            query.append(columnNames.get(i) + " TEXT");
         }
-        sql += ");";
+        query.append(");");
 
-        update(sql);
+        update(query.toString());
         connection.commit();
     }
 
     /**
-     * Create indexes for all tables on unique fields
-     * 
-     * TODO add support for {@link MultiTableModel}
+     * Create indexes for all tables on unique fields.
      * 
      * @param document
      * @throws SQLException
      */
     public void createIndexes(DocumentModel documentModel) throws SQLException {
         log.info(MARKER, "Create indexes for {} ...", documentModel);
-        for (FileModel file : documentModel.getFileModels()) {
-            if (file instanceof SingleTableModel) {
-                createIndexes((TableModel) file);
-            } else if (file instanceof MultiTableModel) {
-                log.warn(MARKER, "Create indexes for {} is not yet supported!", file);
-            }
+        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
+            createIndexes(tableModel);
         }
     }
 
@@ -416,8 +379,6 @@ public class Database implements Closeable {
     /**
      * Load an entire document to the database (insert mode)
      * 
-     * TODO add support for {@link MultiTableFile}
-     * 
      * @throws IOException
      * @throws SQLException
      */
@@ -427,26 +388,51 @@ public class Database implements Closeable {
             if (documentFile instanceof SingleTableFile) {
                 load(context, (SingleTableFile) documentFile);
             } else if (documentFile instanceof MultiTableFile) {
-                log.warn(MARKER, "Loading data from {} is not yet supported!", documentFile);
+                load((MultiTableFile) documentFile);
             }
         }
     }
 
     /**
-     * Load a given original file to the database (insert mode)
+     * Load a given {@link SingleTableFile} in the database (insert mode)
+     * 
+     * @param context
+     * @param documentFile
+     * @throws IOException
+     * @throws SQLException
+     */
+    void load(MultiTableFile documentFile) throws IOException, SQLException {
+        MultiTableModel mutliTableModel = documentFile.getFileModel();
+        MultiTableReader reader = MultiTableReader.createMultiTableReader(documentFile.getPath());
+        for (String tableName : reader.getTableNames()) {
+            if (mutliTableModel.getTableModelByName(tableName) == null) {
+                log.warn(
+                    MARKER, "Loading {} from {} : Skipped (table not found in {})",
+                    tableName,
+                    documentFile.getPath(),
+                    mutliTableModel
+                );
+                continue;
+            }
+            loadFile(tableName, reader.getTablePath(tableName), StandardCharsets.UTF_8);
+        }
+    }
+
+    /**
+     * Load a given {@link SingleTableFile} in the database (insert mode)
      * 
      * @param file
      * @param fileModel
      * @throws IOException
      * @throws SQLException
      */
-    public void load(Context context, SingleTableFile tableFile) throws IOException, SQLException {
+    void load(Context context, SingleTableFile tableFile) throws IOException, SQLException {
         FileModel fileModel = tableFile.getFileModel();
         loadFile(fileModel.getName(), tableFile.getPath(), context.getEncoding());
     }
 
     /**
-     * Load a given file into an existing table
+     * Load a given file into an existing table.
      * 
      * @param tableName
      * @param path
@@ -454,39 +440,39 @@ public class Database implements Closeable {
      * @throws IOException
      * @throws SQLException
      */
-    public void loadFile(String tableName, File path, Charset charset) throws IOException, SQLException {
+    void loadFile(String tableName, File path, Charset charset) throws IOException, SQLException {
         log.info(MARKER, "Load table '{}' from '{}' (charset={})...", tableName, path.getAbsolutePath(), charset);
         /*
          * Create table reader
          */
         TableReader reader = TableReader.createTableReader(path, charset);
 
-        String[] header = reader.getHeader();
-        String[] columnNames = getTableSchema(tableName);
+        String[] inputColumns = reader.getHeader();
+        String[] outputColumns = getTableSchema(tableName);
 
         /*
          * Generate insert into template according to columns
          */
         List<String> columnParts = new ArrayList<>();
         List<String> valueParts = new ArrayList<>();
-        List<Integer> indexes = new ArrayList<Integer>();
-        for (int i = 0; i < header.length; i++) {
-            String att = header[i];
-            for (String columnName : columnNames) {
-                if (columnName.toLowerCase().equals(att.toLowerCase())) {
-                    // l'att du fichier csv existe dans le model de document
-                    indexes.add(i);
-                    columnParts.add(columnName.toLowerCase());
+        List<Integer> inputIndexes = new ArrayList<>();
+        for (int i = 0; i < inputColumns.length; i++) {
+            String inputColumn = inputColumns[i];
+            for (String outputColumn : outputColumns) {
+                if (outputColumn.equalsIgnoreCase(inputColumn)) {
+                    // inputColumn exists
+                    inputIndexes.add(i);
+                    columnParts.add(outputColumn.toLowerCase());
                     valueParts.add("?");
                 }
             }
         }
 
         /* no matching ? */
-        if (indexes.isEmpty()) {
+        if (inputIndexes.isEmpty()) {
             log.warn(
                 MARKER, "No matching column found in {} for {} with {}", tableName, path,
-                String.join(",", header)
+                String.join(",", inputColumns)
             );
             return;
         }
@@ -503,8 +489,8 @@ public class Database implements Closeable {
         while (reader.hasNext()) {
             String[] row = reader.next();
             int parameterIndex = 0;
-            for (int i = 0; i < indexes.size(); i++) {
-                Integer index = indexes.get(i);
+            for (int i = 0; i < inputIndexes.size(); i++) {
+                Integer index = inputIndexes.get(i);
                 sth.setString(parameterIndex + 1, row[index]);
                 parameterIndex++;
             }

@@ -214,5 +214,4 @@ public class DocumentModel implements Model {
         return name + " (" + getClass().getSimpleName() + ")";
     }
 
-
 }

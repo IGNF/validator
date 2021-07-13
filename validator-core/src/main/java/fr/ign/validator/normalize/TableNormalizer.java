@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -87,7 +88,7 @@ public class TableNormalizer implements Closeable {
         /*
          * Create CSV file with an header given by the model.
          */
-        String[] outputHeader = featureType.getAttributeNames();
+        List<String> outputHeader = featureType.getAttributeNames();
         log.info(MARKER, "Create CSV file {}...", targetFile);
         BufferedWriter fileWriter = new BufferedWriter(
             new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8)

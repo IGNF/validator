@@ -40,7 +40,7 @@ public class MultiTableFile extends DocumentFile {
                 String relativePath = context.relativize(getPath()) + "#" + tableName;
                 EmbeddedTableModel tableModel = fileModel.getTableModelByName(tableName);
                 if (tableModel == null || tableModel.getFeatureType() == null) {
-                    // TODO report MULTITABLE_MISSING_MODEL
+                    // TODO report TABLE_MISSING_MODEL
                     log.warn(
                         MARKER, "Validate '{}' according to {} : no FeatureType found for '{}'!",
                         getPath(),

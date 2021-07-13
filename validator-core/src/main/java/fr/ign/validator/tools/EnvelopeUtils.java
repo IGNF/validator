@@ -6,8 +6,6 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
-import org.opengis.geometry.MismatchedDimensionException;
-import org.opengis.referencing.operation.TransformException;
 
 import fr.ign.validator.exception.GeometryTransformException;
 import fr.ign.validator.geometry.ProjectionTransform;

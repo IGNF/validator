@@ -3,7 +3,6 @@ package fr.ign.validator.info;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +21,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.info.model.DocumentFileInfo;
 import fr.ign.validator.info.model.DocumentInfo;
+import fr.ign.validator.info.model.TableStats;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.FileModel;
@@ -30,7 +30,6 @@ import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
-import fr.ign.validator.tools.FileUtils;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -44,17 +43,6 @@ import fr.ign.validator.tools.TableReader;
 public class DocumentInfoExtractor {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("DocumentInfoExtractor");
-
-    /**
-     * Stats about a given table.
-     * 
-     * @author mborne
-     *
-     */
-    private class TableStats {
-        Envelope boundingBox = new Envelope();
-        int totalFeatures = 0;
-    }
 
     /**
      * Gets informations on directory
@@ -116,8 +104,8 @@ public class DocumentInfoExtractor {
         File csvFile = new File(context.getDataDirectory(), fileModel.getName() + ".csv");
         TableStats stats = getTableStatsFromNormalizedCSV(csvFile);
         if (stats != null) {
-            documentFileInfo.setTotalFeatures(stats.totalFeatures);
-            documentFileInfo.setBoundingBox(stats.boundingBox);
+            documentFileInfo.setTotalFeatures(stats.getTotalFeatures());
+            documentFileInfo.setBoundingBox(stats.getBoundingBox());
         }
     }
 
@@ -129,32 +117,25 @@ public class DocumentInfoExtractor {
      * @param documentFileInfo
      */
     private void parseTables(Context context, MultiTableModel fileModel, DocumentFileInfo documentFileInfo) {
-        File csvDirectory = new File(context.getDataDirectory(), fileModel.getName());
-
         // stats for all tables
-        TableStats result = new TableStats();
+        TableStats globalStats = new TableStats();
 
-        String[] extensions = {
-            "csv"
-        };
-        Collection<File> csvFiles = FileUtils.listFilesAndDirs(csvDirectory, extensions);
-        if (csvFiles.isEmpty()) {
-            log.warn(MARKER, "normalized CSV files for {} not found", fileModel.getName());
-            return;
-        }
-
-        for (File csvFile : csvFiles) {
+        for (TableModel tableModel : fileModel.getTableModels()) {
+            File csvFile = new File(context.getDataDirectory(), tableModel.getName() + ".csv");
             TableStats tableStats = getTableStatsFromNormalizedCSV(csvFile);
             if (tableStats == null) {
                 continue;
             }
-            // TODO save stats for each table in multi_table.
-            result.totalFeatures += tableStats.totalFeatures;
-            result.boundingBox.expandToInclude(tableStats.boundingBox);
+            documentFileInfo.getTables().put(
+                tableModel.getName(),
+                tableStats
+            );
+            globalStats.setTotalFeatures(globalStats.getTotalFeatures() + tableStats.getTotalFeatures());
+            globalStats.getBoundingBox().expandToInclude(tableStats.getBoundingBox());
         }
 
-        documentFileInfo.setTotalFeatures(result.totalFeatures);
-        documentFileInfo.setBoundingBox(result.boundingBox);
+        documentFileInfo.setTotalFeatures(globalStats.getTotalFeatures());
+        documentFileInfo.setBoundingBox(globalStats.getBoundingBox());
     }
 
     /**
@@ -172,11 +153,11 @@ public class DocumentInfoExtractor {
             while (reader.hasNext()) {
                 String[] row = reader.next();
                 // count features
-                result.totalFeatures++;
+                result.incrementTotalFeatures();
                 // compute bounding box
                 if (indexWktColumn >= 0) {
                     String wkt = row[indexWktColumn];
-                    result.boundingBox.expandToInclude(EnvelopeUtils.getEnvelope(wkt));
+                    result.getBoundingBox().expandToInclude(EnvelopeUtils.getEnvelope(wkt));
                 }
             }
 
