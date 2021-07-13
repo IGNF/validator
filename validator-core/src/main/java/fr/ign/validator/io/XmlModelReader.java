@@ -8,17 +8,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
-
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.SingleTableModel;
 
 /**
  * Load models using deprecated XML format
@@ -26,8 +19,6 @@ import fr.ign.validator.model.file.SingleTableModel;
  * @author MBorne
  */
 public class XmlModelReader extends AbstractModelReader {
-    public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("XmlModelReader");
 
     private JAXBContext context;
     private Unmarshaller unmarshaller;
@@ -57,17 +48,7 @@ public class XmlModelReader extends AbstractModelReader {
         InputStream is = getInputStream(documentModelUrl);
         try {
             DocumentModel documentModel = (DocumentModel) unmarshaller.unmarshal(is);
-            /*
-             * load feature types for TableModel
-             */
-            for (FileModel fileModel : documentModel.getFileModels()) {
-                if (fileModel instanceof SingleTableModel) {
-                    SingleTableModel tableModel = (SingleTableModel) fileModel;
-                    URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
-                    FeatureType featureType = loadFeatureType(featureTypeUrl);
-                    tableModel.setFeatureType(featureType);
-                }
-            }
+            loadFeatureTypes(documentModel, documentModelUrl);
             return documentModel;
         } catch (JAXBException | IOException e) {
             String message = String.format("Fail to load FeatureType from %1s", documentModelUrl);

@@ -18,55 +18,84 @@
 			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
 			"tables": [
 				{
-					"name": "AffleurantPCRS"
+					"name": "AffleurantPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "AffleurantGeometriquePCRS"
+					"name": "AffleurantGeometriquePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "AffleurantEnveloppePCRS"
+					"name": "AffleurantEnveloppePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "AffleurantSymbolePCRS"
+					"name": "AffleurantSymbolePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "AffleurantPointPCRS"
+					"name": "AffleurantPointPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "ArbrePCRS"
+					"name": "ArbrePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "EmpriseEchangePCRS"
+					"name": "EmpriseEchangePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "FacadePCRS"
+					"name": "FacadePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "LimiteVoiriePCRS"
+					"name": "LimiteVoiriePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "MurPCRS"
+					"name": "MurPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "NomVoiriePCRS"
+					"name": "NomVoiriePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "NumeroVoiriePCRS"
+					"name": "NumeroVoiriePCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "PilierParticulierPCRS"
+					"name": "PilierParticulierPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "ProeminenceBatiPCRS"
+					"name": "ProeminenceBatiPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "RailPCRS"
+					"name": "RailPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "RasterPCRS"
+					"name": "RasterPCRS",
+					"tableModel": "auto"
 				},
 				{
-					"name": "SeuilPCRS"
+					"name": "SeuilPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageLignesPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PointLevePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PointCanevasPCRS",
+					"tableModel": "auto"
 				}
 			]
 		}

@@ -239,7 +239,7 @@ public class JsonModelReaderTest {
             // check embedded tables
             MultiTableModel multiTableModel = (MultiTableModel) fileModel;
             List<EmbeddedTableModel> tableModels = multiTableModel.getTableModels();
-            Assert.assertEquals(17, tableModels.size());
+            Assert.assertEquals(20, tableModels.size());
         }
     }
 

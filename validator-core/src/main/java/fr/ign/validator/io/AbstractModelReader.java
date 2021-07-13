@@ -6,12 +6,18 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
 import fr.ign.validator.model.TableModel;
+import fr.ign.validator.tools.ModelHelper;
 
 /**
  * Common implementation for JSON and XML ModelReader.
@@ -19,6 +25,8 @@ import fr.ign.validator.model.TableModel;
  * @author MBorne
  */
 abstract class AbstractModelReader implements ModelReader {
+    protected static final Logger log = LogManager.getRootLogger();
+    protected static final Marker MARKER = MarkerManager.getMarker("ModelReader");
 
     @Override
     public DocumentModel loadDocumentModel(File documentModelPath) {
@@ -39,6 +47,28 @@ abstract class AbstractModelReader implements ModelReader {
     }
 
     /**
+     * 
+     * @param documentModel
+     * @param documentModelUrl
+     * @throws MalformedURLException
+     */
+    protected void loadFeatureTypes(DocumentModel documentModel, URL documentModelUrl) throws MalformedURLException {
+        log.info(MARKER, "Loading FeatureTypes for {} ...", documentModel);
+        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
+            log.info(MARKER, "Loading FeatureType for {} ...", tableModel);
+            URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
+            if (featureTypeUrl == null) {
+                log.info(MARKER, "Loading FeatureType for {} : skipped (tableModel declared as auto)", tableModel);
+                continue;
+            }
+            FeatureType featureType = loadFeatureType(featureTypeUrl);
+            tableModel.setFeatureType(featureType);
+            log.info(MARKER, "Loading FeatureType for {} : complete ({})", tableModel, featureType);
+        }
+        log.info(MARKER, "Loading FeatureTypes for {} : completed.", documentModel);
+    }
+
+    /**
      * Resolve FeatureType URL for a given FileModel.
      * 
      * @param documentModelUrl
@@ -52,6 +82,12 @@ abstract class AbstractModelReader implements ModelReader {
 
         FeatureTypeRef ref = tableModel.getFeatureTypeRef();
         if (ref != null && !ref.isEmpty()) {
+            // return null if value is "auto"
+            if (ref.getValue().equalsIgnoreCase(FeatureTypeRef.AUTO)) {
+                return null;
+            }
+
+            // complete URL if required
             if (ref.isURL()) {
                 return new URL(ref.getValue());
             } else {

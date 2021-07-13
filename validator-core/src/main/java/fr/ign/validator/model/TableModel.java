@@ -22,4 +22,11 @@ public interface TableModel extends Model {
      */
     public FeatureType getFeatureType();
 
+    /**
+     * Set FeatureType describing the table.
+     * 
+     * @param featureType
+     */
+    public void setFeatureType(FeatureType featureType);
+
 }

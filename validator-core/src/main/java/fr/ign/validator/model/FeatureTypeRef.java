@@ -15,6 +15,16 @@ import com.fasterxml.jackson.annotation.JsonValue;
  *
  */
 public class FeatureTypeRef {
+
+    /**
+     * A special value to declare that the FeatureType is generated according to the
+     * data.
+     */
+    public static final String AUTO = "auto";
+
+    /**
+     * A path relative to the document URL or a complete URL.
+     */
     private String value;
 
     public FeatureTypeRef(String value) {
@@ -30,10 +40,20 @@ public class FeatureTypeRef {
         this.value = value;
     }
 
+    /**
+     * True is the value is null or empty.
+     * 
+     * @return
+     */
     public boolean isEmpty() {
         return StringUtils.isEmpty(value);
     }
 
+    /**
+     * True if the value is a complete URL.
+     * 
+     * @return
+     */
     public boolean isURL() {
         if (StringUtils.isEmpty(value)) {
             return false;
