@@ -22,6 +22,7 @@ import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
+import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -52,9 +53,6 @@ public class AttributeReferenceValidator implements Validator<Database> {
     }
 
     /**
-     * 
-     * TODO add support for {@link MultiTableModel}
-     * 
      * @param context
      * @param database
      * @throws SQLException
@@ -66,13 +64,8 @@ public class AttributeReferenceValidator implements Validator<Database> {
         /*
          * Validate each attribute marked as unique
          */
-        for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof SingleTableModel)) {
-                continue;
-            }
-
-            TableModel tableModel = (TableModel) fileModel;
-            context.beginModel(fileModel);
+        for (TableModel tableModel : ModelHelper.getTableModels(context.getDocumentModel())) {
+            context.beginModel(tableModel);
             FeatureType featureType = tableModel.getFeatureType();
             for (AttributeType<?> attribute : featureType.getAttributes()) {
                 String reference = attribute.getConstraints().getReference();
@@ -82,7 +75,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
 
                 context.beginModel(attribute);
 
-                String sourceTableName = fileModel.getName();
+                String sourceTableName = tableModel.getName();
                 String sourceColumnName = attribute.getName();
                 String targetTableName = attribute.getTableReference();
                 String targetColumnName = attribute.getAttributeReference();
@@ -139,7 +132,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
                          */
                         context.createError(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND)
                             .setScope(ErrorScope.DIRECTORY)
-                            .setFileModel(fileModel.getName())
+                            .setFileModel(tableModel.getName())
                             .setAttribute(attribute.getName())
                             .setFeatureId(featureId)
                             .setFeatureBbox(featureBoundingBox)
@@ -168,7 +161,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
                 it.close();
                 context.endModel(attribute);
             }
-            context.endModel(fileModel);
+            context.endModel(tableModel);
         }
     }
 
