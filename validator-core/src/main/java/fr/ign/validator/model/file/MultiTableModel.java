@@ -14,8 +14,9 @@ import fr.ign.validator.data.file.MultiTableFile;
 import fr.ign.validator.model.FileModel;
 
 /**
- * Represents a file storing multiple table data. Note that it currently only
- * supports GML format as it is introduced to validate PCRS data.
+ * Represents a file storing multiple tables. Note that it currently only
+ * supports GML format as it is introduced to validate PCRS data. It might be
+ * extended to support other formats such as GeoPackage.
  * 
  * @author MBorne
  *

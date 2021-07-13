@@ -23,14 +23,15 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.file.MultiTableFile;
-import fr.ign.validator.data.file.TableFile;
+import fr.ign.validator.data.file.SingleTableFile;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MultiTableModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.normalize.DocumentNormalizer;
 import fr.ign.validator.tools.TableReader;
 
@@ -266,7 +267,7 @@ public class Database implements Closeable {
         log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
         List<FileModel> fileModels = documentModel.getFileModels();
         for (FileModel fileModel : fileModels) {
-            if (fileModel instanceof TableModel) {
+            if (fileModel instanceof SingleTableModel) {
                 createTable((TableModel) fileModel);
             } else if (fileModel instanceof MultiTableModel) {
                 createTables((MultiTableModel) fileModel);
@@ -363,7 +364,7 @@ public class Database implements Closeable {
     public void createIndexes(DocumentModel documentModel) throws SQLException {
         log.info(MARKER, "Create indexes for {} ...", documentModel);
         for (FileModel file : documentModel.getFileModels()) {
-            if (file instanceof TableModel) {
+            if (file instanceof SingleTableModel) {
                 createIndexes((TableModel) file);
             } else if (file instanceof MultiTableModel) {
                 log.warn(MARKER, "Create indexes for {} is not yet supported!", file);
@@ -423,8 +424,8 @@ public class Database implements Closeable {
     public void load(Context context, Document document) throws IOException, SQLException {
         log.info(MARKER, "Loading data from document '{}'...", document.getDocumentPath());
         for (DocumentFile documentFile : document.getDocumentFiles()) {
-            if (documentFile instanceof TableFile) {
-                load(context, (TableFile) documentFile);
+            if (documentFile instanceof SingleTableFile) {
+                load(context, (SingleTableFile) documentFile);
             } else if (documentFile instanceof MultiTableFile) {
                 log.warn(MARKER, "Loading data from {} is not yet supported!", documentFile);
             }
@@ -439,7 +440,7 @@ public class Database implements Closeable {
      * @throws IOException
      * @throws SQLException
      */
-    public void load(Context context, TableFile tableFile) throws IOException, SQLException {
+    public void load(Context context, SingleTableFile tableFile) throws IOException, SQLException {
         FileModel fileModel = tableFile.getFileModel();
         loadFile(fileModel.getName(), tableFile.getPath(), context.getEncoding());
     }

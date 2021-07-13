@@ -33,7 +33,7 @@ public class FeatureTypeRef {
     public boolean isEmpty() {
         return StringUtils.isEmpty(value);
     }
-    
+
     public boolean isURL() {
         if (StringUtils.isEmpty(value)) {
             return false;

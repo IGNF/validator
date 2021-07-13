@@ -7,7 +7,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.file.MultiTableFile;
-import fr.ign.validator.data.file.TableFile;
+import fr.ign.validator.data.file.SingleTableFile;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.FeatureType;
@@ -15,7 +15,7 @@ import fr.ign.validator.tools.TableReader;
 import fr.ign.validator.validation.Validatable;
 
 /**
- * A Table from a {@link TableFile} or a {@link MultiTableFile}
+ * A Table from a {@link SingleTableFile} or a {@link MultiTableFile}
  * 
  * @author MBorne
  */

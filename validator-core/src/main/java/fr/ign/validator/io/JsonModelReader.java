@@ -18,7 +18,7 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MultiTableModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 
 /**
  * Helper class to load {@link DocumentModel} and {@link FeatureType} from JSON.
@@ -50,9 +50,9 @@ public class JsonModelReader extends AbstractModelReader {
             DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
             log.info(MARKER, "Loading FeatureTypes for {} ...", documentModel);
             for (FileModel fileModel : documentModel.getFileModels()) {
-                if (fileModel instanceof TableModel) {
+                if (fileModel instanceof SingleTableModel) {
                     log.info(MARKER, "Loading FeatureType for {} ...", fileModel);
-                    TableModel tableModel = (TableModel) fileModel;
+                    SingleTableModel tableModel = (SingleTableModel) fileModel;
                     URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
                     FeatureType featureType = loadFeatureType(featureTypeUrl);
                     tableModel.setFeatureType(featureType);

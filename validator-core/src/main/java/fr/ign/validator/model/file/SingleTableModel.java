@@ -10,18 +10,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.data.file.TableFile;
+import fr.ign.validator.data.file.SingleTableFile;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
 
 /**
- * Represents a table associated to a FeatureType
+ * A table stored in a file and associated to a FeatureType.
  * 
  * @author MBorne
  *
  */
-public class TableModel extends FileModel {
+public class SingleTableModel extends FileModel implements TableModel {
     public static final String TYPE = "table";
 
     /**
@@ -34,7 +35,7 @@ public class TableModel extends FileModel {
      */
     private FeatureType featureType = null;
 
-    public TableModel() {
+    public SingleTableModel() {
         super();
     }
 
@@ -70,7 +71,7 @@ public class TableModel extends FileModel {
 
     @Override
     public DocumentFile createDocumentFile(File path) {
-        return new TableFile(this, path);
+        return new SingleTableFile(this, path);
     }
 
 }

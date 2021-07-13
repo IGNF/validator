@@ -16,7 +16,7 @@ import fr.ign.validator.cnig.tools.VRT;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.FileConverter;
 
 /**

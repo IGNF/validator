@@ -20,7 +20,8 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.FileModel.MandatoryMode;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.ResourceHelper;
 
 public class XmlModelReaderTest {
@@ -121,7 +122,7 @@ public class XmlModelReaderTest {
         FileModel fileModel = documentModel.getFileModels().get(0);
         Assert.assertEquals("ADRESSE", fileModel.getName());
 
-        Assert.assertTrue(fileModel instanceof TableModel);
+        Assert.assertTrue(fileModel instanceof SingleTableModel);
         FeatureType featureType = ((TableModel) fileModel).getFeatureType();
         Assert.assertNotNull(featureType);
         Assert.assertEquals(2, featureType.getAttributeCount());
@@ -167,7 +168,7 @@ public class XmlModelReaderTest {
         {
             FileModel fileModel = documentModel.getFileModels().get(index++);
             Assert.assertEquals("SIMPLE", fileModel.getName());
-            Assert.assertTrue(fileModel instanceof TableModel);
+            Assert.assertTrue(fileModel instanceof SingleTableModel);
             FeatureType featureType = ((TableModel) fileModel).getFeatureType();
             Assert.assertNotNull(featureType);
             Assert.assertEquals(MandatoryMode.WARN, fileModel.getMandatory());
@@ -183,7 +184,7 @@ public class XmlModelReaderTest {
             Assert.assertEquals("COMMUNE", fileModel.getName());
             Assert.assertEquals(MandatoryMode.WARN, fileModel.getMandatory());
 
-            Assert.assertTrue(fileModel instanceof TableModel);
+            Assert.assertTrue(fileModel instanceof SingleTableModel);
             FeatureType featureType = ((TableModel) fileModel).getFeatureType();
             Assert.assertNotNull(featureType);
             Assert.assertEquals("COMMUNE", featureType.getName());
@@ -294,7 +295,7 @@ public class XmlModelReaderTest {
         for (FileModel fileModel : fileModels) {
             Assert.assertNotNull(fileModel.getName());
             Assert.assertNotNull(fileModel.getMandatory());
-            if (fileModel instanceof TableModel) {
+            if (fileModel instanceof SingleTableModel) {
                 FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 Assert.assertNotNull(featureType);
                 assertIsValid(featureType);

@@ -3,7 +3,7 @@ package fr.ign.validator.model;
 import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 
 /**
  * 
@@ -23,8 +23,8 @@ public class FileModelFactory {
     public static FileModel createFileModelByType(String type) {
         if (DirectoryModel.TYPE.equals(type)) {
             return new DirectoryModel();
-        } else if (TableModel.TYPE.equals(type)) {
-            return new TableModel();
+        } else if (SingleTableModel.TYPE.equals(type)) {
+            return new SingleTableModel();
         } else if (PdfModel.TYPE.equals(type)) {
             return new PdfModel();
         } else if (MetadataModel.TYPE.equals(type)) {

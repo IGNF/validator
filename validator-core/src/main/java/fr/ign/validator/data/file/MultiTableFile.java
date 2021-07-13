@@ -11,6 +11,12 @@ import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.tools.MultiTableReader;
 
+/**
+ * A table storing a set of tables.
+ * 
+ * @author MBorne
+ *
+ */
 public class MultiTableFile extends DocumentFile {
 
     private MultiTableModel fileModel;

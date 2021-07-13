@@ -8,11 +8,10 @@ import java.net.URL;
 
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
-import fr.ign.validator.exception.ReadUrlException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
 
 /**
  * Common implementation for JSON and XML ModelReader.
@@ -40,10 +39,8 @@ abstract class AbstractModelReader implements ModelReader {
     }
 
     /**
-     * Resolve FeatureType URL for a given FileModel
+     * Resolve FeatureType URL for a given FileModel.
      * 
-     * TODO support explicit featureType reference in TableModel
-     *
      * @param documentModelUrl
      * @param documentModel
      * @param tableModel
@@ -53,14 +50,12 @@ abstract class AbstractModelReader implements ModelReader {
     protected URL resolveFeatureTypeUrl(URL documentModelUrl, DocumentModel documentModel, TableModel tableModel)
         throws MalformedURLException {
 
-        String parentUrl = getParentURL(documentModelUrl);
-
         FeatureTypeRef ref = tableModel.getFeatureTypeRef();
         if (ref != null && !ref.isEmpty()) {
             if (ref.isURL()) {
                 return new URL(ref.getValue());
             } else {
-                return new URL(parentUrl + "/" + ref.getValue());
+                return new URL(documentModelUrl, ref.getValue());
             }
         }
 
@@ -68,31 +63,18 @@ abstract class AbstractModelReader implements ModelReader {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
-            return new URL(parentUrl + "/types/" + tableModel.getName() + "." + getFormat());
+            return new URL(
+                documentModelUrl,
+                "./types/" + tableModel.getName() + "." + getFormat()
+            );
         } else {
             /* URL convention */
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.(xml|json)
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(
-                parentUrl + "/" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
+                documentModelUrl,
+                "./" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
             );
-        }
-    }
-
-    /**
-     * Get parent URL
-     * 
-     * @param url
-     * @return
-     */
-    protected String getParentURL(URL url) {
-        String path = url.toString();
-        int lastSlashPos = path.lastIndexOf('/');
-        if (lastSlashPos >= 0) {
-            return path.substring(0, lastSlashPos); // strip off the slash
-        } else {
-            String message = String.format("Fail to get parent URL for : %1s", url);
-            throw new RuntimeException(message);
         }
     }
 

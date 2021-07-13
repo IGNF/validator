@@ -17,7 +17,8 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.StringType;
 
 /**
@@ -56,7 +57,7 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
          */
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
         for (FileModel fileModel : fileModels) {
-            if (fileModel instanceof TableModel) {
+            if (fileModel instanceof SingleTableModel) {
                 FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 AttributeType<?> attribute = featureType.getAttribute("IDURBA");
                 if (attribute == null) {

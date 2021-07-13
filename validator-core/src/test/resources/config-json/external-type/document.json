@@ -1,0 +1,14 @@
+{
+	"name": "remote-type",
+	"title": "Remote type",
+	"description": "Sample configuration with a remote table model",
+	"files": [
+		{
+			"type": "table",
+			"name": "ZONE_URBA",
+			"path": "[AB0-9]{5}_ZONE_URBA_[0-9]{8}",
+			"mandatory": "ERROR",
+			"tableModel": "https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.json"
+		}
+	]
+}

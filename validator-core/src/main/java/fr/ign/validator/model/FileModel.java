@@ -29,7 +29,7 @@ import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.PdfModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.file.XsdSchemaValidator;
 
@@ -44,7 +44,7 @@ import fr.ign.validator.validation.file.XsdSchemaValidator;
     @Type(value = DirectoryModel.class, name = DirectoryModel.TYPE),
     @Type(value = MetadataModel.class, name = MetadataModel.TYPE),
     @Type(value = PdfModel.class, name = PdfModel.TYPE),
-    @Type(value = TableModel.class, name = TableModel.TYPE),
+    @Type(value = SingleTableModel.class, name = SingleTableModel.TYPE),
     @Type(value = MultiTableModel.class, name = MultiTableModel.TYPE)
 })
 public abstract class FileModel implements Model {

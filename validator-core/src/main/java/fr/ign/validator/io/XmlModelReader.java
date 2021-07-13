@@ -15,11 +15,10 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
-import fr.ign.validator.exception.ReadUrlException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 
 /**
  * Load models using deprecated XML format
@@ -62,8 +61,8 @@ public class XmlModelReader extends AbstractModelReader {
              * load feature types for TableModel
              */
             for (FileModel fileModel : documentModel.getFileModels()) {
-                if (fileModel instanceof TableModel) {
-                    TableModel tableModel = (TableModel) fileModel;
+                if (fileModel instanceof SingleTableModel) {
+                    SingleTableModel tableModel = (SingleTableModel) fileModel;
                     URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
                     FeatureType featureType = loadFeatureType(featureTypeUrl);
                     tableModel.setFeatureType(featureType);

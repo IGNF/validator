@@ -18,7 +18,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.Row;
 import fr.ign.validator.data.file.MetadataFile;
-import fr.ign.validator.data.file.TableFile;
+import fr.ign.validator.data.file.SingleTableFile;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ErrorScope;
@@ -448,7 +448,7 @@ public class Context {
     public ErrorScope getScope() {
         if (getDataByType(Attribute.class) != null) {
             return ErrorScope.FEATURE;
-        } else if (getDataByType(TableFile.class) != null) {
+        } else if (getDataByType(SingleTableFile.class) != null) {
             return ErrorScope.HEADER;
         } else if (getDataByType(MetadataFile.class) != null) {
             return ErrorScope.METADATA;

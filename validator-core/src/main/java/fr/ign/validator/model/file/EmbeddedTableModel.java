@@ -4,12 +4,12 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
-import fr.ign.validator.model.Model;
+import fr.ign.validator.model.TableModel;
 
 /**
  * A table in a {@link MultiTableModel}
@@ -17,7 +17,7 @@ import fr.ign.validator.model.Model;
  * @author MBorne
  *
  */
-public class EmbeddedTableModel implements Model {
+public class EmbeddedTableModel implements TableModel {
 
     /**
      * Nom of the table.

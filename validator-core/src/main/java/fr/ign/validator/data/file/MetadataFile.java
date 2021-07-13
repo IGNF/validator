@@ -11,6 +11,12 @@ import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.validation.Validator;
 
+/**
+ * An ISO19115 metadata file.
+ * 
+ * @author MBorne
+ *
+ */
 public class MetadataFile extends DocumentFile {
 
     private MetadataModel fileModel;

@@ -12,7 +12,8 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.DoubleType;
 
 public class NumericCustomizer implements ValidatorListener {
@@ -25,7 +26,7 @@ public class NumericCustomizer implements ValidatorListener {
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
         // looking for TableModel where to add Validator
         for (FileModel fileModel : fileModels) {
-            if (!(fileModel instanceof TableModel)) {
+            if (!(fileModel instanceof SingleTableModel)) {
                 continue;
             }
             TableModel tableModel = (TableModel) fileModel;

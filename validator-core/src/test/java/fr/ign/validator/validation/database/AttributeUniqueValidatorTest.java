@@ -23,7 +23,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
@@ -65,12 +65,12 @@ public class AttributeUniqueValidatorTest {
         featureType2.addAttribute(attribute);
 
         // creates a FileModel with the first Feature Type
-        TableModel fileModel = new TableModel();
+        SingleTableModel fileModel = new SingleTableModel();
         fileModel.setName("TEST");
         fileModel.setFeatureType(featureType);
 
         // reates a FileModel with the second Feature Type
-        TableModel fileModel2 = new TableModel();
+        SingleTableModel fileModel2 = new SingleTableModel();
         fileModel2.setName("RELATION");
         fileModel2.setFeatureType(featureType2);
 

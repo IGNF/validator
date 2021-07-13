@@ -7,20 +7,28 @@ import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.Table;
 import fr.ign.validator.error.CoreErrorCodes;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.TableReader;
 
-public class TableFile extends DocumentFile {
+/**
+ * 
+ * A table storing a table.
+ * 
+ * @author MBorne
+ *
+ */
+public class SingleTableFile extends DocumentFile {
 
-    private TableModel fileModel;
+    private SingleTableModel fileModel;
 
-    public TableFile(TableModel fileModel, File path) {
+    public SingleTableFile(SingleTableModel fileModel, File path) {
         super(path);
         this.fileModel = fileModel;
     }
 
     @Override
-    public TableModel getFileModel() {
+    public SingleTableModel getFileModel() {
         return fileModel;
     }
 

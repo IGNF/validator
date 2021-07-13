@@ -10,7 +10,8 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.GeometryType;
 
 /**
@@ -49,7 +50,7 @@ public class CreateTheGeomColumn implements ValidatorListener {
 
         log.info(MARKER, "Create the_geom column for all tables with a geometry...");
         for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof TableModel)) {
+            if (!(fileModel instanceof SingleTableModel)) {
                 continue;
             }
             String tableName = fileModel.getName();

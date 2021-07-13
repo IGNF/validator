@@ -18,8 +18,9 @@ import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.MultiTableModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
 import fr.ign.validator.validation.Validator;
 
@@ -66,7 +67,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
          * Validate each attribute marked as unique
          */
         for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof TableModel)) {
+            if (!(fileModel instanceof SingleTableModel)) {
                 continue;
             }
 

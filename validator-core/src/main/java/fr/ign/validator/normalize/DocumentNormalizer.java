@@ -15,11 +15,12 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.PdfModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.MultiTableReader;
 
 /**
@@ -67,7 +68,7 @@ public class DocumentNormalizer {
                 fileModel,
                 documentFiles.size()
             );
-            if (fileModel instanceof TableModel) {
+            if (fileModel instanceof SingleTableModel) {
                 normalizeTable(context, (TableModel) fileModel, documentFiles);
             } else if (fileModel instanceof MultiTableModel) {
                 normalizeMultiTable(context, (MultiTableModel) fileModel, documentFiles);

@@ -25,9 +25,10 @@ import fr.ign.validator.info.model.DocumentInfo;
 import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
 import fr.ign.validator.tools.FileUtils;
 import fr.ign.validator.tools.TableReader;
@@ -95,7 +96,7 @@ public class DocumentInfoExtractor {
             documentFileInfo.setModelName(fileModel.getName());
             documentFileInfo.setName(documentFile.getPath().getName());
             documentFileInfo.setPath(context.relativize(documentFile.getPath()));
-            if (fileModel instanceof TableModel) {
+            if (fileModel instanceof SingleTableModel) {
                 parseTable(context, (TableModel) fileModel, documentFileInfo);
             } else if (fileModel instanceof MultiTableModel) {
                 parseTables(context, (MultiTableModel) fileModel, documentFileInfo);

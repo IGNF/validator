@@ -18,12 +18,12 @@ import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MultiTableModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.AutoFeatureType;
 import fr.ign.validator.tools.MultiTableReader;
 
 /**
- * Ensure that FeatureType are defined for each {@link TableModel} and
+ * Ensure that FeatureType are defined for each {@link SingleTableModel} and
  * {@link EmbeddedTableModel} in {@link MultiTableModel}.
  * 
  * If not, a FeatureType is determined from data in order to allow table
@@ -62,8 +62,8 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
         log.info(MARKER, "Process {}...", documentModel);
         context.beginModel(documentModel);
         for (FileModel fileModel : documentModel.getFileModels()) {
-            if (fileModel instanceof TableModel) {
-                process(context, document, (TableModel) fileModel);
+            if (fileModel instanceof SingleTableModel) {
+                process(context, document, (SingleTableModel) fileModel);
             } else if (fileModel instanceof MultiTableModel) {
                 process(context, document, (MultiTableModel) fileModel);
             }
@@ -80,7 +80,7 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
      * @param tableModel
      * @throws IOException
      */
-    private void process(Context context, Document document, TableModel tableModel) throws IOException {
+    private void process(Context context, Document document, SingleTableModel tableModel) throws IOException {
         log.info(MARKER, "Process {}...", tableModel);
 
         if (tableModel.getFeatureType() != null) {
