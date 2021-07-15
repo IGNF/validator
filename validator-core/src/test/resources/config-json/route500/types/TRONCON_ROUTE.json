@@ -1,0 +1,142 @@
+{
+    "name": "TRONCON_ROUTE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "VOCATION",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "Type autoroutier",
+                    "Liaison régionale",
+                    "Liaison principale",
+                    "Liaison locale",
+                    "Bretelle"
+                ]
+            }
+        },
+        {
+            "name": "NB_CHAUSSE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "1 chaussée",
+                    "2 chaussées"
+                ]
+            }
+        },
+        {
+            "name": "NB_VOIES",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "Sans objet",
+                    "1 voie",
+                    "2 voies étroites",
+                    "2 voies larges",
+                    "3 voies",
+                    "4 voies",
+                    "Plus de 4 voies"
+                ]
+            }
+        },
+        {
+            "name": "ETAT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "Revêtu"
+                ]
+            }
+        },
+        {
+            "name": "ACCES",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "RES_VERT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "Appartient",
+                    "N'appartient pas"
+                ]
+            }
+        },
+        {
+            "name": "SENS",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "Double sens",
+                    "Sens direct",
+                    "Sens inverse"
+                ]
+            }
+        },
+        {
+            "name": "COUNT",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "NUM_ROUTE",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "RES_EUROPE",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "LONGUEUR",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "CLASS_ADM",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "Sans objet",
+                    "Départementale",
+                    "Nationale",
+                    "Autoroute"
+                ]
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "LineString",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

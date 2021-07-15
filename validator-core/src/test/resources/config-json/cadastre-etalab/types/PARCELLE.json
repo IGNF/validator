@@ -1,0 +1,69 @@
+{
+    "name": "PARCELLE",
+    "columns": [
+        {
+            "name": "id",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "commune",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "prefixe",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "section",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "numero",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "contenance",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "created",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "updated",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

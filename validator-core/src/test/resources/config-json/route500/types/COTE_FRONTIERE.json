@@ -1,0 +1,19 @@
+{
+    "name": "COTE_FRONTIERE",
+    "columns": [
+        {
+            "name": "NATURE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "LineString",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

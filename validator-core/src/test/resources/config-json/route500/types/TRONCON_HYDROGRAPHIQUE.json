@@ -1,0 +1,26 @@
+{
+    "name": "TRONCON_HYDROGRAPHIQUE",
+    "columns": [
+        {
+            "name": "LARGEUR",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "TOPONYME",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "LineString",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "name": "LIMITE_ADMINISTRATIVE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "NATURE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "LineString",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

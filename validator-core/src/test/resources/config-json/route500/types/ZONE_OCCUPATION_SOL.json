@@ -1,0 +1,19 @@
+{
+    "name": "ZONE_OCCUPATION_SOL",
+    "columns": [
+        {
+            "name": "NATURE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

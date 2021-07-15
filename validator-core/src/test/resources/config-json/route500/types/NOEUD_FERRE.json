@@ -1,0 +1,48 @@
+{
+    "name": "NOEUD_FERRE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "NATURE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "TOPONYME",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "ID_TRONCON",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "ID_COMMUNE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "Point",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,69 @@
+{
+    "name": "NOEUD_COMMUNE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "ID_ND_RTE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "NOM_CHF",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "STATUT",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "INSEE_COMM",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "NOM_COMM",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "SUPERFICIE",
+            "type": "Integer",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "POPULATION",
+            "type": "Integer",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "Point",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}
