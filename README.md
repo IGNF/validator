@@ -17,7 +17,10 @@ Ce programme permet de valider et de normaliser les données présentes dans une
 
 Le paramétrage s'effectue à l'aide de [fichiers JSON décrivant des arborescences de fichiers et des tables](https://github.com/IGNF/validator-schema#ignfvalidator-schema).
 
-Il a été développé dans le cadre du [géoportail de l'urbanisme](https://www.geoportail-urbanisme.gouv.fr) pour la validation des [standards CNIG](https://www.geoportail-urbanisme.gouv.fr/standard/).
+## Cas d'usage
+
+* [Géoportail de l'Urbanisme](https://www.geoportail-urbanisme.gouv.fr) : Validation des données en fonction des [standards CNIG PLU, POS, CC, PSMV, SUP et SCOT](https://www.geoportail-urbanisme.gouv.fr/standard/) en amont de l'aggrégation dans une base nationale.
+* [Validateur TRI](https://validateur-tri.ign.fr/) : Validation de la conformité d'un jeu de données géographiques sur les territoires à risque important d'inondation (TRI) vis à vis du standard de données COVADIS du thème "Directive Inondation" version 2.
 
 ## Principe de fonctionnement
 
