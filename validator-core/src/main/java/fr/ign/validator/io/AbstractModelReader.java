@@ -6,11 +6,18 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.FeatureTypeRef;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.tools.ModelHelper;
 
 /**
  * Common implementation for JSON and XML ModelReader.
@@ -18,6 +25,8 @@ import fr.ign.validator.model.FileModel;
  * @author MBorne
  */
 abstract class AbstractModelReader implements ModelReader {
+    protected static final Logger log = LogManager.getRootLogger();
+    protected static final Marker MARKER = MarkerManager.getMarker("ModelReader");
 
     @Override
     public DocumentModel loadDocumentModel(File documentModelPath) {
@@ -38,48 +47,70 @@ abstract class AbstractModelReader implements ModelReader {
     }
 
     /**
-     * Resolve FeatureType URL for a given FileModel
      * 
-     * TODO support explicit featureType reference in FileModel
-     *
-     * @param documentModelUrl
      * @param documentModel
-     * @param documentFile
-     * @return
+     * @param documentModelUrl
      * @throws MalformedURLException
      */
-    protected URL resolveFeatureTypeUrl(URL documentModelUrl, DocumentModel documentModel, FileModel documentFile)
-        throws MalformedURLException {
-        String parentUrl = getParentURL(documentModelUrl);
-        if (documentModelUrl.getProtocol().equals("file")) {
-            /* config export convention */
-            // validator-config-cnig/config/cnig_PLU_2017/files.xml
-            // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.xml
-            return new URL(parentUrl + "/types/" + documentFile.getName() + "." + getFormat());
-        } else {
-            /* URL convention */
-            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.xml
-            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.xml
-            return new URL(
-                parentUrl + "/" + documentModel.getName() + "/types/" + documentFile.getName() + "." + getFormat()
-            );
+    protected void loadFeatureTypes(DocumentModel documentModel, URL documentModelUrl) throws MalformedURLException {
+        log.info(MARKER, "Loading FeatureTypes for {} ...", documentModel);
+        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
+            log.info(MARKER, "Loading FeatureType for {} ...", tableModel);
+            URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
+            if (featureTypeUrl == null) {
+                log.info(MARKER, "Loading FeatureType for {} : skipped (tableModel declared as auto)", tableModel);
+                continue;
+            }
+            FeatureType featureType = loadFeatureType(featureTypeUrl);
+            tableModel.setFeatureType(featureType);
+            log.info(MARKER, "Loading FeatureType for {} : complete ({})", tableModel, featureType);
         }
+        log.info(MARKER, "Loading FeatureTypes for {} : completed.", documentModel);
     }
 
     /**
-     * Get parent URL
+     * Resolve FeatureType URL for a given FileModel.
      * 
-     * @param url
+     * @param documentModelUrl
+     * @param documentModel
+     * @param tableModel
      * @return
+     * @throws MalformedURLException
      */
-    protected String getParentURL(URL url) {
-        String path = url.toString();
-        int lastSlashPos = path.lastIndexOf('/');
-        if (lastSlashPos >= 0) {
-            return path.substring(0, lastSlashPos); // strip off the slash
+    protected URL resolveFeatureTypeUrl(URL documentModelUrl, DocumentModel documentModel, TableModel tableModel)
+        throws MalformedURLException {
+
+        FeatureTypeRef ref = tableModel.getFeatureTypeRef();
+        if (ref != null && !ref.isEmpty()) {
+            // return null if value is "auto"
+            if (ref.getValue().equalsIgnoreCase(FeatureTypeRef.AUTO)) {
+                return null;
+            }
+
+            // complete URL if required
+            if (ref.isURL()) {
+                return new URL(ref.getValue());
+            } else {
+                return new URL(documentModelUrl, ref.getValue());
+            }
+        }
+
+        if (documentModelUrl.getProtocol().equals("file")) {
+            /* config export convention */
+            // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
+            // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
+            return new URL(
+                documentModelUrl,
+                "./types/" + tableModel.getName() + "." + getFormat()
+            );
         } else {
-            String message = String.format("Fail to get parent URL for : %1s", url);
-            throw new RuntimeException(message);
+            /* URL convention */
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.(xml|json)
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
+            return new URL(
+                documentModelUrl,
+                "./" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
+            );
         }
     }
 
@@ -89,11 +120,11 @@ abstract class AbstractModelReader implements ModelReader {
      * @param url
      * @return
      */
-    protected InputStream getInputStream(URL url) {
+    protected InputStream getInputStream(URL url) throws ModelNotFoundException {
         try {
             return url.openStream();
         } catch (IOException e) {
-            throw new ModelNotFoundException(url);
+            throw new ModelNotFoundException(url, e);
         }
     }
 

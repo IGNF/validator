@@ -1,0 +1,111 @@
+{
+	"name": "CNIG_PCRS_v2.0",
+	"title": "PCRS version 2.0 -21 septembre 2017",
+	"description": "Modèle de démonstration pour valider une archive PCRS v2.0 avec un fichier GML et une fiche de métadonées XML optionnelle",
+	"files": [
+		{
+			"title": "METADONNEES",
+			"name": "METADONNEES",
+			"path": "[^\\/]*",
+			"type": "metadata",
+			"mandatory": "OPTIONAL"
+		},
+		{
+			"name": "DONNEES",
+			"type": "multi_table",
+			"path": "[^\\/]*",
+			"mandatory": "ERROR",
+			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
+			"tables": [
+				{
+					"name": "AffleurantPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantGeometriquePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantEnveloppePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantSymbolePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantPointPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ArbrePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "EmpriseEchangePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "FacadePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "LimiteVoiriePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "MurPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "NomVoiriePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "NumeroVoiriePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilierParticulierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ProeminenceBatiPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "RailPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "RasterPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "SeuilPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageLignesPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PointLevePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PointCanevasPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageTextePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "TronconVoirie",
+					"tableModel": "auto"
+				}
+			]
+		}
+	]
+}

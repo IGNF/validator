@@ -10,10 +10,22 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import fr.ign.validator.tools.filter.FileByExtensionAndDirectoryFilter;
 
 /**
+ * Helper class to find Document files.
  * 
  * @see http://techblog.sharpmind.de/?p=228
  */
 public class FileUtils {
+
+    /**
+     * List files and directories filtering files according to an extension.
+     */
+    public static Collection<File> listFilesAndDirs(File directory, String[] allowedExtensions) {
+        return listFilesAndDirs(
+            directory,
+            new FileByExtensionAndDirectoryFilter(allowedExtensions),
+            TrueFileFilter.INSTANCE
+        );
+    }
 
     /**
      * Finds files and directories within a given directory (and optionally its
@@ -24,7 +36,7 @@ public class FileUtils {
      * @param dirFilter  in which dirs the algorithm should traverse
      * @return the list of found file objects
      */
-    public static Collection<File> listFilesAndDirs(File directory,
+    private static Collection<File> listFilesAndDirs(File directory,
         IOFileFilter fileFilter,
         IOFileFilter dirFilter) {
         Collection<File> files = new ArrayList<File>();
@@ -43,14 +55,6 @@ public class FileUtils {
         }
 
         return files;
-    }
-
-    public static Collection<File> listFilesAndDirs(File directory, String[] allowedExtensions) {
-        return listFilesAndDirs(
-            directory,
-            new FileByExtensionAndDirectoryFilter(allowedExtensions),
-            TrueFileFilter.INSTANCE
-        );
     }
 
 }

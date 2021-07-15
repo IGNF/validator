@@ -18,8 +18,11 @@ import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.MultiTableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
+import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -49,19 +52,21 @@ public class AttributeReferenceValidator implements Validator<Database> {
         }
     }
 
+    /**
+     * @param context
+     * @param database
+     * @throws SQLException
+     * @throws IOException
+     */
     private void doValidate(Context context, Database database) throws SQLException, IOException {
         log.info(MARKER, "Looking for attributes with reference constraints...");
 
         /*
          * Validate each attribute marked as unique
          */
-        for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof TableModel)) {
-                continue;
-            }
-
-            context.beginModel(fileModel);
-            FeatureType featureType = fileModel.getFeatureType();
+        for (TableModel tableModel : ModelHelper.getTableModels(context.getDocumentModel())) {
+            context.beginModel(tableModel);
+            FeatureType featureType = tableModel.getFeatureType();
             for (AttributeType<?> attribute : featureType.getAttributes()) {
                 String reference = attribute.getConstraints().getReference();
                 if (StringUtils.isEmpty(reference)) {
@@ -70,7 +75,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
 
                 context.beginModel(attribute);
 
-                String sourceTableName = fileModel.getName();
+                String sourceTableName = tableModel.getName();
                 String sourceColumnName = attribute.getName();
                 String targetTableName = attribute.getTableReference();
                 String targetColumnName = attribute.getAttributeReference();
@@ -127,7 +132,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
                          */
                         context.createError(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND)
                             .setScope(ErrorScope.DIRECTORY)
-                            .setFileModel(fileModel.getName())
+                            .setFileModel(tableModel.getName())
                             .setAttribute(attribute.getName())
                             .setFeatureId(featureId)
                             .setFeatureBbox(featureBoundingBox)
@@ -156,7 +161,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
                 it.close();
                 context.endModel(attribute);
             }
-            context.endModel(fileModel);
+            context.endModel(tableModel);
         }
     }
 

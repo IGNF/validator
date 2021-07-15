@@ -35,6 +35,11 @@ public class ReadUrlCommand extends AbstractCommand {
     }
 
     @Override
+    public String getDescription() {
+        return "Read data from a given URL (allows to debug proxy and https issues)";
+    }
+
+    @Override
     public void execute() throws Exception {
         URL url = new URL(this.url);
         InputStream in = url.openStream();
@@ -43,7 +48,7 @@ public class ReadUrlCommand extends AbstractCommand {
             BufferedReader buf = new BufferedReader(inR);
             String line;
             while ((line = buf.readLine()) != null) {
-                System.out.println(line);
+                stdout.println(line);
             }
         } finally {
             in.close();

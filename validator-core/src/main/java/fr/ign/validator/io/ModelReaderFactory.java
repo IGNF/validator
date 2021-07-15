@@ -9,6 +9,10 @@ import java.net.URL;
  */
 public class ModelReaderFactory {
 
+    private ModelReaderFactory() {
+        // disabled (class with static helpers)
+    }
+
     /**
      * Create a ModelReader detecting format for a given URL :
      * 

@@ -16,8 +16,8 @@ import fr.ign.validator.database.internal.DuplicatedValuesFinder.DuplicatedValue
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.model.FileModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
 
 /**
@@ -49,19 +49,21 @@ public class AttributeUniqueValidator implements Validator<Database> {
         }
     }
 
+    /**
+     * @param context
+     * @param database
+     * @throws SQLException
+     * @throws IOException
+     */
     private void doValidate(Context context, Database database) throws SQLException, IOException {
         log.info(MARKER, "Looking for attributes with unique constraints...");
 
         /*
          * Validate each attribute marked as unique
          */
-        for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof TableModel)) {
-                continue;
-            }
-
-            context.beginModel(fileModel);
-            for (AttributeType<?> attribute : fileModel.getFeatureType().getAttributes()) {
+        for (TableModel tableModel : ModelHelper.getTableModels(context.getDocumentModel())) {
+            context.beginModel(tableModel);
+            for (AttributeType<?> attribute : tableModel.getFeatureType().getAttributes()) {
                 if (!attribute.getConstraints().isUnique()) {
                     continue;
                 }
@@ -73,12 +75,12 @@ public class AttributeUniqueValidator implements Validator<Database> {
                  */
                 log.info(
                     MARKER, "Table {}.{} : Looking for duplicated values...",
-                    fileModel.getName(),
+                    tableModel.getName(),
                     attribute.getName()
                 );
                 List<DuplicatedValue> duplicatedValues = duplicatedValuesFinder.findDuplicatedValues(
                     database,
-                    fileModel.getName(),
+                    tableModel.getName(),
                     attribute.getName()
                 );
 
@@ -88,7 +90,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
                 log.info(
                     MARKER,
                     "Table {}.{} : Found {} duplicated value(s) (max : {})",
-                    fileModel.getName(),
+                    tableModel.getName(),
                     attribute.getName(),
                     duplicatedValues.size(),
                     DuplicatedValuesFinder.LIMIT_PER_ATTRIBUTE
@@ -101,8 +103,8 @@ public class AttributeUniqueValidator implements Validator<Database> {
                          */
                         context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
                             .setScope(ErrorScope.DIRECTORY)
-                            .setFileModel(fileModel.getName())
-                            .setMessageParam("TABLE_NAME", fileModel.getName())
+                            .setFileModel(tableModel.getName())
+                            .setMessageParam("TABLE_NAME", tableModel.getName())
                             .setMessageParam("COLUMN_NAME", attribute.getName())
                             .setMessageParam("ID_NAME", duplicatedValue.value)
                             .setMessageParam("ID_COUNT", "" + duplicatedValue.count)
@@ -111,7 +113,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
 
                 context.endModel(attribute);
             }
-            context.endModel(fileModel);
+            context.endModel(tableModel);
         }
     }
 

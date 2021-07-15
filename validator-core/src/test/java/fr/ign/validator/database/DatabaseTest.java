@@ -22,6 +22,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.ResourceHelper;
 
@@ -177,7 +178,7 @@ public class DatabaseTest {
     private Context createTestContext() {
         InMemoryReportBuilder reportBuilder = new InMemoryReportBuilder();
         Context context = new Context();
-        context.setProjection("EPSG:4326");
+        context.setProjection(Projection.CODE_CRS84);
         File validationDirectory = new File(folder.getRoot(), "validation");
         validationDirectory.mkdirs();
         context.setValidationDirectory(validationDirectory);

@@ -1,14 +1,12 @@
 package fr.ign.validator.model.type;
 
-import java.io.File;
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import fr.ign.validator.model.AttributeType;
-import fr.ign.validator.validation.attribute.StringEnumValuesValidator;
-import fr.ign.validator.validation.attribute.StringPatternValidator;
 import fr.ign.validator.validation.attribute.MaxLengthValidator;
 import fr.ign.validator.validation.attribute.MinLengthValidator;
+import fr.ign.validator.validation.attribute.StringEnumValuesValidator;
+import fr.ign.validator.validation.attribute.StringPatternValidator;
 
 /**
  * Represents a character string

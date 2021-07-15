@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:gml="http://www.opengis.net/gml" xmlns:gp-urba="http://geobretagne.fr/ns/gp-urba" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://geobretagne.fr/ns/gp-urba">
-  <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="http://geobretagne.fr/geoserver/schemas/gml/3.1.1/base/gml.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wfs="http://www.opengis.net/wfs/2.0"
+  xmlns:gp-urba="http://geobretagne.fr/ns/gp-urba"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://geobretagne.fr/ns/gp-urba">
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd"/>
+  <xsd:import namespace="http://www.opengis.net/wfs/2.0" schemaLocation="http://schemas.opengis.net/wfs/2.0/wfs.xsd"/>
   <xsd:complexType name="DOC_URBA_COMType">
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">
@@ -12,5 +16,5 @@
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
-  <xsd:element name="DOC_URBA_COM" substitutionGroup="gml:_Feature" type="gp-urba:DOC_URBA_COMType"/>
+  <xsd:element name="DOC_URBA_COM" substitutionGroup="gml:AbstractFeature" type="gp-urba:DOC_URBA_COMType"/>
 </xsd:schema>

@@ -1,12 +1,14 @@
 package fr.ign.validator.model;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +17,8 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -23,8 +27,11 @@ import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.io.xml.FileModelAdapter;
 import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
+import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.PdfModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
+import fr.ign.validator.validation.Validator;
+import fr.ign.validator.validation.file.XsdSchemaValidator;
 
 /**
  * Represents a file of a Document
@@ -37,7 +44,8 @@ import fr.ign.validator.model.file.TableModel;
     @Type(value = DirectoryModel.class, name = DirectoryModel.TYPE),
     @Type(value = MetadataModel.class, name = MetadataModel.TYPE),
     @Type(value = PdfModel.class, name = PdfModel.TYPE),
-    @Type(value = TableModel.class, name = TableModel.TYPE),
+    @Type(value = SingleTableModel.class, name = SingleTableModel.TYPE),
+    @Type(value = MultiTableModel.class, name = MultiTableModel.TYPE)
 })
 public abstract class FileModel implements Model {
     public static final Logger log = LogManager.getRootLogger();
@@ -78,12 +86,20 @@ public abstract class FileModel implements Model {
     private MandatoryMode mandatory = MandatoryMode.WARN;
 
     /**
-     * Table model (optional, for tables only)
+     * XSD schema (optional, for XML/GML files only)
+     * 
+     * @see {@link XsdSchemaValidator}
      */
-    private FeatureType featureType = null;
+    @JsonInclude(value = Include.NON_NULL)
+    private URL xsdSchema = null;
+
+    /**
+     * The list of validators on the Document
+     */
+    private List<Validator<DocumentFile>> validators = new ArrayList<>();
 
     protected FileModel() {
-
+        this.validators.add(new XsdSchemaValidator());
     }
 
     /**
@@ -126,14 +142,21 @@ public abstract class FileModel implements Model {
         this.mandatory = mandatory;
     }
 
-    @JsonIgnore
-    public FeatureType getFeatureType() {
-        return featureType;
+    public URL getXsdSchema() {
+        return xsdSchema;
     }
 
-    @XmlTransient
-    public void setFeatureType(FeatureType featureType) {
-        this.featureType = featureType;
+    public void setXsdSchema(URL xsdSchema) {
+        this.xsdSchema = xsdSchema;
+    }
+
+    @JsonIgnore
+    public List<Validator<DocumentFile>> getValidators() {
+        return this.validators;
+    }
+
+    public void addValidator(Validator<DocumentFile> validator) {
+        this.validators.add(validator);
     }
 
     /**
@@ -206,6 +229,11 @@ public abstract class FileModel implements Model {
         } catch (PatternSyntaxException exception) {
             return "(?i)" + getName() + ".*" + getRegexpSuffix();
         }
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + getClass().getSimpleName() + ")";
     }
 
 }

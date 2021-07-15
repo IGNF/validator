@@ -53,7 +53,7 @@ public class Document implements Validatable {
     /**
      * Files related to Document (defined after matching step)
      */
-    private List<DocumentFile> documentFiles = new ArrayList<DocumentFile>();
+    private List<DocumentFile> documentFiles = new ArrayList<>();
 
     /**
      * Additional informations
@@ -109,7 +109,7 @@ public class Document implements Validatable {
      * @return
      */
     public <T extends FileModel> List<DocumentFile> getDocumentFiles(Class<T> type) {
-        List<DocumentFile> result = new ArrayList<DocumentFile>();
+        List<DocumentFile> result = new ArrayList<>();
         for (DocumentFile documentFile : documentFiles) {
             if (type.isAssignableFrom(documentFile.getFileModel().getClass())) {
                 result.add(documentFile);
@@ -132,7 +132,7 @@ public class Document implements Validatable {
      * @return
      */
     public List<DocumentFile> getDocumentFilesByModel(FileModel fileModel) {
-        List<DocumentFile> result = new ArrayList<DocumentFile>();
+        List<DocumentFile> result = new ArrayList<>();
         for (DocumentFile documentFile : documentFiles) {
             if (documentFile.getFileModel() == fileModel) {
                 result.add(documentFile);
@@ -144,9 +144,9 @@ public class Document implements Validatable {
     @Override
     public void validate(Context context) throws Exception {
         log.info(
-            MARKER, "Validate document '{}' with '{}'...",
+            MARKER, "Validate '{}' according to {}...",
             documentPath,
-            documentModel.getName()
+            documentModel
         );
 
         context.setCurrentDirectory(documentPath);
@@ -233,6 +233,7 @@ public class Document implements Validatable {
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.beforeMatching(context, this);
         }
+        log.info(MARKER, "Run 'BeforeMatching' pre-processes : completed");
     }
 
     /**
@@ -246,6 +247,7 @@ public class Document implements Validatable {
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.beforeValidate(context, this);
         }
+        log.info(MARKER, "Run 'beforeValidate' pre-processes : completed");
     }
 
     /**
@@ -259,6 +261,7 @@ public class Document implements Validatable {
         for (ValidatorListener validatorListener : context.getValidatorListeners()) {
             validatorListener.afterValidate(context, this);
         }
+        log.info(MARKER, "Run 'afterValidate' pre-processes : completed");
     }
 
     /**
@@ -269,9 +272,9 @@ public class Document implements Validatable {
     public void findDocumentFiles(Context context) {
         clearFiles();
 
-        File documentPath = getDocumentPath();
-        log.info(MARKER, "findDocumentFiles('{}')...", documentPath);
+        log.info(MARKER, "List files and directories in '{}'...", documentPath);
         Collection<File> files = FileUtils.listFilesAndDirs(documentPath, allowedExtensions);
+        log.info(MARKER, "{} file(s) found in '{}'.", files.size(), documentPath);
 
         /*
          * find match with FileModel
@@ -282,7 +285,7 @@ public class Document implements Validatable {
             FileModel fileModel = documentModel.findFileModelByPath(file);
 
             if (fileModel != null) {
-                log.info(MARKER, "Found FileModel '{}' by path for '{}'", fileModel.getName(), file);
+                log.info(MARKER, "Found {} by path for '{}'", fileModel, file);
                 addDocumentFile(fileModel, file);
                 continue;
             }
@@ -292,7 +295,7 @@ public class Document implements Validatable {
             fileModel = documentModel.findFileModelByFilename(file);
             if (fileModel != null) {
 
-                log.info(MARKER, "Found FileModel '{}' by name for '{}' (FILE_MISPLACED)", fileModel.getName(), file);
+                log.info(MARKER, "Found {} by name for '{}' (FILE_MISPLACED)", fileModel, file);
                 if (context.isFlatValidation()) {
                     addDocumentFile(fileModel, file);
                 } else {
@@ -315,7 +318,10 @@ public class Document implements Validatable {
             );
         }
 
-        log.info(MARKER, "findDocumentFiles('{}') complete, found {} files.", documentPath, documentFiles.size());
+        log.info(
+            MARKER, "List files and directories : completed, {} document file(s) found.",
+            documentFiles.size()
+        );
     }
 
     private void addDocumentFile(FileModel fileModel, File path) {

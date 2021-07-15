@@ -1,11 +1,10 @@
-package fr.ign.validator.repository;
+package fr.ign.validator.geometry;
 
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
 
 /**
@@ -15,7 +14,7 @@ import fr.ign.validator.model.Projection;
  * @author MBorne
  *
  */
-public class ProjectionRepositoryTest {
+public class ProjectionListTest {
 
     @Test
     public void testFindAll() {

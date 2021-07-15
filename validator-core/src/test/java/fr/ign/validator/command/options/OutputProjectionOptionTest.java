@@ -8,54 +8,68 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.junit.Before;
 import org.junit.Test;
 
 import fr.ign.validator.model.Projection;
 
+/**
+ * Test {@link OutputProjectionOption} helper.
+ * 
+ * @author MBorne
+ *
+ */
 public class OutputProjectionOptionTest {
+
+    private Options options;
+
+    private CommandLineParser parser;
+
+    @Before
+    public void setUp() {
+        options = new Options();
+        OutputProjectionOption.buildOptions(options);
+        parser = new DefaultParser();
+    }
 
     @Test
     public void testDefaultIsCRS84() throws ParseException {
-        CommandLine commandLine = createCommandLine(new String[] {});
+        String[] args = {};
+        CommandLine commandLine = parser.parse(options, args);
         Projection result = OutputProjectionOption.parseCommandLine(commandLine);
         assertEquals(Projection.CODE_CRS84, result.getCode());
     }
 
     @Test
     public void testSameAsSourceIsNull() throws ParseException {
-        CommandLine commandLine = createCommandLine(new String[] {
+        String[] args = {
             "--output-projection",
             "same-as-source"
-        });
+        };
+        CommandLine commandLine = parser.parse(options, args);
         Projection result = OutputProjectionOption.parseCommandLine(commandLine);
         assertNull(result);
     }
 
     @Test
     public void testLambert93() throws ParseException {
-        CommandLine commandLine = createCommandLine(new String[] {
+        String[] args = {
             "--output-projection",
             "EPSG:2154"
-        });
+        };
+        CommandLine commandLine = parser.parse(options, args);
         Projection result = OutputProjectionOption.parseCommandLine(commandLine);
         assertEquals("EPSG:2154", result.getCode());
     }
 
     @Test(expected = ParseException.class)
     public void testNotFound() throws ParseException {
-        CommandLine commandLine = createCommandLine(new String[] {
+        String[] args = {
             "--output-projection",
             "NOT:FOUND"
-        });
-        OutputProjectionOption.parseCommandLine(commandLine);
-    }
-
-    private CommandLine createCommandLine(String[] args) throws ParseException {
-        Options options = new Options();
-        OutputProjectionOption.buildOptions(options);
-        CommandLineParser parser = new DefaultParser();
+        };
         CommandLine commandLine = parser.parse(options, args);
-        return commandLine;
+        OutputProjectionOption.parseCommandLine(commandLine);
     }
 
 }

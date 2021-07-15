@@ -20,7 +20,7 @@ import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.PdfModel;
-import fr.ign.validator.model.file.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -46,7 +46,7 @@ public class ValidateDocumentARegressTest {
         documentModel = new DocumentModel();
         List<FileModel> fileModels = new ArrayList<FileModel>();
         {
-            TableModel tableModel = new TableModel();
+            SingleTableModel tableModel = new SingleTableModel();
             tableModel.setName("COMMUNE");
             tableModel.setPath("commune");
 

@@ -14,6 +14,9 @@ import org.junit.rules.TemporaryFolder;
 import fr.ign.validator.cnig.CnigRegressHelper;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
@@ -40,7 +43,9 @@ public class VRTTest {
 
         // Retrieve FeatureType
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
-        FeatureType featureType = documentModel.getFileModelByName("DOC_URBA").getFeatureType();
+        FileModel fileModel = documentModel.getFileModelByName("DOC_URBA");
+        assertTrue(fileModel instanceof SingleTableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
         File vrtFile = VRT.createVRTfile(csvFile, featureType);
         assertTrue(vrtFile.exists());
 
