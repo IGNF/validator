@@ -15,7 +15,7 @@ Ce programme permet de valider et de normaliser les données présentes dans une
 * Des fichiers PDF
 * Des dossiers (principalement pour contrôle de présence)
 
-Le paramétrage s'effectue à l'aide de [fichiers JSON décrivant des arborescences de fichiers et des tables](https://github.com/IGNF/validator-schema#ignfvalidator-schema).
+Le paramétrage s'effectue à l'aide de [fichiers JSON décrivant des arborescences de fichiers et des tables](validator-core/src/main/resources/schema/README.md).
 
 ## Cas d'usage
 
