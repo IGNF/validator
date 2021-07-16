@@ -93,7 +93,6 @@ public class Attribute<T> implements Validatable {
             if (type.isGeometry()) {
                 context.report(
                     context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT)
-                        .setMessageParam("VALUE", value.toString())
                 );
             } else {
                 context.report(

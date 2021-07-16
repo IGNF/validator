@@ -191,7 +191,7 @@ public class GeometryIsValidValidatorTest {
         Assert.assertNull(geometry);
         Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
         Assert.assertEquals(
-            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : POLYGON ((0 0))",
+            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...)",
             report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).get(0).getMessage()
         );
     }
@@ -203,7 +203,7 @@ public class GeometryIsValidValidatorTest {
         Assert.assertNull(geometry);
         Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
         Assert.assertEquals(
-            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : POLYGON ((0 0, 2 0, 2 2, 0 NaN, null 0))",
+            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...)",
             report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).get(0).getMessage()
         );
     }
@@ -215,7 +215,7 @@ public class GeometryIsValidValidatorTest {
         Assert.assertNull(geometry);
         Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
         Assert.assertEquals(
-            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...) : POLYGON ((0 0, 2 0, 2 2, 0 2))",
+            "La géométrie ne peut pas être lue (coordonnée invalide, type géométrique non supporté, nombre de point insuffisant,...)",
             report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).get(0).getMessage()
         );
     }
