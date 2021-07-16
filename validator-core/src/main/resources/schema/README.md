@@ -6,12 +6,12 @@ Cette documentation décrit schématiquement les modèles JSON de validation du 
 
 ## Vue d'ensemble des concepts
 
-| Concept               | Description                                                                   | Implémentation  |
-| --------------------- | ----------------------------------------------------------------------------- | --------------- |
-| [Document](#document) | Description d'une arborescence de fichier/du contenu d'une archive            | `DocumentModel` |
-| [File](#file)         | Description d'un fichier du document (chemin, type, présence obligatoire,...) | `FileModel`     |
-| [Table](#table)       | Description d'une table                                                       | `FeatureType`   |
-| [Column](#column)     | Description d'une colonne d'une table                                         | `AttributeType` |
+| Concept               | Description                                                                     | Implémentation  |
+| --------------------- | ------------------------------------------------------------------------------- | --------------- |
+| [Document](#document) | Modélisation du contenu d'un dossier ou d'une archive.                          | `DocumentModel` |
+| [File](#file)         | Modélisation d'un fichier du document (chemin, type, présence obligatoire,...). | `FileModel`     |
+| [Table](#table)       | Modélisation d'une table matérialisée dans un fichier.                          | `FeatureType`   |
+| [Column](#column)     | Modélisation d'une colonne d'une table.                                         | `AttributeType` |
 
 ## Modélisation des concepts
 
