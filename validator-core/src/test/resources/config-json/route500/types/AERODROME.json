@@ -1,0 +1,34 @@
+{
+    "name": "AERODROME",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "TOPONYME",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "ID_TRONCON",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "Point",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

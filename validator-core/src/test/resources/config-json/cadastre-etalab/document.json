@@ -1,0 +1,30 @@
+{
+    "name": "cadastre-etalab",
+    "files": [
+        {
+            "name": "COMMUNE",
+            "path": "communes",
+            "type": "table"
+        },
+        {
+            "name": "SUBDIVISION_FISCALE",
+            "path": "subdivisions_fiscales",
+            "type": "table"
+        },
+        {
+            "name": "FEUILLE",
+            "path": "feuilles",
+            "type": "table"
+        },
+        {
+            "name": "PARCELLE",
+            "path": "parcelles",
+            "type": "table"
+        },
+        {
+            "name": "BATIMENT",
+            "path": "batiments",
+            "type": "table"
+        }
+    ]
+}

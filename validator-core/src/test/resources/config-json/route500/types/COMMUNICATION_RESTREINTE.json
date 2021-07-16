@@ -1,0 +1,65 @@
+{
+    "name": "COMMUNICATION_RESTREINTE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "ID_ND_RTE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "reference": "NOEUD_ROUTIER.ID_RTE500"
+            }
+        },
+        {
+            "name": "ID_TRO_INI",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "reference": "TRONCON_ROUTE.ID_RTE500"
+            }
+        },
+        {
+            "name": "ID_TRO_FIN",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "reference": "TRONCON_ROUTE.ID_RTE500"
+            }
+        },
+        {
+            "name": "INTERDIT",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "REST_POIDS",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "REST_HAUT",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "Point",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

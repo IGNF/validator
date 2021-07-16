@@ -1,0 +1,40 @@
+{
+    "name": "SUBDIVISION_FISCALE",
+    "columns": [
+        {
+            "name": "parcelle",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "lettre",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "created",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "updated",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

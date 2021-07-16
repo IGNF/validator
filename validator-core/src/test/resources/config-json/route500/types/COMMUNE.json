@@ -1,0 +1,20 @@
+{
+    "name": "COMMUNE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

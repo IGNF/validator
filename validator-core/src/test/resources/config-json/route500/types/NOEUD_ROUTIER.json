@@ -1,0 +1,51 @@
+{
+    "name": "NOEUD_ROUTIER",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "NATURE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "enum":[
+                    "Petit rond-point",
+                    "Grand rond-point",
+                    "Carrefour simple",
+                    "Barrière",
+                    "Changement d'attribut",
+                    "Coupure arbitraire",
+                    "Echangeur complet",
+                    "Noeud de communication restreinte",
+                    "Echangeur partiel",
+                    "Carrefour avec toboggan ou passage inférieur",
+                    "Carrefour aménagé à niveau",
+                    "Barrière de douane",
+                    "Embarcadère",
+                    "Noeud représentatif d'une commune"
+                ]
+            }
+        },
+        {
+            "name": "INSEE_COMM",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "maxLength": 5
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "Point",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "name": "COMMUNE",
+    "columns": [
+        {
+            "name": "id",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "nom",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "created",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "updated",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

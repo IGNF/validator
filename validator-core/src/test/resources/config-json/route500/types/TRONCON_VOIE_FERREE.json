@@ -1,0 +1,41 @@
+{
+    "name": "TRONCON_VOIE_FERREE",
+    "columns": [
+        {
+            "name": "ID_RTE500",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": true
+            }
+        },
+        {
+            "name": "NATURE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "ENERGIE",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "CLASSEMENT",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "LineString",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}

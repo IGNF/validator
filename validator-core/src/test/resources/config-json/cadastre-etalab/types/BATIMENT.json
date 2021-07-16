@@ -1,0 +1,47 @@
+{
+    "name": "BATIMENT",
+    "columns": [
+        {
+            "name": "commune",
+            "type": "String",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "nom",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "type",
+            "type": "String",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "created",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "updated",
+            "type": "Date",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": true
+            }
+        }
+    ]
+}
