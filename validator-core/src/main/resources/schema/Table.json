@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Modèle de table IGNF/validator",
+  "description": "Modélisation d'une table de données (géographique ou non) avec ses attributs (ex : ZONE_URBA dans cnig_PLU_2017, voir https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.json)",
+  "type": "object",
+  "required": [
+    "name",
+    "description",
+    "columns"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Nom",
+      "description": "Nom du modèle de table (ex : ZONE_URBA)"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "description": "Description de la table (ex : ZONE_URBA)"
+    },
+    "columns": {
+      "type": "array",
+      "title": "Colonnes de la table",
+      "items": {
+        "$ref": "#/definitions/AttributeType"
+      }
+    }
+  },
+  "definitions": {
+    "AttributeType": {
+      "type": "object",
+      "title": "Attribut",
+      "description": "Modélisation d'un attribut d'une table",
+      "required": [
+        "name",
+        "type",
+        "description"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "title":"Nom",
+          "description": "Nom de l'attribut (ex : IDURBA)"
+        },
+        "type": {
+          "$ref": "#/definitions/CoreType"
+        },
+        "description": {
+          "type": "string",
+          "title":"Description",
+          "description": "Description sémantique de l'attribut (ex : Identifiant du document d'urbanisme)"
+        },
+        "constraints": {
+          "$ref": "#/definitions/AttributeConstraints"
+        }
+      }
+    },
+    "AttributeConstraints": {
+      "type": "object",
+      "title": "Contrainte sur la colonne",
+      "properties":{
+        "required": {
+          "type": "boolean",
+          "title":"Valeur nulle interdite?",
+          "description": "Contrainte permettant de contrôler l'absence de valeur nulle (ou vide) dans une table"
+        },
+        "unique": {
+          "type": "boolean",
+          "title":"Valeur unique?",
+          "description": "Contrainte permettant de contrôler l'unicité des valeurs dans la table"
+        },
+        "pattern": {
+          "type": "string",
+          "title":"Expression régulière",
+          "description": "Contrainte définie sous forme d'une expression régulière (ex : [0-9]{9} pour un SIREN)"
+        },
+        "minLength": {
+          "type": "integer",
+          "title":"Longueur minimale?",
+          "description": "Contrainte permettant de vérifier que la longueur d'une chaîne de caractères est supérieure une valeur minimale incluse."
+        },
+        "maxLength": {
+          "type": "integer",
+          "title":"Longueur maximale?",
+          "description": "Contrainte permettant de vérifier que la longueur d'une chaîne de caractères est inférieure une valeur minimale incluse."
+        },
+        "enum": {
+          "type": "array",
+          "title": "Valeurs autorisées",
+          "description": "Contrainte d'appartenance à une liste de valeur (ex : un code)",
+          "items": {
+            "type": "string",
+            "title": "Valeur"
+          }
+        },
+        "reference": {
+          "type": "string",
+          "title": "Référence",
+          "description": "Contrainte indiquant une référence à un identifiant (ex : AUTRE_TABLE.ID)"
+        }
+      }
+    },
+    "CoreType": {
+      "type": "string",
+      "title": "Type",
+      "description": "Type de l'attribut (la valeur doit pouvoir être convertie dans ce type)",
+      "enum": [
+        "String",
+        "Boolean",
+        "Date",
+        "Integer",
+        "Double",
+        "URL",
+
+        "Point",
+        "LineString",
+        "Polygon",
+        "MultiPoint",
+        "MultiLineString",
+        "MultiPolygon",
+        "GeometryCollection",
+        "Geometry",
+
+        "Filename",
+        "Path"
+      ]
+    }
+  }
+}

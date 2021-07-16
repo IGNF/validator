@@ -53,7 +53,7 @@ Voir [LICENCE.md](LICENCE.md)
 ## Documentation technique
 
 * [Exemples de modèles de document (french)](validator-core/src/test/resources/config-json/README.md)
-* [Modélisation des documents (french)](doc/model.md)
+* [Modélisation des données (french)](validator-core/src/main/resources/schema/README.md)
 * [Liste des codes d'erreurs (json)](validator-core/src/main/resources/error-code.json)
 * [Projection supportées (json)](validator-core/src/main/resources/projection.json)
 * [Metadata modelization (english)](doc/metadata.md)

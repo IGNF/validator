@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Modèle de document IGNF/validator",
+  "description": "Représente la structure d'un document qui peut par exemple être un dossier ou une archive au format ZIP (ex : PLU au standard CNIG 2017, voir https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json)",
+  "type": "object",
+  "required": [
+    "name",
+    "description",
+    "files"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Nom",
+      "description": "Nom du modèle (ex: cnig_PLU_2017)"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "description": "Description du modèle (ex : Standard CNIG PLU 2017)"
+    },
+    "regexp": {
+      "type": "string",
+      "title": "Nom du document",
+      "description": "Nom attendu pour le dossier racine du document (expression régulière, par ex : .*_PLU_[0-9]{8}"
+    },
+    "files": {
+      "type": "array",
+      "title": "Fichiers",
+      "description": "Description des fichiers contenus dans le document (données géographiques, fiche de métadonnées, PDF, etc.)",
+      "items": {
+        "$ref": "#/definitions/FileModel"
+      }
+    }
+  },
+  "definitions": {
+    "FileModel": {
+      "type": "object",
+      "title": "Fichier",
+      "description": "Modélise un ou plusieurs fichiers du document",
+      "required": [
+        "name",
+        "type",
+        "path"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Nom",
+          "description": "Nom court/identifiant du fichier (ex : ZONE_URBA)"
+        },
+        "type": {
+          "$ref": "#/definitions/FileType"
+        },
+        "path": {
+          "type": "string",
+          "title": "Chemin",
+          "description": "Chemin relatif à partir de la racine du document (ex : \"Donnees_geographiques/(2A|2B|[0-9]{2})[0-9]{3}_ZONE_URBA_[0-9]{8}\")"
+        },
+        "mandatory": {
+          "$ref": "#/definitions/MandatoryMode"
+        },
+        "tableModel": {
+          "type": "string",
+          "title": "Modèle de table",
+          "description": "Lien vers un modèle de table (ex : types/ZONE_URBA.json)"
+        }
+      }
+    },
+    "MandatoryMode":{
+      "type": "string",
+      "title": "Fichier obligatoire?",
+      "description": "ERROR : Fichier obligatoire, WARN : Fichier recommandé, OPTIONAL : Fichier optionnel dont l'absence n'entraîne pas d'avertissement",
+      "enum": [
+        "OPTIONAL",
+        "WARN",
+        "ERROR"
+      ]
+    },
+    "FileType": {
+      "type": "string",
+      "title": "Type",
+      "description": "Type du fichier (table, fiche de métadonnée, etc.)",
+      "enum": [
+        "table",
+        "multi_table",
+        "pdf",
+        "metadata",
+        "directory"
+      ]
+    }
+  }
+}
