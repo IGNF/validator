@@ -8,8 +8,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 /**
- * Add option to configure an optional option to a file with a default to
- * System.stdout.
+ * Add option to configure an optional output file (default is System.out).
  * 
  * @author MBorne
  *
