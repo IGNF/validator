@@ -4,27 +4,32 @@
         {
             "name": "COMMUNE",
             "path": "communes",
-            "type": "table"
+            "type": "table",
+            "tableModel": "types/COMMUNE.json"
         },
         {
             "name": "SUBDIVISION_FISCALE",
             "path": "subdivisions_fiscales",
-            "type": "table"
+            "type": "table",
+            "tableModel": "types/SUBDIVISION_FISCALE.json"
         },
         {
             "name": "FEUILLE",
             "path": "feuilles",
-            "type": "table"
+            "type": "table",
+            "tableModel": "types/FEUILLE.json"
         },
         {
             "name": "PARCELLE",
             "path": "parcelles",
-            "type": "table"
+            "type": "table",
+            "tableModel": "types/PARCELLE.json"
         },
         {
             "name": "BATIMENT",
             "path": "batiments",
-            "type": "table"
+            "type": "table",
+            "tableModel": "types/BATIMENT.json"
         }
     ]
 }
