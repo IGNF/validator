@@ -9,12 +9,14 @@
         {
             "name": "LIMITE_ADMINISTRATIVE",
             "type": "table",
-            "path": "ADMINISTRATIF/LIMITE_ADMINISTRATIVE"
+            "path": "ADMINISTRATIF/LIMITE_ADMINISTRATIVE",
+            "tableModel":"./types/LIMITE_ADMINISTRATIVE.json"
         },
         {
             "name": "COMMUNE",
             "type": "table",
-            "path": "ADMINISTRATIF/COMMUNE"
+            "path": "ADMINISTRATIF/COMMUNE",
+            "tableModel":"./types/COMMUNE.json"
         },
         {
             "name": "HABILLAGE",
@@ -24,17 +26,20 @@
         {
             "name": "COTE_FRONTIERE",
             "type": "table",
-            "path": "HABILLAGE/COTE_FRONTIERE"
+            "path": "HABILLAGE/COTE_FRONTIERE",
+            "tableModel":"./types/COTE_FRONTIERE.json"
         },
         {
             "name": "ZONE_OCCUPATION_SOL",
             "type": "table",
-            "path": "HABILLAGE/ZONE_OCCUPATION_SOL"
+            "path": "HABILLAGE/ZONE_OCCUPATION_SOL",
+            "tableModel":"./types/ZONE_OCCUPATION_SOL.json"
         },
         {
             "name": "TRONCON_HYDROGRAPHIQUE",
             "type": "table",
-            "path": "HABILLAGE/TRONCON_HYDROGRAPHIQUE"
+            "path": "HABILLAGE/TRONCON_HYDROGRAPHIQUE",
+            "tableModel":"./types/TRONCON_HYDROGRAPHIQUE.json"
         },
         {
             "name": "RESEAU_ROUTIER",
@@ -44,27 +49,32 @@
         {
             "name": "NOEUD_ROUTIER",
             "type": "table",
-            "path": "RESEAU_ROUTIER/NOEUD_ROUTIER"
+            "path": "RESEAU_ROUTIER/NOEUD_ROUTIER",
+            "tableModel":"./types/NOEUD_ROUTIER.json"
         },
         {
             "name": "TRONCON_ROUTE",
             "type": "table",
-            "path": "RESEAU_ROUTIER/TRONCON_ROUTE"
+            "path": "RESEAU_ROUTIER/TRONCON_ROUTE",
+            "tableModel":"./types/TRONCON_ROUTE.json"
         },
         {
             "name": "NOEUD_COMMUNE",
             "type": "table",
-            "path": "RESEAU_ROUTIER/NOEUD_COMMUNE"
+            "path": "RESEAU_ROUTIER/NOEUD_COMMUNE",
+            "tableModel":"./types/NOEUD_COMMUNE.json"
         },
         {
             "name": "COMMUNICATION_RESTREINTE",
             "type": "table",
-            "path": "RESEAU_ROUTIER/COMMUNICATION_RESTREINTE"
+            "path": "RESEAU_ROUTIER/COMMUNICATION_RESTREINTE",
+            "tableModel":"./types/COMMUNICATION_RESTREINTE.json"
         },
         {
             "name": "AERODROME",
             "type": "table",
-            "path": "RESEAU_ROUTIER/AERODROME"
+            "path": "RESEAU_ROUTIER/AERODROME",
+            "tableModel":"./types/AERODROME.json"
         },
         {
             "name": "RESEAU_FERRE",
@@ -74,12 +84,14 @@
         {
             "name": "TRONCON_VOIE_FERREE",
             "type": "table",
-            "path": "RESEAU_FERRE/TRONCON_VOIE_FERREE"
+            "path": "RESEAU_FERRE/TRONCON_VOIE_FERREE",
+            "tableModel":"./types/TRONCON_VOIE_FERREE.json"
         },
         {
             "name": "NOEUD_FERRE",
             "type": "table",
-            "path": "RESEAU_FERRE/NOEUD_FERRE"
+            "path": "RESEAU_FERRE/NOEUD_FERRE",
+            "tableModel":"./types/NOEUD_FERRE.json"
         }
     ]
 }
