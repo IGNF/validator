@@ -10,6 +10,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.tools.MultiTableReader;
+import fr.ign.validator.tools.TableReaderOptions;
 
 /**
  * A table storing a set of tables.
@@ -31,21 +32,40 @@ public class MultiTableFile extends DocumentFile {
         return fileModel;
     }
 
+    /**
+     * Get reader with the correct options.
+     * 
+     * @return
+     * @throws IOException
+     */
+    public MultiTableReader getReader() throws IOException {
+        TableReaderOptions options = new TableReaderOptions();
+        // in order to use GMLAS driver from GDAL
+        if (fileModel.getXsdSchema() != null) {
+            options.setXsdSchema(fileModel.getXsdSchema());
+        }
+        return MultiTableReader.createMultiTableReader(getPath(), options);
+    }
+
     @Override
     protected void validateContent(Context context) {
         try {
             log.info(MARKER, "Validate '{}' according to {}...", getPath(), fileModel);
-            MultiTableReader reader = MultiTableReader.createMultiTableReader(getPath());
+
+            MultiTableReader reader = getReader();
             for (String tableName : reader.getTableNames()) {
                 String relativePath = context.relativize(getPath()) + "#" + tableName;
                 EmbeddedTableModel tableModel = fileModel.getTableModelByName(tableName);
                 if (tableModel == null || tableModel.getFeatureType() == null) {
-                    // TODO report TABLE_MISSING_MODEL
                     log.warn(
                         MARKER, "Validate '{}' according to {} : no FeatureType found for '{}'!",
                         getPath(),
                         fileModel,
                         tableName
+                    );
+                    context.report(
+                        context.createError(CoreErrorCodes.MULTITABLE_UNEXPECTED)
+                            .setMessageParam("FILEPATH", relativePath)
                     );
                     continue;
                 }

@@ -174,6 +174,11 @@ public class CoreErrorCodes {
     public static final ErrorCode TABLE_UNEXPECTED_ENCODING = ErrorCode.valueOf("TABLE_UNEXPECTED_ENCODING");
     public static final ErrorCode TABLE_MISSING_GEOMETRY = ErrorCode.valueOf("TABLE_MISSING_GEOMETRY");
 
+    /**
+     * Missing model for a table in a MultiTable
+     */
+    public static final ErrorCode MULTITABLE_UNEXPECTED = ErrorCode.valueOf("MULTITABLE_UNEXPECTED");
+
     /*
      * ErrorCode for error in Features and Attributes
      */

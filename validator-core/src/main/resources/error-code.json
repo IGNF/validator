@@ -106,6 +106,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "MULTITABLE_UNEXPECTED",
+		"level": "WARNING",
+		"message": "La table '{FILEPATH}' n'est pas prévue dans le modèle de validation.",
+		"documentation": ""
+	},
+	{
 		"name": "ATTRIBUTE_UNEXPECTED_NULL",
 		"level": "ERROR",
 		"message": "Une valeur vide n'est pas autorisée pour ce champ.",

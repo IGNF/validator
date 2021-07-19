@@ -403,7 +403,7 @@ public class Database implements Closeable {
      */
     void load(MultiTableFile documentFile) throws IOException, SQLException {
         MultiTableModel mutliTableModel = documentFile.getFileModel();
-        MultiTableReader reader = MultiTableReader.createMultiTableReader(documentFile.getPath());
+        MultiTableReader reader = documentFile.getReader();
         for (String tableName : reader.getTableNames()) {
             if (mutliTableModel.getTableModelByName(tableName) == null) {
                 log.warn(

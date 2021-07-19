@@ -2,7 +2,6 @@ package fr.ign.validator.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
@@ -86,20 +86,79 @@ public class FileConverter {
      * 
      * @param source
      * @param target
-     * @param sourceCharset
+     * @param options
      * @throws IOException
      */
-    public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
+    public void convertToCSV(File source, File target, TableReaderOptions options) throws IOException {
         log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
         if (target.exists()) {
-            target.delete();
+            FileUtils.forceDelete(target);
         }
 
         /*
          * Prepare command arguments.
          */
-        String[] args = getArguments(source, target, DRIVER_CSV);
-        Map<String, String> envs = new HashMap<>();
+        List<String> args = new ArrayList<>();
+        args.add(ogr2ogrPath);
+
+        // Otherwise, some ogr2ogr versions transforms 01 to 1...
+        boolean sourceIsGML = FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gml");
+        if (sourceIsGML) {
+            args.add("--config");
+            args.add("GML_FIELDTYPES");
+            args.add("ALWAYS_STRING");
+
+            File gfsFile = CompanionFileUtils.getCompanionFile(source, "gfs");
+            if (gfsFile.exists()) {
+                log.warn(MARKER, "remove gfs file {}...", gfsFile);
+                FileUtils.forceDelete(gfsFile);
+            }
+        }
+
+        args.add("-f");
+        args.add(DRIVER_CSV);
+
+        if (hasSpatialColumn(source)) {
+            // geometry conversion to WKT
+            args.add("-lco");
+            args.add("GEOMETRY=AS_WKT");
+        }
+
+        // avoid useless quotes (GDAL 2.3 or more)
+        args.add("-lco");
+        args.add("STRING_QUOTING=IF_NEEDED");
+
+        // avoid coordinate rounding
+        args.add("-lco");
+        args.add("OGR_WKT_ROUND=NO");
+
+        // force "\r\n"
+        args.add("-lco");
+        args.add("LINEFORMAT=CRLF");
+
+        if (sourceIsGML && options.hasXsdSchema()) {
+            // ignore empty types
+            args.add("-oo");
+            args.add("REMOVE_UNUSED_LAYERS=YES");
+
+            // specify XSD schema path
+            args.add("-oo");
+            args.add("XSD=" + options.getXsdSchema().toString());
+        }
+
+        /*
+         * Getting input/output files
+         */
+        args.add(target.getAbsolutePath());
+        if (sourceIsGML && options.hasXsdSchema()) {
+            args.add("GMLAS:" + source.getAbsolutePath());
+        } else {
+            args.add(source.getAbsolutePath());
+        }
+
+        // force 2d output (to be removed, related to old JTS versions)
+        args.add("-dim");
+        args.add("2");
 
         /*
          * Remove CPG files as they may contains non portable values such as system.
@@ -110,9 +169,10 @@ public class FileConverter {
         /*
          * Configure charset for shapefiles
          */
+        Map<String, String> envs = new HashMap<>();
         String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
         if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
-            envs.put("SHAPE_ENCODING", toEncoding(sourceCharset));
+            envs.put("SHAPE_ENCODING", toEncoding(options.getSourceCharset()));
         }
         runCommand(args, envs);
 
@@ -120,10 +180,27 @@ public class FileConverter {
          * Ensure that output file is created
          */
         if (!target.exists()) {
-            // TODO throw IOException instead.
-            log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
-            createFalseCSV(target);
+            String message = String.format(
+                "Fail to convert '%1s' to CSV at '%2s'",
+                source.getAbsolutePath(),
+                target.getAbsolutePath()
+            );
+            throw new ValidatorFatalError(message);
         }
+    }
+
+    /**
+     * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV
+     * target.
+     * 
+     * @param source
+     * @param target
+     * @param sourceCharset
+     * @throws IOException
+     */
+    public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
+        TableReaderOptions options = new TableReaderOptions(sourceCharset);
+        convertToCSV(source, target, options);
     }
 
     /**
@@ -135,7 +212,7 @@ public class FileConverter {
     public void convertToShapefile(File source, File target) throws IOException {
         log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
 
-        String[] args = getArguments(source, target, DRIVER_SHAPEFILE);
+        List<String> args = getArguments(source, target, DRIVER_SHAPEFILE);
         Map<String, String> envs = new HashMap<>();
         envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
         runCommand(args, envs);
@@ -143,9 +220,12 @@ public class FileConverter {
          * Controls that output file is created
          */
         if (!target.exists()) {
-            // TODO throw IOException
-            log.error(MARKER, "Impossible de créer le fichier de sortie {}", target.getName());
-            createFalseCSV(target);
+            String message = String.format(
+                "Fail to convert '%1s' to shapefile at '%2s'",
+                source.getAbsolutePath(),
+                target.getAbsolutePath()
+            );
+            throw new ValidatorFatalError(message);
         }
         /*
          * Generating cgp file
@@ -212,9 +292,7 @@ public class FileConverter {
             String result = stdoutReader.readLine();
             stdoutReader.close();
             return result;
-        } catch (IOException e) {
-            return null;
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             return null;
         }
     }
@@ -234,23 +312,6 @@ public class FileConverter {
     }
 
     /**
-     * 
-     * Any invalid csv file blocks ogr2ogr use A valid file with header without data
-     * is created to avoid this problem
-     * 
-     * @param target
-     * @throws IOException
-     */
-    private void createFalseCSV(File target) throws IOException {
-        target.createNewFile();
-        FileWriter fileWriter = new FileWriter(target);
-        String header = "header1,header2,header3";
-        fileWriter.append(header);
-        fileWriter.flush();
-        fileWriter.close();
-    }
-
-    /**
      * Get arguments to invoke ogr2ogr
      * 
      * @param source
@@ -259,56 +320,51 @@ public class FileConverter {
      * @param encode
      * @return
      */
-    private String[] getArguments(File source, File target, String driver) {
-        List<String> arguments = new ArrayList<>();
-        arguments.add(ogr2ogrPath);
+    private List<String> getArguments(File source, File target, String driver) {
+        List<String> args = new ArrayList<>();
+        args.add(ogr2ogrPath);
 
         // Otherwise, some ogr2ogr versions transforms 01 to 1...
-        if (FilenameUtils.getExtension(source.getName()).toLowerCase().equals("gml")) {
-            arguments.add("--config");
-            arguments.add("GML_FIELDTYPES");
-            arguments.add("ALWAYS_STRING");
+        if (FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gml")) {
+            args.add("--config");
+            args.add("GML_FIELDTYPES");
+            args.add("ALWAYS_STRING");
         }
 
-        arguments.add("-f");
-        arguments.add(driver);
+        args.add("-f");
+        args.add(driver);
         /*
          * Getting format-specific parameters
          */
         if (driver.equals(DRIVER_CSV)) {
             if (hasSpatialColumn(source)) {
                 // unsure conversion to WKT
-                arguments.add("-lco");
-                arguments.add("GEOMETRY=AS_WKT");
+                args.add("-lco");
+                args.add("GEOMETRY=AS_WKT");
             }
 
             // avoid useless quotes (GDAL 2.3 or more)
-            arguments.add("-lco");
-            arguments.add("STRING_QUOTING=IF_NEEDED");
+            args.add("-lco");
+            args.add("STRING_QUOTING=IF_NEEDED");
 
             // avoid coordinate rounding
-            arguments.add("-lco");
-            arguments.add("OGR_WKT_ROUND=NO");
+            args.add("-lco");
+            args.add("OGR_WKT_ROUND=NO");
 
             // force "\r\n"
-            arguments.add("-lco");
-            arguments.add("LINEFORMAT=CRLF");
+            args.add("-lco");
+            args.add("LINEFORMAT=CRLF");
         }
         /*
          * Getting input/output files
          */
-        arguments.add(target.getAbsolutePath());
-        arguments.add(source.getAbsolutePath());
+        args.add(target.getAbsolutePath());
+        args.add(source.getAbsolutePath());
 
         // force 2d output (to be removed, related to old JTS versions)
-        arguments.add("-dim");
-        arguments.add("2");
+        args.add("-dim");
+        args.add("2");
 
-        /*
-         * Getting source encoding
-         */
-        String[] args = new String[arguments.size()];
-        arguments.toArray(args);
         return args;
     }
 
@@ -322,7 +378,7 @@ public class FileConverter {
      * @return
      */
     private boolean hasSpatialColumn(File source) {
-        if (!FilenameUtils.getExtension(source.getName()).toLowerCase().equals("dbf")) {
+        if (!FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("dbf")) {
             return true;
         }
         // C'est un .dbf, est-ce qu'il y a un .shp?
@@ -338,7 +394,7 @@ public class FileConverter {
      * 
      * @throws IOException
      */
-    private void runCommand(String[] args, Map<String, String> envs) throws IOException {
+    private void runCommand(List<String> args, Map<String, String> envs) throws IOException {
         Process process = null;
         try {
             /* output command line to logs */
@@ -353,8 +409,6 @@ public class FileConverter {
 
             /*
              * Run process ignoring outputs (previous method seams to cause deadlocks).
-             * 
-             * TODO redirect output to log4j logs
              */
             builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
             builder.redirectError(ProcessBuilder.Redirect.DISCARD);
@@ -365,7 +419,7 @@ public class FileConverter {
                 log.error(MARKER, "command fail!");
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("ogr2ogr command fails", e);
+            throw new ValidatorFatalError("ogr2ogr command fails", e);
         }
     }
 
@@ -374,14 +428,15 @@ public class FileConverter {
      * 
      * @param args
      */
-    private String commandToString(String[] args) {
+    private String commandToString(List<String> args) {
         String message = "";
-        for (int i = 0; i < args.length; i++) {
-            if (i == 0 || args[i].isEmpty() || (args[i].charAt(0) == '-') || (args[i].charAt(0) == '"')
-                || (args[i].charAt(0) == '\'')) {
-                message += args[i] + " ";
+        for (int i = 0; i < args.size(); i++) {
+            String arg = args.get(i);
+            if (i == 0 || arg.isEmpty() || (arg.charAt(0) == '-') || (arg.charAt(0) == '"')
+                || (arg.charAt(0) == '\'')) {
+                message += arg + " ";
             } else {
-                message += "'" + args[i] + "' ";
+                message += "'" + arg + "' ";
             }
         }
         return message;

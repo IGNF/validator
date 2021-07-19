@@ -13,6 +13,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.file.MultiTableFile;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -148,32 +149,32 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
             multiTableModel,
             documentFile.getPath()
         );
-        MultiTableReader reader = MultiTableReader.createMultiTableReader(documentFile.getPath());
+        MultiTableReader reader = ((MultiTableFile) documentFile).getReader();
         for (EmbeddedTableModel tableModel : multiTableModel.getTableModels()) {
             if (tableModel.getFeatureType() != null) {
                 continue;
             }
-            File path = reader.getTablePath(tableModel.getName());
-            if (!path.exists()) {
+            String tableName = tableModel.getName();
+            try {
+                File path = reader.getTablePath(tableName);
+                FeatureType featureType = AutoFeatureType.createFeatureTypeFromTable(path);
+                featureType.setName(tableModel.getName());
+                log.info(
+                    MARKER, "Process {} : FeatureType create for {} from {}",
+                    tableModel,
+                    tableModel.getName(),
+                    documentFile.getPath()
+                );
+                tableModel.setFeatureType(featureType);
+            } catch (IOException e) {
                 log.warn(
                     MARKER, "Process {} : Create empty FeatureType for {} ('{}' not found)",
                     tableModel,
                     tableModel.getName(),
-                    path
+                    tableName
                 );
                 tableModel.setFeatureType(createEmptyFeatureType(tableModel.getName()));
-                continue;
             }
-
-            FeatureType featureType = AutoFeatureType.createFeatureTypeFromTable(path);
-            featureType.setName(tableModel.getName());
-            log.info(
-                MARKER, "Process {} : FeatureType create for {} from {}",
-                tableModel,
-                tableModel.getName(),
-                documentFile.getPath()
-            );
-            tableModel.setFeatureType(featureType);
         }
     }
 

@@ -52,7 +52,7 @@ public class AutoFeatureType {
         for (String attributeName : reader.getHeader()) {
             AttributeType<?> attribute = attributeName.equalsIgnoreCase("WKT") ? new GeometryType() : new StringType();
             attribute.setName(attributeName);
-            if (attributeName.equalsIgnoreCase("gml_id")) {
+            if (attributeName.equalsIgnoreCase("gml_id") || attributeName.equalsIgnoreCase("id")) {
                 attribute.getConstraints().setRequired(true);
                 attribute.getConstraints().setUnique(true);
             } else {
