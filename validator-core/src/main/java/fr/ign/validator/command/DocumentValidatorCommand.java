@@ -13,7 +13,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +24,7 @@ import org.locationtech.jts.io.WKTReader;
 import fr.ign.validator.Context;
 import fr.ign.validator.command.options.OutputProjectionOption;
 import fr.ign.validator.command.options.StringFixerOptions;
+import fr.ign.validator.command.options.ValidationDirectoryOption;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.ModelNotFoundException;
@@ -55,8 +55,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("DocumentValidatorCommand");
-
-    public static final String VALIDATION_DIRECTORY_NAME = "validation";
 
     /**
      * URL of the document model.
@@ -175,7 +173,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         /*
          * output options
          */
-        buildValidationDirectoryOption(options);
+        ValidationDirectoryOption.buildOptions(options);
         buildReportBuilderOptions(options);
         buildErrorConfigOption(options);
         buildNormalizeOption(options);
@@ -209,7 +207,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         /*
          * output
          */
-        parseValidationDirectory(commandLine);
+        this.validationDirectory = ValidationDirectoryOption.parseCommandLine(commandLine, documentPath);
         parseReportBuilder(commandLine);
         parseErrorConfigOption(commandLine);
         parseNormalizeOption(commandLine);
@@ -460,39 +458,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected DocumentModel loadDocumentModel() throws IOException, ModelNotFoundException {
         ModelReader modelReader = ModelReaderFactory.createModelReader(documentModelUrl);
         return modelReader.loadDocumentModel(documentModelUrl);
-    }
-
-    /**
-     * Add option "validation-directory"
-     * 
-     * @param options
-     */
-    protected void buildValidationDirectoryOption(Options options) {
-        // TODO add optional -O, "validation-directory" option to allow output
-        // directory configuration
-    }
-
-    /**
-     * Parse validation directory
-     * 
-     * @param commandLine
-     * @throws ParseException
-     */
-    protected void parseValidationDirectory(CommandLine commandLine) throws ParseException {
-        // TODO optional customization (should not be a child of documentPath)
-        validationDirectory = new File(documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME);
-        if (validationDirectory.exists()) {
-            log.info(MARKER, "Remove directory {}...", validationDirectory.getAbsolutePath());
-            try {
-                FileUtils.deleteDirectory(validationDirectory);
-            } catch (Exception e) {
-                String message = String.format("Fail to delete directory : '%1s'", validationDirectory);
-                log.error(MARKER, message);
-                throw new ParseException(message);
-            }
-        }
-        log.info(MARKER, "Create directory {}...", validationDirectory.getAbsolutePath());
-        validationDirectory.mkdirs();
     }
 
     /**
