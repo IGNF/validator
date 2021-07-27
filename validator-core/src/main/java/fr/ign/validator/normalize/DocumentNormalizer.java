@@ -155,10 +155,10 @@ public class DocumentNormalizer {
             }
 
             /*
-             * 
-             * /* Create normalized CSV file.
+             * Create normalized CSV file (note that using tableModel.name avoids renaming
+             * type to low case)
              */
-            File outputFile = new File(context.getDataDirectory(), tableName + ".csv");
+            File outputFile = new File(context.getDataDirectory(), tableModel.getName() + ".csv");
             TableNormalizer normalizer = null;
             try {
                 normalizer = new TableNormalizer(
