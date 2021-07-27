@@ -16,6 +16,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -59,6 +60,32 @@ public class ValidatePCRSRegressTest {
     }
 
     @Test
+    public void testJeuxTest() throws Exception {
+        File documentPath = getSampleDocument("pcrs-jeux-test");
+
+        Document document = new Document(documentModel, documentPath);
+        File validationDirectory = new File(documentPath.getParentFile(), "validation");
+        validationDirectory.mkdirs();
+        context.setValidationDirectory(validationDirectory);
+
+        document.validate(context);
+
+        assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+        assertEquals(1, report.getErrorsByCode(CoreErrorCodes.NO_SPATIAL_DATA).size());
+        assertEquals(2, report.getErrorsByLevel(ErrorLevel.ERROR).size());
+
+        assertEquals(8, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(8, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+
+        /*
+         * Ensure that validation database is correctly loaded
+         */
+        Database database = Database.createDatabase(context, false);
+        assertEquals(1, database.getCount("EmpriseEchangePCRS"));
+        assertEquals(2916, database.getCount("AffleurantPCRS"));
+    }
+
+    @Test
     public void testLyon01() throws Exception {
         File documentPath = getSampleDocument("pcrs-lyon-01");
 
@@ -72,9 +99,11 @@ public class ValidatePCRSRegressTest {
         /*
          * WKT with CURVEPOLYGON is not supported by current JTS version.
          */
-        assertEquals(14, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
-        assertEquals(14, report.getErrorsByLevel(ErrorLevel.ERROR).size());
-        assertEquals(0, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+        assertEquals(6, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
+        assertEquals(7, report.getErrorsByLevel(ErrorLevel.ERROR).size());
+
+        assertEquals(6, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(6, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
         /*
          * Ensure that validation database is correctly loaded

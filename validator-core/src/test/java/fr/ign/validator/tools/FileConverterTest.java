@@ -1,5 +1,7 @@
 package fr.ign.validator.tools;
 
+import static org.junit.Assert.assertThrows;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
@@ -149,11 +152,10 @@ public class FileConverterTest {
     public void testConvertGmlInvalid() throws IOException {
         File source = ResourceHelper.getResourceFile(getClass(), "/gml/INVALID.gml");
         File target = folder.newFile("INVALID.csv");
-        fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
-        Assert.assertTrue(target.exists());
-        List<String> lines = FileUtils.readLines(target, StandardCharsets.UTF_8);
-        Assert.assertEquals(1, lines.size());
-        Assert.assertEquals("header1,header2,header3", lines.get(0));
+        assertThrows(ValidatorFatalError.class, () -> {
+            fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
+        });
+        Assert.assertFalse(target.exists());
     }
 
     /**

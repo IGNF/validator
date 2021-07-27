@@ -13,6 +13,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.file.MultiTableFile;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.TableModel;
@@ -135,8 +136,8 @@ public class DocumentNormalizer {
             return;
         }
 
-        DocumentFile documentFile = documentFiles.get(0);
-        MultiTableReader reader = MultiTableReader.createMultiTableReader(documentFile.getPath());
+        MultiTableFile documentFile = (MultiTableFile) documentFiles.get(0);
+        MultiTableReader reader = documentFile.getReader();
         for (String tableName : reader.getTableNames()) {
             /*
              * Retrieve source path for CSV converted table.
