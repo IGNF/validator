@@ -25,7 +25,7 @@
 		See following page for the required java version
 		http://docs.geotools.org/latest/userguide/build/install/jdk.html#
 		 -->
-		<geotools.version>21.5</geotools.version>
+		<geotools.version>25.2</geotools.version>
 		<log4j.version>2.13.3</log4j.version>
 		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
 		<jackson.version>2.9.10</jackson.version>
@@ -179,7 +179,7 @@
 		<!-- JTS throw geotools -->
 		<dependency>
 			<groupId>org.geotools</groupId>
-			<artifactId>gt-geometry</artifactId>
+			<artifactId>gt-main</artifactId>
 			<version>${geotools.version}</version>
 		</dependency>
 
