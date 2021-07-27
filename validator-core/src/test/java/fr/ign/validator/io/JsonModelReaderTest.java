@@ -85,7 +85,7 @@ public class JsonModelReaderTest {
                 return (SingleTableModel) fileModel;
             }).collect(Collectors.toList());
 
-        assertEquals(13, tableModels.size());
+        assertEquals(14, tableModels.size());
         for (TableModel tableModel : tableModels) {
             // FeatureType is defined
             assertNotNull(tableModel.getFeatureType());
