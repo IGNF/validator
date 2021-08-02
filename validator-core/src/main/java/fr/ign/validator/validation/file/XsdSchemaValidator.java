@@ -82,9 +82,10 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
                 }
 
                 private void report(SAXParseException e) {
+                    // TODO retrieve more information from the exception
                     context.report(
                         context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR)
-                            .setMessageParam("LINE_NUMBER", "#" + e.getLineNumber())
+                            .setId(String.valueOf(e.getLineNumber())) // line number
                             .setMessageParam("MESSAGE", e.getMessage())
                     );
                 }

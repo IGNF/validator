@@ -72,8 +72,8 @@
 	{
 		"name": "XSD_SCHEMA_ERROR",
 		"level": "ERROR",
-		"message": "{LINE_NUMBER} : {MESSAGE}",
-		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD"
+		"message": "{MESSAGE}",
+		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD associé à un fichier XML/GML"
 	},
 	{
 		"name": "TABLE_MISSING_ATTRIBUTE",

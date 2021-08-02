@@ -14,6 +14,7 @@ import org.junit.rules.TemporaryFolder;
 import fr.ign.validator.Context;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -37,7 +38,7 @@ public class XsdSchemaValidatorRegressTest {
         context = new Context();
         report = new InMemoryReportBuilder();
         context.setReportBuilder(report);
-        context.setProjection(Projection.CODE_CRS84); // TODO
+        context.setProjection(Projection.CODE_CRS84);
 
         /* to access XML schema */
         Networking.configureHttpClient();
@@ -95,10 +96,13 @@ public class XsdSchemaValidatorRegressTest {
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.XSD_SCHEMA_ERROR).get(0);
             assertEquals(ErrorLevel.ERROR, error.getLevel());
+            assertEquals(ErrorScope.DIRECTORY, error.getScope());
+            // check line number
+            assertEquals("26", error.getId());
             // see https://wiki.xmldation.com/Support/Validator/cvc-complex-type-2-4-d
             assertTrue(
                 "unexpected message : " + error.getMessage(),
-                error.getMessage().startsWith("#26 : cvc-complex-type.2.4.d")
+                error.getMessage().startsWith("cvc-complex-type.2.4.d")
             );
         }
     }
