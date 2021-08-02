@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -54,12 +55,22 @@ public class FileConverter {
     private OgrVersion version;
 
     /**
+     * EXPERIMENTAL - PCRS - Optional GMLAS config path provided by GMLAS_CONFIG
+     * environment variable.
+     * 
+     * @see CONFIG_FILE option for GMLAS driver
+     *      https://gdal.org/drivers/vector/gmlas.html#dataset-creation-options
+     */
+    private File gmlasConfig;
+
+    /**
      * Default constructor
      */
     private FileConverter() {
         log.info(MARKER, "Instanciate FileConverter ensuring that ogr2ogr version is supported...");
         this.ogr2ogrPath = retrieveOgr2ogrPath();
         this.version = retrieveAndValidateOgrVersion();
+        this.gmlasConfig = retrieveAndValidateGmlasConfig();
     }
 
     /**
@@ -141,6 +152,11 @@ public class FileConverter {
             args.add("-oo");
             args.add("REMOVE_UNUSED_LAYERS=YES");
 
+            if (gmlasConfig != null) {
+                args.add("-oo");
+                args.add("CONFIG_FILE=" + gmlasConfig.getAbsolutePath());
+            }
+
             // specify XSD schema path
             args.add("-oo");
             args.add("XSD=" + options.getXsdSchema().toString());
@@ -204,15 +220,38 @@ public class FileConverter {
     }
 
     /**
-     * Converts a source file in LATIN1 encoded shapefile
+     * Converts a VRT file to a LATIN1 encoded shapefile.
+     * 
+     * @deprecated related to a legacy datastore (EaaS / mongeoportail), used only
+     *             by plugin-cnig
      * 
      * @param files
      * @throws IOException
      */
     public void convertToShapefile(File source, File target) throws IOException {
+        if (!FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("vrt")) {
+            throw new ValidatorFatalError(
+                "convertToShapefile is deprecated and source file is not a vrt file " + source.getAbsolutePath()
+            );
+        }
         log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
 
-        List<String> args = getArguments(source, target, DRIVER_SHAPEFILE);
+        List<String> args = new ArrayList<>();
+        args.add(ogr2ogrPath);
+
+        args.add("-f");
+        args.add(DRIVER_SHAPEFILE);
+
+        /*
+         * Getting input/output files
+         */
+        args.add(target.getAbsolutePath());
+        args.add(source.getAbsolutePath());
+
+        // force 2d output (to be removed, related to old JTS versions)
+        args.add("-dim");
+        args.add("2");
+
         Map<String, String> envs = new HashMap<>();
         envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
         runCommand(args, envs);
@@ -259,7 +298,7 @@ public class FileConverter {
     }
 
     /**
-     * Récupération de la version de ogr2ogr
+     * Get ogr2ogr version
      * 
      * @return
      */
@@ -269,6 +308,37 @@ public class FileConverter {
         OgrVersion result = new OgrVersion(fullVersion);
         result.ensureVersionIsSupported();
         return result;
+    }
+
+    /**
+     * Get path to GMLAS driver config.
+     * 
+     * @return
+     */
+    private File retrieveAndValidateGmlasConfig() {
+        String value = System.getenv("GMLAS_CONFIG");
+        if (StringUtils.isEmpty(value)) {
+            return null;
+        }
+        File result = new File(value);
+        if (!result.exists()) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Invalid value for GMLAS_CONFIG, '%1s' not found",
+                    value
+                )
+            );
+        }
+        return result;
+    }
+
+    /**
+     * Set gmlasConfig for test purpose.
+     * 
+     * @param gmlasConfig
+     */
+    public void setGmlasConfig(File gmlasConfig) {
+        this.gmlasConfig = gmlasConfig;
     }
 
     /**
@@ -309,63 +379,6 @@ public class FileConverter {
         } else {
             return ENCODING_UTF8;
         }
-    }
-
-    /**
-     * Get arguments to invoke ogr2ogr
-     * 
-     * @param source
-     * @param target
-     * @param driver
-     * @param encode
-     * @return
-     */
-    private List<String> getArguments(File source, File target, String driver) {
-        List<String> args = new ArrayList<>();
-        args.add(ogr2ogrPath);
-
-        // Otherwise, some ogr2ogr versions transforms 01 to 1...
-        if (FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gml")) {
-            args.add("--config");
-            args.add("GML_FIELDTYPES");
-            args.add("ALWAYS_STRING");
-        }
-
-        args.add("-f");
-        args.add(driver);
-        /*
-         * Getting format-specific parameters
-         */
-        if (driver.equals(DRIVER_CSV)) {
-            if (hasSpatialColumn(source)) {
-                // unsure conversion to WKT
-                args.add("-lco");
-                args.add("GEOMETRY=AS_WKT");
-            }
-
-            // avoid useless quotes (GDAL 2.3 or more)
-            args.add("-lco");
-            args.add("STRING_QUOTING=IF_NEEDED");
-
-            // avoid coordinate rounding
-            args.add("-lco");
-            args.add("OGR_WKT_ROUND=NO");
-
-            // force "\r\n"
-            args.add("-lco");
-            args.add("LINEFORMAT=CRLF");
-        }
-        /*
-         * Getting input/output files
-         */
-        args.add(target.getAbsolutePath());
-        args.add(source.getAbsolutePath());
-
-        // force 2d output (to be removed, related to old JTS versions)
-        args.add("-dim");
-        args.add("2");
-
-        return args;
     }
 
     /**

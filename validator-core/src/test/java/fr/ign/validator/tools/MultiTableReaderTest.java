@@ -11,9 +11,15 @@ import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 public class MultiTableReaderTest {
+
+    @Before
+    public void setUp() {
+        FileConverter.getInstance().setGmlasConfig(null);
+    }
 
     /**
      * Test without providing an XSDschema (use standard GML driver in GDAL)
@@ -141,6 +147,113 @@ public class MultiTableReaderTest {
                 "symbole_nilreason",
                 "symbole_owns",
                 "symbole_habillagesymbolepcrs_pkid",
+            };
+            assertArrayEquals(expectedColumns, tableReader.getHeader());
+            // check first row
+            {
+                String[] row = tableReader.next();
+                // id
+                assertEquals("gml_48b70971-dce9-40b9-abec-eb307dd4f946", row[2]);
+            }
+        }
+    }
+
+    /**
+     * Test without providing an XSDschema (using GMLAS driver in GDAL)
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testReadPcrsLyon01WithSchemaAndGmlasConfig() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(
+            getClass(), "/documents/pcrs-lyon-01/20200716.RIL_L264_C298_P0.gml"
+        );
+        clearCache(srcFile);
+        FileConverter.getInstance().setGmlasConfig(
+            ResourceHelper.getResourceFile(FileConverter.class, "/gdal/gmlasconf-validator.xml")
+        );
+        TableReaderOptions options = new TableReaderOptions();
+        options.setXsdSchema(new URL("https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd"));
+        MultiTableReader reader = MultiTableReader.createMultiTableReader(srcFile, options);
+        List<String> tableNames = reader.getTableNames();
+        String[] expectedTableNamess = {
+            "AffleurantEnveloppePCRS",
+            "AffleurantGeometriquePCRS",
+            "AffleurantGeometriquePCRS_enveloppe",
+            "AffleurantGeometriquePCRS_point",
+            "AffleurantPCRS",
+            "AffleurantPointPCRS",
+            "AffleurantSymbolePCRS",
+            "ArbrePCRS",
+            "EmpriseEchangePCRS",
+            "EmpriseEchangePCRS_habillage",
+            "EmpriseEchangePCRS_objet",
+            "FacadePCRS",
+            "HabillageLignesPCRS",
+            "LimiteVoiriePCRS",
+            "PlanCorpsRueSimplifie",
+            "PlanCorpsRueSimplifie_featureMember",
+            "SeuilPCRS",
+        };
+        assertArrayEquals(expectedTableNamess, tableNames.toArray());
+
+        // HabillageLignesPCRS
+        {
+            TableReader tableReader = reader.getTableReader("HabillageLignesPCRS");
+            String[] expectedColumns = {
+                "WKT",
+                "ogr_pkid",
+                "id",
+                "description_href",
+                "description_title",
+                "description_nilReason",
+                "description",
+                "descriptionReference_href",
+                "descriptionReference_title",
+                "descriptionReference_nilReason",
+                "identifier_codeSpace",
+                "identifier",
+                "location_location_pkid",
+                "idHabillage",
+                "thematique"
+            };
+            assertArrayEquals(expectedColumns, tableReader.getHeader());
+            // check first row
+            {
+                String[] row = tableReader.next();
+                // id
+                assertEquals("gml_5ededfe4-8ebb-4cf1-8621-b80a9b6e3912", row[2]);
+            }
+        }
+        // SeuilPCRS
+        {
+            TableReader tableReader = reader.getTableReader("SeuilPCRS");
+            String[] expectedColumns = {
+                "WKT",
+                "ogr_pkid",
+                "id",
+                "description_href",
+                "description_title",
+                "description_nilReason",
+                "description",
+                "descriptionReference_href",
+                "descriptionReference_title",
+                "descriptionReference_nilReason",
+                "identifier_codeSpace",
+                "identifier",
+                "location_location_pkid",
+                "dateLeve",
+                "idObjet",
+                "thematique",
+                "qualiteCategorisation",
+                "precisionPlanimetrique",
+                "precisionAltimetrique",
+                "producteur",
+                "symbole_href",
+                "symbole_title",
+                "symbole_nilReason",
+                "symbole_owns",
+                "symbole_HabillageSymbolePCRS_pkid",
             };
             assertArrayEquals(expectedColumns, tableReader.getHeader());
             // check first row
