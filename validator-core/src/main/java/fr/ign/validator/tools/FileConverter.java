@@ -204,15 +204,38 @@ public class FileConverter {
     }
 
     /**
-     * Converts a source file in LATIN1 encoded shapefile
+     * Converts a VRT file to a LATIN1 encoded shapefile.
+     * 
+     * @deprecated related to a legacy datastore (EaaS / mongeoportail), used only
+     *             by plugin-cnig
      * 
      * @param files
      * @throws IOException
      */
     public void convertToShapefile(File source, File target) throws IOException {
+        if (!FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("vrt")) {
+            throw new ValidatorFatalError(
+                "convertToShapefile is deprecated and source file is not a vrt file " + source.getAbsolutePath()
+            );
+        }
         log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
 
-        List<String> args = getArguments(source, target, DRIVER_SHAPEFILE);
+        List<String> args = new ArrayList<>();
+        args.add(ogr2ogrPath);
+
+        args.add("-f");
+        args.add(DRIVER_SHAPEFILE);
+
+        /*
+         * Getting input/output files
+         */
+        args.add(target.getAbsolutePath());
+        args.add(source.getAbsolutePath());
+
+        // force 2d output (to be removed, related to old JTS versions)
+        args.add("-dim");
+        args.add("2");
+
         Map<String, String> envs = new HashMap<>();
         envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
         runCommand(args, envs);
@@ -309,63 +332,6 @@ public class FileConverter {
         } else {
             return ENCODING_UTF8;
         }
-    }
-
-    /**
-     * Get arguments to invoke ogr2ogr
-     * 
-     * @param source
-     * @param target
-     * @param driver
-     * @param encode
-     * @return
-     */
-    private List<String> getArguments(File source, File target, String driver) {
-        List<String> args = new ArrayList<>();
-        args.add(ogr2ogrPath);
-
-        // Otherwise, some ogr2ogr versions transforms 01 to 1...
-        if (FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gml")) {
-            args.add("--config");
-            args.add("GML_FIELDTYPES");
-            args.add("ALWAYS_STRING");
-        }
-
-        args.add("-f");
-        args.add(driver);
-        /*
-         * Getting format-specific parameters
-         */
-        if (driver.equals(DRIVER_CSV)) {
-            if (hasSpatialColumn(source)) {
-                // unsure conversion to WKT
-                args.add("-lco");
-                args.add("GEOMETRY=AS_WKT");
-            }
-
-            // avoid useless quotes (GDAL 2.3 or more)
-            args.add("-lco");
-            args.add("STRING_QUOTING=IF_NEEDED");
-
-            // avoid coordinate rounding
-            args.add("-lco");
-            args.add("OGR_WKT_ROUND=NO");
-
-            // force "\r\n"
-            args.add("-lco");
-            args.add("LINEFORMAT=CRLF");
-        }
-        /*
-         * Getting input/output files
-         */
-        args.add(target.getAbsolutePath());
-        args.add(source.getAbsolutePath());
-
-        // force 2d output (to be removed, related to old JTS versions)
-        args.add("-dim");
-        args.add("2");
-
-        return args;
     }
 
     /**
