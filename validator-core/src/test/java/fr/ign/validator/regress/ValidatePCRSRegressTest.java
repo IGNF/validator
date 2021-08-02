@@ -16,10 +16,10 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
-import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.tools.FileConverter;
 import fr.ign.validator.tools.Networking;
 import fr.ign.validator.tools.ResourceHelper;
 
@@ -57,6 +57,9 @@ public class ValidatePCRSRegressTest {
 
         /* to access XML schema */
         Networking.configureHttpClient();
+
+        /* reset GMLAS_CONFIG */
+        FileConverter.getInstance().setGmlasConfig(null);
     }
 
     @Test

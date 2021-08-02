@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -54,12 +55,22 @@ public class FileConverter {
     private OgrVersion version;
 
     /**
+     * EXPERIMENTAL - PCRS - Optional GMLAS config path provided by GMLAS_CONFIG
+     * environment variable.
+     * 
+     * @see CONFIG_FILE option for GMLAS driver
+     *      https://gdal.org/drivers/vector/gmlas.html#dataset-creation-options
+     */
+    private File gmlasConfig;
+
+    /**
      * Default constructor
      */
     private FileConverter() {
         log.info(MARKER, "Instanciate FileConverter ensuring that ogr2ogr version is supported...");
         this.ogr2ogrPath = retrieveOgr2ogrPath();
         this.version = retrieveAndValidateOgrVersion();
+        this.gmlasConfig = retrieveAndValidateGmlasConfig();
     }
 
     /**
@@ -140,6 +151,11 @@ public class FileConverter {
             // ignore empty types
             args.add("-oo");
             args.add("REMOVE_UNUSED_LAYERS=YES");
+
+            if (gmlasConfig != null) {
+                args.add("-oo");
+                args.add("CONFIG_FILE=" + gmlasConfig.getAbsolutePath());
+            }
 
             // specify XSD schema path
             args.add("-oo");
@@ -282,7 +298,7 @@ public class FileConverter {
     }
 
     /**
-     * Récupération de la version de ogr2ogr
+     * Get ogr2ogr version
      * 
      * @return
      */
@@ -292,6 +308,37 @@ public class FileConverter {
         OgrVersion result = new OgrVersion(fullVersion);
         result.ensureVersionIsSupported();
         return result;
+    }
+
+    /**
+     * Get path to GMLAS driver config.
+     * 
+     * @return
+     */
+    private File retrieveAndValidateGmlasConfig() {
+        String value = System.getenv("GMLAS_CONFIG");
+        if (StringUtils.isEmpty(value)) {
+            return null;
+        }
+        File result = new File(value);
+        if (!result.exists()) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Invalid value for GMLAS_CONFIG, '%1s' not found",
+                    value
+                )
+            );
+        }
+        return result;
+    }
+
+    /**
+     * Set gmlasConfig for test purpose.
+     * 
+     * @param gmlasConfig
+     */
+    public void setGmlasConfig(File gmlasConfig) {
+        this.gmlasConfig = gmlasConfig;
     }
 
     /**
