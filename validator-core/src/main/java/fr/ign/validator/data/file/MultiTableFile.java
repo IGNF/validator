@@ -65,7 +65,7 @@ public class MultiTableFile extends DocumentFile {
                     );
                     context.report(
                         context.createError(CoreErrorCodes.MULTITABLE_UNEXPECTED)
-                            .setMessageParam("FILEPATH", relativePath)
+                            .setMessageParam("TABLENAME", tableName)
                     );
                     continue;
                 }
