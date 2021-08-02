@@ -464,6 +464,12 @@ public class Context {
      * @return
      */
     public String getFileName() {
+        // allows to group table in MultiTable using an #
+        Table table = getDataByType(Table.class);
+        if (table != null) {
+            return table.getRelativePath();
+        }
+
         DocumentFile documentFile = getDataByType(DocumentFile.class);
         if (documentFile != null) {
             return relativize(documentFile.getPath());
