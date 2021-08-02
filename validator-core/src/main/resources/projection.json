@@ -107,5 +107,59 @@
         "title": "RGSPM06 / UTM 21N (Saint-Pierre-et-Miquelon)",
         "uri": "http://registre.ign.fr/ign/IGNF/crs/IGNF/RGSPM06U21",
         "validityDomain": null
+    },
+    {
+        "code": "EPSG:3942",
+        "title": "CC42 - Conique Conforme Zone 1 (Corse)",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3942",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3943",
+        "title": "CC43 - Conique Conforme Zone 2",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3943",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3944",
+        "title": "CC44 - Conique Conforme Zone 3",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3944",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3945",
+        "title": "CC45 - Conique Conforme Zone 4",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3945",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3946",
+        "title": "CC46 - Conique Conforme Zone 5",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3946",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3947",
+        "title": "CC47 - Conique Conforme Zone 6",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3947",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3948",
+        "title": "CC48 - Conique Conforme Zone 7",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3948",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3949",
+        "title": "CC49 - Conique Conforme Zone 8",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3949",
+        "validityDomain": null
+    },
+    {
+        "code": "EPSG:3950",
+        "title": "CC50 - Conique Conforme Zone 9",
+        "uri": "http://www.opengis.net/def/crs/EPSG/0/3950",
+        "validityDomain": null
     }
 ]
