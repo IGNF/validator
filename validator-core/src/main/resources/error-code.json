@@ -72,8 +72,8 @@
 	{
 		"name": "XSD_SCHEMA_ERROR",
 		"level": "ERROR",
-		"message": "{LINE_NUMBER} : {MESSAGE}",
-		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD"
+		"message": "{MESSAGE}",
+		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD associé à un fichier XML/GML"
 	},
 	{
 		"name": "TABLE_MISSING_ATTRIBUTE",
@@ -108,8 +108,8 @@
 	{
 		"name": "MULTITABLE_UNEXPECTED",
 		"level": "WARNING",
-		"message": "La table '{FILEPATH}' n'est pas prévue dans le modèle de validation.",
-		"documentation": ""
+		"message": "La table '{TABLENAME}' n'est pas prévue dans le modèle de validation.",
+		"documentation": "Une table est présente dans un fichier multi-table sans être définie dans le modèle. Elle est ignorée pour la validation, la normalisation et le calcul de statistique."
 	},
 	{
 		"name": "ATTRIBUTE_UNEXPECTED_NULL",

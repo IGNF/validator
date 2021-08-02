@@ -17,8 +17,8 @@ import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.data.Row;
+import fr.ign.validator.data.Table;
 import fr.ign.validator.data.file.MetadataFile;
-import fr.ign.validator.data.file.SingleTableFile;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ErrorScope;
@@ -448,7 +448,7 @@ public class Context {
     public ErrorScope getScope() {
         if (getDataByType(Attribute.class) != null) {
             return ErrorScope.FEATURE;
-        } else if (getDataByType(SingleTableFile.class) != null) {
+        } else if (getDataByType(Table.class) != null) {
             return ErrorScope.HEADER;
         } else if (getDataByType(MetadataFile.class) != null) {
             return ErrorScope.METADATA;
@@ -464,6 +464,12 @@ public class Context {
      * @return
      */
     public String getFileName() {
+        // allows to group table in MultiTable using an #
+        Table table = getDataByType(Table.class);
+        if (table != null) {
+            return table.getRelativePath();
+        }
+
         DocumentFile documentFile = getDataByType(DocumentFile.class);
         if (documentFile != null) {
             return relativize(documentFile.getPath());

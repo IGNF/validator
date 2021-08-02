@@ -45,6 +45,10 @@ public class Table implements Validatable {
         this.relativePath = relativePath;
     }
 
+    public String getRelativePath() {
+        return relativePath;
+    }
+
     @Override
     public void validate(Context context) {
         context.beginData(this);
