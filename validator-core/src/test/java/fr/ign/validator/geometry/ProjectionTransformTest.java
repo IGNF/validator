@@ -94,7 +94,7 @@ public class ProjectionTransformTest {
         int indexSource = reader.findColumnRequired(sourceSRID);
         int indexTarget = reader.findColumnRequired(targetSRID);
 
-        WKTReader wktReader = new WKTReader();
+        GeometryReader geometryReader = new GeometryReader();
         while (reader.hasNext()) {
             String[] row = reader.next();
             String sourceWKT = row[indexSource];
@@ -103,8 +103,8 @@ public class ProjectionTransformTest {
                 continue;
             }
 
-            Geometry source = wktReader.read(sourceWKT);
-            Geometry expectedTarget = wktReader.read(expectedWKT);
+            Geometry source = geometryReader.read(sourceWKT);
+            Geometry expectedTarget = geometryReader.read(expectedWKT);
 
             Geometry target = transformProjection.transform(source);
             double distance = target.distance(expectedTarget);

@@ -9,10 +9,10 @@ import org.junit.rules.TemporaryFolder;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.io.WKTWriter;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
 public class GraphTopologyValidatorTest {
@@ -24,13 +24,13 @@ public class GraphTopologyValidatorTest {
 
     private Context context;
 
-    private WKTReader format;
+    private GeometryReader format;
 
     private WKTWriter writer;
 
     @Before
     public void setUp() {
-        format = new WKTReader();
+        format = new GeometryReader();
 
         writer = new WKTWriter();
 

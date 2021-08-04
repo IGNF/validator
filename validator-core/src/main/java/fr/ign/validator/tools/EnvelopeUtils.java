@@ -5,9 +5,9 @@ import java.util.Locale;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
-import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.exception.GeometryTransformException;
+import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.Projection;
 
@@ -30,8 +30,8 @@ public class EnvelopeUtils {
             return new Envelope();
         }
         try {
-            WKTReader reader = new WKTReader();
-            org.locationtech.jts.geom.Geometry geometry = reader.read(wkt);
+            GeometryReader reader = new GeometryReader();
+            Geometry geometry = reader.read(wkt);
             return geometry.getEnvelopeInternal();
         } catch (ParseException e) {
             return new Envelope();
@@ -49,9 +49,7 @@ public class EnvelopeUtils {
         try {
             Geometry geom = new ProjectionTransform(projection).transformWKT(wkt);
             return geom.getEnvelopeInternal();
-        } catch (ParseException e) {
-            return new Envelope();
-        } catch (GeometryTransformException e) {
+        } catch (ParseException | GeometryTransformException e) {
             return new Envelope();
         }
     }
