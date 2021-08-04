@@ -10,7 +10,7 @@
 * v4.2.0 - Improve GML reading using GMLAS driver if an xsdSchema is provided
 * v4.2.1 - Add support for curved geometries
 
-## 4.1.0
+## 4.1.x
 
 [See milestone](https://github.com/IGNF/validator/milestone/10?closed=1)
 
