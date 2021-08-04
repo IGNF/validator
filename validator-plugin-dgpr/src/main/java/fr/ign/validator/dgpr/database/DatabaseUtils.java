@@ -15,6 +15,7 @@ import org.locationtech.jts.simplify.DouglasPeuckerSimplifier;
 import org.locationtech.jts.simplify.TopologyPreservingSimplifier;
 
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.tools.EnvelopeUtils;
@@ -32,7 +33,7 @@ public class DatabaseUtils {
     /**
      * WKT Reader Enable projection transform to WKT Geometries
      */
-    public static WKTReader format = new WKTReader();
+    private static final GeometryReader format = new GeometryReader();
 
     /**
      * WKT writer

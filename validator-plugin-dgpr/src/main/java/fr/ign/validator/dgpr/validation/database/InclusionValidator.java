@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.locationtech.jts.io.WKTReader;
 import org.postgresql.util.PSQLException;
 
 import fr.ign.validator.Context;
@@ -31,11 +30,6 @@ public class InclusionValidator implements Validator<Database> {
      * Document
      */
     private Database database;
-
-    /**
-     * WKT Reader Enable projection transform to WKT Geometries
-     */
-    private static WKTReader format = new WKTReader();
 
     /**
      * Ensure feature of high risk are included in any feature of a lower risk

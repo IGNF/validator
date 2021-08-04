@@ -3,11 +3,12 @@
 
 [See milestone](https://github.com/IGNF/validator/milestone/12?closed=1) :
 
-* Upgrade GeoTools and JTS (note that coordinate precision changes for the last decimals in normalized data and geometry errors)
-* Add XSD validation for XML and GML files (PCRS and metadata file)
-* Add support for GML with MultiTable for PCRS
-* Add support for some french projections used in PCRS datasets ("Coniques Conformes Zone 1 to 9")
-* Improve GML reading using GMLAS driver if an xsdSchema is provided
+* v4.2.0 - Upgrade GeoTools and JTS (note that coordinate precision changes for the last decimals in normalized data and geometry errors)
+* v4.2.0 - Add XSD validation for XML and GML files (PCRS and metadata file)
+* v4.2.0 - Add support for GML with MultiTable for PCRS
+* v4.2.0 - Add support for some french projections used in PCRS datasets ("Coniques Conformes Zone 1 to 9")
+* v4.2.0 - Improve GML reading using GMLAS driver if an xsdSchema is provided
+* v4.2.1 - Add support for curved geometries
 
 ## 4.1.x
 

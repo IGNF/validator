@@ -19,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.command.options.OutputProjectionOption;
@@ -29,6 +28,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.exception.PluginNotFoundException;
+import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.io.ModelReader;
 import fr.ign.validator.io.ModelReaderFactory;
@@ -628,7 +628,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
             return;
         }
         String wktExtent = commandLine.getOptionValue("data-extent");
-        WKTReader reader = new WKTReader();
+        GeometryReader reader = new GeometryReader();
         try {
             nativeDataExtent = reader.read(wktExtent);
         } catch (org.locationtech.jts.io.ParseException e) {

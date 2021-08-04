@@ -2,10 +2,11 @@ package fr.ign.validator.model.type;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
-import org.locationtech.jts.io.WKTReader;
+import org.locationtech.jts.io.ParseException;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
 import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
@@ -22,13 +23,13 @@ public class GeometryType extends AttributeType<Geometry> {
 
     public static final String TYPE = "Geometry";
 
+    public static GeometryReader format = new GeometryReader();
+
     public GeometryType() {
         super(Geometry.class);
         addValidator(new GeometryIsValidValidator());
         addValidator(new GeometryDataExtentValidator());
     }
-
-    public static WKTReader format = new WKTReader();
 
     @Override
     public String getTypeName() {
@@ -48,11 +49,12 @@ public class GeometryType extends AttributeType<Geometry> {
 
         String wkt = (String) value;
         try {
-            Geometry geometry = format.read(wkt);
-            return geometry;
-        } catch (Exception e) {
+            return format.read(wkt);
+        } catch (ParseException e) {
             throw new IllegalArgumentException(
-                String.format("Format de géométrie invalide : {}", wkt)
+                String.format(
+                    "Fail to parse geometry from : %1s", wkt
+                ), e
             );
         }
     }
