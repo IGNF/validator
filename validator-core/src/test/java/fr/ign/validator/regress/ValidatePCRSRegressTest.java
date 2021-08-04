@@ -101,8 +101,7 @@ public class ValidatePCRSRegressTest {
         /*
          * WKT with CURVEPOLYGON is not supported by current JTS version.
          */
-        assertEquals(6, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
-        assertEquals(6, report.getErrorsByLevel(ErrorLevel.ERROR).size());
+        assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
         assertEquals(6, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
         assertEquals(6, report.getErrorsByLevel(ErrorLevel.WARNING).size());
