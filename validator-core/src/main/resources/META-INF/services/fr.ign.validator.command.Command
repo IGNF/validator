@@ -5,3 +5,4 @@ fr.ign.validator.command.ProjectionListCommand
 fr.ign.validator.command.ReadUrlCommand
 fr.ign.validator.command.VersionCommand
 fr.ign.validator.command.ErrorConfigCommand
+fr.ign.validator.command.SleepCommand
