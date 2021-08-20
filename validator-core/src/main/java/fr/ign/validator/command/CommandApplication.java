@@ -118,7 +118,7 @@ public class CommandApplication {
         if (command == null) {
             System.err.println("command '" + commandName + "' not found");
             displayHelp();
-            return 0;
+            return 1;
         }
         try {
             return command.run(Arrays.copyOfRange(args, 1, args.length));
