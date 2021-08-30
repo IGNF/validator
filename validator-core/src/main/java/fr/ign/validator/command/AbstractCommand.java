@@ -1,6 +1,7 @@
 package fr.ign.validator.command;
 
 import java.io.PrintStream;
+import java.io.PrintWriter;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -61,12 +62,12 @@ public abstract class AbstractCommand implements Command {
          * parse command line options and handle command line options error
          */
         CommandLineParser parser = new DefaultParser();
+        if (containsHelp(args)) {
+            displayHelp(options);
+            return 0;
+        }
         try {
             CommandLine commandLine = parser.parse(options, args);
-            if (commandLine.hasOption("help")) {
-                displayHelp(options);
-                return 1;
-            }
             configureNetworkingAndProxy(commandLine);
             parseCustomOptions(commandLine);
         } catch (ParseException e) {
@@ -85,6 +86,21 @@ public abstract class AbstractCommand implements Command {
             e.printStackTrace();
             return 1;
         }
+    }
+
+    /**
+     * True if command args contains -h or --help.
+     * 
+     * @param args
+     * @return
+     */
+    private boolean containsHelp(String[] args) {
+        for (String arg : args) {
+            if (arg.equals("-h") || arg.equals("--help")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -115,8 +131,9 @@ public abstract class AbstractCommand implements Command {
      */
     private void displayHelp(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.setWidth(120);
-        formatter.printHelp(getName(), options);
+        PrintWriter pw = new PrintWriter(stdout);
+        formatter.printHelp(pw, 120, getName(), null, options, 0, 0, null, false);
+        pw.flush();
     }
 
     /**
