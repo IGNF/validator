@@ -2,6 +2,7 @@ package fr.ign.validator.cnig.regress;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -590,6 +591,52 @@ public class CnigValidatorRegressTest {
             File file = csvFiles.get(index++);
             assertEquals("SERVITUDE_ACTE_SUP.csv", file.getName());
         }
+    }
+
+    /**
+     * Test to avoid production of nomsuplitt='null'
+     *
+     * @throws Exception
+     */
+    @Test
+    public void test213000896_INT1_83044_20160130() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_INT1_2016");
+        File documentPath = CnigRegressHelper.getSampleDocument("213000896_INT1_83044_20160130", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
+        Assert.assertEquals("213000896_INT1_83044_20160130", document.getDocumentName());
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("213000896_INT1_83044_20160130");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+
+        /* check CSV files */
+        File dataDirectory = context.getDataDirectory();
+
+        // ensure that nomsuplitt is null (not "null") in INT1_GENERATEUR_SUP_S
+        {
+            File generateurSupS = new File(dataDirectory, "INT1_GENERATEUR_SUP_S.csv");
+            assertTrue(generateurSupS.exists());
+            TableReader reader = TableReader.createTableReader(generateurSupS, StandardCharsets.UTF_8);
+            int indexNomSupLitt = reader.findColumnRequired("NOMSUPLITT");
+            while (reader.hasNext()) {
+                String[] row = reader.next();
+                assertNull(row[indexNomSupLitt]);
+            }
+        }
+
     }
 
     /**
