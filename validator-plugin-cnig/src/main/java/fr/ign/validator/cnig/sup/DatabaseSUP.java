@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -300,6 +301,9 @@ public class DatabaseSUP {
     public List<String> getFichiers(List<ActeServitude> actes) {
         HashSet<String> result = new HashSet<>(actes.size());
         for (ActeServitude acte : actes) {
+            if (StringUtils.isEmpty(acte.fichier)) {
+                continue;
+            }
             result.add(acte.fichier);
         }
         return new ArrayList<>(result);
@@ -371,6 +375,9 @@ public class DatabaseSUP {
     public List<String> getNomSupLitts(List<Servitude> servitudes) {
         HashSet<String> result = new HashSet<>(servitudes.size());
         for (Servitude servitude : servitudes) {
+            if (StringUtils.isEmpty(servitude.nomsuplitt)) {
+                continue;
+            }
             result.add(servitude.nomsuplitt);
         }
         return new ArrayList<>(result);
