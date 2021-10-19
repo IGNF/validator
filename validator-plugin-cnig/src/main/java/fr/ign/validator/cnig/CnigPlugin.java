@@ -7,6 +7,7 @@ import fr.ign.validator.cnig.process.DocUrbaComPostProcess;
 import fr.ign.validator.cnig.process.DocUrbaPostProcess;
 import fr.ign.validator.cnig.process.PerimetreScotPostProcess;
 import fr.ign.validator.cnig.process.SupRelationsPostProcess;
+import fr.ign.validator.cnig.validation.attribute.GeometryIsStreamableValidator;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;

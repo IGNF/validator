@@ -24,6 +24,7 @@ import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.exception.ValidatorFatalError;
+import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -143,6 +144,11 @@ public class Context {
      * Allow using faster simplification against topologicaly safe simplification
      */
     private Boolean dgprSafeMode;
+    
+    /**
+     * List of threshold to detect overdescribed geometries
+     */
+    private GeometryComplexityThreshold complexityThreshold;
 
     public Context() {
         registerDefaultListeners();
@@ -775,5 +781,13 @@ public class Context {
     public void setDgprSafeMode(boolean safeSimplification) {
         this.dgprSafeMode = safeSimplification;
     }
+
+	public GeometryComplexityThreshold getComplexityThreshold() {
+		return complexityThreshold;
+	}
+
+	public void setComplexityThreshold(GeometryComplexityThreshold complexityThreshold) {
+		this.complexityThreshold = complexityThreshold;
+	}
 
 }

@@ -96,4 +96,12 @@ public class CnigErrorCodes {
     public static final ErrorCode CNIG_METADATA_KEYWORD_INVALID = ErrorCode.valueOf(
         "CNIG_METADATA_KEYWORD_INVALID"
     );
+
+    public static final ErrorCode CNIG_GEOMETRY_COMPLEXITY_WARNING = ErrorCode.valueOf(
+        "CNIG_GEOMETRY_COMPLEXITY_WARNING"
+    );
+    public static final ErrorCode CNIG_GEOMETRY_COMPLEXITY_ERROR = ErrorCode.valueOf(
+        "CNIG_GEOMETRY_COMPLEXITY_ERROR"
+    );
+
 }
