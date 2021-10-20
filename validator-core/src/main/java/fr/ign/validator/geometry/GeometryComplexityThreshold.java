@@ -1,107 +1,107 @@
 package fr.ign.validator.geometry;
 
+/**
+ * Defines treshold to determine geometry complexity
+ * - maximum point allowed
+ * - maximum ring (holes) allowed
+ * - maximum parts (multigeometry) allowed
+ * - maximum density (number of point by meters used to describe the geometry)
+ * 
+ * All threshold work by couple a warning one or an error one
+ * 
+ * @author cbouche
+ *
+ */
 public class GeometryComplexityThreshold {
 
-	private boolean testSkiped;
+	private int    warningPointCount;
+	private int    warningRingCount;
+	private int    warningPartCount;
+	private double warningDensity;
 
-	private int    warnPoinCnt = 50000;
-	private int    warnRingCnt = 500;
-	private int    warnPartCnt = 500;
-	private double warnDensity = 0.1;
-
-	private int    errPoinCnt = 200000;
-	private int    errRingCnt = 1000;
-	private int    errPartCnt = 1000;
-	private double errDensity = 10;
-
-	public GeometryComplexityThreshold() {
-		testSkiped = true;
-	}
+	private int    errorPointCount;
+	private int    errorRingCount;
+	private int    errorPartCount;
+	private double errorDensity;
 
 	public GeometryComplexityThreshold(
-			int warnPoinCnt, int warnRingCnt, int warnPartCnt, double warnDensity,
-			int errPoinCnt, int errRingCnt, int errPartCnt, double errDensity
+			int warningPointCount, int warningRingCount, int warningPartCount, double warningDensity,
+			int errorPointCount, int errorRingCount, int errorPartCount, double errorDensity
 	) {
 
-		testSkiped = false;
+		this.warningPointCount = warningPointCount;
+		this.warningRingCount = warningRingCount;
+		this.warningPartCount = warningPartCount;
+		this.warningDensity = warningDensity;
 
-		this.warnPoinCnt = warnPoinCnt;
-		this.warnRingCnt = warnRingCnt;
-		this.warnPartCnt = warnPartCnt;
-		this.warnDensity = warnDensity;
-
-		this.errPoinCnt = errPoinCnt;
-		this.errRingCnt = errRingCnt;
-		this.errPartCnt = errPartCnt;
-		this.errDensity = errDensity;
+		this.errorPointCount = errorPointCount;
+		this.errorRingCount = errorRingCount;
+		this.errorPartCount = errorPartCount;
+		this.errorDensity = errorDensity;
 	}
 
-	public boolean isTestSkiped() {
-		return testSkiped;
+	public int getWarningPointCount() {
+		return warningPointCount;
 	}
 
-	public int getWarnPoinCnt() {
-		return warnPoinCnt;
+	public void setWarningPointCount(int warningPointCount) {
+		this.warningPointCount = warningPointCount;
 	}
 
-	public void setWarnPoinCnt(int warnPoinCnt) {
-		this.warnPoinCnt = warnPoinCnt;
+	public int getWarningRingCount() {
+		return warningRingCount;
 	}
 
-	public double getWarnDensity() {
-		return warnDensity;
+	public void setWarningRingCount(int warningRingCount) {
+		this.warningRingCount = warningRingCount;
 	}
 
-	public void setWarnDensity(double warnDensity) {
-		this.warnDensity = warnDensity;
+	public int getWarningPartCount() {
+		return warningPartCount;
 	}
 
-	public int getWarnRingCnt() {
-		return warnRingCnt;
+	public void setWarningPartCount(int warningPartCount) {
+		this.warningPartCount = warningPartCount;
 	}
 
-	public void setWarnRingCnt(int warnRingCnt) {
-		this.warnRingCnt = warnRingCnt;
+	public double getWarningDensity() {
+		return warningDensity;
 	}
 
-	public int getWarnPartCnt() {
-		return warnPartCnt;
+	public void setWarningDensity(double warningDensity) {
+		this.warningDensity = warningDensity;
 	}
 
-	public void setWarnPartCnt(int warnPartCnt) {
-		this.warnPartCnt = warnPartCnt;
+	public int getErrorPointCount() {
+		return errorPointCount;
 	}
 
-	public int getErrPoinCnt() {
-		return errPoinCnt;
+	public void setErrorPointCount(int errorPointCount) {
+		this.errorPointCount = errorPointCount;
 	}
 
-	public void setErrPoinCnt(int errPoinCnt) {
-		this.errPoinCnt = errPoinCnt;
+	public int getErrorRingCount() {
+		return errorRingCount;
 	}
 
-	public double getErrDensity() {
-		return errDensity;
+	public void setErrorRingCount(int errorRingCount) {
+		this.errorRingCount = errorRingCount;
 	}
 
-	public void setErrDensity(double errDensity) {
-		this.errDensity = errDensity;
+	public int getErrorPartCount() {
+		return errorPartCount;
 	}
 
-	public int getErrRingCnt() {
-		return errRingCnt;
+	public void setErrorPartCount(int errorPartCount) {
+		this.errorPartCount = errorPartCount;
 	}
 
-	public void setErrRingCnt(int errRingCnt) {
-		this.errRingCnt = errRingCnt;
+	public double getErrorDensity() {
+		return errorDensity;
 	}
 
-	public int getErrPartCnt() {
-		return errPartCnt;
-	}
-
-	public void setErrPartCnt(int errPartCnt) {
-		this.errPartCnt = errPartCnt;
+	public void setErrorDensity(double errorDensity) {
+		this.errorDensity = errorDensity;
 	}
 
 }

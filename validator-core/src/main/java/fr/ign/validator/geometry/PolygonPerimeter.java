@@ -10,8 +10,8 @@ import org.locationtech.jts.geom.Geometry;
 public class PolygonPerimeter {
 
 
-	public static int getPerimeter(Geometry geometry, String srid) {
-		return 1;
+	public static double getPerimeter(Geometry geometry, String srid) {
+		return geometry.getLength();
 	}
 
 }

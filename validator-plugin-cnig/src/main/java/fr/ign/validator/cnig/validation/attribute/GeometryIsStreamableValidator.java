@@ -41,20 +41,30 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
             return "";
         }
 
+        int holeCount = 0;
+        for (int i = 0; i < geometry.getNumGeometries(); i++) {
+            holeCount += ((Polygon) geometry.getGeometryN(i)).getNumInteriorRing();
+		}
+ 
         if (geometry.getNumPoints() > pointCount) {
-        	return String.format("Nombre de sommets > %d", pointCount);
-        }
-
-        if (((Polygon) geometry).getNumInteriorRing() > ringCount) {
-        	return String.format("Nombre d’anneaux > %d", ringCount);
+        	return String.format("Nombre de sommets %d > %d", geometry.getNumPoints(), pointCount);
         }
 
         if (geometry.getNumGeometries() > partCount) {
-        	return String.format("Nombre de parties > %d", partCount);
+        	return String.format("Nombre de parties %d > %d", geometry.getNumGeometries(), partCount);
         }
 
-        if (geometry.getNumPoints() / PolygonPerimeter.getPerimeter(geometry, srid) > density) {
-        	return String.format("Nombre moyen de point par m > %f", density);
+        if (holeCount > ringCount) {
+        	return String.format(
+        			"Nombre d’anneaux %d > %d",
+        			holeCount, ringCount
+			);
+        }
+
+        Double dst = (double) (geometry.getNumPoints() / PolygonPerimeter.getPerimeter(geometry, srid));
+
+        if (dst > density) {
+        	return String.format("Nombre moyen de point par m %f > %f", dst , density);
         }
 
         return "";
@@ -63,6 +73,10 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 
 	@Override
 	public void validate(Context context, Attribute<Geometry> attribute) {
+		
+		if (context.getComplexityThreshold() == null) {
+			return;
+		}
 
 		// get params context SRID
 		srid = "2154";
@@ -74,10 +88,10 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 
         String errorType = isValid(
         		geometry,
-        		context.getComplexityThreshold().getErrPoinCnt(),
-        		context.getComplexityThreshold().getErrRingCnt(),
-        		context.getComplexityThreshold().getErrPartCnt(),
-        		context.getComplexityThreshold().getErrDensity()
+        		context.getComplexityThreshold().getErrorPointCount(),
+        		context.getComplexityThreshold().getErrorRingCount(),
+        		context.getComplexityThreshold().getErrorPartCount(),
+        		context.getComplexityThreshold().getErrorDensity()
 		);
 
         if (!errorType.equals("")) {
@@ -90,10 +104,10 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 
         errorType = isValid(
         		geometry,
-        		context.getComplexityThreshold().getWarnPoinCnt(),
-        		context.getComplexityThreshold().getWarnRingCnt(),
-        		context.getComplexityThreshold().getWarnPartCnt(),
-        		context.getComplexityThreshold().getWarnDensity()
+        		context.getComplexityThreshold().getWarningPointCount(),
+        		context.getComplexityThreshold().getWarningRingCount(),
+        		context.getComplexityThreshold().getWarningPartCount(),
+        		context.getComplexityThreshold().getWarningDensity()
 		);
 
         if (!errorType.equals("")) {

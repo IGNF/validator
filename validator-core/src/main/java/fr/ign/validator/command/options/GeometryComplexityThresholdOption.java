@@ -36,7 +36,7 @@ public class GeometryComplexityThresholdOption {
         {
             Option option = new Option(
                 null, OPTION_NAME, true,
-                "List of threshold to survey geometry complexity : [[point, ring, part, density], [point, ring, part, density]]"
+                "List of threshold to survey geometry complexity : [[warningPointCount, warningRingCount, warningPartCount, warningDensity], [errorPointCount, errorRingCount, errorPartCount, errorDensity]]"
             );
             option.setRequired(false);
             options.addOption(option);
@@ -52,39 +52,64 @@ public class GeometryComplexityThresholdOption {
      * @throws ParseException
      */
     public static GeometryComplexityThreshold parseCustomOptions(CommandLine commandLine) throws ParseException {
+
         if (!commandLine.hasOption(OPTION_NAME)) {
             return null;
         }
-        
+
         String parsedOption = (String) commandLine.getParsedOptionValue(OPTION_NAME);
 
         String regexpStr = "\\[\\[(.*]*)], \\[(.*]*)]]";
         Pattern regexp = Pattern.compile(regexpStr);
 
         Matcher matcher = regexp.matcher(parsedOption);
-        if (matcher.find()) {
-            MatchResult result = matcher.toMatchResult();
-
-            String[] paramsWarning = result.group(2).split(",");
-            int param1 = Integer.parseInt(paramsWarning[0]);
-            int param2 = Integer.parseInt(paramsWarning[1]);
-            int param3 = Integer.parseInt(paramsWarning[2]);
-            double param4 = Double.parseDouble(paramsWarning[3]);
-
-            String[] paramsError = result.group(3).split(",");
-            int param5 = Integer.parseInt(paramsError[0]);
-            int param6 = Integer.parseInt(paramsError[1]);
-            int param7 = Integer.parseInt(paramsError[2]);
-            double param8 = Double.parseDouble(paramsError[3]);
-
-            return new GeometryComplexityThreshold(
-            		param1, param2, param3, param4,
-            		param5, param6, param7, param8
-    		);
-
+        if (!matcher.find()) {
+            String message = String.format(
+            		"Invalid threshold format, %1s given for %1s",
+            		parsedOption, OPTION_NAME
+            );
+            throw new ParseException(message);
         }
 
-        return new GeometryComplexityThreshold();
+        MatchResult result = matcher.toMatchResult();
+
+        Double[] warningParameters = parseParameters(result.group(1).split(","));
+        Double[] errorParameters = parseParameters(result.group(2).split(","));
+
+       
+        if (warningParameters == null || errorParameters == null) {
+            String message = String.format(
+            		"Invalid threshold format, %1s given for %1s",
+            		parsedOption, OPTION_NAME
+            );
+            throw new ParseException(message);
+        }
+
+        return new GeometryComplexityThreshold(
+        		warningParameters[0].intValue(), warningParameters[1].intValue(),
+        		warningParameters[2].intValue(), warningParameters[3],
+        		errorParameters[0].intValue(), errorParameters[1].intValue(),
+        		errorParameters[2].intValue(), errorParameters[3]
+		);
+    }
+    
+    private static Double[] parseParameters(String[] params) {
+    	Double[] parameters = new Double[4];
+
+    	if (params.length != 4) {
+    		return null;
+        }
+
+        try {
+        	parameters[0] = Double.parseDouble(params[0].trim());
+        	parameters[1] = Double.parseDouble(params[1].trim());
+        	parameters[2] = Double.parseDouble(params[2].trim());
+        	parameters[3] = Double.parseDouble(params[3].trim());
+        } catch (NumberFormatException e) {
+        	return null;
+        }
+
+		return parameters;
     }
     
 
