@@ -74,6 +74,7 @@ public class CnigPlugin implements Plugin {
         context.addListener(new InseeValidator());
         context.addListener(new AtLeastOneWritingMaterialValidator());
         context.addListener(new CustomizeIdurbaPreProcess());
+        context.addListener(new GeometryIsStreamableValidator());
 
         /*
          * Extends metadata validation

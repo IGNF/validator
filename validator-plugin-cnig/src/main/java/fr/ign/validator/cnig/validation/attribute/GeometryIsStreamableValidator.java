@@ -73,7 +73,7 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 
 	@Override
 	public void validate(Context context, Attribute<Geometry> attribute) {
-		
+
 		if (context.getComplexityThreshold() == null) {
 			return;
 		}
@@ -136,6 +136,9 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
             if (fileModel instanceof SingleTableModel) {
                 FeatureType featureType = ((TableModel) fileModel).getFeatureType();
                 GeometryType geometryType = featureType.getDefaultGeometry();
+                if (geometryType == null) {
+                	continue;
+                }
 	            log.info(MARKER, "Ajout de GeometryIsStreamable à {}", geometryType.getName());
 	            geometryType.addValidator(new GeometryIsStreamableValidator());
             }

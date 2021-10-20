@@ -33,6 +33,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -224,6 +225,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, CoreErrorCodes.FILE_MISSING_MANDATORY, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_NOT_FOUND, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR, report);
         ReportAssert.assertCount(6, ErrorLevel.ERROR, report);
 
         /*
@@ -231,6 +233,7 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
         ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
 
         /*
@@ -254,6 +257,12 @@ public class CnigValidatorRegressTest {
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_CC_2017");
         File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517", folder);
         Context context = createContext(documentPath);
+        // add Complexity Threshold option
+        context.setComplexityThreshold(new GeometryComplexityThreshold(
+        		 100, 5, 5, 1,
+        		5000, 4, 4, 1
+		));
+
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -270,18 +279,15 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(19, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
-        ReportAssert.assertCount(1 + 2 + 2 + 19, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR, report);
+        ReportAssert.assertCount(1 + 2 + 2 + 19 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        ReportAssert.assertCount(3, ErrorLevel.WARNING, report);
-
-        /*
-         * check some infos
-         */
-        ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+        ReportAssert.assertCount(2, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
+        ReportAssert.assertCount(3 + 2, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json

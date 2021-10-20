@@ -215,5 +215,37 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
         );
     }
+    
+    
+    
+    @Test
+    public void testWGS84Warning() throws ParseException {
 
+        context.setComplexityThreshold(new GeometryComplexityThreshold(
+        		24, 1, 1, 0.3,
+        		24, 1, 1, 0.3
+		));
+
+        String wkt = "POLYGON((7.26600766 43.70223413, 7.26631879 43.70096984, 7.26664066 43.70095433,"
+        		+ "7.26676940 43.70097760, 7.26683378 43.70083022, 7.26710200 43.70095433,"
+        		+ "7.26738095 43.70086125, 7.26743459 43.70100087, 7.26756334 43.70086125,"
+        		+ "7.26764917 43.70096208, 7.26771354 43.70117151, 7.26747751 43.70131888,"
+        		+ "7.26705908 43.70147401, 7.26714491 43.70158260, 7.26708054 43.70171446,"
+        		+ "7.26682305 43.70187734, 7.26678013 43.70198593, 7.26673722 43.70214105,"
+        		+ "7.26668357 43.70220311, 7.26655483 43.70227291, 7.26642608 43.70228842,"
+        		+ "7.26631879 43.70230394, 7.26611495 43.70236599, 7.26600766 43.70223413))";
+
+        GeometryType type = new GeometryType();
+        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
+        validator.validate(context, attribute);
+        Geometry geometry = attribute.getBindedValue();
+
+        Assert.assertNotNull(geometry);
+        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+        assertEquals(
+        		"",
+        		report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
+        );
+    }
+    
 }
