@@ -259,8 +259,8 @@ public class CnigValidatorRegressTest {
         Context context = createContext(documentPath);
         // add Complexity Threshold option
         context.setComplexityThreshold(new GeometryComplexityThreshold(
-        		 100, 5, 5, 1,
-        		5000, 4, 4, 1
+        		 100, 5, 5, 0.08,
+        		5000, 4, 4, 0.1
 		));
 
         Document document = new Document(documentModel, documentPath);
@@ -286,8 +286,8 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        ReportAssert.assertCount(2, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
-        ReportAssert.assertCount(3 + 2, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
+        ReportAssert.assertCount(3 + 6, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json

@@ -17,6 +17,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.geometry.PolygonPerimeter;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.GeometryType;
@@ -32,8 +33,8 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("GeometryIsStreamable");
-	
-	private String srid;
+
+    private Projection geometryProjection;
 
     public String isValid(Geometry geometry, int pointCount, int ringCount, int partCount, double density) {
 
@@ -60,8 +61,12 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
         			holeCount, ringCount
 			);
         }
+        
+        if (!PolygonPerimeter.isProjectionInMeters(geometryProjection)) {
+        	return "";
+        }
 
-        Double dst = (double) (geometry.getNumPoints() / PolygonPerimeter.getPerimeter(geometry, srid));
+        Double dst = (double) (geometry.getNumPoints() / PolygonPerimeter.getPerimeter(geometry));
 
         if (dst > density) {
         	return String.format("Nombre moyen de point par m %f > %f", dst , density);
@@ -78,11 +83,7 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 			return;
 		}
 
-		// get params context SRID
-		srid = "2154";
-        if (context.getProjection() != null) {
-            srid = context.getProjection().getSrid();
-        }
+		geometryProjection = context.getProjection();
 
         Geometry geometry = attribute.getBindedValue();
 

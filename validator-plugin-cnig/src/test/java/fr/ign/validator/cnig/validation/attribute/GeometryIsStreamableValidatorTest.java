@@ -13,6 +13,8 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.validation.CnigValidatorTestBase;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
+import fr.ign.validator.geometry.ProjectionList;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
@@ -177,6 +179,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		15, 1, 1, 0.4
 		));
 
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
+
         String wkt = "POLYGON((40 40, 20 45, 21 44, 22 43, 23 42, 24 41, 25 40, 25 40, 26 39, 27 38, 28 37, 29 36, 30 35, 31 34, 40 40))";
 
         GeometryType type = new GeometryType();
@@ -201,6 +207,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		15, 1, 1, 0.3
 		));
 
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
+
         String wkt = "POLYGON((40 40, 20 45, 21 44, 22 43, 23 42, 24 41, 25 40, 25 40, 26 39, 27 38, 28 37, 29 36, 30 35, 31 34, 40 40))";
 
         GeometryType type = new GeometryType();
@@ -219,11 +229,11 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
     
     
     @Test
-    public void testWGS84Warning() throws ParseException {
+    public void testEPSG4326Warning() throws ParseException {
 
         context.setComplexityThreshold(new GeometryComplexityThreshold(
-        		24, 1, 1, 0.3,
-        		24, 1, 1, 0.3
+        		24, 1, 1, 0.03,
+        		24, 1, 1, 0.03
 		));
 
         String wkt = "POLYGON((7.26600766 43.70223413, 7.26631879 43.70096984, 7.26664066 43.70095433,"
@@ -235,17 +245,17 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		+ "7.26668357 43.70220311, 7.26655483 43.70227291, 7.26642608 43.70228842,"
         		+ "7.26631879 43.70230394, 7.26611495 43.70236599, 7.26600766 43.70223413))";
 
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:4326");
+        context.setProjection(projection);
+
         GeometryType type = new GeometryType();
         Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
         validator.validate(context, attribute);
         Geometry geometry = attribute.getBindedValue();
 
         Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
-//        assertEquals(
-//        		"",
-//        		report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
-//        );
+        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
     }
     
 }
