@@ -1,5 +1,7 @@
 package fr.ign.validator.geometry;
 
+import java.util.regex.Pattern;
+
 import org.geotools.referencing.CRS;
 import org.locationtech.jts.geom.Geometry;
 
@@ -20,12 +22,10 @@ public class PolygonPerimeter {
 		}
 
         String regexpStr = "UNIT\\[\"m\"";
+        Pattern pattern = Pattern.compile(regexpStr, Pattern.MULTILINE);
+        String wkt = projection.getCRS().toWKT();
 
-		if (projection.getCRS().toWKT().matches(regexpStr)) {
-			return false;
-		}
-
-		return true;
+		return pattern.matcher(wkt).find();
 	}
 
 
