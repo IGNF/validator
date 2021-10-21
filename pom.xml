@@ -55,7 +55,6 @@
 
 		<!-- sonarqube -->
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.coverage.jacoco.xmlReportPaths>${project.buildDir}/validator-core/target/site/jacoco/jacoco.xml,${project.buildDir}/validator-plugin-cnig/target/site/jacoco/jacoco.xml,${project.buildDir}/validator-plugin-dgpr/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<organization>
 		<name>IGN - Service RDS</name>

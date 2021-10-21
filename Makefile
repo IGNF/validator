@@ -27,7 +27,7 @@ sonar: coverage
 
 .PHONY: coverage
 coverage:
-	mvn clean package
+	mvn clean package -Dmaven.test.failure.ignore=true
 	mvn jacoco:report
 
 .PHONY: clean
