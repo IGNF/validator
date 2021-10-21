@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.ign.validator</groupId>
@@ -51,6 +52,10 @@
 		<!-- JDK 8 features -->
 		<javax.annotation.version>1.3.2</javax.annotation.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
+
+		<!-- sonarqube -->
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.coverage.jacoco.xmlReportPaths>${project.buildDir}/validator-core/target/site/jacoco/jacoco.xml,${project.buildDir}/validator-plugin-cnig/target/site/jacoco/jacoco.xml,${project.buildDir}/validator-plugin-dgpr/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<organization>
 		<name>IGN - Service RDS</name>
@@ -327,8 +332,7 @@
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
-					<argLine> --illegal-access=permit
-					</argLine>
+					<argLine>@{argLine} --illegal-access=permit</argLine>
 				</configuration>
 			</plugin>
 
@@ -336,6 +340,7 @@
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
 			</plugin>
+
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -349,6 +354,7 @@
 					</configuration>
 				</plugin>
 
+				<!-- mvn release:prepare -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
@@ -358,6 +364,7 @@
 					</configuration>
 				</plugin>
 
+				<!-- mvn formatter:format -->
 				<plugin>
 					<groupId>net.revelc.code.formatter</groupId>
 					<artifactId>formatter-maven-plugin</artifactId>
@@ -366,9 +373,43 @@
 						<configFile>${project.parent.basedir}/eclipse/formatter-config.xml</configFile>
 					</configuration>
 				</plugin>
+
+
+				<!-- coverage -->
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.6</version>
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 
+
 	</build>
 
+	<profiles>
+		<profile>
+			<id>coverage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
