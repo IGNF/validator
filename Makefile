@@ -21,6 +21,15 @@ test:
 build:
 	mvn clean package -Dmaven.test.skip=true
 
+.PHONY: sonar
+sonar: coverage
+	mvn sonar:sonar
+
+.PHONY: coverage
+coverage:
+	mvn clean package -Dmaven.test.failure.ignore=true
+	mvn jacoco:report
+
 .PHONY: clean
 clean:
 	mvn clean
