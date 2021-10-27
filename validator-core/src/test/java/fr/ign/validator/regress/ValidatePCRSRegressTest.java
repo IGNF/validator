@@ -88,6 +88,31 @@ public class ValidatePCRSRegressTest {
     }
 
     @Test
+    public void testJeuxTestFixed() throws Exception {
+        File documentPath = getSampleDocument("pcrs-jeux-test-fixed");
+
+        Document document = new Document(documentModel, documentPath);
+        File validationDirectory = new File(documentPath.getParentFile(), "validation");
+        validationDirectory.mkdirs();
+        context.setValidationDirectory(validationDirectory);
+
+        document.validate(context);
+
+        assertEquals(0, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+        assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
+
+        assertEquals(7, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(7, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+
+        /*
+         * Ensure that validation database is correctly loaded
+         */
+        Database database = Database.createDatabase(context, false);
+        assertEquals(1, database.getCount("EmpriseEchangePCRS"));
+        assertEquals(2916, database.getCount("AffleurantPCRS"));
+    }
+
+    @Test
     public void testLyon01() throws Exception {
         File documentPath = getSampleDocument("pcrs-lyon-01");
 
