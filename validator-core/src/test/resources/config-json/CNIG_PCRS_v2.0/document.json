@@ -18,27 +18,11 @@
 			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
 			"tables": [
 				{
-					"name": "AffleurantPCRS",
+					"name": "EmpriseDisponibilitePCRS",
 					"tableModel": "auto"
 				},
 				{
-					"name": "AffleurantGeometriquePCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "AffleurantEnveloppePCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "AffleurantSymbolePCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "AffleurantPointPCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "ArbrePCRS",
+					"name": "InitiativePCRS",
 					"tableModel": "auto"
 				},
 				{
@@ -46,15 +30,35 @@
 					"tableModel": "auto"
 				},
 				{
-					"name": "FacadePCRS",
+					"name": "TronconVoirie",
 					"tableModel": "auto"
 				},
 				{
-					"name": "LimiteVoiriePCRS",
+					"name": "Commune",
 					"tableModel": "auto"
 				},
 				{
-					"name": "MurPCRS",
+					"name": "HabillagePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageSymbolePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageTextePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageLignesPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillagePointsPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageEnveloppePCRS",
 					"tableModel": "auto"
 				},
 				{
@@ -66,15 +70,7 @@
 					"tableModel": "auto"
 				},
 				{
-					"name": "PilierParticulierPCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "ProeminenceBatiPCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "RailPCRS",
+					"name": "PointLevePCRS",
 					"tableModel": "auto"
 				},
 				{
@@ -82,15 +78,11 @@
 					"tableModel": "auto"
 				},
 				{
-					"name": "SeuilPCRS",
+					"name": "MasqueOpacitePCRS",
 					"tableModel": "auto"
 				},
 				{
-					"name": "HabillageLignesPCRS",
-					"tableModel": "auto"
-				},
-				{
-					"name": "PointLevePCRS",
+					"name": "ObjetGeneriquePCRS",
 					"tableModel": "auto"
 				},
 				{
@@ -98,11 +90,79 @@
 					"tableModel": "auto"
 				},
 				{
-					"name": "HabillageTextePCRS",
+					"name": "LimiteVoiriePCRS",
 					"tableModel": "auto"
 				},
 				{
-					"name": "TronconVoirie",
+					"name": "MarcheEscalierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "FacadePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ProeminenceBatiPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "SeuilPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "MurPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilierRegulierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilierParticulierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "QuaiRailPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "RailPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ArbrePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilePontPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "QuaiFluvioMaritimePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantGeometriquePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantSymbolePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantEnveloppePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantPointPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantLignesPCRS",
 					"tableModel": "auto"
 				}
 			]

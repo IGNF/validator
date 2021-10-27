@@ -76,8 +76,8 @@ public class ValidatePCRSRegressTest {
         assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
         assertEquals(1, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
-        assertEquals(8, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
-        assertEquals(8, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+        assertEquals(7, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(7, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
         /*
          * Ensure that validation database is correctly loaded
@@ -103,6 +103,7 @@ public class ValidatePCRSRegressTest {
          */
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
+        // ex : "La table 'affleurantgeometriquepcrs_enveloppe' n'est pas prévue dans le modèle de validation.
         assertEquals(6, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
         assertEquals(6, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
