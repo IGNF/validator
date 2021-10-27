@@ -76,7 +76,7 @@ public class GeometryComplexityThresholdOption {
         Double[] warningParameters = parseParameters(result.group(1).split(","));
         Double[] errorParameters = parseParameters(result.group(2).split(","));
 
-       
+
         if (warningParameters == null || errorParameters == null) {
             String message = String.format(
             		"Invalid threshold format, %1s given for %1s",
@@ -92,7 +92,7 @@ public class GeometryComplexityThresholdOption {
         		errorParameters[2].intValue(), errorParameters[3]
 		);
     }
-    
+
     private static Double[] parseParameters(String[] params) {
     	Double[] parameters = new Double[4];
 
@@ -111,6 +111,6 @@ public class GeometryComplexityThresholdOption {
 
 		return parameters;
     }
-    
+
 
 }

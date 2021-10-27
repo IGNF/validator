@@ -279,15 +279,15 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(19, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR, report);
-        ReportAssert.assertCount(1 + 2 + 2 + 19 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR, report);
+        ReportAssert.assertCount(1 + 2 + 2 + 19, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
-        ReportAssert.assertCount(3 + 6, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(7, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
+        ReportAssert.assertCount(3 + 7, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json

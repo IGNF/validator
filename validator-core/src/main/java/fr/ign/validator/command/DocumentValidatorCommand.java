@@ -242,7 +242,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         /*
          * plugin-cnig options
          */
-        GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
+        this.complexityThreshold = GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
 
         /*
          * plugin-dgpr options
@@ -295,7 +295,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
         context.setFlatValidation(flat);
 
         /*
-         * dgpr-plugin options
+         * plugin-cnig options
+         */
+        context.setComplexityThreshold(complexityThreshold);
+
+        /*
+         * plugin-dgpr options
          */
         context.setDgprTolerance(dgprTolerance);
         context.setDgprSimplification(dgprSimplification);

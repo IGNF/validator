@@ -18,13 +18,13 @@ import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
-public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
+public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
 	
-    private GeometryIsStreamableValidator validator;
+    private GeometryComplexityValidator validator;
 
     @Before
     public void setUp() {
-        validator = new GeometryIsStreamableValidator();
+        validator = new GeometryComplexityValidator();
 
         report = new InMemoryReportBuilder();
         context = new Context();
@@ -39,7 +39,7 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
 
     @Test
     public void testGeometryOk() throws ParseException {
-
+    	
         String wkt = "POLYGON((0 0, 0 2, 2 2, 2 0, 0 0))";
 
         GeometryType type = new GeometryType();
@@ -58,6 +58,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		4, 1, 1, 10,
         		6, 1, 1, 10
 		));
+
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
     	
         String wkt = "POLYGON((0 0, 0 2, 2 2, 2 0, 0 0))";
 
@@ -82,6 +86,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		3, 1, 1, 100,
         		4, 1, 1, 100
 		));
+
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
     	
         String wkt = "POLYGON((0 0, 0 2, 2 2, 2 0, 0 0))";
 
@@ -107,6 +115,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		10, 1, 1, 100
 		));
 
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
+
         String wkt = "POLYGON((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20))";
 
         GeometryType type = new GeometryType();
@@ -131,6 +143,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		10, 0, 1, 100
 		));
 
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
+
         String wkt = "POLYGON((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20))";
 
         GeometryType type = new GeometryType();
@@ -154,6 +170,10 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		14, 1, 1, 100,
         		14, 1, 2, 100
 		));
+
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
 
         String wkt = "MULTIPOLYGON(((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
 
@@ -225,9 +245,32 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
         );
     }
-    
-    
-    
+
+
+    @Test
+    public void testPointNoError() throws ParseException {
+
+        context.setComplexityThreshold(new GeometryComplexityThreshold(
+        		1, 1, 1, 0.3,
+        		1, 1, 1, 0.3
+		));
+
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
+
+        String wkt = "Point(40 40)";
+
+        GeometryType type = new GeometryType();
+        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
+        validator.validate(context, attribute);
+        Geometry geometry = attribute.getBindedValue();
+
+        Assert.assertNotNull(geometry);
+        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+    }
+
+
     @Test
     public void testEPSG4326Warning() throws ParseException {
 
@@ -235,6 +278,11 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		24, 1, 1, 0.03,
         		24, 1, 1, 0.03
 		));
+
+        // TODO make it work with geodetic distance
+        // http://gitlab.dockerforge.ign.fr/dscr/deneigeuse-v2/blob/master/src/roadgraph/helper/geom.cpp#L257-295
+        // find a equivalent in geotool
+        // https://github.com/geotools/geotools/blob/main/modules/library/referencing/src/main/java/org/geotools/referencing/datum/DefaultEllipsoid.java
 
         String wkt = "POLYGON((7.26600766 43.70223413, 7.26631879 43.70096984, 7.26664066 43.70095433,"
         		+ "7.26676940 43.70097760, 7.26683378 43.70083022, 7.26710200 43.70095433,"
@@ -246,7 +294,7 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         		+ "7.26631879 43.70230394, 7.26611495 43.70236599, 7.26600766 43.70223413))";
 
         ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:4326");
+        Projection projection = projectionRepository.findByCode("CRS:84");
         context.setProjection(projection);
 
         GeometryType type = new GeometryType();
@@ -255,7 +303,7 @@ public class GeometryIsStreamableValidatorTest extends CnigValidatorTestBase {
         Geometry geometry = attribute.getBindedValue();
 
         Assert.assertNotNull(geometry);
-        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+        //assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
     }
     
 }

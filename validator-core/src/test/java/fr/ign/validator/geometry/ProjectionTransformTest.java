@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.io.WKTReader;
 
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.tools.ResourceHelper;

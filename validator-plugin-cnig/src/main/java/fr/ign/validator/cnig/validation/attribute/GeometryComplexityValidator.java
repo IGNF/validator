@@ -1,12 +1,15 @@
 package fr.ign.validator.cnig.validation.attribute;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 import fr.ign.validator.Context;
@@ -14,38 +17,33 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.geometry.PolygonPerimeter;
+import fr.ign.validator.geometry.GeometryLength;
 import fr.ign.validator.model.FeatureType;
-import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.TableModel;
-import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.GeometryType;
+import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
 
 /**
- * Validate a geometry to ensure it will be streamable (complexity control)
+ * Ensure geometry complexity suitable for web broadcasting
  *
  * @author cbouche
  *
  */
-public class GeometryIsStreamableValidator implements Validator<Attribute<Geometry>>, ValidatorListener {
+public class GeometryComplexityValidator implements Validator<Attribute<Geometry>>, ValidatorListener {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("GeometryIsStreamable");
+    public static final Marker MARKER = MarkerManager.getMarker("GeometryComplexityValidator");
 
-    private Projection geometryProjection;
+    private Projection sourceProjection;
 
     public String isValid(Geometry geometry, int pointCount, int ringCount, int partCount, double density) {
 
         if (null == geometry) {
+            log.debug(MARKER, "Skip validate. geometry is null");
             return "";
         }
-
-        int holeCount = 0;
-        for (int i = 0; i < geometry.getNumGeometries(); i++) {
-            holeCount += ((Polygon) geometry.getGeometryN(i)).getNumInteriorRing();
-		}
  
         if (geometry.getNumPoints() > pointCount) {
         	return String.format("Nombre de sommets %d > %d", geometry.getNumPoints(), pointCount);
@@ -55,24 +53,62 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
         	return String.format("Nombre de parties %d > %d", geometry.getNumGeometries(), partCount);
         }
 
+        int holeCount = 0;
+        for (int i = 0; i < geometry.getNumGeometries(); i++) {
+        	if (!(geometry instanceof Polygon)) {
+        		continue;
+        	}
+            holeCount += ((Polygon) geometry.getGeometryN(i)).getNumInteriorRing();
+		}
+
         if (holeCount > ringCount) {
         	return String.format(
         			"Nombre d’anneaux %d > %d",
         			holeCount, ringCount
 			);
         }
-        
-        if (!PolygonPerimeter.isProjectionInMeters(geometryProjection)) {
-        	return "";
-        }
 
-        Double dst = (double) (geometry.getNumPoints() / PolygonPerimeter.getPerimeter(geometry));
 
-        if (dst > density) {
-        	return String.format("Nombre moyen de point par m %f > %f", dst , density);
-        }
+        for (int i = 0; i < geometry.getNumGeometries(); i++) {
+			Geometry part = geometry.getGeometryN(i);
+			List<LineString> lineStrings = getGeometryRings(part);
+			for (LineString lineString : lineStrings) {
+				Double length;
+				try {
+					length = GeometryLength.getPerimeter(lineString, sourceProjection);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return "";
+				}
+				
+				Double lineDensity = (double) (lineString.getNumPoints() / length);
+				if (lineDensity > density) {
+		        	return String.format("Nombre moyen de point par m %f > %f",  lineDensity, density);
+				}
+			}
+		}
 
         return "";
+    }
+    
+ 
+    private List<LineString> getGeometryRings(Geometry geometry) {
+
+    	List<LineString> lineStrings = new ArrayList<LineString>();
+
+    	if (geometry instanceof Polygon) {
+			lineStrings.add(((Polygon) geometry).getExteriorRing());
+			for (int i = 0; i < ((Polygon) geometry).getNumInteriorRing(); i++) {
+				lineStrings.add(((Polygon) geometry).getInteriorRingN(i));
+			}
+		}
+		
+    	if (geometry instanceof LineString) {
+			lineStrings.add((LineString) geometry);
+		}
+
+    	return lineStrings;
     }
 
 
@@ -80,10 +116,11 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 	public void validate(Context context, Attribute<Geometry> attribute) {
 
 		if (context.getComplexityThreshold() == null) {
+            log.debug(MARKER, "Skip validate. ComplexityThreshold is not set.");
 			return;
 		}
 
-		geometryProjection = context.getProjection();
+		sourceProjection = context.getProjection();
 
         Geometry geometry = attribute.getBindedValue();
 
@@ -95,7 +132,7 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
         		context.getComplexityThreshold().getErrorDensity()
 		);
 
-        if (!errorType.equals("")) {
+        if (!StringUtils.isEmpty(errorType)) {
         	context.report(
                 context.createError(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR)
                 	.setMessageParam("TYPE_ERROR", errorType)
@@ -111,7 +148,7 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
         		context.getComplexityThreshold().getWarningDensity()
 		);
 
-        if (!errorType.equals("")) {
+        if (!StringUtils.isEmpty(errorType)) {
             context.report(
                 context.createError(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING)
                 	.setMessageParam("TYPE_ERROR", errorType)
@@ -131,19 +168,22 @@ public class GeometryIsStreamableValidator implements Validator<Attribute<Geomet
 	@Override
 	public void beforeValidate(Context context, Document document) throws Exception {
 
-		List<FileModel> fileModels = document.getDocumentModel().getFileModels();
+		if (context.getComplexityThreshold() == null) {
+            log.info(MARKER, "Skip GeometryIsStreamableValidator. ComplexityThreshold is not set");
+			return;
+		}
 
-        for (FileModel fileModel : fileModels) {
-            if (fileModel instanceof SingleTableModel) {
-                FeatureType featureType = ((TableModel) fileModel).getFeatureType();
-                GeometryType geometryType = featureType.getDefaultGeometry();
-                if (geometryType == null) {
-                	continue;
-                }
-	            log.info(MARKER, "Ajout de GeometryIsStreamable à {}", geometryType.getName());
-	            geometryType.addValidator(new GeometryIsStreamableValidator());
+		List<TableModel> tableModels = ModelHelper.getTableModels(document.getDocumentModel());
+		for (TableModel tableModel : tableModels) {
+		    FeatureType featureType = tableModel.getFeatureType();
+            GeometryType geometryType = featureType.getDefaultGeometry();
+            if (geometryType == null) {
+	            log.info(MARKER, "Skip GeometryIsStreamableValidator. featureType {}", featureType.getName());
+            	continue;
             }
-        }
+            log.info(MARKER, "Add GeometryIsStreamableValidator to featureType {}:{}", featureType.getName(), geometryType.getName());
+            geometryType.addValidator(new GeometryComplexityValidator());
+		}
 
 	}
 
