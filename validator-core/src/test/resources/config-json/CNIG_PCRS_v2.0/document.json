@@ -142,6 +142,10 @@
 					"tableModel": "auto"
 				},
 				{
+					"name": "AffleurantPCRS",
+					"tableModel": "auto"
+				},
+				{
 					"name": "AffleurantGeometriquePCRS",
 					"tableModel": "auto"
 				},
