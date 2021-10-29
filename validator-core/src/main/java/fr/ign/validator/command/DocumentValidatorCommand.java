@@ -195,7 +195,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         StringFixerOptions.buildOptions(options);
         buildFlatOption(options);
         buildPluginsOption(options);
-        
+
         /*
          * plugin-cnig options
          */
@@ -238,7 +238,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         this.stringFixer = StringFixerOptions.parseCommandLine(commandLine);
         parseDataExtent(commandLine);
         parseFlatOption(commandLine);
-        
+
         /*
          * plugin-cnig options
          */

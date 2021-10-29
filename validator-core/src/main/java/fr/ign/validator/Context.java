@@ -144,7 +144,7 @@ public class Context {
      * Allow using faster simplification against topologicaly safe simplification
      */
     private Boolean dgprSafeMode;
-    
+
     /**
      * List of threshold to detect overdescribed geometries
      */
@@ -782,12 +782,12 @@ public class Context {
         this.dgprSafeMode = safeSimplification;
     }
 
-	public GeometryComplexityThreshold getComplexityThreshold() {
-		return complexityThreshold;
-	}
+    public GeometryComplexityThreshold getComplexityThreshold() {
+        return complexityThreshold;
+    }
 
-	public void setComplexityThreshold(GeometryComplexityThreshold complexityThreshold) {
-		this.complexityThreshold = complexityThreshold;
-	}
+    public void setComplexityThreshold(GeometryComplexityThreshold complexityThreshold) {
+        this.complexityThreshold = complexityThreshold;
+    }
 
 }

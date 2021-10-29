@@ -258,10 +258,12 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("19182_CC_20150517", folder);
         Context context = createContext(documentPath);
         // add Complexity Threshold option
-        context.setComplexityThreshold(new GeometryComplexityThreshold(
-        		 100, 5, 5, 0.08,
-        		5000, 4, 4, 0.1
-		));
+        context.setComplexityThreshold(
+            new GeometryComplexityThreshold(
+                100, 5, 5, 0.08,
+                5000, 4, 4, 0.1
+            )
+        );
 
         Document document = new Document(documentModel, documentPath);
         document.validate(context);

@@ -38,7 +38,7 @@ public class GeometryComplexityThresholdOptionTest {
         GeometryComplexityThreshold result = GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
 
         assertNotNull(result);
-        
+
         assertEquals(5000, result.getWarningPointCount());
         assertEquals(600, result.getWarningRingCount());
         assertEquals(500, result.getWarningPartCount());
@@ -52,10 +52,11 @@ public class GeometryComplexityThresholdOptionTest {
 
     @Test
     public void testNoParam() throws ParseException {
-        String[] args = {
-        };
+        String[] args = {};
         CommandLine commandLine = parser.parse(options, args);
-        GeometryComplexityThreshold complexityThreshold = GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
+        GeometryComplexityThreshold complexityThreshold = GeometryComplexityThresholdOption.parseCustomOptions(
+            commandLine
+        );
 
         assertNull(complexityThreshold);
     }
@@ -87,8 +88,8 @@ public class GeometryComplexityThresholdOptionTest {
             "[[5000, 600, 0.1], [100]]"
         };
 
-    	CommandLine commandLine = parser.parse(options, args);
-    	GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
+        CommandLine commandLine = parser.parse(options, args);
+        GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
     }
 
     @Test(expected = ParseException.class)
@@ -100,6 +101,5 @@ public class GeometryComplexityThresholdOptionTest {
         CommandLine commandLine = parser.parse(options, args);
         GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
     }
-
 
 }

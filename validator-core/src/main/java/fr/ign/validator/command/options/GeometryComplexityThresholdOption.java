@@ -18,14 +18,11 @@ import fr.ign.validator.geometry.GeometryComplexityThreshold;
  */
 public class GeometryComplexityThresholdOption {
 
-
-	private static final String OPTION_NAME = "cnig-complexity-tolerance";
-
+    private static final String OPTION_NAME = "cnig-complexity-tolerance";
 
     private GeometryComplexityThresholdOption() {
-        // disabled 
+        // disabled
     }
-
 
     /**
      * Add "cnig-complexity-tolerance" option to command line.
@@ -42,7 +39,6 @@ public class GeometryComplexityThresholdOption {
             options.addOption(option);
         }
     }
-
 
     /**
      * Parse option from command line.
@@ -65,8 +61,8 @@ public class GeometryComplexityThresholdOption {
         Matcher matcher = regexp.matcher(parsedOption);
         if (!matcher.find()) {
             String message = String.format(
-            		"Invalid threshold format, %1s given for %1s",
-            		parsedOption, OPTION_NAME
+                "Invalid threshold format, %1s given for %1s",
+                parsedOption, OPTION_NAME
             );
             throw new ParseException(message);
         }
@@ -76,41 +72,39 @@ public class GeometryComplexityThresholdOption {
         Double[] warningParameters = parseParameters(result.group(1).split(","));
         Double[] errorParameters = parseParameters(result.group(2).split(","));
 
-
         if (warningParameters == null || errorParameters == null) {
             String message = String.format(
-            		"Invalid threshold format, %1s given for %1s",
-            		parsedOption, OPTION_NAME
+                "Invalid threshold format, %1s given for %1s",
+                parsedOption, OPTION_NAME
             );
             throw new ParseException(message);
         }
 
         return new GeometryComplexityThreshold(
-        		warningParameters[0].intValue(), warningParameters[1].intValue(),
-        		warningParameters[2].intValue(), warningParameters[3],
-        		errorParameters[0].intValue(), errorParameters[1].intValue(),
-        		errorParameters[2].intValue(), errorParameters[3]
-		);
+            warningParameters[0].intValue(), warningParameters[1].intValue(),
+            warningParameters[2].intValue(), warningParameters[3],
+            errorParameters[0].intValue(), errorParameters[1].intValue(),
+            errorParameters[2].intValue(), errorParameters[3]
+        );
     }
 
     private static Double[] parseParameters(String[] params) {
-    	Double[] parameters = new Double[4];
+        Double[] parameters = new Double[4];
 
-    	if (params.length != 4) {
-    		return null;
+        if (params.length != 4) {
+            return null;
         }
 
         try {
-        	parameters[0] = Double.parseDouble(params[0].trim());
-        	parameters[1] = Double.parseDouble(params[1].trim());
-        	parameters[2] = Double.parseDouble(params[2].trim());
-        	parameters[3] = Double.parseDouble(params[3].trim());
+            parameters[0] = Double.parseDouble(params[0].trim());
+            parameters[1] = Double.parseDouble(params[1].trim());
+            parameters[2] = Double.parseDouble(params[2].trim());
+            parameters[3] = Double.parseDouble(params[3].trim());
         } catch (NumberFormatException e) {
-        	return null;
+            return null;
         }
 
-		return parameters;
+        return parameters;
     }
-
 
 }
