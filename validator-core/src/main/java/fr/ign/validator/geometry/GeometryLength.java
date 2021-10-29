@@ -15,23 +15,23 @@ import org.opengis.referencing.operation.TransformException;
 import fr.ign.validator.model.Projection;
 
 /**
- * GeometryLength
- * Allow you to determine the length in meter of any geometry
+ * GeometryLength Allow you to determine the length in meter of any geometry
  *
  * @author cbouche
  *
  */
 public class GeometryLength {
 
-	/**
-	 * get perimeter in meter given the source projection
-	 * @param geometry
-	 * @param projection
-	 * @return
-	 * @throws MismatchedDimensionException
-	 * @throws FactoryException
-	 * @throws TransformException
-	 */
+    /**
+     * get perimeter in meter given the source projection
+     * 
+     * @param geometry
+     * @param projection
+     * @return
+     * @throws MismatchedDimensionException
+     * @throws FactoryException
+     * @throws TransformException
+     */
     public static double getPerimeter(Geometry geometry, Projection projection) throws MismatchedDimensionException,
         FactoryException, TransformException {
         if (isProjectionInMeters(projection)) {
@@ -49,9 +49,9 @@ public class GeometryLength {
         return transformed.getLength();
     }
 
-
     /**
-     * get local projection given a CRS:84's geometry 
+     * get local projection given a CRS:84's geometry
+     * 
      * @param geometry
      * @param sourceProjecion
      * @return
@@ -63,14 +63,14 @@ public class GeometryLength {
         MismatchedDimensionException, TransformException {
 
         String format = "PROJCS[\"local transverse mercator\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\","
-        		+ "SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],"
-        		+ "UNIT[\"degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],"
-        		+ "PARAMETER[\"latitude_of_origin\",%s],PARAMETER[\"central_meridian\",%s],"
-        		+ "PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",0],"
-        		+ "PARAMETER[\"false_northing\",0],UNIT[\"Meter\",1]]";
+            + "SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],"
+            + "UNIT[\"degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],"
+            + "PARAMETER[\"latitude_of_origin\",%s],PARAMETER[\"central_meridian\",%s],"
+            + "PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",0],"
+            + "PARAMETER[\"false_northing\",0],UNIT[\"Meter\",1]]";
 
         String wkt = String.format(format, geometry.getCoordinates()[0].getY(), geometry.getCoordinates()[0].getX());
-        
+
         CoordinateReferenceSystem sourceCRS = sourceProjecion.getCRS();
         CoordinateReferenceSystem targetCRS = CRS.parseWKT(wkt);
 
@@ -81,6 +81,7 @@ public class GeometryLength {
 
     /**
      * get geometry in CRS:84 given the source projection
+     * 
      * @param geometry
      * @param sourceProjection
      * @return
@@ -100,9 +101,10 @@ public class GeometryLength {
     }
 
     /**
-     * Ensure given projection is in meter
-     * in order to avoir reprojection for french document's in EPSG:2154
-     * WARNING : the length will be bad for projection like web mercator
+     * Ensure given projection is in meter in order to avoir reprojection for french
+     * document's in EPSG:2154 WARNING : the length will be bad for projection like
+     * web mercator
+     * 
      * @param projection
      * @return
      */

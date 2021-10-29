@@ -9,22 +9,21 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 /**
- * GeometryRings
- * - determine all rings for a given geometry
+ * GeometryRings - determine all rings for a given geometry
  *
  * @author cbouche
  *
  */
 public class GeometryRings {
 
-
-	/**
-	 * get all geometry for a multiple or simple geometry
-	 * @param geometry
-	 * @return
-	 */
+    /**
+     * get all geometry for a multiple or simple geometry
+     * 
+     * @param geometry
+     * @return
+     */
     public static List<LineString> getRings(Geometry geometry) {
-   
+
         List<LineString> rings = new ArrayList<LineString>();
 
         for (int i = 0; i < geometry.getNumGeometries(); i++) {
@@ -36,14 +35,14 @@ public class GeometryRings {
         return rings;
     }
 
-
-	/**
-	 * get all geometry for a multiple or simple geometry
-	 * @param geometry
-	 * @return
-	 */
+    /**
+     * get all geometry for a multiple or simple geometry
+     * 
+     * @param geometry
+     * @return
+     */
     public static List<LineString> getInnerRings(Geometry geometry) {
-   
+
         List<LineString> rings = new ArrayList<LineString>();
 
         for (int i = 0; i < geometry.getNumGeometries(); i++) {
@@ -55,12 +54,11 @@ public class GeometryRings {
         return rings;
     }
 
-
     /**
-     * Determine all rings using the geometry type
-     * - point have no rings
-     * - linestring is a unique ring
-     * - geometry is compose of multiple interior rings and an exterior ring
+     * Determine all rings using the geometry type - point have no rings -
+     * linestring is a unique ring - geometry is compose of multiple interior rings
+     * and an exterior ring
+     * 
      * @param geometry
      * @return
      */
@@ -68,7 +66,7 @@ public class GeometryRings {
         List<LineString> rings = new ArrayList<LineString>();
 
         if (geometry instanceof Point) {
-        	return rings;
+            return rings;
         }
 
         if (geometry instanceof LineString) {
@@ -83,14 +81,13 @@ public class GeometryRings {
         }
 
         return rings;
-	}
-
+    }
 
     /**
-     * Determine all inner rings using the geometry type
-     * - point have no rings
-     * - linestring have no inner rings
-     * - geometry is compose of multiple inner rings and an exterior ring
+     * Determine all inner rings using the geometry type - point have no rings -
+     * linestring have no inner rings - geometry is compose of multiple inner rings
+     * and an exterior ring
+     * 
      * @param geometry
      * @return
      */
@@ -98,11 +95,11 @@ public class GeometryRings {
         List<LineString> rings = new ArrayList<LineString>();
 
         if (geometry instanceof Point) {
-        	return rings;
+            return rings;
         }
 
         if (geometry instanceof LineString) {
-        	return rings;
+            return rings;
         }
 
         if (geometry instanceof Polygon) {
@@ -112,6 +109,6 @@ public class GeometryRings {
         }
 
         return rings;
-	}
+    }
 
 }

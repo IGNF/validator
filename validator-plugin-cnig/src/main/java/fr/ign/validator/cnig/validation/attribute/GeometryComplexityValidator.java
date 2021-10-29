@@ -45,18 +45,18 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
         }
 
         if (geometry.getNumPoints() > pointCount) {
-        	// cnig-plugin-validator: we allow french usage to message error.
+            // cnig-plugin-validator: we allow french usage to message error.
             return String.format("Nombre de sommets %d > %d", geometry.getNumPoints(), pointCount);
         }
 
         if (geometry.getNumGeometries() > partCount) {
-        	// cnig-plugin-validator: we allow french usage to message error.
+            // cnig-plugin-validator: we allow french usage to message error.
             return String.format("Nombre de parties %d > %d", geometry.getNumGeometries(), partCount);
         }
 
         int holeCount = GeometryRings.getInnerRings(geometry).size();
         if (holeCount > ringCount) {
-        	// cnig-plugin-validator: we allow french usage to message error.
+            // cnig-plugin-validator: we allow french usage to message error.
             return String.format(
                 "Nombre d’anneaux %d > %d",
                 holeCount, ringCount
@@ -66,24 +66,23 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
         List<LineString> lineStrings = GeometryRings.getRings(geometry);
         for (LineString lineString : lineStrings) {
             Double length;
-        	try {
+            try {
                 length = GeometryLength.getPerimeter(lineString, sourceProjection);
             } catch (Exception e) {
-            	throw new RuntimeException("GeometryComplexityValidator: unable to determine length of a geometry.");
+                throw new RuntimeException("GeometryComplexityValidator: unable to determine length of a geometry.");
             }
-        	if (length == 0) {
-        		continue;
-        	}
+            if (length == 0) {
+                continue;
+            }
             Double lineDensity = (double) (lineString.getNumPoints() / length);
             if (lineDensity > density) {
-            	// cnig-plugin-validator: we allow french usage to message error.
+                // cnig-plugin-validator: we allow french usage to message error.
                 return String.format("Nombre moyen de point par m %f > %f", lineDensity, density);
             }
-		}
+        }
 
         return "";
     }
-
 
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {
