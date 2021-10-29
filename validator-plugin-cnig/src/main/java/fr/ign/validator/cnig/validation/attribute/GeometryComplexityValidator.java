@@ -1,6 +1,5 @@
 package fr.ign.validator.cnig.validation.attribute;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,7 +9,6 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Polygon;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
@@ -18,6 +16,7 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.geometry.GeometryLength;
+import fr.ign.validator.geometry.GeometryRings;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.TableModel;
@@ -46,68 +45,45 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
         }
 
         if (geometry.getNumPoints() > pointCount) {
+        	// cnig-plugin-validator: we allow french usage to message error.
             return String.format("Nombre de sommets %d > %d", geometry.getNumPoints(), pointCount);
         }
 
         if (geometry.getNumGeometries() > partCount) {
+        	// cnig-plugin-validator: we allow french usage to message error.
             return String.format("Nombre de parties %d > %d", geometry.getNumGeometries(), partCount);
         }
 
-        int holeCount = 0;
-        for (int i = 0; i < geometry.getNumGeometries(); i++) {
-            if (!(geometry instanceof Polygon)) {
-                continue;
-            }
-            holeCount += ((Polygon) geometry.getGeometryN(i)).getNumInteriorRing();
-        }
-
+        int holeCount = GeometryRings.getInnerRings(geometry).size();
         if (holeCount > ringCount) {
+        	// cnig-plugin-validator: we allow french usage to message error.
             return String.format(
                 "Nombre d’anneaux %d > %d",
                 holeCount, ringCount
             );
         }
 
-        for (int i = 0; i < geometry.getNumGeometries(); i++) {
-            Geometry part = geometry.getGeometryN(i);
-            List<LineString> lineStrings = getGeometryRings(part);
-            for (LineString lineString : lineStrings) {
-                Double length;
-                try {
-                    length = GeometryLength.getPerimeter(lineString, sourceProjection);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                    return "";
-                }
-
-                Double lineDensity = (double) (lineString.getNumPoints() / length);
-                if (lineDensity > density) {
-                    return String.format("Nombre moyen de point par m %f > %f", lineDensity, density);
-                }
+        List<LineString> lineStrings = GeometryRings.getRings(geometry);
+        for (LineString lineString : lineStrings) {
+            Double length;
+        	try {
+                length = GeometryLength.getPerimeter(lineString, sourceProjection);
+            } catch (Exception e) {
+            	throw new RuntimeException("GeometryComplexityValidator: unable to determine length of a geometry.");
             }
-        }
+        	if (length == 0) {
+        		continue;
+        	}
+            Double lineDensity = (double) (lineString.getNumPoints() / length);
+            if (lineDensity > density) {
+            	// cnig-plugin-validator: we allow french usage to message error.
+                return String.format("Nombre moyen de point par m %f > %f", lineDensity, density);
+            }
+		}
 
         return "";
     }
 
-    private List<LineString> getGeometryRings(Geometry geometry) {
-
-        List<LineString> lineStrings = new ArrayList<LineString>();
-
-        if (geometry instanceof Polygon) {
-            lineStrings.add(((Polygon) geometry).getExteriorRing());
-            for (int i = 0; i < ((Polygon) geometry).getNumInteriorRing(); i++) {
-                lineStrings.add(((Polygon) geometry).getInteriorRingN(i));
-            }
-        }
-
-        if (geometry instanceof LineString) {
-            lineStrings.add((LineString) geometry);
-        }
-
-        return lineStrings;
-    }
 
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {

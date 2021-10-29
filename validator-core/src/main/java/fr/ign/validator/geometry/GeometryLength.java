@@ -15,12 +15,23 @@ import org.opengis.referencing.operation.TransformException;
 import fr.ign.validator.model.Projection;
 
 /**
+ * GeometryLength
+ * Allow you to determine the length in meter of any geometry
  *
  * @author cbouche
  *
  */
 public class GeometryLength {
 
+	/**
+	 * get perimeter in meter given the source projection
+	 * @param geometry
+	 * @param projection
+	 * @return
+	 * @throws MismatchedDimensionException
+	 * @throws FactoryException
+	 * @throws TransformException
+	 */
     public static double getPerimeter(Geometry geometry, Projection projection) throws MismatchedDimensionException,
         FactoryException, TransformException {
         if (isProjectionInMeters(projection)) {
@@ -28,9 +39,8 @@ public class GeometryLength {
         }
 
         Geometry wgs84Geom = geometry;
-        // Transformed to WGS84 to get determine local projection
-        // (used to get latitude and longitude of origin)
-        if (!StringUtils.equals(projection.getCode(), "EPSG:4326")) {
+        // To create local projection you first need the projection in CRS:84
+        if (!StringUtils.equals(projection.getCode(), "CRS:84")) {
             wgs84Geom = getWGS84Projection(geometry, projection);
         }
 
@@ -39,12 +49,28 @@ public class GeometryLength {
         return transformed.getLength();
     }
 
+
+    /**
+     * get local projection given a CRS:84's geometry 
+     * @param geometry
+     * @param sourceProjecion
+     * @return
+     * @throws FactoryException
+     * @throws MismatchedDimensionException
+     * @throws TransformException
+     */
     private static Geometry getLocalProjection(Geometry geometry, Projection sourceProjecion) throws FactoryException,
         MismatchedDimensionException, TransformException {
 
-        String format = "PROJCS[\"local transverse mercator\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[\"degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",%s],PARAMETER[\"central_meridian\",%s],PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"Meter\",1]]";
-        String wkt = String.format(format, geometry.getCoordinates()[0].getY(), geometry.getCoordinates()[0].getX());
+        String format = "PROJCS[\"local transverse mercator\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\","
+        		+ "SPHEROID[\"WGS 84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],"
+        		+ "UNIT[\"degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],"
+        		+ "PARAMETER[\"latitude_of_origin\",%s],PARAMETER[\"central_meridian\",%s],"
+        		+ "PARAMETER[\"scale_factor\",1],PARAMETER[\"false_easting\",0],"
+        		+ "PARAMETER[\"false_northing\",0],UNIT[\"Meter\",1]]";
 
+        String wkt = String.format(format, geometry.getCoordinates()[0].getY(), geometry.getCoordinates()[0].getX());
+        
         CoordinateReferenceSystem sourceCRS = sourceProjecion.getCRS();
         CoordinateReferenceSystem targetCRS = CRS.parseWKT(wkt);
 
@@ -53,10 +79,19 @@ public class GeometryLength {
         return transformed;
     }
 
-    private static Geometry getWGS84Projection(Geometry geometry, Projection projection) throws FactoryException,
+    /**
+     * get geometry in CRS:84 given the source projection
+     * @param geometry
+     * @param sourceProjection
+     * @return
+     * @throws FactoryException
+     * @throws MismatchedDimensionException
+     * @throws TransformException
+     */
+    private static Geometry getWGS84Projection(Geometry geometry, Projection sourceProjection) throws FactoryException,
         MismatchedDimensionException, TransformException {
 
-        CoordinateReferenceSystem sourceCRS = projection.getCRS();
+        CoordinateReferenceSystem sourceCRS = sourceProjection.getCRS();
         CoordinateReferenceSystem targetCRS = ProjectionList.getCRS84().getCRS();
 
         MathTransform mathTransform = CRS.findMathTransform(sourceCRS, targetCRS);
@@ -64,6 +99,13 @@ public class GeometryLength {
         return transformed;
     }
 
+    /**
+     * Ensure given projection is in meter
+     * in order to avoir reprojection for french document's in EPSG:2154
+     * WARNING : the length will be bad for projection like web mercator
+     * @param projection
+     * @return
+     */
     private static boolean isProjectionInMeters(Projection projection) {
 
         if (CRS.getMapProjection(projection.getCRS()) == null) {
