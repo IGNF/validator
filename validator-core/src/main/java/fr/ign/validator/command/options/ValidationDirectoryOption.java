@@ -60,7 +60,7 @@ public class ValidationDirectoryOption {
      */
     public static File parseCommandLine(CommandLine commandLine, File documentPath) throws ParseException {
         File validationDirectory = null;
-        ;
+
         if (commandLine.hasOption(OPTION_NAME)) {
             validationDirectory = (File) commandLine.getParsedOptionValue(OPTION_NAME);
             if (validationDirectory.getAbsolutePath().startsWith(documentPath.getAbsolutePath())) {

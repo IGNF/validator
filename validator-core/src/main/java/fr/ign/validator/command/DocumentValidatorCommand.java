@@ -21,6 +21,7 @@ import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.command.options.GeometryComplexityThresholdOption;
 import fr.ign.validator.command.options.OutputProjectionOption;
 import fr.ign.validator.command.options.StringFixerOptions;
 import fr.ign.validator.command.options.ValidationDirectoryOption;
@@ -28,6 +29,7 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.exception.PluginNotFoundException;
+import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.io.ModelReader;
@@ -146,6 +148,11 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected boolean dgprSafeMode;
 
+    /**
+     * List of threshold to detect overdescribed geometries
+     */
+    protected GeometryComplexityThreshold complexityThreshold;
+
     @Override
     public String getName() {
         return NAME;
@@ -190,7 +197,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
         buildPluginsOption(options);
 
         /*
-         * dgpr-plugin options
+         * plugin-cnig options
+         */
+        GeometryComplexityThresholdOption.buildOptions(options);
+
+        /*
+         * plugin-dgpr options
          */
         buildDgprTolerance(options);
         buildDgprSimplifyDistance(options);
@@ -226,6 +238,15 @@ public class DocumentValidatorCommand extends AbstractCommand {
         this.stringFixer = StringFixerOptions.parseCommandLine(commandLine);
         parseDataExtent(commandLine);
         parseFlatOption(commandLine);
+
+        /*
+         * plugin-cnig options
+         */
+        this.complexityThreshold = GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
+
+        /*
+         * plugin-dgpr options
+         */
         parseTopologicalToleranceOption(commandLine);
         parseDistanceSimplificationOption(commandLine);
         parseSafeSimplificationOption(commandLine);
@@ -274,7 +295,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
         context.setFlatValidation(flat);
 
         /*
-         * dgpr-plugin options
+         * plugin-cnig options
+         */
+        context.setComplexityThreshold(complexityThreshold);
+
+        /*
+         * plugin-dgpr options
          */
         context.setDgprTolerance(dgprTolerance);
         context.setDgprSimplification(dgprSimplification);

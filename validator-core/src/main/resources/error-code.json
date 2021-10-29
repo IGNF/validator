@@ -622,6 +622,18 @@
 		"documentation": "Mot clé trouvé mais ne correspondant pas à la valeur présente dans le nom de dossier du document."
 	},
 	{
+		"name": "CNIG_GEOMETRY_COMPLEXITY_WARNING",
+		"level": "WARNING",
+		"message": "La compléxité géométrique approche les seuils tolérés. {TYPE_ERROR}.",
+		"documentation": "La compléxité géométrique approche les seuils tolérés."
+	},
+	{
+		"name": "CNIG_GEOMETRY_COMPLEXITY_ERROR",
+		"level": "ERROR",
+		"message": "La compléxité géométrique dépasse les seuils tolérés. {TYPE_ERROR}.",
+		"documentation": "La compléxité géométrique dépasse les seuils tolérés."
+	},
+	{
 		"name": "DGPR_DOCUMENT_PREFIX_ERROR",
 		"level": "WARNING",
 		"message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
