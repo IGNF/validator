@@ -811,6 +811,103 @@ public class CnigValidatorRegressTest {
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 
+    /**
+     * Test 123456789_A5_88_20200313
+     * 
+     * @see https://github.com/IGNF/validator/issues/260
+     */
+    @Test
+    public void testSupWithCodeDepOn2Characters() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A8_2016");
+        File documentPath = CnigRegressHelper.getSampleDocument("123456789_A5_88_20200313", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
+        Assert.assertEquals("123456789_A5_88_20200313", document.getDocumentName());
+
+        /*
+         * check errors
+         */
+        ReportAssert.assertCount(1, CoreErrorCodes.DIRECTORY_UNEXPECTED_NAME, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
+        ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
+
+        /*
+         * check warnings
+         */
+        ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
+        // TODO https://github.com/IGNF/validator/issues/260
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
+        ReportAssert.assertCount(2, CoreErrorCodes.FILE_UNEXPECTED, report);
+        ReportAssert.assertCount(3 + 1 + 2, ErrorLevel.WARNING, report);
+
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID).get(0);
+            assertEquals("La valeur '088 pour le mot clé 'EMPRISE' avec le thésaurus 'Code officiel géographique au 1er janvier 20[0-9]{2}' n'est pas valide (valeur attendue : '88').",error.getMessage());
+        }
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("123456789_A5_88_20200313");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * Test 123456789_A5_088_20200313
+     * 
+     * @see https://github.com/IGNF/validator/issues/260
+     */
+    @Test
+    public void testSupWithCodeDepOn3Characters() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A8_2016");
+        File documentPath = CnigRegressHelper.getSampleDocument("123456789_A5_088_20200313", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
+        Assert.assertEquals("123456789_A5_088_20200313", document.getDocumentName());
+
+        /*
+         * check errors
+         */
+        ReportAssert.assertCount(1, CoreErrorCodes.DIRECTORY_UNEXPECTED_NAME, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
+        ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
+
+        /*
+         * check warnings
+         */
+        ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
+        // TODO https://github.com/IGNF/validator/issues/260
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
+        ReportAssert.assertCount(2, CoreErrorCodes.FILE_UNEXPECTED, report);
+        ReportAssert.assertCount(3 + 0 + 2, ErrorLevel.WARNING, report);
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("123456789_A5_088_20200313");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
     private void assertEqualsJsonFile(File producedInfosCnigPath, File expectedInfosCnigPath) throws Exception {
         /*
          * switch to true (temporary) to update the regress test (then, review change,
