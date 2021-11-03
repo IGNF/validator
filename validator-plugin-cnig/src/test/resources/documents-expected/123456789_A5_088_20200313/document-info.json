@@ -1,7 +1,7 @@
 {
   "name" : "123456789_A5_088_20200313",
   "documentModel" : {
-    "name" : "cnig_SUP_A8_2016"
+    "name" : "cnig_SUP_A5_2016"
   },
   "files" : [ {
     "type" : "directory",
@@ -24,6 +24,20 @@
     "name" : "A5_ACTE_SUP.dbf",
     "path" : "Donnees_geographiques/A5_ACTE_SUP.dbf",
     "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "A5_ASSIETTE_SUP_S",
+    "name" : "A5_ASSIETTE_SUP_S.dbf",
+    "path" : "Donnees_geographiques/A5_ASSIETTE_SUP_S.dbf",
+    "boundingBox" : [ 6.5439109, 47.8193549, 6.9293033, 48.0800964 ],
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "A5_GENERATEUR_SUP_L",
+    "name" : "A5_GENERATEUR_SUP_L.dbf",
+    "path" : "Donnees_geographiques/A5_GENERATEUR_SUP_L.dbf",
+    "boundingBox" : [ 6.5793800, 47.8485532, 6.8597996, 48.0492756 ],
     "totalFeatures" : 1
   }, {
     "type" : "table",
@@ -52,7 +66,7 @@
     "name" : "SUP-A5-088-123456789-20200313.xml",
     "path" : "SUP-A5-088-123456789-20200313.xml"
   } ],
-  "documentExtent" : null,
+  "documentExtent" : [ 6.5439109, 47.8193549, 6.9293033, 48.0800964 ],
   "tags" : { },
   "metadata" : {
     "fileIdentifier" : "SUP-A5-088-123456789-20200313",

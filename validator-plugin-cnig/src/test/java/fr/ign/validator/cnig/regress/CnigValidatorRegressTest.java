@@ -821,7 +821,7 @@ public class CnigValidatorRegressTest {
         /*
          * validate
          */
-        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A8_2016");
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A5_2016");
         File documentPath = CnigRegressHelper.getSampleDocument("123456789_A5_88_20200313", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
@@ -836,9 +836,7 @@ public class CnigValidatorRegressTest {
         /*
          * check errors
          */
-        ReportAssert.assertCount(1, CoreErrorCodes.DIRECTORY_UNEXPECTED_NAME, report);
-        ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
-        ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
@@ -846,8 +844,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
         // TODO https://github.com/IGNF/validator/issues/260
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
-        ReportAssert.assertCount(2, CoreErrorCodes.FILE_UNEXPECTED, report);
-        ReportAssert.assertCount(3 + 1 + 2, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 1, ErrorLevel.WARNING, report);
 
         {
             ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID).get(0);
@@ -872,7 +869,7 @@ public class CnigValidatorRegressTest {
         /*
          * validate
          */
-        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A8_2016");
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A5_2016");
         File documentPath = CnigRegressHelper.getSampleDocument("123456789_A5_088_20200313", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
@@ -887,9 +884,7 @@ public class CnigValidatorRegressTest {
         /*
          * check errors
          */
-        ReportAssert.assertCount(1, CoreErrorCodes.DIRECTORY_UNEXPECTED_NAME, report);
-        ReportAssert.assertCount(1, CoreErrorCodes.NO_SPATIAL_DATA, report);
-        ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
@@ -897,8 +892,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
         // TODO https://github.com/IGNF/validator/issues/260
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
-        ReportAssert.assertCount(2, CoreErrorCodes.FILE_UNEXPECTED, report);
-        ReportAssert.assertCount(3 + 0 + 2, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
