@@ -507,8 +507,9 @@ public class CnigValidatorRegressTest {
         /*
          * check warnings
          */
-        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -842,14 +843,24 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
-        // TODO https://github.com/IGNF/validator/issues/260
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE).get(0);
+            assertEquals(
+                "Le code de territoire '88' est invalide dans le nom de dossier.",
+                error.getMessage()
+            );
+        }
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
-        ReportAssert.assertCount(3 + 1, ErrorLevel.WARNING, report);
-
+        // see https://github.com/IGNF/validator/issues/260 - inconsistency is reported
         {
             ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID).get(0);
-            assertEquals("La valeur '088 pour le mot clé 'EMPRISE' avec le thésaurus 'Code officiel géographique au 1er janvier 20[0-9]{2}' n'est pas valide (valeur attendue : '88').",error.getMessage());
+            assertEquals(
+                "La valeur '088 pour le mot clé 'EMPRISE' avec le thésaurus 'Code officiel géographique au 1er janvier 20[0-9]{2}' n'est pas valide (valeur attendue : '88').",
+                error.getMessage()
+            );
         }
+        ReportAssert.assertCount(3 + 1 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json

@@ -10,6 +10,7 @@ import fr.ign.validator.cnig.process.SupRelationsPostProcess;
 import fr.ign.validator.cnig.validation.attribute.GeometryComplexityValidator;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
+import fr.ign.validator.cnig.validation.document.DocumentNameValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataKeywordsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataReferenceSystemIdentifierValidator;
@@ -73,6 +74,7 @@ public class CnigPlugin implements Plugin {
          */
         context.addListener(new InseeValidator());
         context.addListener(new AtLeastOneWritingMaterialValidator());
+        context.addListener(new DocumentNameValidator());
         context.addListener(new CustomizeIdurbaPreProcess());
         context.addListener(new GeometryComplexityValidator());
 
