@@ -104,4 +104,11 @@ public class CnigErrorCodes {
         "CNIG_GEOMETRY_COMPLEXITY_ERROR"
     );
 
+    /**
+     * To report "88" instead of "088"
+     */
+    public static final ErrorCode CNIG_SUP_BAD_TERRITORY_CODE = ErrorCode.valueOf(
+        "CNIG_SUP_BAD_TERRITORY_CODE"
+    );
+
 }

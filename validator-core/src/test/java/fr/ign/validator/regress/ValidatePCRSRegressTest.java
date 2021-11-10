@@ -128,7 +128,8 @@ public class ValidatePCRSRegressTest {
          */
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
-        // ex : "La table 'affleurantgeometriquepcrs_enveloppe' n'est pas prévue dans le modèle de validation.
+        // ex : "La table 'affleurantgeometriquepcrs_enveloppe' n'est pas prévue dans le
+        // modèle de validation.
         assertEquals(6, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
         assertEquals(6, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 

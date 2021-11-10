@@ -634,6 +634,12 @@
 		"documentation": "La compléxité géométrique dépasse les seuils tolérés."
 	},
 	{
+		"name": "CNIG_SUP_BAD_TERRITORY_CODE",
+		"level": "WARNING",
+		"message": "Le code de territoire '{EMPRISE}' est invalide dans le nom de dossier.",
+		"documentation": "Les départements doivent être codés sur 3 caractères."
+	},
+	{
 		"name": "DGPR_DOCUMENT_PREFIX_ERROR",
 		"level": "WARNING",
 		"message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",

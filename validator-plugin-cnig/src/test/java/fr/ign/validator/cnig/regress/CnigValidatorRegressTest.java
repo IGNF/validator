@@ -507,8 +507,9 @@ public class CnigValidatorRegressTest {
         /*
          * check warnings
          */
-        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
+        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -808,6 +809,107 @@ public class CnigValidatorRegressTest {
          */
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("200078244_SCOT_20180218");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * Test 123456789_A5_88_20200313
+     * 
+     * @see https://github.com/IGNF/validator/issues/260
+     */
+    @Test
+    public void testSupWithCodeDepOn2Characters() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A5_2016");
+        File documentPath = CnigRegressHelper.getSampleDocument("123456789_A5_88_20200313", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
+        Assert.assertEquals("123456789_A5_88_20200313", document.getDocumentName());
+
+        /*
+         * check errors
+         */
+        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+
+        /*
+         * check warnings
+         */
+        ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE).get(0);
+            assertEquals(
+                "Le code de territoire '88' est invalide dans le nom de dossier.",
+                error.getMessage()
+            );
+        }
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
+        // see https://github.com/IGNF/validator/issues/260 - inconsistency is reported
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID).get(0);
+            assertEquals(
+                "La valeur '088 pour le mot clé 'EMPRISE' avec le thésaurus 'Code officiel géographique au 1er janvier 20[0-9]{2}' n'est pas valide (valeur attendue : '88').",
+                error.getMessage()
+            );
+        }
+        ReportAssert.assertCount(3 + 1 + 1, ErrorLevel.WARNING, report);
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("123456789_A5_88_20200313");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * Test 123456789_A5_088_20200313
+     * 
+     * @see https://github.com/IGNF/validator/issues/260
+     */
+    @Test
+    public void testSupWithCodeDepOn3Characters() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_A5_2016");
+        File documentPath = CnigRegressHelper.getSampleDocument("123456789_A5_088_20200313", folder);
+        Context context = createContext(documentPath);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
+        Assert.assertEquals("123456789_A5_088_20200313", document.getDocumentName());
+
+        /*
+         * check errors
+         */
+        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+
+        /*
+         * check warnings
+         */
+        ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
+        // TODO https://github.com/IGNF/validator/issues/260
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
+        ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("123456789_A5_088_20200313");
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
     }
 

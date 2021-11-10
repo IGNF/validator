@@ -1,0 +1,209 @@
+{
+  "name" : "123456789_A5_088_20200313",
+  "documentModel" : {
+    "name" : "cnig_SUP_A5_2016"
+  },
+  "files" : [ {
+    "type" : "directory",
+    "modelName" : "Actes",
+    "name" : "Actes",
+    "path" : "Actes"
+  }, {
+    "type" : "pdf",
+    "modelName" : "ACTE",
+    "name" : "A5_ValMoselle_act.pdf",
+    "path" : "Actes/A5_ValMoselle_act.pdf"
+  }, {
+    "type" : "directory",
+    "modelName" : "Donnees_geographiques",
+    "name" : "Donnees_geographiques",
+    "path" : "Donnees_geographiques"
+  }, {
+    "type" : "table",
+    "modelName" : "ACTE_SUP",
+    "name" : "A5_ACTE_SUP.dbf",
+    "path" : "Donnees_geographiques/A5_ACTE_SUP.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "A5_ASSIETTE_SUP_S",
+    "name" : "A5_ASSIETTE_SUP_S.dbf",
+    "path" : "Donnees_geographiques/A5_ASSIETTE_SUP_S.dbf",
+    "boundingBox" : [ 6.5439109, 47.8193549, 6.9293033, 48.0800964 ],
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "A5_GENERATEUR_SUP_L",
+    "name" : "A5_GENERATEUR_SUP_L.dbf",
+    "path" : "Donnees_geographiques/A5_GENERATEUR_SUP_L.dbf",
+    "boundingBox" : [ 6.5793800, 47.8485532, 6.8597996, 48.0492756 ],
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "GESTIONNAIRE_SUP",
+    "name" : "A5_GESTIONNAIRE_SUP.dbf",
+    "path" : "Donnees_geographiques/A5_GESTIONNAIRE_SUP.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "SERVITUDE",
+    "name" : "A5_SERVITUDE.dbf",
+    "path" : "Donnees_geographiques/A5_SERVITUDE.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "table",
+    "modelName" : "SERVITUDE_ACTE_SUP",
+    "name" : "A5_SERVITUDE_ACTE_SUP.dbf",
+    "path" : "Donnees_geographiques/A5_SERVITUDE_ACTE_SUP.dbf",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
+    "type" : "metadata",
+    "modelName" : "METADONNEES",
+    "name" : "SUP-A5-088-123456789-20200313.xml",
+    "path" : "SUP-A5-088-123456789-20200313.xml"
+  } ],
+  "documentExtent" : [ 6.5439109, 47.8193549, 6.9293033, 48.0800964 ],
+  "tags" : { },
+  "metadata" : {
+    "fileIdentifier" : "SUP-A5-088-123456789-20200313",
+    "title" : "Servitude d’Utilité Publique de catégorie A5 sur le département de VOSGES",
+    "abstract" : "Les servitudes d'utilité publique sont des limitations administratives au droit de propriété, elles sont instituées, par un ou plusieurs actes, au bénéfice de personnes publiques, de concessionnaires de services ou de travaux publics, ou de personnes privées exerçant une activité d'intérêt général.La collecte et la conservation des servitudes d'utilité publique sont une mission régalienne de l'État qui doit les porter à la connaissance des collectivités territoriales afin que celles-ci les annexent à leur document d'urbanisme. Les servitudes d'utilité publique concernées sont celles définies par les articles L. 126-1 et R. 126-1 du code de l'urbanisme et leurs annexes.",
+    "type" : "dataset",
+    "locators" : [ {
+      "url" : "https://pp-wxs-gpu.mongeoportail.ign.fr/externe/i9ytmrb6tgtq5yfek781ntqi/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
+      "protocol" : "OGC Web Map Service",
+      "protocolUrl" : "http://www.opengis.net/def/serviceType/ogc/wms",
+      "applicationProfile" : "INSPIRE View Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/view",
+      "description" : null
+    }, {
+      "url" : "https://pp-wxs-gpu.mongeoportail.ign.fr/externe/6gixw1zgdlqm6bxvfzqsl49a/wfs?SERVICE=WFS&VERSION=1.1.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
+      "protocol" : "OGC Web Feature Service",
+      "protocolUrl" : "http://www.opengis.net/def/serviceType/ogc/wfs",
+      "applicationProfile" : "INSPIRE Download Network Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/download",
+      "description" : null
+    }, {
+      "url" : "https://www.geoportail-urbanisme.gouv.fr/atom/download-feed/",
+      "name" : "Lien vers le service ATOM du Géoportail de l'urbanisme",
+      "protocol" : "ATOM Syndication Format",
+      "protocolUrl" : "http://tools.ietf.org/html/rfc5023",
+      "applicationProfile" : "INSPIRE Download Network Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/view",
+      "description" : null
+    }, {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/39wtxmgtn23okfbbs1al2lz3/wms/v?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WMS du Géoportail de l'urbanisme",
+      "protocol" : "OGC Web Map Service",
+      "protocolUrl" : "http://www.opengis.net/def/serviceType/ogc/wms",
+      "applicationProfile" : "INSPIRE View Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/view",
+      "description" : "Lien vers le service WMS du Géoportail de l'urbanisme"
+    }, {
+      "url" : "https://wxs-gpu.mongeoportail.ign.fr/externe/39wtxmgtn23okfbbs1al2lz3/wfs/v?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities",
+      "name" : "Lien vers le service WFS du Géoportail de l'urbanisme",
+      "protocol" : "OGC Web Feature Service",
+      "protocolUrl" : "http://www.opengis.net/def/serviceType/ogc/wfs",
+      "applicationProfile" : "INSPIRE Download Network Service",
+      "applicationProfileUrl" : "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download http://inspire.ec.europa.eu/metadata-codelist/ApplicationProfile/download",
+      "description" : "Lien vers le service WFS du Géoportail de l'urbanisme"
+    } ],
+    "identifiers" : [ "https://www.geoportail-urbanisme.gouv.fr/document/123456789_A5_088_20200313" ],
+    "language" : "fre",
+    "topicCategory" : "planningCadastre",
+    "keywords" : [ {
+      "keywords" : [ "Usage des sols" ],
+      "thesaurusName" : "GEMET - INSPIRE themes, version 1.0",
+      "thesaurusDate" : "2008-06-01"
+    }, {
+      "keywords" : [ "A5" ],
+      "thesaurusName" : "Nomenclature nationale des SUP",
+      "thesaurusDate" : "2020-03-13"
+    }, {
+      "keywords" : [ "088" ],
+      "thesaurusName" : "Code officiel géographique au 1er janvier 2020",
+      "thesaurusDate" : "2020-03-13"
+    }, {
+      "keywords" : [ "123456789" ],
+      "thesaurusName" : "Répertoire SIRENE",
+      "thesaurusDate" : "2020-03-13"
+    } ],
+    "referenceSystemIdentifier" : {
+      "code" : "EPSG:2154",
+      "uri" : "http://www.opengis.net/def/crs/EPSG/0/2154"
+    },
+    "dateOfPublication" : null,
+    "dateOfLastRevision" : "2020-03-13",
+    "dateOfCreation" : null,
+    "characterSet" : "utf8",
+    "spatialRepresentationType" : "vector",
+    "lineage" : "Servitude d’utilité publique numérisée conformément aux prescriptions nationales du CNIG du 01/07/2016. Ce lot de données produit en 2020 a été numérisé à partir du PCI Vecteur.",
+    "spatialResolutions" : [ {
+      "denominator" : "5000"
+    } ],
+    "specifications" : [ {
+      "title" : "CNIG SUP v2016",
+      "date" : "2016-07-01",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "INSPIRE Data Specification on Land use - Technical Guidelines, version 3.1",
+      "date" : "2014-04-07",
+      "dateType" : "publication",
+      "degree" : "true"
+    }, {
+      "title" : "Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques",
+      "date" : "2010-12-08",
+      "dateType" : "publication",
+      "degree" : "true"
+    } ],
+    "contact" : {
+      "organisationName" : "DDT88",
+      "electronicMailAddress" : "contact@ddt-88.fr",
+      "role" : "owner",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
+    },
+    "metadataContact" : {
+      "organisationName" : "DDT88",
+      "electronicMailAddress" : "contact@ddt-88.fr",
+      "role" : "pointOfContact",
+      "phone" : null,
+      "deliveryPoint" : null,
+      "city" : null,
+      "postalCode" : null,
+      "country" : null,
+      "onlineResourceUrl" : null,
+      "hoursOfService" : null
+    },
+    "metadataDate" : "2021-03-23T15:00:08+01:00",
+    "metadataLanguage" : "fre",
+    "extents" : [ {
+      "boundingBox" : [ 5.39390875614834, 47.81305372461611, 7.198281537029941, 48.5135922655804 ]
+    } ],
+    "constraints" : [ {
+      "type" : "MD_LegalConstraints",
+      "accessConstraints" : [ "otherRestrictions" ],
+      "otherConstraints" : [ "Pas de restriction d’accès public" ]
+    }, {
+      "type" : "MD_LegalConstraints",
+      "accessConstraints" : [ "otherRestrictions" ],
+      "otherConstraints" : [ "aucune condition d’accès ne s’applique." ]
+    } ],
+    "distributionFormats" : [ {
+      "name" : "SHP",
+      "version" : "1.0"
+    } ]
+  }
+}
