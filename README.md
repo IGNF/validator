@@ -1,6 +1,6 @@
 # Validator
 
-[![Build Status](https://api.travis-ci.com/IGNF/validator.svg?branch=master)](https://travis-ci.com/github/IGNF/validator)
+[![CI](https://github.com/IGNF/validator/actions/workflows/main.yml/badge.svg)](https://github.com/IGNF/validator/actions/workflows/main.yml)
 [![CeCILL License](https://img.shields.io/badge/licence-CeCILL--B-blue.svg)](https://raw.githubusercontent.com/IGNF/validator/master/LICENCE.md)
 
 ## Description
