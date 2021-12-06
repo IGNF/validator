@@ -2,6 +2,8 @@ package fr.ign.validator.cnig.validation.attribute;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Locale;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -220,7 +222,10 @@ public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
         Assert.assertNotNull(geometry);
         assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
         assertEquals(
-            "La compléxité géométrique approche les seuils tolérés. Nombre moyen de point par m 0,319227 > 0,300000.",
+        	String.format(
+    			"La compléxité géométrique approche les seuils tolérés. Nombre moyen de point par m %f > %f.",
+    			0.319227f, 0.300000f
+			),
             report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
         );
     }
@@ -249,7 +254,10 @@ public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
         Assert.assertNotNull(geometry);
         assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
         assertEquals(
-            "La compléxité géométrique dépasse les seuils tolérés. Nombre moyen de point par m 0,319227 > 0,300000.",
+        	String.format(
+    			"La compléxité géométrique dépasse les seuils tolérés. Nombre moyen de point par m %f > %f.",
+    			0.319227f, 0.300000f
+			),
             report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
         );
     }
