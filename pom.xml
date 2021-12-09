@@ -28,7 +28,7 @@
 		<log4j.version>2.13.3</log4j.version>
 		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
 		<jackson.version>2.9.10</jackson.version>
-		<jackson.databind.version>2.9.10.7</jackson.databind.version>
+		<jackson.databind.version>2.9.10.8</jackson.databind.version>
 
 		<maven-formatter-plugin.version>2.11.0</maven-formatter-plugin.version>
 		<jaxen.version>1.2.0</jaxen.version>
