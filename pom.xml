@@ -25,7 +25,7 @@
 		http://docs.geotools.org/latest/userguide/build/install/jdk.html#
 		 -->
 		<geotools.version>21.5</geotools.version>
-		<log4j.version>2.13.3</log4j.version>
+		<log4j.version>2.16.0</log4j.version>
 		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
 		<jackson.version>2.9.10</jackson.version>
 		<jackson.databind.version>2.9.10.7</jackson.databind.version>
