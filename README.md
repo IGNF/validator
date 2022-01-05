@@ -1,7 +1,7 @@
 # Validator
 
 [![CI](https://github.com/IGNF/validator/actions/workflows/main.yml/badge.svg)](https://github.com/IGNF/validator/actions/workflows/main.yml)
-[![CeCILL License](https://img.shields.io/badge/licence-CeCILL--B-blue.svg)](https://raw.githubusercontent.com/IGNF/validator/master/LICENCE.md)
+[![License: CeCILL-B](https://img.shields.io/badge/License-CeCILL--B-blue.svg)](LICENSE)
 
 ## Description
 
@@ -45,10 +45,6 @@ Le schéma suivant illustre le [Principe de fonctionnement du validateur de docu
 | Plugin DGPR                           | Extension permettant de traiter des aspects spécifiques à la validation du standard COVADIS "Directive innondation v2.0" (en particulier, la topologie des différentes couches)                                                      |
 | Normalisation des données             | Production de données données conformes au modèle de validation pour intégration en base de données (format CSV)                                                                                                                     |
 | Normalisation des données             | Conversion des fiches de métadonnées XML dans un modèle pivot JSON                                                                                                                                                                   |
-
-## Licence
-
-Voir [LICENCE.md](LICENCE.md)
 
 ## Documentation technique
 
