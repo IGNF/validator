@@ -215,5 +215,11 @@ public class CoreErrorCodes {
     public static final ErrorCode ATTRIBUTE_FILE_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_FILE_NOT_FOUND");
 
     public static final ErrorCode FILE_NOT_OPENED = ErrorCode.valueOf("FILE_NOT_OPENED");
+    
+    
+    /*
+     * ErrorCode for Database validations
+     */
+    public static final ErrorCode DATABASE_CONTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONTRAINT_MISMATCH");
 
 }
