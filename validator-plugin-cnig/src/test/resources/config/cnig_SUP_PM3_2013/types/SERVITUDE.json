@@ -3,6 +3,12 @@
     "name": "SERVITUDE",
     "title": "SERVITUDE",
     "description": "Table contenant la liste des servitudes d'utilité publique",
+    "constraints": {
+        "conditions": [
+            "quiProd NOT NULL OR modeProd NOT LIKE 'numérisation'",
+            "docSource NOT NULL OR modeProd NOT LIKE 'numérisation'"
+        ]
+    },
     "columns": [
         {
             "id": "117abb6d4dfbd3dfbbfa4e203aa266fb",

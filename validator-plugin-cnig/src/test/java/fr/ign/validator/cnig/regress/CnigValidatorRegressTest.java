@@ -35,6 +35,10 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.TableReader;
@@ -310,6 +314,13 @@ public class CnigValidatorRegressTest {
          * validate
          */
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_PM3_2013");
+
+        FileModel fileModel = documentModel.getFileModelByName("SERVITUDE");
+        Assert.assertNotNull(fileModel);
+        Assert.assertTrue(fileModel instanceof SingleTableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+        Assert.assertEquals(2, featureType.getConstraints().getConditions().size());
+
         File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
@@ -325,7 +336,50 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(12, ErrorLevel.ERROR, report);
+        /*
+         * check database errors
+         */
+        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH, report);
+    	int index = 0;
+        {
+        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH).get(index);
+        	 Assert.assertEquals(
+                 "PM3_ASSIETTE_SUP_S",
+                 error.getFileModel()
+             );
+        	 String messagePart = "La condition 'srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation'' "
+                     + "de la table 'PM3_ASSIETTE_SUP_S' n'est pas respecté par l'objet suivant "
+                     + "'Enveloppe des zonages réglementaires;1;1;null;Digitalisation;null;null;"
+                     + "PM3_Auneau_Legendre_Delpierre_ass;";
+             Assert.assertTrue(error.getMessage().startsWith(messagePart));
+        }
+        index = 5;
+        {
+        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH).get(index);
+        	 Assert.assertEquals(
+                 "PM3_GENERATEUR_SUP_S",
+                 error.getFileModel()
+             );
+        	 String messagePart = "La condition 'srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'' "
+        	 		+ "de la table 'PM3_GENERATEUR_SUP_S' n'est pas respecté par l'objet suivant "
+        	 		+ "'Périmètre réglementé du PPR;3;null;null;Digitalisation;37;null;null;"
+        	 		+ "PM3_Coltainville_Primagaz_gen;28DREAL20140002;";
+             Assert.assertTrue(error.getMessage().startsWith(messagePart));
+        }
+        index = 8;
+        {
+        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH).get(index);
+        	 Assert.assertEquals(
+                 "PM3_GENERATEUR_SUP_S",
+                 error.getFileModel()
+             );
+        	 String messagePart = "La condition 'dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'' "
+        	 		+ "de la table 'PM3_GENERATEUR_SUP_S' n'est pas respecté par l'objet suivant "
+        	 		+ "'Périmètre réglementé du PPR;3;null;null;Digitalisation;37;null;null;"
+        	 		+ "PM3_Coltainville_Primagaz_gen;28DREAL20140002;";
+             Assert.assertTrue(error.getMessage().startsWith(messagePart));
+        }
 
         /*
          * check warning

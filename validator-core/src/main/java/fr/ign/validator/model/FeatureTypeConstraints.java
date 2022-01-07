@@ -1,5 +1,6 @@
 package fr.ign.validator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,14 +8,14 @@ import java.util.List;
  * Feature Type Constraints
  * - attribute unicity ?
  * - foreign key ?
- * - sql conditions
+ * - conditions: sql queries
  *
  * @author cbouche
  *
  */
 public class FeatureTypeConstraints {
 	
-	private List<String> conditions;
+	private List<String> conditions = new ArrayList<String>();
 	
 	public FeatureTypeConstraints() {
 		

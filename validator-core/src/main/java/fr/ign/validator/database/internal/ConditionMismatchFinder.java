@@ -33,17 +33,18 @@ public class ConditionMismatchFinder {
      */
 	public List<String> findConditionMismatch(Database database, String tableName, String condition)
 			throws SQLException, IOException {
-        RowIterator it = database.query(
-            "SELECT * "
-                + " FROM " + tableName
-                + " WHERE NOT (" + condition + ")"
-                + " LIMIT " + LIMIT_ERROR_COUNT
-        );
+
+		String query = "SELECT * "
+                    + " FROM " + tableName
+                    + " WHERE NOT (" + condition + ")"
+                    + " LIMIT " + LIMIT_ERROR_COUNT;
+
+        RowIterator it = database.query(query);
 
         List<String> result = new ArrayList<>();
         while (it.hasNext()) {
             String[] row = it.next();
-            result.add(row[0]);
+            result.add(String.join(";", row));
         }
         it.close();
         return result;

@@ -23,6 +23,7 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.database.AttributeReferenceValidator;
 import fr.ign.validator.validation.database.AttributeUniqueValidator;
+import fr.ign.validator.validation.database.FeatureTypeConditionsValidator;
 import fr.ign.validator.validation.document.DocumentFolderNameValidator;
 import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
@@ -74,6 +75,7 @@ public class DocumentModel implements Model {
         // validators relying on the validation Database
         addDatabaseValidator(new AttributeUniqueValidator());
         addDatabaseValidator(new AttributeReferenceValidator());
+        addDatabaseValidator(new FeatureTypeConditionsValidator());
     }
 
     /**

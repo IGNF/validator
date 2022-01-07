@@ -86,7 +86,7 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                 );
                 for (String tuppleReference : mismatchs) {
                     context.report(
-                        context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
+                        context.createError(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH)
                             .setScope(ErrorScope.DIRECTORY)
                             .setFileModel(tableModel.getName())
                             .setMessageParam("TABLE_NAME", tableModel.getName())
