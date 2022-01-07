@@ -8,6 +8,12 @@ import java.util.List;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 
+/**
+ * Condition Mismatch Finder
+ * - query the database to get all the features who did not respect FeatureType conditions
+ * @author cbouche
+ *
+ */
 public class ConditionMismatchFinder {
 
     /**
@@ -30,7 +36,7 @@ public class ConditionMismatchFinder {
         RowIterator it = database.query(
             "SELECT * "
                 + " FROM " + tableName
-                + " WHERE NOT " + condition
+                + " WHERE NOT (" + condition + ")"
                 + " LIMIT " + LIMIT_ERROR_COUNT
         );
 
