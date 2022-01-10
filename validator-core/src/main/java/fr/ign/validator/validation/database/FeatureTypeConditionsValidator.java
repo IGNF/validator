@@ -51,6 +51,16 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
     }
 
 	private void doValidate(Context context, Database database) throws SQLException, IOException {
+
+		if (!context.isEnableConditions()) {
+			log.info(
+					MARKER, 
+					"Conditions constraints is disable by default,"
+					+ "consider enabling it with --enable-conditions option"
+			);
+			return;
+		}
+
 		log.info(MARKER, "Looking for FeatureType with conditions constraints...");
 
         /*

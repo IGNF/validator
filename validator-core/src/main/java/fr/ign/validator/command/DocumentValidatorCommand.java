@@ -149,11 +149,19 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected boolean dgprSafeMode;
 
     /**
+     * option - array (numerics)
      * List of threshold to detect overdescribed geometries
      */
     protected GeometryComplexityThreshold complexityThreshold;
 
-    @Override
+    /**
+     * Option - switch (boolean) default value is false.
+     * Allow validator to perform SQL conditions on FeatureType.
+     * Be aware of SQL attack if your validator is connect to a sensible database.
+     */
+    protected boolean enableConditions;
+
+	@Override
     public String getName() {
         return NAME;
     }
@@ -238,6 +246,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         this.stringFixer = StringFixerOptions.parseCommandLine(commandLine);
         parseDataExtent(commandLine);
         parseFlatOption(commandLine);
+        parseEnableConditions(commandLine);
 
         /*
          * plugin-cnig options
@@ -293,6 +302,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         context.setStringFixer(stringFixer);
         context.setNativeDataExtent(nativeDataExtent);
         context.setFlatValidation(flat);
+        context.setEnableConditions(enableConditions);
 
         /*
          * plugin-cnig options
@@ -720,6 +730,16 @@ public class DocumentValidatorCommand extends AbstractCommand {
         this.flat = commandLine.hasOption("flat");
     }
 
+    /**
+     * Parse enable conditions option
+     * 
+     * @param commandLine
+     * @return
+     */
+    protected void parseEnableConditions(CommandLine commandLine) {
+        this.enableConditions = commandLine.hasOption("enable-conditions");
+    }
+    
     /**
      * Add option "--plugins"
      * 

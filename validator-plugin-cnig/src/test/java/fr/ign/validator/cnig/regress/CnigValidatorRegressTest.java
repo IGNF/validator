@@ -323,6 +323,7 @@ public class CnigValidatorRegressTest {
 
         File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104", folder);
         Context context = createContext(documentPath);
+        context.setEnableConditions(true);
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -336,9 +337,10 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(12, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(3 + 9, ErrorLevel.ERROR, report);
+
         /*
-         * check database errors
+         * check database errors - 9 errors
          */
         ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH, report);
     	int index = 0;

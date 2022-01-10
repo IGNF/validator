@@ -150,6 +150,11 @@ public class Context {
      */
     private GeometryComplexityThreshold complexityThreshold;
 
+    /**
+     * Allow validator to perform SQL conditions on FeatureType.
+     */
+    private boolean enableConditions = false;
+
     public Context() {
         registerDefaultListeners();
     }
@@ -789,5 +794,13 @@ public class Context {
     public void setComplexityThreshold(GeometryComplexityThreshold complexityThreshold) {
         this.complexityThreshold = complexityThreshold;
     }
+
+	public boolean isEnableConditions() {
+		return enableConditions;
+	}
+
+	public void setEnableConditions(boolean enableConditions) {
+		this.enableConditions = enableConditions;
+	}
 
 }
