@@ -349,8 +349,8 @@ public class CnigValidatorRegressTest {
 	    	Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
 	    	Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
 	    	Assert.assertEquals("1", error.getId());
-	    	String expectedMessage = "La condition \"srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation'\" n'est pas respecté.";
-	        Assert.assertEquals(error.getMessage(), expectedMessage);
+	    	String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
+	        Assert.assertEquals(expectedMessage, error.getMessage());
         }
         index = 5;
         {
@@ -358,8 +358,8 @@ public class CnigValidatorRegressTest {
         	Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
         	Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
         	Assert.assertEquals("3", error.getId());
-	    	String expectedMessage = "La condition \"srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'\" n'est pas respecté.";
-            Assert.assertEquals(error.getMessage(), expectedMessage);
+	    	String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
+	        Assert.assertEquals(expectedMessage, error.getMessage());
         }
         index = 8;
         {
@@ -367,8 +367,8 @@ public class CnigValidatorRegressTest {
         	Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
         	Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
         	Assert.assertEquals("3", error.getId());
-	    	String expectedMessage = "La condition \"dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'\" n'est pas respecté.";
-            Assert.assertEquals(error.getMessage(), expectedMessage);
+	    	String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
+	        Assert.assertEquals(expectedMessage, error.getMessage());
         }
 
         /*
