@@ -101,7 +101,7 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                             .setScope(ErrorScope.FEATURE)
                             .setFile(conditionMismatch.file)
                             .setFileModel(tableModel.getName())
-                            .setAttribute("Multiple")
+                            .setAttribute("--")
                             .setId(conditionMismatch.id)
                             .setMessageParam("CONDITION", condition)
                     );
