@@ -795,12 +795,12 @@ public class Context {
         this.complexityThreshold = complexityThreshold;
     }
 
-	public boolean isEnableConditions() {
-		return enableConditions;
-	}
+    public boolean isEnableConditions() {
+        return enableConditions;
+    }
 
-	public void setEnableConditions(boolean enableConditions) {
-		this.enableConditions = enableConditions;
-	}
+    public void setEnableConditions(boolean enableConditions) {
+        this.enableConditions = enableConditions;
+    }
 
 }

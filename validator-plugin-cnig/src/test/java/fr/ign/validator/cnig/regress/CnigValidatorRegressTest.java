@@ -343,32 +343,32 @@ public class CnigValidatorRegressTest {
          * check database errors - 9 errors
          */
         ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
-    	int index = 0;
+        int index = 0;
         {
-	    	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
-	    	Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
-	    	Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
-	    	Assert.assertEquals("1", error.getId());
-	    	String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
-	        Assert.assertEquals(expectedMessage, error.getMessage());
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+            Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
+            Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("1", error.getId());
+            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
+            Assert.assertEquals(expectedMessage, error.getMessage());
         }
         index = 5;
         {
-        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
-        	Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-        	Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
-        	Assert.assertEquals("3", error.getId());
-	    	String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
-	        Assert.assertEquals(expectedMessage, error.getMessage());
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("3", error.getId());
+            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
+            Assert.assertEquals(expectedMessage, error.getMessage());
         }
         index = 8;
         {
-        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
-        	Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-        	Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
-        	Assert.assertEquals("3", error.getId());
-	    	String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
-	        Assert.assertEquals(expectedMessage, error.getMessage());
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("3", error.getId());
+            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
+            Assert.assertEquals(expectedMessage, error.getMessage());
         }
 
         /*

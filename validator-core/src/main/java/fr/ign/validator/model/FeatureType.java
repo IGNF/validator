@@ -44,12 +44,9 @@ public class FeatureType implements Model {
     private List<AttributeType<?>> attributes = new ArrayList<AttributeType<?>>();
 
     // TODO add private List<String> primaryKey;
-    
+
     /**
-     * Feature Type Constraints
-     * - primary key ?
-     * - foreign key ?
-     * - sql conditions
+     * Feature Type Constraints - primary key ? - foreign key ? - sql conditions
      */
     private FeatureTypeConstraints constraints = new FeatureTypeConstraints();
 
@@ -230,17 +227,17 @@ public class FeatureType implements Model {
      * 
      * @return
      */
-	public FeatureTypeConstraints getConstraints() {
-		return constraints;
-	}
+    public FeatureTypeConstraints getConstraints() {
+        return constraints;
+    }
 
-	/**
-	 * 
-	 * @param constraints
-	 */
-	public void setConstraints(FeatureTypeConstraints constraints) {
-		this.constraints = constraints;
-	}
+    /**
+     * 
+     * @param constraints
+     */
+    public void setConstraints(FeatureTypeConstraints constraints) {
+        this.constraints = constraints;
+    }
 
     /**
      * Retreive the attribute providing the featureId.

@@ -9,8 +9,9 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 
 /**
- * Condition Mismatch Finder
- * - query the database to get all the features who did not respect FeatureType conditions
+ * Condition Mismatch Finder - query the database to get all the features who
+ * did not respect FeatureType conditions
+ * 
  * @author cbouche
  *
  */
@@ -36,23 +37,22 @@ public class ConditionMismatchFinder {
         }
     }
 
-
     /**
      * 
      * @param database
      * @param tableName
      * @param condition
      * @return
-     * @throws SQLException 
-     * @throws IOException 
+     * @throws SQLException
+     * @throws IOException
      */
-	public List<ConditionMismatch> findConditionMismatch(Database database, String tableName, String condition)
-			throws SQLException, IOException {
+    public List<ConditionMismatch> findConditionMismatch(Database database, String tableName, String condition)
+        throws SQLException, IOException {
 
-		String query = "SELECT __id, __file "
-                    + " FROM " + tableName
-                    + " WHERE NOT (" + condition + ")"
-                    + " LIMIT " + LIMIT_ERROR_COUNT;
+        String query = "SELECT __id, __file "
+            + " FROM " + tableName
+            + " WHERE NOT (" + condition + ")"
+            + " LIMIT " + LIMIT_ERROR_COUNT;
 
         RowIterator it = database.query(query);
 
@@ -63,6 +63,6 @@ public class ConditionMismatchFinder {
         }
         it.close();
         return result;
-	}
+    }
 
 }

@@ -21,10 +21,10 @@ import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
 
 /**
- * FeatureType Condition Validator
- * - Database Validator
- * - Search FeatureType which has conditions constraints
- * - Perform ConditionMismatchFinder method on each conditions
+ * FeatureType Condition Validator - Database Validator - Search FeatureType
+ * which has conditions constraints - Perform ConditionMismatchFinder method on
+ * each conditions
+ * 
  * @author cbouche
  *
  */
@@ -51,18 +51,18 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
         }
     }
 
-	private void doValidate(Context context, Database database) throws SQLException, IOException {
+    private void doValidate(Context context, Database database) throws SQLException, IOException {
 
-		if (!context.isEnableConditions()) {
-			log.info(
-					MARKER, 
-					"Conditions constraints is disable by default,"
-					+ "consider enabling it with --enable-conditions option"
-			);
-			return;
-		}
+        if (!context.isEnableConditions()) {
+            log.info(
+                MARKER,
+                "Conditions constraints is disable by default,"
+                    + "consider enabling it with --enable-conditions option"
+            );
+            return;
+        }
 
-		log.info(MARKER, "Looking for FeatureType with conditions constraints...");
+        log.info(MARKER, "Looking for FeatureType with conditions constraints...");
 
         /*
          * Validate each FeatureType who have conditions
@@ -70,7 +70,7 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
         for (TableModel tableModel : ModelHelper.getTableModels(context.getDocumentModel())) {
             context.beginModel(tableModel);
             FeatureTypeConstraints constraints = tableModel.getFeatureType().getConstraints();
-            for(String condition : constraints.getConditions()) {
+            for (String condition : constraints.getConditions()) {
 
                 log.info(
                     MARKER, "Table {} : checking '{}' condition.",
@@ -79,11 +79,11 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                 );
 
                 List<ConditionMismatch> conditionMismatchs = conditionMismatchFinder.findConditionMismatch(
-                		database,
-                		tableModel.getName(),
-                		condition
-        		);
-                
+                    database,
+                    tableModel.getName(),
+                    condition
+                );
+
                 /*
                  * report errors
                  */
@@ -107,8 +107,8 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                 }
             }
             context.endModel(tableModel);
-            
+
         }
-	}
-	
+    }
+
 }

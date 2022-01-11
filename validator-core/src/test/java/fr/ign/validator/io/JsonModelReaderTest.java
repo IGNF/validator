@@ -146,7 +146,9 @@ public class JsonModelReaderTest {
      */
     @Test
     public void testLoadDocumentModelCnigWithConstraints() {
-        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-json/cnig_SUP_EL9_2013/files.json");
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-json/cnig_SUP_EL9_2013/files.json"
+        );
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
         assertIsValid(documentModel);
 
@@ -231,7 +233,6 @@ public class JsonModelReaderTest {
             );
         }
     }
-    
 
     /**
      * Check FeatureType for /config-json/cnig_SUP_EL9_2013/types/SERVITUDE.json
@@ -243,7 +244,7 @@ public class JsonModelReaderTest {
         Assert.assertEquals("Table contenant la liste des servitudes d'utilité publique", featureType.getDescription());
         Assert.assertEquals(15, featureType.getAttributeCount());
         Assert.assertFalse(featureType.isSpatial());
-        
+
         Assert.assertEquals(2, featureType.getConstraints().getConditions().size());
 
         {
@@ -289,7 +290,7 @@ public class JsonModelReaderTest {
                 attribute.getConstraints().getMaxLength()
             );
         }
-        
+
         index = 14;
 
         {
