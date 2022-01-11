@@ -98,10 +98,11 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                 for (ConditionMismatch conditionMismatch : conditionMismatchs) {
                     context.report(
                         context.createError(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH)
-                            .setScope(ErrorScope.HEADER)
-                            .setId(conditionMismatch.id)
+                            .setScope(ErrorScope.FEATURE)
                             .setFile(conditionMismatch.file)
                             .setFileModel(tableModel.getName())
+                            .setAttribute("Multiple")
+                            .setId(conditionMismatch.id)
                             .setMessageParam("CONDITION", condition)
                     );
                 }
