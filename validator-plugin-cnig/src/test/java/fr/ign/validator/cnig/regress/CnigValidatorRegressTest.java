@@ -342,45 +342,33 @@ public class CnigValidatorRegressTest {
         /*
          * check database errors - 9 errors
          */
-        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
     	int index = 0;
         {
-        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH).get(index);
-        	 Assert.assertEquals(
-                 "PM3_ASSIETTE_SUP_S",
-                 error.getFileModel()
-             );
-        	 String messagePart = "La condition 'srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation'' "
-                     + "de la table 'PM3_ASSIETTE_SUP_S' n'est pas respecté par l'objet suivant "
-                     + "'Enveloppe des zonages réglementaires;1;1;null;Digitalisation;null;null;"
-                     + "PM3_Auneau_Legendre_Delpierre_ass;";
-             Assert.assertTrue(error.getMessage().startsWith(messagePart));
+	    	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+	    	Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
+	    	Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
+	    	Assert.assertEquals("1", error.getId());
+	    	String expectedMessage = "La condition \"srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation'\" n'est pas respecté.";
+	        Assert.assertEquals(error.getMessage(), expectedMessage);
         }
         index = 5;
         {
-        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH).get(index);
-        	 Assert.assertEquals(
-                 "PM3_GENERATEUR_SUP_S",
-                 error.getFileModel()
-             );
-        	 String messagePart = "La condition 'srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'' "
-        	 		+ "de la table 'PM3_GENERATEUR_SUP_S' n'est pas respecté par l'objet suivant "
-        	 		+ "'Périmètre réglementé du PPR;3;null;null;Digitalisation;37;null;null;"
-        	 		+ "PM3_Coltainville_Primagaz_gen;28DREAL20140002;";
-             Assert.assertTrue(error.getMessage().startsWith(messagePart));
+        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+        	Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
+        	Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+        	Assert.assertEquals("3", error.getId());
+	    	String expectedMessage = "La condition \"srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'\" n'est pas respecté.";
+            Assert.assertEquals(error.getMessage(), expectedMessage);
         }
         index = 8;
         {
-        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH).get(index);
-        	 Assert.assertEquals(
-                 "PM3_GENERATEUR_SUP_S",
-                 error.getFileModel()
-             );
-        	 String messagePart = "La condition 'dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'' "
-        	 		+ "de la table 'PM3_GENERATEUR_SUP_S' n'est pas respecté par l'objet suivant "
-        	 		+ "'Périmètre réglementé du PPR;3;null;null;Digitalisation;37;null;null;"
-        	 		+ "PM3_Coltainville_Primagaz_gen;28DREAL20140002;";
-             Assert.assertTrue(error.getMessage().startsWith(messagePart));
+        	ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+        	Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
+        	Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+        	Assert.assertEquals("3", error.getId());
+	    	String expectedMessage = "La condition \"dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'\" n'est pas respecté.";
+            Assert.assertEquals(error.getMessage(), expectedMessage);
         }
 
         /*

@@ -478,10 +478,10 @@
 		"documentation": "Impossible d'ouvrir un fichier (shp, dbf, tab, etc.) en lecture"
 	},
 	{
-		"name": "DATABASE_CONTRAINT_MISMATCH",
+		"name": "DATABASE_CONSTRAINT_MISMATCH",
 		"level": "ERROR",
-		"message": "La condition '{CONDITION}' de la table '{TABLE_NAME}' n'est pas respecté par l'objet suivant '{REFERENCE}'.",
-		"documentation": ""
+		"message": "La condition \"{CONDITION}\" n'est pas respecté.",
+		"documentation": "Contrainte exprimé en condition SQL n'est pas respecté."
 	},
 	{
 		"name": "CNIG_INSEE_INVALID",

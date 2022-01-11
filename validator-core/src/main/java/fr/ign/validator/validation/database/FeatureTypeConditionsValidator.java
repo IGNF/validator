@@ -12,6 +12,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.internal.ConditionMismatchFinder;
+import fr.ign.validator.database.internal.ConditionMismatchFinder.ConditionMismatch;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.FeatureTypeConstraints;
@@ -70,14 +71,14 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
             context.beginModel(tableModel);
             FeatureTypeConstraints constraints = tableModel.getFeatureType().getConstraints();
             for(String condition : constraints.getConditions()) {
-            	
+
                 log.info(
-                    MARKER, "Table {} : checking {} condition...",
+                    MARKER, "Table {} : checking '{}' condition.",
                     tableModel.getName(),
                     condition
                 );
-                
-                List<String> mismatchs = conditionMismatchFinder.findConditionMismatch(
+
+                List<ConditionMismatch> conditionMismatchs = conditionMismatchFinder.findConditionMismatch(
                 		database,
                 		tableModel.getName(),
                 		condition
@@ -91,17 +92,17 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                     "Table {}, condition {} : Found {} mismatch (max : {})",
                     tableModel.getName(),
                     condition,
-                    mismatchs.size(),
+                    conditionMismatchs.size(),
                     ConditionMismatchFinder.LIMIT_ERROR_COUNT
                 );
-                for (String tuppleReference : mismatchs) {
+                for (ConditionMismatch conditionMismatch : conditionMismatchs) {
                     context.report(
-                        context.createError(CoreErrorCodes.DATABASE_CONTRAINT_MISMATCH)
-                            .setScope(ErrorScope.DIRECTORY)
+                        context.createError(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH)
+                            .setScope(ErrorScope.HEADER)
+                            .setId(conditionMismatch.id)
+                            .setFile(conditionMismatch.file)
                             .setFileModel(tableModel.getName())
-                            .setMessageParam("TABLE_NAME", tableModel.getName())
                             .setMessageParam("CONDITION", condition)
-                            .setMessageParam("REFERENCE", tuppleReference)
                     );
                 }
             }

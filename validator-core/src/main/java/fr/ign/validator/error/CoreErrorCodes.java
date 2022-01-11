@@ -220,6 +220,6 @@ public class CoreErrorCodes {
     /*
      * ErrorCode for Database validations
      */
-    public static final ErrorCode DATABASE_CONTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONTRAINT_MISMATCH");
+    public static final ErrorCode DATABASE_CONSTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONSTRAINT_MISMATCH");
 
 }

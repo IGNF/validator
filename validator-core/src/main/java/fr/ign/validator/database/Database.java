@@ -310,6 +310,8 @@ public class Database implements Closeable {
 
         StringBuilder query = new StringBuilder();
         query.append("CREATE TABLE " + tableName + " (");
+        query.append(" __id INTEGER,");
+        query.append(" __file TEXT,");
         for (int i = 0; i < columnNames.size(); i++) {
             if (i != 0) {
                 query.append(",");
@@ -454,7 +456,11 @@ public class Database implements Closeable {
          * Generate insert into template according to columns
          */
         List<String> columnParts = new ArrayList<>();
+        columnParts.add("__id");
+        columnParts.add("__file");
         List<String> valueParts = new ArrayList<>();
+        valueParts.add("?");
+        valueParts.add("?");
         List<Integer> inputIndexes = new ArrayList<>();
         for (int i = 0; i < inputColumns.length; i++) {
             String inputColumn = inputColumns[i];
@@ -488,7 +494,12 @@ public class Database implements Closeable {
         int count = 0;
         while (reader.hasNext()) {
             String[] row = reader.next();
-            int parameterIndex = 0;
+            // insert line number
+            sth.setInt(1, count + 1);
+            // insert file path
+            sth.setString(2, path.getName());
+            // insert values
+            int parameterIndex = 2;
             for (int i = 0; i < inputIndexes.size(); i++) {
                 Integer index = inputIndexes.get(i);
                 sth.setString(parameterIndex + 1, row[index]);

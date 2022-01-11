@@ -21,6 +21,21 @@ public class ConditionMismatchFinder {
      */
     public static final int LIMIT_ERROR_COUNT = 10;
 
+    /**
+     * A precise reference to the id and the file where the constraint failed
+     * 
+     * @author cbouche
+     */
+    public class ConditionMismatch {
+        public String id;
+        public String file;
+
+        public ConditionMismatch(String id, String file) {
+            this.id = id;
+            this.file = file;
+        }
+    }
+
 
     /**
      * 
@@ -31,20 +46,20 @@ public class ConditionMismatchFinder {
      * @throws SQLException 
      * @throws IOException 
      */
-	public List<String> findConditionMismatch(Database database, String tableName, String condition)
+	public List<ConditionMismatch> findConditionMismatch(Database database, String tableName, String condition)
 			throws SQLException, IOException {
 
-		String query = "SELECT * "
+		String query = "SELECT __id, __file "
                     + " FROM " + tableName
                     + " WHERE NOT (" + condition + ")"
                     + " LIMIT " + LIMIT_ERROR_COUNT;
 
         RowIterator it = database.query(query);
 
-        List<String> result = new ArrayList<>();
+        List<ConditionMismatch> result = new ArrayList<ConditionMismatch>();
         while (it.hasNext()) {
             String[] row = it.next();
-            result.add(String.join(";", row));
+            result.add(new ConditionMismatch(row[0], row[1]));
         }
         it.close();
         return result;
