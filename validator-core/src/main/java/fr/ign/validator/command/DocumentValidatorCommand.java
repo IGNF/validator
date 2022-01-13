@@ -202,6 +202,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         buildEncodingOption(options);
         StringFixerOptions.buildOptions(options);
         buildFlatOption(options);
+        buildEnableConditions(options);
         buildPluginsOption(options);
 
         /*
@@ -728,6 +729,21 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void parseFlatOption(CommandLine commandLine) {
         this.flat = commandLine.hasOption("flat");
+    }
+
+    /**
+     * 
+     * @param options
+     */
+    protected void buildEnableConditions(Options options) {
+        {
+            Option option = new Option(
+                null, "enable-conditions", false,
+                "Enable SQL like conditions to be performed"
+            );
+            option.setRequired(false);
+            options.addOption(option);
+        }
     }
 
     /**
