@@ -50,7 +50,7 @@ Les exécutables systèmes ci-après sont requis pour l'exécution du programme 
 * java >= 11
 * [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
 
-Les dépendances java telle [geotools](doc/dependencies/geotools.md) sont décrites dans le fichier [pom.xml](pom.xml) et intégrée dans le livrable `validator-cli.jar`.
+Les dépendances java telle [GeoTools](doc/dependencies/geotools.md) sont décrites dans les fichiers [pom.xml](pom.xml) et intégrées dans l'exécutable JAVA.
 
 ## Documentation technique
 
