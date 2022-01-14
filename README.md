@@ -57,9 +57,6 @@ Le schéma suivant illustre le [Principe de fonctionnement du validateur de docu
 * [plugin-cnig - validation des champs IDURBA](doc/plugin-cnig/idurba.md)
 * [plugin-cnig - Validation des mots clés en fonction des CSMD CNIG](doc/plugin-cnig/keywords.md)
 
-## Cas d'utilisation
-
-Ce programme a été développé dans le cadre du [géoportail de l'urbanisme](https://www.geoportail-urbanisme.gouv.fr) pour la validation des [standards CNIG](https://www.geoportail-urbanisme.gouv.fr/standard/).
 
 ## Dépendances
 
