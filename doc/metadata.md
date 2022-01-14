@@ -1,4 +1,4 @@
-# Metadata modelization
+# Metadata
 
 The following Metadata model is dedicated to validation according to INSPIRE and CNIG profiles. XML parsing is partial and based on XPath.
 
@@ -13,7 +13,7 @@ The following profile is used to store metadata parsed from ISO 19915. Metadata 
 Metadata "attributes" with INSPIRE multiplicity for datasets according to INSPIRE_GUIDELINE_2017.
 
 | name                      | type                            | title                                | multiplicity |
-|---------------------------|---------------------------------|--------------------------------------|--------------|
+| ------------------------- | ------------------------------- | ------------------------------------ | ------------ |
 | contraints                | `Contraint[]`                   | Resource constraints                 | [0..*]       |
 | distributionFormats       | `Format`                        | Encoding                             | [0..*]       |
 | spatialResolutions        | `Resolution`                    | Spatial resolution                   | [0..*]       |
