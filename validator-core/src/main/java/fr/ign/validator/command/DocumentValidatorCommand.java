@@ -739,7 +739,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         {
             Option option = new Option(
                 null, "enable-conditions", false,
-                "Enable SQL like conditions to be performed"
+                "Allow SQL conditions to be performed. Be aware of SQL injection, disabled by default."
             );
             option.setRequired(false);
             options.addOption(option);

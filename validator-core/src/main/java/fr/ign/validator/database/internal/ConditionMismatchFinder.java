@@ -49,6 +49,8 @@ public class ConditionMismatchFinder {
     public List<ConditionMismatch> findConditionMismatch(Database database, String tableName, String condition)
         throws SQLException, IOException {
 
+    	// TODO validate condition to avoid SQL injection and crashes
+    	// grammar validation with ANTLR v4
         String query = "SELECT __id, __file "
             + " FROM " + tableName
             + " WHERE NOT (" + condition + ")"
