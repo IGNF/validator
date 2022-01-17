@@ -39,7 +39,7 @@ Le schéma suivant illustre le [principe de fonctionnement du validateur de docu
 
 ## Utilisation
 
-Le validateur se présente sous la forme d'un exécutable java (`validator-cli.jar`) utilisable en ligne de commande. Il n'offre pas d'interface graphique car il a vocation à être intégré pour la mise en oeuvre de service web offrant ces interfaces.
+Le validateur se présente sous la forme d'un exécutable java (`validator-cli.jar`) utilisable en ligne de commande. Il n'offre pas d'interface graphique car il a vocation à être utilisé pour la mise en oeuvre de services web tel le [Géoportail de l'Urbanisme](https://www.geoportail-urbanisme.gouv.fr) offrant ces interfaces.
 
 Les techniciens peuvent se référer à la documentation [utilisation du validateur en ligne de commande](doc/cli.md).
 

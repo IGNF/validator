@@ -8,13 +8,7 @@
 
 ## Installation du validateur
 
-* Identifier la dernière release sur GITHUB : [https://github.com/IGNF/validator/releases](https://github.com/IGNF/validator/releases)
-* Voir les fichiers associés à la release : [Exemple pour release v4.2.3](https://github.com/IGNF/validator/releases/tag/v4.2.3)
-* Télécharger l'exécutable [validator-cli.jar](https://github.com/IGNF/validator/releases/download/v4.2.3/validator-cli.jar)
-
-## Téléchargement du validateur
-
-Les livrables pour chaque versions sont attachés aux [releases sur github.com](https://github.com/IGNF/validator/releases).
+Pour chaque version, les livrables sont attachés à une [release sur github.com](https://github.com/IGNF/validator/releases).
 
 Vous pouvez télécharger le fichier `validator-cli.jar` pour la dernière release et tester à l'aide de la commande `java validator-cli.jar version` qui affichera la version du validateur.
 

@@ -14,7 +14,6 @@ java -jar validator-cli.jar document_validator --help
 Pour valider le fichier "GeoVendee_LeTallud-StGemme.gml" dans le dossier "document-test" en fonction du modèle [CNIG_PCRS_v2.0](https://ignf.github.io/validator/validator-core/src/test/resources/config-json/CNIG_PCRS_v2.0/document.json), on appellera par exemple la commande suivante :
 
 ```bash
-# Appel au validateur JAVA avec le modèle PCRS
 java -jar validator-cli.jar document_validator \
     --report-format jsonl \
     --model https://ignf.github.io/validator/validator-core/src/test/resources/config-json/CNIG_PCRS_v2.0/document.json \

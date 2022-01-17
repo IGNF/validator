@@ -25,7 +25,7 @@ Le concept de [Document.json](Document.json) est utilisé pour modéliser un dos
 | `document.title`       | `string`              | Le nom du modèle pour l'affichage                       |      N      |   4.0   |
 | `document.description` | `string`              | La description du modèle                                |      N      |   4.0   |
 | `document.files`       | `File[]`              | La liste des fichiers attendus dans le dossier          |      O      |   4.0   |
-| `document.constraints` | `DocumentConstraints` | Constraintes au niveau du document                      |      N      |   4.0   |
+| `document.constraints` | `DocumentConstraints` | Contraintes au niveau du document                       |      N      |   4.0   |
 
 ### DocumentConstraints
 
@@ -88,7 +88,7 @@ Le concept de [Column.json](Column.json) est utilisé pour modéliser une table 
 
 ### ColumnType
 
-Le validateur supporte une liste finie de type :
+Le validateur supporte une liste finie de types :
 
 | Nom                                     | Description                                          | Version |
 | --------------------------------------- | ---------------------------------------------------- | :-----: |

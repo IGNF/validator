@@ -15,7 +15,7 @@ Le validateur prépare un répertoire de travail pour la validation où il écri
 
 Le validateur liste les fichiers (`DocumentFile`) ayant des extensions connues dans le document à valider (dossier `--input`).
 
-## 4) Recherche des modèles de fichier correspondant aux fichiers (`DocumentFile`)
+## 4) Recherche des modèles de fichier correspondant aux fichiers
 
 Le validateur recherche le modèle de fichier (`FileModel`) correspondant aux `DocumentFile` trouvés à l'étape précédente.
 
