@@ -23,7 +23,7 @@ import fr.ign.validator.model.type.GeometryType;
  */
 @XmlRootElement
 @XmlType(propOrder = {
-    "name", "description", "attributes"
+    "name", "description", "attributes", "constraints"
 })
 public class FeatureType implements Model {
     /**
@@ -44,6 +44,11 @@ public class FeatureType implements Model {
     private List<AttributeType<?>> attributes = new ArrayList<AttributeType<?>>();
 
     // TODO add private List<String> primaryKey;
+
+    /**
+     * Feature Type Constraints - primary key ? - foreign key ? - sql conditions
+     */
+    private FeatureTypeConstraints constraints = new FeatureTypeConstraints();
 
     public FeatureType() {
 
@@ -216,6 +221,22 @@ public class FeatureType implements Model {
             result.add(getAttribute(i).getName());
         }
         return result;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public FeatureTypeConstraints getConstraints() {
+        return constraints;
+    }
+
+    /**
+     * 
+     * @param constraints
+     */
+    public void setConstraints(FeatureTypeConstraints constraints) {
+        this.constraints = constraints;
     }
 
     /**

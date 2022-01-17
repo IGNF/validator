@@ -149,9 +149,17 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected boolean dgprSafeMode;
 
     /**
-     * List of threshold to detect overdescribed geometries
+     * option - array (numerics) List of threshold to detect overdescribed
+     * geometries
      */
     protected GeometryComplexityThreshold complexityThreshold;
+
+    /**
+     * Option - switch (boolean) default value is false. Allow validator to perform
+     * SQL conditions on FeatureType. Be aware of SQL attack if your validator is
+     * connect to a sensible database.
+     */
+    protected boolean enableConditions;
 
     @Override
     public String getName() {
@@ -194,6 +202,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         buildEncodingOption(options);
         StringFixerOptions.buildOptions(options);
         buildFlatOption(options);
+        buildEnableConditions(options);
         buildPluginsOption(options);
 
         /*
@@ -238,6 +247,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         this.stringFixer = StringFixerOptions.parseCommandLine(commandLine);
         parseDataExtent(commandLine);
         parseFlatOption(commandLine);
+        parseEnableConditions(commandLine);
 
         /*
          * plugin-cnig options
@@ -293,6 +303,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         context.setStringFixer(stringFixer);
         context.setNativeDataExtent(nativeDataExtent);
         context.setFlatValidation(flat);
+        context.setEnableConditions(enableConditions);
 
         /*
          * plugin-cnig options
@@ -718,6 +729,31 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void parseFlatOption(CommandLine commandLine) {
         this.flat = commandLine.hasOption("flat");
+    }
+
+    /**
+     * 
+     * @param options
+     */
+    protected void buildEnableConditions(Options options) {
+        {
+            Option option = new Option(
+                null, "enable-conditions", false,
+                "Allow SQL conditions to be performed. Be aware of SQL injection, disabled by default."
+            );
+            option.setRequired(false);
+            options.addOption(option);
+        }
+    }
+
+    /**
+     * Parse enable conditions option
+     * 
+     * @param commandLine
+     * @return
+     */
+    protected void parseEnableConditions(CommandLine commandLine) {
+        this.enableConditions = commandLine.hasOption("enable-conditions");
     }
 
     /**

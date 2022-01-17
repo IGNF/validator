@@ -5,8 +5,8 @@
     "description": "Table contenant la liste des servitudes d'utilité publique",
     "constraints": {
         "conditions": [
-            "quiProd NOT NULL OR modeProd NOT LIKE 'numérisation'",
-            "docSource NOT NULL OR modeProd NOT LIKE 'numérisation'"
+            "quiProd NOT NULL AND modeProd LIKE 'numérisation'",
+            "docSource NOT NULL AND modeProd LIKE 'numérisation'"
         ]
     },
     "columns": [
@@ -37,7 +37,8 @@
                 "required": true,
                 "unique": false,
                 "pattern": "[0-9]{9}",
-                "maxLength": 9
+                "maxLength": 9,
+                "reference": "GESTIONNAIRE_SUP.IDGEST"
             }
         },
         {

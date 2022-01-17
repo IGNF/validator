@@ -478,6 +478,12 @@
 		"documentation": "Impossible d'ouvrir un fichier (shp, dbf, tab, etc.) en lecture"
 	},
 	{
+		"name": "DATABASE_CONSTRAINT_MISMATCH",
+		"level": "ERROR",
+		"message": "Une règle de remplissage conditionnelle n'est pas respectée. ({CONDITION})",
+		"documentation": ""
+	},
+	{
 		"name": "CNIG_INSEE_INVALID",
 		"level": "ERROR",
 		"message": "La valeur du champ \"INSEE\" ({VALUE}) ne respecte pas le format \"DDCCC\" où \"DD\" est le numéro du département et \"CCC\" le numéro de la commune.",

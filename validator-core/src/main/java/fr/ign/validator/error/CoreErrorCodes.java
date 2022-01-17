@@ -216,4 +216,9 @@ public class CoreErrorCodes {
 
     public static final ErrorCode FILE_NOT_OPENED = ErrorCode.valueOf("FILE_NOT_OPENED");
 
+    /*
+     * ErrorCode for Database validations
+     */
+    public static final ErrorCode DATABASE_CONSTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONSTRAINT_MISMATCH");
+
 }

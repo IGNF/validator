@@ -35,6 +35,10 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.TableReader;
@@ -310,8 +314,16 @@ public class CnigValidatorRegressTest {
          * validate
          */
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_PM3_2013");
+
+        FileModel fileModel = documentModel.getFileModelByName("SERVITUDE");
+        Assert.assertNotNull(fileModel);
+        Assert.assertTrue(fileModel instanceof SingleTableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+        Assert.assertEquals(2, featureType.getConstraints().getConditions().size());
+
         File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104", folder);
         Context context = createContext(documentPath);
+        context.setEnableConditions(true);
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -325,7 +337,39 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(3, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(3 + 9, ErrorLevel.ERROR, report);
+
+        /*
+         * check database errors - 9 errors
+         */
+        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        int index = 0;
+        {
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+            Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
+            Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("1", error.getId());
+            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
+            Assert.assertEquals(expectedMessage, error.getMessage());
+        }
+        index = 5;
+        {
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("3", error.getId());
+            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
+            Assert.assertEquals(expectedMessage, error.getMessage());
+        }
+        index = 8;
+        {
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
+            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("3", error.getId());
+            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
+            Assert.assertEquals(expectedMessage, error.getMessage());
+        }
 
         /*
          * check warning

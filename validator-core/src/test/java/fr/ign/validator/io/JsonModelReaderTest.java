@@ -141,6 +141,32 @@ public class JsonModelReaderTest {
         assertExceptedFeatureTypeAdresse(featureType);
     }
 
+    /**
+     * Read config-json/cnig_SUP_EL9_2013 and performs regress test
+     */
+    @Test
+    public void testLoadDocumentModelCnigWithConstraints() {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-json/cnig_SUP_EL9_2013/files.json"
+        );
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+        assertIsValid(documentModel);
+
+        Assert.assertEquals("cnig_SUP_EL9_2013", documentModel.getName());
+        Assert.assertEquals(10, documentModel.getFileModels().size());
+
+        /* perform checks on FileModel "adresse" */
+        FileModel fileModel = documentModel.getFileModelByName("SERVITUDE");
+        Assert.assertNotNull(fileModel);
+        Assert.assertEquals("Donnees_geographiques/SERVITUDE(_[AB0-9]{3})?", fileModel.getPath());
+
+        /* perform checks on FeatureType "adresse" */
+        Assert.assertTrue(fileModel instanceof SingleTableModel);
+        FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+        Assert.assertNotNull(featureType);
+        assertExceptedFeatureTypeServitude(featureType);
+    }
+
     @Test
     public void testLoadFeatureTypeAdresse() {
         File srcFile = ResourceHelper.getResourceFile(getClass(), "/config-json/adresse/table-models/ADRESSE.json");
@@ -206,6 +232,84 @@ public class JsonModelReaderTest {
                 attribute.getConstraints().isUnique()
             );
         }
+    }
+
+    /**
+     * Check FeatureType for /config-json/cnig_SUP_EL9_2013/types/SERVITUDE.json
+     * 
+     * @param featureType
+     */
+    private void assertExceptedFeatureTypeServitude(FeatureType featureType) {
+        Assert.assertEquals("SERVITUDE", featureType.getName());
+        Assert.assertEquals("Table contenant la liste des servitudes d'utilité publique", featureType.getDescription());
+        Assert.assertEquals(15, featureType.getAttributeCount());
+        Assert.assertFalse(featureType.isSpatial());
+
+        Assert.assertEquals(2, featureType.getConstraints().getConditions().size());
+
+        {
+            String condition = featureType.getConstraints().getConditions().get(0);
+            Assert.assertEquals("quiProd NOT NULL AND modeProd LIKE 'numérisation'", condition);
+        }
+
+        {
+            String condition = featureType.getConstraints().getConditions().get(1);
+            Assert.assertEquals("docSource NOT NULL AND modeProd LIKE 'numérisation'", condition);
+        }
+
+        int index = 0;
+        {
+            AttributeType<?> attribute = featureType.getAttribute(index++);
+            Assert.assertEquals("MODEPROD", attribute.getName());
+            Assert.assertEquals("String", attribute.getTypeName());
+            Assert.assertTrue(
+                attribute.getConstraints().isRequired()
+            );
+            Assert.assertFalse(
+                attribute.getConstraints().isUnique()
+            );
+            String listOfvalue = String.join(",", attribute.getConstraints().getEnumValues());
+            Assert.assertEquals("import,numérisation,reconstitution", listOfvalue);
+        }
+
+        index = 12;
+
+        {
+            AttributeType<?> attribute = featureType.getAttribute(index++);
+            Assert.assertEquals("QUIPROD", attribute.getName());
+            Assert.assertEquals("String", attribute.getTypeName());
+            Assert.assertEquals("Organisme ayant numérisé la servitude", attribute.getDescription());
+            Assert.assertFalse(
+                attribute.getConstraints().isRequired()
+            );
+            Assert.assertFalse(
+                attribute.getConstraints().isUnique()
+            );
+            Assert.assertEquals(
+                Integer.valueOf(80),
+                attribute.getConstraints().getMaxLength()
+            );
+        }
+
+        index = 14;
+
+        {
+            AttributeType<?> attribute = featureType.getAttribute(index++);
+            Assert.assertEquals("DOCSOURCE", attribute.getName());
+            Assert.assertEquals("String", attribute.getTypeName());
+            Assert.assertEquals("Document graphique ayant été numérisé", attribute.getDescription());
+            Assert.assertFalse(
+                attribute.getConstraints().isRequired()
+            );
+            Assert.assertFalse(
+                attribute.getConstraints().isUnique()
+            );
+            Assert.assertEquals(
+                Integer.valueOf(80),
+                attribute.getConstraints().getMaxLength()
+            );
+        }
+
     }
 
     /**

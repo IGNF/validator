@@ -1,12 +1,12 @@
 {
-    "id": "1314efbecbcf4ba12ec0069454dfb756",
-    "name": "PM3_ASSIETTE_SUP_S",
-    "title": "PM3_ASSIETTE_SUP_S",
+    "id": "bb4036e1f1c9bb4e065cb0f8c394daa9",
+    "name": "EL9_ASSIETTE_SUP_S",
+    "title": "EL9_ASSIETTE_SUP_S",
     "description": "Table contenant les assiettes ponctuels / linéaires / surfaciques liés aux servitudes de la catégorie CAT",
     "constraints": {
         "conditions": [
-            "paramCalc NOT NULL OR modeGeoAss NOT LIKE 'Zone tampon'",
-            "srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation'"
+            "parametreCalcul NOT NULL AND modeGeneration LIKE 'Zone tampon'",
+            "sourceGeometrie NOT NULL AND modeGeneration LIKE 'Digitalisation'"
         ]
     },
     "columns": [
@@ -116,7 +116,7 @@
             }
         },
         {
-            "id": "6418d5e70e8f30ede943a050f044525b",
+            "id": "c2db17a87372b342bb16480365e622b0",
             "name": "WKT",
             "title": "Géométrie",
             "description": "Geométrie associée",
