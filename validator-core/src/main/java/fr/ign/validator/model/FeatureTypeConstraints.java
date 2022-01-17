@@ -5,9 +5,7 @@ import java.util.List;
 
 /**
  * 
- * Feature Type Constraints
- * - foreign key 
- * - conditions SQL queries
+ * Feature Type Constraints - foreign key - conditions SQL queries
  *
  * @author cbouche
  *
