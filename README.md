@@ -5,8 +5,9 @@
 
 ## Description
 
-> This programs allows to validate datasets (a folder containing shapefiles, PDF, etc.) according to a file mapping and a FeatureCatalog. It outputs a report describing validation errors and normalized data ready for database integration.
-> It has been developed for the [*géoportail de l'urbanisme*](https://www.geoportail-urbanisme.gouv.fr) to validate urbanism data according to [CNIG standards](https://www.geoportail-urbanisme.gouv.fr/standard/) and allow merging in a national database.
+> This program validates a dataset (a folder containing geodata files and other documents) according to a schema describing the folder structure and the feature catalog. It outputs a report containing validation errors and warnings, and normalized data ready for database integration.
+
+> It has been originally developed for the [Géoportail de l'Urbanisme]((https://www.geoportail-urbanisme.gouv.fr)) to check urban planning documents against CNIG standards in order to produce a nationwide database.
 
 Ce programme permet de valider et de normaliser les données présentes dans une arborescence de fichiers. Ces données peuvent être :
 
