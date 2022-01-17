@@ -33,7 +33,7 @@ Les paramètres sont gérés sous forme de variables d'environnement :
 | [document_validator](cli/document_validator.md) | Valide un document en fonction d'un modèle de document                                          |
 | `projection_list`                               | Exporte la liste des projections supportées au format JSON.                                     |
 | `error_config`                                  | Exporte la liste des modèles d'erreur au format JSON.                                           |
-| `read_url`                                      | Lecture du contenu d'une URL (pour debug des problèmes de proxy et de certificat)               |
-| [metadata_to_json](cli/metadata_to_json.md)     | Conversion d'un fiche de métadonnées XML (ISO19115) dans un modèle simplifié au format JSON.    |
-| `cnig_extract_idgest`                           | Extraction de la valeur de IDGEST à partir d'un fichier SERVITUDE (moissonnage des SUP sur GpU) |
+| `read_url`                                      | Lit le contenu d'une URL (pour debug des problèmes de proxy et de certificat)               |
+| [metadata_to_json](cli/metadata_to_json.md)     | Convertit d'un fiche de métadonnées XML (ISO19115) dans un modèle simplifié au format JSON.    |
+| `cnig_extract_idgest`                           | Extrait de la valeur de IDGEST à partir d'un fichier SERVITUDE (moissonnage des SUP sur GpU) |
 
