@@ -24,7 +24,7 @@ Le paramétrage s'effectue à l'aide de [fichiers JSON décrivant des arborescen
 
 ## Principe de fonctionnement
 
-Le schéma suivant illustre le [principe de fonctionnement du validateur de document](doc/principe.md) :
+Le schéma suivant illustre le [Principe de fonctionnement du validateur](doc/principe.md) :
 
 ![Working principle](doc/img/principe.jpg)
 
@@ -39,7 +39,7 @@ Le schéma suivant illustre le [principe de fonctionnement du validateur de docu
 
 ## Utilisation
 
-Le validateur se présente sous la forme d'un exécutable java (`validator-cli.jar`) utilisable en ligne de commande. Il n'offre pas d'interface graphique car il a vocation à être utilisé pour la mise en oeuvre de services web tel le [Géoportail de l'Urbanisme](https://www.geoportail-urbanisme.gouv.fr) offrant ces interfaces.
+Le validateur se présente sous la forme d'un exécutable java (`validator-cli.jar`) utilisable en ligne de commande. Il n'offre pas d'interface graphique car il a vocation à être utilisé pour la mise en œuvre de services web tel le [Géoportail de l'Urbanisme](https://www.geoportail-urbanisme.gouv.fr) offrant ces interfaces.
 
 Les techniciens peuvent se référer à la documentation [utilisation du validateur en ligne de commande](doc/cli.md).
 
@@ -59,7 +59,7 @@ Les principaux documents sont les suivants :
 * [Modélisation des données](validator-core/src/main/resources/schema/README.md)
 * [Exemples de modèles de document](validator-core/src/test/resources/config-json/README.md)
 * [Utilisation du validateur en ligne de commande](doc/cli.md) pour une utilisation directe.
-* [Principe de fonctionnement du validateur de document](doc/principe.md)
+* [Principe de fonctionnement du validateur](doc/principe.md)
 * [Principe de fonctionnement des plugins](doc/plugins.md)
 * [Liste des codes d'erreurs (JSON)](validator-core/src/main/resources/error-code.json)
 * [Projection supportées (JSON)](validator-core/src/main/resources/projection.json)

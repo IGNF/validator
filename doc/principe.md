@@ -1,4 +1,4 @@
-# Principe de fonctionnement du validateur de document
+# Principe de fonctionnement du validateur
 
 ## 1) Chargement du modèle de document
 
