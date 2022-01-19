@@ -37,32 +37,29 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
 
     private Projection sourceProjection;
 
-    public String isValid(Geometry geometry, int pointCount, int ringCount, int partCount, double density) {
+    private Integer isNumPointInvalid(Geometry geometry, int pointCount) {
+    	if (geometry.getNumPoints() > pointCount) {
+        	return geometry.getNumPoints();
+    	}
+    	return null;
+    }
 
-        if (null == geometry) {
-            log.debug(MARKER, "Skip validate. geometry is null");
-            return "";
-        }
+    private Integer isNumPartInvalid(Geometry geometry, int partCount) {
+    	if (geometry.getNumGeometries() > partCount) {
+        	return geometry.getNumGeometries();
+    	}
+    	return null;
+    }
 
-        if (geometry.getNumPoints() > pointCount) {
-            // cnig-plugin-validator: we allow french usage to message error.
-            return String.format("Nombre de sommets %d > %d", geometry.getNumPoints(), pointCount);
-        }
-
-        if (geometry.getNumGeometries() > partCount) {
-            // cnig-plugin-validator: we allow french usage to message error.
-            return String.format("Nombre de parties %d > %d", geometry.getNumGeometries(), partCount);
-        }
-
+    private Integer isNumRingInvalid(Geometry geometry, int ringCount) {
         int holeCount = GeometryRings.getInnerRings(geometry).size();
         if (holeCount > ringCount) {
-            // cnig-plugin-validator: we allow french usage to message error.
-            return String.format(
-                "Nombre d’anneaux %d > %d",
-                holeCount, ringCount
-            );
+        	return holeCount;
         }
+    	return null;
+    }
 
+    private Double isDensityInvalid(Geometry geometry, double density) {
         List<LineString> lineStrings = GeometryRings.getRings(geometry);
         for (LineString lineString : lineStrings) {
             Double length;
@@ -76,13 +73,114 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
             }
             Double lineDensity = (double) (lineString.getNumPoints() / length);
             if (lineDensity > density) {
-                // cnig-plugin-validator: we allow french usage to message error.
-                return String.format("Nombre moyen de point par m %f > %f", lineDensity, density);
+            	return lineDensity;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 
+     * cnig-plugin-validator: we allow french usage to message error.
+     * @param geometry
+     * @param pointCount
+     * @param ringCount
+     * @param partCount
+     * @param density
+     * @return
+     */
+    public String isWarning(Geometry geometry, int pointCount, int ringCount, int partCount, double density) {
+
+        if (null == geometry) {
+            log.debug(MARKER, "Skip validate. geometry is null");
+            return "";
+        }
+
+        // test1: point count && point density
+        {
+            Integer numPoint = isNumPointInvalid(geometry, pointCount);
+            Double lineDensity = isDensityInvalid(geometry, density);
+            if (numPoint != null && lineDensity != null) {
+                return String.format(
+                		"Nombre de sommets %d > %d et nombre moyen de point par m %f > %f",
+                		numPoint,
+                		pointCount,
+                		lineDensity,
+                		density
+        		);
+            }
+        }
+
+        // test2: part count
+        {
+            Integer message = isNumPartInvalid(geometry, partCount);
+            if (message != null) {
+                return String.format("Nombre de parties %d > %d", message, partCount);
+            }
+        }
+
+        // test3: ring count
+        {
+            Integer message = isNumRingInvalid(geometry, ringCount);
+            if (message != null) {
+                return String.format("Nombre d’anneaux %d > %d", message, ringCount);
             }
         }
 
         return "";
     }
+    
+    /**
+     * 
+     * @param geometry
+     * @param pointCount
+     * @param ringCount
+     * @param partCount
+     * @param density
+     * @return
+     */
+    public String isError(Geometry geometry, int pointCount, int ringCount, int partCount, double density) {
+
+        if (null == geometry) {
+            log.debug(MARKER, "Skip validate. geometry is null");
+            return "";
+        }
+
+        // test1: point count
+        {
+            Integer message = isNumPointInvalid(geometry, pointCount);
+            if (message != null) {
+                return String.format("Nombre de sommets %d > %d", message, pointCount);
+            }
+        }
+
+        // test2: part count
+        {
+            Integer message = isNumPartInvalid(geometry, partCount);
+            if (message != null) {
+                return String.format("Nombre de parties %d > %d", message, partCount);
+            }
+        }
+
+        // test3: ring count
+        {
+            Integer message = isNumRingInvalid(geometry, ringCount);
+            if (message != null) {
+                return String.format("Nombre d’anneaux %d > %d", message, ringCount);
+            }
+        }
+
+        // test4: point density
+        {
+            Double message = isDensityInvalid(geometry, density);
+            if (message != null) {
+                return String.format("Nombre moyen de point par m %f > %f", message, density);
+            }
+        }
+
+        return "";
+    }
+
 
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {
@@ -96,7 +194,7 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
 
         Geometry geometry = attribute.getBindedValue();
 
-        String errorType = isValid(
+        String errorType = isError(
             geometry,
             context.getComplexityThreshold().getErrorPointCount(),
             context.getComplexityThreshold().getErrorRingCount(),
@@ -112,7 +210,7 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
             return;
         }
 
-        errorType = isValid(
+        errorType = isWarning(
             geometry,
             context.getComplexityThreshold().getWarningPointCount(),
             context.getComplexityThreshold().getWarningRingCount(),
