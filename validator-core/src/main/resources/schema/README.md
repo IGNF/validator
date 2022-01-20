@@ -38,26 +38,31 @@ Le concept de [Document.json](Document.json) est utilisé pour modéliser un dos
 
 Les fichiers d'un document peuvent correspondre à des tables, des sous-dossiers, des PDF ou des fichiers de métadonnées. Ils sont décrits par les propriétés suivantes :
 
-| Propriété          | Type                  | Description                                        | Obligatoire | Version |
-| ------------------ | --------------------- | -------------------------------------------------- | :---------: | :-----: |
-| `file.name`        | `string`              | Le nom identifiant le fichier                      |      O      |   4.0   |
-| `file.title`       | `string`              | Le nom du fichier pour affichage                   |      N      |   4.0   |
-| `file.description` | `string`              | La description du fichier                          |      N      |   4.0   |
-| `file.type`        | [FileType](#filetype) | Le type de fichier                                 |      O      |   4.0   |
-| `file.path`        | `RegExp`              | Chemin relatif par rapport à la racine du document |      N      |   4.0   |
-| `file.tableModel`  | `string`              | Liens vers le [modèle de table](#table)            |      N      |   4.0   |
+| Propriété          | Type                  | Description                                            | Obligatoire | Version |
+| ------------------ | --------------------- | ------------------------------------------------------ | :---------: | :-----: |
+| `file.name`        | `string`              | Le nom identifiant le fichier                          |      O      |   4.0   |
+| `file.title`       | `string`              | Le nom du fichier pour affichage                       |      N      |   4.0   |
+| `file.description` | `string`              | La description du fichier                              |      N      |   4.0   |
+| `file.type`        | [FileType](#filetype) | Le type de fichier                                     |      O      |   4.0   |
+| `file.path`        | `RegExp`              | Chemin relatif par rapport à la racine du document (1) |      N      |   4.0   |
+| `file.tableModel`  | `string`              | Liens vers le [modèle de table](#table)                |    N (2)    |   4.0   |
+
+Remarques :
+
+* (1) Les extensions ne sont pas spécifiées dans les modèles. L'expression régulière est complétée automatiquement en fonction du `type`, ce qui simplifie le support de plusieurs formats pour les tables (c.f. [FileType](#filetype) )
+* (2) Il est conseillé de spécifier l'URL du modèle de table qui sera par défaut `./types/{file.name}.json`
 
 ### FileType
 
 Les types de fichiers supportés sont les suivants :
 
-| Type          | Description                                                                               | Version |
-| ------------- | ----------------------------------------------------------------------------------------- | :-----: |
-| `directory`   | Dossier permettant d'en valider l'existence                                               |   4.0   |
-| `metadata`    | Fiche de métadonnées XML au format ISO 19115 (validation profile INSPIRE & CNIG pour GpU) |   4.0   |
-| `pdf`         | Fichier `.pdf`                                                                            |   4.0   |
-| `table`       | Table de données géographique ou non (`.csv`, `.dbf`, `.shp`, `.geojson`, `.gml`)         |   4.0   |
-| `multi_table` | Un ensemble de table stockés dans un seul fichier (`.gml`)                                |   4.2   |
+| Type          | Description                                                                       | Version |
+| ------------- | --------------------------------------------------------------------------------- | :-----: |
+| `directory`   | Dossier permettant d'en valider l'existence                                       |   4.0   |
+| `metadata`    | Fiche de métadonnées XML au format ISO 19115 (`.xml`)                             |   4.0   |
+| `pdf`         | Fichier PDF (`.pdf`)                                                              |   4.0   |
+| `table`       | Table de données géographique ou non (`.csv`, `.dbf`, `.shp`, `.geojson`, `.gml`) |   4.0   |
+| `multi_table` | Un ensemble de table stockés dans un seul fichier (`.gml`)                        |   4.2   |
 
 Remarque : Le support du seul format GML pour les `multi_table` est lié à l'introduction du concept la validation des données [PCRS](https://github.com/cnigfr/PCRS). Il pourrait aussi s'appliquer aux données GeoPackage.
 
