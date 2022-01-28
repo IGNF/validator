@@ -16,6 +16,7 @@ import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
+import fr.ign.validator.model.StaticTable;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.ModelHelper;
 
@@ -31,7 +32,9 @@ abstract class AbstractModelReader implements ModelReader {
     @Override
     public DocumentModel loadDocumentModel(File documentModelPath) {
         try {
-            return loadDocumentModel(documentModelPath.toURI().toURL());
+        	DocumentModel documentModel = loadDocumentModel(documentModelPath.toURI().toURL());
+        	resolveStaticFilesPath(documentModel, documentModelPath.toURI().toURL());
+        	return documentModel;
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -44,6 +47,17 @@ abstract class AbstractModelReader implements ModelReader {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void resolveStaticFilesPath(DocumentModel documentModel, URL documentUrl) {
+        try {
+        	for (StaticTable staticTable : documentModel.getStaticTables()) {
+                URL url = resolveStaticFileUrl(documentUrl, documentModel, staticTable.getName());
+                staticTable.setUrl(url);
+			}
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+		}
     }
 
     /**
@@ -95,13 +109,27 @@ abstract class AbstractModelReader implements ModelReader {
             }
         }
 
-        if (documentModelUrl.getProtocol().equals("file")) {
+        return resolveConfigFileUrl(documentModelUrl, documentModel, tableModel.getName());
+    }
+
+    /**
+     * Resolve Config file URL for a given filename.
+     * 
+     * @param documentModelUrl
+     * @param documentModel
+     * @param filename
+     * @return
+     * @throws MalformedURLException
+     */
+    protected URL resolveConfigFileUrl(URL documentModelUrl, DocumentModel documentModel, String filename)
+    		throws MalformedURLException {
+    	if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(
                 documentModelUrl,
-                "./types/" + tableModel.getName() + "." + getFormat()
+                "./types/" + filename + "." + getFormat()
             );
         } else {
             /* URL convention */
@@ -109,7 +137,37 @@ abstract class AbstractModelReader implements ModelReader {
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(
                 documentModelUrl,
-                "./" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
+                "./" + documentModel.getName() + "/types/" + filename + "." + getFormat()
+            );
+        }
+    }
+
+    /**
+     * Resolve Static file URL for a given filename.
+     * 
+     * @param documentModelUrl
+     * @param documentModel
+     * @param filename
+     * @return
+     * @throws MalformedURLException
+     */
+    protected URL resolveStaticFileUrl(URL documentModelUrl, DocumentModel documentModel, String filename)
+    		throws MalformedURLException {
+    	if (documentModelUrl.getProtocol().equals("file")) {
+            /* config export convention */
+            // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
+            // validator-config-cnig/config/cnig_PLU_2017/codes/InformationUrbaType.csv
+            return new URL(
+                documentModelUrl,
+                "./codes/" + filename + ".csv"
+            );
+        } else {
+            /* URL convention */
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.(xml|json)
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/codes/InformationUrbaType.csv
+            return new URL(
+                documentModelUrl,
+                "./" + documentModel.getName() + "/codes/" + filename + ".csv"
             );
         }
     }

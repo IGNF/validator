@@ -1,0 +1,165 @@
+Code,Sous Code,Libellé,Références législatives du code de l’urbanisme,Références réglementaires du code de l’urbanisme
+1,0,Espace boisé classé,L113-1,R151-31 1°
+1,1,Espace boisé classé à protéger ou conserver,L113-1,R151-31 1°
+1,2,Espace boisé classé à créer,L113-1,R151-31 1°
+1,3,Espace boisé classé significatif au titre de la loi littoral,L121-27,
+2,0,"Limitations de la constructibilité pour des raisons environnementales, de risques, d’intérêt général",,R151-31 2° et R151-34 1°
+2,1,"Secteur avec interdiction de constructibilité pour des raisons environnementales, de risques, d’intérêt général",,R151-31 2°
+2,2,"Secteur avec conditions spéciales de constructibilité pour des raisons environnementales, de risques, d’intérêt général",,R151-34 1°
+3,0,Secteur avec disposition de reconstruction / démolition,L151-10,R151-34 3°
+3,1,[réservé aux cartes communales] Secteur dans lequel la reconstruction à l'identique d'un bâtiment détruit par un sinistre n'est pas autorisée,,R161-7
+3,2,Interdiction de restauration de bâtiment dont il reste l’essentiel des murs porteurs,L111-23,
+4,0,Périmètre issu des PDU sur obligation de stationnement,L151-47 dernier alinéa,
+5,0,"Emplacement réservé
+Remarque : sauf lot de données antérieurs au standard v2017, utiliser impérativement les sous-codes suivants",L151-41 1° à 3°,"R151-34 4°,
+R151-38 1°, R151-43 3°, R151-48 2°, R151-50 1°"
+5,1,Emplacement réservé aux voies publiques,L151-41 1°,R151-48 2°
+5,2,Emplacement réservé aux ouvrages publics,L151-41 1°,R151-50 1°
+5,3,Emplacement réservé aux installations d’intérêt général,L151-41 2°,R151-34 4°
+5,4,Emplacement réservé aux espaces verts/continuités écologiques,L151-41 3°,R151-43 3°
+5,5,Emplacement réservé logement social/mixité sociale,L151-41 4°,R151-38 1°
+5,6,"Servitude de localisation des voies, ouvrages publics, installations d’intérêt général et espaces verts en zone U ou AU",L151-41 dernier alinéa,
+5,7,Secteur de projet en attente d’un projet d’aménagement global,L151-41 5°,R151-32 
+--,--,Abrogé (secteur à densité maximale pour les reconstructions ou aménagements de bâtiments existants),Abrogé,Abrogé
+7,0,"Patrimoine bâti, paysager ou éléments de paysages à protéger pour des motifs d'ordre culturel, historique, architectural ou écologique",L151-19 et L151-23,R151-41 3° Et R151-43  
+7,1,"Patrimoine bâti à protéger pour des motifs d'ordre culturel, historique, architectural",L151-19,R151-41 3°
+7,2,"Patrimoine paysager à protéger pour des motifs d'ordre culturel, historique, architectural",L151-19,R151-41 3°
+7,3,"Patrimoine paysager correspondant à un espace boisé à protéger pour des motifs d'ordre culturel, historique, architectural",L151-19,R151-41 3°
+7,4,"Éléments de paysage, (sites et secteurs) à préserver pour des motifs d'ordre écologique",L151-23,R151-43 5°
+7,5,"Éléments de paysage correspondant à un espace boisé, (sites et secteurs) à préserver pour des motifs d'ordre écologique",L151-23 al.1,R151-43 5°
+8,0,Terrain cultivé ou non bâti à protéger en zone urbaine,L151-23 al. 2,R151-43 6°
+--,--,Anciennement code 9 : Emplacement réservé logement social/mixité sociale est transféré en 05 05,,
+--,--,"Anciennement code 10 : Servitude de localisation des voies (,,) et espaces verts en zone U ou AU est transféré en 05 06",,
+--,--,"Anciennement code 11, est transféré en code 15 Règles d’implantation des constructions",,
+--,--,Anciennement code 12 : Secteur de projet en attente d’un projet d’aménagement global est transféré en 05 07,,
+13,0,Zone à aménager en vue de la pratique du ski,L151-38 al. 2,R151-48 3°
+14,0,Secteur de plan de masse,,R151-40 
+15,0,Règles d’implantation des constructions,L151-17  et L151-18,R151-39 dernier al.
+15,1,Implantation des constructions par rapport aux voies et aux emprises publiques,L151-17 et L151-18,R151-39 
+15,2,Implantation des constructions par rapport aux limites séparatives latérales,L151-17 et L151-18,R151-39 
+15,3,Implantation des constructions par rapport aux limites des fonds de parcelles,L151-17,R151-39 
+15,98,Implantation alternative des constructions,L151-17,R151-39 
+16,0,Constructions et installations nécessaires à des équipements collectifs en zone A ou N,L151-11 1°,R151-23 2°et R151-25  
+16,1,Bâtiment susceptible de changer de destination en zone A ou N,L151-11 2°,"R151-23 2°, R151-25 2° et R151-35 "
+16,2,Bâtiments d’habitation existants pouvant faire l’objet d’extensions ou d’annexes en zone A ou N,L151-12,R151-23 2° et R151-25 2°
+16,3,Secteur de taille et de capacité d’accueil limitées (STECAL) en zone A ou N,L151-13,R151-23 2° et R151-25 2°
+16,4,Constructions et installations nécessaires à l’activité agricole en zone A ou N,L151-11 II,R151-23 1° et R151-25 1°
+16,5,"Diversification de l'activité agricole : transformation, conditionnement et ventes de produits agricoles (activités liées au tourisme exclues)",L151-11 II,
+17,0,Secteur à programme de logements mixité sociale en zone U et AU,L151-15,R151-38 3°
+18,0,Périmètre comportant des orientations d’aménagement et de programmation (OAP),L151-6 et L151-7,R151-6 à R151-8-1
+18,1,OAP de projet (sans règlement),L151-6 et L151-7,R151-8
+18,2,OAP entrées de ville,L151-6 et L151-7 1°,R151-6
+18,3,"OAP relatives à la réhabilitation, la restructuration, la mise en valeur ou l’aménagement",L151-7 4°,
+18,4,OAP d’adaptation des périmètres de transports collectifs,L151-7 6°,
+18,5,"OAP patrimoniales, architecturales et écologiques",L151-6 et L151-7,R151-7
+18,6,OAP relatives à l’habitat,L151-6 et L151-46,
+18,7,OAP comprenant des dispositions relatives à l'équipement commercial et artisanal,L151-6 2e alinéa et L151-7 2°,
+18,8,OAP relatives aux transports et aux déplacements,L151-6 ou L151-47,
+18,9,OAP relatives aux espaces publics en zone d’aménagement concerté,L151-7-1 1°,
+18,10,"OAP relatives aux ouvrages publics, installations d’intérêt général et espaces verts en zone d’aménagement concerté",L151-7-1 2°,
+18,11,OAP valant création de zone d’aménagement concerté,L151-7-2,
+19,0,Secteur protégé en raison de la richesse du sol et du sous-sol,,R151-34 2°
+20,0,Secteur à transfert de constructibilité en zone N,L151-25,R151-36 
+--,–,Idem 10,Idem 10,Idem 10
+22,0,Diversité commerciale à protéger ou à développer,L151-16,R151-37 4°
+22,1,Diversité commerciale à protéger,L151-16,R151-37 4°
+22,2,Diversité commerciale à développer,L151-16,R151-37 4°
+22,3,Linéaire commercial protégé,L151-16,R151-37 4°
+22,4,Linéaire commercial protégé renforcé,L151-16,R151-37 4°
+23,0,Secteur avec taille minimale des logements en zone U et AU,L151-14,R151-38 2°
+24,0,"Voies, chemins, transport public à conserver et à créer",L151-38,R151-48 1°
+24,1,"Voies de circulation à créer, modifier ou conserver",L151-38,R151-48 1°
+24,2,Voies de circulation à modifier,L151-38,R151-48 1°
+24,3,Voies de circulation à créer,L151-38,R151-48 1°
+24,4,Voies de circulation à conserver,L151-38,R151-48 1°
+25,0,Eléments de continuité écologique et trame verte et bleue,L151-23 al. 2,R151-43 4°et R151-43 8 °
+26,0,Secteur de performance énergétique,L151-21,R151-42 1°
+26,1,Secteur de performance énergétique renforcé,L151-21,R151-42 2°
+27,0,Secteur d’aménagement numérique,L151-40,R151-50 2°
+28,0,Conditions de desserte,,R151-47 1° et 2°
+28,1,Conditions permettant une bonne desserte des terrains par les services publics de collecte des déchets,,R151-47 2°
+29,0,Secteur avec densité minimale de construction,,R151-39 2e al.
+29,1,Secteur avec densité minimale de construction à proximité des transports collectifs,L151-26,R151-39 2e al.
+30,0,Majoration des volumes constructibles,,R151-37 2°
+30,1,Majoration des volumes constructibles pour l’habitation,L151-28 1°,R151-37 5°
+30,2,Majoration des volumes constructibles pour les programmes comportant des logements locatifs sociaux,L151-28 2°,R151-37 2°
+30,3,Majoration des volumes constructibles pour exemplarité énergétique ou environnementale,L151-28 3°,R151-42 3°
+30,4,Majoration des volumes constructibles pour les programmes comportant des logements intermédiaires,L151-28 4°,R151-37 7°
+31,0,Espaces remarquables du littoral,L121-23,R121-4 1° à 8°
+31,1,"Dunes, landes côtières, plages et lidos, estrans, falaises et abords",L121-23,R121-4  1°
+31,2,Forêts et zones boisées proches du rivage de la mer et des plans d’eau intérieurs d’une superficie supérieure à 1 000 hectares,L121-23,R121-4  2°
+31,3,Ilots inhabités,L121-23,R121-4  3°
+31,4,"Parties naturelles des estuaires, des rias ou abers et des caps",L121-23,R121-4  4°
+31,5,"Marais, vasières, tourbières, plans d'eau, les zones humides et milieux temporairement immergés",L121-23,R121-4  5°
+31,6,Milieux abritant des concentrations naturelles d'espèces animales ou végétales,L121-23,R121-4  6°
+31,7,Parties naturelles des sites inscrits ou classés ,L121-23,R121-4  7°
+31,8,Formations géologiques,L121-23,R121-4  8°
+32,0,Exclusion protection de plans d’eau de faible importance,L122-12,R122-2
+33,0,Secteur de dérogation aux protections des rives des plans d'eau en zone de montagne,L122-14 1°,
+34,0,"Espaces, paysage et milieux caractéristiques du patrimoine naturel et culturel montagnard à préserver",L122-9,
+35,0,"Terres nécessaires au maintien et au développement des activités agricoles, pastorales et forestières à préserver",L122-10,
+36,0,Mixité des destinations ou sous-destinations,,R151-37 1°
+37,0,Règles différenciées entre le rez-de-chaussée et les étages supérieurs des constructions,,R151-37 3°
+37,1,Règles différenciées pour le rez-de-chaussée en raison des risques inondations,,R151-42 4°
+37,2,Règles différenciées pour mixité sociale et fonctionnelle,,R151-37 1° et 3°
+38,0,Emprise au sol,,R151-39 
+38,1,Emprise au sol minimale,,R151-39 2e al.
+38,2,Emprise au sol maximale,,R151-39 1er al.
+38,97,Emprise au sol règles qualitatives,,R151-39 al.
+38,98,Emprise au sol règles alternatives,,R151-41 1°
+39,0,Hauteur,,R151-39 
+39,1,Hauteur minimale,,R151-39 2e al.
+39,2,Hauteur maximale,,R151-39 1er al.
+39,97,Hauteur règles qualitatives,,R151-39 dernier al.
+39,98,Hauteur règles alternatives,,R151-41 1°
+40,0,Volumétrie,,R151-39
+40,1,Volumétrie minimale,,R151-39 2e al.
+40,2,Volumétrie maximale,,R151-39 1er al.
+40,97,Règles volumétriques qualitatives,,R151-39 dernier al.
+40,98,Règles volumétriques alternatives,,R151-41 1°
+41,0,Aspect extérieur,L151-18,R151-41 2°
+41,1,Aspect extérieur façades,L151-18,R151-41 2°
+41,2,Aspect extérieur toitures,L151-18,R151-41 2°
+41,3,Aspect extérieur clôtures,L151-18,R151-41 2°
+41,98,Aspect extérieur règles alternatives,,R151-13 
+42,0,Coefficient de biotope par surface,L151-22,R151-43 1°
+43,0,"Réalisation d’espaces libres, plantations, aires de jeux et de loisir",,R151-43 2° et 8°
+43,1,"Réalisation d’espaces libres,",,R151-43 2°
+43,2,Réalisation d’aires de jeux et de loisirs,,R151-43 2°
+43,3,Réglementation des plantations,,R151-43 8°
+44,0,Stationnement,,R151-44
+44,1,Stationnement minimal,L151-30 à L151-37,R151-44 
+44,2,Stationnement maximal,L151-30 à L151-37,R151-45 3°
+44,3,Caractéristiques et type de stationnement,,R151-45 1°
+44,4,Minoration des règles de stationnement,,R151-45 2°
+44,5,Réalisation d’aires de livraisons imposée,L151-33-1,
+44,98,Stationnement règles alternatives,,R151-13
+45,0,"Zone d’aménagement concerté (surface de plancher, destination)",L151-27,
+46,0,Constructibilité espace boisé antérieur au 20ème siècle,L151-20,
+47,0,Desserte par les réseaux,L151-39,R151-49 
+47,1,Réseaux publics d'eau,L151-39,R151-49 
+47,2,Réseaux publics d'électricité,L151-39,R151-49 
+47,3,Réseaux publics d'assainissement,L151-39,R151-49 
+47,4,Conditions de réalisation d'un assainissement non collectif,L151-39,R151-49 
+47,5,Infrastructures et réseaux de communications électroniques ,L151-39,R151-49 3°
+48,0,Mesures pour limiter l'imperméabilisation des sols,,R151-49 2°
+48,1,Installations nécessaires à la gestion des eaux pluviales et du ruissellement,,R151-43 7° et R151-49 2°
+49,0,Opération d'ensemble imposée en zone AU,,R151-20 
+49,1,Urbanisation par opération d'ensemble,,R151-20 2e al.
+49,2,Urbanisation conditionnée à la réalisation des équipements internes à la zone,,R151-20 3e al.
+50,0,"Interdiction types d’activités, destinations, sous-destinations",L151-9,R151-30 
+51,0,"Autorisation sous conditions types d’activités, destinations, sous-destinations",L151-9,R151-33 
+52,0,Infrastructures et équipements logistiques à préserver ou à développer en zones U et AU,L151-16-2,
+97,0,"Périmètre d’application d’une pièce écrite territorialisée (rapport de présentation, PADD, règlement, règlement graphique, POA)",,
+97,1,Périmètre couvert par un Plan de secteurs,L151-3,
+99,0,Autre,,
+99,1,Autre : affectation des sols et destination des constructions,L151-9 à L151-10,R151-27 à R151-29 et R151-30 à R151-36 
+99,2,"Autre : zones naturelles, agricoles ou forestières",L151-11 à L151-13,R151-17 à R151-26 
+99,3,Autre : mixité sociale et fonctionnelle en zones urbaines ou à urbaniser,L151-14 à L151-16,R151-37 à R151-38 
+99,4,Autre : qualité du cadre de vie,L151-17 à L151-25,
+99,5,"Autre : Qualité urbaine, architecturale, environnementale et paysagère",,R151-41 à R151-42 
+99,6,Autre : Traitement environnemental et paysager des espaces non bâtis et abords des constructions,,R151-43 
+99,7,Autre : densité,L151-26 à L151-29,R151-39 à R151-40 
+99,8,"Autre : équipements, réseaux et emplacements réservés",L151-38 à L151-42,R151-47 à R151-48 et R151-49 à R151-50
+99,9,Autre : plan local d’urbanisme tenant lieu de programme local de l’habitat et de plan de déplacements urbains,L151-44 à L151-48,R151-54 à R151-55
+99,10,Autre : plan local d’urbanisme tenant lieu de plan de déplacements urbains,L151-44 à L151-48,R151-55

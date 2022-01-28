@@ -24,6 +24,7 @@ import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.database.AttributeReferenceValidator;
 import fr.ign.validator.validation.database.AttributeUniqueValidator;
 import fr.ign.validator.validation.database.FeatureTypeConditionsValidator;
+import fr.ign.validator.validation.database.ForeignKeyValidator;
 import fr.ign.validator.validation.document.DocumentFolderNameValidator;
 import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
@@ -34,7 +35,7 @@ import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
  */
 @XmlRootElement(name = "document")
 @XmlType(propOrder = {
-    "name", "regexp", "fileModels"
+    "name", "regexp", "fileModels", "staticTables"
 })
 public class DocumentModel implements Model {
     public static final Logger log = LogManager.getRootLogger();
@@ -51,6 +52,11 @@ public class DocumentModel implements Model {
     private List<FileModel> fileModels = new ArrayList<FileModel>();
 
     /**
+     * The list of codes in Document
+     */
+    private List<StaticTable> staticTables = new ArrayList<StaticTable>();
+
+    /**
      * Constraints on the document
      */
     private DocumentConstraints constraints = new DocumentConstraints();
@@ -65,8 +71,9 @@ public class DocumentModel implements Model {
      * references,...)
      */
     private List<Validator<Database>> databaseValidators = new ArrayList<>();
+    
 
-    /**
+	/**
      * Constructs a DocumentModel with default constraints
      */
     public DocumentModel() {
@@ -76,6 +83,7 @@ public class DocumentModel implements Model {
         addDatabaseValidator(new AttributeUniqueValidator());
         addDatabaseValidator(new AttributeReferenceValidator());
         addDatabaseValidator(new FeatureTypeConditionsValidator());
+        addDatabaseValidator(new ForeignKeyValidator());
     }
 
     /**
@@ -192,6 +200,24 @@ public class DocumentModel implements Model {
         }
         return result;
     }
+
+    @JsonProperty("codes")
+    public List<StaticTable> getStaticTables() {
+        return this.staticTables;
+    }
+    
+	public void setStaticTables(List<StaticTable> staticTables) {
+		this.staticTables = staticTables;
+	}
+
+	public StaticTable getStaticTableByName(String staticTableName) {
+        for (StaticTable staticTable : staticTables) {
+            if (staticTable.getName().equals(staticTableName)) {
+            	return staticTable;
+            }
+        }
+        return null;
+	}
 
     @JsonIgnore
     public List<Validator<Document>> getValidators() {

@@ -1,0 +1,48 @@
+Code,Sous-Code,Libellé,Références pour la définition de l’information,Références pour l’annexion
+--,--,Anciennement 01 : « Secteur sauvegardé » puis « Site patrimonial remarquable » depuis la Loi CAP de juillet 2016 : ce périmètre d’information est désormais supprimé car il correspond à une SUP,L631-1 code du patrimoine,
+2,0,Zone d'aménagement concerté,L311-1 code de l’urbanisme,R151-52 8°
+3,0,Zone de préemption dans un espace naturel et sensible. [Attention : information facultative non exigée par la loi],L215-1 code de l’urbanisme,Pas de référence pour l’annexion
+4,0,Périmètre de droit de préemption urbain,L211-1 code de l’urbanisme,R151-52 7°
+4,1,Périmètre de droit de préemption urbain renforcé,,R151-52 7°
+5,0,Zone d'aménagement différé,L212-1 et L212-2-1 code de l’urbanisme,R151-52 7°
+--,--,"Anciennement code 06 : zone d’obligation du permis de démolir, est transféré en Prescription 03",,
+7,0,Périmètre de développement prioritaire économie d'énergie,L712-2 code de l’énergie,R151-53 1°
+8,0,"Périmètre forestier : interdiction ou réglementation des plantations (code rural et de la pêche maritime), plantations à réaliser et semis d'essence forestière",L126-1 code rural et de la pêche maritime,R151-53 2°
+9,0,Périmètre minier de concession pour l'exploitation ou le stockage,Livres I et II du code minier,R151-53 3°
+10,0,Zone de recherche et d'exploitation de carrière,"L321-1, L333-1 et L334-1 du code minier",R151-53 4°
+11,0,Périmètre des zones délimitées - divisions foncières soumises à déclaration préalable,L115-3 code de l’urbanisme,R151-52 4°
+12,0,Périmètre de sursis à statuer,L424-1 code de l’urbanisme,R151-52 13°
+13,0,Secteur de programme d'aménagement d'ensemble,L332-9 code de l’urbanisme dans sa version antérieure au 1er mars 2012,R151-52 9°
+14,0,Périmètre de voisinage d'infrastructure de transport terrestre (secteur affecté par le bruit),L571-10 code de l’environnement,R151-53 5°
+--,--,Anciennement code 15 est abrogé : les Zones Agricoles Protégées sont à traiter en SUP A9,Abrogé,Abrogé
+16,0,Site archéologique [Attention : information facultative non exigée par la loi],L522-5 2° du code du patrimoine,Pas de référence pour annexion
+17,0,Zone à risque d'exposition au plomb,L1334-5 code de la santé publique dans sa version antérieure au 11 août 2004,R151-53 6°
+--,--,"Anciennement code 18 (Espaces et milieux à préserver, en fonction de l'intérêt écologique)  est transféré en Prescription 31",L121-23 code de l’urbanisme,R121-4
+19,1,"Zone d'assainissement collectif/non collectif, eaux usées/eaux pluviales, schéma de réseaux eau et assainissement, systèmes d'élimination des déchets",L2224-10 code général des collectivités territoriales,R151-53 8° (zone)
+19,2,Emplacements traitement eaux et déchets,,R151-53 8° (emplacement)
+20,0,Règlement local de publicité,L581-14 code de l’environnement,R151-53 11°
+21,0,Projet de plan de prévention des risques,L562-2 code de l’environnement,R151-53 9°
+22,0,Protection des rives des plans d'eau en zone de montagne,L122-12 code de l’urbanisme,Pas de référence pour l’annexion
+23,0,Arrêté du préfet coordonnateur de massif,L122-12 code de l’urbanisme,R151-52 6°
+--,--,24 (Document d'aménagement artisanal et Commercial) est transféré en Prescription 18-08,,
+25,0,Périmètre de protection des espaces agricoles et naturels périurbain,L113-16 code de l’urbanisme,R151-52 3°
+--,--,Anciennement code 26 (lotissement) est Abrogé,Abrogé,Abrogé
+27,0,Plan d'exposition au bruit des aérodromes,L112-6 code de l’urbanisme,R151-52 2°
+--,--,"Anciennement codes 28 et 29, sont transférés en Prescription 30",,
+30,0,Périmètre projet urbain partenarial,L332-11-3 code de l’urbanisme,R151-52 12°
+31,0,Périmètres patrimoniaux d’exclusion des matériaux et énergies renouvelables pris par délibération,L111-17 code de l’urbanisme,R151-52 1°
+32,0,Secteur de taxe d'aménagement,L331-14 et L331-15 code de l’urbanisme,R151-52 10°
+33,0,Droit de préemption commercial. [Attention : information facultative non exigée par la loi],"L 214-1, R214-1 et 2 code de l’urbanisme",Pas de référence pour l’annexion
+34,0,Périmètre d'opération d'intérêt national. [Attention : information facultative non exigée par la loi],L102-12 et R102-3 code de l’urbanisme,Pas de référence pour l’annexion
+35,0,Périmètre de secteur affecté par un seuil minimal de densité,L331-36 code de l’urbanisme,R151-52 11°
+36,0,Schémas d'aménagement de plage,L121-28 code de l’urbanisme,R151-52 5°
+37,0,Bois ou forêts relevant du régime forestier,L211-1 et L211-2 code forestier,R151-53 7°
+38,0,Secteurs d'information sur les sols ,L125-6 code de l’environnement,R151-53 10°
+39,0,Périmètres de projets AFUP (dans lesquels les propriétaires fonciers sont incités à se regrouper en AFU de projet et les AFU de projet à mener leurs opérations de façon concertée),L322-13 code de l’urbanisme,R151-52 14°
+40,1,Périmètre d’un bien inscrit au patrimoine mondial,L612-1 et R612-1 à R612-2 code du patrimoine,R151-53
+40,2,Zone tampon d’un bien inscrit au patrimoine mondial,,R151-53
+97,0,"Périmètre d’application d’une pièce écrite territorialisée relative aux annexes (liste des annexes, liste des SUP, plan des SUP)",,
+98,0,Périmètre d’annulation partielle du document d’urbanisme (lorsqu’elle impacte le règlement graphique),,
+99,0,"Autre  périmètre, secteur, plan, document, site, projet, espace.",,
+99,1,autre relevant de la loi littoral,,
+99,2,autre relevant de la loi montagne,,

@@ -30,7 +30,9 @@ import fr.ign.validator.cnig.CnigRegressHelper;
 import fr.ign.validator.cnig.ReportAssert;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
@@ -713,13 +715,26 @@ public class CnigValidatorRegressTest {
          */
         Assert.assertEquals(StandardCharsets.ISO_8859_1, context.getEncoding());
         Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+        Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
+        Assert.assertEquals(2, documentModel.getStaticTables().size());
 
         /*
          * check errors
          */
         // YYYYMMDD different in tables
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-        ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(86, CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT, report);
+        ReportAssert.assertCount(18 + 86, ErrorLevel.ERROR, report);
+        
+        {
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT).get(0);
+            assertEquals("1", error.getId());
+            assertEquals("INFO_SURF", error.getFileModel());
+            assertEquals(
+                "Une règle de remplissage conditionnelle n'est pas respectée. ((TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF))",
+                error.getMessage()
+            );
+        }
 
         /*
          * check warnings

@@ -20,7 +20,9 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.StaticTable;
 import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
@@ -166,6 +168,74 @@ public class JsonModelReaderTest {
         Assert.assertNotNull(featureType);
         assertExceptedFeatureTypeServitude(featureType);
     }
+
+
+    /**
+     * Read config-json/cnig_PLU_2017 and performs regress test
+     */
+    @Test
+    public void testLoadForeignKeyConstraint() {
+        File documentModelPath = ResourceHelper.getResourceFile(
+            getClass(), "/config-json/cnig_PLU_2017/files.json"
+        );
+        DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
+        assertIsValid(documentModel);
+
+        Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
+        Assert.assertEquals(33, documentModel.getFileModels().size());
+        Assert.assertEquals(2, documentModel.getStaticTables().size());
+
+        /*
+         * perform checks on FileModel "INFO_SURF"
+         * control constraint
+         * (TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)
+         */
+        {
+            FileModel fileModel = documentModel.getFileModelByName("INFO_SURF");
+            Assert.assertNotNull(fileModel);
+            Assert.assertTrue(fileModel instanceof SingleTableModel);
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+            Assert.assertNotNull(featureType);
+            Assert.assertEquals(1, featureType.getConstraints().getForeignKeys().size());
+
+            ForeignKeyConstraint foreignKeyConstraint = featureType.getConstraints().getForeignKeys().get(0);
+            Assert.assertEquals("(TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)", foreignKeyConstraint.toString());
+        }
+        
+        {
+            FileModel fileModel = documentModel.getFileModelByName("PRESCRIPTION_SURF");
+            Assert.assertNotNull(fileModel);
+            Assert.assertTrue(fileModel instanceof SingleTableModel);
+            FeatureType featureType = ((TableModel) fileModel).getFeatureType();
+            Assert.assertNotNull(featureType);
+            Assert.assertEquals(1, featureType.getConstraints().getForeignKeys().size());
+
+            ForeignKeyConstraint foreignKeyConstraint = featureType.getConstraints().getForeignKeys().get(0);
+            Assert.assertEquals("(TYPEPSC,STYPEPSC) REFERENCES PrescriptionUrbaType(TYPEPSC,STYPEPSC)", foreignKeyConstraint.toString());
+        }
+
+        /*
+         * perform checks on StaticTable "InformationUrbaType"
+         */
+        {
+        	StaticTable staticTable = documentModel.getStaticTableByName("InformationUrbaType");
+            Assert.assertNotNull(staticTable);
+            Assert.assertEquals("InformationUrbaType", staticTable.getName());
+            Assert.assertEquals("./codes/InformationUrbaType.csv", staticTable.getPath());
+            Assert.assertNotNull(staticTable.getUrl());
+        }
+        
+        {
+        	StaticTable staticTable = documentModel.getStaticTableByName("PrescriptionUrbaType");
+            Assert.assertNotNull(staticTable);
+            Assert.assertEquals("PrescriptionUrbaType", staticTable.getName());
+            Assert.assertEquals("./codes/PrescriptionUrbaType.csv", staticTable.getPath());
+            Assert.assertNotNull(staticTable.getUrl());
+        }
+        
+
+    }
+
 
     @Test
     public void testLoadFeatureTypeAdresse() {
