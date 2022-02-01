@@ -3,6 +3,14 @@
     "name": "INFO_PCT",
     "title": "INFO_PCT",
     "description": "Table contenant les informations ponctuelle à reporter à titre d'information",
+    "constraints": {
+        "conditions": [
+            "NOMFIC IS NOT NULL OR TYPEINF NOT LIKE '97'"
+        ],
+        "foreignKeys": [
+            "(TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)"
+        ]
+    },
     "columns": [
         {
             "id": "3730fe22440be9644671b129e0164842",

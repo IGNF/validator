@@ -339,12 +339,12 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(3 + 9, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(6, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(3 + 6, ErrorLevel.ERROR, report);
 
         /*
-         * check database errors - 9 errors
+         * check database errors - 6 errors
          */
-        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         int index = 0;
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
@@ -361,15 +361,6 @@ public class CnigValidatorRegressTest {
             Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("3", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
-            Assert.assertEquals(expectedMessage, error.getMessage());
-        }
-        index = 8;
-        {
-            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
-            Assert.assertEquals("3", error.getId());
-            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
         }
 
@@ -707,6 +698,7 @@ public class CnigValidatorRegressTest {
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
         File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
         Context context = createContext(documentPath);
+        context.setEnableConditions(true);
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -723,12 +715,15 @@ public class CnigValidatorRegressTest {
          */
         // YYYYMMDD different in tables
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-        ReportAssert.assertCount(86, CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT, report);
-        ReportAssert.assertCount(18 + 86, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(2, CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT, report);
+        ReportAssert.assertCount(18 + 2, ErrorLevel.ERROR, report);
         
+        // Manual correction in static table to trigger those error
+        // TYPEINF,STYPEINF : 13,0 instead of 13,00
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT).get(0);
-            assertEquals("1", error.getId());
+            assertEquals("9", error.getId());
             assertEquals("INFO_SURF", error.getFileModel());
             assertEquals(
                 "Une règle de remplissage conditionnelle n'est pas respectée. ((TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF))",
