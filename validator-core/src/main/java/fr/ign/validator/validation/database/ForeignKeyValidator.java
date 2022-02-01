@@ -44,7 +44,6 @@ public class ForeignKeyValidator implements Validator<Database> {
         }
     }
 
-
     private void doValidate(Context context, Database database) throws SQLException, IOException {
 
         log.info(MARKER, "Looking for FeatureType with foreignKeys constraints...");

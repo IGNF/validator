@@ -718,7 +718,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(2, CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT, report);
         ReportAssert.assertCount(18 + 2, ErrorLevel.ERROR, report);
-        
+
         // Manual correction in static table to trigger those error
         // TYPEINF,STYPEINF : 13,0 instead of 13,00
         {

@@ -169,7 +169,6 @@ public class JsonModelReaderTest {
         assertExceptedFeatureTypeServitude(featureType);
     }
 
-
     /**
      * Read config-json/cnig_PLU_2017 and performs regress test
      */
@@ -186,9 +185,8 @@ public class JsonModelReaderTest {
         Assert.assertEquals(2, documentModel.getStaticTables().size());
 
         /*
-         * perform checks on FileModel "INFO_SURF"
-         * control constraint
-         * (TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)
+         * perform checks on FileModel "INFO_SURF" control constraint (TYPEINF,STYPEINF)
+         * REFERENCES InformationUrbaType(TYPEINF,STYPEINF)
          */
         {
             FileModel fileModel = documentModel.getFileModelByName("INFO_SURF");
@@ -199,9 +197,11 @@ public class JsonModelReaderTest {
             Assert.assertEquals(1, featureType.getConstraints().getForeignKeys().size());
 
             ForeignKeyConstraint foreignKeyConstraint = featureType.getConstraints().getForeignKeys().get(0);
-            Assert.assertEquals("(TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)", foreignKeyConstraint.toString());
+            Assert.assertEquals(
+                "(TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)", foreignKeyConstraint.toString()
+            );
         }
-        
+
         {
             FileModel fileModel = documentModel.getFileModelByName("PRESCRIPTION_SURF");
             Assert.assertNotNull(fileModel);
@@ -211,31 +211,31 @@ public class JsonModelReaderTest {
             Assert.assertEquals(1, featureType.getConstraints().getForeignKeys().size());
 
             ForeignKeyConstraint foreignKeyConstraint = featureType.getConstraints().getForeignKeys().get(0);
-            Assert.assertEquals("(TYPEPSC,STYPEPSC) REFERENCES PrescriptionUrbaType(TYPEPSC,STYPEPSC)", foreignKeyConstraint.toString());
+            Assert.assertEquals(
+                "(TYPEPSC,STYPEPSC) REFERENCES PrescriptionUrbaType(TYPEPSC,STYPEPSC)", foreignKeyConstraint.toString()
+            );
         }
 
         /*
          * perform checks on StaticTable "InformationUrbaType"
          */
         {
-        	StaticTable staticTable = documentModel.getStaticTableByName("InformationUrbaType");
+            StaticTable staticTable = documentModel.getStaticTableByName("InformationUrbaType");
             Assert.assertNotNull(staticTable);
             Assert.assertEquals("InformationUrbaType", staticTable.getName());
             Assert.assertEquals("./codes/InformationUrbaType.csv", staticTable.getPath());
             Assert.assertNotNull(staticTable.getUrl());
         }
-        
+
         {
-        	StaticTable staticTable = documentModel.getStaticTableByName("PrescriptionUrbaType");
+            StaticTable staticTable = documentModel.getStaticTableByName("PrescriptionUrbaType");
             Assert.assertNotNull(staticTable);
             Assert.assertEquals("PrescriptionUrbaType", staticTable.getName());
             Assert.assertEquals("./codes/PrescriptionUrbaType.csv", staticTable.getPath());
             Assert.assertNotNull(staticTable.getUrl());
         }
-        
 
     }
-
 
     @Test
     public void testLoadFeatureTypeAdresse() {

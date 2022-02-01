@@ -266,7 +266,7 @@ public class Database implements Closeable {
      * Create tables according to the TableModels of the DocumentModel
      * 
      * @throws SQLException
-     * @throws IOException 
+     * @throws IOException
      */
     public void createTables(DocumentModel documentModel) throws SQLException, IOException {
         log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
@@ -275,11 +275,11 @@ public class Database implements Closeable {
         }
         log.info(MARKER, "Create static table from DocumentModel '{}'...", documentModel.getName());
         for (StaticTable staticTable : documentModel.getStaticTables()) {
-        	createTable(staticTable);
-		}
+            createTable(staticTable);
+        }
     }
 
-	/**
+    /**
      * Create a table according to a TableModel
      * 
      * @param tableModel
@@ -307,7 +307,6 @@ public class Database implements Closeable {
         createTable(tableName, featureType.getAttributeNames());
     }
 
-
     /**
      * Create Table for a given StaticTable
      *
@@ -319,7 +318,7 @@ public class Database implements Closeable {
         TableReader reader = TableReader.createTableReader(staticTable.getUrl());
         String[] inputColumns = reader.getHeader();
         createTable(staticTable.getName(), Arrays.asList(inputColumns));
-	}
+    }
 
     /**
      * Create a table with a list of text columns.
@@ -417,8 +416,8 @@ public class Database implements Closeable {
         }
         log.info(MARKER, "Loading static table from document model '{}'...", document.getDocumentModel().getName());
         for (StaticTable staticTable : document.getDocumentModel().getStaticTables()) {
-        	load(staticTable);
-		}
+            load(staticTable);
+        }
     }
 
     /**
@@ -458,22 +457,21 @@ public class Database implements Closeable {
         FileModel fileModel = tableFile.getFileModel();
         loadFile(fileModel.getName(), tableFile.getPath(), context.getEncoding());
     }
-    
-    
+
     /**
      * Load a given {@link StaticTable} in the database (insert mode)
      *
      * @param staticTable
-     * @throws IOException 
-     * @throws SQLException 
+     * @throws IOException
+     * @throws SQLException
      */
     void load(StaticTable staticTable) throws IOException, SQLException {
-    	log.info(
-    			MARKER, "Load table '{}' from stream '{}' (charset={})...",
-    			staticTable.getName(), staticTable.getPath(), StandardCharsets.UTF_8
-    	);
+        log.info(
+            MARKER, "Load table '{}' from stream '{}' (charset={})...",
+            staticTable.getName(), staticTable.getPath(), StandardCharsets.UTF_8
+        );
         TableReader reader = TableReader.createTableReader(staticTable.getUrl());
-    	loadTable(staticTable.getName(), staticTable.getPath(), reader, StandardCharsets.UTF_8);
+        loadTable(staticTable.getName(), staticTable.getPath(), reader, StandardCharsets.UTF_8);
     }
 
     /**
@@ -486,17 +484,17 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     void loadFile(String tableName, File path, Charset charset) throws IOException, SQLException {
-    	log.info(
-    			MARKER, "Load table '{}' from file '{}' (charset={})...",
-    			tableName, path.getAbsolutePath(), charset
-		);
+        log.info(
+            MARKER, "Load table '{}' from file '{}' (charset={})...",
+            tableName, path.getAbsolutePath(), charset
+        );
         TableReader reader = TableReader.createTableReader(path, charset);
-    	loadTable(tableName, path.getName(), reader, charset);
+        loadTable(tableName, path.getName(), reader, charset);
     }
 
-    
     /**
      * Load a given TableReader in the database (insert mode)
+     * 
      * @param tableName
      * @param source
      * @param reader
@@ -504,8 +502,9 @@ public class Database implements Closeable {
      * @throws IOException
      * @throws SQLException
      */
-    void loadTable(String tableName, String source, TableReader reader, Charset charset) throws IOException, SQLException {
-       
+    void loadTable(String tableName, String source, TableReader reader, Charset charset) throws IOException,
+        SQLException {
+
         String[] inputColumns = reader.getHeader();
         String[] outputColumns = getTableSchema(tableName);
 
@@ -573,9 +572,9 @@ public class Database implements Closeable {
         connection.commit();
 
         log.info(
-	        MARKER,
-	        "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded",
-	        tableName, source, charset, count
+            MARKER,
+            "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded",
+            tableName, source, charset, count
         );
     }
 

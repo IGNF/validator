@@ -261,13 +261,13 @@ public class TableReader implements Iterator<String[]> {
      * @return
      * @throws IOException
      */
-	public static TableReader createTableReader(URL url) throws IOException {
-		log.debug(
+    public static TableReader createTableReader(URL url) throws IOException {
+        log.debug(
             MARKER, "Create TableReader for '{}' (charset={})...",
             url,
             StandardCharsets.UTF_8
         );
         return new TableReader(url.openStream(), StandardCharsets.UTF_8);
-	}
+    }
 
 }

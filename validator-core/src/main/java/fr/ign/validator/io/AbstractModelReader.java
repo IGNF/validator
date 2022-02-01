@@ -32,9 +32,9 @@ abstract class AbstractModelReader implements ModelReader {
     @Override
     public DocumentModel loadDocumentModel(File documentModelPath) {
         try {
-        	DocumentModel documentModel = loadDocumentModel(documentModelPath.toURI().toURL());
-        	resolveStaticFilesPath(documentModel, documentModelPath.toURI().toURL());
-        	return documentModel;
+            DocumentModel documentModel = loadDocumentModel(documentModelPath.toURI().toURL());
+            resolveStaticFilesPath(documentModel, documentModelPath.toURI().toURL());
+            return documentModel;
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -51,13 +51,13 @@ abstract class AbstractModelReader implements ModelReader {
 
     public void resolveStaticFilesPath(DocumentModel documentModel, URL documentUrl) {
         try {
-        	for (StaticTable staticTable : documentModel.getStaticTables()) {
+            for (StaticTable staticTable : documentModel.getStaticTables()) {
                 URL url = resolveStaticFileUrl(documentUrl, documentModel, staticTable.getName());
                 staticTable.setUrl(url);
-			}
+            }
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
-		}
+        }
     }
 
     /**
@@ -122,8 +122,8 @@ abstract class AbstractModelReader implements ModelReader {
      * @throws MalformedURLException
      */
     protected URL resolveConfigFileUrl(URL documentModelUrl, DocumentModel documentModel, String filename)
-    		throws MalformedURLException {
-    	if (documentModelUrl.getProtocol().equals("file")) {
+        throws MalformedURLException {
+        if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
@@ -152,8 +152,8 @@ abstract class AbstractModelReader implements ModelReader {
      * @throws MalformedURLException
      */
     protected URL resolveStaticFileUrl(URL documentModelUrl, DocumentModel documentModel, String filename)
-    		throws MalformedURLException {
-    	if (documentModelUrl.getProtocol().equals("file")) {
+        throws MalformedURLException {
+        if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/codes/InformationUrbaType.csv

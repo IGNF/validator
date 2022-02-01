@@ -71,9 +71,8 @@ public class DocumentModel implements Model {
      * references,...)
      */
     private List<Validator<Database>> databaseValidators = new ArrayList<>();
-    
 
-	/**
+    /**
      * Constructs a DocumentModel with default constraints
      */
     public DocumentModel() {
@@ -205,19 +204,19 @@ public class DocumentModel implements Model {
     public List<StaticTable> getStaticTables() {
         return this.staticTables;
     }
-    
-	public void setStaticTables(List<StaticTable> staticTables) {
-		this.staticTables = staticTables;
-	}
 
-	public StaticTable getStaticTableByName(String staticTableName) {
+    public void setStaticTables(List<StaticTable> staticTables) {
+        this.staticTables = staticTables;
+    }
+
+    public StaticTable getStaticTableByName(String staticTableName) {
         for (StaticTable staticTable : staticTables) {
             if (staticTable.getName().equals(staticTableName)) {
-            	return staticTable;
+                return staticTable;
             }
         }
         return null;
-	}
+    }
 
     @JsonIgnore
     public List<Validator<Document>> getValidators() {

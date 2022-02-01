@@ -9,28 +9,26 @@ import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
 /**
  * 
- * Feature Type Constraints 
- * foreign key 
- * conditions SQL queries
+ * Feature Type Constraints foreign key conditions SQL queries
  *
  * @author cbouche
  *
  */
 public class FeatureTypeConstraints {
 
-	private List<ForeignKeyConstraint> foreignKeys = new ArrayList<ForeignKeyConstraint>();
+    private List<ForeignKeyConstraint> foreignKeys = new ArrayList<ForeignKeyConstraint>();
 
     private List<String> conditions = new ArrayList<String>();
-    
+
     public FeatureTypeConstraints() {
-	}
+    }
 
     public FeatureTypeConstraints(@JsonProperty("foreignKeys") List<String> foreignKeys) {
-    	if (foreignKeys != null) {
-        	for (String foreignKey : foreignKeys) {
-            	this.foreignKeys.add(ForeignKeyConstraint.parseForeignKey(foreignKey));
-    		}    		
-    	}
+        if (foreignKeys != null) {
+            for (String foreignKey : foreignKeys) {
+                this.foreignKeys.add(ForeignKeyConstraint.parseForeignKey(foreignKey));
+            }
+        }
     }
 
     public List<String> getConditions() {
@@ -41,12 +39,12 @@ public class FeatureTypeConstraints {
         this.conditions = conditions;
     }
 
-	public List<ForeignKeyConstraint> getForeignKeys() {
-		return foreignKeys;
-	}
+    public List<ForeignKeyConstraint> getForeignKeys() {
+        return foreignKeys;
+    }
 
-	public void setForeignKeys(List<ForeignKeyConstraint> foreignKeys) {
-		this.foreignKeys = foreignKeys;
-	}
+    public void setForeignKeys(List<ForeignKeyConstraint> foreignKeys) {
+        this.foreignKeys = foreignKeys;
+    }
 
 }

@@ -11,36 +11,36 @@ public class StaticTable {
     private String name;
 
     private String path;
-    
+
     private URL url;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPath() {
-		return path;
-	}
+    public String getPath() {
+        return path;
+    }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     @JsonIgnore
     public URL getUrl() {
-		return url;
-	}
+        return url;
+    }
 
-	public void setUrl(URL url) {
-		this.url = url;
-	}
+    public void setUrl(URL url) {
+        this.url = url;
+    }
 
-	public static String getType() {
-		return TYPE;
-	}
+    public static String getType() {
+        return TYPE;
+    }
 
 }
