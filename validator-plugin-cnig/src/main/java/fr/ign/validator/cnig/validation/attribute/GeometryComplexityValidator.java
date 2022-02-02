@@ -38,25 +38,25 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
     private Projection sourceProjection;
 
     private Integer isNumPointInvalid(Geometry geometry, int pointCount) {
-    	if (geometry.getNumPoints() > pointCount) {
-        	return geometry.getNumPoints();
-    	}
-    	return null;
+        if (geometry.getNumPoints() > pointCount) {
+            return geometry.getNumPoints();
+        }
+        return null;
     }
 
     private Integer isNumPartInvalid(Geometry geometry, int partCount) {
-    	if (geometry.getNumGeometries() > partCount) {
-        	return geometry.getNumGeometries();
-    	}
-    	return null;
+        if (geometry.getNumGeometries() > partCount) {
+            return geometry.getNumGeometries();
+        }
+        return null;
     }
 
     private Integer isNumRingInvalid(Geometry geometry, int ringCount) {
         int holeCount = GeometryRings.getInnerRings(geometry).size();
         if (holeCount > ringCount) {
-        	return holeCount;
+            return holeCount;
         }
-    	return null;
+        return null;
     }
 
     private Double isDensityInvalid(Geometry geometry, double density) {
@@ -73,15 +73,16 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
             }
             Double lineDensity = (double) (lineString.getNumPoints() / length);
             if (lineDensity > density) {
-            	return lineDensity;
+                return lineDensity;
             }
         }
         return null;
     }
-    
+
     /**
      * 
      * cnig-plugin-validator: we allow french usage to message error.
+     * 
      * @param geometry
      * @param pointCount
      * @param ringCount
@@ -102,12 +103,12 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
             Double lineDensity = isDensityInvalid(geometry, density);
             if (numPoint != null && lineDensity != null) {
                 return String.format(
-                		"Nombre de sommets %d > %d et nombre moyen de point par m %f > %f",
-                		numPoint,
-                		pointCount,
-                		lineDensity,
-                		density
-        		);
+                    "Nombre de sommets %d > %d et nombre moyen de point par m %f > %f",
+                    numPoint,
+                    pointCount,
+                    lineDensity,
+                    density
+                );
             }
         }
 
@@ -129,7 +130,7 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
 
         return "";
     }
-    
+
     /**
      * 
      * @param geometry
@@ -180,7 +181,6 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
 
         return "";
     }
-
 
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {
