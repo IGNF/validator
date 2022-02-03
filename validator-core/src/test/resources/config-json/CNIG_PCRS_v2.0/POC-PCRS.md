@@ -19,33 +19,38 @@ La validation des données GML en fonction du schéma XSD du standard CNIG PCRS 
 * Ajout d'un code d'erreur spécifique aux erreurs de validation XSD (`XSD_SCHEMA_ERROR`)
 * Implémentation du contrôle à l'aide d'une classe standard java (`javax.xml.validation.Validator`) par adaptation d'un exemple de code fourni par un producteur PCRS.
 
-Remarque : Ce développement est réutilisable dans d'autres contextes (ex : validation de fiche de métadonnée ou fichiers XML)
+Remarque : Ce développement est réutilisable dans d'autres contextes (ex : validation de fiche de métadonnées ou autres fichiers XML)
 
 ### Validation d'un fichier multi-table
 
-On note dans [document.json](document.json) que le fichier `DONNEES` est de type `"multi_table"`.
+Le concept de fichier multi-table a été introduit pour la validation des données PCRS où un seul fichier GML contient plusieurs tables.
 
-Ce concept de fichier multi-table a été introduit pour la validation des données PCRS où un seul fichier GML contient plusieurs tables.
+Le fichier GML est à ce titre modélisé par un fichier `DONNEES` est de type `"multi_table"` dans [document.json](document.json).
 
-Remarque : Ce développement sera réutilisable dans d'autres contextes (ex : ajout du support de la validation de fichiers GeoPackage qui contiendraient eux aussi plusieurs table)
+Remarque : Ce développement est réutilisable dans d'autres contextes (ex : ajout du support de la validation de fichiers GeoPackage qui contiendraient eux aussi plusieurs table)
 
 ### Modèle de table optionnel
 
 Dans la mesure où le modèle XSD permet de valider la structure des données, il a été décidé dans un premier temps de ne pas imposer la fourniture d'un modèle de table pour chaque type PCRS.
 
-Pour ce faire, un notion de modèle automatique a été introduite. Le modèle considéré est fonction des données, avec détection des champs identifiants et géométrique pour validation de ces aspects.
+Pour ce faire, un notion de modèle automatique a été introduite. Le modèle est déterminé automatiquement en fonction des données avec :
+
+* Détection des champs identifiants pour contrôle d'unicité des valeurs `gml_id`
+* Détection des champs géométriques pour contrôle topologique (le contrôle du type géométrique étant assuré par la validation XSD)
+
+Remarque : Ce développement est réutilisable dans d'autres contextes (ex : modèle générique pour valider uniquement la géométrie et produire des statistiques sur une table)
 
 ### Support des géométries de type courbe
 
 Le support des géométries de type courbe (voir [documentation postgis](https://postgis.net/docs/using_postgis_dbmanagement.html#SQL_MM_Part3)) a été ajouté pour permettre la lecture des géométries correspondantes par le validateur.
 
-Remarque : Ceci permet entre autres d'éviter des erreurs `ATTRIBUTE_GEOMETRY_INVALID_FORMAT` qui étaient produites par l'incapacité de geotools de lire les géométries produites par ogr2ogr de GDAL.
+Remarque : Ceci permet entre autres d'éviter des erreurs `ATTRIBUTE_GEOMETRY_INVALID_FORMAT` qui étaient produites par l'incapacité de geotools de lire les géométries produites par ogr2ogr de GDAL. Toutefois, dans l'attente du traitement de l'[issue 246](https://github.com/IGNF/validator/issues/246), les géométries sont linéarisées dans les traitements réalisés par le validateur.
 
 ## Limites de l'expérimentation
 
 ### Déclaration obligatoire de la projection des données
 
-Il serait pertinent de rendre optionnelle la déclaration de la projection des données à validateur dans l'appel au validateur dans la mesure où elle est déclarée dans les fichiers GML.
+Il serait pertinent de rendre optionnelle la déclaration de la projection des données à valider dans l'appel au validateur dans la mesure où elle est déclarée dans les fichiers GML.
 
 ### Message d'erreur de validation XSD
 
@@ -80,17 +85,9 @@ Des avertissements non pertinents peuvent être levés avec le code d'erreur `MU
 
 Ils sont liés au fait que la lecture des GML est réalisée à l'aide du driver GMLAS de GDAL qui matérialise la racine du document GML et relations sous forme de tables.
 
-Les avertissements de type `MULTITABLE_UNEXPECTED` sur les tables `PlanCorpsRueSimplifie` et `{TypePCRS}_*` peuvent être ignorés dans l'immédiat.
+**Ces avertissements de type `MULTITABLE_UNEXPECTED` sur les tables `PlanCorpsRueSimplifie` et `{TypePCRS}_*` doivent donc être ignorés dans l'immédiat.**
 
-Il est délicat de les filtrer sans développer un plugin dédié pour le PCRS ("plugin-pcrs") dès lors que l'on continue de s'appuyer sur le driver GMLAS de GDAL et le pivot CSV pour la lecture des données.
-
-### Fausses alertes sur les dossiers
-
-Un avertissement de `FILE_UNEXPECTED` peut être levé sur un dossier contenant le fichier GML validé.
-
-A notre connaissance, il n'y a pas de règle de nommage pour des dossiers PCRS et les fichiers GML.
-
-Il conviendra peut-être d'ignorer l'arborescence des dossiers (option `--flat` dans l'appel au validateur)
+Remarque : Il est délicat de les filtrer sans développer un plugin dédié pour le PCRS ("plugin-pcrs") dès lors que l'on continue de s'appuyer sur le driver GMLAS de GDAL et le pivot CSV pour la lecture des données.
 
 ### Risque de caractères interdits dans les noms de fichiers
 
@@ -98,3 +95,10 @@ En amont de l'appel au validateur, il y a généralement une opération d'extrac
 
 Il conviendrait d'éviter les caractères accentués et les espaces dans les noms des fichiers GML (peut-être nommer le GML en fonction de l'identifiant de l'`EmpriseEchangePCRS`?)
 
+### Fausses alertes sur les dossiers
+
+Un avertissement de `FILE_UNEXPECTED` peut être levé sur un dossier contenant le fichier GML validé.
+
+A notre connaissance, contrairement aux cas des PLU/PLUi/POS/CC/PSMV/SUP, il n'y a pas de règles de nommage pour des dossiers PCRS et les fichiers GML.
+
+Dès lors, il conviendra peut-être d'ignorer l'arborescence des dossiers (option `--flat` pour validation à plat dans l'appel au validateur)
