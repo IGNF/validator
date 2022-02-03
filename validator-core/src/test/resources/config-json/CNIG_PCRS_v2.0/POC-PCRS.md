@@ -9,15 +9,15 @@ Des tests et échanges sont en cours avec différents producteurs de ces donnée
 
 ## Évolutions traitées pour le POC
 
-Les évolutions suivantes ont été traité au niveau du coeur du validateur pour valider les données [CNIG PCRS v2.0](https://cnigfr.github.io/PCRS/) :
+Les évolutions suivantes ont été traités au niveau du coeur du validateur pour valider les données [CNIG PCRS v2.0](https://cnigfr.github.io/PCRS/) :
 
 ### Validation d'un fichier à l'aide d'un schéma XSD
 
-La validation des données GML en fonction du schéma XSD fournit par le standard CNIG PCRS v2.0 a été mise en oeuvre comme suit :
+La validation des données GML en fonction du schéma XSD du standard CNIG PCRS v2.0 a été mise en oeuvre comme suit :
 
 * Ajout de la possibilité de configurer la validation d'un fichier XML/GML au niveau du modèle (`"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd"`)
-* Ajout d'un code d'erreur spécifique aux erreurs de validation XSD : `XSD_SCHEMA_ERROR`
-* Implémentation du contrôle à l'aide d'une classe standard java `javax.xml.validation.Validator` (adaptation d'un exemple de code fourni par un producteur PCRS).
+* Ajout d'un code d'erreur spécifique aux erreurs de validation XSD (`XSD_SCHEMA_ERROR`)
+* Implémentation du contrôle à l'aide d'une classe standard java (`javax.xml.validation.Validator`) par adaptation d'un exemple de code fourni par un producteur PCRS.
 
 Remarque : Ce développement est réutilisable dans d'autres contextes (ex : validation de fiche de métadonnée ou fichiers XML)
 
@@ -31,7 +31,9 @@ Remarque : Ce développement sera réutilisable dans d'autres contextes (ex : aj
 
 ### Modèle de table optionnel
 
-> TODO
+Dans la mesure où le modèle XSD permet de valider la structure des données, il a été décidé dans un premier temps de ne pas imposer la fourniture d'un modèle de table pour chaque type PCRS.
+
+Pour ce faire, un notion de modèle automatique a été introduite. Le modèle considéré est fonction des données, avec détection des champs identifiants et géométrique pour validation de ces aspects.
 
 ### Support des géométries de type courbe
 
