@@ -1,5 +1,4 @@
-
-# Principe de fonctionnement du validateur de document
+# Principe de fonctionnement du validateur
 
 ## 1) Chargement du modèle de document
 
@@ -12,11 +11,11 @@ Le validateur prépare un répertoire de travail pour la validation où il écri
 * Le rapport de validation (`validation/validation.jsonl`) avec une erreur au format JSON par ligne (voir [JSON Lines](http://jsonlines.org/))
 * Un répertoire contenant les fichiers normalisés (`validation/DATA`)
 
-## 3) Enumération des fichiers avec des extensions supportées
+## 3) Énumération des fichiers avec des extensions supportées
 
 Le validateur liste les fichiers (`DocumentFile`) ayant des extensions connues dans le document à valider (dossier `--input`).
 
-## 4) Recherche des modèles de fichier correspondant aux fichiers (`DocumentFile`)
+## 4) Recherche des modèles de fichier correspondant aux fichiers
 
 Le validateur recherche le modèle de fichier (`FileModel`) correspondant aux `DocumentFile` trouvés à l'étape précédente.
 
