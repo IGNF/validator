@@ -71,8 +71,8 @@ public class ForeignKeyConstraint {
     }
 
     public static ForeignKeyConstraint parseForeignKey(String foreignKeyString) {
-    	// TODO replace regexp to protect from SQL injection
-    	String regex = "\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)+\\) REFERENCES ([a-zA-Z0-9_]+)\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)+\\)";
+        // TODO replace regexp to protect from SQL injection
+        String regex = "\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)+\\) REFERENCES ([a-zA-Z0-9_]+)\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)+\\)";
         if (!Pattern.matches(regex, foreignKeyString)) {
             throw new InvalidModelException(
                 String.format(
@@ -87,14 +87,14 @@ public class ForeignKeyConstraint {
         String[] targetColumn = targetPart[1].substring(0, targetPart[1].length() - 1).split(",");
 
         if (sourcePart.length != targetColumn.length) {
-        	throw new InvalidModelException(
+            throw new InvalidModelException(
                 String.format(
                     "ForeignKeyConstraint - unable to parse key %s",
                     foreignKeyString
                 )
             );
         }
-        
+
         ForeignKeyConstraint constraint = new ForeignKeyConstraint();
         constraint.setSourceColumnNames(Arrays.asList(sourcePart));
         constraint.setTargetTableName(targetPart[0]);

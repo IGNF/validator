@@ -43,7 +43,7 @@ public class ForeignKeyFinder {
         }
 
         String query = "SELECT r.__id, r.__file, "
-        	+ String.join(", ", foreignKey.getSourceColumnNames())	
+            + String.join(", ", foreignKey.getSourceColumnNames())
             + " FROM " + tableName + " AS r"
             + " WHERE r.__id NOT IN ("
             + " SELECT a.__id "

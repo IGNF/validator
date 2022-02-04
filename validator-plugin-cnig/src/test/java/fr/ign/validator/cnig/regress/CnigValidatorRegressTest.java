@@ -722,7 +722,7 @@ public class CnigValidatorRegressTest {
             assertEquals("15", error.getId());
             assertEquals("INFO_SURF", error.getFileModel());
             assertEquals(
-        		"La correspondance (TYPEINF, STYPEINF) = (04, 99) n'est pas autorisée, car non présente dans la liste de référence InformationUrbaType.",
+                "La correspondance (TYPEINF, STYPEINF) = (04, 99) n'est pas autorisée, car non présente dans la liste de référence InformationUrbaType.",
                 error.getMessage()
             );
         }

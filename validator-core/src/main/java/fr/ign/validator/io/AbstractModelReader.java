@@ -74,13 +74,13 @@ abstract class AbstractModelReader implements ModelReader {
      * @param documentModel
      * @param documentModelUrl
      */
-    protected void loadStaticFiles(DocumentModel documentModel, URL documentModelUrl)  throws MalformedURLException {
-    	log.info(MARKER, "Loading StaticFiles for {} ...", documentModel);
+    protected void loadStaticFiles(DocumentModel documentModel, URL documentModelUrl) throws MalformedURLException {
+        log.info(MARKER, "Loading StaticFiles for {} ...", documentModel);
         for (StaticTable staticTable : documentModel.getStaticTables()) {
-        	log.info(MARKER, "Loading StaticFile for {} ...", staticTable.getName());
-        	URL staticTypeURL = resolveStaticTypeUrl(documentModelUrl, documentModel, staticTable);
+            log.info(MARKER, "Loading StaticFile for {} ...", staticTable.getName());
+            URL staticTypeURL = resolveStaticTypeUrl(documentModelUrl, documentModel, staticTable);
             staticTable.setData(staticTypeURL);
-		}
+        }
     }
 
     /**
@@ -128,7 +128,6 @@ abstract class AbstractModelReader implements ModelReader {
             );
         }
     }
-
 
     /**
      * Resolve FeatureType URL for a given FileModel.

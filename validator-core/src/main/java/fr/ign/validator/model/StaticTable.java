@@ -14,7 +14,7 @@ public class StaticTable {
     public static final String TYPE = "static_table";
 
     private String name;
-    
+
     private String title;
 
     private String dataReference;
@@ -28,36 +28,36 @@ public class StaticTable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getTitle() {
-		return title;
-	}
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	@JsonProperty("data")
+    @JsonProperty("data")
     @JsonInclude(value = Include.NON_NULL)
     public String getDataReference() {
-		return dataReference;
-	}
+        return dataReference;
+    }
 
-	public void setDataReference(String dataReference) {
-		this.dataReference = dataReference;
-	}
+    public void setDataReference(String dataReference) {
+        this.dataReference = dataReference;
+    }
 
     @JsonIgnore
     public URL getData() {
-		return data;
-	}
+        return data;
+    }
 
     @XmlTransient
-	public void setData(URL data) {
-		this.data = data;
-	}
+    public void setData(URL data) {
+        this.data = data;
+    }
 
-	public static String getType() {
+    public static String getType() {
         return TYPE;
     }
 
