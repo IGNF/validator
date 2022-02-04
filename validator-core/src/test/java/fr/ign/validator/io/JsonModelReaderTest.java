@@ -182,7 +182,7 @@ public class JsonModelReaderTest {
 
         Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
         Assert.assertEquals(33, documentModel.getFileModels().size());
-        Assert.assertEquals(2, documentModel.getStaticTables().size());
+        Assert.assertEquals(3, documentModel.getStaticTables().size());
 
         /*
          * perform checks on FileModel "INFO_SURF" control constraint (TYPEINF,STYPEINF)
@@ -217,22 +217,32 @@ public class JsonModelReaderTest {
         }
 
         /*
-         * perform checks on StaticTable "InformationUrbaType"
+         * perform checks on StaticTables
          */
         {
             StaticTable staticTable = documentModel.getStaticTableByName("InformationUrbaType");
             Assert.assertNotNull(staticTable);
             Assert.assertEquals("InformationUrbaType", staticTable.getName());
-            Assert.assertEquals("./codes/InformationUrbaType.csv", staticTable.getPath());
-            Assert.assertNotNull(staticTable.getUrl());
+            Assert.assertEquals("InformationUrbaType", staticTable.getTitle());
+            Assert.assertEquals("./codes/InformationUrbaType.csv", staticTable.getDataReference());
+            Assert.assertNotNull(staticTable.getData());
         }
 
         {
             StaticTable staticTable = documentModel.getStaticTableByName("PrescriptionUrbaType");
             Assert.assertNotNull(staticTable);
             Assert.assertEquals("PrescriptionUrbaType", staticTable.getName());
-            Assert.assertEquals("./codes/PrescriptionUrbaType.csv", staticTable.getPath());
-            Assert.assertNotNull(staticTable.getUrl());
+            Assert.assertEquals("PrescriptionUrbaType", staticTable.getTitle());
+            Assert.assertNull(staticTable.getDataReference());
+            Assert.assertNotNull(staticTable.getData());
+        }
+
+        {
+            StaticTable staticTable = documentModel.getStaticTableByName("DocUrbaType");
+            Assert.assertNotNull(staticTable);
+            Assert.assertEquals("DocUrbaType", staticTable.getName());
+            Assert.assertEquals("DocUrbaType", staticTable.getTitle());
+            Assert.assertNotNull(staticTable.getData());
         }
 
     }

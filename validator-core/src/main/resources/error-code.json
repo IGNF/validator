@@ -484,9 +484,9 @@
 		"documentation": ""
 	},
 	{
-		"name": "DATABASE_FOREIGN_KEY_CONFLICT",
+		"name": "TABLE_FOREIGN_KEY_NOT_FOUND",
 		"level": "ERROR",
-		"message": "Une règle de remplissage conditionnelle n'est pas respectée. ({CONDITION})",
+		"message": "La correspondance ({SOURCE_COL}) = ({SOURCE_VALUE}) n'est pas autorisée, car non présente dans la liste de référence {TARGET_TABLE}.",
 		"documentation": ""
 	},
 	{

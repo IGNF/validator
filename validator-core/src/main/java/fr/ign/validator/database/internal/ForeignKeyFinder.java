@@ -3,27 +3,30 @@ package fr.ign.validator.database.internal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
-public class ForeignKeyConflictFinder {
+public class ForeignKeyFinder {
 
     public static final Integer LIMIT_ERROR_COUNT = 10;
 
-    public class ForeignKeyConflict {
+    public class ForeignKeyMismatch {
         public String file;
         public String id;
+        public String values;
 
-        public ForeignKeyConflict(String id, String file) {
+        public ForeignKeyMismatch(String id, String file, String values) {
             this.id = id;
             this.file = file;
+            this.values = values;
         }
     }
 
-    public List<ForeignKeyConflict> findForeignKeyConflict(
+    public List<ForeignKeyMismatch> foreignKeyNotFound(
         Database database,
         String tableName,
         ForeignKeyConstraint foreignKey) throws SQLException, IOException {
@@ -38,7 +41,9 @@ public class ForeignKeyConflictFinder {
                 + "b." + foreignKey.getTargetColumnNames().get(i);
             conditions.add(condition);
         }
-        String query = "SELECT r.__id, r.__file"
+
+        String query = "SELECT r.__id, r.__file, "
+        	+ String.join(", ", foreignKey.getSourceColumnNames())	
             + " FROM " + tableName + " AS r"
             + " WHERE r.__id NOT IN ("
             + " SELECT a.__id "
@@ -46,13 +51,16 @@ public class ForeignKeyConflictFinder {
             + " JOIN " + foreignKey.getTargetTableName() + " AS b"
             + " ON (" + String.join(" AND ", conditions) + ")"
             + " )";
-
         RowIterator it = database.query(query);
 
-        List<ForeignKeyConflict> result = new ArrayList<ForeignKeyConflict>();
+        List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();
         while (it.hasNext()) {
             String[] row = it.next();
-            result.add(new ForeignKeyConflict(row[0], row[1]));
+            String values = "";
+            if (row.length > 2) {
+                values = String.join(", ", Arrays.copyOfRange(row, 2, row.length));
+            }
+            result.add(new ForeignKeyMismatch(row[0], row[1], values));
         }
         it.close();
         return result;

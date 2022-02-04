@@ -30,9 +30,7 @@ import fr.ign.validator.cnig.CnigRegressHelper;
 import fr.ign.validator.cnig.ReportAssert;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.error.CoreErrorCodes;
-import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
@@ -349,7 +347,7 @@ public class CnigValidatorRegressTest {
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
             Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("Donnees_geographiques/PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("1", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
@@ -358,7 +356,7 @@ public class CnigValidatorRegressTest {
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
             Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("Donnees_geographiques/PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("3", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
@@ -716,17 +714,15 @@ public class CnigValidatorRegressTest {
         // YYYYMMDD different in tables
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
-        ReportAssert.assertCount(2, CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT, report);
-        ReportAssert.assertCount(18 + 2, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
+        ReportAssert.assertCount(20, ErrorLevel.ERROR, report);
 
-        // Manual correction in static table to trigger those error
-        // TYPEINF,STYPEINF : 13,0 instead of 13,00
         {
-            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT).get(0);
-            assertEquals("9", error.getId());
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND).get(0);
+            assertEquals("15", error.getId());
             assertEquals("INFO_SURF", error.getFileModel());
             assertEquals(
-                "Une règle de remplissage conditionnelle n'est pas respectée. ((TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF))",
+        		"La correspondance (TYPEINF, STYPEINF) = (04, 99) n'est pas autorisée, car non présente dans la liste de référence InformationUrbaType.",
                 error.getMessage()
             );
         }

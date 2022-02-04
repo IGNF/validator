@@ -3,7 +3,6 @@ package fr.ign.validator.database;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -315,7 +314,7 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     private void createTable(StaticTable staticTable) throws IOException, SQLException {
-        TableReader reader = TableReader.createTableReader(staticTable.getUrl());
+        TableReader reader = TableReader.createTableReader(staticTable.getData());
         String[] inputColumns = reader.getHeader();
         createTable(staticTable.getName(), Arrays.asList(inputColumns));
     }
@@ -416,7 +415,7 @@ public class Database implements Closeable {
         }
         log.info(MARKER, "Loading static table from document model '{}'...", document.getDocumentModel().getName());
         for (StaticTable staticTable : document.getDocumentModel().getStaticTables()) {
-            load(staticTable);
+            load(context, staticTable);
         }
     }
 
@@ -455,23 +454,25 @@ public class Database implements Closeable {
      */
     void load(Context context, SingleTableFile tableFile) throws IOException, SQLException {
         FileModel fileModel = tableFile.getFileModel();
-        loadFile(fileModel.getName(), tableFile.getPath(), context.getEncoding());
+        TableReader reader = TableReader.createTableReader(tableFile.getPath(), context.getEncoding());
+        loadTable(fileModel.getName(), context.relativize(tableFile.getPath()), reader, context.getEncoding());
     }
 
     /**
      * Load a given {@link StaticTable} in the database (insert mode)
-     *
+     * 
+     * @param context
      * @param staticTable
      * @throws IOException
      * @throws SQLException
      */
-    void load(StaticTable staticTable) throws IOException, SQLException {
+    void load(Context context, StaticTable staticTable) throws IOException, SQLException {
         log.info(
             MARKER, "Load table '{}' from stream '{}' (charset={})...",
-            staticTable.getName(), staticTable.getPath(), StandardCharsets.UTF_8
+            staticTable.getName(), staticTable.getDataReference(), StandardCharsets.UTF_8
         );
-        TableReader reader = TableReader.createTableReader(staticTable.getUrl());
-        loadTable(staticTable.getName(), staticTable.getPath(), reader, StandardCharsets.UTF_8);
+        TableReader reader = TableReader.createTableReader(staticTable.getData());
+        loadTable(staticTable.getName(), staticTable.getDataReference(), reader, StandardCharsets.UTF_8);
     }
 
     /**
@@ -496,13 +497,13 @@ public class Database implements Closeable {
      * Load a given TableReader in the database (insert mode)
      * 
      * @param tableName
-     * @param source
+     * @param sourceFile
      * @param reader
      * @param charset
      * @throws IOException
      * @throws SQLException
      */
-    void loadTable(String tableName, String source, TableReader reader, Charset charset) throws IOException,
+    void loadTable(String tableName, String sourceFile, TableReader reader, Charset charset) throws IOException,
         SQLException {
 
         String[] inputColumns = reader.getHeader();
@@ -534,7 +535,7 @@ public class Database implements Closeable {
         if (inputIndexes.isEmpty()) {
             log.warn(
                 MARKER, "No matching column found in {} for {} with {}",
-                tableName, source, String.join(",", inputColumns)
+                tableName, sourceFile, String.join(",", inputColumns)
             );
             return;
         }
@@ -553,7 +554,7 @@ public class Database implements Closeable {
             // insert line number
             sth.setInt(1, count + 1);
             // insert file path
-            sth.setString(2, source);
+            sth.setString(2, sourceFile);
             // insert values
             int parameterIndex = 2;
             for (int i = 0; i < inputIndexes.size(); i++) {
@@ -574,99 +575,7 @@ public class Database implements Closeable {
         log.info(
             MARKER,
             "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded",
-            tableName, source, charset, count
-        );
-    }
-
-    /**
-     * Load a given file into an existing table.
-     * 
-     * @param tableName
-     * @param path
-     * @param charset
-     * @throws IOException
-     * @throws SQLException
-     */
-    void loadFile2(String tableName, File path, Charset charset) throws IOException, SQLException {
-        log.info(MARKER, "Load table '{}' from '{}' (charset={})...", tableName, path.getAbsolutePath(), charset);
-        /*
-         * Create table reader
-         */
-        TableReader reader = TableReader.createTableReader(path, charset);
-
-        String[] inputColumns = reader.getHeader();
-        String[] outputColumns = getTableSchema(tableName);
-
-        /*
-         * Generate insert into template according to columns
-         */
-        List<String> columnParts = new ArrayList<>();
-        columnParts.add("__id");
-        columnParts.add("__file");
-        List<String> valueParts = new ArrayList<>();
-        valueParts.add("?");
-        valueParts.add("?");
-        List<Integer> inputIndexes = new ArrayList<>();
-        for (int i = 0; i < inputColumns.length; i++) {
-            String inputColumn = inputColumns[i];
-            for (String outputColumn : outputColumns) {
-                if (outputColumn.equalsIgnoreCase(inputColumn)) {
-                    // inputColumn exists
-                    inputIndexes.add(i);
-                    columnParts.add(outputColumn.toLowerCase());
-                    valueParts.add("?");
-                }
-            }
-        }
-
-        /* no matching ? */
-        if (inputIndexes.isEmpty()) {
-            log.warn(
-                MARKER, "No matching column found in {} for {} with {}", tableName, path,
-                String.join(",", inputColumns)
-            );
-            return;
-        }
-
-        String sql = "INSERT INTO " + tableName + " (" + String.join(", ", columnParts) + ") VALUES ("
-            + String.join(", ", valueParts) + ");";
-
-        /* Create prepared statement... */
-        PreparedStatement sth = connection.prepareStatement(sql);
-        log.debug(MARKER, sql);
-
-        /* Batch insertion */
-        int count = 0;
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-            // insert line number
-            sth.setInt(1, count + 1);
-            // insert file path
-            sth.setString(2, path.getName());
-            // insert values
-            int parameterIndex = 2;
-            for (int i = 0; i < inputIndexes.size(); i++) {
-                Integer index = inputIndexes.get(i);
-                sth.setString(parameterIndex + 1, row[index]);
-                parameterIndex++;
-            }
-            sth.addBatch();
-
-            if (++count % batchSize == 0) {
-                sth.executeBatch();
-                sth.clearBatch();
-            }
-        }
-        sth.executeBatch();
-        connection.commit();
-
-        log.info(
-            MARKER,
-            "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded",
-            tableName,
-            path.getAbsolutePath(),
-            charset,
-            count
+            tableName, sourceFile, charset, count
         );
     }
 

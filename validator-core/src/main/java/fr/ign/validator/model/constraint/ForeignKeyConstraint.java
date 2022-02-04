@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import fr.ign.validator.exception.InvalidModelException;
+
 /**
  * Foreign Key Constraint
  * 
@@ -69,9 +71,10 @@ public class ForeignKeyConstraint {
     }
 
     public static ForeignKeyConstraint parseForeignKey(String foreignKeyString) {
-        String regex = "\\(.*(,.*)+\\) REFERENCES (.*)\\(.*(,.*)+\\)";
+    	// TODO replace regexp to protect from SQL injection
+    	String regex = "\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)+\\) REFERENCES ([a-zA-Z0-9_]+)\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)+\\)";
         if (!Pattern.matches(regex, foreignKeyString)) {
-            throw new RuntimeException(
+            throw new InvalidModelException(
                 String.format(
                     "ForeignKeyConstraint - unable to parse key %s",
                     foreignKeyString
@@ -83,6 +86,15 @@ public class ForeignKeyConstraint {
         String[] targetPart = stringPart[1].split("\\(");
         String[] targetColumn = targetPart[1].substring(0, targetPart[1].length() - 1).split(",");
 
+        if (sourcePart.length != targetColumn.length) {
+        	throw new InvalidModelException(
+                String.format(
+                    "ForeignKeyConstraint - unable to parse key %s",
+                    foreignKeyString
+                )
+            );
+        }
+        
         ForeignKeyConstraint constraint = new ForeignKeyConstraint();
         constraint.setSourceColumnNames(Arrays.asList(sourcePart));
         constraint.setTargetTableName(targetPart[0]);

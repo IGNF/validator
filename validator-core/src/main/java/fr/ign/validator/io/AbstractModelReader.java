@@ -32,9 +32,7 @@ abstract class AbstractModelReader implements ModelReader {
     @Override
     public DocumentModel loadDocumentModel(File documentModelPath) {
         try {
-            DocumentModel documentModel = loadDocumentModel(documentModelPath.toURI().toURL());
-            resolveStaticFilesPath(documentModel, documentModelPath.toURI().toURL());
-            return documentModel;
+            return loadDocumentModel(documentModelPath.toURI().toURL());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -44,17 +42,6 @@ abstract class AbstractModelReader implements ModelReader {
     public FeatureType loadFeatureType(File path) throws ModelNotFoundException, InvalidModelException {
         try {
             return loadFeatureType(path.toURI().toURL());
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void resolveStaticFilesPath(DocumentModel documentModel, URL documentUrl) {
-        try {
-            for (StaticTable staticTable : documentModel.getStaticTables()) {
-                URL url = resolveStaticFileUrl(documentUrl, documentModel, staticTable.getName());
-                staticTable.setUrl(url);
-            }
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -80,6 +67,20 @@ abstract class AbstractModelReader implements ModelReader {
             log.info(MARKER, "Loading FeatureType for {} : complete ({})", tableModel, featureType);
         }
         log.info(MARKER, "Loading FeatureTypes for {} : completed.", documentModel);
+    }
+
+    /**
+     * 
+     * @param documentModel
+     * @param documentModelUrl
+     */
+    protected void loadStaticFiles(DocumentModel documentModel, URL documentModelUrl)  throws MalformedURLException {
+    	log.info(MARKER, "Loading StaticFiles for {} ...", documentModel);
+        for (StaticTable staticTable : documentModel.getStaticTables()) {
+        	log.info(MARKER, "Loading StaticFile for {} ...", staticTable.getName());
+        	URL staticTypeURL = resolveStaticTypeUrl(documentModelUrl, documentModel, staticTable);
+            staticTable.setData(staticTypeURL);
+		}
     }
 
     /**
@@ -109,27 +110,13 @@ abstract class AbstractModelReader implements ModelReader {
             }
         }
 
-        return resolveConfigFileUrl(documentModelUrl, documentModel, tableModel.getName());
-    }
-
-    /**
-     * Resolve Config file URL for a given filename.
-     * 
-     * @param documentModelUrl
-     * @param documentModel
-     * @param filename
-     * @return
-     * @throws MalformedURLException
-     */
-    protected URL resolveConfigFileUrl(URL documentModelUrl, DocumentModel documentModel, String filename)
-        throws MalformedURLException {
         if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(
                 documentModelUrl,
-                "./types/" + filename + "." + getFormat()
+                "./types/" + tableModel.getName() + "." + getFormat()
             );
         } else {
             /* URL convention */
@@ -137,29 +124,42 @@ abstract class AbstractModelReader implements ModelReader {
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
             return new URL(
                 documentModelUrl,
-                "./" + documentModel.getName() + "/types/" + filename + "." + getFormat()
+                "./" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
             );
         }
     }
 
+
     /**
-     * Resolve Static file URL for a given filename.
+     * Resolve FeatureType URL for a given FileModel.
      * 
      * @param documentModelUrl
      * @param documentModel
-     * @param filename
+     * @param tableModel
      * @return
      * @throws MalformedURLException
      */
-    protected URL resolveStaticFileUrl(URL documentModelUrl, DocumentModel documentModel, String filename)
+    protected URL resolveStaticTypeUrl(URL documentModelUrl, DocumentModel documentModel, StaticTable staticTable)
         throws MalformedURLException {
+
+        String reference = staticTable.getDataReference();
+        if (reference != null && !reference.isEmpty()) {
+            // complete URL if required
+            try {
+                URL url = new URL(reference);
+                return url;
+            } catch (MalformedURLException e) {
+                return new URL(documentModelUrl, reference);
+            }
+        }
+
         if (documentModelUrl.getProtocol().equals("file")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/codes/InformationUrbaType.csv
             return new URL(
                 documentModelUrl,
-                "./codes/" + filename + ".csv"
+                "./codes/" + staticTable.getName() + ".csv"
             );
         } else {
             /* URL convention */
@@ -167,7 +167,7 @@ abstract class AbstractModelReader implements ModelReader {
             // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/codes/InformationUrbaType.csv
             return new URL(
                 documentModelUrl,
-                "./" + documentModel.getName() + "/codes/" + filename + ".csv"
+                "./" + documentModel.getName() + "/codes/" + staticTable.getName() + ".csv"
             );
         }
     }

@@ -38,6 +38,7 @@ public class JsonModelReader extends AbstractModelReader {
             InputStream is = getInputStream(documentModelUrl);
             DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
             loadFeatureTypes(documentModel, documentModelUrl);
+            loadStaticFiles(documentModel, documentModelUrl);
             return documentModel;
         } catch (IOException e) {
             String message = String.format(

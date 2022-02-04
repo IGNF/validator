@@ -11,8 +11,8 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
-import fr.ign.validator.database.internal.ForeignKeyConflictFinder;
-import fr.ign.validator.database.internal.ForeignKeyConflictFinder.ForeignKeyConflict;
+import fr.ign.validator.database.internal.ForeignKeyFinder;
+import fr.ign.validator.database.internal.ForeignKeyFinder.ForeignKeyMismatch;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.FeatureTypeConstraints;
@@ -26,7 +26,7 @@ public class ForeignKeyValidator implements Validator<Database> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("ForeignKeyValidator");
 
-    private ForeignKeyConflictFinder conflictFinder = new ForeignKeyConflictFinder();
+    private ForeignKeyFinder foreignKeyFinder = new ForeignKeyFinder();
 
     /**
      * Check if every conditions is respected
@@ -60,7 +60,7 @@ public class ForeignKeyValidator implements Validator<Database> {
                     tableModel.getName(), foreignKey
                 );
 
-                List<ForeignKeyConflict> conflicts = conflictFinder.findForeignKeyConflict(
+                List<ForeignKeyMismatch> mismatchs = foreignKeyFinder.foreignKeyNotFound(
                     database,
                     tableModel.getName(),
                     foreignKey
@@ -74,18 +74,20 @@ public class ForeignKeyValidator implements Validator<Database> {
                     "Table {} : foreignKey {} found {} conflicts (max : {})",
                     tableModel.getName(),
                     foreignKey,
-                    conflicts.size(),
-                    ForeignKeyConflictFinder.LIMIT_ERROR_COUNT
+                    mismatchs.size(),
+                    ForeignKeyFinder.LIMIT_ERROR_COUNT
                 );
-                for (ForeignKeyConflict conflict : conflicts) {
+                for (ForeignKeyMismatch mismatch : mismatchs) {
                     context.report(
-                        context.createError(CoreErrorCodes.DATABASE_FOREIGN_KEY_CONFLICT)
+                        context.createError(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND)
                             .setScope(ErrorScope.FEATURE)
-                            .setFile(conflict.file)
+                            .setFile(mismatch.file)
                             .setFileModel(tableModel.getName())
                             .setAttribute("--")
-                            .setId(conflict.id)
-                            .setMessageParam("CONDITION", foreignKey.toString())
+                            .setId(mismatch.id)
+                            .setMessageParam("SOURCE_COL", String.join(", ", foreignKey.getSourceColumnNames()))
+                            .setMessageParam("SOURCE_VALUE", mismatch.values)
+                            .setMessageParam("TARGET_TABLE", foreignKey.getTargetTableName())
                     );
                 }
             }
