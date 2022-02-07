@@ -10,9 +10,13 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
+/**
+ * Foreign Key Finder Provide a method to look out for foreign key not found
+ * 
+ * @author cbouche
+ *
+ */
 public class ForeignKeyFinder {
-
-    public static final Integer LIMIT_ERROR_COUNT = 10;
 
     public class ForeignKeyMismatch {
         public String file;
@@ -26,6 +30,16 @@ public class ForeignKeyFinder {
         }
     }
 
+    /**
+     * Retreive all Foreign Key Mismatch by perfoming an SQL query to database
+     * 
+     * @param database
+     * @param tableName
+     * @param foreignKey
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     */
     public List<ForeignKeyMismatch> foreignKeyNotFound(
         Database database,
         String tableName,
@@ -41,6 +55,14 @@ public class ForeignKeyFinder {
                 + "b." + foreignKey.getTargetColumnNames().get(i);
             conditions.add(condition);
         }
+
+        // Query exemple
+        // sub request retrieve all foreign key match
+        // SELECT r.__id, r.__file, TYPEPSC, STYPEPSC
+        // FROM PRESCRIPTION_SURF AS r WHERE r.__id NOT IN (
+        // SELECT a.__id FROM PRESCRIPTION_SURF AS a
+        // JOIN PrescriptionUrbaType AS b
+        // ON (a.TYPEPSC LIKE b.TYPEPSC AND a.STYPEPSC LIKE b.STYPEPSC) )
 
         String query = "SELECT r.__id, r.__file, "
             + String.join(", ", foreignKey.getSourceColumnNames())

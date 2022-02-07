@@ -70,6 +70,7 @@ abstract class AbstractModelReader implements ModelReader {
     }
 
     /**
+     * Load static Files for a given documentModel
      * 
      * @param documentModel
      * @param documentModelUrl

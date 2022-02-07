@@ -21,6 +21,12 @@ import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
 
+/**
+ * Database validator
+ * 
+ * @author cbouche
+ *
+ */
 public class ForeignKeyValidator implements Validator<Database> {
 
     public static final Logger log = LogManager.getRootLogger();
@@ -71,11 +77,10 @@ public class ForeignKeyValidator implements Validator<Database> {
                  */
                 log.info(
                     MARKER,
-                    "Table {} : foreignKey {} found {} conflicts (max : {})",
+                    "Table {} : foreignKey {} found {} conflicts",
                     tableModel.getName(),
                     foreignKey,
-                    mismatchs.size(),
-                    ForeignKeyFinder.LIMIT_ERROR_COUNT
+                    mismatchs.size()
                 );
                 for (ForeignKeyMismatch mismatch : mismatchs) {
                     context.report(

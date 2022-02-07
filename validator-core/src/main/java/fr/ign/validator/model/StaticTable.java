@@ -9,16 +9,32 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * Static Table
+ * 
+ * @author cbouche
+ *
+ */
 public class StaticTable {
 
-    public static final String TYPE = "static_table";
-
+    /**
+     * Table name in database
+     */
     private String name;
 
+    /**
+     * Table name for report
+     */
     private String title;
 
+    /**
+     * Data reference described in document model
+     */
     private String dataReference;
 
+    /**
+     * URL to access data
+     */
     private URL data;
 
     public String getName() {
@@ -55,10 +71,6 @@ public class StaticTable {
     @XmlTransient
     public void setData(URL data) {
         this.data = data;
-    }
-
-    public static String getType() {
-        return TYPE;
     }
 
 }
