@@ -337,17 +337,17 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(3 + 9, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(6, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(3 + 6, ErrorLevel.ERROR, report);
 
         /*
-         * check database errors - 9 errors
+         * check database errors - 6 errors
          */
-        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         int index = 0;
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
             Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("Donnees_geographiques/PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("1", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
@@ -356,18 +356,9 @@ public class CnigValidatorRegressTest {
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
             Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("Donnees_geographiques/PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("3", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
-            Assert.assertEquals(expectedMessage, error.getMessage());
-        }
-        index = 8;
-        {
-            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
-            Assert.assertEquals("3", error.getId());
-            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
         }
 
@@ -705,6 +696,7 @@ public class CnigValidatorRegressTest {
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
         File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
         Context context = createContext(documentPath);
+        context.setEnableConditions(true);
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -713,13 +705,27 @@ public class CnigValidatorRegressTest {
          */
         Assert.assertEquals(StandardCharsets.ISO_8859_1, context.getEncoding());
         Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+        Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
+        Assert.assertEquals(2, documentModel.getStaticTables().size());
 
         /*
          * check errors
          */
         // YYYYMMDD different in tables
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-        ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
+        ReportAssert.assertCount(20, ErrorLevel.ERROR, report);
+
+        {
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND).get(0);
+            assertEquals("15", error.getId());
+            assertEquals("INFO_SURF", error.getFileModel());
+            assertEquals(
+                "La correspondance (TYPEINF, STYPEINF) = (04, 99) n'est pas autorisée, car non présente dans la liste de référence InformationUrbaType.",
+                error.getMessage()
+            );
+        }
 
         /*
          * check warnings

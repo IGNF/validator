@@ -3,14 +3,6 @@
     "name": "INFO_LIN",
     "title": "INFO_LIN",
     "description": "Table contenant les informations linéaires à reporter à titre d'information",
-    "constraints": {
-        "conditions": [
-            "NOMFIC IS NOT NULL OR TYPEINF NOT LIKE '97'"
-        ],
-        "foreignKeys": [
-            "(TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)"
-        ]
-    },
     "columns": [
         {
             "id": "0d38b8258c4feeecab80112c73e08ed1",

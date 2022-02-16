@@ -9,17 +9,20 @@
     "codes": [
         {
             "id": "",
+            "name": "DocUrbaType",
+            "title": "DocUrbaType",
+            "data": "https://www.cnig.fr/DocUrbaType.csv"
+        },
+        {
+            "id": "",
             "name": "InformationUrbaType",
             "title": "InformationUrbaType",
-            "path": "./codes/InformationUrbaType.csv",
-            "type": "static_table"
+            "data": "./codes/InformationUrbaType.csv"
         },
         {
             "id": "",
             "name": "PrescriptionUrbaType",
-            "title": "PrescriptionUrbaType",
-            "path": "./codes/PrescriptionUrbaType.csv",
-            "type": "static_table"
+            "title": "PrescriptionUrbaType"
         }
     ],
     "files": [

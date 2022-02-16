@@ -3,6 +3,14 @@
     "name": "PRESCRIPTION_SURF",
     "title": "PRESCRIPTION_SURF",
     "description": "Table contenant les prescriptions surfaciques se superposant au document d'urbanisme et le lien avec le texte qui la décrit",
+    "constraints": {
+        "conditions": [
+            "TYPEPSC NOT LIKE '97' OR STYPEPSC NOT LIKE '00' OR NOMFIC IS NOT NULL"
+        ],
+        "foreignKeys": [
+            "(TYPEPSC,STYPEPSC) REFERENCES PrescriptionUrbaType(TYPEPSC,STYPEPSC)"
+        ]
+    },
     "columns": [
         {
             "id": "240923f2e228ed4de4b83835821da7ee",

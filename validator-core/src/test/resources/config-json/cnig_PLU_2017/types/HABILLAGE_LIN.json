@@ -1,0 +1,67 @@
+{
+    "id": "601b9fdc1932dd517b133916f83edecb",
+    "name": "HABILLAGE_LIN",
+    "title": "HABILLAGE_LIN",
+    "description": "Table des tracés linéaires indicatifs figurant sur le plan du document d'urbanisme à des fins d'ha",
+    "columns": [
+        {
+            "id": "20ec96600cbf750d178399ee8a09ef88",
+            "name": "COULEUR",
+            "title": "COULEUR",
+            "description": "Couleur de l’élément graphique, sous la forme rouge-vert-bleu (RVB)",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "[0-9]{3}-[0-9]{3}-[0-9]{3}",
+                "maxLength": 11
+            }
+        },
+        {
+            "id": "7517ffa36b4ae7aeaed078e71f2cb301",
+            "name": "NATTRAC",
+            "title": "NATTRAC",
+            "description": "Nature de la ligne",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 40
+            }
+        },
+        {
+            "id": "8e886f383cd9e55c5417c3090a7605bc",
+            "name": "IDURBA",
+            "title": "IDURBA",
+            "description": "Identifiant du document d'urbanisme",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "9661581a7a7b8c87f875ab0893afdf85",
+            "name": "WKT",
+            "title": "Géométrie",
+            "description": "Geométrie associée",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "f9575be3bb1d81613de38fc5cfd7eb1f",
+            "name": "LIB_IDHAB",
+            "description": "identifiant d'objets",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 40
+            }
+        }
+    ]
+}

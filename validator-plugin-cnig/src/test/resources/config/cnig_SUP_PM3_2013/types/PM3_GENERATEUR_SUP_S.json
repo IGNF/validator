@@ -6,9 +6,9 @@
     "constraints": {
         "conditions": [
             "srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'",
-            "dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation'",
+            "DATESRCGEN IS NOT NULL OR SRCGEOGEN IS NULL",
             "refBDExt NOT NULL OR modeGenere NOT LIKE 'Duplication'",
-            "idBDExt NOT NULL OR modeGenere NOT LIKE 'Duplication'"
+            "IDBDEXT IS NOT NULL OR REFBDEXT IS NULL"
         ]
     },
     "columns": [

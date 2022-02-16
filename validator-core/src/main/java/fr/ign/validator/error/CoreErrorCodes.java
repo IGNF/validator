@@ -220,5 +220,6 @@ public class CoreErrorCodes {
      * ErrorCode for Database validations
      */
     public static final ErrorCode DATABASE_CONSTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONSTRAINT_MISMATCH");
+    public static final ErrorCode TABLE_FOREIGN_KEY_NOT_FOUND = ErrorCode.valueOf("TABLE_FOREIGN_KEY_NOT_FOUND");
 
 }

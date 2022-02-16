@@ -46,7 +46,7 @@ public class FeatureType implements Model {
     // TODO add private List<String> primaryKey;
 
     /**
-     * Feature Type Constraints - primary key ? - foreign key ? - sql conditions
+     * Feature Type Constraints: foreign key and sql conditions
      */
     private FeatureTypeConstraints constraints = new FeatureTypeConstraints();
 
