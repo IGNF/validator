@@ -32,22 +32,24 @@ public class GeometryComplexityThresholdOptionTest {
     public void testParsingOk() throws ParseException {
         String[] args = {
             "--cnig-complexity-tolerance",
-            "[[5000, 600, 500, 0.1], [200000, 3000, 2000, 10]]"
+            "[[-1, 600, 500, 0.1, 50000], [200000, 3000, 2000, 10, 50005]]"
         };
         CommandLine commandLine = parser.parse(options, args);
         GeometryComplexityThreshold result = GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
 
         assertNotNull(result);
 
-        assertEquals(5000, result.getWarningPointCount());
-        assertEquals(600, result.getWarningRingCount());
-        assertEquals(500, result.getWarningPartCount());
-        assertTrue(0.1 == result.getWarningDensity());
+        assertEquals(-1, result.getWarningThreshold().getPointCount());
+        assertEquals(600, result.getWarningThreshold().getPartCount());
+        assertEquals(500, result.getWarningThreshold().getRingCount());
+        assertTrue(0.1 == result.getWarningThreshold().getDensity());
+        assertEquals(50000, result.getWarningThreshold().getRingPointCount());
 
-        assertEquals(200000, result.getErrorPointCount());
-        assertEquals(3000, result.getErrorRingCount());
-        assertEquals(2000, result.getErrorPartCount());
-        assertTrue(10 == result.getErrorDensity());
+        assertEquals(200000, result.getErrorThreshold().getPointCount());
+        assertEquals(3000, result.getErrorThreshold().getPartCount());
+        assertEquals(2000, result.getErrorThreshold().getRingCount());
+        assertTrue(10 == result.getErrorThreshold().getDensity());
+        assertEquals(50005, result.getErrorThreshold().getRingPointCount());
     }
 
     @Test
@@ -96,7 +98,7 @@ public class GeometryComplexityThresholdOptionTest {
     public void testNotNumericParam() throws ParseException {
         String[] args = {
             "--cnig-complexity-tolerance",
-            "[[5000, 600, 500, 0.1], [ab, 3000, 2000, 10]]"
+            "[[5000, 600, 500, 0.1, 5000], [ab, 3000, 2000, 10, ab]]"
         };
         CommandLine commandLine = parser.parse(options, args);
         GeometryComplexityThresholdOption.parseCustomOptions(commandLine);

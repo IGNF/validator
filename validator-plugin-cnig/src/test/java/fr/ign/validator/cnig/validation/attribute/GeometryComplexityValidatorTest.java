@@ -13,6 +13,7 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.validation.CnigValidatorTestBase;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
+import fr.ign.validator.geometry.GeometryThreshold;
 import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.type.GeometryType;
@@ -31,11 +32,15 @@ public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
         context.setReportBuilder(report);
 
         context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                50000, 500, 500, 0.1,
-                200000, 1000, 1000, 10
+	        new GeometryComplexityThreshold(
+	        	new GeometryThreshold(-1, 500, 500, 0.1, 50000),
+	        	new GeometryThreshold(200000, 1000, 1000, 10, 50000)
             )
         );
+
+        ProjectionList projectionRepository = ProjectionList.getInstance();
+        Projection projection = projectionRepository.findByCode("EPSG:2154");
+        context.setProjection(projection);
     }
 
     @Test
@@ -49,233 +54,12 @@ public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
         Geometry geometry = attribute.getBindedValue();
 
         Assert.assertNotNull(geometry);
-    }
-
-    @Test
-    public void testPointThresholdWarning() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                4, 1, 1, 0.1,
-                6, 1, 1, 10
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "POLYGON((0 0, 0 2, 2 2, 2 0, 0 0))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
-        assertEquals(
-            String.format(
-                "La compléxité géométrique approche les seuils tolérés. Nombre de sommets 5 > 4 et nombre moyen de point par m %f > %f.",
-                0.625000f, 0.100000f
-            ),
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
-        );
-    }
-
-    @Test
-    public void testPointThresholdError() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                3, 1, 1, 100,
-                4, 1, 1, 100
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "POLYGON((0 0, 0 2, 2 2, 2 0, 0 0))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
-        assertEquals(
-            "La compléxité géométrique dépasse les seuils tolérés. Nombre de sommets 5 > 4.",
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
-        );
-    }
-
-    @Test
-    public void testHolesThresholdWarning() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                10, 0, 1, 100,
-                10, 1, 1, 100
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "POLYGON((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
-        assertEquals(
-            "La compléxité géométrique approche les seuils tolérés. Nombre d’anneaux 1 > 0.",
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
-        );
-    }
-
-    @Test
-    public void testHolesThresholdError() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                10, 0, 1, 100,
-                10, 0, 1, 100
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "POLYGON((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
-        assertEquals(
-            "La compléxité géométrique dépasse les seuils tolérés. Nombre d’anneaux 1 > 0.",
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
-        );
-    }
-
-    @Test
-    public void testPartThresholdWarning() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                14, 1, 1, 100,
-                14, 1, 2, 100
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "MULTIPOLYGON(((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
-        assertEquals(
-            "La compléxité géométrique approche les seuils tolérés. Nombre de parties 2 > 1.",
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
-        );
-    }
-
-    @Test
-    public void testDensityWarning() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                8, 1, 1, 0.3,
-                15, 1, 1, 10
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "POLYGON((40 40, 20 45, 21 44, 22 43, 23 42, 24 41, 25 40, 25 40, 26 39, 27 38, 28 37, 29 36, 30 35, 31 34, 40 40))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
-        assertEquals(
-            String.format(
-                "La compléxité géométrique approche les seuils tolérés. Nombre de sommets 15 > 8 et nombre moyen de point par m %f > %f.",
-                0.319227f, 0.300000f
-            ),
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
-        );
-    }
-
-    @Test
-    public void testDensityError() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                15, 1, 1, 0.3,
-                15, 1, 1, 0.3
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
-
-        String wkt = "POLYGON((40 40, 20 45, 21 44, 22 43, 23 42, 24 41, 25 40, 25 40, 26 39, 27 38, 28 37, 29 36, 30 35, 31 34, 40 40))";
-
-        GeometryType type = new GeometryType();
-        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
-        validator.validate(context, attribute);
-        Geometry geometry = attribute.getBindedValue();
-
-        Assert.assertNotNull(geometry);
-        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
-        assertEquals(
-            String.format(
-                "La compléxité géométrique dépasse les seuils tolérés. Nombre moyen de point par m %f > %f.",
-                0.319227f, 0.300000f
-            ),
-            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
-        );
+        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
     }
 
     @Test
     public void testPointNoError() throws ParseException {
-
-        context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                1, 1, 1, 0.3,
-                1, 1, 1, 0.3
-            )
-        );
-
-        ProjectionList projectionRepository = ProjectionList.getInstance();
-        Projection projection = projectionRepository.findByCode("EPSG:2154");
-        context.setProjection(projection);
 
         String wkt = "Point(40 40)";
 
@@ -286,15 +70,162 @@ public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
 
         Assert.assertNotNull(geometry);
         assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
+    }
+
+    @Test
+    public void testPointCount() throws ParseException {
+        String wkt = "POLYGON((0 0, 0 2, 2 2, 2 0, 0 0))";
+
+        GeometryType type = new GeometryType();
+        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
+        Geometry geometry = attribute.getBindedValue();
+
+        Assert.assertNotNull(geometry);
+
+
+		context.getComplexityThreshold().getErrorThreshold().setPointCount(4);
+        validator.validate(context, attribute);
+
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+        assertEquals(
+            String.format(
+                "La compléxité géométrique dépasse les seuils tolérés. Nombre de sommets 5 > 4."
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
+        );
+
+		context.getComplexityThreshold().getWarningThreshold().setPointCount(4);
+		context.getComplexityThreshold().getErrorThreshold().setPointCount(10);
+        validator.validate(context, attribute);
+
+        assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
+    	
+        assertEquals(
+            String.format(
+                "La compléxité géométrique approche les seuils tolérés. Nombre de sommets 5 > 4."
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
+        );
+    }
+    
+    @Test
+    public void testPartCount() throws ParseException {
+    	
+    	String wkt = "MULTIPOLYGON(((40 40, 20 45, 45 30, 40 40)), ((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20)))";
+
+        GeometryType type = new GeometryType();
+        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
+        validator.validate(context, attribute);
+        Geometry geometry = attribute.getBindedValue();
+
+        Assert.assertNotNull(geometry);
+
+		context.getComplexityThreshold().getErrorThreshold().setPartCount(1);
+        validator.validate(context, attribute);
+
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+        assertEquals(
+            String.format(
+                "La compléxité géométrique dépasse les seuils tolérés. Nombre de parties 2 > 1."
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
+        );
+
+
+		context.getComplexityThreshold().getErrorThreshold().setPartCount(2);
+		context.getComplexityThreshold().getWarningThreshold().setPartCount(1);
+        validator.validate(context, attribute);
+	    
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
+        assertEquals(
+            String.format(
+                "La compléxité géométrique approche les seuils tolérés. Nombre de parties 2 > 1."
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
+        );
+    }
+    
+    @Test
+    public void testHoleCount() throws ParseException {
+        String wkt = "POLYGON((20 35, 10 30, 10 10, 30 5, 45 20, 20 35), (30 20, 20 15, 20 25, 30 20))";
+        
+        GeometryType type = new GeometryType();
+        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
+        Geometry geometry = attribute.getBindedValue();
+        Assert.assertNotNull(geometry);
+
+		context.getComplexityThreshold().getErrorThreshold().setRingCount(0);
+        validator.validate(context, attribute);
+
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));   	
+        assertEquals(
+            String.format(
+                "La compléxité géométrique dépasse les seuils tolérés. Nombre d’anneaux 1 > 0."
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
+        );
+
+
+		context.getComplexityThreshold().getErrorThreshold().setRingCount(1);
+		context.getComplexityThreshold().getWarningThreshold().setRingCount(0);
+    
+        validator.validate(context, attribute);
+
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
+        assertEquals(
+            String.format(
+                "La compléxité géométrique approche les seuils tolérés. Nombre d’anneaux 1 > 0."
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
+        );
+    }
+    
+    @Test
+    public void testDensity() throws ParseException {
+
+        String wkt = "POLYGON((40 40, 20 45, 21 44, 22 43, 23 42, 24 41, 25 40, 25 40, 26 39, 27 38, 28 37, 29 36, 30 35, 31 34, 40 40))";
+        
+        GeometryType type = new GeometryType();
+        Attribute<Geometry> attribute = new Attribute<Geometry>(type, wkt);
+        Geometry geometry = attribute.getBindedValue();
+        Assert.assertNotNull(geometry);
+
+		context.getComplexityThreshold().getErrorThreshold().setDensity(0.3);
+		context.getComplexityThreshold().getErrorThreshold().setRingPointCount(8);
+        validator.validate(context, attribute);
+
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
+    	assertEquals(
+            String.format(
+                "La compléxité géométrique dépasse les seuils tolérés. Nombre de sommets > 8 et nombre moyen de point par m %f > %f.",
+                0.319227f, 0.300000f
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR).get(0).getMessage()
+        );
+
+		context.getComplexityThreshold().getErrorThreshold().setRingPointCount(50000);
+		context.getComplexityThreshold().getWarningThreshold().setDensity(0.3);
+		context.getComplexityThreshold().getWarningThreshold().setRingPointCount(8);
+	    validator.validate(context, attribute);
+ 
+    	assertEquals(1, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING));
+    	assertEquals(
+            String.format(
+                "La compléxité géométrique approche les seuils tolérés. Nombre de sommets > 8 et nombre moyen de point par m %f > %f.",
+                0.319227f, 0.300000f
+            ),
+            report.getErrorsByCode(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING).get(0).getMessage()
+        );
     }
 
     @Test
     public void testEPSG4326Warning() throws ParseException {
 
         context.setComplexityThreshold(
-            new GeometryComplexityThreshold(
-                24, 1, 1, 0.03,
-                24, 1, 1, 0.03
+    		new GeometryComplexityThreshold(
+            	new GeometryThreshold(-1, 1, 1, 0.03, 24),
+            	new GeometryThreshold(24, 1, 1, 0.03, 24)
             )
         );
 
@@ -322,8 +253,6 @@ public class GeometryComplexityValidatorTest extends CnigValidatorTestBase {
         Geometry geometry = attribute.getBindedValue();
 
         Assert.assertNotNull(geometry);
-        // assertEquals(1,
-        // report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR));
     }
 
 }

@@ -34,6 +34,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
+import fr.ign.validator.geometry.GeometryThreshold;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -264,8 +265,8 @@ public class CnigValidatorRegressTest {
         // add Complexity Threshold option
         context.setComplexityThreshold(
             new GeometryComplexityThreshold(
-                100, 5, 5, 0.08,
-                5000, 4, 4, 0.1
+	        	new GeometryThreshold(-1, 5, 5, 0.08, 100),
+	        	new GeometryThreshold(5000, 4, 4, 0.1, 5000)
             )
         );
 
