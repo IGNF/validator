@@ -37,51 +37,48 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
     public static final Marker MARKER = MarkerManager.getMarker("GeometryComplexityValidator");
 
     private Projection sourceProjection;
-    
+
     public static final Integer DENSITY_EXCLUDE_NUM_POINTS = 50000;
     public static final Double DENSITY_EXCLUDE_PERIMETERS = 1.0d;
 
     private Integer isNumPointInvalid(Geometry geometry, int pointCount) {
-    	if (pointCount < 0) {
-    		return null;
-    	}
+        if (pointCount < 0) {
+            return null;
+        }
         if (geometry.getNumPoints() > pointCount) {
             return geometry.getNumPoints();
         }
         return null;
     }
 
-
     private Integer isNumPartInvalid(Geometry geometry, int partCount) {
-    	if (partCount < 0) {
-    		return null;
-    	}
+        if (partCount < 0) {
+            return null;
+        }
         if (geometry.getNumGeometries() > partCount) {
             return geometry.getNumGeometries();
         }
         return null;
     }
 
-
     private Integer isNumRingInvalid(Geometry geometry, int ringCount) {
         int holeCount = GeometryRings.getInnerRings(geometry).size();
-    	if (ringCount < 0) {
-    		return null;
-    	}
+        if (ringCount < 0) {
+            return null;
+        }
         if (holeCount > ringCount) {
             return holeCount;
         }
         return null;
     }
 
-
     private Double isDensityInvalid(Geometry geometry, double density, int maxRingPointCount) {
         List<LineString> lineStrings = GeometryRings.getRings(geometry);
         for (LineString lineString : lineStrings) {
-        	// exclude polygon's rings if max ring point count not passed
-        	if (lineString.getNumPoints() < maxRingPointCount) {
-        		continue;
-        	}
+            // exclude polygon's rings if max ring point count not passed
+            if (lineString.getNumPoints() < maxRingPointCount) {
+                continue;
+            }
             Double length;
             try {
                 length = GeometryLength.getPerimeter(lineString, sourceProjection);
@@ -89,7 +86,7 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
                 throw new RuntimeException("GeometryComplexityValidator: unable to determine length of a geometry.");
             }
             if (length == 0) {
-            	continue;
+                continue;
             }
             Double lineDensity = (double) (lineString.getNumPoints() / length);
             if (lineDensity > density) {
@@ -157,7 +154,6 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
         return "";
     }
 
-
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {
 
@@ -198,8 +194,7 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
 
     }
 
-
-	@Override
+    @Override
     public void beforeMatching(Context context, Document document) throws Exception {
         // nothing to do
     }

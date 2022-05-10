@@ -82,16 +82,16 @@ public class GeometryComplexityThresholdOption {
         }
 
         return new GeometryComplexityThreshold(
-    		new GeometryThreshold(
-    				warningParameters[0].intValue(), warningParameters[1].intValue(),
-    	            warningParameters[2].intValue(), warningParameters[3],
-    	            warningParameters[4].intValue()
-    		),
-    		new GeometryThreshold(
-    				errorParameters[0].intValue(), errorParameters[1].intValue(),
-    				errorParameters[2].intValue(), errorParameters[3],
-    				errorParameters[4].intValue()
-    		)
+            new GeometryThreshold(
+                warningParameters[0].intValue(), warningParameters[1].intValue(),
+                warningParameters[2].intValue(), warningParameters[3],
+                warningParameters[4].intValue()
+            ),
+            new GeometryThreshold(
+                errorParameters[0].intValue(), errorParameters[1].intValue(),
+                errorParameters[2].intValue(), errorParameters[3],
+                errorParameters[4].intValue()
+            )
         );
     }
 

@@ -265,8 +265,8 @@ public class CnigValidatorRegressTest {
         // add Complexity Threshold option
         context.setComplexityThreshold(
             new GeometryComplexityThreshold(
-	        	new GeometryThreshold(-1, 5, 5, 0.08, 100),
-	        	new GeometryThreshold(5000, 4, 4, 0.1, 5000)
+                new GeometryThreshold(-1, 5, 5, 0.08, 100),
+                new GeometryThreshold(5000, 4, 4, 0.1, 5000)
             )
         );
 
