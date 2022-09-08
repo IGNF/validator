@@ -14,6 +14,10 @@ public class DocumentModelName {
 
     private static final String REGEXP_YYYY = "[0-9]{4}";
 
+    public static final String TYPE_SUP = "SUP";
+    public static final String TYPE_SCOT = "SCOT";
+    public static final String TYPE_PLU = "PLU";
+
     /**
      * Test if document model is a CNIG standard
      * 
@@ -36,6 +40,19 @@ public class DocumentModelName {
             return null;
         }
         return parts[1];
+    }
+
+    /**
+     * Check that document name belong to SUP type
+     * 
+     * @param documentModelName
+     * @return
+     */
+    public static boolean isDocumentModelSup(String documentModelName) {
+        if (getDocumentType(documentModelName) != null) {
+            return getDocumentType(documentModelName).toUpperCase().equals(TYPE_SUP);
+        }
+        return false;
     }
 
     /**
