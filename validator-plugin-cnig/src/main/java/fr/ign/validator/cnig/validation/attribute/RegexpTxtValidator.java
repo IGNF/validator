@@ -29,8 +29,9 @@ public class RegexpTxtValidator implements Validator<Attribute<String>>, Validat
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("RegexpTxtValidator");
 
-    private static final String FILE_MODEL = "PRESCRIPTION_SURF";
-    private static final String ATTRIBUTE_TXT = "TXT";
+    private static final String DOCUMENT_MODEL_NAME = "cnig_PLUi_2017";
+    private static final String FILE_MODEL_NAME = "PRESCRIPTION_SURF";
+    private static final String ATTRIBUTE_NAME = "TXT";
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
@@ -40,8 +41,7 @@ public class RegexpTxtValidator implements Validator<Attribute<String>>, Validat
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-        DocumentName documentName = new DocumentName(document.getDocumentName());
-        if (!documentName.getDocumentType().equals(DocumentType.PLUi)) {
+        if (!document.getDocumentModel().getName().equalsIgnoreCase(DOCUMENT_MODEL_NAME)) {
             return;
         }
         List<FileModel> fileModels = document.getDocumentModel().getFileModels();
@@ -49,11 +49,11 @@ public class RegexpTxtValidator implements Validator<Attribute<String>>, Validat
             if (!(fileModel instanceof SingleTableModel)) {
                 continue;
             }
-            if (!fileModel.getName().equals(FILE_MODEL)) {
+            if (!fileModel.getName().equals(FILE_MODEL_NAME)) {
                 continue;
             }
             FeatureType featureType = ((TableModel) fileModel).getFeatureType();
-            AttributeType<?> attributeType = featureType.getAttribute(ATTRIBUTE_TXT);
+            AttributeType<?> attributeType = featureType.getAttribute(ATTRIBUTE_NAME);
             if (null != attributeType && attributeType instanceof StringType) {
                 log.info(MARKER, "Ajout de RegexpTxtValidator à {}", attributeType.getName());
                 ((StringType) attributeType).addValidator(new RegexpTxtValidator());
