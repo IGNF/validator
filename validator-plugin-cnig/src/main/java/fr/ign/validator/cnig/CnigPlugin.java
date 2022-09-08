@@ -9,6 +9,7 @@ import fr.ign.validator.cnig.process.PerimetreScotPostProcess;
 import fr.ign.validator.cnig.process.SupRelationsPostProcess;
 import fr.ign.validator.cnig.validation.attribute.GeometryComplexityValidator;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
+import fr.ign.validator.cnig.validation.attribute.RegexpTxtValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneAssietteValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneGenerateurValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
@@ -90,6 +91,7 @@ public class CnigPlugin implements Plugin {
          * Extends attribute validation
          */
         context.addListener(new InseeValidator());
+        context.addListener(new RegexpTxtValidator());
         context.addListener(new GeometryComplexityValidator());
 
         /*

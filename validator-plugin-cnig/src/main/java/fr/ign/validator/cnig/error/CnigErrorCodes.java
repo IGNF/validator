@@ -10,6 +10,7 @@ import fr.ign.validator.error.ErrorCode;
  */
 public class CnigErrorCodes {
     public static final ErrorCode CNIG_INSEE_INVALID = ErrorCode.valueOf("CNIG_INSEE_INVALID");
+    public static final ErrorCode CNIG_TXT_REGEXP_INVALID = ErrorCode.valueOf("CNIG_TXT_REGEXP_INVALID");
     public static final ErrorCode CNIG_SIREN_INVALID = ErrorCode.valueOf("CNIG_SIREN_INVALID");
 
     public static final ErrorCode CNIG_DOCUMENT_NO_PDF = ErrorCode.valueOf("CNIG_DOCUMENT_NO_PDF");
