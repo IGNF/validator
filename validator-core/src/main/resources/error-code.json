@@ -652,6 +652,18 @@
 		"documentation": "Les départements doivent être codés sur 3 caractères."
 	},
 	{
+		"name": "CNIG_GENERATEUR_SUP_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Aucun générateur trouvée.",
+		"documentation": "Selon la catégorie de SUP des géométries sont autorisées, au moins une doit être présente."
+	},
+	{
+		"name": "CNIG_ASSIETTE_SUP_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Aucune assiette trouvée.",
+		"documentation": "Selon la catégorie de SUP des géométries sont autorisées, au moins une doit être présente."
+	},
+	{
 		"name": "DGPR_DOCUMENT_PREFIX_ERROR",
 		"level": "WARNING",
 		"message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",

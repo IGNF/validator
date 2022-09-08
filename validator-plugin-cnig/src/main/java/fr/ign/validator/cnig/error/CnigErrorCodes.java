@@ -64,6 +64,11 @@ public class CnigErrorCodes {
     public static final ErrorCode CNIG_SUP_IDGEN_NOT_FOUND = ErrorCode.valueOf(
         "CNIG_SUP_IDGEN_NOT_FOUND"
     );
+    /**
+     * SUP - reported when no generateur / assiette file found
+     */
+    public static final ErrorCode CNIG_GENERATEUR_SUP_NOT_FOUND = ErrorCode.valueOf("CNIG_GENERATEUR_SUP_NOT_FOUND");
+    public static final ErrorCode CNIG_ASSIETTE_SUP_NOT_FOUND = ErrorCode.valueOf("CNIG_ASSIETTE_SUP_NOT_FOUND");
 
     public static final ErrorCode CNIG_METADATA_SPECIFICATION_NOT_FOUND = ErrorCode.valueOf(
         "CNIG_METADATA_SPECIFICATION_NOT_FOUND"

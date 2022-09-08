@@ -29,6 +29,9 @@ import fr.ign.validator.Context;
 import fr.ign.validator.cnig.CnigRegressHelper;
 import fr.ign.validator.cnig.ReportAssert;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
+import fr.ign.validator.cnig.model.DocumentModelName;
+import fr.ign.validator.cnig.model.DocumentName;
+import fr.ign.validator.cnig.model.DocumentType;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
@@ -659,6 +662,9 @@ public class CnigValidatorRegressTest {
          */
         Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
         Assert.assertEquals("213000896_INT1_83044_20160130", document.getDocumentName());
+        DocumentName documentName = new DocumentName(document.getDocumentName());
+        Assert.assertEquals(DocumentType.SUP, documentName.getDocumentType());
+        Assert.assertTrue(DocumentModelName.isDocumentModelSup(document.getDocumentModel().getName()));
 
         /*
          * check document-info.json
@@ -681,6 +687,9 @@ public class CnigValidatorRegressTest {
                 assertNull(row[indexNomSupLitt]);
             }
         }
+
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
     }
 
@@ -717,6 +726,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
         ReportAssert.assertCount(20, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND).get(0);
