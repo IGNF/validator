@@ -50,10 +50,14 @@ public class ForeignKeyFinder {
 
         List<String> conditions = new ArrayList<String>();
         for (int i = 0; i < foreignKey.getSourceColumnNames().size(); i++) {
-            String condition = "a." + foreignKey.getSourceColumnNames().get(i)
+            String condition = "src." + foreignKey.getSourceColumnNames().get(i)
                 + " LIKE "
-                + "b." + foreignKey.getTargetColumnNames().get(i);
-            conditions.add(condition);
+                + " target." + foreignKey.getTargetColumnNames().get(i);
+            if (i == 0) {
+            	conditions.add(" WHERE " + condition);
+            } else {
+                conditions.add(" AND " + condition);
+            }
         }
 
         // Query exemple
@@ -64,15 +68,24 @@ public class ForeignKeyFinder {
         // JOIN PrescriptionUrbaType AS b
         // ON (a.TYPEPSC LIKE b.TYPEPSC AND a.STYPEPSC LIKE b.STYPEPSC) )
 
-        String query = "SELECT r.__id, r.__file, "
-            + String.join(", ", foreignKey.getSourceColumnNames())
-            + " FROM " + tableName + " AS r"
-            + " WHERE r.__id NOT IN ("
-            + " SELECT a.__id "
-            + " FROM " + tableName + " AS a"
-            + " JOIN " + foreignKey.getTargetTableName() + " AS b"
-            + " ON (" + String.join(" AND ", conditions) + ")"
-            + " )";
+//        String query = "SELECT r.__id, r.__file, "
+//            + String.join(", ", foreignKey.getSourceColumnNames())
+//            + " FROM " + tableName + " AS r"
+//            + " WHERE r.__id NOT IN ("
+//            + " SELECT a.__id "
+//            + " FROM " + tableName + " AS a"
+//            + " JOIN " + foreignKey.getTargetTableName() + " AS b"
+//            + " ON (" + String.join(" AND ", conditions) + ")"
+//            + " )";
+        
+        String query = "SELECT src.__id, src.__file, "
+                + String.join(", ", foreignKey.getSourceColumnNames())
+                + " FROM " + tableName + " AS src"
+                + " WHERE NOT EXISTS ( "
+                + "    SELECT true "
+                + "    FROM " + foreignKey.getTargetTableName() + " AS target "
+                + String.join("", conditions)
+                + ")";
         RowIterator it = database.query(query);
 
         List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();
