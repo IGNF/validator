@@ -138,6 +138,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_TXT_REGEXP_INVALID, report);
         ReportAssert.assertCount(7, ErrorLevel.WARNING, report);
 
         /*
@@ -824,6 +825,7 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_TXT_REGEXP_INVALID, report);
         ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
 
         /*

@@ -664,6 +664,12 @@
 		"documentation": "Selon la catégorie de SUP des géométries sont autorisées, au moins une doit être présente."
 	},
 	{
+		"name": "CNIG_TXT_REGEXP_INVALID",
+		"level": "ERROR",
+		"message": "Si TYPEPSC vaut '97' et STYPEPSC vaut '01' le champ TXT - {VALUE} - doit respecté le format SECT[0-9]{2}.",
+		"documentation": "Si TYPEPSC vaut '97' et STYPEPSC vaut '01' le champ TXT doit respecté le format SECT[0-9]{2}."
+	},
+	{
 		"name": "DGPR_DOCUMENT_PREFIX_ERROR",
 		"level": "WARNING",
 		"message": "Le nom du dossier {DOCUMENT_NAME} ne contient pas le suffixe _SIG_DI, impossible de déterminer le préfixe du TRI à appliquer pour les fichiers à valider.",
