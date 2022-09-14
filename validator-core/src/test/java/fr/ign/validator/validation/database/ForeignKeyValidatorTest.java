@@ -68,7 +68,6 @@ public class ForeignKeyValidatorTest {
             fileModels.add(fileModel);
         }
 
-
         {
             // creates attributes, "ID", "VALUE", "SUB_VALUE"
             AttributeType<String> attribute = new StringType();

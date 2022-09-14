@@ -54,7 +54,7 @@ public class ForeignKeyFinder {
                 + " LIKE "
                 + " target." + foreignKey.getTargetColumnNames().get(i);
             if (i == 0) {
-            	conditions.add(" WHERE " + condition);
+                conditions.add(" WHERE " + condition);
             } else {
                 conditions.add(" AND " + condition);
             }
@@ -77,15 +77,15 @@ public class ForeignKeyFinder {
 //            + " JOIN " + foreignKey.getTargetTableName() + " AS b"
 //            + " ON (" + String.join(" AND ", conditions) + ")"
 //            + " )";
-        
+
         String query = "SELECT src.__id, src.__file, "
-                + String.join(", ", foreignKey.getSourceColumnNames())
-                + " FROM " + tableName + " AS src"
-                + " WHERE NOT EXISTS ( "
-                + "    SELECT true "
-                + "    FROM " + foreignKey.getTargetTableName() + " AS target "
-                + String.join("", conditions)
-                + ")";
+            + String.join(", ", foreignKey.getSourceColumnNames())
+            + " FROM " + tableName + " AS src"
+            + " WHERE NOT EXISTS ( "
+            + "    SELECT true "
+            + "    FROM " + foreignKey.getTargetTableName() + " AS target "
+            + String.join("", conditions)
+            + ")";
         RowIterator it = database.query(query);
 
         List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();

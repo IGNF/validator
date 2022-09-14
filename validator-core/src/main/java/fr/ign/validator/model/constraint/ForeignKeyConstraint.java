@@ -71,14 +71,15 @@ public class ForeignKeyConstraint {
 
     public static ForeignKeyConstraint parseForeignKey(String foreignKeyString) {
         // TODO replace regexp to protect from SQL injection
-        // String regex = "\\([a-zA-Z0-9_]+(, *[a-zA-Z0-9_]+)*\\) +REFERENCES +[a-zA-Z0-9_]+ *\\([a-zA-Z0-9_]+(, *[a-zA-Z0-9_]+)*\\)";
+        // String regex = "\\([a-zA-Z0-9_]+(, *[a-zA-Z0-9_]+)*\\) +REFERENCES
+        // +[a-zA-Z0-9_]+ *\\([a-zA-Z0-9_]+(, *[a-zA-Z0-9_]+)*\\)";
         // remove whitespaces
-    	foreignKeyString = foreignKeyString.replaceAll("\\(\\s+", "\\(")
-    			                           .replaceAll("\\)\\s+", "\\)")
-    			                           .replaceAll(",\\s+", ",")
-    			                           .replaceAll("\\s+\\(", "\\(")
-                                           .replaceAll("\\s+\\)", "\\)")
-    			                           .replaceAll("\\s+,", ",");
+        foreignKeyString = foreignKeyString.replaceAll("\\(\\s+", "\\(")
+            .replaceAll("\\)\\s+", "\\)")
+            .replaceAll(",\\s+", ",")
+            .replaceAll("\\s+\\(", "\\(")
+            .replaceAll("\\s+\\)", "\\)")
+            .replaceAll("\\s+,", ",");
         String regex = "\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)*\\)REFERENCES *[a-zA-Z0-9_]+\\([a-zA-Z0-9_]+(,[a-zA-Z0-9_]+)*\\)";
         if (!Pattern.matches(regex, foreignKeyString)) {
             throw new InvalidModelException(
@@ -107,12 +108,12 @@ public class ForeignKeyConstraint {
         constraint.setTargetTableName(targetPart[0].trim());
 
         for (String column : sourceColumns) {
-        	constraint.getSourceColumnNames().add(column.trim());
-		}
+            constraint.getSourceColumnNames().add(column.trim());
+        }
 
         for (String column : targetColumns) {
-        	constraint.getTargetColumnNames().add(column.trim());
-		}
+            constraint.getTargetColumnNames().add(column.trim());
+        }
 
         return constraint;
     }
