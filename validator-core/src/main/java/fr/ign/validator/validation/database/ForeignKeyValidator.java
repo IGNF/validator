@@ -68,7 +68,7 @@ public class ForeignKeyValidator implements Validator<Database> {
 
                 List<ForeignKeyMismatch> mismatchs = foreignKeyFinder.foreignKeyNotFound(
                     database,
-                    tableModel.getName(),
+                    tableModel,
                     foreignKey
                 );
 

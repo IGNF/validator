@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
+import fr.ign.validator.model.AttributeType;
+import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
 /**
@@ -34,7 +37,7 @@ public class ForeignKeyFinder {
      * Retreive all Foreign Key Mismatch by perfoming an SQL query to database
      * 
      * @param database
-     * @param tableName
+     * @param tableModel
      * @param foreignKey
      * @return
      * @throws SQLException
@@ -42,7 +45,7 @@ public class ForeignKeyFinder {
      */
     public List<ForeignKeyMismatch> foreignKeyNotFound(
         Database database,
-        String tableName,
+        TableModel tableModel,
         ForeignKeyConstraint foreignKey) throws SQLException, IOException {
 
         // TODO validate condition to avoid SQL injection and crashes
@@ -54,29 +57,24 @@ public class ForeignKeyFinder {
                 + " LIKE "
                 + " target." + foreignKey.getTargetColumnNames().get(i);
             if (i == 0) {
-                conditions.add(" WHERE " + condition);
+                conditions.add("WHERE " + condition);
             } else {
-                conditions.add(" AND " + condition);
+                conditions.add("AND " + condition);
             }
         }
 
-        // Query exemple
-        // sub request retrieve all foreign key match
-        // SELECT r.__id, r.__file, TYPEPSC, STYPEPSC
-        // FROM PRESCRIPTION_SURF AS r WHERE r.__id NOT IN (
-        // SELECT a.__id FROM PRESCRIPTION_SURF AS a
-        // JOIN PrescriptionUrbaType AS b
-        // ON (a.TYPEPSC LIKE b.TYPEPSC AND a.STYPEPSC LIKE b.STYPEPSC) )
+        List<String> nullableClause = new ArrayList<String>();
+        for (int i = 0; i < foreignKey.getSourceColumnNames().size(); i++) {
+        	String name = foreignKey.getSourceColumnNames().get(i);
+        	AttributeType<?> attribute = tableModel.getFeatureType().getAttribute(name);
+        	if (attribute == null || attribute.getConstraints().isRequired()) {
+        		continue;
+        	}
+            String condition = "AND " + name + " IS NOT NULL";
+        	nullableClause.add(condition);
+        }
 
-//        String query = "SELECT r.__id, r.__file, "
-//            + String.join(", ", foreignKey.getSourceColumnNames())
-//            + " FROM " + tableName + " AS r"
-//            + " WHERE r.__id NOT IN ("
-//            + " SELECT a.__id "
-//            + " FROM " + tableName + " AS a"
-//            + " JOIN " + foreignKey.getTargetTableName() + " AS b"
-//            + " ON (" + String.join(" AND ", conditions) + ")"
-//            + " )";
+        String tableName = tableModel.getName();
 
         String query = "SELECT src.__id, src.__file, "
             + String.join(", ", foreignKey.getSourceColumnNames())
@@ -84,8 +82,10 @@ public class ForeignKeyFinder {
             + " WHERE NOT EXISTS ( "
             + "    SELECT true "
             + "    FROM " + foreignKey.getTargetTableName() + " AS target "
-            + String.join("", conditions)
-            + ")";
+            + String.join(" ", conditions)
+            + ") "
+            + String.join(" ", nullableClause);
+
         RowIterator it = database.query(query);
 
         List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();

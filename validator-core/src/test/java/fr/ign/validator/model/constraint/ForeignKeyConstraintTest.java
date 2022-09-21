@@ -16,6 +16,14 @@ public class ForeignKeyConstraintTest {
     }
 
     @Test
+    public void testParseGPU() {
+        String constraintString = "(STYPEP) REFERENCES ListeStypepCC(STYPEP)";
+        ForeignKeyConstraint constraint = ForeignKeyConstraint.parseForeignKey(constraintString);
+
+        Assert.assertEquals("(STYPEP) REFERENCES ListeStypepCC(STYPEP)", constraint.toString());
+    }
+
+    @Test
     public void testParseFormat2() {
         String constraintString = " (  VALUE ,  SUB_VALUE  )  REFERENCES   MY_REFERENCE ( TYPE,  SUB_TYPE ) ";
         ForeignKeyConstraint constraint = ForeignKeyConstraint.parseForeignKey(constraintString);
