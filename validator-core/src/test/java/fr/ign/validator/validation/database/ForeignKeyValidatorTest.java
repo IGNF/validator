@@ -51,7 +51,9 @@ public class ForeignKeyValidatorTest {
             // creates attributes "TYPE", "SUB_TYPE"
             AttributeType<String> attribute = new StringType();
             attribute.setName("TYPE");
+            attribute.getConstraints().setRequired(true);
             AttributeType<String> attribute2 = new StringType();
+            attribute2.getConstraints().setRequired(true);
             attribute2.setName("SUB_TYPE");
 
             List<AttributeType<?>> attributes = new ArrayList<>();
@@ -74,8 +76,10 @@ public class ForeignKeyValidatorTest {
             attribute.setName("ID");
             AttributeType<String> attribute2 = new StringType();
             attribute2.setName("VALUE");
+            attribute2.getConstraints().setRequired(true);
             AttributeType<String> attribute3 = new StringType();
             attribute3.setName("SUB_VALUE");
+            attribute3.getConstraints().setRequired(false);
 
             List<AttributeType<?>> attributes = new ArrayList<>();
             attributes.add(attribute);
@@ -180,6 +184,66 @@ public class ForeignKeyValidatorTest {
             assertEquals(ErrorScope.FEATURE, error.getScope());
             assertEquals(
                 "La correspondance (VALUE, SUB_VALUE) = (type2, sub_type1) n'est pas autorisée, car non présente dans la liste de référence MY_REFERENCE.",
+                error.getMessage()
+            );
+            assertEquals("SAMPLE_MODEL", error.getDocumentModel());
+        }
+
+    }
+
+    @Test
+    public void testNullValueNotValid() throws Exception {
+        // creates an empty database
+        File path = new File(folder.getRoot(), "document_database.db");
+        Database database = new Database(path);
+
+        // add the table TEST into the database
+        database.query("CREATE TABLE MY_TABLE(__id TEXT, __file TEXT, id TEXT, value TEXT, sub_value TEXT);");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id1', 'type1', 'sub_type1');");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id2', 'type1', 'sub_type2');");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id3', 'type2', 'sub_type1');");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id4', 'type2', null);");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id4', 'type2', 'sub_type5');");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id4', null, 'sub_type5');");
+
+        // add the table RELATION into the database
+        database.query("CREATE TABLE MY_REFERENCE(__id TEXT, __file TEXT, type TEXT, sub_type TEXT);");
+        database.query("INSERT INTO MY_REFERENCE(type, sub_type) VALUES ('type1', 'sub_type1');");
+        database.query("INSERT INTO MY_REFERENCE(type, sub_type) VALUES ('type1', 'sub_type2');");
+        database.query("INSERT INTO MY_REFERENCE(type, sub_type) VALUES ('type2', 'sub_type5');");
+
+        // check that the validator doesn't send any error
+        ForeignKeyValidator validator = new ForeignKeyValidator();
+        validator.validate(context, database);
+
+        Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND).size());
+
+        List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND);
+        int index = 0;
+        // check first error
+        {
+            ValidatorError error = errors.get(index++);
+            assertEquals("--", error.getAttribute());
+            assertEquals(null, error.getId());
+            assertEquals("", error.getFeatureId());
+            assertEquals("MY_TABLE", error.getFileModel());
+            assertEquals(ErrorScope.FEATURE, error.getScope());
+            assertEquals(
+                "La correspondance (VALUE, SUB_VALUE) = (type2, sub_type1) n'est pas autorisée, car non présente dans la liste de référence MY_REFERENCE.",
+                error.getMessage()
+            );
+            assertEquals("SAMPLE_MODEL", error.getDocumentModel());
+        }
+
+        {
+            ValidatorError error = errors.get(index++);
+            assertEquals("--", error.getAttribute());
+            assertEquals(null, error.getId());
+            assertEquals("", error.getFeatureId());
+            assertEquals("MY_TABLE", error.getFileModel());
+            assertEquals(ErrorScope.FEATURE, error.getScope());
+            assertEquals(
+                "La correspondance (VALUE, SUB_VALUE) = (null, sub_type5) n'est pas autorisée, car non présente dans la liste de référence MY_REFERENCE.",
                 error.getMessage()
             );
             assertEquals("SAMPLE_MODEL", error.getDocumentModel());
