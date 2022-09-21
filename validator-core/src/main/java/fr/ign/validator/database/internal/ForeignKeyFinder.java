@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
 import fr.ign.validator.model.AttributeType;
@@ -65,13 +64,13 @@ public class ForeignKeyFinder {
 
         List<String> nullableClause = new ArrayList<String>();
         for (int i = 0; i < foreignKey.getSourceColumnNames().size(); i++) {
-        	String name = foreignKey.getSourceColumnNames().get(i);
-        	AttributeType<?> attribute = tableModel.getFeatureType().getAttribute(name);
-        	if (attribute == null || attribute.getConstraints().isRequired()) {
-        		continue;
-        	}
+            String name = foreignKey.getSourceColumnNames().get(i);
+            AttributeType<?> attribute = tableModel.getFeatureType().getAttribute(name);
+            if (attribute == null || attribute.getConstraints().isRequired()) {
+                continue;
+            }
             String condition = "AND " + name + " IS NOT NULL";
-        	nullableClause.add(condition);
+            nullableClause.add(condition);
         }
 
         String tableName = tableModel.getName();
