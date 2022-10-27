@@ -12,7 +12,7 @@ package fr.ign.validator.metadata;
 public class SecurityConstraint extends Constraint {
 
     /**
-     * TODO MD_ClassificationCode?
+     * MD_ClassificationCode
      */
     private String classification;
 

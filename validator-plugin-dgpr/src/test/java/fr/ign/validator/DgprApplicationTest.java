@@ -237,10 +237,7 @@ public class DgprApplicationTest {
             error51.getMessage()
         );
 
-        /*
-         * TODO Confirm that we had 15 errors before issue 174 due to exclusion of 0..1
-         * references (use required & reference if value is required).
-         */
+
         Assert.assertEquals(5, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).size());
         {
             List<ValidatorError> errors = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND);

@@ -18,13 +18,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class LegalConstraint extends Constraint {
 
     /**
-     * TODO MD_RestrictionCode?
+     * MD_RestrictionCode
      */
     @JsonInclude(Include.NON_EMPTY)
     private List<String> accessConstraints = new ArrayList<>();
 
     /**
-     * TODO MD_RestrictionCode?
+     * MD_RestrictionCode
      */
     @JsonInclude(Include.NON_EMPTY)
     private List<String> useConstraints = new ArrayList<>();

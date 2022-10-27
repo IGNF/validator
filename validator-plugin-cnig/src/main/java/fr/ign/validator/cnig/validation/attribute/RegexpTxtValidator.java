@@ -11,8 +11,6 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
-import fr.ign.validator.cnig.model.DocumentName;
-import fr.ign.validator.cnig.model.DocumentType;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.ValidatorError;
@@ -35,7 +33,6 @@ public class RegexpTxtValidator implements Validator<Attribute<String>>, Validat
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
-        // TODO Auto-generated method stub
 
     }
 
@@ -63,7 +60,6 @@ public class RegexpTxtValidator implements Validator<Attribute<String>>, Validat
 
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
-        // TODO Auto-generated method stub
 
     }
 

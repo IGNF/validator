@@ -432,8 +432,6 @@ public class JsonModelReaderTest {
     /**
      * Performs basic consistency checks on DocumentModel
      * 
-     * TODO avoid code duplication with XmlModelReaderTest
-     * 
      * @param documentModel
      */
     private void assertIsValid(DocumentModel documentModel) {
