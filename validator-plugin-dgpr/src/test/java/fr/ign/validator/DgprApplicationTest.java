@@ -237,7 +237,6 @@ public class DgprApplicationTest {
             error51.getMessage()
         );
 
-
         Assert.assertEquals(5, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).size());
         {
             List<ValidatorError> errors = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND);

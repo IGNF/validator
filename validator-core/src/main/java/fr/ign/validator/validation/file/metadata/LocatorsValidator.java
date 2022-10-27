@@ -26,6 +26,9 @@ public class LocatorsValidator implements Validator<Metadata> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("LocatorsValidator");
 
+    private static final String PARAM_NUMBER = "NUMBER";
+    private static final String PARAM_COUNT = "COUNT";
+
     @Override
     public void validate(Context context, Metadata metadata) {
         List<OnlineResource> onlineResources = metadata.getLocators();
@@ -40,22 +43,22 @@ public class LocatorsValidator implements Validator<Metadata> {
             if (StringUtils.isEmpty(onlineResource.getName())) {
                 context.report(
                     context.createError(CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND)
-                        .setMessageParam("NUMBER", String.valueOf(count))
-                        .setMessageParam("COUNT", String.valueOf(onlineResources.size()))
+                        .setMessageParam(PARAM_NUMBER, String.valueOf(count))
+                        .setMessageParam(PARAM_COUNT, String.valueOf(onlineResources.size()))
                 );
             }
             if (StringUtils.isEmpty(onlineResource.getProtocol())) {
                 context.report(
                     context.createError(CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND)
-                        .setMessageParam("NUMBER", String.valueOf(count))
-                        .setMessageParam("COUNT", String.valueOf(onlineResources.size()))
+                        .setMessageParam(PARAM_NUMBER, String.valueOf(count))
+                        .setMessageParam(PARAM_COUNT, String.valueOf(onlineResources.size()))
                 );
             }
             if (StringUtils.isEmpty(onlineResource.getUrl())) {
                 context.report(
                     context.createError(CoreErrorCodes.METADATA_LOCATOR_URL_NOT_FOUND)
-                        .setMessageParam("NUMBER", String.valueOf(count))
-                        .setMessageParam("COUNT", String.valueOf(onlineResources.size()))
+                        .setMessageParam(PARAM_NUMBER, String.valueOf(count))
+                        .setMessageParam(PARAM_COUNT, String.valueOf(onlineResources.size()))
                 );
             }
             count++;

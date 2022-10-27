@@ -115,7 +115,7 @@ public class OgrVersion {
         }
 
         /* Validate pattern and parse major, minor and patch */
-        Pattern pattern = Pattern.compile("(?i)" + REGEXP_VERSION);
+        Pattern pattern = Pattern.compile("(?i)" + REGEXP_VERSION); // NOSONAR
         Matcher matcher = pattern.matcher(fullVersion);
 
         if (matcher.matches()) {
