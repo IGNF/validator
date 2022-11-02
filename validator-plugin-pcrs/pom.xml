@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>fr.ign.validator</groupId>
+		<artifactId>validator</artifactId>
+		<version>4.3.3-SNAPSHOT</version>
+	</parent>
+	<name>validator-plugin-pcrs</name>
+	<artifactId>validator-plugin-pcrs</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>validator-core</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+	</dependencies>
+
+</project>
