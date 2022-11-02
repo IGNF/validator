@@ -1,4 +1,4 @@
-package fr.ign.validator.regress;
+package fr.ign.validator.pcrs;
 
 import static org.junit.Assert.assertEquals;
 
@@ -131,7 +131,8 @@ public class ValidatePCRSRegressTest {
         // ex : "La table 'affleurantgeometriquepcrs_enveloppe' n'est pas prévue dans le
         // modèle de validation.
         assertEquals(6, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
-        assertEquals(6, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+        assertEquals(1, report.getErrorsByCode(CoreErrorCodes.FILE_UNEXPECTED).size());
+        assertEquals(7, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
         /*
          * Ensure that validation database is correctly loaded
