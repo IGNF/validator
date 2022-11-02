@@ -6,12 +6,9 @@ import fr.ign.validator.plugin.Plugin;
 import fr.ign.validator.process.DocumentInfoExtractorPostProcess;
 
 /**
- * Customizes validator for CNIG standard validation
+ * Customizes validator for PCRS standard validation
  * 
- * @see <a href=
- *      "http://www.geoportail-urbanisme.gouv.fr/standard">http://www.geoportail-urbanisme.gouv.fr/standard</a>
- * 
- * @author MBorne
+ * @author CBouche
  *
  */
 public class PcrsPlugin implements Plugin {
@@ -25,7 +22,7 @@ public class PcrsPlugin implements Plugin {
 
     @Override
     public void setup(Context context) {
-        context.setNormalizeEnabled(true);
+        context.setFlatValidation(true);
     }
 
 }
