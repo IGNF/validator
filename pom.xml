@@ -93,6 +93,7 @@
 		<module>validator-cli</module>
 		<module>validator-plugin-cnig</module>
 		<module>validator-plugin-dgpr</module>
+		<module>validator-plugin-pcrs</module>
 	</modules>
 
 
