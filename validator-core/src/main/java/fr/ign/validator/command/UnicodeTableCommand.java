@@ -22,8 +22,6 @@ import fr.ign.validator.tools.Characters;
  * 
  * Generate a unicode table to document string fixer
  * 
- * TODO generate HTML (CSV is too big for github)
- * 
  * @author MBorne
  *
  */

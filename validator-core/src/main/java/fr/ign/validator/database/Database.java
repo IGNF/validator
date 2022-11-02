@@ -52,7 +52,7 @@ public class Database implements Closeable {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("Database");
 
-    private static final int batchSize = 100;
+    private static final int BATCH_SIZE = 100;
 
     private static final String ENV_DATABASE_URL = "DB_URL";
     private static final String ENV_DATABASE_USER = "DB_USER";
@@ -552,9 +552,9 @@ public class Database implements Closeable {
         while (reader.hasNext()) {
             String[] row = reader.next();
             // insert line number
-            sth.setInt(1, count + 1);
+            sth.setInt(1, count + 1); // NOSONAR
             // insert file path
-            sth.setString(2, sourceFile);
+            sth.setString(2, sourceFile); // NOSONAR
             // insert values
             int parameterIndex = 2;
             for (int i = 0; i < inputIndexes.size(); i++) {
@@ -564,7 +564,7 @@ public class Database implements Closeable {
             }
             sth.addBatch();
 
-            if (++count % batchSize == 0) {
+            if (++count % BATCH_SIZE == 0) {
                 sth.executeBatch();
                 sth.clearBatch();
             }
@@ -639,9 +639,12 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     public int getCount(String tableName) throws SQLException {
-        PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName);
-        ResultSet rs = sth.executeQuery();
-        rs.next();
+        Statement stmt = connection.createStatement();
+        String query = String.format(
+            "SELECT count(*) FROM %s ",
+            stmt.enquoteIdentifier(tableName, false)
+        );
+        ResultSet rs = stmt.executeQuery(query);
         return rs.getInt(1);
     }
 

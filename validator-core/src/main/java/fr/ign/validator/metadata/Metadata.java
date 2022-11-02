@@ -170,8 +170,6 @@ public interface Metadata {
     /**
      * Resource CharacterSet
      * 
-     * TODO support other INSPIRE codes
-     * 
      * @see http://cnig.gouv.fr/wp-content/uploads/2014/01/Guide-de-saisie-des-éléments-de-métadonnées-INSPIRE-v1.1-final.pdf#page=103
      *      to support other codes
      * 

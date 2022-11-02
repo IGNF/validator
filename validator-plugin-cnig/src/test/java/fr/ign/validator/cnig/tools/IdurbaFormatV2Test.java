@@ -43,7 +43,7 @@ public class IdurbaFormatV2Test {
         assertTrue(format.isValid("2A004_PLUi_20180101"));
         assertTrue(format.isValid("2A004_PLUi_20180101_A"));
 
-        // TODO sd-redmine-13106 - support the official form
+        // sd-redmine-13106 - support the official form
         assertTrue(format.isValid("2A004_PLUI_20180101"));
         assertTrue(format.isValid("2A004_PLUI_20180101_A"));
     }

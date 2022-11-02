@@ -116,10 +116,15 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
      * @return
      */
     private javax.xml.validation.Validator getXsdSchemaValidator(URL xsdSchemaUrl) {
-        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
-            Schema schema = schemaFactory.newSchema(xsdSchemaUrl);
+            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+
+            Schema schema = factory.newSchema(xsdSchemaUrl);
             javax.xml.validation.Validator xsdValidator = schema.newValidator();
+            xsdValidator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            xsdValidator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             return xsdValidator;
         } catch (SAXException e) {
             throw new InvalidModelException("fail to load XSD schema from " + xsdSchemaUrl, e);

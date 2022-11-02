@@ -167,7 +167,7 @@ public class GeometryIsValidValidatorTest {
         Assert.assertNotNull(geometry);
         Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
         Assert.assertEquals(
-            "La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur est en doublon (DUPLICATE_RINGS).",
+            "La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur s'auto-intersecte ou intersecte un autre contour du même polygone (RING_SELF_INTERSECTION, SELF_INTERSECTION).",
             report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage()
         );
     }
@@ -179,7 +179,7 @@ public class GeometryIsValidValidatorTest {
         Assert.assertNotNull(geometry);
         Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
         Assert.assertEquals(
-            "La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur est en doublon (DUPLICATE_RINGS).",
+            "La géométrie de l'objet n'est pas topologiquement correcte. Un contour intérieur (trou) ou extérieur s'auto-intersecte ou intersecte un autre contour du même polygone (RING_SELF_INTERSECTION, SELF_INTERSECTION).",
             report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).get(0).getMessage()
         );
     }

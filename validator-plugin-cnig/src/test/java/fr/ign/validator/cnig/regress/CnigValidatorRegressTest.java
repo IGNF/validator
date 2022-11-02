@@ -407,8 +407,6 @@ public class CnigValidatorRegressTest {
 
         /*
          * check errors
-         * 
-         * TODO : fix ATTRIBUTE_INVALID_FORMAT
          */
         ReportAssert.assertCount(104, CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, report);
         {
@@ -965,7 +963,6 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
-        // TODO https://github.com/IGNF/validator/issues/260
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
         ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
 

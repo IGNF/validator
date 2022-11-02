@@ -24,27 +24,30 @@
 		See following page for the required java version
 		http://docs.geotools.org/latest/userguide/build/install/jdk.html#
 		 -->
-		<geotools.version>25.2</geotools.version>
-		<log4j.version>2.17.1</log4j.version>
+		<geotools.version>27.2</geotools.version>
+		<log4j.version>2.19.0</log4j.version>
 		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
-		<jackson.version>2.12.6</jackson.version>
-		<jackson.databind.version>2.12.6.1</jackson.databind.version>
+		<jackson.version>2.13.4</jackson.version>
+		<jackson.databind.version>2.13.4.2</jackson.databind.version>
 
 		<maven-formatter-plugin.version>2.11.0</maven-formatter-plugin.version>
 		<jaxen.version>1.2.0</jaxen.version>
 		<jdom.version>1.0</jdom.version>
-		<apache-common-io.version>2.7</apache-common-io.version>
-		<apache-common-cli.version>1.4</apache-common-cli.version>
-		<apache-commons-csv.version>1.8</apache-commons-csv.version>
+		<apache-common-io.version>2.11.0</apache-common-io.version>
+		<apache-common-cli.version>1.5.0</apache-common-cli.version>
+		<apache-commons-csv.version>1.9.0</apache-commons-csv.version>
 		<apache-commons-lang.version>2.6</apache-commons-lang.version>
-		<jaxb.version>2.3.0</jaxb.version>
+		<!-- jaxb -->
+		<jaxb-core.version>2.3.0</jaxb-core.version>
+		<jaxb-impl.version>2.3.0</jaxb-impl.version>
+		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<!-- JDBC -->
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
-		<sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
+		<sqlite-jdbc.version>3.39.3.0</sqlite-jdbc.version>
 		<!-- Testing -->
-		<junit.version>4.13.1</junit.version>
-		<jsonassert.version>1.5.0</jsonassert.version>
-		<mockito.version>3.0.0</mockito.version>
+		<junit.version>4.13.2</junit.version>
+		<jsonassert.version>1.5.1</jsonassert.version>
+		<mockito.version>4.8.1</mockito.version>
 		<!-- Build and deploy -->
 		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
@@ -223,17 +226,17 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.version}</version>
+			<version>${jaxb-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
-			<version>${jaxb.version}</version>
+			<version>${jaxb-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb.version}</version>
+			<version>${jaxb-impl.version}</version>
 		</dependency>
 
 		<!--

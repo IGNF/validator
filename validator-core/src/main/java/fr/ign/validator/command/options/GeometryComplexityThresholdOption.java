@@ -21,6 +21,8 @@ public class GeometryComplexityThresholdOption {
 
     private static final String OPTION_NAME = "cnig-complexity-tolerance";
 
+    private static final String REGEX_TRESHHOLD = "\\[\\[(.*]*)], \\[(.*]*)]]";
+
     private GeometryComplexityThresholdOption() {
         // disabled
     }
@@ -56,8 +58,7 @@ public class GeometryComplexityThresholdOption {
 
         String parsedOption = (String) commandLine.getParsedOptionValue(OPTION_NAME);
 
-        String regexpStr = "\\[\\[(.*]*)], \\[(.*]*)]]";
-        Pattern regexp = Pattern.compile(regexpStr);
+        Pattern regexp = Pattern.compile(REGEX_TRESHHOLD); // NOSONAR
 
         Matcher matcher = regexp.matcher(parsedOption);
         if (!matcher.find()) {

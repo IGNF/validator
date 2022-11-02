@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * 
  * Note that keywords are internationalized and grouped by thesaurus
  * 
- * TODO add thesaurusDate (it is required by INSPIRE)
- * 
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_Keywords.html">gmd:MD_Keywords</a>
  * 

@@ -23,7 +23,7 @@ public class GeometryType extends AttributeType<Geometry> {
 
     public static final String TYPE = "Geometry";
 
-    public static GeometryReader format = new GeometryReader();
+    private static GeometryReader format = new GeometryReader();
 
     public GeometryType() {
         super(Geometry.class);

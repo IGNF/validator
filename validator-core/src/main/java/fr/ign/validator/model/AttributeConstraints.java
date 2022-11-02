@@ -27,8 +27,6 @@ public class AttributeConstraints {
     /**
      * Indicates if the value is unique in the table
      * 
-     * TODO move DGPR validation to validator-core
-     * 
      * @since 4.0 previously "identifier" supported only by dgpr plugin
      * 
      * @see fr.ign.validator.validation.database.AttributeUniqueValidator
@@ -37,7 +35,7 @@ public class AttributeConstraints {
     private boolean unique;
 
     /**
-     * Regexp matching the attribute value TODO rename to pattern
+     * Regexp matching the attribute value
      * 
      * @since 4.0 previously "regexp"
      * 
@@ -78,9 +76,6 @@ public class AttributeConstraints {
 
     /**
      * Reference to another table attribute. Format TABLE_NAME.ATTRIBUTE_NAME
-     * 
-     * TODO support alternative format TABLE_NAME(ATTRIBUTE_NAME) TODO move
-     * validation from validator-plugin-dgpr to validator-core
      */
     private String reference;
 
