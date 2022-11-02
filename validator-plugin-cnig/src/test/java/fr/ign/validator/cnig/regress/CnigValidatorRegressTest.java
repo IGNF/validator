@@ -26,6 +26,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.cnig.CnigPlugin;
 import fr.ign.validator.cnig.CnigRegressHelper;
 import fr.ign.validator.cnig.ReportAssert;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
@@ -82,7 +83,7 @@ public class CnigValidatorRegressTest {
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         context.setValidationDirectory(validationDirectory);
         PluginManager pluginManager = new PluginManager();
-        pluginManager.getPluginByName("CNIG").setup(context);
+        pluginManager.getPluginByName(CnigPlugin.NAME).setup(context);
         return context;
     }
 

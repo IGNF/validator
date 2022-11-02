@@ -23,7 +23,7 @@ public class PcrsContextTest {
     public void testPcrsDefaultConstructor() {
         Context context = new Context();
         PluginManager pluginManager = new PluginManager();
-        pluginManager.getPluginByName("PCRS").setup(context);
+        pluginManager.getPluginByName(PcrsPlugin.NAME).setup(context);
 
         Assert.assertEquals("UTF-8", context.getEncoding().name());
         Assert.assertTrue(context.isFlatValidation());

@@ -18,6 +18,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.FileConverter;
 import fr.ign.validator.tools.Networking;
@@ -42,6 +43,11 @@ public class ValidatePCRSRegressTest {
     @Before
     public void setUp() {
         context = new Context();
+
+        /* enable plugin */
+        PluginManager pluginManager = new PluginManager();
+        pluginManager.getPluginByName(PcrsPlugin.NAME).setup(context);
+
         /* create report */
         report = new InMemoryReportBuilder();
         context.setReportBuilder(report);
