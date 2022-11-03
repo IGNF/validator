@@ -114,7 +114,7 @@ public class DocumentNormalizer {
             for (DocumentFile documentFile : documentFiles) {
                 normalizer.append(documentFile.getPath());
             }
-        }finally {
+        } finally {
             normalizer.close();
         }
     }
