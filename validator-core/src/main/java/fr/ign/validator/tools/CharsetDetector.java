@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -65,9 +66,10 @@ public class CharsetDetector {
      */
     public static boolean isValidCharset(File file, Charset charset) {
         log.trace(MARKER, "isValidCharset('{}','{}')...", file.getAbsolutePath(), charset);
+        CharsetDecoder cs = charset.newDecoder();
+        BufferedReader in = null;
         try {
-            CharsetDecoder cs = charset.newDecoder();
-            BufferedReader in = new BufferedReader(
+            in = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(file),
                     cs
@@ -76,10 +78,11 @@ public class CharsetDetector {
             while (in.readLine() != null) {
 
             }
-            in.close();
         } catch (Exception e) {
             log.debug(MARKER, "isValidCharset('{}','{}') : false", file.getAbsolutePath(), charset);
             return false;
+        } finally {
+            IOUtils.closeQuietly(in);
         }
         log.trace(MARKER, "isValidCharset('{}','{}') : true", file.getAbsolutePath(), charset);
         return true;
