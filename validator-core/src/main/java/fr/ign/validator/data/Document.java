@@ -16,6 +16,7 @@ import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.tools.FileUtils;
@@ -312,10 +313,12 @@ public class Document implements Validatable {
              * not covered by model
              */
             log.info(MARKER, "FileModel not found for '{}' (FILE_UNEXPECTED)!", file);
-            context.report(
-                context.createError(CoreErrorCodes.FILE_UNEXPECTED)
-                    .setMessageParam("FILEPATH", context.relativize(file))
-            );
+            ErrorCode errorCode = CoreErrorCodes.FILE_UNEXPECTED;
+            if (file.isDirectory()) {
+                errorCode = CoreErrorCodes.DIRECTORY_UNEXPECTED;
+            }
+            context.createError(errorCode)
+                .setMessageParam("FILEPATH", context.relativize(file));
         }
 
         log.info(

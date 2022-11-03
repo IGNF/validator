@@ -23,7 +23,7 @@ public class CodeFilteredReportBuilder implements ReportBuilder {
      */
     private ReportBuilder original;
 
-    private List<String> authorizedTables = new ArrayList<String>();
+    private List<String> expectedTable = new ArrayList<String>();
 
     /**
      * Constructor with an existing reportBuilder
@@ -39,28 +39,24 @@ public class CodeFilteredReportBuilder implements ReportBuilder {
     public void addError(ValidatorError error) {
         ErrorCode errorCode = error.getCode();
 
-        // TODO
-        // 1. test error code
-        // 2. test message
-
-        if (errorCode.equals(CoreErrorCodes.FILE_UNEXPECTED)) {
+        if (errorCode.equals(CoreErrorCodes.DIRECTORY_UNEXPECTED)) {
             return;
         }
 
         if (errorCode.equals(CoreErrorCodes.MULTITABLE_UNEXPECTED)
-            && error.getMessage().toLowerCase().matches(getAuthorizedRegexp().toLowerCase())) {
+            && error.getMessage().toLowerCase().matches(getExpectedTableRegexp().toLowerCase())) {
             return;
         }
 
         original.addError(error);
     }
 
-    public void addAuthorizedTable(String tablename) {
-        authorizedTables.add(tablename);
+    public void addExpectedTable(String tablename) {
+        expectedTable.add(tablename);
     }
 
-    public String getAuthorizedRegexp() {
-        return ".*'(" + String.join("|", authorizedTables) + ")(_.+)?'.*";
+    private String getExpectedTableRegexp() {
+        return ".*'(" + String.join("|", expectedTable) + ")(_.+)?'.*";
     }
 
 }

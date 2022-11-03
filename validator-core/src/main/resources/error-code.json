@@ -40,6 +40,12 @@
 		"documentation": "Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un fichier"
 	},
 	{
+		"name": "DIRECTORY_UNEXPECTED",
+		"level": "WARNING",
+		"message": "Le répertoire '{FILEPATH}' est mal nommé ou n'est pas prévu dans le standard.",
+		"documentation": "Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un répertoire"
+	},
+	{
 		"name": "FILE_MISSING_MANDATORY",
 		"level": "ERROR",
 		"message": "Le fichier obligatoire '{FILEMODEL_NAME}' est absent du document.",

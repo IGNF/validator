@@ -18,7 +18,6 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.model.DocumentModel;
-import fr.ign.validator.pcrs.report.CodeFilteredReportBuilder;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.FileConverter;
@@ -136,6 +135,7 @@ public class ValidatePcrsRegressTest {
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
         assertEquals(0, report.getErrorsByCode(CoreErrorCodes.FILE_UNEXPECTED).size());
+        assertEquals(0, report.getErrorsByCode(CoreErrorCodes.DIRECTORY_UNEXPECTED).size());
         assertEquals(0, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 

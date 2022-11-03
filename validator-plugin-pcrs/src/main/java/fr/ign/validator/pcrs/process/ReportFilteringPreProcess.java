@@ -17,14 +17,14 @@ public class ReportFilteringPreProcess implements ValidatorListener {
         context.setReportBuilder(reportBuilder);
 
         // PlanCorpsRueSimplifie n'apparait pas comme une table du multitable
-        reportBuilder.addAuthorizedTable("PlanCorpsRueSimplifie");
+        reportBuilder.addExpectedTable("PlanCorpsRueSimplifie");
 
         for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
             if (!(fileModel instanceof MultiTableModel)) {
                 continue;
             }
             for (EmbeddedTableModel tableModel : ((MultiTableModel) fileModel).getTableModels()) {
-                reportBuilder.addAuthorizedTable(tableModel.getName());
+                reportBuilder.addExpectedTable(tableModel.getName());
             }
         }
 

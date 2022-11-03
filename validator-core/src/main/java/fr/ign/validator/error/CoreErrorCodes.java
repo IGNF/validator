@@ -38,6 +38,7 @@ public class CoreErrorCodes {
     );
 
     public static final ErrorCode FILE_UNEXPECTED = ErrorCode.valueOf("FILE_UNEXPECTED");
+    public static final ErrorCode DIRECTORY_UNEXPECTED = ErrorCode.valueOf("DIRECTORY_UNEXPECTED");
 
     public static final ErrorCode FILE_MISPLACED = ErrorCode.valueOf("FILE_MISPLACED");
     public static final ErrorCode FILE_EMPTY = ErrorCode.valueOf("FILE_EMPTY");
