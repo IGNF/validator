@@ -18,6 +18,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.pcrs.report.CodeFilteredReportBuilder;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.FileConverter;
@@ -31,7 +32,7 @@ import fr.ign.validator.tools.ResourceHelper;
  * @author MBorne
  *
  */
-public class ValidatePCRSRegressTest {
+public class ValidatePcrsRegressTest {
 
     protected Context context;
     protected InMemoryReportBuilder report;
@@ -44,14 +45,14 @@ public class ValidatePCRSRegressTest {
     public void setUp() {
         context = new Context();
 
-        /* enable plugin */
-        PluginManager pluginManager = new PluginManager();
-        pluginManager.getPluginByName(PcrsPlugin.NAME).setup(context);
-
         /* create report */
         report = new InMemoryReportBuilder();
         context.setReportBuilder(report);
         context.setNormalizeEnabled(true);
+
+        /* enable plugin */
+        PluginManager pluginManager = new PluginManager();
+        pluginManager.getPluginByName(PcrsPlugin.NAME).setup(context);
 
         /* load document model */
         {
@@ -82,8 +83,8 @@ public class ValidatePCRSRegressTest {
         assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
         assertEquals(1, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
-        assertEquals(7, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
-        assertEquals(7, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+        assertEquals(0, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(0, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
         /*
          * Ensure that validation database is correctly loaded
@@ -107,8 +108,8 @@ public class ValidatePCRSRegressTest {
         assertEquals(0, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
-        assertEquals(7, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
-        assertEquals(7, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+        assertEquals(0, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(0, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
         /*
          * Ensure that validation database is correctly loaded
@@ -134,11 +135,9 @@ public class ValidatePCRSRegressTest {
          */
         assertEquals(0, report.getErrorsByLevel(ErrorLevel.ERROR).size());
 
-        // ex : "La table 'affleurantgeometriquepcrs_enveloppe' n'est pas prévue dans le
-        // modèle de validation.
-        assertEquals(6, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
-        assertEquals(1, report.getErrorsByCode(CoreErrorCodes.FILE_UNEXPECTED).size());
-        assertEquals(7, report.getErrorsByLevel(ErrorLevel.WARNING).size());
+        assertEquals(0, report.getErrorsByCode(CoreErrorCodes.FILE_UNEXPECTED).size());
+        assertEquals(0, report.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
+        assertEquals(0, report.getErrorsByLevel(ErrorLevel.WARNING).size());
 
         /*
          * Ensure that validation database is correctly loaded
@@ -157,7 +156,7 @@ public class ValidatePCRSRegressTest {
      */
     public File getSampleDocument(String documentName) throws IOException {
         File sourcePath = ResourceHelper.getResourceFile(
-            ValidatePCRSRegressTest.class,
+            ValidatePcrsRegressTest.class,
             "/documents/" + documentName
         );
         File documentPath = folder.newFolder(documentName);
