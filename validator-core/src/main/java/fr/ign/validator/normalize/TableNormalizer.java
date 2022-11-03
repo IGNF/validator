@@ -90,10 +90,11 @@ public class TableNormalizer implements Closeable {
          */
         List<String> outputHeader = featureType.getAttributeNames();
         log.info(MARKER, "Create CSV file {}...", targetFile);
-        BufferedWriter fileWriter = new BufferedWriter(
-            new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8)
+        printer = new CSVPrinter(
+            new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(targetFile), StandardCharsets.UTF_8)
+            ), CSVFormat.RFC4180
         );
-        printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
         printer.printRecord(outputHeader);
     }
 

@@ -110,10 +110,13 @@ public class DocumentNormalizer {
 
         File csvFile = new File(context.getDataDirectory(), fileModel.getName() + ".csv");
         TableNormalizer normalizer = new TableNormalizer(context, featureType, csvFile);
-        for (DocumentFile documentFile : documentFiles) {
-            normalizer.append(documentFile.getPath());
+        try {
+            for (DocumentFile documentFile : documentFiles) {
+                normalizer.append(documentFile.getPath());
+            }
+        }finally {
+            normalizer.close();
         }
-        normalizer.close();
     }
 
     /**

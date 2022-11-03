@@ -544,32 +544,36 @@ public class Database implements Closeable {
             + String.join(", ", valueParts) + ");";
 
         /* Create prepared statement... */
-        PreparedStatement sth = connection.prepareStatement(sql);
         log.debug(MARKER, sql);
-
-        /* Batch insertion */
+        PreparedStatement sth = connection.prepareStatement(sql);
         int count = 0;
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-            // insert line number
-            sth.setInt(1, count + 1); // NOSONAR
-            // insert file path
-            sth.setString(2, sourceFile); // NOSONAR
-            // insert values
-            int parameterIndex = 2;
-            for (int i = 0; i < inputIndexes.size(); i++) {
-                Integer index = inputIndexes.get(i);
-                sth.setString(parameterIndex + 1, row[index]);
-                parameterIndex++;
-            }
-            sth.addBatch();
+        try {
+            /* Batch insertion */
 
-            if (++count % BATCH_SIZE == 0) {
-                sth.executeBatch();
-                sth.clearBatch();
+            while (reader.hasNext()) {
+                String[] row = reader.next();
+                // insert line number
+                sth.setInt(1, count + 1); // NOSONAR
+                // insert file path
+                sth.setString(2, sourceFile); // NOSONAR
+                // insert values
+                int parameterIndex = 2;
+                for (int i = 0; i < inputIndexes.size(); i++) {
+                    Integer index = inputIndexes.get(i);
+                    sth.setString(parameterIndex + 1, row[index]);
+                    parameterIndex++;
+                }
+                sth.addBatch();
+
+                if (++count % BATCH_SIZE == 0) {
+                    sth.executeBatch();
+                    sth.clearBatch();
+                }
             }
+            sth.executeBatch();
+        } finally {
+            sth.close();
         }
-        sth.executeBatch();
         connection.commit();
 
         log.info(
@@ -640,12 +644,16 @@ public class Database implements Closeable {
      */
     public int getCount(String tableName) throws SQLException {
         Statement stmt = connection.createStatement();
-        String query = String.format(
-            "SELECT count(*) FROM %s ",
-            stmt.enquoteIdentifier(tableName, false)
-        );
-        ResultSet rs = stmt.executeQuery(query);
-        return rs.getInt(1);
+        try {
+            String query = String.format(
+                "SELECT count(*) FROM %s ",
+                stmt.enquoteIdentifier(tableName, false)
+            );
+            ResultSet rs = stmt.executeQuery(query);
+            return rs.getInt(1);
+        } finally {
+            stmt.close();
+        }
     }
 
 }
