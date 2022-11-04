@@ -37,6 +37,41 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("XsdSchemaValidator");
 
+    private final class XsdErrorHandler implements ErrorHandler {
+        private final Context context;
+
+        private XsdErrorHandler(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void fatalError(SAXParseException e) {
+            log.fatal(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
+            report(e);
+        }
+
+        @Override
+        public void error(SAXParseException e) {
+            log.error(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
+            report(e);
+        }
+
+        @Override
+        public void warning(SAXParseException e) {
+            log.warn(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
+            report(e);
+        }
+
+        private void report(SAXParseException e) {
+            // TODO retrieve more information from the exception
+            context.report(
+                context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR)
+                    .setId(String.valueOf(e.getLineNumber())) // line number
+                    .setMessageParam("MESSAGE", e.getMessage())
+            );
+        }
+    }
+
     @Override
     public void validate(Context context, DocumentFile documentFile) {
         URL xsdSchemaUrl = documentFile.getFileModel().getXsdSchema();
@@ -62,34 +97,7 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
 
         try {
             /* create custom error handler reporting errors in validation report */
-            xsdValidator.setErrorHandler(new ErrorHandler() {
-                @Override
-                public void fatalError(SAXParseException e) {
-                    log.fatal(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
-                    report(e);
-                }
-
-                @Override
-                public void error(SAXParseException e) {
-                    log.error(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
-                    report(e);
-                }
-
-                @Override
-                public void warning(SAXParseException e) {
-                    log.warn(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
-                    report(e);
-                }
-
-                private void report(SAXParseException e) {
-                    // TODO retrieve more information from the exception
-                    context.report(
-                        context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR)
-                            .setId(String.valueOf(e.getLineNumber())) // line number
-                            .setMessageParam("MESSAGE", e.getMessage())
-                    );
-                }
-            });
+            xsdValidator.setErrorHandler(new XsdErrorHandler(context));
 
             xsdValidator.validate(
                 new StreamSource(
