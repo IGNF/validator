@@ -78,7 +78,7 @@
 	{
 		"name": "XSD_SCHEMA_ERROR",
 		"level": "ERROR",
-		"message": "{MESSAGE}",
+		"message": "Fichier non conforme au schéma XSD",
 		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD associé à un fichier XML/GML"
 	},
 	{

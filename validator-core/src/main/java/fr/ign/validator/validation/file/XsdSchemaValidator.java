@@ -22,6 +22,7 @@ import org.xml.sax.SAXParseException;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.validation.Validator;
@@ -63,12 +64,18 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
         }
 
         private void report(SAXParseException e) {
-            // TODO retrieve more information from the exception
-            context.report(
-                context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR)
-                    .setId(String.valueOf(e.getLineNumber())) // line number
-                    .setMessageParam("MESSAGE", e.getMessage())
-            );
+            ValidatorError validatorError = context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR);
+            // line number
+            validatorError.setId(String.valueOf(e.getLineNumber()));
+            // parse {xsdErrorCode}:{xsdErrorMessage} from message
+            String[] messageParts = e.getMessage().split(":", 2);
+            if (messageParts.length == 2) {
+                validatorError.setXsdErrorCode(messageParts[0].trim());
+                validatorError.setXsdErrorMessage(messageParts[1].trim());
+            } else {
+                validatorError.setXsdErrorMessage(e.getMessage());
+            }
+            context.report(validatorError);
         }
     }
 
