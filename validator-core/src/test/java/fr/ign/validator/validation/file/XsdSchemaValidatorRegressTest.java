@@ -107,6 +107,12 @@ public class XsdSchemaValidatorRegressTest {
                 "unexpected xsdErrorMessage : " + error.getXsdErrorMessage(),
                 error.getXsdErrorMessage().contains("'gp-urba:CUSTOM'")
             );
+            // check pseudo XPath
+            assertEquals(
+                "//wfs:FeatureCollection/wfs:member/gp-urba:INFO_PCT",
+                error.getXsdErrorPath()
+            );
+
             // see https://wiki.xmldation.com/Support/Validator/cvc-complex-type-2-4-d
             assertEquals(
                 "Fichier non conforme au schéma XSD",

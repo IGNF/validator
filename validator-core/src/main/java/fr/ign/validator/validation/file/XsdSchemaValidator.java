@@ -5,9 +5,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.XMLConstants;
-import javax.xml.transform.stream.StreamSource;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -15,9 +19,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.xml.sax.ErrorHandler;
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
@@ -30,6 +35,8 @@ import fr.ign.validator.validation.Validator;
 /**
  * Validate a file according to a given XSD schema.
  * 
+ * @see https://stackoverflow.com/a/7114306
+ * 
  * @author MBorne
  *
  */
@@ -38,11 +45,35 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("XsdSchemaValidator");
 
-    private final class XsdErrorHandler implements ErrorHandler {
+    /**
+     * Listen and report XSD validation errors with a pseudo XPath to ease error
+     * location in data.
+     */
+    private final class XsdErrorHandler extends DefaultHandler {
         private final Context context;
+
+        /**
+         * Stacked elements in order to report error location
+         */
+        private List<String> elements = new ArrayList<>();
 
         private XsdErrorHandler(Context context) {
             this.context = context;
+        }
+
+        @Override
+        public void startElement(String uri, String localName, String qName, Attributes attributes)
+            throws SAXException {
+            elements.add(qName);
+            super.startElement(uri, localName, qName, attributes);
+        }
+
+        @Override
+        public void endElement(String uri, String localName, String qName) throws SAXException {
+            if (!elements.isEmpty()) {
+                elements.remove(elements.size() - 1);
+            }
+            super.endElement(uri, localName, qName);
         }
 
         @Override
@@ -63,6 +94,9 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
             report(e);
         }
 
+        /**
+         * Create and report a {@link ValidatorError} from a {@link SAXParseException}
+         */
         private void report(SAXParseException e) {
             ValidatorError validatorError = context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR);
             // line number
@@ -75,7 +109,18 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
             } else {
                 validatorError.setXsdErrorMessage(e.getMessage());
             }
+            // pseudo xpath
+            validatorError.setXsdErrorPath(getCurrentPath());
             context.report(validatorError);
+        }
+
+        /**
+         * Format elements stack to pseudo XPath
+         * 
+         * @return
+         */
+        private String getCurrentPath() {
+            return "//" + String.join("/", elements);
         }
     }
 
@@ -100,18 +145,14 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
      */
     void validate(Context context, URL xsdSchema, File xmlFile) {
         log.info(MARKER, "Validate {} with XSD schema {} ...", xmlFile, xsdSchema);
-        javax.xml.validation.Validator xsdValidator = getXsdSchemaValidator(xsdSchema);
 
+        SAXParser parser = getSchemaAwareParser(xsdSchema);
         try {
-            /* create custom error handler reporting errors in validation report */
-            xsdValidator.setErrorHandler(new XsdErrorHandler(context));
-
-            xsdValidator.validate(
-                new StreamSource(
-                    new BufferedInputStream(
-                        new FileInputStream(xmlFile)
-                    )
-                )
+            XsdErrorHandler handler = new XsdErrorHandler(context);
+            parser.parse(
+                new BufferedInputStream(
+                    new FileInputStream(xmlFile)
+                ), handler
             );
         } catch (SAXException e) {
             String message = String.format("SAXParseException not catched for %1s", xmlFile);
@@ -125,24 +166,29 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
     }
 
     /**
-     * Load XSD schema from URL.
      * 
      * @param xsdSchemaUrl
      * @return
      */
-    private javax.xml.validation.Validator getXsdSchemaValidator(URL xsdSchemaUrl) {
+    private SAXParser getSchemaAwareParser(URL xsdSchemaUrl) {
         try {
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            // get schema
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            schemaFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            Schema schema = schemaFactory.newSchema(xsdSchemaUrl);
 
-            Schema schema = factory.newSchema(xsdSchemaUrl);
-            javax.xml.validation.Validator xsdValidator = schema.newValidator();
-            xsdValidator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            xsdValidator.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-            return xsdValidator;
+            final SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            factory.setSchema(schema);
+            SAXParser parser = factory.newSAXParser();
+            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+            return parser;
         } catch (SAXException e) {
             throw new InvalidModelException("fail to load XSD schema from " + xsdSchemaUrl, e);
+        } catch (ParserConfigurationException e) {
+            throw new InvalidModelException("fail to create SAXParser for " + xsdSchemaUrl, e);
         }
     }
 
