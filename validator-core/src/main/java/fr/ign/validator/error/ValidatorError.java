@@ -2,6 +2,8 @@ package fr.ign.validator.error;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -79,6 +81,18 @@ public class ValidatorError implements Cloneable {
      * Feature identifier is available.
      */
     private String featureId;
+
+    /**
+     * XSD error code (XSD_SCHEMA_ERROR)
+     */
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String xsdErrorCode;
+
+    /**
+     * XSD error message according to the local (XSD_SCHEMA_ERROR)
+     */
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String xsdErrorMessage;
 
     /**
      * @param code
@@ -263,6 +277,22 @@ public class ValidatorError implements Cloneable {
     public ValidatorError setFeatureId(String featureId) {
         this.featureId = featureId;
         return this;
+    }
+
+    public String getXsdErrorCode() {
+        return xsdErrorCode;
+    }
+
+    public void setXsdErrorCode(String xsdErrorCode) {
+        this.xsdErrorCode = xsdErrorCode;
+    }
+
+    public String getXsdErrorMessage() {
+        return xsdErrorMessage;
+    }
+
+    public void setXsdErrorMessage(String xsdErrorMessage) {
+        this.xsdErrorMessage = xsdErrorMessage;
     }
 
     @Override

@@ -22,6 +22,7 @@ import org.xml.sax.SAXParseException;
 import fr.ign.validator.Context;
 import fr.ign.validator.data.DocumentFile;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.validation.Validator;
@@ -36,6 +37,47 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("XsdSchemaValidator");
+
+    private final class XsdErrorHandler implements ErrorHandler {
+        private final Context context;
+
+        private XsdErrorHandler(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void fatalError(SAXParseException e) {
+            log.fatal(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
+            report(e);
+        }
+
+        @Override
+        public void error(SAXParseException e) {
+            log.error(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
+            report(e);
+        }
+
+        @Override
+        public void warning(SAXParseException e) {
+            log.warn(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
+            report(e);
+        }
+
+        private void report(SAXParseException e) {
+            ValidatorError validatorError = context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR);
+            // line number
+            validatorError.setId(String.valueOf(e.getLineNumber()));
+            // parse {xsdErrorCode}:{xsdErrorMessage} from message
+            String[] messageParts = e.getMessage().split(":", 2);
+            if (messageParts.length == 2) {
+                validatorError.setXsdErrorCode(messageParts[0].trim());
+                validatorError.setXsdErrorMessage(messageParts[1].trim());
+            } else {
+                validatorError.setXsdErrorMessage(e.getMessage());
+            }
+            context.report(validatorError);
+        }
+    }
 
     @Override
     public void validate(Context context, DocumentFile documentFile) {
@@ -62,34 +104,7 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
 
         try {
             /* create custom error handler reporting errors in validation report */
-            xsdValidator.setErrorHandler(new ErrorHandler() {
-                @Override
-                public void fatalError(SAXParseException e) {
-                    log.fatal(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
-                    report(e);
-                }
-
-                @Override
-                public void error(SAXParseException e) {
-                    log.error(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
-                    report(e);
-                }
-
-                @Override
-                public void warning(SAXParseException e) {
-                    log.warn(MARKER, "#{} - {}", e.getLineNumber(), e.getMessage());
-                    report(e);
-                }
-
-                private void report(SAXParseException e) {
-                    // TODO retrieve more information from the exception
-                    context.report(
-                        context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR)
-                            .setId(String.valueOf(e.getLineNumber())) // line number
-                            .setMessageParam("MESSAGE", e.getMessage())
-                    );
-                }
-            });
+            xsdValidator.setErrorHandler(new XsdErrorHandler(context));
 
             xsdValidator.validate(
                 new StreamSource(
