@@ -109,7 +109,7 @@ public class XsdSchemaValidatorRegressTest {
             );
             // check pseudo XPath
             assertEquals(
-                "//wfs:FeatureCollection/wfs:member/gp-urba:INFO_PCT",
+                "//wfs:FeatureCollection/wfs:member/gp-urba:INFO_PCT[@id='INFO_PCT.356']",
                 error.getXsdErrorPath()
             );
 
@@ -120,4 +120,5 @@ public class XsdSchemaValidatorRegressTest {
             );
         }
     }
+
 }

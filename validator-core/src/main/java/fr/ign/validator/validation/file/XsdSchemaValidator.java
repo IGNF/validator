@@ -45,6 +45,8 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("XsdSchemaValidator");
 
+    private static final String ATT_ID = "id";
+
     /**
      * Listen and report XSD validation errors with a pseudo XPath to ease error
      * location in data.
@@ -64,8 +66,34 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
             throws SAXException {
-            elements.add(qName);
+
+            /*
+             * retrieve id to simplify error location in data (except for root element where
+             * it is useless)
+             */
+            if (this.elements.isEmpty()) {
+                elements.add(qName);
+            } else {
+                elements.add(qName + getIdentifier(attributes));
+            }
+
             super.startElement(uri, localName, qName, attributes);
+        }
+
+        /**
+         * Get identifier from attributes
+         * 
+         * @param attributes
+         * @return
+         */
+        private String getIdentifier(Attributes attributes) {
+            for (int i = 0; i < attributes.getLength(); i++) {
+                String name = attributes.getLocalName(i);
+                if (name.equals(ATT_ID)) {
+                    return "[@id='" + attributes.getValue(i) + "']";
+                }
+            }
+            return "";
         }
 
         @Override
