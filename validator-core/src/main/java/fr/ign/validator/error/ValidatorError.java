@@ -95,6 +95,12 @@ public class ValidatorError implements Cloneable {
     private String xsdErrorMessage;
 
     /**
+     * XSD pseudo XPath to ease error location (XSD_SCHEMA_ERROR)
+     */
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String xsdErrorPath;
+
+    /**
      * @param code
      */
     public ValidatorError(ErrorCode code) {
@@ -293,6 +299,14 @@ public class ValidatorError implements Cloneable {
 
     public void setXsdErrorMessage(String xsdErrorMessage) {
         this.xsdErrorMessage = xsdErrorMessage;
+    }
+
+    public String getXsdErrorPath() {
+        return xsdErrorPath;
+    }
+
+    public void setXsdErrorPath(String xsdErrorPath) {
+        this.xsdErrorPath = xsdErrorPath;
     }
 
     @Override
