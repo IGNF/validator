@@ -53,8 +53,34 @@ public class FilteredReportBuilderRegressTest {
                 original.getErrorsByCode(CoreErrorCodes.FILE_EMPTY).get(1)
             );
         }
-        assertEquals(2, original.getErrorsByCode(CoreErrorCodes.FILE_EMPTY).size());
         assertEquals(1, original.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size());
+    }
+
+    @Test
+    public void testLimitPerSubCode() {
+        InMemoryReportBuilder original = new InMemoryReportBuilder();
+        FilteredReportBuilder filtered = new FilteredReportBuilder(original, 2);
+
+        ValidatorError[] addedErrors = {
+            context.createError(CoreErrorCodes.FILE_EMPTY),
+            context.createError(CoreErrorCodes.FILE_EMPTY),
+            context.createError(CoreErrorCodes.FILE_EMPTY),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR).setXsdErrorCode("A"),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR).setXsdErrorCode("A"),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR).setXsdErrorCode("A"),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR).setXsdErrorCode("B"),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR).setXsdErrorCode("B"),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR),
+            context.createError(CoreErrorCodes.XSD_SCHEMA_ERROR),
+            context.createError(CoreErrorCodes.FILE_EMPTY),
+        };
+        for (ValidatorError addedError : addedErrors) {
+            filtered.addError(addedError);
+        }
+        assertEquals(2, original.getErrorsByCode(CoreErrorCodes.FILE_EMPTY).size());
+        // 2 xsdErrorCode="A", 2 xsdErrorCode="B" and 2 empty xsdErrorCode
+        assertEquals(6, original.getErrorsByCode(CoreErrorCodes.XSD_SCHEMA_ERROR).size());
     }
 
 }

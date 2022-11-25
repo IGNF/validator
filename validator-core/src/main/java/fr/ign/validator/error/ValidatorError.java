@@ -289,24 +289,27 @@ public class ValidatorError implements Cloneable {
         return xsdErrorCode;
     }
 
-    public void setXsdErrorCode(String xsdErrorCode) {
+    public ValidatorError setXsdErrorCode(String xsdErrorCode) {
         this.xsdErrorCode = xsdErrorCode;
+        return this;
     }
 
     public String getXsdErrorMessage() {
         return xsdErrorMessage;
     }
 
-    public void setXsdErrorMessage(String xsdErrorMessage) {
+    public ValidatorError setXsdErrorMessage(String xsdErrorMessage) {
         this.xsdErrorMessage = xsdErrorMessage;
+        return this;
     }
 
     public String getXsdErrorPath() {
         return xsdErrorPath;
     }
 
-    public void setXsdErrorPath(String xsdErrorPath) {
+    public ValidatorError setXsdErrorPath(String xsdErrorPath) {
         this.xsdErrorPath = xsdErrorPath;
+        return this;
     }
 
     @Override
