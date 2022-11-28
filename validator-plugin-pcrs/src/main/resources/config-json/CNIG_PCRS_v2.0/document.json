@@ -1,0 +1,171 @@
+{
+	"name": "CNIG_PCRS_v2.0",
+	"title": "PCRS version 2.0 -21 septembre 2017",
+	"description": "Modèle de démonstration pour valider une archive PCRS v2.0 avec un fichier GML et une fiche de métadonées XML optionnelle",
+	"files": [
+		{
+			"title": "METADONNEES",
+			"name": "METADONNEES",
+			"path": "[^\\/]*",
+			"type": "metadata",
+			"mandatory": "OPTIONAL"
+		},
+		{
+			"name": "DONNEES",
+			"type": "multi_table",
+			"path": "[^\\/]*",
+			"mandatory": "ERROR",
+			"xsdSchema": "https://cnigfr.github.io/PCRS/schemas/CNIG_PCRS_v2.0.xsd",
+			"tables": [
+				{
+					"name": "EmpriseDisponibilitePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "InitiativePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "EmpriseEchangePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "TronconVoirie",
+					"tableModel": "auto"
+				},
+				{
+					"name": "Commune",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillagePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageSymbolePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageTextePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageLignesPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillagePointsPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "HabillageEnveloppePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "NomVoiriePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "NumeroVoiriePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PointLevePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "RasterPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "MasqueOpacitePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ObjetGeneriquePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PointCanevasPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "LimiteVoiriePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "MarcheEscalierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "FacadePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ProeminenceBatiPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "SeuilPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "MurPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilierRegulierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilierParticulierPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "QuaiRailPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "RailPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "ArbrePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "PilePontPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "QuaiFluvioMaritimePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantGeometriquePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantSymbolePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantEnveloppePCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantPointPCRS",
+					"tableModel": "auto"
+				},
+				{
+					"name": "AffleurantLignesPCRS",
+					"tableModel": "auto"
+				}
+			]
+		}
+	]
+}

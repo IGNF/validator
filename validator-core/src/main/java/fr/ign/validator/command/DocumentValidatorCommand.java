@@ -21,6 +21,7 @@ import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.Version;
 import fr.ign.validator.command.options.GeometryComplexityThresholdOption;
 import fr.ign.validator.command.options.OutputProjectionOption;
 import fr.ign.validator.command.options.StringFixerOptions;
@@ -330,10 +331,18 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         try {
             DocumentModel documentModel = loadDocumentModel();
+
             context.report(
                 context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam(
                     "MESSAGE",
                     "Validation avec le modèle : " + documentModel.getName()
+                )
+            );
+
+            context.report(
+                context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam(
+                    "MESSAGE",
+                    "Version du validateur : " + Version.VERSION
                 )
             );
 

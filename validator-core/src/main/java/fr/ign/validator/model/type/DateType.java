@@ -98,7 +98,7 @@ public class DateType extends AttributeType<Date> {
         if (null == value) {
             return null;
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat format = new SimpleDateFormat(FORMAT_A);
         return format.format(value);
     }
 

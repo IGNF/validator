@@ -22,12 +22,12 @@ import fr.ign.validator.tools.Characters;
  * 
  * Generate a unicode table to document string fixer
  * 
- * TODO generate HTML (CSV is too big for github)
- * 
  * @author MBorne
  *
  */
 public class UnicodeTableCommand extends AbstractCommand {
+
+    private static final String OPT_OUTPUT = "output";
 
     public static final String NAME = "unicode_table";
 
@@ -49,7 +49,7 @@ public class UnicodeTableCommand extends AbstractCommand {
     protected void buildCustomOptions(Options options) {
         // output
         {
-            Option option = new Option("O", "output", true, "Output CSV file");
+            Option option = new Option("O", OPT_OUTPUT, true, "Output CSV file");
             option.setRequired(false);
             option.setType(File.class);
             options.addOption(option);
@@ -58,8 +58,8 @@ public class UnicodeTableCommand extends AbstractCommand {
 
     @Override
     protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-        if (commandLine.hasOption("output")) {
-            this.outputFile = (File) commandLine.getParsedOptionValue("output");
+        if (commandLine.hasOption(OPT_OUTPUT)) {
+            this.outputFile = (File) commandLine.getParsedOptionValue(OPT_OUTPUT);
         }
     }
 
@@ -79,36 +79,40 @@ public class UnicodeTableCommand extends AbstractCommand {
         simplifierLatin1.loadCharset(StandardCharsets.ISO_8859_1);
 
         OutputStream os = outputFile != null ? new FileOutputStream(outputFile) : stdout;
-        BufferedWriter fileWriter = new BufferedWriter(
-            new OutputStreamWriter(os, StandardCharsets.UTF_8)
+        CSVPrinter printer = new CSVPrinter(
+            new BufferedWriter(
+                new OutputStreamWriter(os, StandardCharsets.UTF_8)
+            ), CSVFormat.RFC4180
         );
-        CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
-        printer.printRecord(
-            "codePoint",
-            "hexa",
-            "escape_control",
-            "name",
-            "simplify_common",
-            "simplify_latin1",
-            "uri"
-        );
-        for (int codePoint = 0; codePoint < maxCodePoint; codePoint++) {
-            String original = new String(Character.toChars(codePoint));
-
-            String simplifiedCommon = simplifierCommon.transform(original);
-            String simplifiedLatin1 = simplifierLatin1.transform(original);
-
+        try {
             printer.printRecord(
-                codePoint,
-                Characters.toHexa(codePoint),
-                controlEscaper.transform(original),
-                Character.getName(codePoint),
-                simplifiedCommon.equals(original) ? "NOP" : simplifiedCommon,
-                simplifiedLatin1.equals(original) ? "NOP" : simplifiedLatin1,
-                Characters.toURI(codePoint)
+                "codePoint",
+                "hexa",
+                "escape_control",
+                "name",
+                "simplify_common",
+                "simplify_latin1",
+                "uri"
             );
+            for (int codePoint = 0; codePoint < maxCodePoint; codePoint++) {
+                String original = new String(Character.toChars(codePoint));
+
+                String simplifiedCommon = simplifierCommon.transform(original);
+                String simplifiedLatin1 = simplifierLatin1.transform(original);
+
+                printer.printRecord(
+                    codePoint,
+                    Characters.toHexa(codePoint),
+                    controlEscaper.transform(original),
+                    Character.getName(codePoint),
+                    simplifiedCommon.equals(original) ? "NOP" : simplifiedCommon,
+                    simplifiedLatin1.equals(original) ? "NOP" : simplifiedLatin1,
+                    Characters.toURI(codePoint)
+                );
+            }
+        } finally {
+            printer.close();
         }
-        printer.close();
     }
 
 }

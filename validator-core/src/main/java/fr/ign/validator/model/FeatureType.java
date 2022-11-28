@@ -16,9 +16,6 @@ import fr.ign.validator.model.type.GeometryType;
 /**
  * Describe the content of a table
  * 
- * TODO restore XML mapping for parent as separated file (no more required for
- * GPU, XML models is a flat export of a database)
- * 
  * @author MBorne
  */
 @XmlRootElement
@@ -43,10 +40,8 @@ public class FeatureType implements Model {
      */
     private List<AttributeType<?>> attributes = new ArrayList<AttributeType<?>>();
 
-    // TODO add private List<String> primaryKey;
-
     /**
-     * Feature Type Constraints - primary key ? - foreign key ? - sql conditions
+     * Feature Type Constraints: foreign key and sql conditions
      */
     private FeatureTypeConstraints constraints = new FeatureTypeConstraints();
 
@@ -241,8 +236,6 @@ public class FeatureType implements Model {
 
     /**
      * Retreive the attribute providing the featureId.
-     * 
-     * TODO rely on primaryKey definition.
      * 
      * @return
      */

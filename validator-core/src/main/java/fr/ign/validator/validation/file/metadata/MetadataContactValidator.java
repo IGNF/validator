@@ -32,7 +32,6 @@ public class MetadataContactValidator implements Validator<Metadata> {
             );
             return;
         }
-        // TODO validate content (not required by GPU)
     }
 
 }

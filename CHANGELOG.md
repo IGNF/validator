@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## 4.3.x
+
+* v4.3.0 - Update Documentation; add Foreign Key constraints validation
+
 ## 4.2.x
 
 [See milestone](https://github.com/IGNF/validator/milestone/12?closed=1) :
@@ -9,6 +14,11 @@
 * v4.2.0 - Add support for some french projections used in PCRS datasets ("Coniques Conformes Zone 1 to 9")
 * v4.2.0 - Improve GML reading using GMLAS driver if an xsdSchema is provided
 * v4.2.1 - Add support for curved geometries
+* v4.2.2 - Subcommand --help
+* v4.2.3 - Improve test
+* v4.2.4 - Add geometry complexity validation 
+* v4.2.5 - Update log4j version
+* v4.2.6 - Rename licence; Add SQL constraints validation
 
 ## 4.1.x
 

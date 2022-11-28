@@ -22,9 +22,19 @@ public class DocumentModelNameTest {
     public void testGetDocumentType() {
         assertNull(DocumentModelName.getDocumentType("cnig"));
 
-        assertEquals("SCOT", DocumentModelName.getDocumentType("cnig_SCOT_2013"));
-        assertEquals("PLU", DocumentModelName.getDocumentType("cnig_PLU_2013"));
-        assertEquals("SUP", DocumentModelName.getDocumentType("cnig_SUP_AC2_2013"));
+        assertEquals(DocumentModelName.TYPE_SCOT, DocumentModelName.getDocumentType("cnig_SCOT_2013"));
+        assertEquals(DocumentModelName.TYPE_PLU, DocumentModelName.getDocumentType("cnig_PLU_2013"));
+        assertEquals(DocumentModelName.TYPE_SUP, DocumentModelName.getDocumentType("cnig_SUP_AC2_2013"));
+    }
+
+    @Test
+    public void testIsDocumentSup() {
+        assertFalse(DocumentModelName.isDocumentModelSup("cnig"));
+
+        assertFalse(DocumentModelName.isDocumentModelSup("cnig_SCOT_2013"));
+        assertFalse(DocumentModelName.isDocumentModelSup("cnig_PLU_2013"));
+        assertTrue(DocumentModelName.isDocumentModelSup("cnig_SUP_AC2_2013"));
+        assertTrue(DocumentModelName.isDocumentModelSup("cnig_sup_ac2_2013"));
     }
 
     @Test

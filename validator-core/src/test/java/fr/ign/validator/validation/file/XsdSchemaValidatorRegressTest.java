@@ -1,6 +1,7 @@
 package fr.ign.validator.validation.file;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -99,11 +100,25 @@ public class XsdSchemaValidatorRegressTest {
             assertEquals(ErrorScope.DIRECTORY, error.getScope());
             // check line number
             assertEquals("26", error.getId());
-            // see https://wiki.xmldation.com/Support/Validator/cvc-complex-type-2-4-d
+            assertEquals("cvc-complex-type.2.4.d", error.getXsdErrorCode());
+            // Note that complete message depends on the local
+            assertNotNull(error.getXsdErrorMessage());
             assertTrue(
-                "unexpected message : " + error.getMessage(),
-                error.getMessage().startsWith("cvc-complex-type.2.4.d")
+                "unexpected xsdErrorMessage : " + error.getXsdErrorMessage(),
+                error.getXsdErrorMessage().contains("'gp-urba:CUSTOM'")
+            );
+            // check pseudo XPath
+            assertEquals(
+                "//wfs:FeatureCollection/wfs:member/gp-urba:INFO_PCT[@id='INFO_PCT.356']",
+                error.getXsdErrorPath()
+            );
+
+            // see https://wiki.xmldation.com/Support/Validator/cvc-complex-type-2-4-d
+            assertEquals(
+                "Fichier non conforme au schéma XSD",
+                error.getMessage()
             );
         }
     }
+
 }

@@ -95,14 +95,12 @@ public class MetadataModel extends FileModel {
         // topicCategory
         addMetadataValidator(new TopicCategoryValidator());
 
-        // keywords
-        // TODO
+        // keywords - no default validator
 
         // extents
         addMetadataValidator(new ExtentsValidator());
 
-        // referenceSystemIdentifier
-        // TODO
+        // referenceSystemIdentifier - no default validator
 
         // dateOfPublication
         // dateOfLastRevision
@@ -112,8 +110,7 @@ public class MetadataModel extends FileModel {
         // characterSet
         addMetadataValidator(new CharacterSetValidator());
 
-        // contraints
-        // TODO
+        // contraints - no default validator
 
         // distributionFormats
         addMetadataValidator(new DistributionFormatsValidator());

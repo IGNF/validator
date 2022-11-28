@@ -9,6 +9,9 @@ import fr.ign.validator.cnig.process.PerimetreScotPostProcess;
 import fr.ign.validator.cnig.process.SupRelationsPostProcess;
 import fr.ign.validator.cnig.validation.attribute.GeometryComplexityValidator;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
+import fr.ign.validator.cnig.validation.attribute.RegexpTxtValidator;
+import fr.ign.validator.cnig.validation.document.AtLeastOneAssietteValidator;
+import fr.ign.validator.cnig.validation.document.AtLeastOneGenerateurValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.document.DocumentNameValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
@@ -43,16 +46,23 @@ public class CnigPlugin implements Plugin {
         context.setNormalizeEnabled(true);
 
         /*
-         * Join SUP files to add a column "fichiers" and "nomsuplitt" (must run before
-         * CreateShapefilesPostProcess)
+         * PreProcess - Customize idurba
+         */
+        context.addListener(new CustomizeIdurbaPreProcess());
+
+        /*
+         * PostProcess - Join SUP files to add a column "fichiers" and "nomsuplitt"
+         * (must run before CreateShapefilesPostProcess)
          */
         context.addListener(new SupRelationsPostProcess());
         /*
-         * Converts DATA/*.csv to DATA/*.shp (must follow ReferenceActeSupPostProcess)
+         * PostProcess- Converts DATA/*.csv to DATA/*.shp (must follow
+         * ReferenceActeSupPostProcess)
          */
         context.addListener(new CreateShapefilesPostProcess());
         /*
-         * Compute document.tag.typeref (must run before document-info.json generation)
+         * PostProcess - Compute document.tag.typeref (must run before
+         * document-info.json generation)
          */
         context.addListenerBefore(
             new DocUrbaPostProcess(),
@@ -60,22 +70,28 @@ public class CnigPlugin implements Plugin {
         );
 
         /*
-         * Extends DOC_URBA_COM validation
+         * PostProcess - DOC_URBA_COM validation for PLUi
          */
         context.addListener(new DocUrbaComPostProcess());
 
         /*
-         * Extends PERIMETRE_SCOT validation
+         * PostProcess - Extends PERIMETRE_SCOT validation
          */
         context.addListener(new PerimetreScotPostProcess());
+
+        /*
+         * Extends document validation
+         */
+        context.addListener(new DocumentNameValidator());
+        context.addListener(new AtLeastOneWritingMaterialValidator());
+        context.addListener(new AtLeastOneGenerateurValidator());
+        context.addListener(new AtLeastOneAssietteValidator());
 
         /*
          * Extends attribute validation
          */
         context.addListener(new InseeValidator());
-        context.addListener(new AtLeastOneWritingMaterialValidator());
-        context.addListener(new DocumentNameValidator());
-        context.addListener(new CustomizeIdurbaPreProcess());
+        context.addListener(new RegexpTxtValidator());
         context.addListener(new GeometryComplexityValidator());
 
         /*

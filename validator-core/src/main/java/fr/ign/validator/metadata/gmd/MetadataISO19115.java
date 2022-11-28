@@ -508,8 +508,6 @@ public class MetadataISO19115 implements Metadata {
     /**
      * INSPIRE GUIDELINE - 2.7 Quality and validity / 2.7.2 Spatial resolution (p45)
      * 
-     * TODO multiplicity & dual mode (equivalent scale or distance...)
-     * 
      * @return
      */
     @Override

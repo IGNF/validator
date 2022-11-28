@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+  <Appenders>
+
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="[%p][%marker] - %m%n"/>
+    </Console>
+
+  </Appenders>
+
+  <Loggers>
+
+    <Root level="debug">
+      <AppenderRef ref="STDOUT" level="debug" />
+    </Root>
+
+  </Loggers>
+
+</Configuration>
+

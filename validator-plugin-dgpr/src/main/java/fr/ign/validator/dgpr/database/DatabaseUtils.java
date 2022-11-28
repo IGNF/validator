@@ -9,7 +9,6 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.io.ParseException;
-import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.io.WKTWriter;
 import org.locationtech.jts.simplify.DouglasPeuckerSimplifier;
 import org.locationtech.jts.simplify.TopologyPreservingSimplifier;
@@ -22,8 +21,6 @@ import fr.ign.validator.tools.EnvelopeUtils;
 
 /**
  * Helpers developed for DGPR plugin.
- * 
- * TODO split class moving helpers in existing classes.
  * 
  * @author CBouche
  *

@@ -1,4 +1,7 @@
 # CNIG_PCRS_v2.0
+
+**ATTENTION : Migration du modèle en cours dans le plugin dédié PCRS**
+
 ## Description
 
 Modèle **expérimental** pour la validation des jeux de données respectant le standard [CNIG PCRS v2.0](https://cnigfr.github.io/PCRS/).

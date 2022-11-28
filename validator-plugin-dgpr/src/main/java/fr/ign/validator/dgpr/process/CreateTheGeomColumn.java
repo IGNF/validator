@@ -67,7 +67,6 @@ public class CreateTheGeomColumn implements ValidatorListener {
             );
 
             log.info(MARKER, "Update values for the_geom of {}...", tableName);
-            // TODO ensure that ST_Multi is required (kept from original code)
             database.query(
                 "UPDATE " + tableName + " SET the_geom = "
                     + "ST_Multi(ST_Transform("

@@ -38,6 +38,7 @@ public class CoreErrorCodes {
     );
 
     public static final ErrorCode FILE_UNEXPECTED = ErrorCode.valueOf("FILE_UNEXPECTED");
+    public static final ErrorCode DIRECTORY_UNEXPECTED = ErrorCode.valueOf("DIRECTORY_UNEXPECTED");
 
     public static final ErrorCode FILE_MISPLACED = ErrorCode.valueOf("FILE_MISPLACED");
     public static final ErrorCode FILE_EMPTY = ErrorCode.valueOf("FILE_EMPTY");
@@ -220,5 +221,6 @@ public class CoreErrorCodes {
      * ErrorCode for Database validations
      */
     public static final ErrorCode DATABASE_CONSTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONSTRAINT_MISMATCH");
+    public static final ErrorCode TABLE_FOREIGN_KEY_NOT_FOUND = ErrorCode.valueOf("TABLE_FOREIGN_KEY_NOT_FOUND");
 
 }

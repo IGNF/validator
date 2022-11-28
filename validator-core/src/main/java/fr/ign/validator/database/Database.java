@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -30,6 +31,7 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.StaticTable;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.tools.ModelHelper;
@@ -50,7 +52,7 @@ public class Database implements Closeable {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("Database");
 
-    private static final int batchSize = 100;
+    private static final int BATCH_SIZE = 100;
 
     private static final String ENV_DATABASE_URL = "DB_URL";
     private static final String ENV_DATABASE_USER = "DB_USER";
@@ -263,11 +265,16 @@ public class Database implements Closeable {
      * Create tables according to the TableModels of the DocumentModel
      * 
      * @throws SQLException
+     * @throws IOException
      */
-    public void createTables(DocumentModel documentModel) throws SQLException {
+    public void createTables(DocumentModel documentModel) throws SQLException, IOException {
         log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
         for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
             createTable(tableModel);
+        }
+        log.info(MARKER, "Create static table from DocumentModel '{}'...", documentModel.getName());
+        for (StaticTable staticTable : documentModel.getStaticTables()) {
+            createTable(staticTable);
         }
     }
 
@@ -297,6 +304,19 @@ public class Database implements Closeable {
             return;
         }
         createTable(tableName, featureType.getAttributeNames());
+    }
+
+    /**
+     * Create Table for a given StaticTable
+     *
+     * @param staticTable
+     * @throws IOException
+     * @throws SQLException
+     */
+    private void createTable(StaticTable staticTable) throws IOException, SQLException {
+        TableReader reader = TableReader.createTableReader(staticTable.getData());
+        String[] inputColumns = reader.getHeader();
+        createTable(staticTable.getName(), Arrays.asList(inputColumns));
     }
 
     /**
@@ -393,6 +413,10 @@ public class Database implements Closeable {
                 load((MultiTableFile) documentFile);
             }
         }
+        log.info(MARKER, "Loading static table from document model '{}'...", document.getDocumentModel().getName());
+        for (StaticTable staticTable : document.getDocumentModel().getStaticTables()) {
+            load(context, staticTable);
+        }
     }
 
     /**
@@ -430,7 +454,25 @@ public class Database implements Closeable {
      */
     void load(Context context, SingleTableFile tableFile) throws IOException, SQLException {
         FileModel fileModel = tableFile.getFileModel();
-        loadFile(fileModel.getName(), tableFile.getPath(), context.getEncoding());
+        TableReader reader = TableReader.createTableReader(tableFile.getPath(), context.getEncoding());
+        loadTable(fileModel.getName(), context.relativize(tableFile.getPath()), reader, context.getEncoding());
+    }
+
+    /**
+     * Load a given {@link StaticTable} in the database (insert mode)
+     * 
+     * @param context
+     * @param staticTable
+     * @throws IOException
+     * @throws SQLException
+     */
+    void load(Context context, StaticTable staticTable) throws IOException, SQLException {
+        log.info(
+            MARKER, "Load table '{}' from stream '{}' (charset={})...",
+            staticTable.getName(), staticTable.getDataReference(), StandardCharsets.UTF_8
+        );
+        TableReader reader = TableReader.createTableReader(staticTable.getData());
+        loadTable(staticTable.getName(), staticTable.getDataReference(), reader, StandardCharsets.UTF_8);
     }
 
     /**
@@ -443,11 +485,26 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     void loadFile(String tableName, File path, Charset charset) throws IOException, SQLException {
-        log.info(MARKER, "Load table '{}' from '{}' (charset={})...", tableName, path.getAbsolutePath(), charset);
-        /*
-         * Create table reader
-         */
+        log.info(
+            MARKER, "Load table '{}' from file '{}' (charset={})...",
+            tableName, path.getAbsolutePath(), charset
+        );
         TableReader reader = TableReader.createTableReader(path, charset);
+        loadTable(tableName, path.getName(), reader, charset);
+    }
+
+    /**
+     * Load a given TableReader in the database (insert mode)
+     * 
+     * @param tableName
+     * @param sourceFile
+     * @param reader
+     * @param charset
+     * @throws IOException
+     * @throws SQLException
+     */
+    void loadTable(String tableName, String sourceFile, TableReader reader, Charset charset) throws IOException,
+        SQLException {
 
         String[] inputColumns = reader.getHeader();
         String[] outputColumns = getTableSchema(tableName);
@@ -477,8 +534,8 @@ public class Database implements Closeable {
         /* no matching ? */
         if (inputIndexes.isEmpty()) {
             log.warn(
-                MARKER, "No matching column found in {} for {} with {}", tableName, path,
-                String.join(",", inputColumns)
+                MARKER, "No matching column found in {} for {} with {}",
+                tableName, sourceFile, String.join(",", inputColumns)
             );
             return;
         }
@@ -487,41 +544,42 @@ public class Database implements Closeable {
             + String.join(", ", valueParts) + ");";
 
         /* Create prepared statement... */
-        PreparedStatement sth = connection.prepareStatement(sql);
         log.debug(MARKER, sql);
-
-        /* Batch insertion */
+        PreparedStatement sth = connection.prepareStatement(sql);
         int count = 0;
-        while (reader.hasNext()) {
-            String[] row = reader.next();
-            // insert line number
-            sth.setInt(1, count + 1);
-            // insert file path
-            sth.setString(2, path.getName());
-            // insert values
-            int parameterIndex = 2;
-            for (int i = 0; i < inputIndexes.size(); i++) {
-                Integer index = inputIndexes.get(i);
-                sth.setString(parameterIndex + 1, row[index]);
-                parameterIndex++;
-            }
-            sth.addBatch();
+        try {
+            /* Batch insertion */
 
-            if (++count % batchSize == 0) {
-                sth.executeBatch();
-                sth.clearBatch();
+            while (reader.hasNext()) {
+                String[] row = reader.next();
+                // insert line number
+                sth.setInt(1, count + 1); // NOSONAR
+                // insert file path
+                sth.setString(2, sourceFile); // NOSONAR
+                // insert values
+                int parameterIndex = 2;
+                for (int i = 0; i < inputIndexes.size(); i++) {
+                    Integer index = inputIndexes.get(i);
+                    sth.setString(parameterIndex + 1, row[index]);
+                    parameterIndex++;
+                }
+                sth.addBatch();
+
+                if (++count % BATCH_SIZE == 0) {
+                    sth.executeBatch();
+                    sth.clearBatch();
+                }
             }
+            sth.executeBatch();
+        } finally {
+            sth.close();
         }
-        sth.executeBatch();
         connection.commit();
 
         log.info(
             MARKER,
             "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded",
-            tableName,
-            path.getAbsolutePath(),
-            charset,
-            count
+            tableName, sourceFile, charset, count
         );
     }
 
@@ -585,10 +643,17 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     public int getCount(String tableName) throws SQLException {
-        PreparedStatement sth = connection.prepareStatement("SELECT count(*) FROM " + tableName);
-        ResultSet rs = sth.executeQuery();
-        rs.next();
-        return rs.getInt(1);
+        Statement stmt = connection.createStatement();
+        try {
+            String query = String.format(
+                "SELECT count(*) FROM %s ",
+                stmt.enquoteIdentifier(tableName, false)
+            );
+            ResultSet rs = stmt.executeQuery(query);
+            return rs.getInt(1);
+        } finally {
+            stmt.close();
+        }
     }
 
 }

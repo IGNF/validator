@@ -3,6 +3,14 @@
     "name": "INFO_SURF",
     "title": "INFO_SURF",
     "description": "INFO_SURF",
+    "constraints": {
+        "conditions": [
+            "NOMFIC IS NOT NULL OR TYPEINF NOT LIKE '97'"
+        ],
+        "foreignKeys": [
+            "(TYPEINF,STYPEINF) REFERENCES InformationUrbaType(TYPEINF,STYPEINF)"
+        ]
+    },
     "columns": [
         {
             "id": "0b5edbb8ebd989c17965d5d1c37abc20",

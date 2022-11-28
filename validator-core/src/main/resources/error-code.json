@@ -40,6 +40,12 @@
 		"documentation": "Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un fichier"
 	},
 	{
+		"name": "DIRECTORY_UNEXPECTED",
+		"level": "WARNING",
+		"message": "Le répertoire '{FILEPATH}' est mal nommé ou n'est pas prévu dans le standard.",
+		"documentation": "Cette erreur se produit lorsque l'on ne trouve aucun modèle correspondant à un répertoire"
+	},
+	{
 		"name": "FILE_MISSING_MANDATORY",
 		"level": "ERROR",
 		"message": "Le fichier obligatoire '{FILEMODEL_NAME}' est absent du document.",
@@ -72,7 +78,7 @@
 	{
 		"name": "XSD_SCHEMA_ERROR",
 		"level": "ERROR",
-		"message": "{MESSAGE}",
+		"message": "Fichier non conforme au schéma XSD",
 		"documentation": "Cette erreur se produit lors du nom respect d'un schéma XSD associé à un fichier XML/GML"
 	},
 	{
@@ -484,6 +490,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "TABLE_FOREIGN_KEY_NOT_FOUND",
+		"level": "ERROR",
+		"message": "La correspondance ({SOURCE_COL}) = ({SOURCE_VALUE}) n'est pas autorisée, car non présente dans la liste de référence {TARGET_TABLE}.",
+		"documentation": ""
+	},
+	{
 		"name": "CNIG_INSEE_INVALID",
 		"level": "ERROR",
 		"message": "La valeur du champ \"INSEE\" ({VALUE}) ne respecte pas le format \"DDCCC\" où \"DD\" est le numéro du département et \"CCC\" le numéro de la commune.",
@@ -644,6 +656,24 @@
 		"level": "WARNING",
 		"message": "Le code de territoire '{EMPRISE}' est invalide dans le nom de dossier.",
 		"documentation": "Les départements doivent être codés sur 3 caractères."
+	},
+	{
+		"name": "CNIG_GENERATEUR_SUP_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Aucun générateur trouvée.",
+		"documentation": "Selon la catégorie de SUP des géométries sont autorisées, au moins une doit être présente."
+	},
+	{
+		"name": "CNIG_ASSIETTE_SUP_NOT_FOUND",
+		"level": "ERROR",
+		"message": "Aucune assiette trouvée.",
+		"documentation": "Selon la catégorie de SUP des géométries sont autorisées, au moins une doit être présente."
+	},
+	{
+		"name": "CNIG_TXT_REGEXP_INVALID",
+		"level": "ERROR",
+		"message": "Si TYPEPSC vaut '97' et STYPEPSC vaut '01' le champ TXT - {VALUE} - doit respecté le format SECT[0-9]{2}.",
+		"documentation": "Si TYPEPSC vaut '97' et STYPEPSC vaut '01' le champ TXT doit respecté le format SECT[0-9]{2}."
 	},
 	{
 		"name": "DGPR_DOCUMENT_PREFIX_ERROR",

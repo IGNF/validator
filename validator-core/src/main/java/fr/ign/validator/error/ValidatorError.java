@@ -2,6 +2,8 @@ package fr.ign.validator.error;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -79,6 +81,24 @@ public class ValidatorError implements Cloneable {
      * Feature identifier is available.
      */
     private String featureId;
+
+    /**
+     * XSD error code (XSD_SCHEMA_ERROR)
+     */
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String xsdErrorCode;
+
+    /**
+     * XSD error message according to the local (XSD_SCHEMA_ERROR)
+     */
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String xsdErrorMessage;
+
+    /**
+     * XSD pseudo XPath to ease error location (XSD_SCHEMA_ERROR)
+     */
+    @JsonInclude(value = Include.NON_EMPTY)
+    private String xsdErrorPath;
 
     /**
      * @param code
@@ -262,6 +282,33 @@ public class ValidatorError implements Cloneable {
 
     public ValidatorError setFeatureId(String featureId) {
         this.featureId = featureId;
+        return this;
+    }
+
+    public String getXsdErrorCode() {
+        return xsdErrorCode;
+    }
+
+    public ValidatorError setXsdErrorCode(String xsdErrorCode) {
+        this.xsdErrorCode = xsdErrorCode;
+        return this;
+    }
+
+    public String getXsdErrorMessage() {
+        return xsdErrorMessage;
+    }
+
+    public ValidatorError setXsdErrorMessage(String xsdErrorMessage) {
+        this.xsdErrorMessage = xsdErrorMessage;
+        return this;
+    }
+
+    public String getXsdErrorPath() {
+        return xsdErrorPath;
+    }
+
+    public ValidatorError setXsdErrorPath(String xsdErrorPath) {
+        this.xsdErrorPath = xsdErrorPath;
         return this;
     }
 

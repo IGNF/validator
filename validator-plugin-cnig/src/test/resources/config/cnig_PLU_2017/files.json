@@ -6,6 +6,22 @@
     "constraints": {
         "folderName": "[a-zA-Z0-9]+_PLU_[0-9]{8}(_[a-zA-Z])?"
     },
+    "codes": [
+        {
+            "id": "",
+            "name": "InformationUrbaType",
+            "title": "InformationUrbaType",
+            "path": "./codes/InformationUrbaType.csv",
+            "type": "static_table"
+        },
+        {
+            "id": "",
+            "name": "PrescriptionUrbaType",
+            "title": "PrescriptionUrbaType",
+            "path": "./codes/PrescriptionUrbaType.csv",
+            "type": "static_table"
+        }
+    ],
     "files": [
         {
             "id": "aeb3e95a507f5fe0d2f60c310ca55d97",

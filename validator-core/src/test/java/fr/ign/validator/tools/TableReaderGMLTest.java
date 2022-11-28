@@ -87,8 +87,7 @@ public class TableReaderGMLTest {
     }
 
     /**
-     * This test works with some ogr2ogr versions TODO NOMFIC should appears with
-     * FixGML
+     * This test works with some ogr2ogr versions
      */
     @Test
     @Ignore
@@ -101,7 +100,6 @@ public class TableReaderGMLTest {
             String[] header = reader.getHeader();
 
             assertTrue(Arrays.asList(header).contains("LIBELLE"));
-            // TODO NOMFIC should appears with FixGML
             assertTrue(Arrays.asList(header).contains("NOMFIC"));
 
         } catch (IOException e) {

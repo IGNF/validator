@@ -26,14 +26,19 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.cnig.CnigPlugin;
 import fr.ign.validator.cnig.CnigRegressHelper;
 import fr.ign.validator.cnig.ReportAssert;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
+import fr.ign.validator.cnig.model.DocumentModelName;
+import fr.ign.validator.cnig.model.DocumentName;
+import fr.ign.validator.cnig.model.DocumentType;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
+import fr.ign.validator.geometry.GeometryThreshold;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -78,7 +83,7 @@ public class CnigValidatorRegressTest {
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         context.setValidationDirectory(validationDirectory);
         PluginManager pluginManager = new PluginManager();
-        pluginManager.getPluginByName("CNIG").setup(context);
+        pluginManager.getPluginByName(CnigPlugin.NAME).setup(context);
         return context;
     }
 
@@ -134,6 +139,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_TXT_REGEXP_INVALID, report);
         ReportAssert.assertCount(7, ErrorLevel.WARNING, report);
 
         /*
@@ -264,8 +270,8 @@ public class CnigValidatorRegressTest {
         // add Complexity Threshold option
         context.setComplexityThreshold(
             new GeometryComplexityThreshold(
-                100, 5, 5, 0.08,
-                5000, 4, 4, 0.1
+                new GeometryThreshold(-1, 5, 5, 0.08, 100),
+                new GeometryThreshold(5000, 4, 4, 0.1, 5000)
             )
         );
 
@@ -337,17 +343,17 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(3 + 9, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(6, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(3 + 6, ErrorLevel.ERROR, report);
 
         /*
-         * check database errors - 9 errors
+         * check database errors - 6 errors
          */
-        ReportAssert.assertCount(9, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         int index = 0;
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
             Assert.assertEquals("PM3_ASSIETTE_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("Donnees_geographiques/PM3_ASSIETTE_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("1", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoAss NOT NULL OR modeGeoAss NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
@@ -356,18 +362,9 @@ public class CnigValidatorRegressTest {
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
             Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
+            Assert.assertEquals("Donnees_geographiques/PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
             Assert.assertEquals("3", error.getId());
             String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (srcGeoGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
-            Assert.assertEquals(expectedMessage, error.getMessage());
-        }
-        index = 8;
-        {
-            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH).get(index);
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S", error.getFileModel());
-            Assert.assertEquals("PM3_GENERATEUR_SUP_S_028.dbf", error.getFile());
-            Assert.assertEquals("3", error.getId());
-            String expectedMessage = "Une règle de remplissage conditionnelle n'est pas respectée. (dateSrcGen NOT NULL OR modeGenere NOT LIKE 'Digitalisation')";
             Assert.assertEquals(expectedMessage, error.getMessage());
         }
 
@@ -411,8 +408,6 @@ public class CnigValidatorRegressTest {
 
         /*
          * check errors
-         * 
-         * TODO : fix ATTRIBUTE_INVALID_FORMAT
          */
         ReportAssert.assertCount(104, CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, report);
         {
@@ -667,6 +662,9 @@ public class CnigValidatorRegressTest {
          */
         Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
         Assert.assertEquals("213000896_INT1_83044_20160130", document.getDocumentName());
+        DocumentName documentName = new DocumentName(document.getDocumentName());
+        Assert.assertEquals(DocumentType.SUP, documentName.getDocumentType());
+        Assert.assertTrue(DocumentModelName.isDocumentModelSup(document.getDocumentModel().getName()));
 
         /*
          * check document-info.json
@@ -690,6 +688,9 @@ public class CnigValidatorRegressTest {
             }
         }
 
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
+
     }
 
     /**
@@ -705,6 +706,7 @@ public class CnigValidatorRegressTest {
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
         File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
         Context context = createContext(documentPath);
+        context.setEnableConditions(true);
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -713,13 +715,29 @@ public class CnigValidatorRegressTest {
          */
         Assert.assertEquals(StandardCharsets.ISO_8859_1, context.getEncoding());
         Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+        Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
+        Assert.assertEquals(2, documentModel.getStaticTables().size());
 
         /*
          * check errors
          */
         // YYYYMMDD different in tables
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
-        ReportAssert.assertCount(18, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
+        ReportAssert.assertCount(20, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
+
+        {
+            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND).get(0);
+            assertEquals("15", error.getId());
+            assertEquals("INFO_SURF", error.getFileModel());
+            assertEquals(
+                "La correspondance (TYPEINF, STYPEINF) = (04, 99) n'est pas autorisée, car non présente dans la liste de référence InformationUrbaType.",
+                error.getMessage()
+            );
+        }
 
         /*
          * check warnings
@@ -806,6 +824,7 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_TXT_REGEXP_INVALID, report);
         ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
 
         /*
@@ -945,7 +964,6 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
-        // TODO https://github.com/IGNF/validator/issues/260
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
         ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
 

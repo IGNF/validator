@@ -22,8 +22,6 @@ import fr.ign.validator.tools.ResourceHelper;
 /**
  * Test VRT generation
  * 
- * TODO add test with a geom
- * 
  * @author MBorne
  *
  */

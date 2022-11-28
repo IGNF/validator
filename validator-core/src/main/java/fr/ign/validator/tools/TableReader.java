@@ -2,6 +2,8 @@ package fr.ign.validator.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -73,6 +75,21 @@ public class TableReader implements Iterator<String[]> {
             charset = CharsetDetector.detectCharset(csvFile);
         }
         CSVParser parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180);
+        this.iterator = parser.iterator();
+        readHeader();
+    }
+
+    /**
+     * 
+     * Reading file with given charset (validated by system).
+     * 
+     * 
+     * @param file
+     * @param charset
+     * @throws IOException
+     */
+    TableReader(InputStream csvStream, Charset preferedCharset) throws IOException {
+        CSVParser parser = CSVParser.parse(csvStream, preferedCharset, CSVFormat.RFC4180);
         this.iterator = parser.iterator();
         readHeader();
     }
@@ -235,6 +252,22 @@ public class TableReader implements Iterator<String[]> {
         }
         // ogr2ogr is supposed to always produced UTF-8 encoded CSV file
         return new TableReader(tempFile, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 
+     * @param url
+     * @param charset
+     * @return
+     * @throws IOException
+     */
+    public static TableReader createTableReader(URL url) throws IOException {
+        log.debug(
+            MARKER, "Create TableReader for '{}' (charset={})...",
+            url,
+            StandardCharsets.UTF_8
+        );
+        return new TableReader(url.openStream(), StandardCharsets.UTF_8);
     }
 
 }

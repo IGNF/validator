@@ -16,6 +16,7 @@ import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
+import fr.ign.validator.model.StaticTable;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.ModelHelper;
 
@@ -69,6 +70,21 @@ abstract class AbstractModelReader implements ModelReader {
     }
 
     /**
+     * Load static Files for a given documentModel
+     * 
+     * @param documentModel
+     * @param documentModelUrl
+     */
+    protected void loadStaticFiles(DocumentModel documentModel, URL documentModelUrl) throws MalformedURLException {
+        log.info(MARKER, "Loading StaticFiles for {} ...", documentModel);
+        for (StaticTable staticTable : documentModel.getStaticTables()) {
+            log.info(MARKER, "Loading StaticFile for {} ...", staticTable.getName());
+            URL staticTypeURL = resolveStaticTypeUrl(documentModelUrl, documentModel, staticTable);
+            staticTable.setData(staticTypeURL);
+        }
+    }
+
+    /**
      * Resolve FeatureType URL for a given FileModel.
      * 
      * @param documentModelUrl
@@ -110,6 +126,48 @@ abstract class AbstractModelReader implements ModelReader {
             return new URL(
                 documentModelUrl,
                 "./" + documentModel.getName() + "/types/" + tableModel.getName() + "." + getFormat()
+            );
+        }
+    }
+
+    /**
+     * Resolve FeatureType URL for a given FileModel.
+     * 
+     * @param documentModelUrl
+     * @param documentModel
+     * @param tableModel
+     * @return
+     * @throws MalformedURLException
+     */
+    protected URL resolveStaticTypeUrl(URL documentModelUrl, DocumentModel documentModel, StaticTable staticTable)
+        throws MalformedURLException {
+
+        String reference = staticTable.getDataReference();
+        if (reference != null && !reference.isEmpty()) {
+            // complete URL if required
+            try {
+                URL url = new URL(reference);
+                return url;
+            } catch (MalformedURLException e) {
+                return new URL(documentModelUrl, reference);
+            }
+        }
+
+        if (documentModelUrl.getProtocol().equals("file")) {
+            /* config export convention */
+            // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
+            // validator-config-cnig/config/cnig_PLU_2017/codes/InformationUrbaType.csv
+            return new URL(
+                documentModelUrl,
+                "./codes/" + staticTable.getName() + ".csv"
+            );
+        } else {
+            /* URL convention */
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.(xml|json)
+            // https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/codes/InformationUrbaType.csv
+            return new URL(
+                documentModelUrl,
+                "./" + documentModel.getName() + "/codes/" + staticTable.getName() + ".csv"
             );
         }
     }
