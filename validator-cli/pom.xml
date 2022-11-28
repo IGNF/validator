@@ -34,6 +34,14 @@
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- PCRS -->
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>validator-plugin-pcrs</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
