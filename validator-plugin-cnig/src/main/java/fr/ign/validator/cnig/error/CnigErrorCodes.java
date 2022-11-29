@@ -14,6 +14,7 @@ public class CnigErrorCodes {
     public static final ErrorCode CNIG_SIREN_INVALID = ErrorCode.valueOf("CNIG_SIREN_INVALID");
 
     public static final ErrorCode CNIG_DOCUMENT_NO_PDF = ErrorCode.valueOf("CNIG_DOCUMENT_NO_PDF");
+    public static final ErrorCode CNIG_PIECE_ECRITE_ONLY_PDF = ErrorCode.valueOf("CNIG_PIECE_ECRITE_ONLY_PDF");
 
     /**
      * DU - Reported when ZONE_URBA.IDURBA doesn't match any format

@@ -514,6 +514,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "CNIG_PIECE_ECRITE_ONLY_PDF",
+		"level": "ERROR",
+		"message": "Seules les pièces écrites au format PDF sont acceptées.",
+		"documentation": ""
+	},
+	{
 		"name": "CNIG_IDURBA_INVALID",
 		"level": "ERROR",
 		"message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",

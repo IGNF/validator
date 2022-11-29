@@ -14,6 +14,7 @@ import fr.ign.validator.cnig.validation.document.AtLeastOneAssietteValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneGenerateurValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.document.DocumentNameValidator;
+import fr.ign.validator.cnig.validation.document.PieceEcriteOnlyPdfValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataDateOfLastRevisionValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataKeywordsValidator;
 import fr.ign.validator.cnig.validation.metadata.CnigMetadataReferenceSystemIdentifierValidator;
@@ -86,6 +87,7 @@ public class CnigPlugin implements Plugin {
         context.addListener(new AtLeastOneWritingMaterialValidator());
         context.addListener(new AtLeastOneGenerateurValidator());
         context.addListener(new AtLeastOneAssietteValidator());
+        context.addListener(new PieceEcriteOnlyPdfValidator());
 
         /*
          * Extends attribute validation

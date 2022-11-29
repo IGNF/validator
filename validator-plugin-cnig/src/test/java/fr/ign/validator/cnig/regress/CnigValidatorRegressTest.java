@@ -725,7 +725,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
-        ReportAssert.assertCount(20, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        ReportAssert.assertCount(21, ErrorLevel.ERROR, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
@@ -735,6 +736,17 @@ public class CnigValidatorRegressTest {
             assertEquals("INFO_SURF", error.getFileModel());
             assertEquals(
                 "La correspondance (TYPEINF, STYPEINF) = (04, 99) n'est pas autorisée, car non présente dans la liste de référence InformationUrbaType.",
+                error.getMessage()
+            );
+        }
+
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(0);
+            assertEquals("", error.getId());
+            assertEquals("", error.getFileModel());
+            assertEquals("Thumbs.db", error.getFile());
+            assertEquals(
+                "Seules les pièces écrites au format PDF sont acceptées.",
                 error.getMessage()
             );
         }
@@ -818,7 +830,8 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
-        ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        ReportAssert.assertCount(11, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
