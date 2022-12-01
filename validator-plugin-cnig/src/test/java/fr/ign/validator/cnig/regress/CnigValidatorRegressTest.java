@@ -725,8 +725,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
-        ReportAssert.assertCount(21, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(2, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        ReportAssert.assertCount(23, ErrorLevel.ERROR, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
@@ -742,13 +742,14 @@ public class CnigValidatorRegressTest {
 
         {
             ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(0);
-            assertEquals("", error.getId());
-            assertEquals("", error.getFileModel());
+            assertEquals("ce_fichier_nest_pas_prevu.csv", error.getFile());
+            assertEquals("Seules les pièces écrites au format PDF sont acceptées.", error.getMessage());
+        }
+
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(1);
             assertEquals("Thumbs.db", error.getFile());
-            assertEquals(
-                "Seules les pièces écrites au format PDF sont acceptées.",
-                error.getMessage()
-            );
+            assertEquals("Seules les pièces écrites au format PDF sont acceptées.", error.getMessage());
         }
 
         /*
@@ -830,7 +831,6 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
-        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
         ReportAssert.assertCount(11, ErrorLevel.ERROR, report);
 
         /*
@@ -846,6 +846,17 @@ public class CnigValidatorRegressTest {
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("241800432_PLUi_20200128");
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+
+        /*
+         * check CNIG_PIECE_ECRITE_ONLY_PDF errors
+         */
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF);
+            for (ValidatorError error : errors) {
+                assertEquals("Thumbs.db", error.getFile());
+            }
+        }
     }
 
     /**

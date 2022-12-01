@@ -195,6 +195,13 @@
     "name" : "30014_plan_sup_20171013.pdf",
     "path" : "Pieces_ecrites/4_Annexes/30014_plan_sup_20171013.pdf"
   }, {
+    "type" : "table",
+    "modelName" : "TITRES_PIECES_ECRITES",
+    "name" : "30014_titres_pieces_ecrites_20171013.csv",
+    "path" : "Pieces_ecrites/4_Annexes/30014_titres_pieces_ecrites_20171013.csv",
+    "boundingBox" : null,
+    "totalFeatures" : 1
+  }, {
     "type" : "directory",
     "modelName" : "5_Orientations_amenagement",
     "name" : "5_Orientations_amenagement",
