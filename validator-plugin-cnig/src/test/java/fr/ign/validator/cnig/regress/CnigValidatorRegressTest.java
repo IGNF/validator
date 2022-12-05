@@ -82,6 +82,28 @@ public class CnigValidatorRegressTest {
         context.setProjection("EPSG:2154");
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         context.setValidationDirectory(validationDirectory);
+        context.setFlatValidation(false);
+        // setup must be last instruction to modify context
+        PluginManager pluginManager = new PluginManager();
+        pluginManager.getPluginByName(CnigPlugin.NAME).setup(context);
+        return context;
+    }
+
+    /**
+     * Create flat validation context
+     *
+     * @param documentPath
+     * @return
+     * @throws Exception
+     */
+    private Context createFlatContext(File documentPath) throws Exception {
+        Context context = new Context();
+        context.setReportBuilder(report);
+        context.setProjection("EPSG:2154");
+        File validationDirectory = new File(documentPath.getParentFile(), "validation");
+        context.setValidationDirectory(validationDirectory);
+        context.setFlatValidation(true);
+        // setup must be last instruction to modify context
         PluginManager pluginManager = new PluginManager();
         pluginManager.getPluginByName(CnigPlugin.NAME).setup(context);
         return context;
@@ -706,7 +728,8 @@ public class CnigValidatorRegressTest {
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
         File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
         Context context = createContext(documentPath);
-        context.setEnableConditions(true);
+        Assert.assertFalse(context.isFlatValidation());
+
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -756,7 +779,62 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * Test PLU standard cnig_PLU_2017 avec option flat
+     *
+     * @throws Exception
+     */
+    @Test
+    public void test30014_PLU_20171013_flatOption() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
+        File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
+        Context context = createFlatContext(documentPath);
+        Assert.assertTrue(context.isFlatValidation());
+
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.ISO_8859_1, context.getEncoding());
+        Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+        Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
+        Assert.assertEquals(2, documentModel.getStaticTables().size());
+
+        /*
+         * check errors
+         */
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        ReportAssert.assertCount(21, ErrorLevel.ERROR, report);
+
+        /*
+         * check warnings
+         */
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
+
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID);
+            for (ValidatorError error : errors) {
+                assertEquals("Thumbs.db", error.getFile());
+            }
+        }
 
         /*
          * check document-info.json

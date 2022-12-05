@@ -520,6 +520,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "CNIG_FILE_EXTENSION_INVALID",
+		"level": "WARNING",
+		"message": "Seuls les fichiers avec les extensions suivantes sont autorisés : xml, pdf, csv, MapInfo (dbf), ArcGIS (shp), geojson, gml",
+		"documentation": ""
+	},
+	{
 		"name": "CNIG_IDURBA_INVALID",
 		"level": "ERROR",
 		"message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",

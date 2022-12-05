@@ -2,7 +2,6 @@ package fr.ign.validator.cnig.validation.document;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -16,17 +15,19 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.model.DocumentModelName;
 import fr.ign.validator.data.Document;
-import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.model.DocumentModel;
+import fr.ign.validator.tools.CompanionFileUtils;
 import fr.ign.validator.validation.Validator;
 
-public class PieceEcriteOnlyPdfValidator implements Validator<Document>, ValidatorListener {
+public class FileExtensionValidator implements Validator<Document>, ValidatorListener {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("PieceEcriteOnlyPdfValidator");
+    public static final Marker MARKER = MarkerManager.getMarker("FileExtensionValidator");
 
-    private static final String PIECE_ECRITE_DIRNAME = "Pieces_ecrites";
-    private static final String PIECE_ECRITE_FILENAME = "TITRES_PIECES_ECRITES";
+    private static final String[] VALID_FILE_EXTENSION = {
+        "xml", "pdf", "csv", "dbf", "shp", "geojson", "gml"
+    };
+    private static final String ROOT_SHAPE_EXTENSION = "shp";
+    private static final String ROOT_MAPINFO_EXTENSION = "dbf";
     private static final String[] DOCUMENT_TYPES = {
         "plu", "plui", "pos", "psmv", "cc", "scot"
     };
@@ -58,42 +59,30 @@ public class PieceEcriteOnlyPdfValidator implements Validator<Document>, Validat
             return;
         }
 
-        DocumentModel documentModel = document.getDocumentModel();
-        DocumentFile pieceEcriteFile = null;
-        List<DocumentFile> documentFiles = document.getDocumentFilesByModel(
-            documentModel.getFileModelByName(PIECE_ECRITE_FILENAME)
-        );
-        if (documentFiles.size() > 0) {
-            pieceEcriteFile = documentFiles.get(0);
-        }
-
         File documentDirectory = context.getCurrentDirectory();
         if (!documentDirectory.exists()) {
             log.info(MARKER, "Le repertoire document n'est pas valide");
             return;
         }
-        log.info(MARKER, "Search non pdf files in directory : pieces ecrites...");
-
-        File pieceEcriteDirectory = new File(documentDirectory, PIECE_ECRITE_DIRNAME);
-        if (!pieceEcriteDirectory.exists()) {
-            log.info(MARKER, "Le repertoire piece ecrite n'existe pas");
-            return;
-        }
 
         String[] extensions = null;
-        Collection<File> files = FileUtils.listFiles(pieceEcriteDirectory, extensions, true);
+        Collection<File> files = FileUtils.listFiles(documentDirectory, extensions, true);
         for (File file : files) {
             // get extension
             String extension = FilenameUtils.getExtension(file.getName());
-            if (extension.equals("pdf")) {
+            if (extension.toLowerCase().matches("(" + String.join("|", VALID_FILE_EXTENSION) + ")")) {
                 continue;
             }
-            if (pieceEcriteFile != null && pieceEcriteFile.getPath().toString().equals(file.getPath())) {
+            // test if there is a dbf, or shp compagnion file
+            if (CompanionFileUtils.hasCompanionFile(file, ROOT_SHAPE_EXTENSION)) {
+                continue;
+            }
+            if (CompanionFileUtils.hasCompanionFile(file, ROOT_MAPINFO_EXTENSION)) {
                 continue;
             }
             context.report(
                 context.createError(
-                    CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF
+                    CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID
                 ).setFile(file.getName())
             );
         }
