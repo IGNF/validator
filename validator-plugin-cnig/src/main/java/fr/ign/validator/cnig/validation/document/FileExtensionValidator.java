@@ -24,10 +24,10 @@ public class FileExtensionValidator implements Validator<Document>, ValidatorLis
     public static final Marker MARKER = MarkerManager.getMarker("FileExtensionValidator");
 
     private static final String[] VALID_FILE_EXTENSION = {
-        "xml", "pdf", "csv", "dbf", "shp", "geojson", "gml"
+        "xml", "pdf", "csv", "map", "mid", "dbf", "shp", "geojson", "gml"
     };
     private static final String ROOT_SHAPE_EXTENSION = "shp";
-    private static final String ROOT_MAPINFO_EXTENSION = "dbf";
+    private static final String ROOT_MAPINFO_EXTENSION = "map";
     private static final String[] DOCUMENT_TYPES = {
         "plu", "plui", "pos", "psmv", "cc", "scot"
     };

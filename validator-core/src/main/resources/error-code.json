@@ -522,7 +522,7 @@
 	{
 		"name": "CNIG_FILE_EXTENSION_INVALID",
 		"level": "WARNING",
-		"message": "Seuls les fichiers avec les extensions suivantes sont autorisés : xml, pdf, csv, MapInfo (dbf), ArcGIS (shp), geojson, gml",
+		"message": "Seuls les fichiers avec les extensions suivantes sont autorisés : xml, pdf, csv, MapInfo (map, mid), ArcGIS (shp, dbf), geojson, gml",
 		"documentation": ""
 	},
 	{
