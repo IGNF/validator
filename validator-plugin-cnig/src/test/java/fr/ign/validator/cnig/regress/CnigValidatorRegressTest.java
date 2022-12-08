@@ -82,6 +82,28 @@ public class CnigValidatorRegressTest {
         context.setProjection("EPSG:2154");
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         context.setValidationDirectory(validationDirectory);
+        context.setFlatValidation(false);
+        // setup must be last instruction to modify context
+        PluginManager pluginManager = new PluginManager();
+        pluginManager.getPluginByName(CnigPlugin.NAME).setup(context);
+        return context;
+    }
+
+    /**
+     * Create flat validation context
+     *
+     * @param documentPath
+     * @return
+     * @throws Exception
+     */
+    private Context createFlatContext(File documentPath) throws Exception {
+        Context context = new Context();
+        context.setReportBuilder(report);
+        context.setProjection("EPSG:2154");
+        File validationDirectory = new File(documentPath.getParentFile(), "validation");
+        context.setValidationDirectory(validationDirectory);
+        context.setFlatValidation(true);
+        // setup must be last instruction to modify context
         PluginManager pluginManager = new PluginManager();
         pluginManager.getPluginByName(CnigPlugin.NAME).setup(context);
         return context;
@@ -706,7 +728,8 @@ public class CnigValidatorRegressTest {
         DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
         File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
         Context context = createContext(documentPath);
-        context.setEnableConditions(true);
+        Assert.assertFalse(context.isFlatValidation());
+
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
@@ -725,7 +748,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(18, CnigErrorCodes.CNIG_IDURBA_UNEXPECTED, report);
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
-        ReportAssert.assertCount(20, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(2, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        ReportAssert.assertCount(23, ErrorLevel.ERROR, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
@@ -739,11 +763,78 @@ public class CnigValidatorRegressTest {
             );
         }
 
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(0);
+            assertEquals("ce_fichier_nest_pas_prevu.csv", error.getFile());
+            assertEquals("Seules les pièces écrites au format PDF sont acceptées.", error.getMessage());
+        }
+
+        {
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(1);
+            assertEquals("Thumbs.db", error.getFile());
+            assertEquals("Seules les pièces écrites au format PDF sont acceptées.", error.getMessage());
+        }
+
         /*
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+
+        /*
+         * check document-info.json
+         */
+        File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
+        File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("30014_PLU_20171013");
+        assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * Test PLU standard cnig_PLU_2017 avec option flat
+     *
+     * @throws Exception
+     */
+    @Test
+    public void test30014_PLU_20171013_flatOption() throws Exception {
+        /*
+         * validate
+         */
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_PLU_2017");
+        File documentPath = CnigRegressHelper.getSampleDocument("30014_PLU_20171013", folder);
+        Context context = createFlatContext(documentPath);
+        Assert.assertTrue(context.isFlatValidation());
+
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * check basic points
+         */
+        Assert.assertEquals(StandardCharsets.ISO_8859_1, context.getEncoding());
+        Assert.assertEquals("30014_PLU_20171013", document.getDocumentName());
+        Assert.assertEquals("cnig_PLU_2017", documentModel.getName());
+        Assert.assertEquals(2, documentModel.getStaticTables().size());
+
+        /*
+         * check errors
+         */
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        ReportAssert.assertCount(21, ErrorLevel.ERROR, report);
+
+        /*
+         * check warnings
+         */
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
+        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
+
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID);
+            for (ValidatorError error : errors) {
+                assertEquals("Thumbs.db", error.getFile());
+            }
+        }
 
         /*
          * check document-info.json
@@ -818,7 +909,7 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
-        ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(11, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
@@ -833,6 +924,17 @@ public class CnigValidatorRegressTest {
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("241800432_PLUi_20200128");
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+
+        /*
+         * check CNIG_PIECE_ECRITE_ONLY_PDF errors
+         */
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
+        {
+            List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF);
+            for (ValidatorError error : errors) {
+                assertEquals("Thumbs.db", error.getFile());
+            }
+        }
     }
 
     /**

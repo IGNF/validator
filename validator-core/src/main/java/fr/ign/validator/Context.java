@@ -800,6 +800,7 @@ public class Context {
     }
 
     public void setEnableConditions(boolean enableConditions) {
+        log.info(MARKER, "set enable condition to {}", enableConditions);
         this.enableConditions = enableConditions;
     }
 
