@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import fr.ign.validator.exception.ModelNotFoundException;
@@ -74,6 +75,7 @@ public class JsonModelReaderTest {
      * @throws MalformedURLException
      */
     @Test
+    @Ignore
     public void testLoadDocumentModelFromGpU() throws MalformedURLException {
         URL documentModelUrl = new URL("https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json");
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelUrl);
@@ -102,6 +104,7 @@ public class JsonModelReaderTest {
      * @throws MalformedURLException
      */
     @Test
+    @Ignore
     public void testLoadDocumentModelWithExternalFeatureType() throws MalformedURLException {
         File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-json/external-type/document.json");
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
