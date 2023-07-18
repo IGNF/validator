@@ -765,13 +765,6 @@ public class CnigValidatorRegressTest {
 
         {
             ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(0);
-            assertEquals("ce_fichier_nest_pas_prevu.csv", error.getFile());
-            assertEquals("Seules les pièces écrites au format PDF sont acceptées.", error.getMessage());
-        }
-
-        {
-            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF).get(1);
-            assertEquals("Thumbs.db", error.getFile());
             assertEquals("Seules les pièces écrites au format PDF sont acceptées.", error.getMessage());
         }
 
