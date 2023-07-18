@@ -900,7 +900,10 @@ public class CnigValidatorRegressTest {
         /*
          * check errors
          */
-        ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+        // GDAL 3.0
+        Assert.assertTrue(report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size() > 0);
+        // GDAL 3.4
+        Assert.assertTrue(report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID).size() < 4);
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_NULL, report);
         ReportAssert.assertCount(11, ErrorLevel.ERROR, report);
 
