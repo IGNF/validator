@@ -43,7 +43,7 @@ public class AttributeUniqueValidatorTest {
         context = new Context();
         context.setProjection("EPSG:4326");
         context.setReportBuilder(reportBuilder);
- 
+
         // creates list of attributes
         List<AttributeType<?>> attributes = new ArrayList<>();
         // creates attribute "id" which is an identifier
@@ -62,7 +62,6 @@ public class AttributeUniqueValidatorTest {
         AttributeType<Geometry> geometryType = new GeometryType();
         geometryType.setName("WKT");
         attributes.add(geometryType);
-        
 
         SingleTableModel fileModel = new SingleTableModel();
         fileModel.setName("TEST");
@@ -123,7 +122,7 @@ public class AttributeUniqueValidatorTest {
 
         List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE);
         {
-        	
+
             ValidatorError error = errors.get(0);
             assertEquals("ID", error.getAttribute());
             assertEquals("TEST", error.getFileModel());
@@ -158,7 +157,6 @@ public class AttributeUniqueValidatorTest {
         database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_1', '', 'POINT(1, 0)');");
         database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_2', '', 'POINT(1, 1)');");
 
-
         // check that the identifierValidator sends two errors
         AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
         identifierValidator.validate(context, database);
@@ -168,15 +166,14 @@ public class AttributeUniqueValidatorTest {
 
     @Test
     public void testNotUniqdWKT() throws Exception {
-    	// update model
+        // update model
         SingleTableModel model = (SingleTableModel) context.getDocumentModel().getFileModelByName("TEST");
         GeometryType type = (GeometryType) model.getFeatureType().getAttribute("WKT");
         type.getConstraints().setUnique(true);
-        
+
         // creates an empty database
         File path = new File(folder.getRoot(), "document_database.db");
         Database database = new Database(path);
-        
 
         // add the table TEST into the database
         database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT, wkt TEXT);");
@@ -185,7 +182,6 @@ public class AttributeUniqueValidatorTest {
         database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_4', '', 'POINT(2, 2)');");
         database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_5', '', 'POINT(2, 2)');");
         database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_6', '', 'POINT(2, 2)');");
-
 
         // check that the identifierValidator sends two errors
         AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
