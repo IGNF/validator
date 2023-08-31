@@ -1,6 +1,7 @@
 package fr.ign.validator.info.model;
 
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -23,6 +24,11 @@ public class TableStats {
      * total number of features.
      */
     private int totalFeatures = 0;
+    /**
+     * 
+     * @return
+     */
+    private Geometry union;
 
     @JsonSerialize(using = EnvelopeSerializer.class)
     @JsonInclude(value = Include.NON_NULL)
@@ -44,6 +50,14 @@ public class TableStats {
 
     public void incrementTotalFeatures() {
         this.totalFeatures++;
+    }
+
+    public Geometry getUnion() {
+        return union;
+    }
+
+    public void setUnion(Geometry union) {
+        this.union = union;
     }
 
 }

@@ -39,6 +39,10 @@ public class DocumentFileInfo {
      */
     private Envelope boundingBox = null;
     /**
+     * Geometry(only for tables)
+     */
+    private String unionWKT = null;
+    /**
      * Feature count (only for tables)
      */
     private Integer totalFeatures = null;
@@ -91,6 +95,14 @@ public class DocumentFileInfo {
 
     public void setBoundingBox(Envelope boundingBox) {
         this.boundingBox = boundingBox;
+    }
+
+    public String getUnionWKT() {
+        return unionWKT;
+    }
+
+    public void setUnionWKT(String unionWKT) {
+        this.unionWKT = unionWKT;
     }
 
     @JsonInclude(value = Include.NON_NULL)

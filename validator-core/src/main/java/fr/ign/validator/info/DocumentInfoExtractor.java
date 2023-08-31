@@ -3,13 +3,16 @@ package fr.ign.validator.info;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.geotools.geometry.jts.WKTWriter2;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.io.WKTWriter;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
@@ -31,6 +34,7 @@ import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.EnvelopeUtils;
 import fr.ign.validator.tools.TableReader;
+import fr.ign.validator.tools.UnionUtils;
 
 /**
  * 
@@ -102,10 +106,19 @@ public class DocumentInfoExtractor {
      */
     private void parseTable(Context context, TableModel fileModel, DocumentFileInfo documentFileInfo) {
         File csvFile = new File(context.getDataDirectory(), fileModel.getName() + ".csv");
-        TableStats stats = getTableStatsFromNormalizedCSV(csvFile);
+        boolean computeUnion = false;
+        if (fileModel.getName().contains("ZONE_URBA") || fileModel.getName().contains("SECTEUR_CC")) {
+            computeUnion = true;
+        }
+        TableStats stats = getTableStatsFromNormalizedCSV(csvFile, computeUnion);
         if (stats != null) {
             documentFileInfo.setTotalFeatures(stats.getTotalFeatures());
             documentFileInfo.setBoundingBox(stats.getBoundingBox());
+            if (stats.getUnion() != null) {
+                WKTWriter2 writer = new WKTWriter2();
+                String geometryWKT = writer.write(stats.getUnion());
+                documentFileInfo.setUnionWKT(geometryWKT);
+            }
         }
     }
 
@@ -119,10 +132,11 @@ public class DocumentInfoExtractor {
     private void parseTables(Context context, MultiTableModel fileModel, DocumentFileInfo documentFileInfo) {
         // stats for all tables
         TableStats globalStats = new TableStats();
+        boolean computeUnion = false;
 
         for (TableModel tableModel : fileModel.getTableModels()) {
             File csvFile = new File(context.getDataDirectory(), tableModel.getName() + ".csv");
-            TableStats tableStats = getTableStatsFromNormalizedCSV(csvFile);
+            TableStats tableStats = getTableStatsFromNormalizedCSV(csvFile, computeUnion);
             if (tableStats == null) {
                 continue;
             }
@@ -144,12 +158,13 @@ public class DocumentInfoExtractor {
      * @param csvFile
      * @return
      */
-    private TableStats getTableStatsFromNormalizedCSV(File csvFile) {
+    private TableStats getTableStatsFromNormalizedCSV(File csvFile, boolean computeUnion) {
         TableStats result = new TableStats();
         try {
             TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
 
             int indexWktColumn = reader.findColumn("WKT");
+            List<String> listWkt = new ArrayList<String>();
             while (reader.hasNext()) {
                 String[] row = reader.next();
                 // count features
@@ -157,10 +172,13 @@ public class DocumentInfoExtractor {
                 // compute bounding box
                 if (indexWktColumn >= 0) {
                     String wkt = row[indexWktColumn];
+                    listWkt.add(wkt);
                     result.getBoundingBox().expandToInclude(EnvelopeUtils.getEnvelope(wkt));
                 }
             }
-
+            if (computeUnion) {
+                result.setUnion(UnionUtils.getUnion(listWkt));
+            }
         } catch (IOException e) {
             log.error(MARKER, "fail to compute stats for {}", csvFile);
             return null;
