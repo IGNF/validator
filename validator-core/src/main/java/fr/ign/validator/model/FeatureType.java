@@ -236,11 +236,18 @@ public class FeatureType implements Model {
 
     /**
      * Retreive the attribute providing the featureId.
-     * 
+     * ----
+     * TODO must add an identifier constraint on type
+     * instead of looping for unique constraint
+     * ----
+     * NOW we skip the WKT attribute as an identifier
      * @return
      */
     public AttributeType<?> getIdentifier() {
         for (AttributeType<?> attribute : attributes) {
+            if (attribute.getName().equals("WKT")) {
+                continue;
+            }
             if (attribute.getConstraints().isUnique()) {
                 return attribute;
             }

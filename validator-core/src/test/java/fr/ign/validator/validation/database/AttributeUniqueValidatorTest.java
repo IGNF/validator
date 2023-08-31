@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.locationtech.jts.geom.Geometry;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.NoSuchAuthorityCodeException;
 
@@ -24,6 +25,7 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.SingleTableModel;
+import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
@@ -41,43 +43,35 @@ public class AttributeUniqueValidatorTest {
         context = new Context();
         context.setProjection("EPSG:4326");
         context.setReportBuilder(reportBuilder);
-
-        // creates attribute "id" which is an identifier
-        AttributeType<String> attribute = new StringType();
-        attribute.setName("ID");
-        attribute.getConstraints().setUnique(true);
-
-        // creates attribute "relation_id" which is NOT an identifier
-        AttributeType<String> attribute2 = new StringType();
-        attribute2.setName("RELATION_ID");
-
+ 
         // creates list of attributes
         List<AttributeType<?>> attributes = new ArrayList<>();
-        attributes.add(attribute);
-        attributes.add(attribute2);
+        // creates attribute "id" which is an identifier
+        {
+            AttributeType<String> attribute = new StringType();
+            attribute.setName("ID");
+            attribute.getConstraints().setUnique(true);
+            attributes.add(attribute);
+        }
+        // creates attribute "relation_id" which is NOT an identifier
+        {
+            AttributeType<String> attribute = new StringType();
+            attribute.setName("RELATION_ID");
+            attributes.add(attribute);
+        }
+        AttributeType<Geometry> geometryType = new GeometryType();
+        geometryType.setName("WKT");
+        attributes.add(geometryType);
+        
 
-        // creates a FeatureType with both attributes
-        FeatureType featureType = new FeatureType();
-        featureType.setAttributes(attributes);
-
-        // creates a FeatureType with only 'id' attribute
-        FeatureType featureType2 = new FeatureType();
-        featureType2.addAttribute(attribute);
-
-        // creates a FileModel with the first Feature Type
         SingleTableModel fileModel = new SingleTableModel();
         fileModel.setName("TEST");
+        FeatureType featureType = new FeatureType();
+        featureType.setAttributes(attributes);
         fileModel.setFeatureType(featureType);
-
-        // reates a FileModel with the second Feature Type
-        SingleTableModel fileModel2 = new SingleTableModel();
-        fileModel2.setName("RELATION");
-        fileModel2.setFeatureType(featureType2);
-
-        // creates a List<FileModel> with both FileModel
+        // creates a List<FileModel>
         List<FileModel> fileModels = new ArrayList<>();
         fileModels.add(fileModel);
-        fileModels.add(fileModel2);
 
         // creates a DocumentModel with the List<FileModel>
         DocumentModel documentModel = new DocumentModel();
@@ -93,17 +87,11 @@ public class AttributeUniqueValidatorTest {
         Database database = new Database(path);
 
         // add the table TEST into the database
-        database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT);");
+        database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT, wkt TEXT);");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_1', 'relation_1');");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_2', 'relation_2');");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_3', 'relation_1');");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_4', 'relation_3');");
-
-        // add the table RELATION into the database
-        database.query("CREATE TABLE RELATION(id TEXT);");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_1');");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_2');");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
 
         // check that the validator doesn't send any error
         AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
@@ -113,25 +101,19 @@ public class AttributeUniqueValidatorTest {
     }
 
     @Test
-    public void testNotValid() throws Exception {
+    public void testNotUniq() throws Exception {
         // creates an empty database
         File path = new File(folder.getRoot(), "document_database.db");
         Database database = new Database(path);
 
         // add the table TEST into the database
-        database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT);");
+        database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT, wkt TEXT);");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_1', 'relation_1');");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_2', 'relation_2');");
         database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_2', 'relation_1');");
-        database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_4', 'relation_3');");
-
-        // add the table RELATION into the database
-        database.query("CREATE TABLE RELATION(id TEXT);");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_1');");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_2');");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
-        database.query("INSERT INTO RELATION(id) VALUES ('relation_3');");
+        database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_2', 'relation_3');");
+        database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_3', 'relation_2');");
+        database.query("INSERT INTO TEST(id, relation_id) VALUES ('test_3', 'relation_3');");
 
         // check that the identifierValidator sends two errors
         AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
@@ -140,30 +122,76 @@ public class AttributeUniqueValidatorTest {
         Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
 
         List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE);
-        int index = 0;
-        // check first error
         {
-            ValidatorError error = errors.get(index++);
+        	
+            ValidatorError error = errors.get(0);
             assertEquals("ID", error.getAttribute());
             assertEquals("TEST", error.getFileModel());
             assertEquals(ErrorScope.DIRECTORY, error.getScope());
             assertEquals(
-                "La valeur 'test_2' est présente 2 fois pour le champ 'ID' de la table 'TEST'.",
+                "La valeur 'test_2' est présente 3 fois pour le champ 'ID' de la table 'TEST'.",
                 error.getMessage()
             );
             assertEquals("SAMPLE_MODEL", error.getDocumentModel());
         }
         {
-            ValidatorError error = errors.get(index++);
+            ValidatorError error = errors.get(1);
             assertEquals("ID", error.getAttribute());
-            assertEquals("RELATION", error.getFileModel());
+            assertEquals("TEST", error.getFileModel());
             assertEquals(ErrorScope.DIRECTORY, error.getScope());
             assertEquals(
-                "La valeur 'relation_3' est présente 3 fois pour le champ 'ID' de la table 'RELATION'.",
+                "La valeur 'test_3' est présente 2 fois pour le champ 'ID' de la table 'TEST'.",
                 error.getMessage()
             );
             assertEquals("SAMPLE_MODEL", error.getDocumentModel());
         }
+    }
+
+    @Test
+    public void testUniqWKT() throws Exception {
+        // creates an empty database
+        File path = new File(folder.getRoot(), "document_database.db");
+        Database database = new Database(path);
+
+        // add the table TEST into the database
+        database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT, wkt TEXT);");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_1', '', 'POINT(1, 0)');");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_2', '', 'POINT(1, 1)');");
+
+
+        // check that the identifierValidator sends two errors
+        AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
+        identifierValidator.validate(context, database);
+
+        Assert.assertEquals(0, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
+    }
+
+    @Test
+    public void testNotUniqdWKT() throws Exception {
+    	// update model
+        SingleTableModel model = (SingleTableModel) context.getDocumentModel().getFileModelByName("TEST");
+        GeometryType type = (GeometryType) model.getFeatureType().getAttribute("WKT");
+        type.getConstraints().setUnique(true);
+        
+        // creates an empty database
+        File path = new File(folder.getRoot(), "document_database.db");
+        Database database = new Database(path);
+        
+
+        // add the table TEST into the database
+        database.query("CREATE TABLE TEST(id TEXT, relation_id TEXT, wkt TEXT);");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_1', '', 'POINT(1, 1)');");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_2', '', 'POINT(1, 1)');");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_4', '', 'POINT(2, 2)');");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_5', '', 'POINT(2, 2)');");
+        database.query("INSERT INTO TEST(id, relation_id, wkt) VALUES ('test_6', '', 'POINT(2, 2)');");
+
+
+        // check that the identifierValidator sends two errors
+        AttributeUniqueValidator identifierValidator = new AttributeUniqueValidator();
+        identifierValidator.validate(context, database);
+
+        Assert.assertEquals(2, reportBuilder.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
     }
 
 }
