@@ -43,7 +43,7 @@
 		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<!-- JDBC -->
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
-		<sqlite-jdbc.version>3.39.3.0</sqlite-jdbc.version>
+		<sqlite-jdbc.version>3.41.2.2</sqlite-jdbc.version>
 		<!-- Testing -->
 		<junit.version>4.13.2</junit.version>
 		<jsonassert.version>1.5.1</jsonassert.version>
