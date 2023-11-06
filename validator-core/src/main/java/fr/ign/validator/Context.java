@@ -151,6 +151,11 @@ public class Context {
     private GeometryComplexityThreshold complexityThreshold;
 
     /**
+     * Document geometry declared in validation command
+     */
+    private Geometry documentEmprise;
+
+    /**
      * Allow validator to perform SQL conditions on FeatureType.
      */
     private boolean enableConditions = false;
@@ -797,6 +802,14 @@ public class Context {
 
     public boolean isEnableConditions() {
         return enableConditions;
+    }
+
+    public Geometry getDocumentEmprise() {
+        return documentEmprise;
+    }
+
+    public void setDocumentEmprise(Geometry documentEmprise) {
+        this.documentEmprise = documentEmprise;
     }
 
     public void setEnableConditions(boolean enableConditions) {

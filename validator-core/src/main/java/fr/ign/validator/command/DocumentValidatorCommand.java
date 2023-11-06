@@ -22,6 +22,7 @@ import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.Version;
+import fr.ign.validator.command.options.DocumentEmpriseOption;
 import fr.ign.validator.command.options.GeometryComplexityThresholdOption;
 import fr.ign.validator.command.options.OutputProjectionOption;
 import fr.ign.validator.command.options.StringFixerOptions;
@@ -156,6 +157,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected GeometryComplexityThreshold complexityThreshold;
 
     /**
+     * Option - Geometry of the document emprise to detect outside emprise
+     * geometries
+     */
+    protected Geometry documentEmprise;
+
+    /**
      * Option - switch (boolean) default value is false. Allow validator to perform
      * SQL conditions on FeatureType. Be aware of SQL attack if your validator is
      * connect to a sensible database.
@@ -210,6 +217,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          * plugin-cnig options
          */
         GeometryComplexityThresholdOption.buildOptions(options);
+        DocumentEmpriseOption.buildOptions(options);
 
         /*
          * plugin-dgpr options
@@ -254,6 +262,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          * plugin-cnig options
          */
         this.complexityThreshold = GeometryComplexityThresholdOption.parseCustomOptions(commandLine);
+        this.documentEmprise = DocumentEmpriseOption.parseCustomOptions(commandLine);
 
         /*
          * plugin-dgpr options
@@ -310,6 +319,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
          * plugin-cnig options
          */
         context.setComplexityThreshold(complexityThreshold);
+        context.setDocumentEmprise(documentEmprise);
 
         /*
          * plugin-dgpr options

@@ -664,6 +664,12 @@
 		"documentation": "La compléxité géométrique dépasse les seuils tolérés."
 	},
 	{
+		"name": "CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR",
+		"level": "WARNING",
+		"message": "La géométrie est détectée en dehors des limites du document d'urbanisme.",
+		"documentation": "La géométrie est détectée en dehors des limites du document d'urbanisme."
+	},
+	{
 		"name": "CNIG_SUP_BAD_TERRITORY_CODE",
 		"level": "WARNING",
 		"message": "Le code de territoire '{EMPRISE}' est invalide dans le nom de dossier.",

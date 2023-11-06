@@ -105,11 +105,21 @@ public class CnigErrorCodes {
         "CNIG_METADATA_KEYWORD_INVALID"
     );
 
+    /**
+     * Report geometry not suitable for web broadcasting
+     */
     public static final ErrorCode CNIG_GEOMETRY_COMPLEXITY_WARNING = ErrorCode.valueOf(
         "CNIG_GEOMETRY_COMPLEXITY_WARNING"
     );
     public static final ErrorCode CNIG_GEOMETRY_COMPLEXITY_ERROR = ErrorCode.valueOf(
         "CNIG_GEOMETRY_COMPLEXITY_ERROR"
+    );
+
+    /**
+     * Report geometry outsite the declared document emprise
+     */
+    public static final ErrorCode CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR = ErrorCode.valueOf(
+        "CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR"
     );
 
     /**
