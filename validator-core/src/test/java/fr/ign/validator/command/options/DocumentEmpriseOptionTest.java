@@ -45,7 +45,10 @@ public class DocumentEmpriseOptionTest {
         WKTWriter2 writer = new WKTWriter2();
         String wkt = writer.write(result);
 
-        assertEquals("POLYGON ((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))", wkt);
+        assertEquals(
+            "POLYGON ((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))",
+            wkt
+        );
     }
 
     @Test
@@ -64,7 +67,10 @@ public class DocumentEmpriseOptionTest {
         WKTWriter2 writer = new WKTWriter2();
         String wkt = writer.write(result);
 
-        assertEquals("POLYGON ((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))", wkt);
+        assertEquals(
+            "POLYGON ((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))",
+            wkt
+        );
     }
 
     @Test
@@ -82,7 +88,10 @@ public class DocumentEmpriseOptionTest {
         WKTWriter2 writer = new WKTWriter2();
         String wkt = writer.write(result);
 
-        assertEquals("POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))", wkt);
+        assertEquals(
+            "POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))",
+            wkt
+        );
     }
 
     @Test(expected = ParseException.class)
