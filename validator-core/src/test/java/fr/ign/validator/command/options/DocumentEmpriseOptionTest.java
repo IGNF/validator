@@ -35,7 +35,7 @@ public class DocumentEmpriseOptionTest {
     public void testWKTParsingOk() throws ParseException {
         String[] args = {
             "--cnig-document-emprise",
-            "POINT(1 1)"
+            "POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))"
         };
         CommandLine commandLine = parser.parse(options, args);
         Geometry result = DocumentEmpriseOption.parseCustomOptions(commandLine);
@@ -45,7 +45,7 @@ public class DocumentEmpriseOptionTest {
         WKTWriter2 writer = new WKTWriter2();
         String wkt = writer.write(result);
 
-        assertEquals("POINT (1 1)", wkt);
+        assertEquals("POLYGON ((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))", wkt);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class DocumentEmpriseOptionTest {
         WKTWriter2 writer = new WKTWriter2();
         String wkt = writer.write(result);
 
-        assertEquals("POINT (1 1)", wkt);
+        assertEquals("POLYGON ((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))", wkt);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class DocumentEmpriseOptionTest {
     public void testGeoJSONOk() throws ParseException {
         String[] args = {
             "--cnig-document-emprise",
-            "{ type:\"POINT\", geometry: [1, 1] }"
+            ""
         };
         CommandLine commandLine = parser.parse(options, args);
         Geometry result = DocumentEmpriseOption.parseCustomOptions(commandLine);
@@ -82,7 +82,7 @@ public class DocumentEmpriseOptionTest {
         WKTWriter2 writer = new WKTWriter2();
         String wkt = writer.write(result);
 
-        assertEquals("POINT(1 1)", wkt);
+        assertEquals("POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))", wkt);
     }
 
     @Test(expected = ParseException.class)
