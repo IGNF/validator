@@ -86,7 +86,12 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
             FeatureType featureType = tableModel.getFeatureType();
             GeometryType geometryType = featureType.getDefaultGeometry();
             if (geometryType == null) {
-                log.info(MARKER, "Skip validator. No geomety for featureType {}", featureType.getName());
+                log.info(MARKER, "Skip {}. No geomety for this featureType.", featureType.getName());
+                continue;
+            }
+            String name = featureType.getName();
+            if (name.equals("SECTEUR_CC") || name.equals("ZONE_URBA")) {
+                log.info(MARKER, "Skip {}. Only for SECTEUR_CC or ZONE_URBA.", featureType.getName());
                 continue;
             }
             log.info(
