@@ -13,7 +13,10 @@ import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.geometry.ProjectionList;
+import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.tools.ModelHelper;
@@ -25,12 +28,10 @@ import fr.ign.validator.validation.Validator;
  * @author cbouche
  *
  */
-public class GeometryInsideDocumentValidator implements Validator<Attribute<Geometry>>, ValidatorListener {
+public class GeometryInDocumentValidator implements Validator<Attribute<Geometry>>, ValidatorListener {
 
     public static final Logger log = LogManager.getRootLogger();
-    public static final Marker MARKER = MarkerManager.getMarker("GeometryInsideDocumentValidator");
-
-//	private Projection sourceProjection;
+    public static final Marker MARKER = MarkerManager.getMarker("GeometryInDocumentValidator");
 
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {
@@ -46,8 +47,6 @@ public class GeometryInsideDocumentValidator implements Validator<Attribute<Geom
             log.debug(MARKER, "Skip validation. Geometry is null");
             return;
         }
-
-//		sourceProjection = context.getProjection();
 
         if (isInsideDocumentEmprise(geometry, documentEmprise)) {
             return;
@@ -67,26 +66,33 @@ public class GeometryInsideDocumentValidator implements Validator<Attribute<Geom
 
     @Override
     public void beforeValidate(Context context, Document document) throws Exception {
-        System.err.println(MARKER);
 
         if (context.getDocumentEmprise() == null) {
-            log.info(MARKER, "Skip GeometryInsideDocumentValidator. DocumentEmprise is not set");
+            log.info(MARKER, "Skip validator. DocumentEmprise is not set");
             return;
         }
+
+        // transform input geometry
+        Projection sourceProjection = context.getProjection();
+        Projection crs84 = ProjectionList.getCRS84();
+        ProjectionTransform projectionTransform = new ProjectionTransform(crs84, sourceProjection);
+
+        Geometry projectedGeometry = projectionTransform.transform(context.getDocumentEmprise());
+        context.setDocumentEmprise(projectedGeometry);
 
         List<TableModel> tableModels = ModelHelper.getTableModels(document.getDocumentModel());
         for (TableModel tableModel : tableModels) {
             FeatureType featureType = tableModel.getFeatureType();
             GeometryType geometryType = featureType.getDefaultGeometry();
             if (geometryType == null) {
-                log.info(MARKER, "Skip GeometryInsideDocumentValidator. featureType {}", featureType.getName());
+                log.info(MARKER, "Skip validator. No geomety for featureType {}", featureType.getName());
                 continue;
             }
             log.info(
-                MARKER, "Add GeometryInsideDocumentValidator to featureType {}:{}", featureType.getName(),
+                MARKER, "Add validator to featureType {}:{}", featureType.getName(),
                 geometryType.getName()
             );
-            geometryType.addValidator(new GeometryInsideDocumentValidator());
+            geometryType.addValidator(new GeometryInDocumentValidator());
         }
 
     }

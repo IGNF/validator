@@ -21,13 +21,13 @@ import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.type.GeometryType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
-public class GeometryInsideDocumentTest extends CnigValidatorTestBase {
+public class GeometryInDocumentValidatorTest extends CnigValidatorTestBase {
 
-    private GeometryInsideDocumentValidator validator;
+    private GeometryInDocumentValidator validator;
 
     @Before
     public void setUp() {
-        validator = new GeometryInsideDocumentValidator();
+        validator = new GeometryInDocumentValidator();
 
         report = new InMemoryReportBuilder();
         context = new Context();

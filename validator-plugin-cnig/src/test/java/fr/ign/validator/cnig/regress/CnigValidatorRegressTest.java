@@ -126,7 +126,7 @@ public class CnigValidatorRegressTest {
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
 
-        String wktEmprise = "POLYGON((550000 6740000, 570000 6740000, 570000 6760000, 550000 6760000, 550000 6740000))";
+        String wktEmprise = "POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))";
 
         WKTReader2 reader = new WKTReader2();
         Geometry documentEmprise = reader.read(wktEmprise);
