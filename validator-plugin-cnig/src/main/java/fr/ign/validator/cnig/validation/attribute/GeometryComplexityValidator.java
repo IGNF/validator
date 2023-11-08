@@ -203,7 +203,7 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
     public void beforeValidate(Context context, Document document) throws Exception {
 
         if (context.getComplexityThreshold() == null) {
-            log.info(MARKER, "Skip GeometryIsStreamableValidator. ComplexityThreshold is not set");
+            log.info(MARKER, "Skip GeometryComplexityValidator. ComplexityThreshold is not set");
             return;
         }
 
@@ -212,11 +212,11 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
             FeatureType featureType = tableModel.getFeatureType();
             GeometryType geometryType = featureType.getDefaultGeometry();
             if (geometryType == null) {
-                log.info(MARKER, "Skip GeometryIsStreamableValidator. featureType {}", featureType.getName());
+                log.info(MARKER, "Skip GeometryComplexityValidator. featureType {}", featureType.getName());
                 continue;
             }
             log.info(
-                MARKER, "Add GeometryIsStreamableValidator to featureType {}:{}", featureType.getName(), geometryType
+                MARKER, "Add GeometryComplexityValidator to featureType {}:{}", featureType.getName(), geometryType
                     .getName()
             );
             geometryType.addValidator(new GeometryComplexityValidator());

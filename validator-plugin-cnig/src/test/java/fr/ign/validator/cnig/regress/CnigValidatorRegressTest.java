@@ -17,11 +17,13 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.geotools.geometry.jts.WKTReader2;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.locationtech.jts.geom.Geometry;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
@@ -123,6 +125,14 @@ public class CnigValidatorRegressTest {
         File documentPath = CnigRegressHelper.getSampleDocument("41175_PLU_20140603", folder);
         Context context = createContext(documentPath);
         Document document = new Document(documentModel, documentPath);
+
+        String wktEmprise = "POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))";
+
+        WKTReader2 reader = new WKTReader2();
+        Geometry documentEmprise = reader.read(wktEmprise);
+
+        context.setDocumentEmprise(documentEmprise);
+
         document.validate(context);
 
         /*
@@ -158,6 +168,7 @@ public class CnigValidatorRegressTest {
         /*
          * check warnings
          */
+        ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);

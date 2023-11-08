@@ -8,6 +8,7 @@ import fr.ign.validator.cnig.process.DocUrbaPostProcess;
 import fr.ign.validator.cnig.process.PerimetreScotPostProcess;
 import fr.ign.validator.cnig.process.SupRelationsPostProcess;
 import fr.ign.validator.cnig.validation.attribute.GeometryComplexityValidator;
+import fr.ign.validator.cnig.validation.attribute.GeometryInDocumentValidator;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.attribute.RegexpTxtValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneAssietteValidator;
@@ -100,6 +101,7 @@ public class CnigPlugin implements Plugin {
         context.addListener(new InseeValidator());
         context.addListener(new RegexpTxtValidator());
         context.addListener(new GeometryComplexityValidator());
+        context.addListener(new GeometryInDocumentValidator());
 
         /*
          * Extends metadata validation

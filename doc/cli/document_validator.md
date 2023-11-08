@@ -34,8 +34,7 @@ Les fichiers produits seront les suivants :
 | `./validation/document-test/DATA/{NomType}.csv` | Les données normalisées pour une éventuelle livraison à un entrepot de diffusion        |
 | `./validator-debug.log`                         | Les logs du validateur java                                                             |
 
-
-## Remarques
+## Normalisation et conversion
 
 La conversion des fichiers au format CSV est réalisées sous forme de fichier "companions" avec des extensions dédiées (`.vrows` et `.vtabs`) dans le dossier à valider :
 
@@ -44,3 +43,27 @@ La conversion des fichiers au format CSV est réalisées sous forme de fichier "
 
 Ces conversions sont réalisées à l'aide de [ogr2ogr de GDAL](../dependencies/ogr2ogr.md). L'utilisation d'extension dédiées facilite principalement une nouvelle exécution du validateur sur un dossier.
 
+## Options du plugin CNIG
+
+Les contrôles spécifiques aux plugins sont contrôlés par des paramètres en entrée de validation. Pour la ligne de commande `document_validator` le plugin CNIG utilise les paramètres suivants :
+* Option `cnig-document-emprise` attend une *géométrie* au format WKT et définie dans le système de projection EPSG:4326
+* Option `cnig-complexity-tolerance` attend deux groupes de 4 *seuils* de détection de géométries complexes.
+  * *Nombre maximum de point par mètre*
+  * *Nombre maximum de parties*
+  * *Nombre maximum de trous*
+  * *Nombre maximum de points*
+  * Fournir d'abord les seuils qui leverait un avertissement
+  * Puis les seuils qui leverait une erreur
+
+```bash
+java -jar validator-cli.jar document_validator \
+    --report-format jsonl \
+    --model cnig_PLU_2017 \
+    --input INSEE_PLU_DATE \
+    --output validation \
+    --srs EPSG:2154 \
+    --normalize \
+    --plugins "CNIG" \
+    --cnig-complexity-tolerance "[[-1,500,500,0.1,50000],[200000,1000,1000,10,50000]]" \
+    --cnig-document-emprise "POLYGON((1.186438253 47.90390196, 1.098884284 47.90390196, 1.098884284 47.83421197, 1.186438253 47.83421197, 1.186438253 47.90390196))"
+```
