@@ -90,7 +90,7 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
                 continue;
             }
             String name = featureType.getName();
-            if (name.equals("SECTEUR_CC") || name.equals("ZONE_URBA")) {
+            if (!name.equals("SECTEUR_CC") && !name.equals("ZONE_URBA")) {
                 log.info(MARKER, "Skip {}. Only for SECTEUR_CC or ZONE_URBA.", featureType.getName());
                 continue;
             }
