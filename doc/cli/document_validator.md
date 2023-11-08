@@ -47,11 +47,13 @@ Ces conversions sont réalisées à l'aide de [ogr2ogr de GDAL](../dependencies/
 
 Les contrôles spécifiques aux plugins sont contrôlés par des paramètres en entrée de validation. Pour la ligne de commande `document_validator` le plugin CNIG utilise les paramètres suivants :
 * Option `cnig-document-emprise` attend une *géométrie* au format WKT et définie dans le système de projection EPSG:4326
-* Option `cnig-complexity-tolerance` attend un couple de 4 *seuils* de détection de géométries complexes.
+* Option `cnig-complexity-tolerance` attend deux groupes de 4 *seuils* de détection de géométries complexes.
   * *Nombre maximum de point par mètre*
   * *Nombre maximum de parties*
   * *Nombre maximum de trous*
   * *Nombre maximum de points*
+  * Fournir d'abord les seuils qui leverait un avertissement
+  * Puis les seuils qui leverait une erreur
 
 ```bash
 java -jar validator-cli.jar document_validator \
