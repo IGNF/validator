@@ -78,7 +78,8 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
         ProjectionTransform projectionTransform = new ProjectionTransform(crs84, sourceProjection);
 
         Geometry projectedGeometry = projectionTransform.transform(context.getDocumentEmprise());
-        context.setDocumentEmprise(projectedGeometry);
+        Geometry bufferedGeometry = projectedGeometry.buffer(10);
+        context.setDocumentEmprise(bufferedGeometry);
 
         List<TableModel> tableModels = ModelHelper.getTableModels(document.getDocumentModel());
         for (TableModel tableModel : tableModels) {
