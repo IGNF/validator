@@ -1,16 +1,18 @@
 package fr.ign.validator.command.options;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.geotools.geometry.jts.WKTReader2;
 import org.locationtech.jts.geom.Geometry;
+
+import fr.ign.validator.geometry.GeometryReader;
+import fr.ign.validator.tools.FileConverter;
+import fr.ign.validator.tools.TableReader;
 
 /**
  * 
@@ -34,7 +36,8 @@ public class DocumentEmpriseOption {
         {
             Option option = new Option(
                 null, OPTION_NAME, true,
-                "Path to a geometry or a geometry. WKT or GeoJSON format are supported. Declared in the same CRS than data source"
+                "Path to a GeoJSON feature collection file or a simple WKT geometry."
+                    + "Coordinates must be declare in ESPG:4326."
             );
             option.setRequired(false);
             options.addOption(option);
@@ -55,53 +58,83 @@ public class DocumentEmpriseOption {
         }
 
         String parsedOption = (String) commandLine.getParsedOptionValue(OPTION_NAME);
-        String textGeometry = null;
-        Geometry documentReferenceGeometry = null;
 
         File file = new File(parsedOption);
         if (file.exists()) {
-            FileReader fileReader;
-            try {
-                fileReader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                textGeometry = bufferedReader.readLine().trim();
-                bufferedReader.close();
-            } catch (IOException e) {
-                DocumentEmpriseOption.throwParseErrorException(parsedOption, "File is unreadable");
-            }
-        } else {
-            textGeometry = parsedOption;
+            return parseGeoJSONFileOption(parsedOption);
         }
 
-        if (textGeometry == null) {
-            DocumentEmpriseOption.throwParseErrorException(parsedOption, "Text geometry is empty");
-        }
+        return parseWKTOption(parsedOption);
+    }
 
-        WKTReader2 reader2 = new WKTReader2();
+    private static Geometry parseWKTOption(String parsedOption) throws ParseException {
+        Geometry documentReferenceGeometry = null;
+        GeometryReader geometryReader = new GeometryReader();
+
         try {
-            documentReferenceGeometry = reader2.read(textGeometry);
+            documentReferenceGeometry = geometryReader.read(parsedOption);
         } catch (org.locationtech.jts.io.ParseException e) {
             DocumentEmpriseOption.throwParseErrorException(parsedOption, "Error while parsing WKT");
         }
 
         if (documentReferenceGeometry == null) {
+            DocumentEmpriseOption.throwParseErrorException(parsedOption, "Parsed geometry is empty");
+        }
+
+        return documentReferenceGeometry;
+
+    }
+
+    private static Geometry parseGeoJSONFileOption(String parsedOption) throws ParseException {
+        File file = new File(parsedOption);
+        String filename = file.getName().toLowerCase();
+
+        if (!filename.endsWith(".json")) {
+            DocumentEmpriseOption.throwParseErrorException(parsedOption, "Ensure the input file has .json extension");
+        }
+        FileConverter fileConverter = FileConverter.getInstance();
+        File transformedFile = new File(file.getParentFile().getPath() + "/cnig_document_emprise_wkt.csv");
+        try {
+            fileConverter.convertToCSV(file, transformedFile, StandardCharsets.UTF_8);
+        } catch (IOException e) {
             DocumentEmpriseOption.throwParseErrorException(
-                parsedOption, "TODO IMPLEMENT GeoJSON reader or provide WKT"
+                parsedOption,
+                "Ensure the input file respect geojson format"
             );
         }
 
-        // TODO content
-        // try is JSON geometry
-        // if go with it
-        // if not throw ParseException "Invalid document emprise option"
-        return documentReferenceGeometry;
+        GeometryReader geometryReader = new GeometryReader();
+        Geometry union = null;
+
+        try {
+            // read CSV file
+            TableReader tableReader = TableReader.createTableReader(transformedFile, StandardCharsets.UTF_8);
+
+            int column = tableReader.findColumn("WKT");
+            while (tableReader.hasNext()) {
+                String wkt = tableReader.next()[column];
+                Geometry geometry = geometryReader.read(wkt);
+                if (union == null) {
+                    union = geometry;
+                } else {
+                    // merge featureCollection
+                    union = union.union(geometry);
+                }
+            }
+        } catch (IOException e) {
+            DocumentEmpriseOption.throwParseErrorException(parsedOption, "Parsed geometry is empty");
+        } catch (org.locationtech.jts.io.ParseException e) {
+            DocumentEmpriseOption.throwParseErrorException(parsedOption, "Parsed geometry is empty");
+        }
+
+        return union;
     }
 
     private static void throwParseErrorException(String parsedOption, String reason) throws ParseException {
         // TODO try with GeoJSON format before throwing
         String message = String.format(
-            "Invalid document emprise format - %1s - %1s given for %1s",
-            reason, parsedOption, OPTION_NAME
+            "Invalid document emprise format - %1s - %1s given for %1s", reason,
+            parsedOption, OPTION_NAME
         );
         throw new ParseException(message);
     }
