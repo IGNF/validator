@@ -126,6 +126,12 @@ public class FileConverter {
             }
         }
 
+        // TODO add options for geopackage format
+        boolean sourceIsGeopackage = FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gpkg");
+        if (sourceIsGeopackage) {
+            log.warn(MARKER, "detect Geopackage format");
+        }
+
         args.add("-f");
         args.add(DRIVER_CSV);
 

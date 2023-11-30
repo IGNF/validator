@@ -38,7 +38,7 @@ public class Document implements Validatable {
      * Allowed file extensions used to perform file listing
      */
     private String[] allowedExtensions = {
-        "dbf", "DBF", "tab", "TAB", "pdf", "PDF", "xml", "XML", "gml", "GML", "csv", "CSV"
+        "dbf", "DBF", "tab", "TAB", "pdf", "PDF", "xml", "XML", "gml", "GML", "csv", "CSV", "gpkg", "GPKG"
     };
 
     /**

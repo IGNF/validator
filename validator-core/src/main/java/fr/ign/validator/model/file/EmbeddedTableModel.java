@@ -25,6 +25,11 @@ public class EmbeddedTableModel implements TableModel {
     private String name;
 
     /**
+     * Path of the table.
+     */
+    private String path;
+
+    /**
      * FeatureType reference.
      */
     private FeatureTypeRef featureTypeRef;
@@ -46,6 +51,15 @@ public class EmbeddedTableModel implements TableModel {
     @XmlTransient
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    @XmlTransient
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @JsonProperty("tableModel")

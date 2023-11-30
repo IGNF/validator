@@ -1,0 +1,31 @@
+{
+    "name": "typeppr_codegaspar_referenceinternet",
+    "description": "",
+    "columns": [
+      {
+        "name": "adresse",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "codeprocedure",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "nomressource",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "typereference",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "description",
+        "description": "",
+        "type": "String"
+      }
+    ]
+  }

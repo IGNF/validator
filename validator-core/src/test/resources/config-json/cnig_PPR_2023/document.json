@@ -1,0 +1,40 @@
+{
+	"name": "cnig_PPR_2023",
+	"title": "",
+	"description": "",
+	"files": [
+		{
+			"name": "DONNEES",
+			"type": "multi_table",
+			"path": "[^\\/]*",
+			"mandatory": "ERROR",
+			"tables": [
+				{
+					"name": "typeppr_codegaspar_perimetre_s",
+					"path": "ppr[a-zA-Z]_[0-9]{2,3}(PREF|DDT|DDTM|DREAL|DRIEAT)[0-9]{4}[0-9]{4}_perimetre_s",
+					"tableModel": "table-models/typeppr_codegaspar_perimetre_s.json"
+				},
+				{
+					"name": "typeppr_codegaspar_procedure",
+					"path": "ppr[a-zA-Z]_[0-9]{2,3}(PREF|DDT|DDTM|DREAL|DRIEAT)[0-9]{4}[0-9]{4}_procedure",
+					"tableModel": "table-models/typeppr_codegaspar_procedure.json"
+				},
+				{
+					"name": "typeppr_codegaspar_referenceinternet",
+					"path": "ppr[a-zA-Z]_[0-9]{2,3}(PREF|DDT|DDTM|DREAL|DRIEAT)[0-9]{4}[0-9]{4}_referenceinternet",
+					"tableModel": "table-models/typeppr_codegaspar_referenceinternet.json"
+				},
+				{
+					"name": "typeppr_codegaspar_zonereglementairefoncier_s",
+					"path": "ppr[a-zA-Z]_[0-9]{2,3}(PREF|DDT|DDTM|DREAL|DRIEAT)[0-9]{4}[0-9]{4}_zonereglementairefoncier_s",
+					"tableModel": "table-models/typeppr_codegaspar_zonereglementairefoncier_s.json"
+				},
+				{
+					"name": "typeppr_codegaspar_zonereglementaireurba_s",
+					"path": "ppr[a-zA-Z]_[0-9]{2,3}(PREF|DDT|DDTM|DREAL|DRIEAT)[0-9]{4}[0-9]{4}_zonereglementaireurba_s",
+					"tableModel": "table-models/typeppr_codegaspar_zonereglementaireurba_s.json"
+				}
+			]
+		}
+	]
+}

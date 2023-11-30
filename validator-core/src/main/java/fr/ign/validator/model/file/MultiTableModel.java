@@ -24,6 +24,8 @@ import fr.ign.validator.model.FileModel;
 public class MultiTableModel extends FileModel {
     public static final String TYPE = "multi_table";
 
+    private static final String SUFFIXES_REGEXP = "\\.(gml|GML|gpkg|GPKG)";
+
     private List<EmbeddedTableModel> tableModels = new ArrayList<>();
 
     public MultiTableModel() {
@@ -37,7 +39,7 @@ public class MultiTableModel extends FileModel {
 
     @Override
     public String getRegexpSuffix() {
-        return "\\.(gml|GML)";
+        return SUFFIXES_REGEXP;
     }
 
     @Override
@@ -65,6 +67,9 @@ public class MultiTableModel extends FileModel {
     public EmbeddedTableModel getTableModelByName(String name) {
         for (EmbeddedTableModel tableModel : tableModels) {
             if (tableModel.getName().equalsIgnoreCase(name)) {
+                return tableModel;
+            }
+            if (tableModel.getPath() != null && name.matches("(?i)" + tableModel.getPath())) {
                 return tableModel;
             }
         }
