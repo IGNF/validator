@@ -25,6 +25,8 @@ import fr.ign.validator.model.TableModel;
 public class SingleTableModel extends FileModel implements TableModel {
     public static final String TYPE = "table";
 
+    private static final String SUFFIXES_REGEXP = "\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV|gpkg|GPKG)";
+
     /**
      * FeatureType reference.
      */
@@ -66,7 +68,7 @@ public class SingleTableModel extends FileModel implements TableModel {
 
     @Override
     public String getRegexpSuffix() {
-        return "\\.(dbf|DBF|tab|TAB|gml|GML|csv|CSV)";
+        return SUFFIXES_REGEXP;
     }
 
     @Override

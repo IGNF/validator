@@ -1,0 +1,63 @@
+{
+  "name": "typeppr_codegaspar_zonereglementaireurba_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzonereglementaire",
+      "description": "Identifiant unique",
+      "type": "String",
+      "constraints": {
+        "required": true,
+        "unique": true,
+        "maxLength": 8
+      }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 16
+      }
+    },
+    {
+      "name": "codezonereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 10
+      }
+    },
+    {
+      "name": "libellezonereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 255
+      }
+    },
+    {
+      "name": "typereglement",
+      "description": "",
+      "type": "String",
+      "constraints": {
+        "maxLength": 2
+      }
+    },
+    {
+      "name": "obligationtravaux",
+      "description": "",
+      "type": "Boolean"
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Geométrie associée",
+      "type": "Polygon",
+      "constraints": {
+        "required": true,
+        "unique": false
+      }
+    }
+  ]
+}

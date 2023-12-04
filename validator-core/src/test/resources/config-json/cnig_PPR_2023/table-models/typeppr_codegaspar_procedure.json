@@ -1,0 +1,21 @@
+{
+    "name": "typeppr_codegaspar_procedure",
+    "description": "",
+    "columns": [
+      {
+        "name": "codeprocedure",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "libelleprocedure",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "typeprocedure",
+        "description": "",
+        "type": "String"
+      }
+    ]
+  }

@@ -1,0 +1,40 @@
+{
+    "name": "typeppr_codegaspar_perimetre_s",
+    "description": "",
+    "columns": [
+      {
+        "name": "idperimetre",
+        "description": "Identifiant unique",
+        "type": "Integer",
+        "constraints": {
+          "required": true,
+          "unique": true
+        }
+      },
+      {
+        "name": "codeprocedure",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "etatprocedure",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "dateetat",
+        "description": "",
+        "type": "String"
+      },
+      {
+        "name": "WKT",
+        "title": "Géométrie",
+        "description": "Geométrie associée",
+        "type": "MultiPolygon",
+        "constraints": {
+          "required": true,
+          "unique": false
+        }
+      }
+    ]
+  }

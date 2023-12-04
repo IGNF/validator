@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -263,6 +264,41 @@ public class MultiTableReaderTest {
                 assertEquals("gml_48b70971-dce9-40b9-abec-eb307dd4f946", row[2]);
             }
         }
+    }
+
+    @Test
+    public void testReadGeopackage() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(
+            getClass(), "/geopackage/pprt_69dreal20090005/pprt_69dreal20090005.gpkg"
+        );
+        clearCache(srcFile);
+
+        MultiTableReader reader = MultiTableReader.createMultiTableReader(srcFile, new TableReaderOptions());
+        List<String> tableNames = reader.getTableNames();
+
+        String[] expectedTableNamess = {
+            "pprt_69dreal20090005_perimetre_s",
+            "pprt_69dreal20090005_procedure",
+            "pprt_69dreal20090005_referenceinternet",
+            "pprt_69dreal20090005_zonereglementairefoncier_s",
+            "pprt_69dreal20090005_zonereglementaireurba_s",
+        };
+        assertArrayEquals(expectedTableNamess, tableNames.toArray());
+
+        TableReader tableReader = reader.getTableReader("pprt_69dreal20090005_perimetre_s");
+        String[] expectedColumns = {
+            "WKT",
+            "idperimetre",
+            "codeprocedure",
+            "etatprocedure",
+            "dateetat"
+        };
+        assertArrayEquals(expectedColumns, tableReader.getHeader());
+
+        String[] row = tableReader.next();
+
+        String expected = "\\[MULTIPOLYGON .*, 1, 69DREAL20090005, APPROUVE, 2017/02/08\\]";
+        assertTrue(Arrays.toString(row).matches(expected));
     }
 
     private void clearCache(File srcFile) throws IOException {

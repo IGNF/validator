@@ -431,7 +431,8 @@ public class Database implements Closeable {
         MultiTableModel mutliTableModel = documentFile.getFileModel();
         MultiTableReader reader = documentFile.getReader();
         for (String tableName : reader.getTableNames()) {
-            if (mutliTableModel.getTableModelByName(tableName) == null) {
+            TableModel tableModel = mutliTableModel.getTableModelByName(tableName);
+            if (tableModel == null) {
                 log.warn(
                     MARKER, "Loading {} from {} : Skipped (table not found in {})",
                     tableName,
@@ -440,7 +441,7 @@ public class Database implements Closeable {
                 );
                 continue;
             }
-            loadFile(tableName, reader.getTablePath(tableName), StandardCharsets.UTF_8);
+            loadFile(tableModel.getName(), reader.getTablePath(tableName), StandardCharsets.UTF_8);
         }
     }
 
