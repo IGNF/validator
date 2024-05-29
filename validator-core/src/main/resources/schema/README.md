@@ -62,9 +62,9 @@ Les types de fichiers supportés sont les suivants :
 | `metadata`    | Fiche de métadonnées XML au format ISO 19115 (`.xml`)                             |   4.0   |
 | `pdf`         | Fichier PDF (`.pdf`)                                                              |   4.0   |
 | `table`       | Table de données géographique ou non (`.csv`, `.dbf`, `.shp`, `.geojson`, `.gml`) |   4.0   |
-| `multi_table` | Un ensemble de table stockés dans un seul fichier (`.gml`)                        |   4.2   |
+| `multi_table` | Un ensemble de tables stockées dans un seul fichier (`.gml`, `.gpkg`)               |   4.2   |
 
-Remarque : Le support du seul format GML pour les `multi_table` est lié à l'introduction du concept la validation des données [PCRS](https://github.com/cnigfr/PCRS). Il pourrait aussi s'appliquer aux données GeoPackage.
+Remarque : L'ajout du concept `multi_table` est lié à la validation des données [PCRS vecteur](https://github.com/cnigfr/PCRS) où un même fichier GML contient plusieurs collections. Il est étendu au format GeoPackage pour le [Géostandards Risques](https://github.com/cnigfr/Geostandards-Risques).
 
 ### Table
 
