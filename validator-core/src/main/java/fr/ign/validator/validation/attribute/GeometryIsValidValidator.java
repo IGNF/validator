@@ -29,7 +29,18 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
             return;
         }
 
-        if (!geometry.isValid()) {
+        // Permet de vérifier l'intégrité des données géographiques
+        // En attendant une mise à niveau de la librairie GeoTools/GEOS
+        boolean geometryReliability = false;
+        boolean geometryValidity = false;
+        try {
+            geometryValidity = !geometry.isValid();
+            geometryReliability = true;
+        } catch (Exception e) {
+            context.report(context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_INTERNAL));
+        }
+
+        if (geometryReliability && geometryValidity) {
             // recherche du point erreur avec la classe IsValidOp
             IsValidOp isValidOp = new IsValidOp(geometry);
             TopologyValidationError topologyValidationError = isValidOp.getValidationError();
