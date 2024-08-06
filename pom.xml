@@ -49,7 +49,7 @@
 		<jsonassert.version>1.5.3</jsonassert.version>
 		<mockito.version>4.11.0</mockito.version>
 		<!-- Build and deploy -->
-		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
 		<!-- JDK 8 features -->
 		<javax.annotation.version>1.3.2</javax.annotation.version>
