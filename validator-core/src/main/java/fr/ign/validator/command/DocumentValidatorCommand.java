@@ -20,6 +20,8 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
 
+import com.ctc.wstx.util.StringUtil;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.Version;
 import fr.ign.validator.command.options.DocumentEmpriseOption;
@@ -887,8 +889,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      * @throws ParseException
      */
     protected void parseDistanceSimplificationOption(CommandLine commandLine) throws ParseException {
-        String strValue = commandLine.getOptionValue("dgpr-simplify", null);
-        if (strValue == null) {
+        String strValue = commandLine.getOptionValue("dgpr-simplify");
+        if (StringUtils.isEmpty(strValue)) {
             this.dgprSimplification = null;
             log.info(MARKER, "validator command running whith no geometric simplification");
             return;
