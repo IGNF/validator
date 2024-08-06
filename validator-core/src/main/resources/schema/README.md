@@ -1,4 +1,4 @@
-# Modélisation des données
+# Modélisation des données et des erreurs
 
 ## Description
 
@@ -6,14 +6,15 @@ Cette documentation décrit schématiquement les modèles JSON de validation du 
 
 ## Vue d'ensemble des concepts
 
-| Concept               | Description                                                                     | Implémentation  |
-| --------------------- | ------------------------------------------------------------------------------- | --------------- |
-| [Document](#document) | Modélisation du contenu d'un dossier ou d'une archive.                          | `DocumentModel` |
-| [File](#file)         | Modélisation d'un fichier du document (chemin, type, présence obligatoire,...). | `FileModel`     |
-| [Table](#table)       | Modélisation d'une table matérialisée dans un fichier.                          | `FeatureType`   |
-| [Column](#column)     | Modélisation d'une colonne d'une table.                                         | `AttributeType` |
+| Concept                            | Description                                                                     | Implémentation   |
+| ---------------------------------- | ------------------------------------------------------------------------------- | ---------------- |
+| [Document](#document)              | Modélisation du contenu d'un dossier ou d'une archive.                          | `DocumentModel`  |
+| [File](#file)                      | Modélisation d'un fichier du document (chemin, type, présence obligatoire,...). | `FileModel`      |
+| [Table](#table)                    | Modélisation d'une table matérialisée dans un fichier.                          | `FeatureType`    |
+| [Column](#column)                  | Modélisation d'une colonne d'une table.                                         | `AttributeType`  |
+| [ValidatorError](#validationerror) | Modélisation des erreurs (résultat de la validation)                            | `ValidatorError` |
 
-## Modélisation des concepts
+## Modélisation des données
 
 ### Document
 
@@ -62,7 +63,7 @@ Les types de fichiers supportés sont les suivants :
 | `metadata`    | Fiche de métadonnées XML au format ISO 19115 (`.xml`)                             |   4.0   |
 | `pdf`         | Fichier PDF (`.pdf`)                                                              |   4.0   |
 | `table`       | Table de données géographique ou non (`.csv`, `.dbf`, `.shp`, `.geojson`, `.gml`) |   4.0   |
-| `multi_table` | Un ensemble de tables stockées dans un seul fichier (`.gml`, `.gpkg`)               |   4.2   |
+| `multi_table` | Un ensemble de tables stockées dans un seul fichier (`.gml`, `.gpkg`)             |   4.2   |
 
 Remarque : L'ajout du concept `multi_table` est lié à la validation des données [PCRS vecteur](https://github.com/cnigfr/PCRS) où un même fichier GML contient plusieurs collections. Il est étendu au format GeoPackage pour le [Géostandards Risques](https://github.com/cnigfr/Geostandards-Risques).
 
@@ -147,4 +148,40 @@ Remarques :
 | `minimum` | `any` | Contrainte sur la valeur minimale autorisée (incluse) |
 | `maximum` | `any` | Contrainte sur la valeur maximale autorisée (incluse) |
 
+
+## Modélisation des erreurs
+
+### ValidatorError
+
+Le concept de [ValidatorError](ValidatorError.json) est utilisé pour modéliser les erreurs rapportés dans les rapports de validation. Les principales propriétés sont les suivantes :
+
+| Nom             | description                                                          | Exemple                                         |
+| --------------- | -------------------------------------------------------------------- | ----------------------------------------------- |
+| `code`          | Code de l'erreur                                                     | `ATTRIBUTE_GEOMETRY_INVALID`                    |
+| `level`         | Niveau de gravité de l'erreur (DEBUG, INFO, WARNING, ERROR ou FATAL) | `ERROR`                                         |
+| `message`       | Message d'erreur détaillé                                            | `"La géométrie n'est pas valide"`               |
+| `documentModel` | Nom du modèle de document                                            | `cnig_PLU_2017`                                 |
+| `fileModel`     | Nom du modèle de fichier                                             | `ZONE_URBA`                                     |
+| `attribute`     | Nom de la colonne concernée                                          | `WKT`                                           |
+| `file`          | Chemin du fichier concerné                                           | `Donnees_geographique/ZONE_URBA.shp`            |
+| `id`            | Numéro de la ligne dans le fichier / la table                        | `228`                                           |
+| `featureBbox`   | Boite englobante de l'objet (lonMin,latMin,lonMax,latMax)            | `-2.156289,47.3279265,-2.1558376,47.3281971`    |
+| `errorGeometry` | Localisation de l'erreur géométrique (format WKT, projection CRS:84) | `POINT (-2.1559630631294775 47.32809837488598)` |
+| `featureId`     | Identifiant de l'objet (si disponible)                               | `id-6b2bd0b0-c593-4e40-8e2e-2037e35b4685`       |
+
+Les propriétés suivantes sont spécifiques aux erreurs de validation XML sur la base de schémas XSD (`code=XSD_SCHEMA_ERROR`) : 
+
+| Nom               | description                                      | Exemple                                                                                                      |
+| ----------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `xsdErrorCode`    | Code de l'erreur                                 | [cvc-datatype-valid.1.2.3](https://knowledge.xmldation.com/fr/support/validator/cvc-datatype-valid-1-2-1/fr) |
+| `xsdErrorMessage` | Message d'erreur standard du validateur XSD      | `'bad-nature' n'est pas une valeur valide du type d'union 'NatureAffleurantPCRSTypeType'.`                   |
+| `xsdErrorPath`    | XPath correspondant à l'erreur de validation XML | `//PlanCorpsRueSimplifie/featureMember/AffleurantPCRS[@id='AffleurantEnveloppePCRS.0']/nature`               |
+
+Les niveaux de gravité des erreurs sont utilisés comme suit :
+
+* `FATAL` correspond à un échec de la validation (problème technique, plantage du validateur)
+* `ERROR` matérialise problème bloquant pour l'intégration des données dans une base de données (ex : problème de type)
+* `WARNING` matérialise un problème non bloquant pour l'intégration des données dans une base de données est rencontré
+* `INFO` permet d'ajouter au rapport un message d'information visible par les utilisateurs du validateur (ex : projection lue dans une fiche de métadonnées)
+* `DEBUG` permet d'ajouter un rapport un message d'information non visible par les utilisateurs (ex : version de GDAL)
 
