@@ -35,7 +35,7 @@
 		<jdom.version>1.0</jdom.version>
 		<apache-common-io.version>2.14.0</apache-common-io.version>
 		<apache-common-cli.version>1.5.0</apache-common-cli.version>
-		<apache-commons-csv.version>1.10.0</apache-commons-csv.version>
+		<apache-commons-csv.version>1.11.0</apache-commons-csv.version>
 		<apache-commons-lang.version>2.6</apache-commons-lang.version>
 		<!-- jaxb -->
 		<jaxb-core.version>2.3.0.1</jaxb-core.version>
