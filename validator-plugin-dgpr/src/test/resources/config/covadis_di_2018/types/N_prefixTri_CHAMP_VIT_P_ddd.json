@@ -1,0 +1,115 @@
+{
+    "id": "bb1493f0bf53c582aef834154d88727d",
+    "name": "N_prefixTri_CHAMP_VIT_P_ddd",
+    "columns": [
+        {
+            "id": "0595184d876a2c4f76c8950dcb3b4cfc",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "060b9e89d489b4ebd48dbdead4ce393d",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        },
+        {
+            "id": "063678fff044da6c7fd1892403120902",
+            "name": "WKT",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "3b3112847d110529f4d1a848110c698c",
+            "name": "ID_TRI",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "486430181786f13772080748578688d3",
+            "name": "ID_POINT",
+            "description": "COVADIS B1.2. - Identifiant de type 'PCV_[numero automatique] - Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "PCV_[0-9]+$"
+            }
+        },
+        {
+            "id": "69aac251173386216c8cd29d99f0fdea",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8cf638a06843200e39f3203e6630372e",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "aaae4e8a82483fdec1ef2da6b93b3b2e",
+            "name": "VITESS_MAX",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "0.5",
+                    "1",
+                    "2",
+                    ""
+                ]
+            }
+        },
+        {
+            "id": "aae5b2dbf7f5c7098e47be5e621cda17",
+            "name": "VITESS_MIN",
+            "description": "Valeur vide interdite - Vitesse Min toujours inférieure à Vitesse Max",
+            "type": "Double",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "0.2",
+                    "0.5",
+                    "1",
+                    "2"
+                ]
+            }
+        },
+        {
+            "id": "e63c06adc1894b375553522cbafdadd6",
+            "name": "AZIMUTH",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

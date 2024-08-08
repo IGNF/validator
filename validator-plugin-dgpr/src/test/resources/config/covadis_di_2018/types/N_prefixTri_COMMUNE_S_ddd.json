@@ -1,0 +1,124 @@
+{
+    "id": "05c3929fac32a948e13f52c92df22496",
+    "name": "N_prefixTri_COMMUNE_S_ddd",
+    "columns": [
+        {
+            "id": "4eb6f3c060c5d7922c614bfa4b4b8adc",
+            "name": "ANNEE_COG",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "7d3dad307ba7779c6f81b90910b041b3",
+            "name": "CODE_INSEE",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "pattern": "^[0-9][0-9AB][0-9]{3}$",
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "a7bdf4ddaf3bed849093bdabd23aa16c",
+            "name": "NOM_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "af5e52f07376e901252eb4b207dcf7aa",
+            "name": "HAB_SAISON",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d564f02da3f15c63560068d6b1f080af",
+            "name": "NOM_COM",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "d7ca959ba3ee559bbd60dfc355ff2010",
+            "name": "VER_SI_EXT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "d872e16c5ef763a0f2fb7b31a87c1e0d",
+            "name": "ID_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "df7a04c44bc696573bd61a1d00fdd7ad",
+            "name": "TX_HAB_SAI",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "e30c3cf18146e37358d443a964e27084",
+            "name": "HAB_PERM",
+            "description": "Valeur vide interdite",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e4dc0f06020bf7bfe46dfcf38816748b",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e515cc976523bb8a1bfca0da60b826b0",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "f51a0a36b2e22a1d7235c5ffdcb7deb8",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

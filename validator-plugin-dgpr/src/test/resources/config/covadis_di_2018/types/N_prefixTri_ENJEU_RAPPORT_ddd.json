@@ -1,0 +1,124 @@
+{
+    "id": "dea41a913caf04312f9f6f9ff904b938",
+    "name": "N_prefixTri_ENJEU_RAPPORT_ddd",
+    "columns": [
+        {
+            "id": "09d6541d72b4c9bd232543afd72a5ede",
+            "name": "TYP_INOND2",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "2062def188ee18d6318c628346616e7b",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "2e25dea4154dac636706d4ea2061ec36",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "3db34d321220a6ce7e22f33dec23eec6",
+            "name": "ID",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "5032b6e1efae76ad34677d881e7d354a",
+            "name": "SCENARIO",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "83a0ec620dfcaec60e5df7085a3ba5cb",
+            "name": "EMPLOI_MAX",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "872e08fe5d06c965e7e225f64a3abd3c",
+            "name": "HAB_PERM",
+            "description": "Valeur vide interdite",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "889cf5c7ca23e82eb2674e0ec07eca02",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8c469b2910622c9545a45d46537e78dd",
+            "name": "EMPLOI_MIN",
+            "description": "Valeur vide interdite",
+            "type": "Integer",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "bf9aafab0edde36b357b1cce6d3ccc56",
+            "name": "TYP_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        }
+    ]
+}

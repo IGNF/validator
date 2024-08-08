@@ -1,0 +1,125 @@
+{
+    "id": "1a9c7d96761590a44882360ceeb2be42",
+    "name": "N_prefixTri_INONDABLE_suffixInond_S_ddd",
+    "columns": [
+        {
+            "id": "36fc952cfcfc21bb8e504dfdbe72a8d9",
+            "name": "COURS_DEAU",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 127
+            }
+        },
+        {
+            "id": "4d159b42648bdff9dbcc2bcfa5f27edc",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "50fd9ade445819d4d28c122c4e326296",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "5a7f27cd15036b49ed295b762eb8bb27",
+            "name": "SCENARIO",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "6275fb734cb8bc1d1ed4f9e430481014",
+            "name": "TYP_INOND2",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "7de1979381388196d7bcc8329898255a",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "85ea88d4b9374ce9330e1d4ccbe68814",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "88eab770fd22ab89ffc9f19b0c3d37e7",
+            "name": "ID_TRI",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "d6d207d07e5daef7fa996af118ed7c82",
+            "name": "TYP_INOND",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "ea2ae1b87bbe2b1f1fc71a2d22a4d4cc",
+            "name": "ID_S_INOND",
+            "description": "COVADIS B1.2. - Identifiant de type SIN_[numero]",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "SIN_[0-9]+$",
+                "maxLength": 30
+            }
+        }
+    ]
+}

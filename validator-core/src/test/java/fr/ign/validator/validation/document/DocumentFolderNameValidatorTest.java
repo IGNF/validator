@@ -23,7 +23,7 @@ public class DocumentFolderNameValidatorTest {
         validator = new DocumentFolderNameValidator();
 
         context = new Context();
-        File currentDirectory = ResourceHelper.getResourceFile(getClass(), "/config-xml/geofla");
+        File currentDirectory = ResourceHelper.getResourceFile(getClass(), "/documents/commune-sample");
         context.setCurrentDirectory(currentDirectory);
 
         report = new InMemoryReportBuilder();

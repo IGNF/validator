@@ -21,7 +21,7 @@ public interface ModelReader {
     public String getFormat();
 
     /**
-     * Read File as a DocumentModel (files.xml)
+     * Read File as a DocumentModel
      *
      * @param documentModelPath
      * @return

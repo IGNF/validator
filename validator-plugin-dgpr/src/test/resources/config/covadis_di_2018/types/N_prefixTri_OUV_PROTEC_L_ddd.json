@@ -1,0 +1,144 @@
+{
+    "id": "4dda5554688cd6f3f7579638a1570771",
+    "name": "N_prefixTri_OUV_PROTEC_L_ddd",
+    "columns": [
+        {
+            "id": "07321d95136f774894bc1645ffeda3f5",
+            "name": "TYP_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "0ee636a129ab195a4780eb287df1dc24",
+            "name": "ID_OUVRAGE",
+            "description": "COVADIS B1.2. - Identifiant de type SIN_[numero]",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "OUV_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "23620fac1042a526ab6d8b5e37e11ff5",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "4b8a765262702e2837c3dadf1ad55680",
+            "name": "TYP_INOND2",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "568be2907666861ffbda32089970047d",
+            "name": "NOM",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "8185331974620cb98553a0017b51ff00",
+            "name": "WKT",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "976b6cfc6de53435c96d62cd66caa51b",
+            "name": "SCENA_RUPT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "05",
+                    "02",
+                    "04",
+                    "03",
+                    "99"
+                ]
+            }
+        },
+        {
+            "id": "a5429c5444e56f4fd801c413edaf165b",
+            "name": "ID_SIOUH",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "c0c65b4dcc355fb65c3a6bfbd9b9c234",
+            "name": "ID_ROE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "d7efad4de63e3f1f39cf89927057aeba",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "da03d5ec4ea4de451efc45d3af728c5d",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "fc5bed581a74af7ece46bdb3b812d1dd",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

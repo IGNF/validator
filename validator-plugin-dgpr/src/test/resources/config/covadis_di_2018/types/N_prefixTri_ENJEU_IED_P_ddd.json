@@ -1,0 +1,62 @@
+{
+    "id": "de0eb8e1068a4a04d0fb341b3ecf12bd",
+    "name": "N_prefixTri_ENJEU_IED_P_ddd",
+    "columns": [
+        {
+            "id": "5edc5823bebb154b45c368c99a8bcbaa",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "69dcea6a749429a71e1a2262999703f7",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "72667ab07497b527fdc32ebc1f9f251e",
+            "name": "WKT",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "8692dbf58821b17f85bca42c773137b8",
+            "name": "NOM",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 100
+            }
+        },
+        {
+            "id": "aeacf3ecc0407459b737ea24cfaa8714",
+            "name": "CODE_IED",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d6b3de2e5d35d6999e9d4d3574a096a1",
+            "name": "CODE_ACTIV",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 6
+            }
+        }
+    ]
+}

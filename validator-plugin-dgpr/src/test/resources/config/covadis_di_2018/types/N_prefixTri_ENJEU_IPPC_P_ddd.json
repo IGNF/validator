@@ -1,0 +1,63 @@
+{
+    "id": "5f5edc2568a4beb2cb4200c80e2d9fff",
+    "name": "N_prefixTri_ENJEU_IPPC_P_ddd",
+    "columns": [
+        {
+            "id": "0ca7740f00084c75cffd1396468ad361",
+            "name": "NOM",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "46c230381b08c1a54fc01f2b08fdf64d",
+            "name": "CODE_IPPC",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "7110007b8eaca23002fd009fd4dab994",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "818c9b7f3b11d615d7ce9e4d8fd279ac",
+            "name": "WKT",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "95708b2239eb010d9f7a10faab1830a5",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "df568ab29d380849c5ea03997831c02a",
+            "name": "CODE_ACTIV",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 6
+            }
+        }
+    ]
+}

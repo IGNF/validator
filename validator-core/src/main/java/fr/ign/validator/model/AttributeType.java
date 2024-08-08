@@ -3,16 +3,12 @@ package fr.ign.validator.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.io.xml.AttributeTypeAdapter;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeRequiredValidator;
 import fr.ign.validator.validation.attribute.CharactersValidator;
@@ -24,7 +20,6 @@ import fr.ign.validator.validation.attribute.CharactersValidator;
  *
  * @param <T> the matching java type
  */
-@XmlJavaTypeAdapter(AttributeTypeAdapter.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonInclude(value = Include.NON_NULL)
 public abstract class AttributeType<T> implements Model, Cloneable {
@@ -118,96 +113,12 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         this.description = description;
     }
 
-    @XmlTransient
     public AttributeConstraints getConstraints() {
         return constraints;
     }
 
     public void setConstraints(AttributeConstraints constraints) {
         this.constraints = constraints;
-    }
-
-    @Deprecated
-    public boolean hasRegexp() {
-        return null != constraints.getPattern();
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public String getRegexp() {
-        return constraints.getPattern();
-    }
-
-    @Deprecated
-    public void setRegexp(String regexp) {
-        this.constraints.setPattern(regexp);
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public Integer getSize() {
-        return constraints.getMaxLength();
-    }
-
-    @Deprecated
-    public void setSize(Integer size) {
-        this.constraints.setMaxLength(size);
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public boolean isNullable() {
-        return !constraints.isRequired();
-    }
-
-    @Deprecated
-    public void setNullable(boolean nullable) {
-        this.constraints.setRequired(!nullable);
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public boolean hasListOfValues() {
-        return constraints.getEnumValues() != null;
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public List<String> getListOfValues() {
-        return constraints.getEnumValues();
-    }
-
-    @Deprecated
-    public void setListOfValues(List<String> listOfValues) {
-        this.constraints.getEnumValues(listOfValues);
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public boolean isIdentifier() {
-        return constraints.isUnique();
-    }
-
-    @Deprecated
-    public void setIdentifier(boolean identifier) {
-        this.constraints.setUnique(identifier);
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public String getReference() {
-        return this.constraints.getReference();
-    }
-
-    @Deprecated
-    public void setReference(String reference) {
-        this.constraints.setReference(reference);
-    }
-
-    @Deprecated
-    @JsonIgnore
-    public boolean isReference() {
-        return this.constraints.getReference() != null;
     }
 
     @Deprecated

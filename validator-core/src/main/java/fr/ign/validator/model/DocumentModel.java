@@ -4,12 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -33,10 +27,6 @@ import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
  *
  * @author MBorne
  */
-@XmlRootElement(name = "document")
-@XmlType(propOrder = {
-    "name", "regexp", "fileModels", "staticTables"
-})
 public class DocumentModel implements Model {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("DocumentModel");
@@ -103,7 +93,6 @@ public class DocumentModel implements Model {
         this.name = name;
     }
 
-    @XmlTransient
     public DocumentConstraints getConstraints() {
         return constraints;
     }
@@ -132,8 +121,6 @@ public class DocumentModel implements Model {
         this.constraints.setFolderName(regexp);
     }
 
-    @XmlElementWrapper(name = "files")
-    @XmlElement(name = "file")
     @JsonProperty("files")
     public List<FileModel> getFileModels() {
         return fileModels;

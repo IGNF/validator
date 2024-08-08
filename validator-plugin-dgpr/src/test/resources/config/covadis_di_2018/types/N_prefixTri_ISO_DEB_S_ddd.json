@@ -1,0 +1,96 @@
+{
+    "id": "a31b326475cf78a5e2dd5e7ae4991bb5",
+    "name": "N_prefixTri_ISO_DEB_S_ddd",
+    "columns": [
+        {
+            "id": "03444c47ba08c8f475843b1163f2f68f",
+            "name": "ID_ZONE",
+            "description": "COVADIS B1.2. - Identifiant de type ZCD_'[numero]'",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "ZCD_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "15da1d618efc1fe5d54c7ad187da71e7",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        },
+        {
+            "id": "722358cd6f36568f7af54e7e8bbd686d",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "7ec5ac927939180dd96b0241ff5fb66d",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "bc878ea685a2435dd2cd23c03ea1e566",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "cf08e78cbe0b481d5ed0b5e3378a4776",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "e170ba1da615534fd0dabebb1db948e9",
+            "name": "ID_TRI",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "e500f80cdf2448e1750ae219c8ce1d03",
+            "name": "DEBLIN_MIN",
+            "description": "Valeur vide interdite- Exprimé en m²/s - Ne peut pas être négative",
+            "type": "Double",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "ffd6ccba3faf1f17fe481fa3aa8f98ef",
+            "name": "DEBLIN_MAX",
+            "description": "Exprimé en m²/s - DEBLIN_MAX >= DEBLIN_MIN",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

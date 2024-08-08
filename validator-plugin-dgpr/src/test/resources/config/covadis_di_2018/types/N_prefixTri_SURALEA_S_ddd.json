@@ -1,0 +1,86 @@
+{
+    "id": "643ed5073eca983b9fc71ec51339cfef",
+    "name": "N_prefixTri_SURALEA_S_ddd",
+    "columns": [
+        {
+            "id": "5c1dfc12218a47860cc0cf5076c97275",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "5e6a84378464f9258f9458c09e88641f",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "711729915b4cac0a4893d61ecb070872",
+            "name": "SCENARIO",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "868e2172aec1752afe89f0742fc78125",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "9269d360bab683392aa088e437c3025f",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "b79e071259123c8123e3e8ba871e2305",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "e470007c6e89061a7217968fe50ddef7",
+            "name": "ID_ZONE",
+            "description": "COVADIS B1.2. - Identifiant de type ZSA_[numero]",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "ZSA_[0-9]+$",
+                "maxLength": 30
+            }
+        }
+    ]
+}

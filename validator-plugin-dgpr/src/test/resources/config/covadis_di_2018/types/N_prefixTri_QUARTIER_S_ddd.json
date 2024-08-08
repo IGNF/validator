@@ -1,0 +1,84 @@
+{
+    "id": "9c7af389c9367e37ff3c26ed6db9ffb7",
+    "name": "N_prefixTri_QUARTIER_S_ddd",
+    "columns": [
+        {
+            "id": "0da1797ba9e6c0a971032efb5fb9a2b1",
+            "name": "VER_SI_EXT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "27d5b59c7a95509a10e08420484ead66",
+            "name": "CODE_INSEE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "3183995fbd732558df88b59ccd4b2303",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "333e0abb65064891f4df1a5cba964e8a",
+            "name": "HAB_PERM",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "38a252c0f751ab088a9ba57725aa34f1",
+            "name": "ID_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "78e402159cae4ad8263cbb0713ca6fc0",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e45567e7ddedd1969ba80cdd45aacf02",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "ff90f53f22fde65cebfa8839467a9837",
+            "name": "NOM_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        }
+    ]
+}

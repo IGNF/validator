@@ -1,7 +1,5 @@
 package fr.ign.validator.model.file;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -48,7 +46,6 @@ public class EmbeddedTableModel implements TableModel {
         return name;
     }
 
-    @XmlTransient
     public void setName(String name) {
         this.name = name;
     }
@@ -57,7 +54,6 @@ public class EmbeddedTableModel implements TableModel {
         return path;
     }
 
-    @XmlTransient
     public void setPath(String path) {
         this.path = path;
     }

@@ -1,0 +1,52 @@
+{
+    "id": "6a9129c92808cc4d1cd6a2cd920e991d",
+    "name": "N_prefixTri_ENJEU_STEU_P_ddd",
+    "columns": [
+        {
+            "id": "24544b05fc0288369125a5e69bced5f4",
+            "name": "CAPACITE_N",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "3892d8675fc2df43c638c2a386ed61ad",
+            "name": "CODE_STEU",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "55a8e21f313689cc3019bfcf73eea27f",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "967891e1a85e966cda64a7b79cf7d10c",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d3d6ba309455788cce4ccef7f4cb8836",
+            "name": "WKT",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        }
+    ]
+}

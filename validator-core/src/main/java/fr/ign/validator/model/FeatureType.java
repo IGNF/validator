@@ -3,12 +3,6 @@ package fr.ign.validator.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.model.type.GeometryType;
@@ -18,10 +12,6 @@ import fr.ign.validator.model.type.GeometryType;
  *
  * @author MBorne
  */
-@XmlRootElement
-@XmlType(propOrder = {
-    "name", "description", "attributes", "constraints"
-})
 public class FeatureType implements Model {
     /**
      * Parent (optional)
@@ -72,13 +62,11 @@ public class FeatureType implements Model {
      *
      * @param featureType
      */
-    @XmlTransient
     public void setParent(FeatureType parent) {
         this.parent = parent;
     }
 
     @Override
-    @XmlElement(name = "typeName")
     public String getName() {
         return name;
     }
@@ -120,7 +108,6 @@ public class FeatureType implements Model {
         return description;
     }
 
-    @XmlElement
     public void setDescription(String description) {
         this.description = description;
     }
@@ -136,8 +123,6 @@ public class FeatureType implements Model {
         return attributes;
     }
 
-    @XmlElementWrapper(name = "attributes")
-    @XmlElement(name = "attribute")
     @JsonProperty("columns")
     public void setAttributes(List<AttributeType<?>> attributes) {
         this.attributes = attributes;

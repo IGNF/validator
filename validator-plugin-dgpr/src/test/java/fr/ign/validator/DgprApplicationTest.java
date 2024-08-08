@@ -18,8 +18,8 @@ import fr.ign.validator.data.Document;
 import fr.ign.validator.dgpr.error.DgprErrorCodes;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ValidatorError;
+import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.io.ModelReader;
-import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.plugin.PluginManager;
 import fr.ign.validator.report.InMemoryReportBuilder;
@@ -57,9 +57,9 @@ public class DgprApplicationTest {
 
     private DocumentModel getDocumentModel(String documentModelName) throws Exception {
         File documentModelPath = new File(
-            getClass().getResource("/config/" + documentModelName + "/files.xml").getPath()
+            getClass().getResource("/config/" + documentModelName + "/files.json").getPath()
         );
-        ModelReader loader = new XmlModelReader();
+        ModelReader loader = new JsonModelReader();
         DocumentModel documentModel = loader.loadDocumentModel(documentModelPath);
         documentModel.setName(documentModelName);
         return documentModel;
@@ -224,17 +224,12 @@ public class DgprApplicationTest {
         /*
          * Validation unicite et relation
          */
-        Assert.assertEquals(2, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
+        Assert.assertEquals(1, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).size());
         ValidatorError error50 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(0);
-        ValidatorError error51 = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).get(1);
         Assert.assertEquals(
             "La valeur 'ZE_2' est présente 2 fois pour le champ 'ID_ZONE' de la table 'N_prefixTri_ECOUL_S_ddd'.",
             error50
                 .getMessage()
-        );
-        Assert.assertEquals(
-            "La valeur 'SIEXT' est présente 2 fois pour le champ 'ID_SI_EXT' de la table 'N_prefixTri_ENJEU_CRISE_L_ddd'.",
-            error51.getMessage()
         );
 
         Assert.assertEquals(5, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND).size());

@@ -1,0 +1,47 @@
+{
+    "id": "248d4f5b981afb499f831c4146b4ae8a",
+    "name": "N_prefixTri_REL_HYDRO_INOND_ddd",
+    "columns": [
+        {
+            "id": "0420d09827f0e09e2ad2d018b1238581",
+            "name": "CODE_EH",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "0df6a886ddc7082c8879a49533358f66",
+            "name": "ID_TRI",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "23aca607382a6f31171885785934c31b",
+            "name": "VER_SI_EXT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "b034760eaeae2df99b2412726cde7efe",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        }
+    ]
+}

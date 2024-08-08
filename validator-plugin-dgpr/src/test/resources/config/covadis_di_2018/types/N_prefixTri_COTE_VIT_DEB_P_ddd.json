@@ -1,0 +1,123 @@
+{
+    "id": "bb1152ec96d65076c8b5a5ee898d733a",
+    "name": "N_prefixTri_COTE_VIT_DEB_P_ddd",
+    "columns": [
+        {
+            "id": "1bdd78078d8cdd8a17ae93201485bad9",
+            "name": "WKT",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "27fe9a1ee396afef7288769d9d51bf28",
+            "name": "DEBLIN",
+            "description": "Ne peut pas être négative",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "395cef1868375857a789c22b50ad8c2e",
+            "name": "VITESSE",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "3aee91bef9d4c944abc08bbcb558631a",
+            "name": "ID_POINT",
+            "description": "COVADIS B1.2. - Identifiant de type 'PRE_[numero automatique]'",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "PRE_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "426ccb7e5aa3988d7d6fc9d17fbf45fe",
+            "name": "COTE",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "6731a68d63a325149a347bf084a70d15",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "6bdc0b626787ee403a9f7ba40ca71d8e",
+            "name": "DATOBSERV",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "6d63fa1f54db2211d79475b0c958af59",
+            "name": "AZIMUTH",
+            "description": "Si la vitesse ou le débit linéique est renseigné, alors l’azimuth doit aussi être renseigné.",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "726269209e1297abe231c8254cc3d4b4",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "c13502ddfabad95d738d479bbad56b2c",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        },
+        {
+            "id": "c858b084e52c1da9b4fc97ff7c6e1b4d",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "dbcceb67972de405eca615efa5e33ab6",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

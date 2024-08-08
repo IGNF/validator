@@ -1,0 +1,83 @@
+{
+    "id": "19029ec8b2f9eaabc179938237f3b607",
+    "name": "N_prefixTri_SOUST_INOND_S_ddd",
+    "columns": [
+        {
+            "id": "0ce6fcb39fd852465b2f12129384b335",
+            "name": "ID_ZONE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "0f06d05836ae8b2f93e21011802d65aa",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "1c460be5b298f4471f335e9adffe390f",
+            "name": "SCENARIO",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "2f8ce8a147b5aef38d68128062b75e03",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "c49b141f4d877efd9b1c5081a18fd208",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "d92eceed5def551e92940244275515ce",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d951c9d7cd98ee82a02df1bd2534216c",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}
