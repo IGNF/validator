@@ -10,7 +10,7 @@ import java.util.ServiceLoader;
  * Prototype based factory providing AttributeType creation by name (Boolean,
  * Double, etc.)
  *
- * @see src/main/resources/META-INF/services/fr.ign.validator.model.AttributeType
+ * @see src/main/resources/META-INF/services/fr.ign.validator.model.AttributeType containing the list of this types.
  *
  * @author MBorne
  *

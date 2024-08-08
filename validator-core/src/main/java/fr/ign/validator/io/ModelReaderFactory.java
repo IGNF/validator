@@ -2,6 +2,8 @@ package fr.ign.validator.io;
 
 import java.net.URL;
 
+import fr.ign.validator.exception.InvalidModelException;
+
 /**
  * Create ModelReader instances
  *
@@ -26,7 +28,7 @@ public class ModelReaderFactory {
      */
     public static ModelReader createModelReader(URL url) {
         if (url.toString().endsWith(".xml")) {
-            return new XmlModelReader();
+            throw new InvalidModelException("Fail to load "+url+" (XML model support has been removed, use JSON format)");
         } else {
             return new JsonModelReader();
         }

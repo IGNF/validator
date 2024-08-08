@@ -7,10 +7,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -24,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import fr.ign.validator.data.DocumentFile;
-import fr.ign.validator.io.xml.FileModelAdapter;
 import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
@@ -38,7 +33,6 @@ import fr.ign.validator.validation.file.XsdSchemaValidator;
  *
  * @author MBorne
  */
-@XmlJavaTypeAdapter(FileModelAdapter.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
     @Type(value = DirectoryModel.class, name = DirectoryModel.TYPE),
@@ -51,7 +45,6 @@ public abstract class FileModel implements Model {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("FileModel");
 
-    @XmlEnum(String.class)
     public enum MandatoryMode {
         /**
          * Ignore if file is missing
@@ -129,7 +122,6 @@ public abstract class FileModel implements Model {
         return path;
     }
 
-    @XmlElement(name = "regexp")
     public void setPath(String path) {
         this.path = path;
     }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import fr.ign.validator.data.Attribute;
-import fr.ign.validator.io.xml.AttributeTypeAdapter;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeRequiredValidator;
 import fr.ign.validator.validation.attribute.CharactersValidator;
@@ -24,7 +22,6 @@ import fr.ign.validator.validation.attribute.CharactersValidator;
  *
  * @param <T> the matching java type
  */
-@XmlJavaTypeAdapter(AttributeTypeAdapter.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonInclude(value = Include.NON_NULL)
 public abstract class AttributeType<T> implements Model, Cloneable {

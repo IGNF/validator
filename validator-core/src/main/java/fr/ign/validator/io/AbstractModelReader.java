@@ -21,7 +21,7 @@ import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.ModelHelper;
 
 /**
- * Common implementation for JSON and XML ModelReader.
+ * Common implementation for JSON and XML ModelReader (removed).
  *
  * @author MBorne
  */
