@@ -1,0 +1,104 @@
+{
+    "id": "6752da9c4e4eca4a180d92d94c0385d9",
+    "name": "N_prefixTri_ZONE_PROTEG_S_ddd",
+    "columns": [
+        {
+            "id": "09648eab37a50c5379580e40cad32951",
+            "name": "SCENARIO",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "66968cdfe141ea7265660810f4085999",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "6bedd4c9b27eacf3ce58a8bea62d0d99",
+            "name": "ZP",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "77b0ca4c7bfdf9ddb3e145ca23aad91d",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "a3b7308550cec554f718ac40da776d87",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "a97bce40559b1bc31146a7691554bff3",
+            "name": "ID_ZONE",
+            "description": "COVADIS B1.2. - Identifiant de type ZP(P)_[numero]",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "ZPP?_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "b26a33c30a7d66ffb7bf7caf51c8fa9f",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d05e60c57b8d6a6021f1e38f3515eda1",
+            "name": "ZPP",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "ef79bb40ea54d87d964f8fd93c431bc1",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

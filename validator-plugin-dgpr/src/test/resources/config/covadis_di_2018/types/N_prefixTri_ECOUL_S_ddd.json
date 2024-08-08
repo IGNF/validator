@@ -1,0 +1,91 @@
+{
+    "id": "6f63a412ee3ae88c4cb5cb69f7fcd945",
+    "name": "N_prefixTri_ECOUL_S_ddd",
+    "columns": [
+        {
+            "id": "197a691c7c83639c58cd3b395223bf0d",
+            "name": "VITESSE",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "Fai",
+                    "For",
+                    "Mod"
+                ]
+            }
+        },
+        {
+            "id": "3d456e6fab11b88a7b2396c3006867ed",
+            "name": "ID_ZONE",
+            "description": "COVADIS B1.2. - Identifiant de type ZE_[numero]",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "ZE_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "6a898baec11141ebf3a3b242abf08db4",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "799bede8fa0e54566191e3c08be51bff",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "7f8b1b7d9c143d40449bd045130ecab0",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        },
+        {
+            "id": "8d6b2f3bb6345a490430cd27c3d1df9d",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "a0366ce1e087059c7b206d7c96e7505e",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d9508edbba6c4968e7f8d7e86059e1ae",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,67 @@
+{
+    "id": "08184a2768da79cf74ec4f3ed15ce68d",
+    "name": "N_prefixTri_CARTE_RISQ_S_ddd",
+    "columns": [
+        {
+            "id": "1bd2a37619e39921a37032f9a35d3f61",
+            "name": "DATFINVAL",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "33d6bf13c85b065a47debdbedb28e922",
+            "name": "DATAPPRO",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "36f7b243777e8a3f311cf4ed01965c50",
+            "name": "ID_TRI",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "af04c65418d8e5fd18045c2a6414cf65",
+            "name": "ID_CARTE",
+            "description": "COVADIS B1.2. - Identifiant de type CRI_[numero]",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "CRI_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "b952bcc9638681312dcffe31e4cb3e92",
+            "name": "URLRAPPORT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "dc29321dd26d263e3521ff18a7c5949f",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        }
+    ]
+}

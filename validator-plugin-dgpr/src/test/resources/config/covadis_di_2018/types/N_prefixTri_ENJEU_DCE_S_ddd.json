@@ -1,0 +1,59 @@
+{
+    "id": "2b6f49c3b2c66e4139db0191e253c776",
+    "name": "N_prefixTri_ENJEU_DCE_S_ddd",
+    "columns": [
+        {
+            "id": "01d169c91ee9f131d8f914fe4abe036b",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "311026ab95009c0938cd0555748521a7",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "4245f94f228ff8291431aae640f5c018",
+            "name": "PA_TYPE",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "",
+                    "BA",
+                    "A7",
+                    "HA",
+                    "BI"
+                ]
+            }
+        },
+        {
+            "id": "4992a4011ad2feba7172fd41c8cfdcd4",
+            "name": "EU_CD_PA",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "fea8807b56ca82cc038540a955afc63e",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

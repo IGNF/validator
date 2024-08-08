@@ -1,0 +1,83 @@
+{
+    "id": "fc40ca2a89bfe0e66b6d7ca9084783d3",
+    "name": "N_prefixTri_TRI_S_ddd",
+    "columns": [
+        {
+            "id": "50657730fcbf1639aff214658d973bdf",
+            "name": "TX_HAB_SAI",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "596f8bacd6106e5a78698c4d7cc8b422",
+            "name": "NOM",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "826f1a906f914a20e79e5b270d343e94",
+            "name": "HAB_SAISON",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "834f5775bfa7b3ab42101923f3f7f55f",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "c27a38213c5d8477e66fa27977d189fd",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "e3494002d678835aac24600a877db3fa",
+            "name": "ID_TRI",
+            "description": "COVADIS B1.2. - Identifiant de type [Code EUUOM Bassin DCE]_TRI_[Nom court TRI]. Exemple : \"FRD_TRI_LYON\"",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "^FR[A-Z0-9]{1,4}_TRI_[A-Z_0-9]{1,33}$",
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "f85fac7eb484c62c3721e4f9306da702",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "f9732b41e6a21ec58c40c428a50da51d",
+            "name": "HAB_PERM",
+            "type": "Integer",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

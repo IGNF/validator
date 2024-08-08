@@ -1,0 +1,124 @@
+{
+    "id": "a2b8bfebc23b2e9ff86666a5317f3026",
+    "name": "N_prefixTri_CARTE_INOND_S_ddd",
+    "columns": [
+        {
+            "id": "0517a3d56312a29ac420ce7cb770c193",
+            "name": "TYP_INOND1",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "191da4fe8e998f772102b8a1ef140cbf",
+            "name": "TYP_INOND2",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "396e89a06c6b62295a04d4407909f276",
+            "name": "SCENARIO",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "74ba6cfe17c69c3d22bc099fedfed640",
+            "name": "DATFINVAL",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8ac0994afe17fb3288825ef4a5c7c43a",
+            "name": "ID_TRI",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "944c6cd7cc419a26472ebbfcd265d1d5",
+            "name": "URLRAPPORT",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 254
+            }
+        },
+        {
+            "id": "b2031b1c0921bdbf948823fdd5e8de95",
+            "name": "EST_SYNTH",
+            "type": "Boolean",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "b6b35d5d577158289011a78459eea12e",
+            "name": "DATAPPRO",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d0a3f10cba77397ef3ded392bf6c8fe2",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "e687dab359fc6c2e1b31c500048ed830",
+            "name": "ID_CARTE",
+            "description": "- COVADIS B1.2. - Identifiant de type 'CSI_[numero automatique]'",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "CSI_[0-9]+$",
+                "maxLength": 30
+            }
+        }
+    ]
+}

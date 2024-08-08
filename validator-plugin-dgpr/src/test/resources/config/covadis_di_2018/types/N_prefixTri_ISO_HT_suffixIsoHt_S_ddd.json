@@ -1,0 +1,174 @@
+{
+    "id": "872b653303e627041c50b2bca0e83757",
+    "name": "N_prefixTri_ISO_HT_suffixIsoHt_S_ddd",
+    "columns": [
+        {
+            "id": "44b7394c61ca6fa7b001c43722acbde6",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "53a8b31af9c5d596ea674a71bc903c32",
+            "name": "SCENARIO",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "5ae13050f35f80d17187117ffa355778",
+            "name": "HT_MAX",
+            "description": "Si cette valeur n’est pas renseignée, la plage de hauteur correspond à la plage des hauteurs maximales (supérieure à une hauteur donnée). Par exemple, la plage des « hauteurs supérieures ou égales à 4 m» sera modélisée dans la base par le remplissage du seuil inférieur de la plage de hauteur (avec dans le cas de l’exemple la valeur « 4 ») et un seuil supérieur laissé vide c’est à dire 9999 pour Mapinfo et NULL pour Qgis.",
+            "type": "Double",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "0.5",
+                    "1",
+                    "1.5",
+                    "2",
+                    "3",
+                    "4",
+                    ""
+                ]
+            }
+        },
+        {
+            "id": "701862ec2ae6bed28b2a3e0a55e8fee9",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "8993748cd627de9058ae8e9a3201ed33",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        },
+        {
+            "id": "8e3b632ceb2ddf9ac4331ecb2c59ac54",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "bdfd92ccc82f84cd0c1fae039235e4d7",
+            "name": "TYP_INOND2",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "c46c48ecb339be31cb04f157123b7337",
+            "name": "COURS_DEAU",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 127
+            }
+        },
+        {
+            "id": "c5e8ca685b183606905fb53eecd9d96c",
+            "name": "TYP_INOND",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "c848d56350993556f092dbf37006cdfb",
+            "name": "ID_TRI",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "cb1ff310f3d6ac8d03458ac58db02df4",
+            "name": "ID_ZONE",
+            "description": "COVADIS B1.2. - Identifiant de type 'ZCH_[numero]'",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "ZCH_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "dd71706bd5f384b00c31a185b5d09d5c",
+            "name": "HT_MIN",
+            "description": "Valeur vide interdite",
+            "type": "Double",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "0",
+                    "0.5",
+                    "1",
+                    "1.5",
+                    "2",
+                    "3",
+                    "4"
+                ]
+            }
+        },
+        {
+            "id": "fa120eeea2e0a5018c87efee2f8767c2",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        }
+    ]
+}
