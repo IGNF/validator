@@ -12,10 +12,10 @@ import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.string.transform.StringSimplifier;
 
 /**
- * 
+ *
  * Compose transforms to fix a input string applying operation in the given
  * order :
- * 
+ *
  * <ul>
  * <li>Detect and fix double UTF-8 encoding relative to LATIN1</li>
  * <li>Simplify characters for a better support by fonts (common) or by a given
@@ -23,7 +23,7 @@ import fr.ign.validator.string.transform.StringSimplifier;
  * <li>Escape controls characters and characters not supported by a given
  * charset</li>
  * </ul>
- * 
+ *
  * @author MBorne
  */
 public class StringFixer implements StringTransform {
@@ -35,14 +35,14 @@ public class StringFixer implements StringTransform {
 
     /**
      * Enable common character simplification are applied
-     * 
+     *
      * @see /validator-core/src/main/resources/simplify/common.csv
      */
     private boolean commonSimplified = false;
 
     /**
      * Enable character simplification relative to this charset (null if disabled)
-     * 
+     *
      * @see /validator-core/src/main/resources/simplify/[CHARSET].csv
      */
     private Charset charsetSimplified = null;
@@ -59,14 +59,14 @@ public class StringFixer implements StringTransform {
 
     /**
      * Transforms (cached, null if not yet generated)
-     * 
+     *
      * @param options
      */
     private List<StringTransform> transforms;
 
     /**
      * Create a full string fixer for a given charset (simplify & escape)
-     * 
+     *
      * @param charset
      * @return
      */
@@ -143,7 +143,7 @@ public class StringFixer implements StringTransform {
 
     /**
      * Get transforms
-     * 
+     *
      * @return
      */
     private List<StringTransform> getTransforms() {
@@ -153,14 +153,14 @@ public class StringFixer implements StringTransform {
 
     /**
      * Build transforms according to options in a given order
-     * 
+     *
      * <ul>
      * <li>double utf-8 fixing</li>
      * <li>simplification</li>
      * <li>escape controls</li>
      * <li>escape charset specific</li>
      * </ul>
-     * 
+     *
      */
     private void buildTransformsIfRequired() {
         if (transforms != null) {
@@ -192,7 +192,7 @@ public class StringFixer implements StringTransform {
 
     /**
      * Add a transform
-     * 
+     *
      * @param transform
      */
     private void addTransform(StringTransform transform) {

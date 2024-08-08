@@ -20,14 +20,14 @@ import fr.ign.validator.metadata.Metadata;
 
 /**
  * Validate metadata according to CNIG standards :
- * 
+ *
  * @see http://cnig.gouv.fr/wp-content/uploads/2020/05/200511_Consignes_saisie_metadonnees_DU_v2020-05.pdf#page=8
  *      for PLU,PLUI,POS,CC,PSMV documents
  * @see http://cnig.gouv.fr/wp-content/uploads/2020/05/200511_Consignes_saisie_metadonnees_SUP_v2020-05.pdf#page=8
  *      for SUP documents
  * @see http://cnig.gouv.fr/wp-content/uploads/2020/05/200511_Consignes_saisie_metadonnees_SCOT_v2020-05.pdf#page=7&zoom=auto,-92,444
  *      for SCOT documents
- * 
+ *
  * @author mborne
  *
  */
@@ -48,7 +48,7 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
 
     /**
      * Provide the list of required keywords according to document name.
-     * 
+     *
      * @param documentName
      * @return
      */
@@ -183,7 +183,7 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
 
     /**
      * Get first value in keyword list.
-     * 
+     *
      * @param keywords
      * @return
      */
@@ -196,7 +196,7 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
 
     /**
      * Find keyword by thesaurus name.
-     * 
+     *
      * @param metadata
      * @param expectedThesaurusName
      * @return

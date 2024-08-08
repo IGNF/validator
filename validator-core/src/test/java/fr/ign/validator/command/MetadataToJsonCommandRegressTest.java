@@ -16,7 +16,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Regress test for metadata_to_json command
- * 
+ *
  * @author FCerizay
  */
 public class MetadataToJsonCommandRegressTest {

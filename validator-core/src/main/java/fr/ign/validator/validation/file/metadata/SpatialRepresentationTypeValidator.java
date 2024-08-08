@@ -13,9 +13,9 @@ import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates metadata.spatialRepresentationType
- * 
+ *
  * @author MBorne
  *
  */

@@ -12,7 +12,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Ensure that IDASS is unique in ASSIETTE_SUP_P/L/S tables.
- * 
+ *
  * @author MBorne
  *
  */

@@ -2,7 +2,7 @@ package fr.ign.validator.error;
 
 /**
  * ErrorLevel corresponding to the gravity of ValidatorError
- * 
+ *
  * @author MBorne
  */
 public enum ErrorLevel {

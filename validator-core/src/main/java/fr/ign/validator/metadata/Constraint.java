@@ -8,11 +8,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
- * 
+ *
  * Implementation of gmd:MD_Constraints
- * 
+ *
  * TODO broke hierarchy?
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_Constraints.html">gmd:MD_Constraints</a>
  * @see <a href=
@@ -34,7 +34,7 @@ public class Constraint {
 
     /**
      * Get GMD class name to simplify inspection
-     * 
+     *
      * @return
      */
     public String getType() {

@@ -1,9 +1,9 @@
 package fr.ign.validator.tools.ogr;
 
 /**
- * 
+ *
  * ogr2ogr's version is not supported
- * 
+ *
  * @author MBorne
  *
  */

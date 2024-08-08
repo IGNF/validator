@@ -26,7 +26,7 @@ import fr.ign.validator.tools.MultiTableReader;
 
 /**
  * Creates DATA and METADATA directories in the validation directory :
- * 
+ *
  * <ul>
  * <li>Tables are normalized according to FeatureType as
  * DATA/{fileModel.name}.csv</li>
@@ -36,10 +36,10 @@ import fr.ign.validator.tools.MultiTableReader;
  * <li>Metadata are copied to METADATA directory</li>
  * <li>Directories are ignored</li>
  * </ul>
- * 
+ *
  * Note that DATA and METADATA corresponds to the structure of an EaaS delivery
  * (former geoportal datastore).
- * 
+ *
  * @author MBorne
  *
  */
@@ -49,7 +49,7 @@ public class DocumentNormalizer {
 
     /**
      * Normalize document files.
-     * 
+     *
      * @param context
      */
     public void normalize(Context context, Document document) throws IOException {
@@ -93,7 +93,7 @@ public class DocumentNormalizer {
 
     /**
      * Convert documentFiles in a normalized DATA/{fileModel.name}.csv file.
-     * 
+     *
      * @param context
      * @param fileModel
      * @param documentFiles
@@ -122,7 +122,7 @@ public class DocumentNormalizer {
     /**
      * Convert documentFiles in a normalized DATA/{fileModel.name}.{tableName}.csv
      * file.
-     * 
+     *
      * @param context
      * @param fileModel
      * @param documentFiles
@@ -181,7 +181,7 @@ public class DocumentNormalizer {
 
     /**
      * Copy files to targetDirectory without original hierarchy.
-     * 
+     *
      * @param documentFiles
      * @param targetDirectory
      * @throws IOException

@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * 
+ *
  * Prototype based factory providing AttributeType creation by name (Boolean,
  * Double, etc.)
- * 
+ *
  * @see src/main/resources/META-INF/services/fr.ign.validator.model.AttributeType
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,7 +34,7 @@ public class AttributeTypeFactory {
 
     /**
      * Gets list of types
-     * 
+     *
      * @return
      */
     public Collection<String> getTypeNames() {
@@ -43,7 +43,7 @@ public class AttributeTypeFactory {
 
     /**
      * Gets a type by name
-     * 
+     *
      * @param name
      * @return
      */
@@ -54,7 +54,7 @@ public class AttributeTypeFactory {
 
     /**
      * Saving a type
-     * 
+     *
      * @param valueType
      */
     private void addPrototype(AttributeType<?> valueType) {
@@ -63,7 +63,7 @@ public class AttributeTypeFactory {
 
     /**
      * Retrieves ValueTypeRegistry instance
-     * 
+     *
      * @return
      */
     public static AttributeTypeFactory getInstance() {

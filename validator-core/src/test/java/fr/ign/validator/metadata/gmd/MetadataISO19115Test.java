@@ -31,7 +31,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Test GMD metadata reader
- * 
+ *
  * @author MBorne
  *
  */

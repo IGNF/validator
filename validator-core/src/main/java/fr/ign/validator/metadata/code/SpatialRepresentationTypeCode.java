@@ -4,12 +4,12 @@ import fr.ign.validator.code.CodeList;
 import fr.ign.validator.code.CodeListValue;
 
 /**
- * 
+ *
  * Implementation of gmd:LanguageCode
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_LanguageCode.html">gmd:LanguageCode</a>
- * 
+ *
  * @author MBorne
  *
  */

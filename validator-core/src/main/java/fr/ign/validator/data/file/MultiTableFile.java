@@ -14,7 +14,7 @@ import fr.ign.validator.tools.TableReaderOptions;
 
 /**
  * A table storing a set of tables.
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,7 +34,7 @@ public class MultiTableFile extends DocumentFile {
 
     /**
      * Get reader with the correct options.
-     * 
+     *
      * @return
      * @throws IOException
      */

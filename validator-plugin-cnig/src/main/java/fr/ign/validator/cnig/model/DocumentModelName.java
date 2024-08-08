@@ -1,12 +1,12 @@
 package fr.ign.validator.cnig.model;
 
 /**
- * 
+ *
  * Parse document model name to extract informations according to naming
  * convention :
- * 
+ *
  * cnig_{DocumentType}[_{SupCategory}]_YYYY
- * 
+ *
  * @author MBorne
  *
  */
@@ -20,7 +20,7 @@ public class DocumentModelName {
 
     /**
      * Test if document model is a CNIG standard
-     * 
+     *
      * @param documentModelName
      * @return
      */
@@ -30,7 +30,7 @@ public class DocumentModelName {
 
     /**
      * Get document type from standard name (ex : PLU, SUP, etc.)
-     * 
+     *
      * @param documentModelName
      * @return
      */
@@ -44,7 +44,7 @@ public class DocumentModelName {
 
     /**
      * Check that document name belong to SUP type
-     * 
+     *
      * @param documentModelName
      * @return
      */
@@ -57,7 +57,7 @@ public class DocumentModelName {
 
     /**
      * Get version
-     * 
+     *
      * @param documentModelName
      * @return
      */

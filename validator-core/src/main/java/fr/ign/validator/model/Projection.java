@@ -7,12 +7,12 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * 
+ *
  * Provides mapping informations between CRS in geotools and metadata
- * 
+ *
  * WARNING : validityDomain will probably be replaced by a lon,lat bounding box
  * extracted from URI (current usage is for GpU)
- * 
+ *
  * @author MBorne
  *
  */
@@ -46,7 +46,7 @@ public class Projection {
 
     /**
      * WKT representing the validity domain for coordinates in the given projection
-     * 
+     *
      * ex : "POLYGON((60000 6010000,60000 7130000,1270000 7130000,1270000
      * 6010000,60000 6010000))"
      */
@@ -94,7 +94,7 @@ public class Projection {
 
     /**
      * Get geotools CRS (null if not found)
-     * 
+     *
      * @return
      */
     @JsonIgnore
@@ -113,10 +113,10 @@ public class Projection {
 
     /**
      * Get SRID code (used in postgis command)
-     * 
+     *
      * TODO handle coordinate flip for postgis transform (EPSG:4326 is lat,lon for
      * the validator to match official conventions)
-     * 
+     *
      * @return
      */
     public String getSrid() {

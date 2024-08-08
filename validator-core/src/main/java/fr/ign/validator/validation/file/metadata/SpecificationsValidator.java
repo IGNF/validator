@@ -15,10 +15,10 @@ import fr.ign.validator.metadata.Specification;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "specifications" is not empty and that each "specification" is
  * valid
- * 
+ *
  * @author MBorne
  *
  */

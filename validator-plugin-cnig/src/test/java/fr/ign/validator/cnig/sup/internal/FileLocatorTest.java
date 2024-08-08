@@ -14,7 +14,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Test class {@link FileLocatorTest}
- * 
+ *
  * @author MBorne
  *
  */

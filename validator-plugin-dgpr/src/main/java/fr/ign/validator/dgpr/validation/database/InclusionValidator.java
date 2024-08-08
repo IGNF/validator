@@ -33,7 +33,7 @@ public class InclusionValidator implements Validator<Database> {
 
     /**
      * Ensure feature of high risk are included in any feature of a lower risk
-     * 
+     *
      * @param context
      * @param document
      * @param database

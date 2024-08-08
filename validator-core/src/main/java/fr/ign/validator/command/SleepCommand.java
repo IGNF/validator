@@ -8,9 +8,9 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 /**
- * 
+ *
  * Display validator version
- * 
+ *
  * @author MBorne
  */
 public class SleepCommand extends AbstractCommand {

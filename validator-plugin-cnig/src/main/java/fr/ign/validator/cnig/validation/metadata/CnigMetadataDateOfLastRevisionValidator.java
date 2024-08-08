@@ -7,10 +7,10 @@ import fr.ign.validator.metadata.Metadata;
 
 /**
  * Validates that dateOfLastRevision is defined
- * 
+ *
  * Note that CNIG DU and SUP profiles are more restrictive than INSPIRE on this
  * point and that date content is validated in core
- * 
+ *
  * @author MBorne
  *
  */

@@ -18,7 +18,7 @@ public class GeometryRings {
 
     /**
      * get all geometry for a multiple or simple geometry
-     * 
+     *
      * @param geometry
      * @return
      */
@@ -37,7 +37,7 @@ public class GeometryRings {
 
     /**
      * get all geometry for a multiple or simple geometry
-     * 
+     *
      * @param geometry
      * @return
      */
@@ -58,7 +58,7 @@ public class GeometryRings {
      * Determine all rings using the geometry type - point have no rings -
      * linestring is a unique ring - geometry is compose of multiple interior rings
      * and an exterior ring
-     * 
+     *
      * @param geometry
      * @return
      */
@@ -87,7 +87,7 @@ public class GeometryRings {
      * Determine all inner rings using the geometry type - point have no rings -
      * linestring have no inner rings - geometry is compose of multiple inner rings
      * and an exterior ring
-     * 
+     *
      * @param geometry
      * @return
      */

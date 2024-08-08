@@ -11,7 +11,7 @@ import fr.ign.validator.tools.filter.FileByExtensionAndDirectoryFilter;
 
 /**
  * Helper class to find Document files.
- * 
+ *
  * @see http://techblog.sharpmind.de/?p=228
  */
 public class FileUtils {

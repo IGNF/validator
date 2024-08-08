@@ -21,7 +21,7 @@ import fr.ign.validator.tools.EnvelopeUtils;
 
 /**
  * Helpers developed for DGPR plugin.
- * 
+ *
  * @author CBouche
  *
  */
@@ -51,7 +51,7 @@ public class DatabaseUtils {
 
     /**
      * Perform unions of Geometry from two geometries
-     * 
+     *
      * @param a
      * @param b
      * @return
@@ -68,7 +68,7 @@ public class DatabaseUtils {
     /**
      * Perform unions of Geometry from a database result set Feature must contains
      * 'WKT' columns
-     * 
+     *
      * @param rowIterator
      * @return
      * @throws Exception
@@ -119,10 +119,10 @@ public class DatabaseUtils {
 
     /**
      * Return enveloppe of giving Wkt Geometry
-     * 
+     *
      * @deprecated moved to validator-core
      * @see EnvelopeUtils#getEnvelope(String, fr.ign.validator.model.Projection)
-     * 
+     *
      * @param wkt
      * @param wktProjection
      * @return
@@ -136,7 +136,7 @@ public class DatabaseUtils {
 
     /**
      * Identify invalid geometry on which union and intersect operation will failed
-     * 
+     *
      * @param geometry
      * @return
      */
@@ -146,7 +146,7 @@ public class DatabaseUtils {
 
     /**
      * Identify invalid geometry on which union and intersect operation will failed
-     * 
+     *
      * @param geometry
      * @return
      */
@@ -205,7 +205,7 @@ public class DatabaseUtils {
     }
 
     /**
-     * 
+     *
      * @param geom
      * @param tolerance
      * @return

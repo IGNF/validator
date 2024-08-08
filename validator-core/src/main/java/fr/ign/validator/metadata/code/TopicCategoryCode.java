@@ -4,12 +4,12 @@ import fr.ign.validator.code.CodeList;
 import fr.ign.validator.code.CodeListValue;
 
 /**
- * 
+ *
  * Implementation of gmd:MD_TopicCategoryCode
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_TopicCategoryCode.html">gmd:MD_TopicCategoryCode</a>
- * 
+ *
  * @author MBorne
  *
  */

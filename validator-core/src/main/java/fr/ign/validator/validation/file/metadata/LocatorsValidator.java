@@ -15,9 +15,9 @@ import fr.ign.validator.metadata.OnlineResource;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "locators" is defined and each locator is valid
- * 
+ *
  * @author MBorne
  *
  */

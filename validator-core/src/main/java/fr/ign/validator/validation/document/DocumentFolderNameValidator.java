@@ -8,10 +8,10 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensure that the name of the document directory correspond the regexp defined
  * in DocumentModel
- * 
+ *
  * @author MBorne
  *
  */

@@ -9,9 +9,9 @@ import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validate characters according to {@link StringFixer}
- * 
+ *
  * @author MBorne
  *
  * @param <T>

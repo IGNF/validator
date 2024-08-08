@@ -9,10 +9,10 @@ import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.report.ReportBuilder;
 
 /**
- * 
+ *
  * Decorate a ReportBuilder. Filter specific error (codes/message) -
  * FILE_UNEXPECTED - MULTITABLE_UNEXPECTED
- * 
+ *
  * @author cbouche
  *
  */
@@ -27,7 +27,7 @@ public class CodeFilteredReportBuilder implements ReportBuilder {
 
     /**
      * Constructor with an existing reportBuilder
-     * 
+     *
      * @param original
      * @param maxError
      */

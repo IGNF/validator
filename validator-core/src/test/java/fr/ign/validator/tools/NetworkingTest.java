@@ -17,7 +17,7 @@ public class NetworkingTest {
 
     /**
      * Ensure that proxy is correctly defined from CLI option (--proxy)
-     * 
+     *
      * @throws ParseException
      */
     @Test
@@ -35,7 +35,7 @@ public class NetworkingTest {
     /**
      * Ensure that proxy is correctly defined from environment variables while
      * running tests so that URL content can be retreived.
-     * 
+     *
      * @throws IOException
      * @throws MalformedURLException
      * @throws ParseException

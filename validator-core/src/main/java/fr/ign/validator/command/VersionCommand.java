@@ -13,9 +13,9 @@ import fr.ign.validator.Version;
 import fr.ign.validator.command.options.OutputFileOption;
 
 /**
- * 
+ *
  * Display validator version
- * 
+ *
  * @author MBorne
  */
 public class VersionCommand extends AbstractCommand {

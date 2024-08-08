@@ -4,7 +4,7 @@ import fr.ign.validator.error.ErrorCode;
 
 /**
  * CNIG specific error codes
- * 
+ *
  * @author MBorne
  *
  */

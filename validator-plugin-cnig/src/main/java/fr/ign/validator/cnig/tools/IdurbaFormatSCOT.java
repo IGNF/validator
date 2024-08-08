@@ -5,9 +5,9 @@ import org.apache.commons.lang.StringUtils;
 import fr.ign.validator.cnig.model.DocumentName;
 
 /**
- * 
+ *
  * Helper to validate IDURBA format according to CNIG standards v2017 or more.
- * 
+ *
  * @author MBorne
  *
  */

@@ -10,7 +10,7 @@ import fr.ign.validator.validation.attribute.StringPatternValidator;
 
 /**
  * Represents a character string
- * 
+ *
  * @author MBorne
  *
  */

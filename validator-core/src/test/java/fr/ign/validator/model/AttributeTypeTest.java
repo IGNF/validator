@@ -36,7 +36,7 @@ public class AttributeTypeTest {
 
     /**
      * Test jackson's config
-     * 
+     *
      * @throws IOException
      */
     @Test

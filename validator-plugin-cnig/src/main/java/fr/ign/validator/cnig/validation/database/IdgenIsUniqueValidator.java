@@ -12,7 +12,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Ensure that IDGEN is unique in GENERATEUR_SUP_P/L/S tables.
- * 
+ *
  * @author MBorne
  *
  */

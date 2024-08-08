@@ -39,10 +39,10 @@ import fr.ign.validator.tools.MultiTableReader;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
+ *
  * Helper to load document data into a SQL database to validate some constraints
  * (unique, reference, etc.)
- * 
+ *
  * @author CBouche
  * @author MBorne
  *
@@ -75,7 +75,7 @@ public class Database implements Closeable {
 
     /**
      * Create or open an SQLITE database
-     * 
+     *
      * @param sqlitePath
      */
     public Database(File sqlitePath) {
@@ -103,7 +103,7 @@ public class Database implements Closeable {
 
     /**
      * Create or open a PostgreSQL database with a given schema
-     * 
+     *
      * @param url
      * @param user
      * @param password
@@ -126,7 +126,7 @@ public class Database implements Closeable {
 
     /**
      * Get SQL connection
-     * 
+     *
      * @return
      */
     public Connection getConnection() {
@@ -142,10 +142,10 @@ public class Database implements Closeable {
 
     /**
      * Returns true the database supports geometry type.
-     * 
+     *
      * Note that it currently assume that postgis is always enabled for postgresql
      * database.
-     * 
+     *
      * @return
      */
     public boolean hasGeometrySupport() {
@@ -158,7 +158,7 @@ public class Database implements Closeable {
 
     /**
      * If defined, ensure that the specified schema exists and set in search_path.
-     * 
+     *
      * @param reset true if the schema has to be re-created
      * @throws SQLException
      */
@@ -179,16 +179,16 @@ public class Database implements Closeable {
 
     /**
      * Create a validation Database according to environment variables :
-     * 
+     *
      * <ul>
      * <li>DB_URL (ex : "jdbc:postgresql:validator-test")</li>
      * <li>DB_USER (ex : "postgis")</li>
      * <li>DB_PASSWORD (ex : "postgis")</li>
      * <li>DB_SCHEMA (ex : "validation_{document.id}")</li>
      * </ul>
-     * 
+     *
      * Note that :
-     * 
+     *
      * <ul>
      * <li>An SQLITE database is created in validation directory if DB_URL is not
      * specified</li>
@@ -200,7 +200,7 @@ public class Database implements Closeable {
      *
      * @param document
      * @param reset    true if the schema has to be re-created
-     * 
+     *
      * @return
      * @throws SQLException
      */
@@ -215,7 +215,7 @@ public class Database implements Closeable {
 
     /**
      * Create an SQLITE database as document_database.db in validation directory.
-     * 
+     *
      * @param context
      * @param reset
      * @return
@@ -238,7 +238,7 @@ public class Database implements Closeable {
 
     /**
      * Create a PostgreSQL database according to environment variables.
-     * 
+     *
      * @param context
      * @param reset
      * @return
@@ -263,7 +263,7 @@ public class Database implements Closeable {
 
     /**
      * Create tables according to the TableModels of the DocumentModel
-     * 
+     *
      * @throws SQLException
      * @throws IOException
      */
@@ -280,7 +280,7 @@ public class Database implements Closeable {
 
     /**
      * Create a table according to a TableModel
-     * 
+     *
      * @param tableModel
      * @throws SQLException
      */
@@ -293,7 +293,7 @@ public class Database implements Closeable {
 
     /**
      * Create table for a given FeatureType.
-     * 
+     *
      * @param tableName
      * @param featureType
      * @throws SQLException
@@ -321,7 +321,7 @@ public class Database implements Closeable {
 
     /**
      * Create a table with a list of text columns.
-     * 
+     *
      * @param string
      * @param columnNames
      */
@@ -346,7 +346,7 @@ public class Database implements Closeable {
 
     /**
      * Create indexes for all tables on unique fields.
-     * 
+     *
      * @param document
      * @throws SQLException
      */
@@ -359,7 +359,7 @@ public class Database implements Closeable {
 
     /**
      * Create indexes for a given table.
-     * 
+     *
      * @param tableModel
      * @throws SQLException
      */
@@ -385,7 +385,7 @@ public class Database implements Closeable {
 
     /**
      * Create index idx_{tableName}_{columnName} on {tableName}({columnName}
-     * 
+     *
      * @param tableName
      * @param columnName
      */
@@ -400,7 +400,7 @@ public class Database implements Closeable {
 
     /**
      * Load an entire document to the database (insert mode)
-     * 
+     *
      * @throws IOException
      * @throws SQLException
      */
@@ -421,7 +421,7 @@ public class Database implements Closeable {
 
     /**
      * Load a given {@link SingleTableFile} in the database (insert mode)
-     * 
+     *
      * @param context
      * @param documentFile
      * @throws IOException
@@ -447,7 +447,7 @@ public class Database implements Closeable {
 
     /**
      * Load a given {@link SingleTableFile} in the database (insert mode)
-     * 
+     *
      * @param file
      * @param fileModel
      * @throws IOException
@@ -461,7 +461,7 @@ public class Database implements Closeable {
 
     /**
      * Load a given {@link StaticTable} in the database (insert mode)
-     * 
+     *
      * @param context
      * @param staticTable
      * @throws IOException
@@ -478,7 +478,7 @@ public class Database implements Closeable {
 
     /**
      * Load a given file into an existing table.
-     * 
+     *
      * @param tableName
      * @param path
      * @param charset
@@ -496,7 +496,7 @@ public class Database implements Closeable {
 
     /**
      * Load a given TableReader in the database (insert mode)
-     * 
+     *
      * @param tableName
      * @param sourceFile
      * @param reader
@@ -586,7 +586,7 @@ public class Database implements Closeable {
 
     /**
      * Perform any SQL request returning results
-     * 
+     *
      * @param sql
      * @return
      * @throws SQLException
@@ -603,7 +603,7 @@ public class Database implements Closeable {
 
     /**
      * Perform any SQL request that doesn't returns results
-     * 
+     *
      * @param sql
      * @return
      * @throws SQLException
@@ -623,7 +623,7 @@ public class Database implements Closeable {
 
     /**
      * Return an Array of String giving column names for a giving table
-     * 
+     *
      * @param tablename
      * @return
      * @throws SQLException
@@ -638,7 +638,7 @@ public class Database implements Closeable {
 
     /**
      * Return the number of rows for a given table
-     * 
+     *
      * @param tableName
      * @return
      * @throws SQLException

@@ -5,12 +5,12 @@ import java.io.File;
 import org.apache.commons.io.FilenameUtils;
 
 /**
- * 
+ *
  * Allows to manipulate file with same name and different extension
  * (my_table.shp, my_table.dbf, my_table.cpg,...)
- * 
+ *
  * Note that all methods are case sensitive
- * 
+ *
  * @author MBorne
  *
  */
@@ -18,7 +18,7 @@ public class CompanionFileUtils {
 
     /**
      * Finds companion file
-     * 
+     *
      * @param source    Reference file (ex : PARCELLE.dbf)
      * @param extension companion file extension (ex: shp)
      * @return companion file (ex : PARCELLE.shp)
@@ -33,7 +33,7 @@ public class CompanionFileUtils {
 
     /**
      * Tests if a companion file exists
-     * 
+     *
      * @param source
      * @param extension
      * @return
@@ -50,7 +50,7 @@ public class CompanionFileUtils {
 
     /**
      * Removes a companion file
-     * 
+     *
      * @param source
      * @param extension
      * @return

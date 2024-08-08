@@ -6,7 +6,7 @@ import fr.ign.validator.exception.GeometryTransformException;
 
 /**
  * Returns the same geometry (allows to easily disable transforms)
- * 
+ *
  * @author MBorne
  *
  */

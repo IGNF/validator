@@ -3,7 +3,7 @@ package fr.ign.validator.geometry;
 /**
  * A couple of warning threshold and an error one - used by geometry complexity
  * validator
- * 
+ *
  * @author cbouche
  *
  */

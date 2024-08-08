@@ -2,7 +2,7 @@ package fr.ign.validator.cnig.tools;
 
 /**
  * Allows IDURBA validation. Note that :
- * 
+ *
  * <ul>
  * <li>Only PLU, POS, CC, PLUi and PSMV documents are concerned</li>
  * <li>{@link IdurbaFormatV1} is relative to CNIG standard v2013 and v2014</li>
@@ -11,7 +11,7 @@ package fr.ign.validator.cnig.tools;
  * corresponding to the DocumentModel version
  * <li>
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */
@@ -19,7 +19,7 @@ public interface IdurbaFormat {
 
     /**
      * True if value is valid according to this format
-     * 
+     *
      * @param value
      * @return
      */
@@ -27,7 +27,7 @@ public interface IdurbaFormat {
 
     /**
      * Get regexp to produce help message for the format
-     * 
+     *
      * @return
      */
     @Deprecated
@@ -35,7 +35,7 @@ public interface IdurbaFormat {
 
     /**
      * Validates an idUrba according to a documentName
-     * 
+     *
      * @param value
      * @param documentName
      * @return
@@ -44,7 +44,7 @@ public interface IdurbaFormat {
 
     /**
      * Get expected regexp for a given documentName
-     * 
+     *
      * @param documentName
      * @return
      */

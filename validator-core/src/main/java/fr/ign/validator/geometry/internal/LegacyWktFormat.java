@@ -10,7 +10,7 @@ import org.locationtech.jts.io.WKTReader;
 /**
  * Mainly introduced to keep support for "POINT Z (809848 6322607 8)" which is
  * not supported by {@link WKTReader2} with JTS 1.18.
- * 
+ *
  * @author MBorne
  *
  */

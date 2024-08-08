@@ -13,14 +13,14 @@ import fr.ign.validator.info.model.DocumentInfo;
 
 /**
  * DocumentInfo writer
- * 
+ *
  * @author MBorne
  */
 public class DocumentInfoWriter {
 
     /**
      * Save DocumentInfo to JSON file
-     * 
+     *
      * @param documentInfo
      * @param output
      * @throws JDOMException

@@ -8,9 +8,9 @@ import fr.ign.validator.model.FileModel.MandatoryMode;
 
 /**
  * FileModel serialization adapter
- * 
+ *
  * Note that "regexp" is renamed to "path"
- * 
+ *
  * @author MBorne
  *
  */

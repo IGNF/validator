@@ -13,7 +13,7 @@ import fr.ign.validator.model.Projection;
 
 /**
  * Manipulates Bounding Boxes (envelope or bbox)
- * 
+ *
  * @author MBorne
  *
  */
@@ -21,7 +21,7 @@ public class EnvelopeUtils {
 
     /**
      * Get bounding box from WKT string.
-     * 
+     *
      * @param wkt
      * @return
      */
@@ -40,7 +40,7 @@ public class EnvelopeUtils {
 
     /**
      * Get CRS:84 envelope from WKT string with a given projection.
-     * 
+     *
      * @param wkt
      * @param projection
      * @return
@@ -56,7 +56,7 @@ public class EnvelopeUtils {
 
     /**
      * Formats bbox as string : "xmin,ymin,xmax,ymax"
-     * 
+     *
      * @param env
      * @return
      */
@@ -72,7 +72,7 @@ public class EnvelopeUtils {
 
     /**
      * Format double
-     * 
+     *
      * @param value
      * @return
      */
@@ -82,7 +82,7 @@ public class EnvelopeUtils {
 
     /**
      * Indicates if bbox is null
-     * 
+     *
      * @param env
      * @return
      */

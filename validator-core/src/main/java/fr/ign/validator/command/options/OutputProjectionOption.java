@@ -10,7 +10,7 @@ import fr.ign.validator.model.Projection;
 
 /**
  * Add "output-projection" to the command line.
- * 
+ *
  * @author MBorne
  *
  */
@@ -22,7 +22,7 @@ public class OutputProjectionOption {
 
     /**
      * Add "srs" option
-     * 
+     *
      * @param options
      */
     public static void buildOptions(Options options) {
@@ -39,7 +39,7 @@ public class OutputProjectionOption {
 
     /**
      * Parse output-projection from the command line.
-     * 
+     *
      * @param commandLine
      * @return
      * @return Projection or null if "source" is specified.

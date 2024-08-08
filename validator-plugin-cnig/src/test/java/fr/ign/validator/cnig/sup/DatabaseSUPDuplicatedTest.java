@@ -18,14 +18,14 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Performs the following tests on {@link DatabaseSUP} :
- * 
+ *
  * <ul>
  * <li>Load CSV files from /jointure_sup/duplicated/DATA checking row
  * counts</li>
  * <li>Ensure that the process doesn't crash and the finder produces unique
  * values if multiple SERVITUDE rows have the same IDSUP (2147483647).</li>
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */

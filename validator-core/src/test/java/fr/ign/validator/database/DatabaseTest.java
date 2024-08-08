@@ -33,7 +33,7 @@ public class DatabaseTest {
 
     /**
      * Create an SQLITE database with a specific path and performs basic tests
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -66,7 +66,7 @@ public class DatabaseTest {
 
     /**
      * Performs basic test with some queries
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -91,7 +91,7 @@ public class DatabaseTest {
 
     /**
      * Load DUMMY.csv file with A,B,WKT columns in table with A,B columns.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -113,7 +113,7 @@ public class DatabaseTest {
 
     /**
      * Load DUMMY.csv file with A,B,WKT columns in table with C,D columns.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -153,7 +153,7 @@ public class DatabaseTest {
 
     /**
      * Get sample Document
-     * 
+     *
      * @return
      * @throws IOException
      */
@@ -172,7 +172,7 @@ public class DatabaseTest {
 
     /**
      * Create a test context
-     * 
+     *
      * @return
      */
     private Context createTestContext() {

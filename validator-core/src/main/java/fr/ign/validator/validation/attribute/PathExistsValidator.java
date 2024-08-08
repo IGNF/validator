@@ -8,9 +8,9 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates that the path exists for PathAttribute type attributes
- * 
+ *
  * @author MBorne
  *
  */
@@ -39,7 +39,7 @@ public class PathExistsValidator implements Validator<Attribute<File>> {
 
     /**
      * Remove fragment from URI (#page=125)
-     * 
+     *
      * @param path
      * @return
      */

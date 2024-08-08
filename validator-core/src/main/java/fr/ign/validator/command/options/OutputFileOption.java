@@ -9,7 +9,7 @@ import org.apache.commons.cli.ParseException;
 
 /**
  * Add option to configure an optional output file (default is System.out).
- * 
+ *
  * @author MBorne
  *
  */
@@ -23,7 +23,7 @@ public class OutputFileOption {
 
     /**
      * Add "output" option to command line.
-     * 
+     *
      * @param options
      */
     public static void buildOptions(Options options) {
@@ -40,7 +40,7 @@ public class OutputFileOption {
 
     /**
      * Parse option from command line.
-     * 
+     *
      * @param commandLine
      * @return
      * @throws ParseException

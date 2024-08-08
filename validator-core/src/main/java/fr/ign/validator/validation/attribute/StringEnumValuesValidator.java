@@ -9,9 +9,9 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates according to a list of values
- * 
+ *
  * @author MBorne
  *
  */
@@ -52,7 +52,7 @@ public class StringEnumValuesValidator implements Validator<Attribute<String>> {
 
     /**
      * Formatting a list of values for error report
-     * 
+     *
      * @param listOfValues
      * @return
      */

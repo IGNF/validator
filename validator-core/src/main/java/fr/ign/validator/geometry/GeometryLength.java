@@ -24,7 +24,7 @@ public class GeometryLength {
 
     /**
      * get perimeter in meter given the source projection
-     * 
+     *
      * @param geometry
      * @param projection
      * @return
@@ -51,7 +51,7 @@ public class GeometryLength {
 
     /**
      * get local projection given a CRS:84's geometry
-     * 
+     *
      * @param geometry
      * @param sourceProjecion
      * @return
@@ -81,7 +81,7 @@ public class GeometryLength {
 
     /**
      * get geometry in CRS:84 given the source projection
-     * 
+     *
      * @param geometry
      * @param sourceProjection
      * @return
@@ -104,7 +104,7 @@ public class GeometryLength {
      * Ensure given projection is in meter in order to avoir reprojection for french
      * document's in EPSG:2154 WARNING : the length will be bad for projection like
      * web mercator
-     * 
+     *
      * @param projection
      * @return
      */

@@ -16,13 +16,13 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Performs the following tests on {@link DatabaseSUP} :
- * 
+ *
  * <ul>
  * <li>Load CSV files from /jointure_sup/many2many/DATA checking row counts</li>
  * <li>Ensure that "dummy" is supported by find methods.</li>
  * <li>Ensure that MANY-TO-MANY relations are supported by find methods.</li>
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */

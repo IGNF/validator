@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Static Table
- * 
+ *
  * @author cbouche
  *
  */

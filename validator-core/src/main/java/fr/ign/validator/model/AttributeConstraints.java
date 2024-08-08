@@ -16,9 +16,9 @@ public class AttributeConstraints {
 
     /**
      * Indicates if null values are forbidden
-     * 
+     *
      * @since 4.0 previously "nullable" with opposite value
-     * 
+     *
      * @see fr.ign.validator.validation.attribute.AttributeRequiredValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_UNEXPECTED_NULL
      */
@@ -26,9 +26,9 @@ public class AttributeConstraints {
 
     /**
      * Indicates if the value is unique in the table
-     * 
+     *
      * @since 4.0 previously "identifier" supported only by dgpr plugin
-     * 
+     *
      * @see fr.ign.validator.validation.database.AttributeUniqueValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_NOT_UNIQUE
      */
@@ -36,9 +36,9 @@ public class AttributeConstraints {
 
     /**
      * Regexp matching the attribute value
-     * 
+     *
      * @since 4.0 previously "regexp"
-     * 
+     *
      * @see fr.ign.validator.validation.attribute.StringPatternValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_INVALID_REGEXP
      */
@@ -46,19 +46,19 @@ public class AttributeConstraints {
 
     /**
      * Minimum length of the value
-     * 
+     *
      * @see fr.ign.validator.validation.attribute.MinLengthValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_TOO_SHORT
-     * 
+     *
      * @since 4.1
      */
     private Integer minLength;
 
     /**
      * Maximum length of the value
-     * 
+     *
      * @since 4.0 previously "size"
-     * 
+     *
      * @see fr.ign.validator.validation.attribute.MaxLengthValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_SIZE_EXCEEDED
      */
@@ -66,9 +66,9 @@ public class AttributeConstraints {
 
     /**
      * Restriction on a list of values
-     * 
+     *
      * @since 4.0 previously "listOfValues"
-     * 
+     *
      * @see fr.ign.validator.validation.attribute.StringEnumValuesValidator
      * @see fr.ign.validator.error.CoreErrorCodes#ATTRIBUTE_UNEXPECTED_VALUE
      */
@@ -126,7 +126,7 @@ public class AttributeConstraints {
 
     /**
      * Tell if enum restriction is defined
-     * 
+     *
      * @return
      */
     public boolean hasEnumValues() {

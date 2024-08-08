@@ -4,9 +4,9 @@ import fr.ign.validator.string.StringTransform;
 import fr.ign.validator.tools.Characters;
 
 /**
- * 
+ *
  * Escape characters marked as ISO controls
- * 
+ *
  * @author MBorne
  *
  */
@@ -14,7 +14,7 @@ public class IsoControlEscaper implements StringTransform {
 
     /**
      * Ignores standard controls?
-     * 
+     *
      * @see standard controls definition {@link Characters#isStandardControl}
      */
     private boolean standardControlsAllowed;

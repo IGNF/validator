@@ -12,9 +12,9 @@ import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
 import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
 
 /**
- * 
+ *
  * A geometry of any type
- * 
+ *
  * @author MBorne
  *
  */
@@ -69,7 +69,7 @@ public class GeometryType extends AttributeType<Geometry> {
 
     /**
      * Extracting a geometry from a collection
-     * 
+     *
      * @param geometry
      * @param c
      * @return
@@ -92,7 +92,7 @@ public class GeometryType extends AttributeType<Geometry> {
 
     /**
      * Returns an IllegalArgumentException saying the geometry type is not correct
-     * 
+     *
      * @param value
      */
     protected String getMessageInvalidGeometryType(Geometry value) {

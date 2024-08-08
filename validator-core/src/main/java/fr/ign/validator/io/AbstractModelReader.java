@@ -22,7 +22,7 @@ import fr.ign.validator.tools.ModelHelper;
 
 /**
  * Common implementation for JSON and XML ModelReader.
- * 
+ *
  * @author MBorne
  */
 abstract class AbstractModelReader implements ModelReader {
@@ -48,7 +48,7 @@ abstract class AbstractModelReader implements ModelReader {
     }
 
     /**
-     * 
+     *
      * @param documentModel
      * @param documentModelUrl
      * @throws MalformedURLException
@@ -71,7 +71,7 @@ abstract class AbstractModelReader implements ModelReader {
 
     /**
      * Load static Files for a given documentModel
-     * 
+     *
      * @param documentModel
      * @param documentModelUrl
      */
@@ -86,7 +86,7 @@ abstract class AbstractModelReader implements ModelReader {
 
     /**
      * Resolve FeatureType URL for a given FileModel.
-     * 
+     *
      * @param documentModelUrl
      * @param documentModel
      * @param tableModel
@@ -132,7 +132,7 @@ abstract class AbstractModelReader implements ModelReader {
 
     /**
      * Resolve FeatureType URL for a given FileModel.
-     * 
+     *
      * @param documentModelUrl
      * @param documentModel
      * @param tableModel
@@ -174,7 +174,7 @@ abstract class AbstractModelReader implements ModelReader {
 
     /**
      * Open URL, throws ModelNotFoundException on failure
-     * 
+     *
      * @param url
      * @return
      */

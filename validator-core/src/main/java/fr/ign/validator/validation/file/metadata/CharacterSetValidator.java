@@ -13,9 +13,9 @@ import fr.ign.validator.metadata.code.CharacterSetCode;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates metadata.characterSet
- * 
+ *
  * @author MBorne
  *
  */

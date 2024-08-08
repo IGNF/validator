@@ -12,9 +12,9 @@ import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "fileIdentifier" is defined and not empty
- * 
+ *
  * @author MBorne
  *
  */

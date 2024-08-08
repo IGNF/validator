@@ -44,9 +44,9 @@ import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.validation.Validatable;
 
 /**
- * 
+ *
  * Validation context
- * 
+ *
  * @author MBorne
  *
  */
@@ -56,7 +56,7 @@ public class Context {
 
     /**
      * Data charset (overridden by metadata provided charset)
-     * 
+     *
      * @see MetadataPreProcess
      */
     private Charset encoding = StandardCharsets.UTF_8;
@@ -166,7 +166,7 @@ public class Context {
 
     /**
      * Get validatorListeners
-     * 
+     *
      * @return
      */
     public List<ValidatorListener> getValidatorListeners() {
@@ -175,7 +175,7 @@ public class Context {
 
     /**
      * add listener
-     * 
+     *
      * @param listener
      */
     public void addListener(ValidatorListener listener) {
@@ -184,7 +184,7 @@ public class Context {
 
     /**
      * Add listener before the first listener of a given class
-     * 
+     *
      * @param listener
      * @param clazz
      */
@@ -198,7 +198,7 @@ public class Context {
 
     /**
      * Find listener for a given class
-     * 
+     *
      * @param clazz
      * @return
      */
@@ -266,7 +266,7 @@ public class Context {
 
     /**
      * Set projection from CRS code
-     * 
+     *
      * @param code
      */
     public void setProjection(String code) {
@@ -317,7 +317,7 @@ public class Context {
 
     /**
      * Get ErrorFactory
-     * 
+     *
      * @return
      */
     public ErrorFactory getErrorFactory() {
@@ -326,7 +326,7 @@ public class Context {
 
     /**
      * Set ErrorFactory
-     * 
+     *
      * @param errorFactory
      */
     public void setErrorFactory(ErrorFactory errorFactory) {
@@ -335,7 +335,7 @@ public class Context {
 
     /**
      * Push given model to stack
-     * 
+     *
      * @param model
      */
     public void beginModel(Model model) {
@@ -345,7 +345,7 @@ public class Context {
 
     /**
      * Get model stack
-     * 
+     *
      * @return
      */
     public List<Model> getModelStack() {
@@ -354,7 +354,7 @@ public class Context {
 
     /**
      * Get current model by type
-     * 
+     *
      * @param clazz
      * @return
      */
@@ -370,7 +370,7 @@ public class Context {
 
     /**
      * Get current document model
-     * 
+     *
      * @return
      */
     public DocumentModel getDocumentModel() {
@@ -379,7 +379,7 @@ public class Context {
 
     /**
      * Get current document model name
-     * 
+     *
      * @param context
      * @return
      */
@@ -393,7 +393,7 @@ public class Context {
 
     /**
      * Get current file model name
-     * 
+     *
      * @param context
      * @return
      */
@@ -407,7 +407,7 @@ public class Context {
 
     /**
      * Get current attribute name
-     * 
+     *
      * @param context
      * @return
      */
@@ -433,7 +433,7 @@ public class Context {
 
     /**
      * Begin data validation (push data on dataStack)
-     * 
+     *
      * @param location
      */
     public void beginData(Validatable data) {
@@ -442,7 +442,7 @@ public class Context {
 
     /**
      * Get data by type from data stack
-     * 
+     *
      * @param clazz
      * @return
      */
@@ -458,7 +458,7 @@ public class Context {
 
     /**
      * Get current scope from data stack
-     * 
+     *
      * @return
      */
     public ErrorScope getScope() {
@@ -475,7 +475,7 @@ public class Context {
 
     /**
      * Get current fileName from data stack
-     * 
+     *
      * @param context
      * @return
      */
@@ -499,7 +499,7 @@ public class Context {
 
     /**
      * Get current line number from data stack
-     * 
+     *
      * @param context
      * @return
      */
@@ -513,7 +513,7 @@ public class Context {
 
     /**
      * Get current feature bounding box from data stack
-     * 
+     *
      * @return string
      */
     public Envelope getFeatureBBox() {
@@ -526,7 +526,7 @@ public class Context {
 
     /**
      * Get current identifiant
-     * 
+     *
      * @return
      */
     public String getFeatureId() {
@@ -539,7 +539,7 @@ public class Context {
 
     /**
      * End data validation (pop data from dataStack)
-     * 
+     *
      * @param location
      */
     public void endData(Validatable data) {
@@ -552,7 +552,7 @@ public class Context {
 
     /**
      * Get relative path according to current directory.
-     * 
+     *
      * @param path
      * @return
      */
@@ -569,7 +569,7 @@ public class Context {
 
     /**
      * Create and report an error according to its code
-     * 
+     *
      * @param code
      * @param messageParams
      */
@@ -580,7 +580,7 @@ public class Context {
 
     /**
      * Direct reporting of an existing error
-     * 
+     *
      * @param validatorError
      */
     public void report(ValidatorError validatorError) {
@@ -589,7 +589,7 @@ public class Context {
 
     /**
      * Generic method for building errors
-     * 
+     *
      * @param code
      * @param messageParams
      */
@@ -619,7 +619,7 @@ public class Context {
 
     /**
      * Get ValidationDirectory
-     * 
+     *
      * @return
      */
     public File getValidationDirectory() {
@@ -628,7 +628,7 @@ public class Context {
 
     /**
      * Set ValidationDirectory
-     * 
+     *
      * @return
      */
     public void setValidationDirectory(File validationDirectory) {
@@ -642,7 +642,7 @@ public class Context {
 
     /**
      * Enable or disable data normalization.
-     * 
+     *
      * @param normalizeEnabled
      */
     public void setNormalizeEnabled(boolean normalizeEnabled) {
@@ -652,7 +652,7 @@ public class Context {
 
     /**
      * Get output projection for normalized data.
-     * 
+     *
      * @return
      */
     public Projection getOutputProjection() {
@@ -661,7 +661,7 @@ public class Context {
 
     /**
      * Set output projection for normalized data.
-     * 
+     *
      * @param outputProjection
      */
     public void setOutputProjection(Projection outputProjection) {
@@ -671,7 +671,7 @@ public class Context {
 
     /**
      * Get DATA directory for normalized data ({validation_dir}/DATA)
-     * 
+     *
      * @return
      */
     public File getDataDirectory() {
@@ -684,7 +684,7 @@ public class Context {
 
     /**
      * Get metadata directory ({validation_dir}/METADATA)
-     * 
+     *
      * @return
      */
     public File getMetadataDirectory() {
@@ -740,7 +740,7 @@ public class Context {
 
     /**
      * tolerance option used in geometric operation (dgpr plugin)
-     * 
+     *
      * @return
      */
     public Double getDgprTolerance() {
@@ -749,7 +749,7 @@ public class Context {
 
     /**
      * tolerance option used in geometric operation (dgpr plugin)
-     * 
+     *
      * @param topologicalTolerance
      */
     public void setDgprTolerance(double topologicalTolerance) {
@@ -758,7 +758,7 @@ public class Context {
 
     /**
      * simplification distance option
-     * 
+     *
      * @return distance
      */
     public Double getDgprSimplification() {
@@ -767,7 +767,7 @@ public class Context {
 
     /**
      * simplification distance option
-     * 
+     *
      * @param distanceSimplification
      */
     public void setDgprSimplification(Double distanceSimplification) {
@@ -776,7 +776,7 @@ public class Context {
 
     /**
      * safe simplification option
-     * 
+     *
      * @return safe simplication allowed
      */
     public Boolean isDgprSafeMode() {
@@ -785,7 +785,7 @@ public class Context {
 
     /**
      * safe simplification option
-     * 
+     *
      * @param safeSimplification
      */
     public void setDgprSafeMode(boolean safeSimplification) {

@@ -7,7 +7,7 @@ import fr.ign.validator.model.AttributeConstraints;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates the size of a StringType Attribute
  *
  * @author MBorne

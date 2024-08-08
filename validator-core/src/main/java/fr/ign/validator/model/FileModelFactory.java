@@ -7,9 +7,9 @@ import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.model.file.SingleTableModel;
 
 /**
- * 
+ *
  * Factory providing FileModel creation by name (Table, PDF,etc.)
- * 
+ *
  * @author MBorne
  *
  */
@@ -17,7 +17,7 @@ public class FileModelFactory {
 
     /**
      * Create a file model for a given type
-     * 
+     *
      * @param name
      * @return
      */

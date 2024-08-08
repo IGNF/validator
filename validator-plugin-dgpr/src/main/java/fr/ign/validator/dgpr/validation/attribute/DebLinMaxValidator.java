@@ -58,7 +58,7 @@ public class DebLinMaxValidator implements Validator<Attribute<Double>> {
     }
 
     /**
-     * 
+     *
      * @param context
      * @param debMaxValue
      */
@@ -72,7 +72,7 @@ public class DebLinMaxValidator implements Validator<Attribute<Double>> {
 
     /**
      * Report if DebMin > DebMax
-     * 
+     *
      * @param context
      * @param debMaxValue
      */

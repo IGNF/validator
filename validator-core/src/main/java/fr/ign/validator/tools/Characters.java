@@ -1,9 +1,9 @@
 package fr.ign.validator.tools;
 
 /**
- * 
+ *
  * Utility class validating & escaping characters
- * 
+ *
  * @author MBorne
  *
  */
@@ -11,7 +11,7 @@ public class Characters {
 
     /**
      * Test if a character is a standard control :
-     * 
+     *
      * <ul>
      * <li>Backspace (\b)</li>
      * <li>Form feed (\f)</li>
@@ -19,7 +19,7 @@ public class Characters {
      * <li>Carriage return (\r)</li>
      * <li>Tab (\t)</li>
      * </ul>
-     * 
+     *
      * @param codePoint
      */
     public static boolean isStandardControl(int codePoint) {
@@ -36,7 +36,7 @@ public class Characters {
     }
 
     /**
-     * 
+     *
      * @param codePoint
      * @return
      */
@@ -59,7 +59,7 @@ public class Characters {
 
     /**
      * Convert character to URI displaying details
-     * 
+     *
      * @param codePoint
      * @return
      */
@@ -70,7 +70,7 @@ public class Characters {
 
     /**
      * Converts character to hexa representation
-     * 
+     *
      * @param codePoint
      * @return
      */

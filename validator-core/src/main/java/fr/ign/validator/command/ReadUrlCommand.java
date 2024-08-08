@@ -15,9 +15,9 @@ import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
 /**
- * 
+ *
  * Read URL to check proxy configuration
- * 
+ *
  * @author MBorne
  */
 public class ReadUrlCommand extends AbstractCommand {

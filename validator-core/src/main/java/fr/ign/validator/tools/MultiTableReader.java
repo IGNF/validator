@@ -15,7 +15,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 /**
  * Helper class to read data from {@link MultiTableFile}.
- * 
+ *
  * @author MBorne
  *
  */
@@ -43,7 +43,7 @@ public class MultiTableReader {
     /**
      * Create a {@link MultiTableReader} with a source gmlPath and a csvDirectory
      * produced by an ogr2ogr conversion.
-     * 
+     *
      * @param gmlPath
      * @param csvDirectory
      */
@@ -58,7 +58,7 @@ public class MultiTableReader {
 
     /**
      * Retrieve table names listing files in converted folder.
-     * 
+     *
      * @return
      */
     private List<String> retrieveTableNames() {
@@ -79,7 +79,7 @@ public class MultiTableReader {
 
     /**
      * Get available table names.
-     * 
+     *
      * @return
      */
     public List<String> getTableNames() {
@@ -88,7 +88,7 @@ public class MultiTableReader {
 
     /**
      * Get reader for a specific table.
-     * 
+     *
      * @param tableName
      * @return
      * @throws IOException
@@ -100,7 +100,7 @@ public class MultiTableReader {
 
     /**
      * Get path to the table converted to CSV.
-     * 
+     *
      * @param tableName
      * @return
      * @throws IOException
@@ -119,9 +119,9 @@ public class MultiTableReader {
 
     /**
      * Create a multiple table reader converting source file to a CSV directory.
-     * 
+     *
      * @see {@link fr.ign.validator.data.file.MultiTableFile.MultiTableFile#getReader()}
-     * 
+     *
      * @param file
      * @param preferedCharset
      * @return

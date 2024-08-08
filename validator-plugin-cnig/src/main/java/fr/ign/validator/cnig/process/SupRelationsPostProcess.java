@@ -30,7 +30,7 @@ import fr.ign.validator.validation.Validator;
 /**
  * Post-process relations between SUP tables to adds columns to "GENERATEUR" and
  * "ASSIETE" tables in output data.
- * 
+ *
  * @author MBorne
  */
 public class SupRelationsPostProcess implements ValidatorListener {
@@ -119,7 +119,7 @@ public class SupRelationsPostProcess implements ValidatorListener {
 
     /**
      * Test if document model is a SUP.
-     * 
+     *
      * @param documentModel
      * @return
      */

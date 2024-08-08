@@ -15,7 +15,7 @@ public class ModelReaderFactory {
 
     /**
      * Create a ModelReader detecting format for a given URL :
-     * 
+     *
      * <ul>
      * <li>Deprecated XmlModelReader only if URL ends with .xml</li>
      * <li>JsonModelReader for other cases</li>

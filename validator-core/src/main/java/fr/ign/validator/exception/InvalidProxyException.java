@@ -1,7 +1,7 @@
 package fr.ign.validator.exception;
 
 /**
- * 
+ *
  * @author MBorne
  */
 public class InvalidProxyException extends RuntimeException {

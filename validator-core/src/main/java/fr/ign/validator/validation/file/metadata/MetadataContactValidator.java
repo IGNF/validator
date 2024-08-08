@@ -12,9 +12,9 @@ import fr.ign.validator.metadata.ResponsibleParty;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "metadataContact" is defined
- * 
+ *
  * @author MBorne
  *
  */

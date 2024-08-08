@@ -17,7 +17,7 @@ public class StringFixerOptions {
 
     /**
      * Define command line options to configure StringFixer
-     * 
+     *
      * @param options
      */
     public static void buildOptions(Options options) {
@@ -77,7 +77,7 @@ public class StringFixerOptions {
 
     /**
      * Parse command line to build StringFixer
-     * 
+     *
      * @param commandLine
      * @return
      */

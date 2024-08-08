@@ -3,14 +3,14 @@ package fr.ign.validator.metadata;
 /**
  * Partial implementation for gmd:report items focused on specification
  * extraction from gmd:DQ_ConformanceResult.
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_report-1.html">gmd:report</a>
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_DQ_ConformanceResult.html">gmd:DQ_ConformanceResult</a>
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_specification-1.html">gmd:specification</a>
- * 
+ *
  * @author MBorne
  *
  */
@@ -33,9 +33,9 @@ public class Specification {
 
     /**
      * Validation result (true, false or text corresponding to gco:nilReason)
-     * 
+     *
      * @warning CNIG guidance seems to specify something else than a boolean
-     * 
+     *
      * @see <a href=
      *      "http://www.datypic.com/sc/niem21/e-gmd_pass-1.html">gmd:pass</a>
      */

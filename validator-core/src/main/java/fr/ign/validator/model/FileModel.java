@@ -35,7 +35,7 @@ import fr.ign.validator.validation.file.XsdSchemaValidator;
 
 /**
  * Represents a file of a Document
- * 
+ *
  * @author MBorne
  */
 @XmlJavaTypeAdapter(FileModelAdapter.class)
@@ -75,7 +75,7 @@ public abstract class FileModel implements Model {
     /**
      * Path of the file (regexp without extension, ex :
      * Donnees_geographiques/ZONE_URBA_[0-9a-b]{5})
-     * 
+     *
      * @since 4.0 previously "regexp"
      */
     private String path;
@@ -87,7 +87,7 @@ public abstract class FileModel implements Model {
 
     /**
      * XSD schema (optional, for XML/GML files only)
-     * 
+     *
      * @see {@link XsdSchemaValidator}
      */
     @JsonInclude(value = Include.NON_NULL)
@@ -104,7 +104,7 @@ public abstract class FileModel implements Model {
 
     /**
      * Get file type
-     * 
+     *
      * @return
      */
     @JsonIgnore
@@ -112,7 +112,7 @@ public abstract class FileModel implements Model {
 
     /**
      * Creates a DocumentFile for this FileModel
-     * 
+     *
      * @return
      */
     abstract public DocumentFile createDocumentFile(File path);
@@ -162,7 +162,7 @@ public abstract class FileModel implements Model {
     /**
      * Returns the corresponding regexp to : - the supported extensions - the
      * character "/" for folders
-     * 
+     *
      * @return
      */
     @JsonIgnore
@@ -172,7 +172,7 @@ public abstract class FileModel implements Model {
 
     /**
      * Tests if the file matches the regexp
-     * 
+     *
      * @param file
      * @return
      */
@@ -186,7 +186,7 @@ public abstract class FileModel implements Model {
     /**
      * Returns a regexp corresponding to the full path (with folder and extension
      * according to file type)
-     * 
+     *
      * @return
      */
     @JsonIgnore
@@ -200,7 +200,7 @@ public abstract class FileModel implements Model {
     /**
      * Tests if filename matches the regexp (in order to detect files in wrong
      * directory)
-     * 
+     *
      * @param file
      * @return
      */
@@ -213,7 +213,7 @@ public abstract class FileModel implements Model {
     /**
      * Returns a regexp corresponding to the filename (with folder for flat
      * validation and extension according to file type)
-     * 
+     *
      * @return
      */
     @JsonIgnore

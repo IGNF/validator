@@ -13,7 +13,7 @@ import fr.ign.validator.error.ValidatorError;
 /**
  * Create a JSON report file (experimental, ValidatorError serialization has to
  * be improved)
- * 
+ *
  * @author MBorne
  */
 public class JsonReportBuilder implements ReportBuilder, Closeable {

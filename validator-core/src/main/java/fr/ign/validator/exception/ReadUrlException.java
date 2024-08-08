@@ -5,7 +5,7 @@ import java.net.URL;
 
 /**
  * Thrown on failure to read a given URL
- * 
+ *
  * @author MBorne
  *
  */

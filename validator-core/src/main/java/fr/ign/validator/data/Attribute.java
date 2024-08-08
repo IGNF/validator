@@ -9,7 +9,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Represents an attribute of a Feature (value associated to a type)
- * 
+ *
  * @author MBorne
  *
  */
@@ -42,7 +42,7 @@ public class Attribute<T> implements Validatable {
 
     /**
      * Construction of an attribute with type and value
-     * 
+     *
      * @param type
      * @param value
      */
@@ -66,7 +66,7 @@ public class Attribute<T> implements Validatable {
 
     /**
      * Get original value
-     * 
+     *
      * @return
      */
     public Object getValue() {

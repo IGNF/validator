@@ -14,9 +14,9 @@ import fr.ign.validator.model.file.PdfModel;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Checking the document contains at least one written material ("Pièce écrite")
- * 
+ *
  * @author MBorne
  *
  */

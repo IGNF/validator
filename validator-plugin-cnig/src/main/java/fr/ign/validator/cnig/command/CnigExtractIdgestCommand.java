@@ -14,9 +14,9 @@ import fr.ign.validator.cnig.sup.IdgestExtractor;
 import fr.ign.validator.command.AbstractCommand;
 
 /**
- * 
+ *
  * Extracts IDGEST for SUP (cnig pre-validator)
- * 
+ *
  * @author fcerizay
  *
  */

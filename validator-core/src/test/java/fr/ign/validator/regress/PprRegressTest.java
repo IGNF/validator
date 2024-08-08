@@ -28,9 +28,9 @@ import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
 /**
- * 
+ *
  * Regress test for some GpU documents.
- * 
+ *
  * @author MBorne
  *
  */

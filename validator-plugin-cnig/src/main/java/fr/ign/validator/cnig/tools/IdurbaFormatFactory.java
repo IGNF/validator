@@ -8,14 +8,14 @@ import fr.ign.validator.model.DocumentModel;
 
 /**
  * Helper to create {@link IdurbaFormat} format instances.
- * 
+ *
  * @author MBorne
  */
 public class IdurbaFormatFactory {
 
     /**
      * Get supported formats
-     * 
+     *
      * @return
      */
     public static List<IdurbaFormat> getFormats() {
@@ -28,7 +28,7 @@ public class IdurbaFormatFactory {
 
     /**
      * Create format corresponding to the version of the DocumentModel.
-     * 
+     *
      * @param documentModel
      * @return
      */

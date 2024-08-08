@@ -5,10 +5,10 @@ import fr.ign.validator.code.CodeListValue;
 
 /**
  * Implementation of gmd:MD_ScopeCode
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_ScopeCode.html">gmd:MD_ScopeCode</a>
- * 
+ *
  * @author MBorne
  *
  */

@@ -3,11 +3,11 @@ package fr.ign.validator.cnig.model;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
+ *
  * Validates SIREN codes (on 9 digits)
- * 
+ *
  * @see http://www.insee.fr/fr/methodes/default.asp?page=definitions/numero-siren.htm
- * 
+ *
  * @author MBorne
  *
  */
@@ -17,7 +17,7 @@ public class SirenCode {
 
     /**
      * Indicates if given parameter is a valid SIREN code
-     * 
+     *
      * @param value
      * @return
      */

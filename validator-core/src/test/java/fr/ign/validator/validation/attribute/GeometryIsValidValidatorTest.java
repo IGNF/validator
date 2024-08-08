@@ -39,7 +39,7 @@ public class GeometryIsValidValidatorTest {
 
     /**
      * bind and validate attribute
-     * 
+     *
      * @param context
      * @param wkt
      * @return

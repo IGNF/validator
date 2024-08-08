@@ -10,9 +10,9 @@ import fr.ign.validator.exception.InvalidErrorConfigException;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
- * 
+ *
  * Test ErrorFactory according to error codes
- * 
+ *
  * @author MBorne
  *
  */

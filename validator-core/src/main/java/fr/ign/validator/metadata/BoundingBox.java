@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fr.ign.validator.io.json.BoundingBoxSerializer;
 
 /**
- * 
+ *
  * Implementation of gmd:EX_GeographicBoundingBox
- * 
+ *
  * Note that coordinates are stored as string to allow validation reporting
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_EX_GeographicBoundingBox.html">gmd:EX_GeographicBoundingBox</a>
- * 
+ *
  * @author MBorne
  *
  */
@@ -61,7 +61,7 @@ public class BoundingBox {
 
     /**
      * Test if bounding box is valid
-     * 
+     *
      * @return
      */
     public boolean isValid() {
@@ -79,7 +79,7 @@ public class BoundingBox {
     /**
      * Converts to double array
      * [westBoundLongitude,southBoundLatitude,eastBoundLongitude,northBoundLatitude]
-     * 
+     *
      * @return
      */
     public double[] toArray() {

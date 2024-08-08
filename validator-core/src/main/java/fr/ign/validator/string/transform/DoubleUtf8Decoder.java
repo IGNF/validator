@@ -8,11 +8,11 @@ import java.util.Map;
 import fr.ign.validator.string.StringTransform;
 
 /**
- * 
+ *
  * Correction of string in double-encoded utf-8. Proceeds by finding badly
  * encoded sequences (unefficient if it is sure that the string is badly
  * encoded)
- * 
+ *
  * @author MBorne
  *
  */
@@ -67,7 +67,7 @@ public class DoubleUtf8Decoder implements StringTransform {
 
     /**
      * "è" => "Ã¨"
-     * 
+     *
      * @param s
      * @return
      */

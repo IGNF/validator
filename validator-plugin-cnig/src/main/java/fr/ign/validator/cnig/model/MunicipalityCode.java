@@ -3,9 +3,9 @@ package fr.ign.validator.cnig.model;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
+ *
  * Validates INSEE codes for municipalities
- * 
+ *
  * @author MBorne
  *
  */
@@ -14,7 +14,7 @@ public class MunicipalityCode {
 
     /**
      * Validates a municipality code
-     * 
+     *
      * @param value
      * @return
      */

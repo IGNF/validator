@@ -16,7 +16,7 @@ import fr.ign.validator.model.type.GeometryType;
 
 /**
  * Add column the_geom from WKT to all spatial tables.
- * 
+ *
  * @author CBouche
  * @author MBorne
  *

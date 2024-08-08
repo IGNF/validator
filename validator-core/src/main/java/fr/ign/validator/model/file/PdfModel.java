@@ -7,9 +7,9 @@ import fr.ign.validator.data.file.PdfFile;
 import fr.ign.validator.model.FileModel;
 
 /**
- * 
+ *
  * Represents a file with the extension ".pdf"
- * 
+ *
  * @author MBorne
  *
  */

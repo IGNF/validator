@@ -31,9 +31,9 @@ import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
- * 
+ *
  * JsonReaderModel regress tests based on samples in /resources/config-json/
- * 
+ *
  * @author MBorne
  *
  */
@@ -60,7 +60,7 @@ public class JsonModelReaderTest {
     /**
      * Ensure that ModelNotFoundException are thrown if DocumentModel URL doesn't
      * exists
-     * 
+     *
      * @throws MalformedURLException
      */
     @Test(expected = ModelNotFoundException.class)
@@ -71,7 +71,7 @@ public class JsonModelReaderTest {
 
     /**
      * Read DocumentModel from GpU
-     * 
+     *
      * @throws MalformedURLException
      */
     @Test
@@ -100,7 +100,7 @@ public class JsonModelReaderTest {
 
     /**
      * Read DocumentModel from GpU
-     * 
+     *
      * @throws MalformedURLException
      */
     @Test
@@ -259,7 +259,7 @@ public class JsonModelReaderTest {
 
     /**
      * Check FeatureType for /config-json/adresse/types/ADRESSE.json
-     * 
+     *
      * @param featureType
      */
     private void assertExceptedFeatureTypeAdresse(FeatureType featureType) {
@@ -319,7 +319,7 @@ public class JsonModelReaderTest {
 
     /**
      * Check FeatureType for /config-json/cnig_SUP_EL9_2013/types/SERVITUDE.json
-     * 
+     *
      * @param featureType
      */
     private void assertExceptedFeatureTypeServitude(FeatureType featureType) {
@@ -434,7 +434,7 @@ public class JsonModelReaderTest {
 
     /**
      * Performs basic consistency checks on DocumentModel
-     * 
+     *
      * @param documentModel
      */
     private void assertIsValid(DocumentModel documentModel) {
@@ -452,7 +452,7 @@ public class JsonModelReaderTest {
 
     /**
      * Performs basic consistency checks on FeatureType
-     * 
+     *
      * @param documentModel
      */
     private void assertIsValid(FeatureType featureType) {

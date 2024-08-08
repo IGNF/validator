@@ -19,7 +19,7 @@ import fr.ign.validator.tools.TableReader;
 /**
  * Create DatabaseSUP instances for test purpose (legacy method replaced after
  * moving validation database to the core).
- * 
+ *
  * @author MBorne
  *
  */
@@ -36,7 +36,7 @@ public class TestDatabaseFactory {
 
     /**
      * Create DatabaseSUP from CSV files in dataDirectory for test purpose
-     * 
+     *
      * @param dataDirectory
      * @return
      */

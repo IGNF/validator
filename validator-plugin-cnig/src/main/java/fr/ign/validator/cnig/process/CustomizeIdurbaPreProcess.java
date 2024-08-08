@@ -22,9 +22,9 @@ import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.StringType;
 
 /**
- * 
+ *
  * Customize validation to validate IDURBA attributes.
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,7 +34,7 @@ public class CustomizeIdurbaPreProcess implements ValidatorListener {
 
     /**
      * Extends the validation of DOC_URBA table
-     * 
+     *
      * @param context
      * @param document
      * @throws Exception

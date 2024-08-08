@@ -14,9 +14,9 @@ import fr.ign.validator.tools.CompanionFileUtils;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
- * 
+ *
  * Test command CnigExtractIdgestCommand
- * 
+ *
  * @author FCerizay
  *
  */

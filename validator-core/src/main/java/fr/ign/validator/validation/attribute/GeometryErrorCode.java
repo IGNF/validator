@@ -34,7 +34,7 @@ public class GeometryErrorCode extends CodeListValue {
 
     /**
      * Get associated message
-     * 
+     *
      * @return
      */
     public String getMessage() {
@@ -43,7 +43,7 @@ public class GeometryErrorCode extends CodeListValue {
 
     /**
      * Translate JTS code
-     * 
+     *
      * @param errorType
      * @return
      */

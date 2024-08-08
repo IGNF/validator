@@ -11,7 +11,7 @@ import fr.ign.validator.metadata.BoundingBox;
 
 /**
  * Serialize BoundingBox to JSON format [xmin,ymin,xmax,ymax]
- * 
+ *
  * @author MBorne
  *
  */
