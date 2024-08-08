@@ -14,7 +14,7 @@ Note that CI is configured throw [GitHub Actions](https://github.com/IGNF/valida
 
 It relies on [.github/workflows/main.yml](.github/workflows/main.yml) which :
 
-* Install OpenJDK 11 and maven
+* Install Java and maven
 * Install ogr2ogr
 * Run tests through [.ci/build-openjdk11.sh](.ci/build-openjdk11.sh)
 
