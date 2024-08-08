@@ -8,9 +8,9 @@ import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.validation.Validatable;
 
 /**
- * 
+ *
  * List of columns of a table associated to a FeatureType
- * 
+ *
  * @author MBorne
  *
  */

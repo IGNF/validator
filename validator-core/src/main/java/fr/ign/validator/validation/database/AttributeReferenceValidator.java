@@ -24,7 +24,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Validate "reference" constraints using validation database.
- * 
+ *
  * @author MBorne
  *
  */
@@ -164,7 +164,7 @@ public class AttributeReferenceValidator implements Validator<Database> {
 
     /**
      * Get SQL statement to retrieve rows with invalid reference.
-     * 
+     *
      * @param sourceTableName
      * @param sourceColumnName
      * @param targetTableName

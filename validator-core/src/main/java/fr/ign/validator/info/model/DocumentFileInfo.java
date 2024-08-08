@@ -13,7 +13,7 @@ import org.locationtech.jts.geom.Envelope;
 
 /**
  * Represents a non-geographical file (pdf) in directory
- * 
+ *
  * @author CBouche
  *
  */

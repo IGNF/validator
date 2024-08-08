@@ -14,9 +14,9 @@ import fr.ign.validator.error.ErrorFactory;
 import fr.ign.validator.error.ValidatorError;
 
 /**
- * 
+ *
  * Ensure that CnigErrorCodes have default configuration
- * 
+ *
  * @author MBorne
  *
  */

@@ -19,7 +19,7 @@ import fr.ign.validator.validation.attribute.CharactersValidator;
 
 /**
  * Describes an attribute of a table (FeatureType)
- * 
+ *
  * @author MBorne
  *
  * @param <T> the matching java type
@@ -55,7 +55,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Constructing a class and validators by default
-     * 
+     *
      * @param clazz
      */
     protected AttributeType(Class<T> clazz) {
@@ -66,7 +66,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Returns type name
-     * 
+     *
      * @return
      */
     @JsonIgnore
@@ -74,7 +74,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Indicates if attribute is a geometry
-     * 
+     *
      * @return
      */
     @JsonIgnore
@@ -84,7 +84,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Create an AttributeType instance for a given type name
-     * 
+     *
      * @param type
      * @return
      */
@@ -94,7 +94,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Create an Attribute with a given value
-     * 
+     *
      * @param object
      * @return
      */
@@ -246,7 +246,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
     /**
      * Converts a value in the matching java type. Validates the possibility of a
      * conversion of a value in the java type matching the ValueType
-     * 
+     *
      * @param value
      * @return
      */
@@ -254,9 +254,9 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Formats the value as a string parameter (e.g. YYYYMMDD for dates)
-     * 
+     *
      * Note : null stays null
-     * 
+     *
      * @param value
      * @return
      * @throws IllegalArgumentException if type is incorrect
@@ -265,7 +265,7 @@ public abstract class AttributeType<T> implements Model, Cloneable {
 
     /**
      * Formats object in parameter
-     * 
+     *
      * @param value
      * @return
      * @throws IllegalArgumentException if type is incorrect

@@ -7,9 +7,9 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.Projection;
 
 /**
- * 
+ *
  * Provides informations messages about project
- * 
+ *
  * @author MBorne
  *
  */

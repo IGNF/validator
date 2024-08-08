@@ -11,7 +11,7 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 /**
  * Helper class to write test counting errors in report.
- * 
+ *
  * @author MBorne
  *
  */
@@ -19,7 +19,7 @@ public class ReportAssert {
 
     /**
      * Check error count for a given level
-     * 
+     *
      * @param expected
      * @param level
      * @param report
@@ -35,7 +35,7 @@ public class ReportAssert {
 
     /**
      * Check error count for a given code
-     * 
+     *
      * @param expected
      * @param level
      * @param report
@@ -51,7 +51,7 @@ public class ReportAssert {
 
     /**
      * Get counts by code
-     * 
+     *
      * @param errors
      * @return
      */

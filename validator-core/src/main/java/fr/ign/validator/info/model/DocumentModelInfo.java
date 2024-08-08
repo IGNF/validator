@@ -4,7 +4,7 @@ import fr.ign.validator.model.DocumentModel;
 
 /**
  * Expose partial informations about the DocumentModel
- * 
+ *
  * @author MBorne
  *
  */

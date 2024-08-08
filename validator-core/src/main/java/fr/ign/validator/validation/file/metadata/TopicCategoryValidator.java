@@ -13,9 +13,9 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "topicCategory" is defined and valid
- * 
+ *
  * @author MBorne
  *
  */

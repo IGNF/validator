@@ -16,7 +16,7 @@ import org.opengis.referencing.operation.TransformException;
 import fr.ign.validator.model.Projection;
 
 /**
- * 
+ *
  * @author cbouche
  *
  */

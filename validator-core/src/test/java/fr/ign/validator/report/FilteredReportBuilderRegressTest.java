@@ -12,7 +12,7 @@ import fr.ign.validator.error.ValidatorError;
 
 /**
  * Regress test for {@link FilteredReportBuilder}
- * 
+ *
  * @author MBorne
  *
  */

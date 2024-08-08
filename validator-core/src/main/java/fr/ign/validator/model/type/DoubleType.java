@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import fr.ign.validator.model.AttributeType;
 
 /**
- * 
+ *
  * Represents a double
- * 
+ *
  * @author MBorne
  *
  */

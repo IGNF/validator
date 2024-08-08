@@ -12,7 +12,7 @@ import fr.ign.validator.cnig.sup.DatabaseSUP;
 
 /**
  * Helper to locate CSV files in output directory.
- * 
+ *
  * @author MBorne
  *
  */
@@ -46,7 +46,7 @@ public class FileLocator {
 
     /**
      * Helper - find a single CSV file
-     * 
+     *
      * @param name
      * @return
      */
@@ -65,7 +65,7 @@ public class FileLocator {
 
     /**
      * Helper - find multiple single CSV file
-     * 
+     *
      * @param regexp
      * @return
      */

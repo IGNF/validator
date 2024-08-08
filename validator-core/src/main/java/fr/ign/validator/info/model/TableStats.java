@@ -10,7 +10,7 @@ import fr.ign.validator.io.json.EnvelopeSerializer;
 
 /**
  * Statistics about a table.
- * 
+ *
  * @author MBorne
  *
  */

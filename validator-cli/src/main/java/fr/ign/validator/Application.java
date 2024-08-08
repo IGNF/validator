@@ -6,7 +6,7 @@ import fr.ign.validator.command.CommandApplication;
 
 /**
  * Command line application
- * 
+ *
  * @author MBorne
  */
 public class Application {

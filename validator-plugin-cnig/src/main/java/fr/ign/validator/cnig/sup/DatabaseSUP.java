@@ -23,12 +23,12 @@ import fr.ign.validator.database.internal.DuplicatedValuesFinder.DuplicatedValue
 import fr.ign.validator.model.FileModel;
 
 /**
- * 
+ *
  * Helper class to manipulate relations between ACTE, SERVITUDE, GENERATEUR and
  * ASSIETTE files.
- * 
+ *
  * @warning it relies on merged GENERATEUR and ASSIETTE tables.
- * 
+ *
  * @see http://cnig.gouv.fr/wp-content/uploads/2014/09/20140930_STANDARD_SUP_V2013.pdf#page=20&zoom=auto,-260,773
  * @see https://github.com/IGNF/validator/issues/176 (except TABLE_GENERATEUR
  *      and TABLE_ASSIETTE, tables are already loaded in validation database)
@@ -115,7 +115,7 @@ public class DatabaseSUP {
 
     /**
      * Create DatabaseSUP as an SQLite database.
-     * 
+     *
      * @param tempDirectory
      * @throws SQLException
      */
@@ -126,7 +126,7 @@ public class DatabaseSUP {
     /**
      * Create DatabaseSUP merging GENERATEUR and ASSIETTE tables in the validation
      * database.
-     * 
+     *
      * @param validationDatabase
      * @return
      */
@@ -158,7 +158,7 @@ public class DatabaseSUP {
 
     /**
      * Get database connection
-     * 
+     *
      * @return
      */
     private Connection getConnection() {
@@ -167,9 +167,9 @@ public class DatabaseSUP {
 
     /**
      * Create SQL table "generateur".
-     * 
+     *
      * @throws SQLException
-     * 
+     *
      * @see {@link #loadTableGenerateur(File)}
      */
     void createTableGenerateur() throws SQLException {
@@ -184,7 +184,7 @@ public class DatabaseSUP {
      * Create SQL table "assiette".
      *
      * @throws SQLException
-     * 
+     *
      * @see {@link #loadTableAssiette(File)}
      */
     void createTableAssiete() throws SQLException {
@@ -197,7 +197,7 @@ public class DatabaseSUP {
 
     /**
      * Insert rows from tableName into TABLE_GENERATEUR.
-     * 
+     *
      * @param tableName
      * @throws SQLException
      */
@@ -211,7 +211,7 @@ public class DatabaseSUP {
 
     /**
      * Insert rows from tableName into TABLE_ASSIETTE.
-     * 
+     *
      * @param tableName
      * @throws SQLException
      */
@@ -225,7 +225,7 @@ public class DatabaseSUP {
 
     /**
      * Return the number of rows in a given table.
-     * 
+     *
      * @return
      * @throws SQLException
      */
@@ -255,7 +255,7 @@ public class DatabaseSUP {
 
     /**
      * Find actes for a given idAss.
-     * 
+     *
      * @param idAss
      * @return
      */
@@ -276,7 +276,7 @@ public class DatabaseSUP {
 
     /**
      * Fetch unique Acte from ResultSet.
-     * 
+     *
      * @param rs
      * @return
      * @throws SQLException
@@ -294,7 +294,7 @@ public class DatabaseSUP {
 
     /**
      * Helper to extract "fichier" values
-     * 
+     *
      * @param actes
      * @return
      */
@@ -330,7 +330,7 @@ public class DatabaseSUP {
 
     /**
      * Find servitudes for a given idAss.
-     * 
+     *
      * @param idAss
      * @return
      */
@@ -350,7 +350,7 @@ public class DatabaseSUP {
 
     /**
      * Fetch unique Acte from ResultSet.
-     * 
+     *
      * @param rs
      * @return
      * @throws SQLException
@@ -368,7 +368,7 @@ public class DatabaseSUP {
 
     /**
      * Helper to extract "nomSupLitt" values
-     * 
+     *
      * @param actes
      * @return
      */
@@ -385,7 +385,7 @@ public class DatabaseSUP {
 
     /**
      * Validation - Find non unique IDGEN values.
-     * 
+     *
      * @return
      * @throws SQLException
      * @throws IOException
@@ -397,7 +397,7 @@ public class DatabaseSUP {
 
     /**
      * Validation - Find non unique IDASS values.
-     * 
+     *
      * @return
      * @throws SQLException
      * @throws IOException
@@ -409,7 +409,7 @@ public class DatabaseSUP {
 
     /**
      * Validation - find AssietteSup with invalid IDGEN
-     * 
+     *
      * @param limit maximum number of results.
      * @return
      * @throws SQLException
@@ -429,7 +429,7 @@ public class DatabaseSUP {
 
     /**
      * Fetch unique AssietteSup from ResultSet.
-     * 
+     *
      * @param rs
      * @return
      * @throws SQLException

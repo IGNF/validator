@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * 
+ *
  * Represents a list of values associated to translation. Values are loaded as a
  * ResourceBundle from src/main/resources/metadata/codes/[NAME].properties
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,7 +34,7 @@ public class CodeList {
 
     /**
      * Get the name of the list
-     * 
+     *
      * @return
      */
     public String getName() {
@@ -43,7 +43,7 @@ public class CodeList {
 
     /**
      * Gets allowed values
-     * 
+     *
      * @return
      */
     public Collection<String> getAllowedValues() {
@@ -52,7 +52,7 @@ public class CodeList {
 
     /**
      * Gets translation for a given code
-     * 
+     *
      * @param code
      * @return
      */
@@ -62,9 +62,9 @@ public class CodeList {
 
     /**
      * Gets a code list by a given name
-     * 
+     *
      * TODO Read JSON file where objects contains at least a name
-     * 
+     *
      * @param name
      * @return
      */

@@ -13,9 +13,9 @@ import fr.ign.validator.metadata.code.ScopeCode;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "type" is defined and allowed
- * 
+ *
  * @author MBorne
  *
  */

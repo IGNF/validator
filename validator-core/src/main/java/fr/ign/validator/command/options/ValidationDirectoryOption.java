@@ -17,7 +17,7 @@ import fr.ign.validator.exception.ValidatorFatalError;
 /**
  * Add an optional "--output" option to configure validation directory (default
  * is "validation" in the parent directory of the document)
- * 
+ *
  * @author MBorne
  *
  */
@@ -35,7 +35,7 @@ public class ValidationDirectoryOption {
 
     /**
      * Add "output" option to command line.
-     * 
+     *
      * @param options
      */
     public static void buildOptions(Options options) {
@@ -53,7 +53,7 @@ public class ValidationDirectoryOption {
 
     /**
      * Parse validationDirectory from command line and create if.
-     * 
+     *
      * @param commandLine
      * @return
      * @throws ParseException

@@ -21,7 +21,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Test VRT generation
- * 
+ *
  * @author MBorne
  *
  */

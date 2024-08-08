@@ -19,7 +19,7 @@ import fr.ign.validator.geometry.internal.WktWithCurveFormat;
  *
  * @see https://github.com/IGNF/validator/issues/232 related to the introduction
  *      of this class to avoid the direct use of WKTReader from JTS.
- * 
+ *
  * @author MBorne
  *
  */
@@ -41,7 +41,7 @@ public class GeometryReader {
 
     /**
      * Converts a given string to a JTS {@link Geometry}
-     * 
+     *
      * @param wkt
      * @return
      * @throws ParseException

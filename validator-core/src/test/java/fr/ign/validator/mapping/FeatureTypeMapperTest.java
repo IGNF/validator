@@ -9,7 +9,7 @@ import fr.ign.validator.model.type.BooleanType;
 
 /**
  * Test FeatureTypeMapper
- * 
+ *
  * @author MBorne
  *
  */

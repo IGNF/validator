@@ -8,7 +8,7 @@ public class SupCategory {
 
     /**
      * Indicates if given parameter is a valid SUP category
-     * 
+     *
      * @param siren
      * @return
      */

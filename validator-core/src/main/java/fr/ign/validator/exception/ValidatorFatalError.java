@@ -2,7 +2,7 @@ package fr.ign.validator.exception;
 
 /**
  * Unrecoverable runtime error (runtime issue, coding problem,...)
- * 
+ *
  * @author MBorne
  *
  */

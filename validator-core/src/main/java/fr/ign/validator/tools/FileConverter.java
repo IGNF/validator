@@ -24,12 +24,12 @@ import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
- * 
+ *
  * Helper based on GDAL/ogr2ogr to convert spatial file formats
- * 
+ *
  * @author MBorne
  * @author CBouche
- * 
+ *
  */
 public class FileConverter {
 
@@ -57,7 +57,7 @@ public class FileConverter {
     /**
      * EXPERIMENTAL - PCRS - Optional GMLAS config path provided by GMLAS_CONFIG
      * environment variable.
-     * 
+     *
      * @see CONFIG_FILE option for GMLAS driver
      *      https://gdal.org/drivers/vector/gmlas.html#dataset-creation-options
      */
@@ -75,7 +75,7 @@ public class FileConverter {
 
     /**
      * Get instance
-     * 
+     *
      * @return
      */
     public static FileConverter getInstance() {
@@ -84,7 +84,7 @@ public class FileConverter {
 
     /**
      * returns ogr2ogr version
-     * 
+     *
      * @return null if command `ogr2ogr --version` fails
      */
     public OgrVersion getVersion() {
@@ -94,7 +94,7 @@ public class FileConverter {
     /**
      * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV
      * target.
-     * 
+     *
      * @param source
      * @param target
      * @param options
@@ -214,7 +214,7 @@ public class FileConverter {
     /**
      * Convert a source file with a given sourceCharset to an UTF-8 encoded CSV
      * target.
-     * 
+     *
      * @param source
      * @param target
      * @param sourceCharset
@@ -227,10 +227,10 @@ public class FileConverter {
 
     /**
      * Converts a VRT file to a LATIN1 encoded shapefile.
-     * 
+     *
      * @deprecated related to a legacy datastore (EaaS / mongeoportail), used only
      *             by plugin-cnig
-     * 
+     *
      * @param files
      * @throws IOException
      */
@@ -285,7 +285,7 @@ public class FileConverter {
      * <li>Environment variable OGR2OGR_PATH</li>
      * <li>System property ogr2ogr_path</li>
      * </ul>
-     * 
+     *
      * @return
      */
     private String retrieveOgr2ogrPath() {
@@ -305,7 +305,7 @@ public class FileConverter {
 
     /**
      * Get ogr2ogr version
-     * 
+     *
      * @return
      */
     private OgrVersion retrieveAndValidateOgrVersion() {
@@ -318,7 +318,7 @@ public class FileConverter {
 
     /**
      * Get path to GMLAS driver config.
-     * 
+     *
      * @return
      */
     private File retrieveAndValidateGmlasConfig() {
@@ -340,7 +340,7 @@ public class FileConverter {
 
     /**
      * Set gmlasConfig for test purpose.
-     * 
+     *
      * @param gmlasConfig
      */
     public void setGmlasConfig(File gmlasConfig) {
@@ -349,7 +349,7 @@ public class FileConverter {
 
     /**
      * Call `ogr2ogr --version` to get GDAL version
-     * 
+     *
      * @return
      */
     private String retrieveFullVersion() {
@@ -375,7 +375,7 @@ public class FileConverter {
 
     /**
      * Convert java charset to GDAL encoding
-     * 
+     *
      * @param sourceCharset
      * @return
      */
@@ -389,10 +389,10 @@ public class FileConverter {
 
     /**
      * Indicates if a source file has a geometry column
-     * 
+     *
      * Note : This is used to avoid the different behaviors of ogr2ogr when treating
      * dbf files
-     * 
+     *
      * @param source
      * @return
      */
@@ -410,7 +410,7 @@ public class FileConverter {
 
     /**
      * Run command line
-     * 
+     *
      * @throws IOException
      */
     private void runCommand(List<String> args, Map<String, String> envs) throws IOException {
@@ -444,7 +444,7 @@ public class FileConverter {
 
     /**
      * Logs the execution of a command
-     * 
+     *
      * @param args
      */
     private String commandToString(List<String> args) {

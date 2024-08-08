@@ -18,7 +18,7 @@ import fr.ign.validator.model.type.StringType;
 /**
  * Dirty way to create minimal {@link FeatureType} reading data from table in
  * order to allow geometry validation when no model is provided for data.
- * 
+ *
  * @author MBorne
  *
  */
@@ -38,7 +38,7 @@ public class AutoFeatureType {
      * <li>WKT column is defined as {@link GeometryType}</li>
      * <li>other fields are defined as {@link StringType}</li>
      * </ul>
-     * 
+     *
      * @param path
      * @return
      * @throws IOException

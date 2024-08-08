@@ -11,7 +11,7 @@ import fr.ign.validator.validation.Validator;
 /**
  * Base class for custom Metadata validation providing registration on each
  * Metadata FileModel.
- * 
+ *
  * @author mborne
  *
  */

@@ -3,12 +3,12 @@ package fr.ign.validator.metadata;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * 
+ *
  * Partial implementation of gmd:RS_Identifier
- * 
+ *
  * @warning not directly convertible to CRS see
  *          http://cnig.gouv.fr/wp-content/uploads/2014/07/Guide-de-saisie-des-%C3%A9l%C3%A9ments-de-m%C3%A9tadonn%C3%A9es-INSPIRE-v1.1.1.pdf#page=30&zoom=auto,-46,416
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_RS_Identifier.html">gmd:RS_Identifier</a>
  * @see <a href=
@@ -26,7 +26,7 @@ public class ReferenceSystemIdentifier {
     private String code;
 
     /**
-     * 
+     *
      */
     private String codeSpace;
 

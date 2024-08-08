@@ -15,7 +15,7 @@ import fr.ign.validator.model.FeatureType;
 
 /**
  * Load models using deprecated XML format
- * 
+ *
  * @author MBorne
  */
 public class XmlModelReader extends AbstractModelReader {

@@ -14,10 +14,10 @@ import fr.ign.validator.metadata.Resolution;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "spatialResolutions" is not empty and that content (denominator
  * or distance) is valid.
- * 
+ *
  * @author MBorne
  *
  */
@@ -62,7 +62,7 @@ public class SpatialResolutionsValidator implements Validator<Metadata> {
 
     /**
      * TODO move to IntegerType
-     * 
+     *
      * @param value
      * @return
      */
@@ -80,7 +80,7 @@ public class SpatialResolutionsValidator implements Validator<Metadata> {
 
     /**
      * TODO move to DoubleType
-     * 
+     *
      * @param value
      * @return
      */

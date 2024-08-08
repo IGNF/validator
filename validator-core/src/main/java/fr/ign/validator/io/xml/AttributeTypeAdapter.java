@@ -17,7 +17,7 @@ public class AttributeTypeAdapter extends XmlAdapter<AttributeTypeAdapter.Adapte
 
     /**
      * Legacy XML format
-     * 
+     *
      * @author MBorne
      */
     public static class AdaptedAttributeType {

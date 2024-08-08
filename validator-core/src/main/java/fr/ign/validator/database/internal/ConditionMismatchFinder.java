@@ -11,7 +11,7 @@ import fr.ign.validator.database.RowIterator;
 /**
  * Condition Mismatch Finder - query the database to get all the features who
  * did not respect FeatureType conditions
- * 
+ *
  * @author cbouche
  *
  */
@@ -24,7 +24,7 @@ public class ConditionMismatchFinder {
 
     /**
      * A precise reference to the id and the file where the constraint failed
-     * 
+     *
      * @author cbouche
      */
     public class ConditionMismatch {
@@ -38,7 +38,7 @@ public class ConditionMismatchFinder {
     }
 
     /**
-     * 
+     *
      * @param database
      * @param tableName
      * @param condition

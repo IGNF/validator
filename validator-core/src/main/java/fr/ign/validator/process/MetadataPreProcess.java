@@ -22,10 +22,10 @@ import fr.ign.validator.model.file.MetadataModel;
 
 /**
  * Pre-process extracting data charset from metadata file
- * 
+ *
  * Note that future version may also extract CRS (see
  * https://github.com/IGNF/validator/issues/40)
- * 
+ *
  * @author CBouche
  */
 public class MetadataPreProcess implements ValidatorListener {
@@ -88,7 +88,7 @@ public class MetadataPreProcess implements ValidatorListener {
 
     /**
      * Read charset from metadata (returns null if not found)
-     * 
+     *
      * @param context
      * @param document
      * @return
@@ -125,7 +125,7 @@ public class MetadataPreProcess implements ValidatorListener {
 
     /**
      * Generates a concatenated list of filenames
-     * 
+     *
      * @param context
      * @param matchingFiles
      * @return

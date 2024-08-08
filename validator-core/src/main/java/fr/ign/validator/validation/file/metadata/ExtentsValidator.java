@@ -14,9 +14,9 @@ import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "extents" is defined and is valid
- * 
+ *
  * @author MBorne
  *
  */

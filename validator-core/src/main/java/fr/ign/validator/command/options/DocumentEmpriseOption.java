@@ -15,7 +15,7 @@ import fr.ign.validator.tools.FileConverter;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
+ *
  * @author cbouche
  *
  */
@@ -29,7 +29,7 @@ public class DocumentEmpriseOption {
 
     /**
      * Add "cnig-document-emprise" option to command line.
-     * 
+     *
      * @param options
      */
     public static void buildOptions(Options options) {
@@ -46,7 +46,7 @@ public class DocumentEmpriseOption {
 
     /**
      * Parse option from command line.
-     * 
+     *
      * @param commandLine
      * @return
      * @throws ParseException

@@ -63,7 +63,7 @@ public class DateType extends AttributeType<Date> {
 
     /**
      * Tente une conversion
-     * 
+     *
      * @param dateValue
      * @param dateFormat
      * @return

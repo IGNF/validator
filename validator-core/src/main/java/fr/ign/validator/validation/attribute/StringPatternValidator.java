@@ -9,9 +9,9 @@ import fr.ign.validator.model.AttributeConstraints;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates a StringType Attribute according to a regexp
- * 
+ *
  * @author MBorne
  *
  */

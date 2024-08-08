@@ -8,11 +8,11 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validation de la projection déclarée sur une géométrie en comparaison avec
  * l'emprise de définition de la projection Validates that the geometry fits in
  * data extent
- * 
+ *
  * @author MBorne
  *
  */

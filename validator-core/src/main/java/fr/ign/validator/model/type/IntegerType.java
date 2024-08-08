@@ -35,7 +35,7 @@ public class IntegerType extends AttributeType<Integer> {
     }
 
     /**
-     * 
+     *
      * @param value
      * @return
      */
@@ -56,7 +56,7 @@ public class IntegerType extends AttributeType<Integer> {
 
     /**
      * Tries to pars an integer (e.g. 4)
-     * 
+     *
      * @param value
      * @return
      */

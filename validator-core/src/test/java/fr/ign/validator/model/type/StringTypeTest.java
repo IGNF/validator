@@ -13,7 +13,7 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 import static org.junit.Assert.*;
 
 /**
- * 
+ *
  * @author CBouche
  *
  */

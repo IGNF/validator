@@ -30,7 +30,7 @@ import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
 /**
  * A DocumentModel defines a list of FileModel
- * 
+ *
  * @author MBorne
  */
 @XmlRootElement(name = "document")
@@ -87,7 +87,7 @@ public class DocumentModel implements Model {
 
     /**
      * Returns the name of the document model
-     * 
+     *
      * @return
      */
     public String getName() {
@@ -96,7 +96,7 @@ public class DocumentModel implements Model {
 
     /**
      * Defines the name of the document model
-     * 
+     *
      * @param name
      */
     public void setName(String name) {
@@ -123,9 +123,9 @@ public class DocumentModel implements Model {
 
     /**
      * Defines regexp matching the directory of the document
-     * 
+     *
      * @param regexp
-     * 
+     *
      * @deprecated
      */
     public void setRegexp(String regexp) {
@@ -141,7 +141,7 @@ public class DocumentModel implements Model {
 
     /**
      * Find FileModel by name
-     * 
+     *
      * @param typeName
      * @return
      */
@@ -163,7 +163,7 @@ public class DocumentModel implements Model {
 
     /**
      * Finds FileModel corresponding to File with (full) filepath
-     * 
+     *
      * @param documentPath
      * @param file
      * @return
@@ -183,7 +183,7 @@ public class DocumentModel implements Model {
 
     /**
      * Finds FileModel corresponding to File with (only) filename
-     * 
+     *
      * @param file
      * @return
      */

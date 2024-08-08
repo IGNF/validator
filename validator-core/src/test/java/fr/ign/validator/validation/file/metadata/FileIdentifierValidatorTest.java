@@ -125,7 +125,7 @@ public class FileIdentifierValidatorTest extends MetadataValidatorTestBase {
     /**
      * Ensure that all fileIdentifiers in are valid in
      * "sample-fileidentifiers-valid.txt" file
-     * 
+     *
      * @throws IOException
      */
     @Test

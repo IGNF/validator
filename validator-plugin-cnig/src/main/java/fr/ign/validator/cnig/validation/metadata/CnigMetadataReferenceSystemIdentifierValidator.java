@@ -11,9 +11,9 @@ import fr.ign.validator.model.Projection;
 
 /**
  * Ensures that ReferenceSystemIdentifier is defined according to guidelines :
- * 
+ *
  * http://cnig.gouv.fr/wp-content/uploads/2017/12/171219_Consignes_saisie_metadonnees_DU_v2017.pdf#page=10
- * 
+ *
  * @author MBorne
  *
  */

@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Implementation of gmd:MD_LegalConstraints
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_LegalConstraints.html">gmd:MD_LegalConstraints</a>
- * 
+ *
  * @author MBorne
  *
  */

@@ -17,9 +17,9 @@ import fr.ign.validator.tools.TableReader;
  * validator-core/src/test/resources/projection/reference_postgis.csv to perform
  * test about coordinate transforms. Basically, it compares postgis and geotools
  * transforms.
- * 
+ *
  * @see validator-core/src/test/resources/projection/README.md
- * 
+ *
  * @author MBorne
  *
  */
@@ -76,7 +76,7 @@ public class ProjectionTransformTest {
     }
 
     /**
-     * 
+     *
      * @param sourceSRID
      * @param targetSRID
      * @param tolerance

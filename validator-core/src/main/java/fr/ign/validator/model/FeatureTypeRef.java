@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * A reference to a FeatureType (a complete URL or an URL relative to the
  * DocumentModel URL)
- * 
+ *
  * @author MBorne
  *
  */
@@ -42,7 +42,7 @@ public class FeatureTypeRef {
 
     /**
      * True is the value is null or empty.
-     * 
+     *
      * @return
      */
     public boolean isEmpty() {
@@ -51,7 +51,7 @@ public class FeatureTypeRef {
 
     /**
      * True if the value is a complete URL.
-     * 
+     *
      * @return
      */
     public boolean isURL() {

@@ -8,7 +8,7 @@ import fr.ign.validator.validation.Validator;
 /**
  * Validates if an attribute is nullable or not (reports unexpected null
  * attribute)
- * 
+ *
  * @author MBorne
  *
  */

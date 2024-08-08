@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import fr.ign.validator.cnig.model.DocumentName;
 
 /**
- * 
+ *
  * Helper to validate IDURBA format according to CNIG standards v2013 and v2014.
  *
  * @author MBorne
@@ -28,7 +28,7 @@ public class IdurbaFormatV1 implements IdurbaFormat {
 
     /**
      * Get regexp to validate the format
-     * 
+     *
      * @return
      */
     public String getRegexp() {
@@ -48,7 +48,7 @@ public class IdurbaFormatV1 implements IdurbaFormat {
 
     /**
      * Gets regexp to find idUrba
-     * 
+     *
      * @param documentName
      * @return
      */

@@ -54,7 +54,7 @@ public class XmlModelReaderTest {
     /**
      * Ensure that ModelNotFoundException are thrown if DocumentModel URL doesn't
      * exists
-     * 
+     *
      * @throws MalformedURLException
      */
     @Test
@@ -72,7 +72,7 @@ public class XmlModelReaderTest {
 
     /**
      * Ensure that ModelNotFoundException are thrown if a FeatureType is missing
-     * 
+     *
      * @throws MalformedURLException
      */
     @Test
@@ -92,7 +92,7 @@ public class XmlModelReaderTest {
 
     /**
      * Read cnig_PLU_2014 and performs regress test
-     * 
+     *
      * @throws JsonProcessingException
      */
     @Test
@@ -107,7 +107,7 @@ public class XmlModelReaderTest {
 
     /**
      * Read adresse model and performs regress test
-     * 
+     *
      * @throws JsonProcessingException
      */
     @Test
@@ -195,7 +195,7 @@ public class XmlModelReaderTest {
     /**
      * Check FeatureType definition for
      * /config-xml/sample-document/types/COMMUNE.xml
-     * 
+     *
      * @param featureType
      */
     private void assertExceptedFeatureTypeCommune(FeatureType featureType) {
@@ -287,7 +287,7 @@ public class XmlModelReaderTest {
 
     /**
      * Performs basic consistency checks on DocumentModel
-     * 
+     *
      * @param documentModel
      */
     private void assertIsValid(DocumentModel documentModel) {
@@ -305,7 +305,7 @@ public class XmlModelReaderTest {
 
     /**
      * Performs basic consistency checks on FeatureType
-     * 
+     *
      * @param documentModel
      */
     private void assertIsValid(FeatureType featureType) {

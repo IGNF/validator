@@ -11,14 +11,14 @@ import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates dateOfPublication, dateOfLastRevision and dateOfCreation :
- * 
+ *
  * <ul>
  * <li>Ensures that at least one date is defined</li>
  * <li>Ensures that each defined date is in a valid format</li>
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */

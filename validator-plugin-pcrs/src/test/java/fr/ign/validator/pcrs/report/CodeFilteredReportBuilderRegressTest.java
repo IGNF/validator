@@ -13,7 +13,7 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 
 /**
  * Regress test for {@link FilteredReportBuilder}
- * 
+ *
  * @author MBorne
  *
  */

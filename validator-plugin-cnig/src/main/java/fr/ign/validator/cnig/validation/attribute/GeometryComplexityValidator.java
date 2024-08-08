@@ -97,9 +97,9 @@ public class GeometryComplexityValidator implements Validator<Attribute<Geometry
     }
 
     /**
-     * 
+     *
      * cnig-plugin-validator: we allow french usage to message error.
-     * 
+     *
      * @param geometry
      * @param pointCount
      * @param ringCount

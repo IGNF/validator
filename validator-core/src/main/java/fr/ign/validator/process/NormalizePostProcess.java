@@ -13,7 +13,7 @@ import fr.ign.validator.normalize.DocumentNormalizer;
 /**
  * Invoke {@link DocumentNormalizer} to normalize input data in validation
  * directory.
- * 
+ *
  * @author MBorne
  *
  */

@@ -26,7 +26,7 @@ import fr.ign.validator.validation.Validator;
 /**
  * Document materialized as a directory (documentPath) associated to a
  * DocumentModel (documentModel)
- * 
+ *
  * @author MBorne
  *
  */
@@ -62,7 +62,7 @@ public class Document implements Validatable {
     private Map<String, String> tags = new HashMap<>();
 
     /**
-     * 
+     *
      * @param documentModel
      * @param path
      */
@@ -87,7 +87,7 @@ public class Document implements Validatable {
 
     /**
      * documentName calculated from directory name
-     * 
+     *
      * @return
      */
     public String getDocumentName() {
@@ -103,9 +103,9 @@ public class Document implements Validatable {
 
     /**
      * Retrieves documentFiles by FileModel type
-     * 
+     *
      * Example : document.getDocumentFiles(MetadataFile.class)
-     * 
+     *
      * @param type
      * @return
      */
@@ -128,7 +128,7 @@ public class Document implements Validatable {
 
     /**
      * Retrieve documentFiles corresponding to a model
-     * 
+     *
      * @param fileModel
      * @return
      */
@@ -200,7 +200,7 @@ public class Document implements Validatable {
 
     /**
      * Create a validation Database for the Document and apply validators
-     * 
+     *
      * @param context
      */
     private void runDatabaseValidators(Context context) {
@@ -225,7 +225,7 @@ public class Document implements Validatable {
 
     /**
      * Generates event indicating file matching is starting
-     * 
+     *
      * @param context
      * @throws Exception
      */
@@ -239,7 +239,7 @@ public class Document implements Validatable {
 
     /**
      * Generates event indicating validation is starting
-     * 
+     *
      * @param context
      * @throws Exception
      */
@@ -253,7 +253,7 @@ public class Document implements Validatable {
 
     /**
      * Generates event indicating validation is done
-     * 
+     *
      * @param context
      * @throws Exception
      */
@@ -267,7 +267,7 @@ public class Document implements Validatable {
 
     /**
      * Matching files in documentPath with FileModel defined in DocumentModel
-     * 
+     *
      * @param documentPath
      */
     public void findDocumentFiles(Context context) {
@@ -340,7 +340,7 @@ public class Document implements Validatable {
 
     /**
      * Get tags
-     * 
+     *
      * @return
      */
     public Map<String, String> getTags() {
@@ -349,7 +349,7 @@ public class Document implements Validatable {
 
     /**
      * Insert or update tag
-     * 
+     *
      * @param key
      * @param value
      */

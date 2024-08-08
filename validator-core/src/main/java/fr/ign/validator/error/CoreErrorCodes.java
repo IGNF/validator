@@ -2,7 +2,7 @@ package fr.ign.validator.error;
 
 /**
  * Error codes defined in validator-core
- * 
+ *
  * @author MBorne
  *
  */

@@ -16,7 +16,7 @@ import fr.ign.validator.validation.Validatable;
 
 /**
  * A Table from a {@link SingleTableFile} or a {@link MultiTableFile}
- * 
+ *
  * @author MBorne
  */
 public class Table implements Validatable {

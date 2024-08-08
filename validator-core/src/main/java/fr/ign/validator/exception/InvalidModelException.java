@@ -1,9 +1,9 @@
 package fr.ign.validator.exception;
 
 /**
- * 
+ *
  * Failure while reading models
- * 
+ *
  * @author MBorne
  *
  */

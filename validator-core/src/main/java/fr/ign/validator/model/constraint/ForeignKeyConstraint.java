@@ -8,7 +8,7 @@ import fr.ign.validator.exception.InvalidModelException;
 
 /**
  * Foreign Key Constraint
- * 
+ *
  * ALTER TABLE featureType ADD CONSTRAINT featureTypeConstraint FOREIGN
  * KEY(key1, key2) REFERENCES staticTable(reference1, reference2)
  *

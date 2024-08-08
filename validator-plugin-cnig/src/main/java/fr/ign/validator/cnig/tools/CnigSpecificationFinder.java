@@ -15,7 +15,7 @@ import fr.ign.validator.metadata.Specification;
 
 /**
  * Extract CNIG specification from metadata
- * 
+ *
  * @author MBorne
  *
  */
@@ -26,7 +26,7 @@ public class CnigSpecificationFinder {
 
     /**
      * Get regexp corresponding to "CNIG {DocumentType} v{YYYY}"
-     * 
+     *
      * @return
      */
     public static String getRegexpTitle() {
@@ -38,7 +38,7 @@ public class CnigSpecificationFinder {
 
     /**
      * Find specification definition according to CNIG DU or SUP profile
-     * 
+     *
      * @param metadata
      * @return
      */
@@ -63,7 +63,7 @@ public class CnigSpecificationFinder {
 
     /**
      * Test if specification.dateType is "publication"
-     * 
+     *
      * @param specification
      * @return
      */
@@ -76,7 +76,7 @@ public class CnigSpecificationFinder {
 
     /**
      * Test if specification title
-     * 
+     *
      * @param specification
      * @return
      */

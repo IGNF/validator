@@ -49,9 +49,9 @@ import fr.ign.validator.string.StringFixer;
 import fr.ign.validator.tools.FileConverter;
 
 /**
- * 
+ *
  * Validate a document directory according to a DocumentModel
- * 
+ *
  * @author MBorne
  *
  */
@@ -64,7 +64,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * URL of the document model.
-     * 
+     *
      */
     protected URL documentModelUrl;
 
@@ -378,7 +378,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "input" option
-     * 
+     *
      * @param options
      */
     protected void buildDocumentPathOption(Options options) {
@@ -391,7 +391,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse documentPath from commandLine
-     * 
+     *
      * @param commandLine
      * @throws ParseException
      */
@@ -411,7 +411,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "config" option
-     * 
+     *
      * @param options
      */
     protected void buildConfigOption(Options options) {
@@ -427,7 +427,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "version" option
-     * 
+     *
      * @param options
      */
     protected void buildVersionOption(Options options) {
@@ -442,7 +442,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "document-model" option
-     * 
+     *
      * @param options
      */
     protected void buildModelOption(Options options) {
@@ -456,7 +456,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse "config" option to "configDir"
-     * 
+     *
      * @param commandLine
      * @throws ParseException
      */
@@ -482,7 +482,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Locate either files.json or files.xml in configDir.
-     * 
+     *
      * @param configDir
      * @param version
      * @return
@@ -508,7 +508,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Load document model according to documentModelName
-     * 
+     *
      * @return
      * @throws IOException
      * @throws ModelNotFoundException
@@ -520,7 +520,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "report-format" and "max-errors" options
-     * 
+     *
      * @param options
      */
     protected void buildReportBuilderOptions(Options options) {
@@ -542,7 +542,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option --error-config to the command line.
-     * 
+     *
      * @param options
      */
     protected void buildErrorConfigOption(Options options) {
@@ -558,7 +558,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Retrieve --normalize option.
-     * 
+     *
      * @param commandLine
      */
     protected void parseErrorConfigOption(CommandLine commandLine) throws ParseException {
@@ -585,7 +585,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option --normalize to the command line.
-     * 
+     *
      * @param options
      */
     protected void buildNormalizeOption(Options options) {
@@ -601,7 +601,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Retrieve --normalize option.
-     * 
+     *
      * @param commandLine
      */
     protected void parseNormalizeOption(CommandLine commandLine) {
@@ -610,7 +610,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Create report builder from commandLine
-     * 
+     *
      * @param commandLine
      */
     protected void parseReportBuilder(CommandLine commandLine) throws ParseException {
@@ -629,7 +629,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "srs" option
-     * 
+     *
      * @param options
      */
     protected void buildCoordinateReferenceSystemOptions(Options options) {
@@ -642,7 +642,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse CoordinateReferenceSystem
-     * 
+     *
      * @param commandLine
      * @return
      */
@@ -660,7 +660,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Build option data-extent
-     * 
+     *
      * @param options
      */
     protected void buildDataExtentOption(Options options) {
@@ -677,7 +677,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "data-extent" option
-     * 
+     *
      * @param commandLine
      * @throws ParseException
      */
@@ -698,7 +698,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add "--encoding" option
-     * 
+     *
      * @param options
      */
     protected void buildEncodingOption(Options options) {
@@ -714,7 +714,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse encoding
-     * 
+     *
      * @param commandLine
      * @return
      */
@@ -728,7 +728,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option "--flat"
-     * 
+     *
      * @param options
      */
     protected void buildFlatOption(Options options) {
@@ -744,7 +744,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse flat option
-     * 
+     *
      * @param commandLine
      * @return
      */
@@ -753,7 +753,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
     }
 
     /**
-     * 
+     *
      * @param options
      */
     protected void buildEnableConditions(Options options) {
@@ -769,7 +769,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse enable conditions option
-     * 
+     *
      * @param commandLine
      * @return
      */
@@ -779,7 +779,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option "--plugins"
-     * 
+     *
      * @param options
      */
     protected void buildPluginsOption(Options options) {
@@ -792,7 +792,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse plugins option
-     * 
+     *
      * @param commandLine
      */
     protected void parsePluginsOption(CommandLine commandLine) {
@@ -815,7 +815,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option "--dgpr-tolerance"
-     * 
+     *
      * @param options
      */
     protected void buildDgprTolerance(Options options) {
@@ -831,7 +831,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option "--dgpr-simplify"
-     * 
+     *
      * @param options
      */
     protected void buildDgprSimplifyDistance(Options options) {
@@ -847,7 +847,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Add option "--dgpr-safe-simplify"
-     * 
+     *
      * @param options
      */
     protected void buildDgprSimplifySafe(Options options) {
@@ -907,7 +907,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
 
     /**
      * Parse flat option
-     * 
+     *
      * @param commandLine
      * @return
      */

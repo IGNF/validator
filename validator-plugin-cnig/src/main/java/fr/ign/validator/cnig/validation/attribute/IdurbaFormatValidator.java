@@ -15,10 +15,10 @@ import fr.ign.validator.data.Attribute;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Dedicated to IDURBA validation in DOC_URBA table. Ensure that the value
  * matches one of the supported {@link IdurbaFormat}.
- * 
+ *
  * @author MBorne
  *
  */
@@ -30,7 +30,7 @@ public class IdurbaFormatValidator implements Validator<Attribute<String>> {
 
     /**
      * Test if string value is valid
-     * 
+     *
      * @param value
      * @return
      */

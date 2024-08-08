@@ -15,14 +15,14 @@ public interface ModelReader {
 
     /**
      * Get format (json or xml, lowercase)
-     * 
+     *
      * @return
      */
     public String getFormat();
 
     /**
      * Read File as a DocumentModel (files.xml)
-     * 
+     *
      * @param documentModelPath
      * @return
      */
@@ -30,14 +30,14 @@ public interface ModelReader {
 
     /**
      * Read DocumentModel from URL
-     * 
+     *
      * @param documentModelUrl
      */
     DocumentModel loadDocumentModel(URL documentModelUrl) throws ModelNotFoundException, InvalidModelException;
 
     /**
      * Load FeatureType from file
-     * 
+     *
      * @param featureTypePath
      * @return
      * @throws ModelNotFoundException, InvalidModelException
@@ -46,7 +46,7 @@ public interface ModelReader {
 
     /**
      * Load FeatureType from URL
-     * 
+     *
      * @param featureTypeUrl
      * @return
      * @throws ModelNotFoundException, InvalidModelException

@@ -26,9 +26,9 @@ import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
+ *
  * Normalize table file producing a CSV according to FeatureType columns.
- * 
+ *
  * @author MBorne
  *
  */
@@ -58,7 +58,7 @@ public class TableNormalizer implements Closeable {
 
     /**
      * Create table normalizer with a given FeatureType.
-     * 
+     *
      * @param context
      * @param featureType
      * @param targetFile
@@ -100,7 +100,7 @@ public class TableNormalizer implements Closeable {
 
     /**
      * Append rows corresponding to a document file
-     * 
+     *
      * @param documentFile
      * @throws IOException
      * @throws Exception

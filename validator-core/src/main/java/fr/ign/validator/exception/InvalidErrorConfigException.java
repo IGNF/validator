@@ -1,9 +1,9 @@
 package fr.ign.validator.exception;
 
 /**
- * 
+ *
  * Failure while reading error configuration
- * 
+ *
  * @author MBorne
  *
  */

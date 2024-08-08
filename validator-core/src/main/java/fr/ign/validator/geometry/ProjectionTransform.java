@@ -17,7 +17,7 @@ import org.locationtech.jts.io.WKTReader;
 
 /**
  * Transforms coordinates from sourceCRS to targetCRS
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,7 +34,7 @@ public class ProjectionTransform implements GeometryTransform {
 
     /**
      * Create a ProjectionTransform from source projection to target projection.
-     * 
+     *
      * @param source
      * @param target
      */
@@ -44,7 +44,7 @@ public class ProjectionTransform implements GeometryTransform {
 
     /**
      * Create a ProjectionTransform from source projection to CRS:84 (lon,lat).
-     * 
+     *
      * @param source
      */
     public ProjectionTransform(Projection source) {
@@ -53,7 +53,7 @@ public class ProjectionTransform implements GeometryTransform {
 
     /**
      * Create a ProjectionTransform from sourceCRS to targetCRS.
-     * 
+     *
      * @param sourceCRS
      * @param targetCRS
      */
@@ -72,7 +72,7 @@ public class ProjectionTransform implements GeometryTransform {
 
     /**
      * Transform a given geometry from source to target projection.
-     * 
+     *
      * @param geometry
      * @return
      * @throws MismatchedDimensionException
@@ -89,7 +89,7 @@ public class ProjectionTransform implements GeometryTransform {
 
     /**
      * Transform WKT String in source CRS to Geometry in target CRS
-     * 
+     *
      * @param wkt
      * @return
      * @throws GeometryTransformException

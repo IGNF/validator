@@ -18,11 +18,11 @@ import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.file.MetadataModel;
 
 /**
- * 
+ *
  * Remove XML files which doesn't corresponds to ISO19115 metadata files
- * 
+ *
  * @see MetadataISO19115.isMetadataFile
- * 
+ *
  * @author MBorne
  *
  */

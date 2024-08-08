@@ -14,9 +14,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * 
+ *
  * Test CSV file reading with TableReader
- * 
+ *
  * @author mickael
  *
  */

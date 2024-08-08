@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Date (2000-01-01) or DateTime (2000-01-01T12:00:00)
- * 
+ *
  * @see <a href="http://www.datypic.com/sc/niem21/e-gco_Date.html">gco:Date</a>
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gco_DateTime.html">gco:DateTime</a>
@@ -31,7 +31,7 @@ public class Date implements Comparable<Date> {
 
     /**
      * FIXME test regular expression with sample dates
-     * 
+     *
      * @return
      */
     public boolean isValid() {

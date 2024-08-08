@@ -19,7 +19,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Test sur l'extraction de typeref
- * 
+ *
  * @author MBorne
  *
  */

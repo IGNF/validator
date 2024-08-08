@@ -10,9 +10,9 @@ import org.opengis.referencing.operation.MathTransform;
 
 /**
  * Test geotools behavior with lat,lon order for EPSG codes.
- * 
+ *
  * Note that gt-epsg-hsql provides a different behavior than gt-epsg-wkt
- * 
+ *
  * @see http://docs.geotools.org/latest/userguide/library/referencing/order.html
  */
 public class GeotoolsLonLatBehaviorTest {
@@ -38,7 +38,7 @@ public class GeotoolsLonLatBehaviorTest {
         CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
         /*
          * Should be NORTH_EAST according to GML description
-         * 
+         *
          * @see http://www.opengis.net/def/crs/EPSG/0/4326
          * "Ellipsoidal 2D CS. Axes: latitude, longitude. Orientations: north, east. UoM: degree"
          */
@@ -50,7 +50,7 @@ public class GeotoolsLonLatBehaviorTest {
         CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:2154");
         /*
          * Should be NORTH_EAST according to GML description
-         * 
+         *
          * @see http://www.opengis.net/def/crs/EPSG/0/2154
          * "This EuroGeographics identifier is for a CRS similar to this but with CS axes in order north, east."
          */
@@ -59,7 +59,7 @@ public class GeotoolsLonLatBehaviorTest {
 
     /**
      * Ensure that forcing lon,lat lead to EAST_NORTH for "EPSG:4326"
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -70,7 +70,7 @@ public class GeotoolsLonLatBehaviorTest {
 
     /**
      * Ensure that CRS:84 is lon,lat
-     * 
+     *
      * @throws Exception
      */
     @Test

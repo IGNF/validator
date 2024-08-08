@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * Failure to find column by name.
- * 
+ *
  * @author MBorne
  *
  */

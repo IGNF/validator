@@ -13,7 +13,7 @@ public class DocumentModelTest {
 
     /**
      * Helper to create a fake DocumentModel
-     * 
+     *
      * @return
      */
     private DocumentModel createFakeDocumentModel() {

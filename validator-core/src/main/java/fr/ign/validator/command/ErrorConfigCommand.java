@@ -18,7 +18,7 @@ import fr.ign.validator.error.ValidatorError;
 
 /**
  * Dump default configuration for error codes.
- * 
+ *
  * @author MBorne
  *
  */

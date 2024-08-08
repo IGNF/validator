@@ -6,7 +6,7 @@ import fr.ign.validator.model.AttributeType;
 
 /**
  * Represents a boolean
- * 
+ *
  * @author MBorne
  *
  */

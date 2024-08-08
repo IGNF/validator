@@ -17,9 +17,9 @@ import org.junit.Test;
 import fr.ign.validator.exception.ColumnNotFoundException;
 
 /**
- * 
+ *
  * Test CSV file reading with TableReader
- * 
+ *
  * @author mickael
  *
  */
@@ -98,7 +98,7 @@ public class TableReaderCSVTest {
 
     /**
      * Performs basic feature checks
-     * 
+     *
      * @param reader
      * @throws IOException
      */

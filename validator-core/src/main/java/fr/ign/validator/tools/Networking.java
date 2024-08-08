@@ -12,7 +12,7 @@ import org.apache.logging.log4j.MarkerManager;
 
 /**
  * Helper class to configure networking options (SSL, proxy,...)
- * 
+ *
  * @author MBorne
  *
  */
@@ -35,7 +35,7 @@ public class Networking {
     /**
      * Configure networking options (ssl, proxy,...) using proxy from command line
      * options.
-     * 
+     *
      * @param proxy
      * @throws ParseException
      */

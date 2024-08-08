@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Options to read table data.
- * 
+ *
  * @author MBorne
  *
  */

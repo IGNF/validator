@@ -12,9 +12,9 @@ import fr.ign.validator.model.Projection;
 
 /**
  * Helper class to find supported projections embedded in resources.
- * 
+ *
  * @see validator-core/src/main/resources/projection.json
- * 
+ *
  * @author MBorne
  */
 public class ProjectionList {
@@ -32,7 +32,7 @@ public class ProjectionList {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public static ProjectionList getInstance() {
@@ -41,7 +41,7 @@ public class ProjectionList {
 
     /**
      * Get CRS:84 projection.
-     * 
+     *
      * @return
      */
     public static Projection getCRS84() {
@@ -50,7 +50,7 @@ public class ProjectionList {
 
     /**
      * Find all projections
-     * 
+     *
      * @return
      */
     public List<Projection> findAll() {
@@ -59,7 +59,7 @@ public class ProjectionList {
 
     /**
      * Find projection by code
-     * 
+     *
      * @param code
      * @return
      */
@@ -74,7 +74,7 @@ public class ProjectionList {
 
     /**
      * Find projection by code
-     * 
+     *
      * @param code
      * @return
      */
@@ -89,7 +89,7 @@ public class ProjectionList {
 
     /**
      * Load src/main/resources/projection.json
-     * 
+     *
      * @throws IOException
      */
     private void loadFromResources() throws IOException {

@@ -20,7 +20,7 @@ import fr.ign.validator.tools.ogr.OgrVersion;
 
 /**
  * Regress test for format conversions
- * 
+ *
  * @author MBorne
  */
 public class FileConverterTest {
@@ -160,9 +160,9 @@ public class FileConverterTest {
 
     /**
      * Regress test about GDAL coordinate precision while converting to CSV
-     * 
+     *
      * @see validator-core/src/test/resources/data/POINT.README.md
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -192,10 +192,10 @@ public class FileConverterTest {
 
     /**
      * Find expected CSV POINT file according to the GDAL current version
-     * 
+     *
      * @deprecated GDAL >= 2.3 is now required (POINT_EXPECTED_1.10.x.csv and
      *             POINT_EXPECTED_1.11.x.csv kept for trace)
-     * 
+     *
      * @return
      */
     private String getExpectedPointName() {

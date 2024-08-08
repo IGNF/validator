@@ -6,7 +6,7 @@ import fr.ign.validator.plugin.Plugin;
 
 /**
  * Customizes validator for PCRS standard validation
- * 
+ *
  * @author CBouche
  *
  */
