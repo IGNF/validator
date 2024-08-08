@@ -28,7 +28,9 @@ public class ModelReaderFactory {
      */
     public static ModelReader createModelReader(URL url) {
         if (url.toString().endsWith(".xml")) {
-            throw new InvalidModelException("Fail to load "+url+" (XML model support has been removed, use JSON format)");
+            throw new InvalidModelException(
+                "Fail to load " + url + " (XML model support has been removed, use JSON format)"
+            );
         } else {
             return new JsonModelReader();
         }

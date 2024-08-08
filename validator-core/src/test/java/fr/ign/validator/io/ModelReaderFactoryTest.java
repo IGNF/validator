@@ -19,12 +19,15 @@ public class ModelReaderFactoryTest {
         RuntimeException thrown = null;
         try {
             ModelReaderFactory.createModelReader(url);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             thrown = e;
         }
         assertNotNull(thrown);
         assertTrue(thrown instanceof InvalidModelException);
-        assertEquals("Fail to load https://example.org/my-model.xml (XML model support has been removed, use JSON format)",thrown.getMessage());
+        assertEquals(
+            "Fail to load https://example.org/my-model.xml (XML model support has been removed, use JSON format)",
+            thrown.getMessage()
+        );
     }
 
     @Test
