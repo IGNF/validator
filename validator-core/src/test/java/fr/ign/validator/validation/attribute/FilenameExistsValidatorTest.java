@@ -23,7 +23,7 @@ public class FilenameExistsValidatorTest {
         validator = new FilenameExistsValidator();
 
         context = new Context();
-        File currentDirectory = ResourceHelper.getResourceFile(getClass(), "/config-xml/geofla");
+        File currentDirectory = ResourceHelper.getResourceFile(getClass(), "/documents/commune-sample");
         context.setCurrentDirectory(currentDirectory);
 
         report = new InMemoryReportBuilder();
@@ -33,7 +33,7 @@ public class FilenameExistsValidatorTest {
     @Test
     public void testExisting() {
         PathType type = new PathType();
-        Attribute<File> attribute = new Attribute<File>(type, new File("files.xml"));
+        Attribute<File> attribute = new Attribute<File>(type, new File("commune.csv"));
         validator.validate(context, attribute);
         Assert.assertEquals(0, report.countErrors());
     }
@@ -41,7 +41,7 @@ public class FilenameExistsValidatorTest {
     @Test
     public void testExistingWithFragment() {
         PathType type = new PathType();
-        Attribute<File> attribute = new Attribute<File>(type, new File("files.xml#page=15"));
+        Attribute<File> attribute = new Attribute<File>(type, new File("commune.csv#page=15"));
         validator.validate(context, attribute);
         Assert.assertEquals(0, report.countErrors());
     }
@@ -49,7 +49,7 @@ public class FilenameExistsValidatorTest {
     @Test
     public void testExistingInSubdirectory() {
         PathType type = new PathType();
-        Attribute<File> attribute = new Attribute<File>(type, new File("COMMUNE.xml"));
+        Attribute<File> attribute = new Attribute<File>(type, new File("a_file.pdf"));
         validator.validate(context, attribute);
         Assert.assertEquals(0, report.countErrors());
     }
@@ -57,7 +57,7 @@ public class FilenameExistsValidatorTest {
     @Test
     public void testExistingInSubdirectoryWithFragment() {
         PathType type = new PathType();
-        Attribute<File> attribute = new Attribute<File>(type, new File("COMMUNE.xml#page=15"));
+        Attribute<File> attribute = new Attribute<File>(type, new File("a_file.pdf#page=15"));
         validator.validate(context, attribute);
         Assert.assertEquals(0, report.countErrors());
     }

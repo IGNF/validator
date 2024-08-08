@@ -1,5 +1,7 @@
 package fr.ign.validator.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.net.MalformedURLException;
@@ -7,13 +9,22 @@ import java.net.URL;
 
 import org.junit.Test;
 
+import fr.ign.validator.exception.InvalidModelException;
+
 public class ModelReaderFactoryTest {
 
     @Test
     public void testXml() throws MalformedURLException {
         URL url = new URL("https://example.org/my-model.xml");
-        ModelReader reader = ModelReaderFactory.createModelReader(url);
-        assertTrue(reader instanceof XmlModelReader);
+        RuntimeException thrown = null;
+        try {
+            ModelReaderFactory.createModelReader(url);
+        }catch(RuntimeException e){
+            thrown = e;
+        }
+        assertNotNull(thrown);
+        assertTrue(thrown instanceof InvalidModelException);
+        assertEquals("Fail to load https://example.org/my-model.xml (XML model support has been removed, use JSON format)",thrown.getMessage());
     }
 
     @Test

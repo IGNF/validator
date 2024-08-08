@@ -11,12 +11,13 @@ public class FileUtilsTest {
 
     @Test
     public void testListFilesAndDirs() {
-        File directory = ResourceHelper.getResourceFile(getClass(), "/config-xml/geofla");
+        File directory = ResourceHelper.getResourceFile(getClass(), "/documents/commune-sample");
         String[] extensions = {
             "xml"
         };
         Collection<File> files = FileUtils.listFilesAndDirs(directory, extensions);
-        assertEquals(4, files.size());
+        // 2 XML files and 1 sub-directory
+        assertEquals(3, files.size());
     }
 
 }
