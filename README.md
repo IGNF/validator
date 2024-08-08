@@ -48,7 +48,7 @@ Les techniciens peuvent se référer à la documentation [utilisation du validat
 
 Les exécutables systèmes ci-après sont requis pour l'exécution du programme :
 
-* java >= 11
+* [java >= 17](https://docs.geotools.org/latest/userguide/build/install/jdk.html)
 * [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
 
 Les dépendances java telle [GeoTools](doc/dependencies/geotools.md) sont décrites dans les fichiers [pom.xml](pom.xml) et intégrées dans l'exécutable JAVA.
