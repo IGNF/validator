@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.data.DocumentFile;
@@ -51,8 +48,6 @@ public class MultiTableModel extends FileModel {
         this.tableModels = tableModels;
     }
 
-    @XmlElementWrapper(name = "tables")
-    @XmlElement(name = "table")
     @JsonProperty("tables")
     public List<EmbeddedTableModel> getTableModels() {
         return tableModels;

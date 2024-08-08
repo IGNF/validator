@@ -2,8 +2,6 @@ package fr.ign.validator.model.file;
 
 import java.io.File;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -61,7 +59,6 @@ public class SingleTableModel extends FileModel implements TableModel {
         return featureType;
     }
 
-    @XmlTransient
     public void setFeatureType(FeatureType featureType) {
         this.featureType = featureType;
     }

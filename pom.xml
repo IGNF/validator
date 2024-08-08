@@ -37,10 +37,6 @@
 		<apache-common-cli.version>1.8.0</apache-common-cli.version>
 		<apache-commons-csv.version>1.11.0</apache-commons-csv.version>
 		<apache-commons-lang.version>2.6</apache-commons-lang.version>
-		<!-- jaxb -->
-		<jaxb-core.version>2.3.0.1</jaxb-core.version>
-		<jaxb-impl.version>2.3.9</jaxb-impl.version>
-		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<!-- JDBC -->
 		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
 		<sqlite-jdbc.version>3.46.0.1</sqlite-jdbc.version>
@@ -225,22 +221,6 @@
 			<version>${jaxen.version}</version>
 		</dependency>
 
-		<!-- JABX is required by XmlModelReader -->
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb-api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-core</artifactId>
-			<version>${jaxb-core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb-impl.version}</version>
-		</dependency>
 
 		<!--
 		################################################################

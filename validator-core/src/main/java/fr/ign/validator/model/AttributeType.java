@@ -3,8 +3,6 @@ package fr.ign.validator.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -115,7 +113,6 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         this.description = description;
     }
 
-    @XmlTransient
     public AttributeConstraints getConstraints() {
         return constraints;
     }
