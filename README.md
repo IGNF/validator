@@ -57,12 +57,12 @@ Les dépendances java telle [GeoTools](doc/dependencies/geotools.md) sont décri
 
 Les principaux documents sont les suivants :
 
-* [Modélisation des données](validator-core/src/main/resources/schema/README.md)
+* [Modélisation des données et des erreurs](validator-core/src/main/resources/schema/README.md)
+* [Liste des codes d'erreurs (JSON)](validator-core/src/main/resources/error-code.json)
 * [Exemples de modèles de document](validator-core/src/test/resources/config-json/README.md)
 * [Utilisation du validateur en ligne de commande](doc/cli.md) pour une utilisation directe.
 * [Principe de fonctionnement du validateur](doc/principe.md)
 * [Principe de fonctionnement des plugins](doc/plugins.md)
-* [Liste des codes d'erreurs (JSON)](validator-core/src/main/resources/error-code.json)
 * [Projection supportées (JSON)](validator-core/src/main/resources/projection.json)
 
 Les documents ci-après traitent des problématiques particulières :
