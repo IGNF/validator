@@ -211,6 +211,9 @@ public class CoreErrorCodes {
     public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf(
         "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT"
     );
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_INTERNAL = ErrorCode.valueOf(
+        "ATTRIBUTE_GEOMETRY_INVALID_INTERNAL"
+    );
 
     public static final ErrorCode ATTRIBUTE_PATH_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_PATH_NOT_FOUND");
     public static final ErrorCode ATTRIBUTE_FILE_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_FILE_NOT_FOUND");
