@@ -34,7 +34,7 @@ public class CSV {
 
     /**
      * Get the index of the most probable geometry column
-     * 
+     *
      * @param csvFile
      * @param geometryColumnNames
      * @return

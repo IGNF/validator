@@ -1,39 +1,24 @@
 package fr.ign.validator.cnig.command;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.locationtech.jts.geom.Geometry;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import fr.ign.validator.cnig.geometry.GeometryHelpers;
 import fr.ign.validator.cnig.process.DocumentGeometryProcess;
-import fr.ign.validator.cnig.tools.CSV;
 import fr.ign.validator.command.AbstractCommand;
-import fr.ign.validator.metadata.Metadata;
-import fr.ign.validator.metadata.gmd.MetadataISO19115;
 
 /**
  * Generates Document Geomtry from csv files
@@ -98,9 +83,15 @@ public class DocumentGeometryCommand extends AbstractCommand {
     }
 
     private void process(List<File> inputFiles, File targetFile) throws Exception {
+        // Core processing
         DocumentGeometryProcess documentGeometryProcess = new DocumentGeometryProcess(inputFiles, geometryColumnNames);
         documentGeometryProcess.detectGeometries();
         String union = documentGeometryProcess.union();
+
+        // Writing to file
+        BufferedWriter bufferedWriter = getWriter(targetFile);
+        bufferedWriter.write(union);
+        bufferedWriter.close();
     }
 
     private BufferedWriter getWriter(File targetFile) throws IOException {
