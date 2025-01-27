@@ -35,16 +35,6 @@ public class DocumentGeometryCommand extends AbstractCommand {
     public static final String COMMA_DELIMITER = ",";
 
     /**
-     * Input string
-     */
-    private String inputString;
-
-    /**
-     * Geometry columns names string
-     */
-    private String geometryColumnNameString;
-
-    /**
      * Input files
      */
     private List<File> inputFiles = new ArrayList<File>();
@@ -69,6 +59,9 @@ public class DocumentGeometryCommand extends AbstractCommand {
         return "Generates Document Geometry from csv files";
     }
 
+    /**
+     * Life cycle of command
+     */
     @Override
     public void execute() throws Exception {
         File targetFile = new File(outputFile.getAbsolutePath());
@@ -82,6 +75,13 @@ public class DocumentGeometryCommand extends AbstractCommand {
         log.info(MARKER, "complete");
     }
 
+    /**
+     * Processing data
+     *
+     * @param inputFiles
+     * @param targetFile
+     * @throws Exception
+     */
     private void process(List<File> inputFiles, File targetFile) throws Exception {
         // Core processing
         DocumentGeometryProcess documentGeometryProcess = new DocumentGeometryProcess(inputFiles, geometryColumnNames);
@@ -94,6 +94,13 @@ public class DocumentGeometryCommand extends AbstractCommand {
         bufferedWriter.close();
     }
 
+    /**
+     * File Writer helper
+     *
+     * @param targetFile
+     * @return
+     * @throws IOException
+     */
     private BufferedWriter getWriter(File targetFile) throws IOException {
         if (targetFile.exists()) {
             targetFile.delete();
@@ -101,6 +108,9 @@ public class DocumentGeometryCommand extends AbstractCommand {
         return new BufferedWriter(new FileWriter(targetFile));
     }
 
+    /**
+     * auxilliary options for commnad
+     */
     @Override
     protected void buildCustomOptions(Options options) {
         // input
@@ -128,17 +138,33 @@ public class DocumentGeometryCommand extends AbstractCommand {
         }
     }
 
+    /**
+     * Parses command input from command line
+     */
     @Override
     protected void parseCustomOptions(CommandLine commandLine) throws ParseException {
-        this.inputString = (String) commandLine.getParsedOptionValue("input");
-        this.geometryColumnNameString = (String) commandLine.getParsedOptionValue("geometries");
+        String inputString = (String) commandLine.getParsedOptionValue("input");
+        String geometryColumnNameString = (String) commandLine.getParsedOptionValue("geometries");
         this.outputFile = (File) commandLine.getParsedOptionValue("output");
 
-        // input files parser
-        if (this.inputString.isEmpty()) {
+        this.inputFiles = parseFileOption(inputString);
+        this.geometryColumnNames = parseGeometryOption(geometryColumnNameString, commandLine.hasOption("geometries"));
+    }
+
+
+    /**
+     * Asserts that Files input is conform
+     *
+     * @param inputString
+     * @return
+     * @throws ParseException
+     */
+    public List<File> parseFileOption(String inputString) throws ParseException{
+        List<File> inputFiles = new ArrayList<File>();
+        if (inputString.isEmpty()) {
             throw new ParseException("Input is empty");
         }
-        String[] potentialStrings = this.inputString.split(", *");
+        String[] potentialStrings = inputString.split(", *");
         for (String potentialString : potentialStrings){
             File potentialFile = new File(potentialString);
             if (!potentialFile.isFile()){
@@ -147,18 +173,29 @@ public class DocumentGeometryCommand extends AbstractCommand {
             if (FilenameUtils.getExtension(potentialString) != "csv"){
                 throw new ParseException(potentialString + " must be a CSV file");
             }
-            this.inputFiles.add(potentialFile);
+            inputFiles.add(potentialFile);
         }
+        return inputFiles;
+    }
 
-        // input geometry columns names parser
-        this.geometryColumnNames.add("geom");
-        this.geometryColumnNames.add("geometry");
-        if (commandLine.hasOption("geometries")){
-            String[] names = this.geometryColumnNameString.split(", *");
+    /**
+     * Asserts that geometry input is conform
+     *
+     * @param geometryColumnNameString
+     * @param hasOption
+     * @return
+     */
+    public List<String> parseGeometryOption(String geometryColumnNameString, boolean hasOption){
+        List<String> geometryColumnNames = new ArrayList<String>();
+        geometryColumnNames.add("geom");
+        geometryColumnNames.add("geometry");
+        if (hasOption) {
+            String[] names = geometryColumnNameString.split(", *");
             for (String geometryName : names){
-                this.geometryColumnNames.add(geometryName);
+                geometryColumnNames.add(geometryName);
             }
         }
+        return geometryColumnNames;
     }
 
 }
