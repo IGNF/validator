@@ -52,6 +52,9 @@ public class CSV {
     }
 
     public static List<Geometry> getGeometriesFromFile(File csvFile, int geometryColumn) throws IOException {
+        if (geometryColumn == -1){
+            throw new IOException(csvFile.getAbsolutePath() + ": Geometry column cant be found. Please check arguments.");
+        }
         TableReader tableReader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
         GeometryReader geometryReader = new GeometryReader();
         List<Geometry> geometries = new ArrayList<Geometry>();
@@ -63,7 +66,7 @@ public class CSV {
                 geometries.add(geometry);
             }
         } catch (org.locationtech.jts.io.ParseException e) {
-            throw new IOException(csvFile.getAbsolutePath() + ": Parsed geometry is empty");
+            throw new IOException(csvFile.getAbsolutePath() + ": Parsed geometry is empty or invalid");
         }
 
         return geometries;

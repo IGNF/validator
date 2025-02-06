@@ -73,6 +73,7 @@ public class DocumentGeometryCommand extends AbstractCommand {
             e.printStackTrace(System.err);
         }
         log.info(MARKER, "complete");
+        //dans gpu-site, lancement commande + lecture WKT
     }
 
     /**
@@ -123,7 +124,8 @@ public class DocumentGeometryCommand extends AbstractCommand {
         }
         {
             Option option = new Option("g", "geometries", true,
-            "Input names of geometry columns names. Different names should be separated by ','. Default is 'geom, geometry'");
+            "Input names of geometry columns names. Different names should be separated by ','. " +
+                "'geom' and 'geometry' are included by default");
             option.setRequired(false);
             option.setType(String.class);
             options.addOption(option);
@@ -168,10 +170,10 @@ public class DocumentGeometryCommand extends AbstractCommand {
         for (String potentialString : potentialStrings){
             File potentialFile = new File(potentialString);
             if (!potentialFile.isFile()){
-                throw new ParseException(potentialString + " cannot be found");
+                throw new ParseException("'" + potentialString + "' cannot be found");
             }
-            if (FilenameUtils.getExtension(potentialString) != "csv"){
-                throw new ParseException(potentialString + " must be a CSV file");
+            if (! FilenameUtils.getExtension(potentialString).equals("csv")){
+                throw new ParseException("'" + potentialString + "' must be a CSV file");
             }
             inputFiles.add(potentialFile);
         }

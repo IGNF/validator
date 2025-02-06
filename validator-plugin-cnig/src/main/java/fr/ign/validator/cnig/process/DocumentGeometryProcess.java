@@ -102,8 +102,6 @@ public class DocumentGeometryProcess {
         // to WKT
         return multiPolygon.toText();
     }
-        //ecriture WKT
-        //dans gpu-site, lancement commande + lecture WKT
 
         /**
          * Attemmpts to fix invalid geometries.
