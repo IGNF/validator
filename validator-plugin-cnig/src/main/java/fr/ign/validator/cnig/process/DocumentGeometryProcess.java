@@ -10,18 +10,20 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
+import org.locationtech.jts.geom.GeometryCollectionIterator;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.util.GeometryFixer;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 import org.locationtech.jts.operation.union.UnaryUnionOp;
 import org.locationtech.jts.simplify.TopologyPreservingSimplifier;
 
 import fr.ign.validator.cnig.tools.CSV;
-import fr.ign.validator.cnig.tools.GeometryMakeValid;
 
 /**
  *
@@ -75,7 +77,7 @@ public class DocumentGeometryProcess {
 
             // Attempting to fix broken geometries
             for (Geometry geometry : csvGeometries){
-                this.geometries.add(GeometryMakeValid.validate(geometry));
+                this.geometries.add(GeometryFixer.fix(geometry));
             }
         }
     }
@@ -96,19 +98,47 @@ public class DocumentGeometryProcess {
         Geometry simplified = TopologyPreservingSimplifier.simplify(smallBuffer, tolerance);
 
         // homogenize to multipolygon
-        GeometryFactory geometryFactory = new GeometryFactory();
-        MultiPolygon multiPolygon;
-        if (simplified instanceof Polygon){
-            Polygon[] polys = new Polygon[1];
-            polys[0] = (Polygon) simplified;
-            multiPolygon = geometryFactory.createMultiPolygon(polys);
-        } else {
-            multiPolygon = (MultiPolygon) simplified;
-        }
-
-        Geometry validPolys = GeometryMakeValid.validate(multiPolygon);
+        MultiPolygon multiPolygon = geometryToMultiPolygon(simplified);
 
         // to WKT
-        return validPolys.toText();
+        return multiPolygon.toText();
+    }
+
+
+    /**
+     * Homogenize geometry to multipolygon
+     *
+     * @param geometry
+     * @return
+     */
+    public static MultiPolygon geometryToMultiPolygon(Geometry geometry){
+        GeometryFactory geometryFactory = new GeometryFactory();
+        List<Polygon> polygons = new ArrayList<Polygon>();
+        geometryToPolygonArray(geometry, polygons);
+        return geometryFactory.createMultiPolygon((Polygon[]) polygons.toArray());
+    }
+
+    /**
+     * Iterates over Collections to fill Polygons arrays
+     *
+     * @param geometry
+     * @param polygons
+     * @return
+     */
+    public static void geometryToPolygonArray(Geometry geometry, List<Polygon> polygons){
+        Geometry valid = GeometryFixer.fix(geometry);
+        if (valid instanceof Polygon){
+            polygons.add((Polygon) valid);
+        } else if (valid instanceof MultiPolygon){
+            for (int i = 0; i < valid.getNumGeometries(); i++) {
+                Polygon polygon = (Polygon) valid.getGeometryN(i);
+                polygons.add(polygon);
+            }
+        } else if (geometry instanceof GeometryCollection) {
+            for (int i = 0; i < valid.getNumGeometries(); i++) {
+                Geometry subGeometry = valid.getGeometryN(i);
+                geometryToPolygonArray(subGeometry, polygons);
+            }
+        }
     }
 }
