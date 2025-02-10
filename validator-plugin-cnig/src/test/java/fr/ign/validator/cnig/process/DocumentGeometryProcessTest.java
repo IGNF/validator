@@ -28,8 +28,6 @@ import fr.ign.validator.tools.ResourceHelper;
  */
 public class DocumentGeometryProcessTest {
 
-    //CSV Tests Before (utils)
-
     DocumentGeometryProcess documentGeometryProcess;
 
     /**
@@ -38,11 +36,11 @@ public class DocumentGeometryProcessTest {
      */
     public DocumentGeometryProcessTest() throws Exception {
         List<File> inputFiles = new ArrayList<File>();
-        inputFiles.add(ResourceHelper.getResourceFile(getClass(), "/csv/DOC_URBA.csv"));
-        inputFiles.add(ResourceHelper.getResourceFile(getClass(), "/csv/DOC_URBA.csv"));
+        inputFiles.add(ResourceHelper.getResourceFile(getClass(), "/geometry/fair_geometries.csv"));
+        inputFiles.add(ResourceHelper.getResourceFile(getClass(), "/geometry/dubious_geometries.csv"));
 
         List<String> geometries = new ArrayList<String>();
-        geometries.add("goem");
+        geometries.add("geom");
         geometries.add("geometry");
         geometries.add("WKT");
 
@@ -50,8 +48,7 @@ public class DocumentGeometryProcessTest {
     }
 
     @Test
-    public void testBadCall() throws Exception{
-        assertEquals(1,1);
+    public void testDetectGeometries() throws Exception{
         this.documentGeometryProcess.detectGeometries();
     }
 }

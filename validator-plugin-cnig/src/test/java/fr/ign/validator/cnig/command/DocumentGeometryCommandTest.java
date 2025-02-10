@@ -70,7 +70,7 @@ public class DocumentGeometryCommandTest {
 
         // Correct option
         File urbaFile = ResourceHelper.getResourceFile(getClass(), "/geometry/fair_geometries.csv");
-        File secteurFile = ResourceHelper.getResourceFile(getClass(), "/geometry/debious_geometries.csv");
+        File secteurFile = ResourceHelper.getResourceFile(getClass(), "/geometry/dubious_geometries.csv");
         File[] expected = {urbaFile, secteurFile};
         String urbaLocation = urbaFile.getAbsolutePath();
         String secteurLocation = secteurFile.getAbsolutePath();

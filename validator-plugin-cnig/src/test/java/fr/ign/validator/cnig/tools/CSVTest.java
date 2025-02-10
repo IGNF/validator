@@ -61,19 +61,19 @@ public class CSVTest {
         }
         assertArrayEquals(fairWKTExpected, fairActual.toArray());
 
-        //debious geometries
-        File debiousFile = ResourceHelper.getResourceFile(getClass(), "/geometry/debious_geometries.csv");
-        String[] debiousWKTExpected = {
+        //dubious geometries
+        File dubiousFile = ResourceHelper.getResourceFile(getClass(), "/geometry/dubious_geometries.csv");
+        String[] dubiousWKTExpected = {
             "POLYGON ((0 0, 0 1, 2 1, 2 2, 1 2, 1 0, 0 0))", //self intersection / butterfly
             "POLYGON ((0 0, 0 1, 0 2, 0 0))", //polygon -> linee
             "POLYGON ((0 0, 0 0, 0 0, 0 0))" //polygon -> point
         };
-        List<Geometry> debiousGeometries = CSV.getGeometriesFromFile(debiousFile, 1);
-        List<String> debiousActual = new ArrayList<String>();
-        for (Geometry geometry : debiousGeometries){
-            debiousActual.add(geometry.toText());
+        List<Geometry> dubiousGeometries = CSV.getGeometriesFromFile(dubiousFile, 1);
+        List<String> dubiousActual = new ArrayList<String>();
+        for (Geometry geometry : dubiousGeometries){
+            dubiousActual.add(geometry.toText());
         }
-        assertArrayEquals(debiousWKTExpected, debiousActual.toArray());
+        assertArrayEquals(dubiousWKTExpected, dubiousActual.toArray());
 
         //non-parsable geometries
         File brokenFile = ResourceHelper.getResourceFile(getClass(), "/geometry/broken_geometries.csv");
