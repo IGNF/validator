@@ -17,6 +17,8 @@ import fr.ign.validator.cnig.error.CnigErrorCodes;
 import fr.ign.validator.cnig.model.DocumentModelName;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.metadata.gmd.MetadataISO19115;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.validation.Validator;
 
@@ -90,6 +92,14 @@ public class PieceEcriteOnlyPdfValidator implements Validator<Document>, Validat
             }
             if (pieceEcriteFile != null && pieceEcriteFile.getPath().toString().equals(file.getPath())) {
                 continue;
+            }
+            if (extension.equals("xml")) {
+                if (!MetadataISO19115.isMetadataFile(file)) {
+                    log.info(
+                        MARKER, "Non Metadata XML file in Pieces_Ecrites.", file.getPath()
+                    );
+                    continue;
+                }
             }
             context.report(
                 context.createError(
