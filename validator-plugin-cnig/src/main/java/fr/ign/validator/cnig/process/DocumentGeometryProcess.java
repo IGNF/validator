@@ -119,11 +119,10 @@ public class DocumentGeometryProcess {
     }
 
     /**
-     * Iterates over Collections to fill Polygons arrays
+     * Iterates over Collections to fill Polygons list
      *
      * @param geometry
      * @param polygons
-     * @return
      */
     public static void geometryToPolygonArray(Geometry geometry, List<Polygon> polygons){
         Geometry valid = GeometryFixer.fix(geometry);
