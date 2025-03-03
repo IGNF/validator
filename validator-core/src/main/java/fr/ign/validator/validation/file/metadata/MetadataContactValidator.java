@@ -31,6 +31,15 @@ public class MetadataContactValidator implements Validator<Metadata> {
                 CoreErrorCodes.METADATA_METADATACONTACT_NOT_FOUND
             );
             return;
+        } if (!contact.mailIsValid()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_METADATACONTACT_MAILINVALID)
+                    .setMessageParam("VALUE", contact.getElectronicMailAddress())
+            );
+        } if (!contact.hasName()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_METADATACONTACT_NAMEABSENT)
+            );
         }
     }
 

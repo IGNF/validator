@@ -147,10 +147,21 @@ public class CoreErrorCodes {
     );
 
     public static final ErrorCode METADATA_CONTACT_NOT_FOUND = ErrorCode.valueOf("METADATA_CONTACT_NOT_FOUND");
+    public static final ErrorCode METADATA_CONTACT_NAMEABSENT = ErrorCode.valueOf(
+        "METADATA_CONTACT_NAMEABSENT"
+    );
+    public static final ErrorCode METADATA_CONTACT_MAILINVALID = ErrorCode.valueOf("METADATA_CONTACT_MAILINVALID");;
 
     public static final ErrorCode METADATA_METADATACONTACT_NOT_FOUND = ErrorCode.valueOf(
         "METADATA_METADATACONTACT_NOT_FOUND"
     );
+    public static final ErrorCode METADATA_METADATACONTACT_NAMEABSENT = ErrorCode.valueOf(
+        "METADATA_METADATACONTACT_NAMEABSENT"
+    );
+    public static final ErrorCode METADATA_METADATACONTACT_MAILINVALID = ErrorCode.valueOf(
+        "METADATA_METADATACONTACT_MAILINVALID"
+    );
+
 
     public static final ErrorCode METADATA_METADATADATE_NOT_FOUND = ErrorCode.valueOf(
         "METADATA_METADATADATE_NOT_FOUND"
@@ -222,5 +233,4 @@ public class CoreErrorCodes {
      */
     public static final ErrorCode DATABASE_CONSTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONSTRAINT_MISMATCH");
     public static final ErrorCode TABLE_FOREIGN_KEY_NOT_FOUND = ErrorCode.valueOf("TABLE_FOREIGN_KEY_NOT_FOUND");
-
 }
