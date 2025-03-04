@@ -32,6 +32,17 @@ public class ContactValidator implements Validator<Metadata> {
             );
             return;
         }
+        if (!contact.mailIsValid()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_CONTACT_MAILINVALID)
+                    .setMessageParam("VALUE", contact.getElectronicMailAddress())
+            );
+        }
+        if (!contact.hasName()) {
+            context.report(
+                context.createError(CoreErrorCodes.METADATA_METADATACONTACT_NAMEABSENT)
+            );
+        }
     }
 
 }
