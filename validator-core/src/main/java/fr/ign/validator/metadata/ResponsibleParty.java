@@ -2,6 +2,7 @@ package fr.ign.validator.metadata;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  * Partial implementation of gmd:CI_ResponsibleParty
  *
@@ -118,11 +119,11 @@ public class ResponsibleParty {
         Pattern pattern = Pattern.compile(".+@.+\\..+");
         Matcher matcher = pattern.matcher(this.electronicMailAddress);
 
-        if (this.electronicMailAddress == null){
+        if (this.electronicMailAddress == null) {
             return false;
-        } else if (this.electronicMailAddress == "non_renseigne@exemple.fr"){
+        } else if (this.electronicMailAddress == "non_renseigne@exemple.fr") {
             return false;
-        } else if (matcher.find()){
+        } else if (matcher.find()) {
             return true;
         } else {
             return false;
@@ -130,7 +131,7 @@ public class ResponsibleParty {
     }
 
     public boolean hasName() {
-        return ! (this.organisationName == null || this.organisationName.isBlank());
+        return !(this.organisationName == null || this.organisationName.isBlank());
     }
 
 }

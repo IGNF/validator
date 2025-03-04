@@ -162,7 +162,6 @@ public class CoreErrorCodes {
         "METADATA_METADATACONTACT_MAILINVALID"
     );
 
-
     public static final ErrorCode METADATA_METADATADATE_NOT_FOUND = ErrorCode.valueOf(
         "METADATA_METADATADATE_NOT_FOUND"
     );
