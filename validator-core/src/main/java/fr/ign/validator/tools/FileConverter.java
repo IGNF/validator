@@ -112,6 +112,11 @@ public class FileConverter {
         List<String> args = new ArrayList<>();
         args.add(ogr2ogrPath);
 
+        // Fixes ogr2ogr version 3.8 errors
+        args.add("--config");
+        args.add("OGR2OGR_USE_ARROW_API");
+        args.add("NO");
+
         // Otherwise, some ogr2ogr versions transforms 01 to 1...
         boolean sourceIsGML = FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gml");
         if (sourceIsGML) {
