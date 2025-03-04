@@ -23,7 +23,7 @@ jobs:
 
     - name: Install ogr2ogr
       run: |
-        sudo apt-get -y install gdal-bin=3.6.4
+        sudo apt-get -y install gdal-bin=3.6.4+dfsg-1~jammy0
         which ogr2ogr
 
     - name: Build and test
