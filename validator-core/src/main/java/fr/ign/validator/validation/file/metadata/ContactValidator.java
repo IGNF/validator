@@ -31,12 +31,14 @@ public class ContactValidator implements Validator<Metadata> {
                 CoreErrorCodes.METADATA_CONTACT_NOT_FOUND
             );
             return;
-        } if (!contact.mailIsValid()) {
+        }
+        if (!contact.mailIsValid()) {
             context.report(
                 context.createError(CoreErrorCodes.METADATA_CONTACT_MAILINVALID)
                     .setMessageParam("VALUE", contact.getElectronicMailAddress())
             );
-        } if (!contact.hasName()) {
+        }
+        if (!contact.hasName()) {
             context.report(
                 context.createError(CoreErrorCodes.METADATA_METADATACONTACT_NAMEABSENT)
             );
