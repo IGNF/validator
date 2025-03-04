@@ -145,7 +145,7 @@ public class FileConverter {
             args.add("-lco");
             args.add("GEOMETRY=AS_WKT");
             // Fixes ogr2ogr version 3.8 errors
-            args.add("--lco");
+            args.add("-lco");
             args.add("GEOMETRY_NAME=WKT");
         }
 
