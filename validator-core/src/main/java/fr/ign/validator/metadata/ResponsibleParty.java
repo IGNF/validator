@@ -121,7 +121,7 @@ public class ResponsibleParty {
 
         if (this.electronicMailAddress == null) {
             return false;
-        } else if (this.electronicMailAddress == "non_renseigne@exemple.fr") {
+        } else if (this.electronicMailAddress.equals("non_renseigne@exemple.fr")) {
             return false;
         } else if (matcher.find()) {
             return true;
