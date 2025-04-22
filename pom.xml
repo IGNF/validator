@@ -4,7 +4,7 @@
 	<groupId>fr.ign.validator</groupId>
 	<artifactId>validator</artifactId>
 	<packaging>pom</packaging>
-	<version>4.4.7-SNAPSHOT</version>
+	<version>4.4.8-SNAPSHOT</version>
 	<name>Validator</name>
 
 	<scm>
@@ -42,7 +42,7 @@
 		<jaxb-impl.version>2.3.9</jaxb-impl.version>
 		<jaxb-api.version>2.3.1</jaxb-api.version>
 		<!-- JDBC -->
-		<postgresql.version>9.1-901-1.jdbc4</postgresql.version>
+		<postgresql.version>42.7.5</postgresql.version>
 		<sqlite-jdbc.version>3.46.0.1</sqlite-jdbc.version>
 		<!-- Testing -->
 		<junit.version>4.13.2</junit.version>
@@ -256,7 +256,7 @@
 		</dependency>
 		<!-- Drive postgresql -->
 		<dependency>
-			<groupId>postgresql</groupId>
+			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>
