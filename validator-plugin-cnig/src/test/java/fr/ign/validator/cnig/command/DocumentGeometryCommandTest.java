@@ -36,8 +36,8 @@ public class DocumentGeometryCommandTest {
 
     @Test
     public void testFindStrictEquals() throws IOException {
-        File inFile = ResourceHelper.getResourceFile(getClass(), "/csv/DOC_URBA.csv");
-        File outFile = ResourceHelper.getResourceFile(getClass(), "/csv/Document.csv");
+        File inFile = ResourceHelper.getResourceFile(getClass(), "/geometry/input_document.csv");
+        File outFile = ResourceHelper.getResourceFile(getClass(), "/geometry/output.csv");
 
         String inputString = inFile.getAbsolutePath();
         String outString = outFile.getAbsolutePath();
