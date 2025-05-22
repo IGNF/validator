@@ -12,7 +12,6 @@ import org.locationtech.jts.geom.Geometry;
 import fr.ign.validator.tools.TableReader;
 import fr.ign.validator.geometry.GeometryReader;
 
-
 public class CSV {
 
     /**
@@ -43,8 +42,8 @@ public class CSV {
     public static int getGeometryColumn(File csvFile, List<String> geometryColumnNames) throws IOException {
         TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
         String[] header = reader.getHeader();
-        for (String geometryColumnName : geometryColumnNames){
-            if (Arrays.asList(header).contains(geometryColumnName)){
+        for (String geometryColumnName : geometryColumnNames) {
+            if (Arrays.asList(header).contains(geometryColumnName)) {
                 return reader.findColumn(geometryColumnName);
             }
         }
@@ -52,8 +51,10 @@ public class CSV {
     }
 
     public static List<Geometry> getGeometriesFromFile(File csvFile, int geometryColumn) throws IOException {
-        if (geometryColumn == -1){
-            throw new IOException(csvFile.getAbsolutePath() + ": Geometry column cant be found. Please check arguments.");
+        if (geometryColumn == -1) {
+            throw new IOException(
+                csvFile.getAbsolutePath() + ": Geometry column cant be found. Please check arguments."
+            );
         }
         TableReader tableReader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
         GeometryReader geometryReader = new GeometryReader();

@@ -28,7 +28,7 @@ import fr.ign.validator.command.AbstractCommand;
  */
 public class DocumentGeometryCommand extends AbstractCommand {
 
-    public static final String NAME = "document-geometry";
+    public static final String NAME = "document_geometry";
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("DocumentGeometryCommand");
@@ -40,7 +40,7 @@ public class DocumentGeometryCommand extends AbstractCommand {
     private List<File> inputFiles = new ArrayList<File>();
 
     /**
-     *  Geometry columns names
+     * Geometry columns names
      */
     private List<String> geometryColumnNames = new ArrayList<String>();
 
@@ -73,7 +73,7 @@ public class DocumentGeometryCommand extends AbstractCommand {
             e.printStackTrace(System.err);
         }
         log.info(MARKER, "complete");
-        //dans gpu-site, lancement commande + lecture WKT
+        // dans gpu-site, lancement commande + lecture WKT
     }
 
     /**
@@ -86,10 +86,14 @@ public class DocumentGeometryCommand extends AbstractCommand {
     private void process(List<File> inputFiles, File targetFile) throws Exception {
         // Core processing
         DocumentGeometryProcess documentGeometryProcess = new DocumentGeometryProcess(inputFiles, geometryColumnNames);
+        log.info(MARKER, "Detecting Geometries ...");
         documentGeometryProcess.detectGeometries();
+
+        log.info(MARKER, "Union from detected Geometries ...");
         String union = documentGeometryProcess.union();
 
         // Writing to file
+        log.info(MARKER, "Writing Union Geometry to file ...");
         BufferedWriter bufferedWriter = getWriter(targetFile);
         bufferedWriter.write(union);
         bufferedWriter.close();
@@ -116,16 +120,20 @@ public class DocumentGeometryCommand extends AbstractCommand {
     protected void buildCustomOptions(Options options) {
         // input
         {
-            Option option = new Option("i", "input", true,
-                "Input files (csv). Different inputs should be separated by ','");
+            Option option = new Option(
+                "i", "input", true,
+                "Input files (csv). Different inputs should be separated by ','"
+            );
             option.setRequired(true);
             option.setType(String.class);
             options.addOption(option);
         }
         {
-            Option option = new Option("g", "geometries", true,
-            "Input names of geometry columns names. Different names should be separated by ','. " +
-                "'geom' and 'geometry' are included by default");
+            Option option = new Option(
+                "g", "geometries", true,
+                "Input names of geometry columns names. Different names should be separated by ','. " +
+                    "'geom' and 'geometry' are included by default"
+            );
             option.setRequired(false);
             option.setType(String.class);
             options.addOption(option);
@@ -133,7 +141,7 @@ public class DocumentGeometryCommand extends AbstractCommand {
 
         // output
         {
-            Option option = new Option("o", "output", true, "Output file (csv)");
+            Option option = new Option("o", "output", true, "Output file");
             option.setRequired(true);
             option.setType(File.class);
             options.addOption(option);
@@ -153,7 +161,6 @@ public class DocumentGeometryCommand extends AbstractCommand {
         this.geometryColumnNames = parseGeometryOption(geometryColumnNameString, commandLine.hasOption("geometries"));
     }
 
-
     /**
      * Asserts that Files input is conform
      *
@@ -161,18 +168,18 @@ public class DocumentGeometryCommand extends AbstractCommand {
      * @return
      * @throws ParseException
      */
-    public List<File> parseFileOption(String inputString) throws ParseException{
+    public List<File> parseFileOption(String inputString) throws ParseException {
         List<File> inputFiles = new ArrayList<File>();
         if (inputString.isEmpty()) {
             throw new ParseException("Input is empty");
         }
         String[] potentialStrings = inputString.split(", *");
-        for (String potentialString : potentialStrings){
+        for (String potentialString : potentialStrings) {
             File potentialFile = new File(potentialString);
-            if (!potentialFile.isFile()){
+            if (!potentialFile.isFile()) {
                 throw new ParseException("'" + potentialString + "' cannot be found");
             }
-            if (! FilenameUtils.getExtension(potentialString).equals("csv")){
+            if (!FilenameUtils.getExtension(potentialString).equals("csv")) {
                 throw new ParseException("'" + potentialString + "' must be a CSV file");
             }
             inputFiles.add(potentialFile);
@@ -187,13 +194,13 @@ public class DocumentGeometryCommand extends AbstractCommand {
      * @param hasOption
      * @return
      */
-    public List<String> parseGeometryOption(String geometryColumnNameString, boolean hasOption){
+    public List<String> parseGeometryOption(String geometryColumnNameString, boolean hasOption) {
         List<String> geometryColumnNames = new ArrayList<String>();
         geometryColumnNames.add("geom");
         geometryColumnNames.add("geometry");
         if (hasOption) {
             String[] names = geometryColumnNameString.split(", *");
-            for (String geometryName : names){
+            for (String geometryName : names) {
                 geometryColumnNames.add(geometryName);
             }
         }

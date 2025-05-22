@@ -36,60 +36,80 @@ public class DocumentGeometryCommandTest {
 
     @Test
     public void testFindStrictEquals() throws IOException {
-        File inFile = ResourceHelper.getResourceFile(getClass(), "/geometry/input_document.csv");
+        File inFile1 = ResourceHelper.getResourceFile(getClass(), "/geometry/ZONE_URBA.csv");
+        File inFile2 = ResourceHelper.getResourceFile(getClass(), "/geometry/SECTEUR_CC.csv");
         File outFile = ResourceHelper.getResourceFile(getClass(), "/geometry/output.csv");
+        File expectedFile = ResourceHelper.getResourceFile(getClass(), "/geometry/union_geometries");
 
-        String inputString = inFile.getAbsolutePath();
+        String inputString = inFile1.getAbsolutePath() + ',' + inFile2.getAbsolutePath();
         String outString = outFile.getAbsolutePath();
 
         DocumentGeometryCommand command = new DocumentGeometryCommand();
         String[] args = new String[] {
             "--input", inputString,
+            "-g", "WKT",
             "--output", outString
         };
         assertEquals(0, command.run(args));
 
         // Verifie l'output
         String outContent = FileUtils.readFileToString(outFile, StandardCharsets.UTF_8);
-        assertEquals("131000", outContent);
+        String expectedContent = FileUtils.readFileToString(expectedFile, StandardCharsets.UTF_8);
+        assertEquals(expectedContent, outContent);
     }
 
     @Test
     public void testParseFileOption() throws ParseException {
         // Empty option
         String mockEmptyString = "";
-        ParseException emptyException = assertThrows(ParseException.class,
-            () -> documentGeometryCommand.parseFileOption(mockEmptyString));
+        ParseException emptyException = assertThrows(
+            ParseException.class,
+            () -> documentGeometryCommand.parseFileOption(mockEmptyString)
+        );
         assertEquals("Input is empty", emptyException.getMessage());
 
         // Invalid File location
         String mockInvalidString = "Invalid File Location";
-        ParseException invalidException = assertThrows(ParseException.class,
-            () -> documentGeometryCommand.parseFileOption(mockInvalidString));
+        ParseException invalidException = assertThrows(
+            ParseException.class,
+            () -> documentGeometryCommand.parseFileOption(mockInvalidString)
+        );
         assertEquals("'Invalid File Location' cannot be found", invalidException.getMessage());
 
         // Correct option
         File urbaFile = ResourceHelper.getResourceFile(getClass(), "/geometry/fair_geometries.csv");
         File secteurFile = ResourceHelper.getResourceFile(getClass(), "/geometry/dubious_geometries.csv");
-        File[] expected = {urbaFile, secteurFile};
+        File[] expected = {
+            urbaFile, secteurFile
+        };
         String urbaLocation = urbaFile.getAbsolutePath();
         String secteurLocation = secteurFile.getAbsolutePath();
         String mockCorrectString = urbaLocation + ", " + secteurLocation;
-        assertArrayEquals(expected,
-            documentGeometryCommand.parseFileOption(mockCorrectString).toArray());
+        assertArrayEquals(
+            expected,
+            documentGeometryCommand.parseFileOption(mockCorrectString).toArray()
+        );
     }
 
     @Test
-    public void testParseGeometryOption(){
+    public void testParseGeometryOption() {
         // absent option
-        String[] expectedAbsent = {"geom", "geometry"};
-        assertArrayEquals(expectedAbsent,
-            documentGeometryCommand.parseGeometryOption("", false).toArray());
+        String[] expectedAbsent = {
+            "geom", "geometry"
+        };
+        assertArrayEquals(
+            expectedAbsent,
+            documentGeometryCommand.parseGeometryOption("", false).toArray()
+        );
 
         // present option
         String geometryColumnNameString = "column1, column2";
-        String[] expectedPresent = {"geom", "geometry", "column1", "column2"};
-        assertArrayEquals(expectedPresent,
-            documentGeometryCommand.parseGeometryOption(geometryColumnNameString, true).toArray());
+        String[] expectedPresent = {
+            "geom", "geometry", "column1", "column2"
+        };
+        assertArrayEquals(
+            expectedPresent,
+            documentGeometryCommand.parseGeometryOption(geometryColumnNameString, true).toArray()
+        );
     }
 }
