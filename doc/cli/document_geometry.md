@@ -15,8 +15,3 @@ java -jar validator-cli.jar document_geometry \
     -g "WKT" \
     -o ../../validator-plugin-cnig/src/test/resources/geometry/union_geometries
 ```
-
-## Remarques
-
-* Le modèle pivot est une simplification du modèle ISO 19915 se concentrant sur les éléments utilisés dans les profiles INSPIRE et CNIG.
-* **ATTENTION : Ce modèle pivot JSON n'est pas standardisé et est susceptible d'évoluer**
