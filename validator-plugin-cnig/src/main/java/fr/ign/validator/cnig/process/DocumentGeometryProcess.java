@@ -54,7 +54,7 @@ public class DocumentGeometryProcess {
 
     /**
      * Constructor for processing class
-     * 
+     *
      * @param inputFiles
      * @param geometryColumnNames
      */
@@ -81,7 +81,7 @@ public class DocumentGeometryProcess {
 
     /**
      * Merges geometries
-     * 
+     *
      * @return WKT of union
      */
     public String union() {

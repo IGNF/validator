@@ -28,7 +28,7 @@ public class DocumentGeometryProcessTest {
 
     /**
      * Initialize test
-     * 
+     *
      * @throws Exception
      */
     public DocumentGeometryProcessTest() throws Exception {
