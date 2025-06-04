@@ -2,8 +2,6 @@ package fr.ign.validator.model;
 
 import java.net.URL;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -68,7 +66,6 @@ public class StaticTable {
         return data;
     }
 
-    @XmlTransient
     public void setData(URL data) {
         this.data = data;
     }

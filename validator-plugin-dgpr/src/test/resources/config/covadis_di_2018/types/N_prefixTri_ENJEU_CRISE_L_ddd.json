@@ -1,0 +1,106 @@
+{
+    "id": "e20359af951c292467fcb915e7c31c4b",
+    "name": "N_prefixTri_ENJEU_CRISE_L_ddd",
+    "columns": [
+        {
+            "id": "03e42c12fd371b23e9508a316caedb62",
+            "name": "CODCOVADIS",
+            "description": "Cf. nomenclature COVADIS standard PPRN (annexe D.1)",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[0-9]{0,4}[a-z]*$",
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "565c1e034edf1c989cdbd774e0d5c488",
+            "name": "VER_SI_EXT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "5d4bd771e534657f0c0c6f94f840d6a0",
+            "name": "WKT",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "606e9cf800bf5f422b3a99b6bfbc9945",
+            "name": "CATEGORIE",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "11",
+                    "99",
+                    "98",
+                    "01",
+                    "15",
+                    "07",
+                    "02",
+                    "10",
+                    "09",
+                    "06",
+                    "04",
+                    "03",
+                    "05",
+                    "12",
+                    "13",
+                    "14",
+                    "08"
+                ]
+            }
+        },
+        {
+            "id": "dd60970d7f938e8e6a440bba585965fc",
+            "name": "NOM_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "e3f1aadb0e12394626083060871095c6",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "eac0a6cc86c6aacda1891fcacd8ea609",
+            "name": "ID_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "ecf1086d908e948ca3a906d40996a3be",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        }
+    ]
+}

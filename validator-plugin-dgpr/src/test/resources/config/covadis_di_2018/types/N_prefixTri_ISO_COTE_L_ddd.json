@@ -1,0 +1,148 @@
+{
+    "id": "3d4e469c6eddc1dc8f8f2fff62bd0875",
+    "name": "N_prefixTri_ISO_COTE_L_ddd",
+    "columns": [
+        {
+            "id": "4b058a7da64637355eee06ad1fdd8df5",
+            "name": "TYP_INOND2",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "4f23f60de39305a09834a4c5b5cf5ea8",
+            "name": "DATSORTIE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "5266517a49def5d75034516143178ee7",
+            "name": "DATENTREE",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "624b29b074cce14480e4cf11fc62d344",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "7b7fb438055638b2605987f3a23686e5",
+            "name": "COTE",
+            "description": "Valeur vide interdite",
+            "type": "Double",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "8ccb4c23b5d92de3fd50ddb5ffd63871",
+            "name": "TYP_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "01",
+                    "04",
+                    "02",
+                    "03"
+                ]
+            }
+        },
+        {
+            "id": "ad81018d87b74c0d940cc98fd25918c6",
+            "name": "SCENARIO",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "enum": [
+                    "04Fai_100",
+                    "04Faicc_ct",
+                    "01Forcc_ct",
+                    "01Forcc_100",
+                    "03Mcc_ct",
+                    "04Fai",
+                    "01For",
+                    "02Moy",
+                    "03Mcc"
+                ]
+            }
+        },
+        {
+            "id": "c7a99d4503a997919d5ab7a0bd7193e9",
+            "name": "ID_TRI",
+            "description": "Valeur nulle interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
+            }
+        },
+        {
+            "id": "d2e8cfe0b7150e5bcda821220c89df76",
+            "name": "ID_LIGNE",
+            "description": "COVADIS B1.2. - Identifiant de type 'LIC_[numero]'",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": true,
+                "pattern": "LIC_[0-9]+$",
+                "maxLength": 30
+            }
+        },
+        {
+            "id": "e432d04296de787a5a998b15dd1bb7be",
+            "name": "COURS_DEAU",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 127
+            }
+        },
+        {
+            "id": "e755f4e8bf3a6cba024bd6c29bd8b099",
+            "name": "ID_S_INOND",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
+            }
+        },
+        {
+            "id": "e9907cc8340d8e5f6ea8098934abb8ea",
+            "name": "WKT",
+            "type": "MultiLineString",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+    "id": "753e61c837050dc32bdac88721341556",
+    "name": "N_prefixTri_ENJEU_PATRIM_P_ddd",
+    "columns": [
+        {
+            "id": "289af181078f7f2dc2d4efeeb009a8fd",
+            "name": "TYPE_ENJEU",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 80
+            }
+        },
+        {
+            "id": "39cd57f4e6caaba0ea413af82a2ec122",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "9e0762ef88044c9dd4c379cbdb7d7895",
+            "name": "ID_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "b7801c80a3fec01e09e0e5d781547ebe",
+            "name": "WKT",
+            "type": "MultiPoint",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "dbbec236804372b00793325ded419625",
+            "name": "VER_SI_EXT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "e364b47bd88853a58e15979c459cd6c1",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "f2e292201ac4be3ad1af47980578e820",
+            "name": "NOM_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        }
+    ]
+}

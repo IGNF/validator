@@ -12,8 +12,8 @@ import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;
+import fr.ign.validator.io.JsonModelReader;
 import fr.ign.validator.io.ModelReader;
-import fr.ign.validator.io.XmlModelReader;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
@@ -42,8 +42,8 @@ public class TableNormalizerTest {
         context.setProjection(Projection.CODE_CRS84);
         context.setReportBuilder(reportBuilder);
 
-        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-xml/adresse/files.xml");
-        ModelReader modelLoader = new XmlModelReader();
+        File documentModelPath = ResourceHelper.getResourceFile(getClass(), "/config-json/adresse/files.json");
+        ModelReader modelLoader = new JsonModelReader();
         DocumentModel documentModel = modelLoader.loadDocumentModel(documentModelPath);
 
         File documentPath = ResourceHelper.getResourceFile(getClass(), "/documents/adresse-multiple");

@@ -1,0 +1,96 @@
+{
+    "id": "59b94cece0c04bb40df2d058ef69fbe6",
+    "name": "N_prefixTri_ENJEU_ECO_S_ddd",
+    "columns": [
+        {
+            "id": "2c05d1d52bd94fcb0db8e5b5da7815bd",
+            "name": "CODCOVADIS",
+            "description": "Cf. nomenclature COVADIS standard PPRN (annexe D.1)",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "pattern": "^[0-9]{4}[a-z]*$",
+                "maxLength": 5
+            }
+        },
+        {
+            "id": "5682b7d7d7e36c7c4c495b654ac3f80c",
+            "name": "VER_SI_EXT",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "maxLength": 10
+            }
+        },
+        {
+            "id": "87bbdfca741e8cc29be1a8fae097a8f2",
+            "name": "WKT",
+            "type": "MultiPolygon",
+            "constraints": {
+                "required": false,
+                "unique": false
+            }
+        },
+        {
+            "id": "94d0e2f1f1b86ecfa47d4a85ef406b6d",
+            "name": "ID_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        },
+        {
+            "id": "9fbba2e4a1d2dea69d52fca82fff1c8b",
+            "name": "DATIMPORT",
+            "type": "Date",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "cea9aac3b73716f5accb6b797699ff22",
+            "name": "EST_REF",
+            "type": "Boolean",
+            "constraints": {
+                "required": true,
+                "unique": false
+            }
+        },
+        {
+            "id": "d7fe9b179c7b7d2c5f8d74c6378a4017",
+            "name": "TYPE_ACTIV",
+            "type": "String",
+            "constraints": {
+                "required": true,
+                "unique": false,
+                "enum": [
+                    "03",
+                    "04",
+                    "99",
+                    "07",
+                    "02",
+                    "01",
+                    "06",
+                    "05"
+                ]
+            }
+        },
+        {
+            "id": "faa81b0de6a68a199eec3da5272ce808",
+            "name": "NOM_SI_EXT",
+            "description": "Valeur vide interdite",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "unique": false,
+                "maxLength": 50
+            }
+        }
+    ]
+}
