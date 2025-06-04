@@ -46,7 +46,7 @@
 		<mockito.version>5.12.0</mockito.version>
 		<!-- Build and deploy -->
 		<maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-		<maven-surefire-plugin.version>3.3.1</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
 		<maven-release-plugin.version>3.1.1</maven-release-plugin.version>
 		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 
