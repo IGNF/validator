@@ -33,7 +33,7 @@ public class TableReaderGMLTest {
             assertTrue(header.length >= 4);
 
             int wktIndex = reader.findColumn("WKT");
-            assertTrue("WKT column not found", wktIndex != 1);
+            assertTrue("WKT column not found", wktIndex >= 0);
             assertTrue(Arrays.asList(header).contains("gml_id"));
             assertTrue(Arrays.asList(header).contains("IDURBA"));
             assertTrue(Arrays.asList(header).contains("INSEE"));

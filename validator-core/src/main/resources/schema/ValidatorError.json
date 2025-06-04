@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "Code de l'erreur"
+      },
+      "level": {
+        "type": "string",
+        "description": "Niveau de gravité de l'erreur"
+      },
+      "message": {
+        "type": "string",
+        "description": "Message d'erreur détaillé"
+      },
+      "documentModel": {
+        "type": "string",
+        "description": "Nom du modèle de document"
+      },
+      "fileModel": {
+        "type": "string",
+        "description": "Nom du modèle de fichier"
+      },
+      "attribute": {
+        "type": "string",
+        "description": "Nom de la colonne concernée"
+      },
+      "file": {
+        "type": "string",
+        "description": "Chemin du fichier concerné"
+      },
+      "id": {
+        "type": "string",
+        "description": "Numéro de la ligne dans le fichier / la table"
+      },
+      "featureBbox": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 4,
+        "maxItems": 4,
+        "description": "Boite englobante de l'objet (lonMin,latMin,lonMax,latMax)"
+      },
+      "errorGeometry": {
+        "type": "string",
+        "description": "Localisation de l'erreur géométrique (format WKT, projection CRS:84)"
+      },
+      "featureId": {
+        "type": "string",
+        "description": "Identifiant de l'objet (si disponible)"
+      }
+    },
+    "required": [
+      "code",
+      "level",
+      "message",
+      "documentModel"
+    ]
+  }
+  

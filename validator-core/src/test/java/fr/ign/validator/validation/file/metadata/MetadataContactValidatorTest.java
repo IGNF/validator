@@ -20,6 +20,8 @@ public class MetadataContactValidatorTest extends MetadataValidatorTestBase {
     public void testValid() {
         Metadata metadata = mock(Metadata.class);
         ResponsibleParty contact = new ResponsibleParty();
+        contact.setOrganisationName("organisation");
+        contact.setElectronicMailAddress("a@b.c");
         when(metadata.getMetadataContact()).thenReturn(contact);
 
         MetadataContactValidator validator = new MetadataContactValidator();

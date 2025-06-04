@@ -1,5 +1,8 @@
 package fr.ign.validator.metadata;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Partial implementation of gmd:CI_ResponsibleParty
  *
@@ -109,6 +112,26 @@ public class ResponsibleParty {
 
     public void setHoursOfService(String hoursOfService) {
         this.hoursOfService = hoursOfService;
+    }
+
+    public boolean mailIsValid() {
+        // pattern is <non empty>@<non-empty>.<non-empty>
+        Pattern pattern = Pattern.compile(".+@.+\\..+");
+        Matcher matcher = pattern.matcher(this.electronicMailAddress);
+
+        if (this.electronicMailAddress == null) {
+            return false;
+        } else if (this.electronicMailAddress.equals("non_renseigne@exemple.fr")) {
+            return false;
+        } else if (matcher.find()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean hasName() {
+        return !(this.organisationName == null || this.organisationName.isBlank());
     }
 
 }

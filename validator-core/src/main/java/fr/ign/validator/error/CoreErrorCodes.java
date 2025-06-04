@@ -147,9 +147,19 @@ public class CoreErrorCodes {
     );
 
     public static final ErrorCode METADATA_CONTACT_NOT_FOUND = ErrorCode.valueOf("METADATA_CONTACT_NOT_FOUND");
+    public static final ErrorCode METADATA_CONTACT_NAMEABSENT = ErrorCode.valueOf(
+        "METADATA_CONTACT_NAMEABSENT"
+    );
+    public static final ErrorCode METADATA_CONTACT_MAILINVALID = ErrorCode.valueOf("METADATA_CONTACT_MAILINVALID");;
 
     public static final ErrorCode METADATA_METADATACONTACT_NOT_FOUND = ErrorCode.valueOf(
         "METADATA_METADATACONTACT_NOT_FOUND"
+    );
+    public static final ErrorCode METADATA_METADATACONTACT_NAMEABSENT = ErrorCode.valueOf(
+        "METADATA_METADATACONTACT_NAMEABSENT"
+    );
+    public static final ErrorCode METADATA_METADATACONTACT_MAILINVALID = ErrorCode.valueOf(
+        "METADATA_METADATACONTACT_MAILINVALID"
     );
 
     public static final ErrorCode METADATA_METADATADATE_NOT_FOUND = ErrorCode.valueOf(
@@ -210,6 +220,9 @@ public class CoreErrorCodes {
     public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID");
     public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf(
         "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT"
+    );
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_INTERNAL = ErrorCode.valueOf(
+        "ATTRIBUTE_GEOMETRY_INVALID_INTERNAL"
     );
 
     public static final ErrorCode ATTRIBUTE_PATH_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_PATH_NOT_FOUND");

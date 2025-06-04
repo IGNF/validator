@@ -245,9 +245,9 @@ public class FeatureType implements Model {
      * @return -1 si undefined
      */
     public int indexOf(String name) {
-        String regexp = "(?i)" + name;
         for (int i = 0; i < attributes.size(); i++) {
-            if (attributes.get(i).getName().matches(regexp)) {
+            String regexp = "(?i)\ufeff?" + attributes.get(i).getName();
+            if (name.matches(regexp)) {
                 return getParentAttributeCount() + i;
             }
         }
