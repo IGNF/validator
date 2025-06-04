@@ -182,11 +182,17 @@
 		"level": "ERROR",
 		"message": "La géométrie de l'objet n'est pas topologiquement correcte. {TYPE_ERROR}",
 		"documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
-	},{"name":
-	"ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT"
-,
+	},
+	{
+		"name":"ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",
 		"level": "ERROR",
 		"message": "Les coordonnées de la géométrie de l'objet ne correspondent pas à la zone attendue.",
+		"documentation": ""
+	},
+	{
+		"name":"ATTRIBUTE_GEOMETRY_INVALID_INTERNAL",
+		"level": "ERROR",
+		"message": "Le processus de validation des géométries ne peut pas se résoudre. Essayez de simplifier vos géométries : https://postgis.net/docs/ST_Simplify.html",
 		"documentation": ""
 	},
 	{
