@@ -30,7 +30,7 @@
 		<jackson.version>2.19.0</jackson.version>
 		<jackson.databind.version>2.19.0</jackson.databind.version>
 
-		<maven-formatter-plugin.version>2.24.1</maven-formatter-plugin.version>
+		<maven-formatter-plugin.version>2.26.0</maven-formatter-plugin.version>
 		<jaxen.version>1.2.0</jaxen.version>
 		<jdom.version>1.0</jdom.version>
 		<apache-common-io.version>2.19.0</apache-common-io.version>
