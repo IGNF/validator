@@ -57,6 +57,11 @@ public class Document implements Validatable {
     private List<DocumentFile> documentFiles = new ArrayList<>();
 
     /**
+     * Files misplaced from model expactations
+     */
+    private Map<FileModel, File> misplacedFiles = new HashMap<>();
+
+    /**
      * Additional informations
      */
     private Map<String, String> tags = new HashMap<>();
@@ -298,7 +303,7 @@ public class Document implements Validatable {
 
                 log.info(MARKER, "Found {} by name for '{}' (FILE_MISPLACED)", fileModel, file);
                 if (context.isFlatValidation()) {
-                    addDocumentFile(fileModel, file);
+                    addMisplacedFile(fileModel, file);
                 } else {
                     context.beginModel(fileModel);
                     context.report(
@@ -321,6 +326,11 @@ public class Document implements Validatable {
                 context.createError(errorCode)
                     .setMessageParam("FILEPATH", context.relativize(file))
             );
+
+            /*
+             * Adds the best remaining candidates.
+             */
+            addMisplacedDocumentFiles();
         }
 
         log.info(
@@ -329,8 +339,37 @@ public class Document implements Validatable {
         );
     }
 
+    /*
+     * Adds a DocumentFile as the best candidate.
+     */
     private void addDocumentFile(FileModel fileModel, File path) {
+        this.misplacedFiles.remove(fileModel);
         this.documentFiles.add(fileModel.createDocumentFile(path));
+    }
+
+    /*
+     * Adds a misplaced file only if a better candidate doesn't already exists.
+     */
+    private void addMisplacedFile(FileModel fileModel, File path) {
+        boolean fileModelExists = false;
+        for (DocumentFile documentFile : this.documentFiles){
+            if (documentFile.getFileModel().equals(fileModel)){fileModelExists=true;}
+        }
+        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()){
+            if (misplacedFile.getKey().equals(fileModel)){fileModelExists=true;}
+        }
+        if (! fileModelExists){
+            this.misplacedFiles.put(fileModel, path);
+        }
+    }
+
+    /*
+     * Transfers misplaced files to DocumentFiels
+     */
+    private void addMisplacedDocumentFiles() {
+        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()){
+            addDocumentFile(misplacedFile.getKey(), misplacedFile.getValue());
+        }
     }
 
     /**
