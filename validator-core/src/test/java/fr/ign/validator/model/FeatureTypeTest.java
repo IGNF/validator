@@ -7,7 +7,7 @@ import org.junit.Test;
 import fr.ign.validator.model.type.StringType;
 
 /**
- * 
+ *
  * @author CBouche
  *
  */

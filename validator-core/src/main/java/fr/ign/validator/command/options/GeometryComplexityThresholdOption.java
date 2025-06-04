@@ -13,7 +13,7 @@ import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.geometry.GeometryThreshold;
 
 /**
- * 
+ *
  * @author cbouche
  *
  */
@@ -29,7 +29,7 @@ public class GeometryComplexityThresholdOption {
 
     /**
      * Add "cnig-complexity-tolerance" option to command line.
-     * 
+     *
      * @param options
      */
     public static void buildOptions(Options options) {
@@ -45,7 +45,7 @@ public class GeometryComplexityThresholdOption {
 
     /**
      * Parse option from command line.
-     * 
+     *
      * @param commandLine
      * @return
      * @throws ParseException

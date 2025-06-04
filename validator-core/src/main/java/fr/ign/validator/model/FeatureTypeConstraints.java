@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
 /**
- * 
+ *
  * Feature Type Constraints foreign key conditions SQL queries
  *
  * @author cbouche

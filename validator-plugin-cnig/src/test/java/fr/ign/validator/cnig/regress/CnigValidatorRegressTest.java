@@ -51,9 +51,9 @@ import fr.ign.validator.report.InMemoryReportBuilder;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
+ *
  * Regress test for some GpU documents.
- * 
+ *
  * @author MBorne
  *
  */
@@ -597,7 +597,7 @@ public class CnigValidatorRegressTest {
 
     /**
      * Controls normalized files for SUP
-     * 
+     *
      * @param dataDirectory
      * @throws IOException
      */
@@ -986,7 +986,7 @@ public class CnigValidatorRegressTest {
 
     /**
      * Test 123456789_A5_88_20200313
-     * 
+     *
      * @see https://github.com/IGNF/validator/issues/260
      */
     @Test
@@ -1044,7 +1044,7 @@ public class CnigValidatorRegressTest {
 
     /**
      * Test 123456789_A5_088_20200313
-     * 
+     *
      * @see https://github.com/IGNF/validator/issues/260
      */
     @Test

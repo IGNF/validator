@@ -5,9 +5,9 @@ import java.util.Comparator;
 import fr.ign.validator.info.model.DocumentFileInfo;
 
 /**
- * 
+ *
  * Helper to sort files according to their names
- * 
+ *
  * @author MBorne
  *
  */

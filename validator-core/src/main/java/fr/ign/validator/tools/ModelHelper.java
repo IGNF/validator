@@ -12,7 +12,7 @@ import fr.ign.validator.model.file.SingleTableModel;
 
 /**
  * Helpers to manipulate models.
- * 
+ *
  * @author MBorne
  *
  */
@@ -25,7 +25,7 @@ public class ModelHelper {
     /**
      * Traverse {@link DocumentModel} to retrieve all {@link SingleTableModel} and
      * {@link EmbeddedTableModel}
-     * 
+     *
      * @param documentModel
      * @return
      */

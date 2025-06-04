@@ -14,9 +14,9 @@ import org.apache.commons.cli.ParseException;
 import fr.ign.validator.tools.Networking;
 
 /**
- * 
+ *
  * Common command implementation and helpers
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,14 +34,14 @@ public abstract class AbstractCommand implements Command {
 
     /**
      * Append custom CLI options to default ones
-     * 
+     *
      * @param options
      */
     protected abstract void buildCustomOptions(Options options);
 
     /**
      * Parse custom CLI options to member variable
-     * 
+     *
      * @param commandLine
      * @throws ParseException
      */
@@ -90,7 +90,7 @@ public abstract class AbstractCommand implements Command {
 
     /**
      * True if command args contains -h or --help.
-     * 
+     *
      * @param args
      * @return
      */
@@ -105,7 +105,7 @@ public abstract class AbstractCommand implements Command {
 
     /**
      * Get common options
-     * 
+     *
      * @return
      */
     private Options getCommonOptions() {
@@ -126,7 +126,7 @@ public abstract class AbstractCommand implements Command {
 
     /**
      * Display help
-     * 
+     *
      * @param options
      */
     private void displayHelp(Options options) {
@@ -138,7 +138,7 @@ public abstract class AbstractCommand implements Command {
 
     /**
      * Parse proxy option and define proxy
-     * 
+     *
      * @param commandLine
      */
     protected void configureNetworkingAndProxy(CommandLine commandLine) {

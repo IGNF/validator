@@ -33,9 +33,9 @@ import fr.ign.validator.tools.EnvelopeUtils;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
+ *
  * Extracts informations from a validation directory of a document
- * 
+ *
  * @author CBouche
  * @author MBorne
  *
@@ -46,7 +46,7 @@ public class DocumentInfoExtractor {
 
     /**
      * Gets informations on directory
-     * 
+     *
      * @param documentName
      * @param validationDirectory
      * @return
@@ -95,7 +95,7 @@ public class DocumentInfoExtractor {
 
     /**
      * Retrieve boundingBox and featureCount from normalized file
-     * 
+     *
      * @param context
      * @param fileModel
      * @param documentFileInfo
@@ -111,7 +111,7 @@ public class DocumentInfoExtractor {
 
     /**
      * Retrieve boundingBox and featureCount from normalized file
-     * 
+     *
      * @param context
      * @param fileModel
      * @param documentFileInfo
@@ -140,7 +140,7 @@ public class DocumentInfoExtractor {
 
     /**
      * Get {@link TableStats} from a normalized CSV file.
-     * 
+     *
      * @param csvFile
      * @return
      */
@@ -170,7 +170,7 @@ public class DocumentInfoExtractor {
 
     /**
      * Gets fileIdentifier from metadataFiles
-     * 
+     *
      * @param document
      * @return
      */
@@ -194,7 +194,7 @@ public class DocumentInfoExtractor {
 
     /**
      * Compute global extends from
-     * 
+     *
      * @param repertory
      * @return
      */

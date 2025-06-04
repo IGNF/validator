@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Implementation of gmd:MD_Keywords
- * 
+ *
  * Note that keywords are internationalized and grouped by thesaurus
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_Keywords.html">gmd:MD_Keywords</a>
- * 
+ *
  * @author MBorne
  *
  */

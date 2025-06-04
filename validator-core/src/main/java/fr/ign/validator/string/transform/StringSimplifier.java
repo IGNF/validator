@@ -20,7 +20,7 @@ import fr.ign.validator.string.StringTransform;
 
 /**
  * Replace codePoint a string
- * 
+ *
  * @author MBorne
  *
  */
@@ -33,7 +33,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Add replacement
-     * 
+     *
      * @param before
      * @param after
      */
@@ -43,7 +43,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Get replacement map
-     * 
+     *
      * @return
      */
     public Map<String, String> getReplacements() {
@@ -64,7 +64,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Load common replacements stored in /simplify/common.csv
-     * 
+     *
      * @throws IOException
      */
     public void loadCommon() {
@@ -81,7 +81,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Load charset specific replacements stored in /simplify/[CHARSET-NAME].csv
-     * 
+     *
      * @param charset
      * @throws IOException
      */
@@ -99,7 +99,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Load mapping from CSV file (before,after,comment)
-     * 
+     *
      * @param file
      * @throws IOException
      */
@@ -111,7 +111,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Load mapping from CSV file (before,after,comment)
-     * 
+     *
      * @param file
      * @throws IOException
      */
@@ -123,7 +123,7 @@ public class StringSimplifier implements StringTransform {
 
     /**
      * Parser CSV
-     * 
+     *
      * @param parser
      */
     private void loadCSV(CSVParser parser) {

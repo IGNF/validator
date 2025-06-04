@@ -11,7 +11,7 @@ import org.locationtech.jts.geom.Geometry;
 import fr.ign.validator.error.CoreErrorCodes;
 
 /**
- * 
+ *
  * @author CBouche
  *
  */

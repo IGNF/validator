@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 /**
  * Ensure that IDGEN in ASSIETTE_SUP_P/L/S tables exists in GENERATEUR_SUP_P/L/S
  * tables.
- * 
+ *
  * @author MBorne
  *
  */

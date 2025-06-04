@@ -8,9 +8,9 @@ import org.junit.Test;
 import fr.ign.validator.model.Projection;
 
 /**
- * 
+ *
  * TODO add control about validity domain (check WKT validity for example)
- * 
+ *
  * @author MBorne
  *
  */

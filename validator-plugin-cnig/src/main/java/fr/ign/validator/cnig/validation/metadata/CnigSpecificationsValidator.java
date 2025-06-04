@@ -8,10 +8,10 @@ import fr.ign.validator.metadata.Specification;
 
 /**
  * Ensures that "specifications" contains an element with the following form :
- * 
+ *
  * ex : "CNIG PLU v2013"
- * 
- * 
+ *
+ *
  * @author MBorne
  *
  */

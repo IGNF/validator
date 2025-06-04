@@ -21,9 +21,9 @@ import fr.ign.validator.geometry.ProjectionList;
 import fr.ign.validator.model.Projection;
 
 /**
- * 
+ *
  * Exports supported projections
- * 
+ *
  * @author MBorne
  *
  */

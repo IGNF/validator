@@ -23,7 +23,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Database validator
- * 
+ *
  * @author cbouche
  *
  */
@@ -36,7 +36,7 @@ public class ForeignKeyValidator implements Validator<Database> {
 
     /**
      * Check if every conditions is respected
-     * 
+     *
      * @param context
      * @param document
      * @param database

@@ -7,9 +7,9 @@ import fr.ign.validator.string.StringTransform;
 import fr.ign.validator.tools.Characters;
 
 /**
- * 
+ *
  * Escape characters not supported by a given Charset
- * 
+ *
  * @author MBorne
  *
  */
@@ -23,7 +23,7 @@ public class EscapeForCharset implements StringTransform {
 
     /**
      * Tests if a character is convertible to the given charset
-     * 
+     *
      * @param codePoint
      * @return
      */

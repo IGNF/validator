@@ -15,12 +15,12 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Performs the following tests on {@link DatabaseSUP} :
- * 
+ *
  * <ul>
  * <li>Load CSV files from /jointure_sup/one2one/DATA checking row counts</li>
  * <li>Ensure that ONE-TO-ONE relations are supported by find methods.</li>
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */

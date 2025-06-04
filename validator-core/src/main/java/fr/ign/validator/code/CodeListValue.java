@@ -3,11 +3,11 @@ package fr.ign.validator.code;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * 
+ *
  * Permissive enum for code list implementation
- * 
+ *
  * TODO add protected constructor with a CodeList
- * 
+ *
  * @author MBorne
  *
  */
@@ -32,7 +32,7 @@ public abstract class CodeListValue {
 
     /**
      * True if the value belong to the code list
-     * 
+     *
      * @return
      */
     public boolean isValid() {

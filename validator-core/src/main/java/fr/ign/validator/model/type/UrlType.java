@@ -11,7 +11,7 @@ import fr.ign.validator.validation.attribute.MinLengthValidator;
 
 /**
  * Location of a file
- * 
+ *
  * @author MBorne
  */
 @JsonTypeName(UrlType.TYPE)
@@ -32,7 +32,7 @@ public class UrlType extends AttributeType<URL> {
 
     /**
      * Conversion in the matching java type
-     * 
+     *
      * @param value
      * @throws IllegalArgumentException if conversion fails
      * @return

@@ -14,7 +14,7 @@ import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
 /**
  * Foreign Key Finder Provide a method to look out for foreign key not found
- * 
+ *
  * @author cbouche
  *
  */
@@ -34,7 +34,7 @@ public class ForeignKeyFinder {
 
     /**
      * Retreive all Foreign Key Mismatch by perfoming an SQL query to database
-     * 
+     *
      * @param database
      * @param tableModel
      * @param foreignKey

@@ -9,9 +9,9 @@ import java.util.ServiceLoader;
 import fr.ign.validator.Version;
 
 /**
- * 
+ *
  * Provide a system to have a single CLI application with multiple sub-command
- * 
+ *
  * @author MBorne
  */
 public class CommandApplication {
@@ -40,7 +40,7 @@ public class CommandApplication {
 
     /**
      * Add command
-     * 
+     *
      * @param command
      */
     public void addCommand(Command command) {
@@ -49,7 +49,7 @@ public class CommandApplication {
 
     /**
      * Get command by name
-     * 
+     *
      * @param name
      * @return
      */
@@ -89,7 +89,7 @@ public class CommandApplication {
 
     /**
      * Format item for help.
-     * 
+     *
      * @param name
      * @param description
      * @return
@@ -100,7 +100,7 @@ public class CommandApplication {
 
     /**
      * Run command
-     * 
+     *
      * @param args
      * @return
      */
@@ -130,7 +130,7 @@ public class CommandApplication {
 
     /**
      * Allows to replace writes to out.
-     * 
+     *
      * @param out
      */
     public void setStdout(PrintStream stdout) {

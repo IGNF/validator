@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 /**
- * 
+ *
  * Utility class for plugin handling
- * 
+ *
  * @author MBorne
  *
  */
@@ -28,7 +28,7 @@ public class PluginManager {
 
     /**
      * Gets the list with all the plugins
-     * 
+     *
      * @return
      */
     public Collection<Plugin> getPlugins() {
@@ -37,7 +37,7 @@ public class PluginManager {
 
     /**
      * Gets a plugin by its name
-     * 
+     *
      * @param name
      * @return
      */

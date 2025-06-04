@@ -13,9 +13,9 @@ import fr.ign.validator.metadata.code.LanguageCode;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates metadata.language
- * 
+ *
  * @author MBorne
  *
  */

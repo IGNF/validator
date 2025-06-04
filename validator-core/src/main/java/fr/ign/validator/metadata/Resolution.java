@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * Implementation of gmd:MD_Resolution
  *
  * Note that either denominator or distance should be defined
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_Resolution.html">gmd:MD_Resolution</a>
- * 
+ *
  * @author MBorne
  *
  */

@@ -15,7 +15,7 @@ import fr.ign.validator.model.Projection;
 
 /**
  * Test {@link OutputProjectionOption} helper.
- * 
+ *
  * @author MBorne
  *
  */

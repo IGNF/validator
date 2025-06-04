@@ -2,10 +2,10 @@ package fr.ign.validator.metadata;
 
 /**
  * Partial implementation of gmd:MD_Format
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_Format.html">gmd:MD_Format</a>
- * 
+ *
  * @author MBorne
  *
  */

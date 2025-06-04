@@ -13,9 +13,9 @@ import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Validates a geometry
- * 
+ *
  * @author MBorne
  *
  */

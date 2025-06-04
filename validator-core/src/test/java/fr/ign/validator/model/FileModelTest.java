@@ -15,7 +15,7 @@ public class FileModelTest {
 
     /**
      * Test jackson's config
-     * 
+     *
      * @throws IOException
      */
     @Test

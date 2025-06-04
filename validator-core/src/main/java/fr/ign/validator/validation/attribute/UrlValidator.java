@@ -8,7 +8,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Validates the URL
- * 
+ *
  * @author MBorne
  *
  */

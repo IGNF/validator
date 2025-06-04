@@ -23,7 +23,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Extends validator to validate INSEE codes
- * 
+ *
  * @author MBorne
  *
  */

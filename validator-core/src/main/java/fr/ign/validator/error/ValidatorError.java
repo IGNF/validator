@@ -14,7 +14,7 @@ import org.locationtech.jts.geom.Envelope;
 
 /**
  * A validation error with corresponding context informations
- * 
+ *
  * @author CBouche
  *
  */
@@ -161,7 +161,7 @@ public class ValidatorError implements Cloneable {
 
     /**
      * Replace {name} by value in error message (original is the template)
-     * 
+     *
      * @param name
      * @param value
      * @return
@@ -258,7 +258,7 @@ public class ValidatorError implements Cloneable {
 
     /**
      * WKT geometry error
-     * 
+     *
      * @return
      */
     public String getErrorGeometry() {
@@ -267,7 +267,7 @@ public class ValidatorError implements Cloneable {
 
     /**
      * WKT geometry error
-     * 
+     *
      * @param errorGeometry
      * @return
      */

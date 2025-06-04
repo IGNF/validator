@@ -26,7 +26,7 @@ public class AbstractTypeTest<T> {
 
     /**
      * bind and validate attribute
-     * 
+     *
      * @param context
      * @param inputValue
      * @return

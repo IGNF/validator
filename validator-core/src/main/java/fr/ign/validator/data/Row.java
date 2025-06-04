@@ -11,9 +11,9 @@ import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.validation.Validatable;
 
 /**
- * 
+ *
  * Data from a line of a table
- * 
+ *
  * @author MBorne
  *
  */
@@ -45,7 +45,7 @@ public class Row implements Validatable {
     private String featureId;
 
     /**
-     * 
+     *
      * @param line
      * @param values
      */

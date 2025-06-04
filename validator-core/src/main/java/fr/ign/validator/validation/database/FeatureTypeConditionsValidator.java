@@ -24,7 +24,7 @@ import fr.ign.validator.validation.Validator;
  * FeatureType Condition Validator - Database Validator - Search FeatureType
  * which has conditions constraints - Perform ConditionMismatchFinder method on
  * each conditions
- * 
+ *
  * @author cbouche
  *
  */
@@ -37,7 +37,7 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
 
     /**
      * Check if every conditions is respected
-     * 
+     *
      * @param context
      * @param document
      * @param database

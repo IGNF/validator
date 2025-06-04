@@ -11,9 +11,9 @@ import fr.ign.validator.validation.attribute.MaxLengthValidator;
 import fr.ign.validator.validation.attribute.MinLengthValidator;
 
 /**
- * 
+ *
  * Path to a file, relative to Document root
- * 
+ *
  * @author MBorne
  */
 @JsonTypeName(PathType.TYPE)
@@ -35,7 +35,7 @@ public class PathType extends AttributeType<File> {
 
     /**
      * Conversion in the matching java type
-     * 
+     *
      * @param value
      * @throws IllegalArgumentException if conversion fails
      * @return

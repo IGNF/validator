@@ -1,9 +1,9 @@
 package fr.ign.validator.exception;
 
 /**
- * 
+ *
  * Failure to read metadata file
- * 
+ *
  * @author MBorne
  *
  */

@@ -16,7 +16,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * High level regression test
- * 
+ *
  * @author MBorne
  *
  */

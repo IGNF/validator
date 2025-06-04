@@ -2,7 +2,7 @@ package fr.ign.validator.error;
 
 /**
  * Error location. Allows to group errors while displaying validation report.
- * 
+ *
  * @author MBorne
  */
 public enum ErrorScope {

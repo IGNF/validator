@@ -15,7 +15,7 @@ import fr.ign.validator.model.type.GeometryType;
 
 /**
  * Describe the content of a table
- * 
+ *
  * @author MBorne
  */
 @XmlRootElement
@@ -51,7 +51,7 @@ public class FeatureType implements Model {
 
     /**
      * Indicates if the FeatureType has a parent
-     * 
+     *
      * @return
      */
     public boolean hasParent() {
@@ -60,7 +60,7 @@ public class FeatureType implements Model {
 
     /**
      * Gets parent of the FeatureType
-     * 
+     *
      * @return
      */
     public FeatureType getParent() {
@@ -69,7 +69,7 @@ public class FeatureType implements Model {
 
     /**
      * Defines the parent of the FeatureType
-     * 
+     *
      * @param featureType
      */
     @XmlTransient
@@ -89,7 +89,7 @@ public class FeatureType implements Model {
 
     /**
      * Indicates if table is spatial
-     * 
+     *
      * @return
      */
     public boolean isSpatial() {
@@ -104,7 +104,7 @@ public class FeatureType implements Model {
     /**
      * Get default geometry (the first one if multiple geometry are defined to match
      * GeoServer behavior).
-     * 
+     *
      * @return
      */
     public GeometryType getDefaultGeometry() {
@@ -145,7 +145,7 @@ public class FeatureType implements Model {
 
     /**
      * Adds an attribute
-     * 
+     *
      * @param attribute
      */
     public void addAttribute(AttributeType<?> attribute) {
@@ -154,7 +154,7 @@ public class FeatureType implements Model {
 
     /**
      * Gets number of attributes (manages inheritance)
-     * 
+     *
      * @return
      */
     public int getAttributeCount() {
@@ -163,7 +163,7 @@ public class FeatureType implements Model {
 
     /**
      * Return number of attributes of parent (0 if parentless)
-     * 
+     *
      * @return
      */
     private int getParentAttributeCount() {
@@ -176,7 +176,7 @@ public class FeatureType implements Model {
 
     /**
      * Gets an attribute by its position (manages inheritance)
-     * 
+     *
      * @param index
      * @return
      */
@@ -193,7 +193,7 @@ public class FeatureType implements Model {
 
     /**
      * Gets an attribute by its name (manages inheritance)
-     * 
+     *
      * @param name
      * @return
      */
@@ -207,7 +207,7 @@ public class FeatureType implements Model {
 
     /**
      * Gets names of attributes
-     * 
+     *
      * @return
      */
     public List<String> getAttributeNames() {
@@ -219,7 +219,7 @@ public class FeatureType implements Model {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public FeatureTypeConstraints getConstraints() {
@@ -227,7 +227,7 @@ public class FeatureType implements Model {
     }
 
     /**
-     * 
+     *
      * @param constraints
      */
     public void setConstraints(FeatureTypeConstraints constraints) {
@@ -238,7 +238,7 @@ public class FeatureType implements Model {
      * Retreive the attribute providing the featureId. ---- TODO must add an
      * identifier constraint on type instead of looping for unique constraint ----
      * NOW we skip the WKT attribute as an identifier
-     * 
+     *
      * @return
      */
     public AttributeType<?> getIdentifier() {
@@ -255,14 +255,14 @@ public class FeatureType implements Model {
 
     /**
      * Finds the position of an attribute by its name (manages inheritance)
-     * 
+     *
      * @param name
      * @return -1 si undefined
      */
     public int indexOf(String name) {
-        String regexp = "(?i)" + name;
         for (int i = 0; i < attributes.size(); i++) {
-            if (attributes.get(i).getName().matches(regexp)) {
+            String regexp = "(?i)\ufeff?" + attributes.get(i).getName();
+            if (name.matches(regexp)) {
                 return getParentAttributeCount() + i;
             }
         }

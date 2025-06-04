@@ -14,7 +14,7 @@ import fr.ign.validator.model.FeatureType;
 
 /**
  * Helper class to load {@link DocumentModel} and {@link FeatureType} from JSON.
- * 
+ *
  * @author MBorne
  *
  */

@@ -11,11 +11,11 @@ import fr.ign.validator.validation.attribute.MaxLengthValidator;
 import fr.ign.validator.validation.attribute.MinLengthValidator;
 
 /**
- * 
+ *
  * Reference to a file given by filename
- * 
+ *
  * Note : unlike Path, the filename is not the full filepath
- * 
+ *
  * @author MBorne
  */
 @JsonTypeName(FilenameType.TYPE)
@@ -37,7 +37,7 @@ public class FilenameType extends AttributeType<File> {
 
     /**
      * Conversion in the matching java type
-     * 
+     *
      * @param value
      * @throws IllegalArgumentException if conversion fails
      * @return

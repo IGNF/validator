@@ -23,7 +23,7 @@ import fr.ign.validator.metadata.gmd.MetadataISO19115;
 
 /**
  * Convert ISO 19115 metadata to JSON
- * 
+ *
  * @author MBorne
  *
  */

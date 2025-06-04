@@ -13,7 +13,7 @@ import fr.ign.validator.model.TableModel;
 
 /**
  * A table in a {@link MultiTableModel}
- * 
+ *
  * @author MBorne
  *
  */

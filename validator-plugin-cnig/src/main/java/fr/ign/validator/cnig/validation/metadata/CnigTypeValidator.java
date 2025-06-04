@@ -7,7 +7,7 @@ import fr.ign.validator.metadata.code.ScopeCode;
 
 /**
  * Ensures that "type" is defined to "dataset"
- * 
+ *
  * @author MBorne
  *
  */

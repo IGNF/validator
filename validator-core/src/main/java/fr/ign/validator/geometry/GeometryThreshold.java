@@ -5,7 +5,7 @@ package fr.ign.validator.geometry;
  * maximum ring (holes) allowed - maximum parts (multigeometry) allowed -
  * maximum density (number of point by meters used to describe the geometry) -
  * and maximum point of any ring (used in density control)
- * 
+ *
  * @author cbouche
  *
  */

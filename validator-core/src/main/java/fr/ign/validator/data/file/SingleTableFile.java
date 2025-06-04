@@ -12,9 +12,9 @@ import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.tools.TableReader;
 
 /**
- * 
+ *
  * A table storing a table.
- * 
+ *
  * @author MBorne
  *
  */
@@ -39,7 +39,7 @@ public class SingleTableFile extends DocumentFile {
 
     /**
      * File validation
-     * 
+     *
      * @param context
      * @param matchingFile
      */

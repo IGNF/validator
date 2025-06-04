@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  * Test TableReader with ESRI Shapefiles
- * 
+ *
  * @author mborne
  */
 public class TableReaderSHPTest {

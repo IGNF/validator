@@ -2,10 +2,10 @@ package fr.ign.validator.metadata;
 
 /**
  * Implementation of gmd:MD_SecurityConstraints
- * 
+ *
  * @see <a href=
  *      "http://www.datypic.com/sc/niem21/e-gmd_MD_SecurityConstraints.html">gmd:MD_SecurityConstraints</a>
- * 
+ *
  * @author MBorne
  *
  */

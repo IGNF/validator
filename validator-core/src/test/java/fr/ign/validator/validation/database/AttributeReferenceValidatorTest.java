@@ -44,7 +44,7 @@ public class AttributeReferenceValidatorTest {
 
     /**
      * Create a sample DocumentModel with USER associated to a single TEAM.
-     * 
+     *
      * @return
      */
     private DocumentModel createTestDocumentModel() {

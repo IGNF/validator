@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Represents an error code
- * 
+ *
  * @author CBouche
  * @author MBorne
  */
@@ -26,7 +26,7 @@ public class ErrorCode {
 
     /**
      * Creates an ErrorCode according to a string
-     * 
+     *
      * @param name
      * @return
      */

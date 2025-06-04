@@ -8,10 +8,10 @@ import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.error.ValidatorError;
 
 /**
- * 
+ *
  * Decorate a ReportBuilder to limit the maximum number of error reported for
  * each type (avoid to handle large file parsing)
- * 
+ *
  * @author FCerizay
  *
  */
@@ -31,7 +31,7 @@ public class FilteredReportBuilder implements ReportBuilder {
 
     /**
      * Constructor with an existing reportBuilder
-     * 
+     *
      * @param original
      * @param maxError
      */
@@ -59,7 +59,7 @@ public class FilteredReportBuilder implements ReportBuilder {
 
     /**
      * Get count key taking in account xsdErrorCode for XSD_SCHEMA_ERROR.
-     * 
+     *
      * @param error
      * @return
      */

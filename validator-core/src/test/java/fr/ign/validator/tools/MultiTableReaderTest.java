@@ -24,7 +24,7 @@ public class MultiTableReaderTest {
 
     /**
      * Test without providing an XSDschema (use standard GML driver in GDAL)
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -57,7 +57,7 @@ public class MultiTableReaderTest {
 
     /**
      * Test without providing an XSDschema (using GMLAS driver in GDAL)
-     * 
+     *
      * @throws IOException
      */
     @Test
@@ -161,7 +161,7 @@ public class MultiTableReaderTest {
 
     /**
      * Test without providing an XSDschema (using GMLAS driver in GDAL)
-     * 
+     *
      * @throws IOException
      */
     @Test

@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  * Test {@link OutputFileOption} helper.
- * 
+ *
  * @author MBorne
  *
  */

@@ -3,15 +3,15 @@ package fr.ign.validator.cnig.model;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
+ *
  * Helper to manipulate document name according to CNIG naming conventions :
- * 
+ *
  * <ul>
  * <li>DU : {CodeTerritoire}_(PLU|PLUi|POS|CC|PSMV)_{YYYYMMDD}[_{CodeDU}]</li>
  * <li>SUP : {SirenGestionnaire}_{CategorieSUP}_{CodeTerritoire}_{YYYYMMDD}</li>
  * <li>SCOT : {SirenScot}_scot or {SirenScot}_scot_{YYYYMMDD}[_{CodeDU}]
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */
@@ -114,7 +114,7 @@ public class DocumentName {
 
     /**
      * Parse value to retrieve properties
-     * 
+     *
      * @throws InvalidDocumentName
      */
     private void parse() {
@@ -164,7 +164,7 @@ public class DocumentName {
 
     /**
      * Get regexp for SCOT document name
-     * 
+     *
      * @return
      */
     public static String getRegexpSCOT() {
@@ -175,7 +175,7 @@ public class DocumentName {
 
     /**
      * Get pattern to validate the name of a PLU, PLUi, POS, CC, PSMV
-     * 
+     *
      * @return
      */
     public static String getRegexpDU() {
@@ -187,7 +187,7 @@ public class DocumentName {
 
     /**
      * Get pattern to validate the name of a SUP
-     * 
+     *
      * @return
      */
     public static String getRegexpSUP() {

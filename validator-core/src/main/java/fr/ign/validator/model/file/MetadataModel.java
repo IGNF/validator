@@ -30,9 +30,9 @@ import fr.ign.validator.validation.file.metadata.TopicCategoryValidator;
 import fr.ign.validator.validation.file.metadata.TypeValidator;
 
 /**
- * 
+ *
  * Represents a metadata file
- * 
+ *
  *
  */
 public class MetadataModel extends FileModel {

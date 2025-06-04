@@ -13,7 +13,7 @@ import java.util.Map;
 import org.junit.Test;
 
 /**
- * 
+ *
  * @author CBouche
  *
  */

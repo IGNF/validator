@@ -14,9 +14,9 @@ import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.AttributeTypeFactory;
 
 /**
- * 
+ *
  * Create ObjectMapper instances
- * 
+ *
  * @author MBorne
  *
  */
@@ -27,7 +27,7 @@ public class ObjectMapperFactory {
 
     /**
      * Create an object mapper configured to deal with AttributeType subtypes
-     * 
+     *
      * @return
      */
     public static ObjectMapper createObjectMapper() {

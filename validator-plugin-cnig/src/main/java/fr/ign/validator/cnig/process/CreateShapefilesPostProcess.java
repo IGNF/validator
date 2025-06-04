@@ -20,10 +20,10 @@ import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.FileConverter;
 
 /**
- * 
+ *
  * Effectue une conversion en SHP des CSV présents dans le dossier validation.
  * Converts csv files (in validation directory) to shp
- * 
+ *
  * @author MBorne
  *
  */

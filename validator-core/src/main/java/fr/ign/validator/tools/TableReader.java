@@ -25,15 +25,15 @@ import fr.ign.validator.exception.ColumnNotFoundException;
 /**
  * Read spatial and non spatial tables from different formats (CSV, Shapefile,
  * MapInfo, GML, GeoJSON,...).
- * 
+ *
  * Note that :
- * 
+ *
  * <ul>
  * <li>CSV files are read using apache-common-csv</li>
  * <li>Other formats are converted to CSV files (.vrows) using "ogr2ogr"</li>
  * <li>reader.charsetValid is set to false when charset is invalid</li>
  * </ul>
- * 
+ *
  * @author MBorne
  */
 public class TableReader implements Iterator<String[]> {
@@ -60,10 +60,10 @@ public class TableReader implements Iterator<String[]> {
     private boolean charsetValid = true;
 
     /**
-     * 
+     *
      * Reading file with given charset (validated by system).
-     * 
-     * 
+     *
+     *
      * @param file
      * @param charset
      * @throws IOException
@@ -80,10 +80,10 @@ public class TableReader implements Iterator<String[]> {
     }
 
     /**
-     * 
+     *
      * Reading file with given charset (validated by system).
-     * 
-     * 
+     *
+     *
      * @param file
      * @param charset
      * @throws IOException
@@ -96,7 +96,7 @@ public class TableReader implements Iterator<String[]> {
 
     /**
      * Indicate if charset used to open file is valid.
-     * 
+     *
      * @return
      */
     public boolean isCharsetValid() {
@@ -105,11 +105,11 @@ public class TableReader implements Iterator<String[]> {
 
     /**
      * Header reading
-     * 
-     * 
+     *
+     *
      * Note : NULL or empty fields are filtered to avoid problems with files with
      * only one column
-     * 
+     *
      * @throws IOException
      */
     private void readHeader() throws IOException {
@@ -151,7 +151,7 @@ public class TableReader implements Iterator<String[]> {
     }
 
     /**
-     * 
+     *
      * @param row
      * @return
      */
@@ -165,7 +165,7 @@ public class TableReader implements Iterator<String[]> {
 
     /**
      * Trims a string
-     * 
+     *
      * @param value
      * @return
      */
@@ -178,7 +178,7 @@ public class TableReader implements Iterator<String[]> {
 
     /**
      * Converts to NULL an empty string
-     * 
+     *
      * @param value
      */
     private String nullifyEmptyString(String value) {
@@ -191,7 +191,7 @@ public class TableReader implements Iterator<String[]> {
 
     /**
      * Finds the position of a column by its name in header
-     * 
+     *
      * @param string
      * @return
      */
@@ -202,7 +202,7 @@ public class TableReader implements Iterator<String[]> {
     /**
      * Same as {@link #findColumn(String)} throwing exception when column is not
      * found.
-     * 
+     *
      * @param name
      * @return
      * @throws ColumnNotFoundException
@@ -218,7 +218,7 @@ public class TableReader implements Iterator<String[]> {
     /**
      * Creates a reader from a file and a charset. If preferedCharset is invalid, a
      * valid charset is detected to read the file.
-     * 
+     *
      * @param file
      * @param preferedCharset
      * @return
@@ -255,7 +255,7 @@ public class TableReader implements Iterator<String[]> {
     }
 
     /**
-     * 
+     *
      * @param url
      * @param charset
      * @return

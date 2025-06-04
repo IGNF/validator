@@ -21,7 +21,7 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  * Utility class that creates a VRT file to go with WKT files
- * 
+ *
  * @author MBorne
  *
  */
@@ -34,7 +34,7 @@ public class VRT {
 
     /**
      * Creates a vrt corresponding to a sourceFile for a given FeatureType
-     * 
+     *
      * @param csvFile
      * @param featureType
      * @return
@@ -52,7 +52,7 @@ public class VRT {
 
     /**
      * #FIX genetares vrt files compatible with ogr2ogr 1.9
-     * 
+     *
      * @param csvFile
      * @param featureType
      * @return
@@ -85,10 +85,10 @@ public class VRT {
 
         /*
          * Each <Field> except WKT
-         * 
+         *
          * Note : this step is mandatory so that ogr2ogr doesn't truncate the text
          * fields to 80 characters when converting in shapefile
-         * 
+         *
          */
         List<String> fieldNames = getFieldNamesFromCSV(csvFile);
         for (String fieldName : fieldNames) {
@@ -109,7 +109,7 @@ public class VRT {
 
     /**
      * Gets the list of fields in csv file (except for geometry)
-     * 
+     *
      * @param csvFile
      * @return
      * @throws IOException

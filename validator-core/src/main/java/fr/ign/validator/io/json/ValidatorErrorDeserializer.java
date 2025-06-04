@@ -14,9 +14,9 @@ import fr.ign.validator.error.ValidatorError;
 
 /**
  * Deserialize ValidatorError
- * 
+ *
  * @see https://www.baeldung.com/jackson-deserialization
- * 
+ *
  * @author MBorne
  *
  */

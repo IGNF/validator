@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * 
+ *
  * Test ValidatorError behavior about parameters.
- * 
+ *
  * @author MBorne
  *
  */

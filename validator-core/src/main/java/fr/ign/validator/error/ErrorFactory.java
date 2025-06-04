@@ -22,12 +22,12 @@ import fr.ign.validator.exception.InvalidErrorConfigException;
 import fr.ign.validator.exception.ValidatorFatalError;
 
 /**
- * 
+ *
  * Creates ValidatorError according to prototypes loaded from configuration
  * files
- * 
+ *
  * @author MBorne
- * 
+ *
  */
 public class ErrorFactory {
     public static final Logger log = LogManager.getRootLogger();
@@ -44,7 +44,7 @@ public class ErrorFactory {
 
     /**
      * Creates a new error with its code and message parameters
-     * 
+     *
      * @param code
      * @return
      */
@@ -65,7 +65,7 @@ public class ErrorFactory {
 
     /**
      * Gets loaded prototypes
-     * 
+     *
      * @return
      */
     public Collection<ValidatorError> getPrototypes() {
@@ -74,7 +74,7 @@ public class ErrorFactory {
 
     /**
      * Finds prototype for the given code
-     * 
+     *
      * @param code
      * @return
      */
@@ -84,7 +84,7 @@ public class ErrorFactory {
 
     /**
      * Add or replace a prototype
-     * 
+     *
      * @param validatorError
      */
     private void addOrReplacePrototype(ValidatorError validatorError) {
@@ -94,7 +94,7 @@ public class ErrorFactory {
 
     /**
      * Load error codes from a given file.
-     * 
+     *
      * @param errorConfigPath
      * @throws FileNotFoundException
      */
@@ -121,7 +121,7 @@ public class ErrorFactory {
 
     /**
      * Load error codes from an input stream.
-     * 
+     *
      * @param is
      */
     private void loadErrorCodes(InputStream is) {

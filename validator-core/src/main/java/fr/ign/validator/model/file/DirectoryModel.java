@@ -7,9 +7,9 @@ import fr.ign.validator.data.file.DirectoryFile;
 import fr.ign.validator.model.FileModel;
 
 /**
- * 
+ *
  * Represents a directory (as a file with the type "directory")
- * 
+ *
  * @author MBorne
  *
  */

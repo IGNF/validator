@@ -12,7 +12,7 @@ import fr.ign.validator.tools.EnvelopeUtils;
 
 /**
  * Serialize BoundingBox to JSON format [xmin,ymin,xmax,ymax]
- * 
+ *
  * @author MBorne
  *
  */

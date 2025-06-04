@@ -22,7 +22,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Validate attributes according to "unique" constraints.
- * 
+ *
  * @author CBouche
  * @author MBorne
  */
@@ -35,7 +35,7 @@ public class AttributeUniqueValidator implements Validator<Database> {
 
     /**
      * Check if there every ID is unique in a given table
-     * 
+     *
      * @param context
      * @param document
      * @param database

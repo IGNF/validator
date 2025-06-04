@@ -10,7 +10,7 @@ import fr.ign.validator.database.RowIterator;
 
 /**
  * Helper to find duplicated values in a given database.
- * 
+ *
  * @author MBorne
  *
  */
@@ -23,7 +23,7 @@ public class DuplicatedValuesFinder {
 
     /**
      * A duplicated value with the number of occurence
-     * 
+     *
      * @author MBorne
      */
     public class DuplicatedValue {
@@ -38,7 +38,7 @@ public class DuplicatedValuesFinder {
 
     /**
      * Find duplicated values for a given {tableName}.{columnName}
-     * 
+     *
      * @param database
      * @param tableName
      * @param columnName

@@ -23,14 +23,14 @@ public class CharsetDetector {
 
     /**
      * Detects character encoding from data source between UTF-8 and LATIN1.
-     * 
+     *
      * Warning :
      * <ul>
      * <li>Returns UTF-8 first if characters are valid by UTF-8</li>
      * <li>Consequently, can return UTF-8 if text is ISO_8859_1 without accent</li>
      * </ul>
-     * 
-     * 
+     *
+     *
      * @param file
      * @return
      * @throws IOException
@@ -48,7 +48,7 @@ public class CharsetDetector {
 
     /**
      * Tests if file is encoded in UTF-8
-     * 
+     *
      * @param file
      * @return
      * @throws FileNotFoundException
@@ -59,7 +59,7 @@ public class CharsetDetector {
 
     /**
      * Tests if file is encoded in given charset
-     * 
+     *
      * @param file
      * @param charset
      * @return

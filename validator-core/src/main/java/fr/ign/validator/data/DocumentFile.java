@@ -26,7 +26,7 @@ public abstract class DocumentFile implements Validatable {
 
     /**
      * Construction of a file from model and filepath
-     * 
+     *
      * @param fileModel
      * @param path
      */
@@ -48,7 +48,7 @@ public abstract class DocumentFile implements Validatable {
 
     /**
      * Validating FileModel
-     * 
+     *
      * @param context
      */
     public final void validate(Context context) {
@@ -78,7 +78,7 @@ public abstract class DocumentFile implements Validatable {
 
     /**
      * Validate file content
-     * 
+     *
      * @param context
      */
     abstract protected void validateContent(Context context);

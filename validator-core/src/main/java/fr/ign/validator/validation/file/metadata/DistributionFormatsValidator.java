@@ -15,9 +15,9 @@ import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensures that "distributionFormats" is not empty and that formats are valid
- * 
+ *
  * @author MBorne
  *
  */

@@ -35,12 +35,12 @@ import fr.ign.validator.metadata.code.SpatialRepresentationTypeCode;
 import fr.ign.validator.metadata.code.TopicCategoryCode;
 
 /***
- * 
+ *
  * ISO 19115 parser for INSPIRE profile and CNIG (french) profiles.
- * 
+ *
  * Note that elements starting with capital letters are "substituable" (so
  * gmd:MD_DataIdentification is replaced by a joker "*")
- * 
+ *
  * @author MBorne
  *
  */
@@ -52,7 +52,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Create reader from file
-     * 
+     *
      * @param file
      * @throws JDOMException
      * @throws IOException
@@ -63,7 +63,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Create metadata reader from file
-     * 
+     *
      * @param file
      * @return
      * @throws InvalidMetadataException
@@ -81,7 +81,7 @@ public class MetadataISO19115 implements Metadata {
     /**
      * Tests if the given file is a metadata file (XML file with root element named
      * MD_Metadata)
-     * 
+     *
      * @param file
      * @return
      */
@@ -98,7 +98,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Retrieves the underlying XML document
-     * 
+     *
      * @return
      */
     protected Element getMetadataElement() {
@@ -298,7 +298,7 @@ public class MetadataISO19115 implements Metadata {
     /**
      * WARNING : MD_SpatialRepresenationTypeCode code list doesn't seems to be in
      * XSD... CNIG_MD_DU could require "vecteur" instead of "vector"
-     * 
+     *
      * @see https://joinup.ec.europa.eu/discussion/geodcat-ap-how-encode-spatial-representation-type
      */
     @Override
@@ -336,7 +336,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Finds last resource date for a given type (publication, revision, creation)
-     * 
+     *
      * @param type
      * @return
      */
@@ -363,7 +363,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Parses Date from dateElement (a gmd:date Element in gmd:citation)
-     * 
+     *
      * @param dateElement
      * @return
      */
@@ -389,7 +389,7 @@ public class MetadataISO19115 implements Metadata {
     }
 
     /**
-     * 
+     *
      * @return
      */
     @Override
@@ -412,7 +412,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * gmd:resourceConstraints element
-     * 
+     *
      * @param resourceConstraintElement
      * @return
      */
@@ -464,7 +464,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * gmd:identificationInfo - gmd:spatialRepresentationType (ex : vector)
-     * 
+     *
      * @return
      */
     @Override
@@ -477,7 +477,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Get distribution formats
-     * 
+     *
      * @return
      */
     @Override
@@ -507,7 +507,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * INSPIRE GUIDELINE - 2.7 Quality and validity / 2.7.2 Spatial resolution (p45)
-     * 
+     *
      * @return
      */
     @Override
@@ -545,7 +545,7 @@ public class MetadataISO19115 implements Metadata {
     /**
      * INSPIRE GUIDELINE - 2.8 Conformity / 2.8.2 Specification (p49) CNIG_MD_DU -
      * 7) Conformité / Spécification (p12)
-     * 
+     *
      * @return
      */
     @Override
@@ -582,7 +582,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * INSPIRE GUIDELINE - 2.10 Responsible organisation (p55)
-     * 
+     *
      * @return
      */
     @Override
@@ -628,7 +628,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Create an xpath query
-     * 
+     *
      * @param path
      * @return
      * @throws JDOMException
@@ -644,7 +644,7 @@ public class MetadataISO19115 implements Metadata {
 
     /**
      * Finds text value for a given path (selectSingleNode converted to string)
-     * 
+     *
      * @param path
      * @param context
      * @return

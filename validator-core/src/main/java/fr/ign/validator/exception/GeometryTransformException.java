@@ -2,7 +2,7 @@ package fr.ign.validator.exception;
 
 /**
  * Failure in geometry transform.
- * 
+ *
  * @author MBorne
  *
  */

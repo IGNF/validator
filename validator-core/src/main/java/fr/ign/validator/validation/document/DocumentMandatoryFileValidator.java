@@ -9,9 +9,9 @@ import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.validation.Validator;
 
 /**
- * 
+ *
  * Ensure that mandatory files are presents
- * 
+ *
  * @author MBorne
  *
  */
@@ -51,10 +51,10 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 
     /**
      * ErrorCode according to FileModel
-     * 
+     *
      * Note : Did not want to explain to users that a directory is a particular file
-     * 
-     * 
+     *
+     *
      * @param fileModel
      * @return
      */
@@ -68,7 +68,7 @@ public class DocumentMandatoryFileValidator implements Validator<Document> {
 
     /**
      * ErrorCode according to FileModel
-     * 
+     *
      * @param fileModel
      * @return
      */

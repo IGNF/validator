@@ -6,9 +6,9 @@ import fr.ign.validator.code.CodeList;
 import fr.ign.validator.code.CodeListValue;
 
 /**
- * 
+ *
  * CharacterSet in metadata file
- * 
+ *
  * @author MBorne
  *
  */
@@ -29,13 +29,13 @@ public class CharacterSetCode extends CodeListValue {
 
     /**
      * Gets corresponding java charset
-     * 
+     *
      * TODO improve mapping to support check and translate other codes
-     * 
+     *
      * @see <a href=
      *      "http://www.geoapi.org/snapshot/pending/org/opengis/metadata/identification/CharacterSet.html">CharacterSet
      *      in GeoAPI</a>
-     * 
+     *
      * @return
      */
     public Charset getCharset() {

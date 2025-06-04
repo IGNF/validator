@@ -2,7 +2,7 @@ package fr.ign.validator.error;
 
 /**
  * Error codes defined in validator-core
- * 
+ *
  * @author MBorne
  *
  */
@@ -147,9 +147,19 @@ public class CoreErrorCodes {
     );
 
     public static final ErrorCode METADATA_CONTACT_NOT_FOUND = ErrorCode.valueOf("METADATA_CONTACT_NOT_FOUND");
+    public static final ErrorCode METADATA_CONTACT_NAMEABSENT = ErrorCode.valueOf(
+        "METADATA_CONTACT_NAMEABSENT"
+    );
+    public static final ErrorCode METADATA_CONTACT_MAILINVALID = ErrorCode.valueOf("METADATA_CONTACT_MAILINVALID");;
 
     public static final ErrorCode METADATA_METADATACONTACT_NOT_FOUND = ErrorCode.valueOf(
         "METADATA_METADATACONTACT_NOT_FOUND"
+    );
+    public static final ErrorCode METADATA_METADATACONTACT_NAMEABSENT = ErrorCode.valueOf(
+        "METADATA_METADATACONTACT_NAMEABSENT"
+    );
+    public static final ErrorCode METADATA_METADATACONTACT_MAILINVALID = ErrorCode.valueOf(
+        "METADATA_METADATACONTACT_MAILINVALID"
     );
 
     public static final ErrorCode METADATA_METADATADATE_NOT_FOUND = ErrorCode.valueOf(

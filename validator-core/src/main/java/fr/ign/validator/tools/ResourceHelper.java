@@ -6,7 +6,7 @@ public class ResourceHelper {
 
     /**
      * Get resource File corresponding to a given path in clazz package
-     * 
+     *
      * @param path ex : "/config/cnig_PLU_2014/files.xml"
      * @return
      */

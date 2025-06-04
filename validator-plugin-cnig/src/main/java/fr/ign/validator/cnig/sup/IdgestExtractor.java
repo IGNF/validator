@@ -26,7 +26,7 @@ public class IdgestExtractor {
     }
 
     /**
-     * 
+     *
      * @param filePath
      */
     public String findIdGest(File servitudeFile) {

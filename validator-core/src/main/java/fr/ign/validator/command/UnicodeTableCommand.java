@@ -19,9 +19,9 @@ import fr.ign.validator.string.transform.StringSimplifier;
 import fr.ign.validator.tools.Characters;
 
 /**
- * 
+ *
  * Generate a unicode table to document string fixer
- * 
+ *
  * @author MBorne
  *
  */

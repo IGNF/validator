@@ -18,7 +18,7 @@ import fr.ign.validator.model.TableModel;
 
 /**
  * A table stored in a file and associated to a FeatureType.
- * 
+ *
  * @author MBorne
  *
  */

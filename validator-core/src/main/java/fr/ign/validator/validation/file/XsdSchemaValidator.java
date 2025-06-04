@@ -34,9 +34,9 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * Validate a file according to a given XSD schema.
- * 
+ *
  * @see https://stackoverflow.com/a/7114306
- * 
+ *
  * @author MBorne
  *
  */
@@ -82,7 +82,7 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
 
         /**
          * Get identifier from attributes
-         * 
+         *
          * @param attributes
          * @return
          */
@@ -144,7 +144,7 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
 
         /**
          * Format elements stack to pseudo XPath
-         * 
+         *
          * @return
          */
         private String getCurrentPath() {
@@ -166,7 +166,7 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
 
     /**
      * Validate xmlFile according to xsdSchema.
-     * 
+     *
      * @param context
      * @param xsdSchema
      * @param xmlFile
@@ -194,7 +194,7 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
     }
 
     /**
-     * 
+     *
      * @param xsdSchemaUrl
      * @return
      */

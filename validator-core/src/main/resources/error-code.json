@@ -454,9 +454,33 @@
 		"documentation": ""
 	},
 	{
+		"name": "METADATA_CONTACT_NAMEABSENT",
+		"level": "ERROR",
+		"message": "Le champ \"Nom de l'organisation\" pour le propriétaire de la donnée n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_CONTACT_MAILINVALID",
+		"level": "ERROR",
+		"message": "La valeur \"{VALUE}\" pour le champ \"organisme responsable de la ressource\" n'est pas valide.",
+		"documentation": ""
+	},
+	{
 		"name": "METADATA_METADATACONTACT_NOT_FOUND",
 		"level": "ERROR",
 		"message": "Le champ \"point de contact de la métadonnée\" n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATACONTACT_NAMEABSENT",
+		"level": "ERROR",
+		"message": "Le champ \"Nom de l'organisation\" pour le point de contact n'est pas renseigné.",
+		"documentation": ""
+	},
+	{
+		"name": "METADATA_METADATACONTACT_MAILINVALID",
+		"level": "ERROR",
+		"message": "La valeur \"{VALUE}\" pour le champ \"point de contact de la métadonnée\" n'est pas valide.",
 		"documentation": ""
 	},
 	{

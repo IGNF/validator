@@ -18,10 +18,10 @@ import fr.ign.validator.metadata.Metadata;
 import fr.ign.validator.model.DocumentModel;
 
 /**
- * 
+ *
  * Represents a directory. Contains DataFiles and DataLayers
- * 
- * 
+ *
+ *
  * @author CBouche
  *
  */
@@ -64,7 +64,7 @@ public class DocumentInfo {
 
     /**
      * get directory name
-     * 
+     *
      * @return
      */
     public String getName() {
@@ -73,7 +73,7 @@ public class DocumentInfo {
 
     /**
      * Get partial informations for DocumentModel
-     * 
+     *
      * @return
      */
     public DocumentModelInfo getDocumentModel() {
@@ -83,7 +83,7 @@ public class DocumentInfo {
 
     /**
      * get register Files
-     * 
+     *
      * @return
      */
     public List<DocumentFileInfo> getFiles() {
@@ -92,7 +92,7 @@ public class DocumentInfo {
 
     /**
      * add register File
-     * 
+     *
      * @param dataFile
      */
     public void addFile(DocumentFileInfo dataFile) {
@@ -119,7 +119,7 @@ public class DocumentInfo {
 
     /**
      * Get tags
-     * 
+     *
      * @return
      */
     public Map<String, String> getTags() {

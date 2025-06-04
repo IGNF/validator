@@ -12,7 +12,7 @@ import fr.ign.validator.exception.InvalidProxyException;
 
 /**
  * Parse proxy string to get compatibility with HTTP_PROXY environment variables
- * 
+ *
  * @author MBorne
  *
  */
@@ -20,13 +20,13 @@ public class ProxyParser {
 
     /**
      * Parse proxy provided as a single string with one of the following format
-     * 
+     *
      * <ul>
      * <li>{proxyHost}:{proxyPort}</li>
      * <li>http://{proxyHost}:{proxyPort}</li>
      * <li>http://{proxyUser}:{proxyPassword}@{proxyHost}:{proxyPort}</li>
      * </ul>
-     * 
+     *
      * @param proxy
      * @return the corresponding system properties
      * @throws ParseException
@@ -44,7 +44,7 @@ public class ProxyParser {
 
     /**
      * Convert syntax from NO_PROXY env variable to java's nonProxyHosts
-     * 
+     *
      * @param noProxy
      * @return
      */
@@ -69,7 +69,7 @@ public class ProxyParser {
 
     /**
      * Parse legacy format {proxyHost}:{proxyPort}
-     * 
+     *
      * @param proxy
      * @param properties
      * @return
@@ -91,7 +91,7 @@ public class ProxyParser {
 
     /**
      * Parse proxy defined as an URL
-     * 
+     *
      * @param proxy
      * @param properties
      * @return

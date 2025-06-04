@@ -3,9 +3,9 @@ package fr.ign.validator.metadata;
 /**
  * Partial implementation of gmd:EX_Extent restricted to a gmd:geographicElement
  * defined as a GeographicBoundingBox
- * 
+ *
  * TODO add temporal extend (fromDate, toDate)
- * 
+ *
  * @author MBorne
  *
  */

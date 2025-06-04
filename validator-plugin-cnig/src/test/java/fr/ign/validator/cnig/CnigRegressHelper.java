@@ -12,9 +12,9 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.tools.ResourceHelper;
 
 /**
- * 
+ *
  * Helper class to build regress test for CNIG validation
- * 
+ *
  * @author MBorne
  *
  */
@@ -22,9 +22,9 @@ public class CnigRegressHelper {
 
     /**
      * Get document model
-     * 
+     *
      * @see validator-plugin-cnig/test/resources/config/{documentModelName}
-     * 
+     *
      * @param documentModelName
      * @return
      * @throws Exception
@@ -43,9 +43,9 @@ public class CnigRegressHelper {
     /**
      * Get sample document. If folder is not null, document is copied to a temp
      * folder (keep this explicit)
-     * 
+     *
      * @see validator-plugin-cnig/test/resources/documents/{documentName}
-     * 
+     *
      * @param documentName
      * @param folder
      * @return
@@ -64,7 +64,7 @@ public class CnigRegressHelper {
 
     /**
      * Get path to expected document-info.json
-     * 
+     *
      * @param documentName
      * @return
      */

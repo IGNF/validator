@@ -22,12 +22,12 @@ import fr.ign.validator.tools.TableReader;
 
 /**
  * Helper class to add columns on GENERATEUR and ASSIETTE tables output data :
- * 
+ *
  * <ul>
  * <li>"fichier" is reported from "acte_sup" table exploring relations</li>
  * <li>"nomsuplitt" is reported from "servitude" table exploring relations</li>
  * </ul>
- * 
+ *
  * @author MBorne
  *
  */
@@ -50,7 +50,7 @@ public class AdditionalColumnsBuilder {
     private File tempDirectory;
 
     /**
-     * 
+     *
      * @param tempDirectory directory in which temporary CSV files are created.
      * @param dataDirectory
      */
@@ -61,7 +61,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Add columns to GENERATEUR_SUP and ASSIETTE_SUP files in dataDirectory.
-     * 
+     *
      * @throws Exception
      */
     public void addColumnsToGenerateurAndAssietteFiles(File dataDirectory) throws Exception {
@@ -85,7 +85,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Ajout de la colonne "fichiers" au fichier generateursFile
-     * 
+     *
      * @param database
      * @param generateursFile
      * @throws IOException
@@ -149,7 +149,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Create output header with new column names.
-     * 
+     *
      * @param inputHeader
      * @return
      */
@@ -162,7 +162,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Create output row with new column values.
-     * 
+     *
      * @param inputRow
      * @param fichiers
      * @return
@@ -180,7 +180,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Concatène la liste des fichiers avec des pipes "|"
-     * 
+     *
      * @param fichiers
      * @return
      */
@@ -197,7 +197,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Get ActeServitude for an assiette or generateur id.
-     * 
+     *
      * @param database
      * @param fileType
      * @param id
@@ -219,7 +219,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Get Servitude for an assiette or generateur id.
-     * 
+     *
      * @param database
      * @param fileType
      * @param id
@@ -241,7 +241,7 @@ public class AdditionalColumnsBuilder {
 
     /**
      * Renvoie le nom de la colonne identifiant en fonction du type de fichier
-     * 
+     *
      * @param fileType
      * @return
      */

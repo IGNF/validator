@@ -26,10 +26,10 @@ import fr.ign.validator.tools.MultiTableReader;
 /**
  * Ensure that FeatureType are defined for each {@link SingleTableModel} and
  * {@link EmbeddedTableModel} in {@link MultiTableModel}.
- * 
+ *
  * If not, a FeatureType is determined from data in order to allow table
  * validation of some aspects (geometry,...) without providing a complete model.
- * 
+ *
  * @author MBorne
  *
  */
@@ -55,7 +55,7 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
 
     /**
      * Process DocumentModel components.
-     * 
+     *
      * @param document
      * @throws IOException
      */
@@ -75,7 +75,7 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
 
     /**
      * Process FeatureType associated to TableModel.
-     * 
+     *
      * @param context
      * @param document
      * @param tableModel
@@ -180,7 +180,7 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
 
     /**
      * Get first {@link DocumentFile} matched to {@link FileModel}
-     * 
+     *
      * @param document
      * @param fileModel
      * @return
@@ -204,7 +204,7 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
     /**
      * False if {@link MultiTableModel} as at least one missing {@link FeatureType}
      * definition.
-     * 
+     *
      * @param multiTableModel
      * @return
      */
@@ -219,7 +219,7 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
 
     /**
      * Create empty FeatureType to avoid risk of crash during runtime.
-     * 
+     *
      * @param name
      * @return
      */

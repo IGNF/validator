@@ -14,7 +14,7 @@ public class RowIterator implements Iterator<String[]>, Closeable {
 
     /**
      * RowIterator from ResultSet (SELECT query)
-     * 
+     *
      * @param rs
      * @throws SQLException
      */

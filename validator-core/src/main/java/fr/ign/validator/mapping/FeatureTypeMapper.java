@@ -9,7 +9,7 @@ import fr.ign.validator.tools.HeaderHelper;
 
 /**
  * Maps header with attributes of a FeatureType
- * 
+ *
  * @author MBorne
  */
 public class FeatureTypeMapper {
@@ -43,7 +43,7 @@ public class FeatureTypeMapper {
 
     /**
      * Constructing an instance from header and FeatureType
-     * 
+     *
      * @param columns
      * @param featureType
      * @return
@@ -61,7 +61,7 @@ public class FeatureTypeMapper {
 
     /**
      * Returns the index of a input column.
-     * 
+     *
      * @param name
      * @return
      */
@@ -78,7 +78,7 @@ public class FeatureTypeMapper {
 
     /**
      * Returns a list of attributes existing in header and missing in model
-     * 
+     *
      * @return
      */
     public List<String> getUnexpectedAttributes() {
@@ -87,7 +87,7 @@ public class FeatureTypeMapper {
 
     /**
      * Returns a list of attributes existing in model and missing in header
-     * 
+     *
      * @return
      */
     public List<String> getMissingAttributes() {
@@ -127,7 +127,7 @@ public class FeatureTypeMapper {
 
     /**
      * Returns the position of an attribute of the FeatureType (in header)
-     * 
+     *
      * @param index
      * @return -1 si absent
      */

@@ -43,7 +43,7 @@ public class ResourceHelperTest {
 
     /**
      * Get validator-core/src/main/resources/error-code.json
-     * 
+     *
      * @throws IOException
      */
     @Test

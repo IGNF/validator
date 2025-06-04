@@ -15,15 +15,15 @@ import fr.ign.validator.info.DocumentInfoWriter;
 import fr.ign.validator.info.model.DocumentInfo;
 
 /**
- * 
+ *
  * Produce a document-info.json file with various informations about the
  * validated document
- * 
+ *
  * Note that this feature extends and replaces the previous "cnig-infos.xml"
  * specific to validator-cnig-plugin
- * 
+ *
  * @see DocumentInfo
- * 
+ *
  * @author CBouche
  *
  */

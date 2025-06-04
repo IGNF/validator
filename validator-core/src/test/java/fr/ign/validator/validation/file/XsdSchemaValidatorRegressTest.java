@@ -24,7 +24,7 @@ import fr.ign.validator.tools.ResourceHelper;
 
 /**
  * Regress test for {{@link XsdSchemaValidator}
- * 
+ *
  * @author MBorne
  *
  */

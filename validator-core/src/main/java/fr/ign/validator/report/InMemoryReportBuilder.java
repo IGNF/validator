@@ -8,9 +8,9 @@ import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 
 /**
- * 
+ *
  * Store ValidatorError in memory (designed for test purpose and UI).
- * 
+ *
  * @author MBorne
  *
  */
@@ -28,7 +28,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 
     /**
      * Get reported errors
-     * 
+     *
      * @return
      */
     public List<ValidatorError> getErrors() {
@@ -37,7 +37,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 
     /**
      * Get reported errors for a given ErrorLevel
-     * 
+     *
      * @param code
      * @return
      */
@@ -53,7 +53,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 
     /**
      * Get reported errors for a given ErrorCode
-     * 
+     *
      * @param code
      * @return
      */
@@ -69,7 +69,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 
     /**
      * Count errors
-     * 
+     *
      * @return
      */
     public int countErrors() {
@@ -78,7 +78,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 
     /**
      * Count errors for a given code
-     * 
+     *
      * @param code
      * @return
      */
@@ -88,7 +88,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
 
     /**
      * Count errors for a given level
-     * 
+     *
      * @param level
      * @return
      */
@@ -99,7 +99,7 @@ public class InMemoryReportBuilder implements ReportBuilder {
     /**
      * Check that report contains any ValidatorError with level = FATAL or level =
      * ERROR
-     * 
+     *
      * @return
      */
     public boolean isValid() {

@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
+ *
  * Wrapper around GDAL version provided by "ogr2ogr --version" with the
  * following format : "GDAL 2.2.2, released 2017/09/15"
- * 
+ *
  * @author MBorne
  *
  */
@@ -25,7 +25,7 @@ public class OgrVersion {
 
     /**
      * Result of the command "ogr2ogr --version", for example :
-     * 
+     *
      * <ul>
      * <li>GDAL 1.9.1, released 2012/05/15</li>
      * <li>GDAL 2.2.2, released 2017/09/15</li>
@@ -41,7 +41,7 @@ public class OgrVersion {
 
     /**
      * Create OgrVersion parsing fullVersion string.
-     * 
+     *
      * @param fullVersion
      * @throws OgrNotFoundException on failure to parse fullVersion
      */
@@ -68,7 +68,7 @@ public class OgrVersion {
 
     /**
      * Indicates if version is supported by IGNF/validator.
-     * 
+     *
      * @return
      */
     public boolean isSupported() {
@@ -106,7 +106,7 @@ public class OgrVersion {
 
     /**
      * Parse major, minor and patch from fullVersion string.
-     * 
+     *
      * @throws OgrNotFoundException
      */
     private void parseFullVersion() throws OgrNotFoundException {

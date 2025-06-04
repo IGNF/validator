@@ -13,7 +13,7 @@ import fr.ign.validator.validation.Validator;
 
 /**
  * An ISO19115 metadata file.
- * 
+ *
  * @author MBorne
  *
  */

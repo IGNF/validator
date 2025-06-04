@@ -1,9 +1,9 @@
 package fr.ign.validator.tools.ogr;
 
 /**
- * 
+ *
  * ogr2ogr is missing in the system
- * 
+ *
  * @author MBorne
  *
  */
