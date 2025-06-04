@@ -784,7 +784,8 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
-        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
+        ReportAssert.assertCount(2, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -830,7 +831,8 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
-        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
+        ReportAssert.assertCount(2 + 1, ErrorLevel.WARNING, report);
 
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         {

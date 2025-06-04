@@ -43,6 +43,10 @@ public class CodeFilteredReportBuilder implements ReportBuilder {
             return;
         }
 
+        if (errorCode.equals(CoreErrorCodes.FILE_UNEXPECTED)) {
+            return;
+        }
+
         if (errorCode.equals(CoreErrorCodes.MULTITABLE_UNEXPECTED)
             && error.getMessage().toLowerCase().matches(getExpectedTableRegexp().toLowerCase())) {
             return;
