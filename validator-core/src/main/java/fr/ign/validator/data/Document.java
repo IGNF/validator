@@ -317,8 +317,10 @@ public class Document implements Validatable {
             if (file.isDirectory()) {
                 errorCode = CoreErrorCodes.DIRECTORY_UNEXPECTED;
             }
-            context.createError(errorCode)
-                .setMessageParam("FILEPATH", context.relativize(file));
+            context.report(
+                context.createError(errorCode)
+                    .setMessageParam("FILEPATH", context.relativize(file))
+            );
         }
 
         log.info(

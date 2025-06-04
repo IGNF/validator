@@ -49,7 +49,7 @@ public class CodeFilteredReportBuilderRegressTest {
 
         assertEquals(1, original.getErrorsByCode(CoreErrorCodes.FILE_EMPTY).size());
         assertEquals(0, original.getErrorsByCode(CoreErrorCodes.DIRECTORY_UNEXPECTED).size());
-        assertEquals(1, original.getErrorsByCode(CoreErrorCodes.FILE_UNEXPECTED).size());
+        assertEquals(0, original.getErrorsByCode(CoreErrorCodes.FILE_UNEXPECTED).size());
         assertEquals(2, original.getErrorsByCode(CoreErrorCodes.MULTITABLE_UNEXPECTED).size());
     }
 
