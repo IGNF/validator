@@ -51,6 +51,7 @@ public class DuplicatedValuesFinder {
         RowIterator it = database.query(
             "SELECT " + columnName + " AS id, count(*) AS count"
                 + " FROM " + tableName
+                + " WHERE " + columnName + " IS NOT NULL"
                 + " GROUP BY " + columnName
                 + " HAVING count(*) > 1 ORDER BY count(*) DESC"
                 + " LIMIT " + LIMIT_PER_ATTRIBUTE
