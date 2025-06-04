@@ -352,13 +352,17 @@ public class Document implements Validatable {
      */
     private void addMisplacedFile(FileModel fileModel, File path) {
         boolean fileModelExists = false;
-        for (DocumentFile documentFile : this.documentFiles){
-            if (documentFile.getFileModel().equals(fileModel)){fileModelExists=true;}
+        for (DocumentFile documentFile : this.documentFiles) {
+            if (documentFile.getFileModel().equals(fileModel)) {
+                fileModelExists = true;
+            }
         }
-        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()){
-            if (misplacedFile.getKey().equals(fileModel)){fileModelExists=true;}
+        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()) {
+            if (misplacedFile.getKey().equals(fileModel)) {
+                fileModelExists = true;
+            }
         }
-        if (! fileModelExists){
+        if (!fileModelExists) {
             this.misplacedFiles.put(fileModel, path);
         }
     }
@@ -367,7 +371,7 @@ public class Document implements Validatable {
      * Transfers misplaced files to DocumentFiels
      */
     private void addMisplacedDocumentFiles() {
-        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()){
+        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()) {
             addDocumentFile(misplacedFile.getKey(), misplacedFile.getValue());
         }
     }
