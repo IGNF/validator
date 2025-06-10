@@ -18,6 +18,7 @@ import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.geometry.GeometryTransform;
 import fr.ign.validator.geometry.NullTransform;
 import fr.ign.validator.geometry.ProjectionTransform;
@@ -119,6 +120,13 @@ public class TableNormalizer implements Closeable {
         while (reader.hasNext()) {
             String[] inputRow = reader.next();
             String[] outputRow = new String[featureType.getAttributeCount()];
+            if (inputRow.length != inputHeader.length) {
+                context.report(
+                    context.createError(CoreErrorCodes.TABLE_INVALID_ROW)
+                        .setMessageParam("FILEPATH", csvFile.getPath())
+                );
+                continue;
+            }
             for (int i = 0; i < inputRow.length; i++) {
                 int position = featureType.indexOf(inputHeader[i]);
                 if (position < 0) {
