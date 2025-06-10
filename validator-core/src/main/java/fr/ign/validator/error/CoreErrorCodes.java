@@ -184,6 +184,7 @@ public class CoreErrorCodes {
     public static final ErrorCode TABLE_UNEXPECTED_ATTRIBUTE = ErrorCode.valueOf("TABLE_UNEXPECTED_ATTRIBUTE");
     public static final ErrorCode TABLE_UNEXPECTED_ENCODING = ErrorCode.valueOf("TABLE_UNEXPECTED_ENCODING");
     public static final ErrorCode TABLE_MISSING_GEOMETRY = ErrorCode.valueOf("TABLE_MISSING_GEOMETRY");
+    public static final ErrorCode TABLE_INVALID_ROW = ErrorCode.valueOf("TABLE_INVALID_ROW");
 
     /**
      * Missing model for a table in a MultiTable

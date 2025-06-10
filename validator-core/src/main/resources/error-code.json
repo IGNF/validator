@@ -112,6 +112,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "TABLE_INVALID_ROW",
+		"level": "ERROR",
+		"message": "Le fichier '{FILEPATH}' à un nombre de colonnes inconsistant.",
+		"documentation": ""
+	},
+	{
 		"name": "MULTITABLE_UNEXPECTED",
 		"level": "WARNING",
 		"message": "La table '{TABLENAME}' n'est pas prévue dans le modèle de validation.",
