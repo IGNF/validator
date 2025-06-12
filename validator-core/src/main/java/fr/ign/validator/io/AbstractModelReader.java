@@ -111,7 +111,8 @@ abstract class AbstractModelReader implements ModelReader {
             }
         }
 
-        if (documentModelUrl.getProtocol().equals("file")) {
+        if (documentModelUrl.getProtocol().equals("file")
+            || documentModelUrl.getPath().endsWith("files.json")) {
             /* config export convention */
             // validator-config-cnig/config/cnig_PLU_2017/files.(xml|json)
             // validator-config-cnig/config/cnig_PLU_2017/types/ZONE_URBA.(xml|json)
