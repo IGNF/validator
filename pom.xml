@@ -38,7 +38,7 @@
 		<apache-commons-csv.version>1.11.0</apache-commons-csv.version>
 		<apache-commons-lang.version>2.6</apache-commons-lang.version>
 		<!-- JDBC -->
-		<postgresql.version>42.7.6</postgresql.version>
+		<postgresql.version>42.7.7</postgresql.version>
 		<sqlite-jdbc.version>3.50.1.0</sqlite-jdbc.version>
 		<!-- Testing -->
 		<junit.version>4.13.2</junit.version>
