@@ -41,7 +41,7 @@ public class DatabaseSUP {
     public static final Marker MARKER = MarkerManager.getMarker("DatabaseSUP");
 
     /**
-     * SERVITUDE / Servitude in CNIG standard ("idsup","nomsuplitt")
+     * SERVITUDE / Servitude in CNIG standard ("idsup","nomsuplitt","nomreg")
      */
     public static final String TABLE_SERVITUDE = "servitude";
 
@@ -76,6 +76,7 @@ public class DatabaseSUP {
 
     public static final String COLUMN_IDSUP = "idsup";
     public static final String COLUMN_NOMSUPLITT = "nomsuplitt";
+    public static final String COLUMN_NOMREG = "nomreg";
 
     public static final String COLUMN_IDACTE = "idacte";
     public static final String COLUMN_FICHIER = "fichier";
@@ -98,6 +99,7 @@ public class DatabaseSUP {
     public class Servitude {
         public String idsup;
         public String nomsuplitt;
+        public String nomreg;
     }
 
     /**
@@ -114,6 +116,11 @@ public class DatabaseSUP {
     private Database database;
 
     /**
+     * COLUMN nomreg exists in SERVITUDE
+     */
+    private boolean nomRegExists;
+
+    /**
      * Create DatabaseSUP as an SQLite database.
      *
      * @param tempDirectory
@@ -121,6 +128,8 @@ public class DatabaseSUP {
      */
     public DatabaseSUP(Database database) throws SQLException {
         this.database = database;
+        this.nomRegExists = false;
+        this.fetchNomRegExistence();
     }
 
     /**
@@ -316,7 +325,10 @@ public class DatabaseSUP {
      * @return
      */
     public List<Servitude> findServitudesByGenerateur(String idGen) {
-        String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt FROM generateur g "
+        String nomRegString = this.nomRegExists ? ",s.nomreg" : "";
+        String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt"
+            + nomRegString
+            + " FROM generateur g "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE g.idgen = ?";
         try {
@@ -335,7 +347,10 @@ public class DatabaseSUP {
      * @return
      */
     public List<Servitude> findServitudesByAssiette(String idAss) {
-        String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt FROM assiette a "
+        String nomRegString = this.nomRegExists ? ",s.nomreg" : "";
+        String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt "
+            + nomRegString
+            + " FROM assiette a "
             + " LEFT JOIN generateur g ON a.idgen = g.idgen "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE a.idass = ?";
@@ -361,6 +376,9 @@ public class DatabaseSUP {
             Servitude servitude = new Servitude();
             servitude.idsup = rs.getString(COLUMN_IDSUP);
             servitude.nomsuplitt = rs.getString(COLUMN_NOMSUPLITT);
+            if (this.nomRegExists) {
+                servitude.nomreg = rs.getString(COLUMN_NOMREG);
+            }
             result.add(servitude);
         }
         return result;
@@ -379,6 +397,23 @@ public class DatabaseSUP {
                 continue;
             }
             result.add(servitude.nomsuplitt);
+        }
+        return new ArrayList<>(result);
+    }
+
+    /**
+     * Helper to extract "nomReg" values
+     *
+     * @param actes
+     * @return
+     */
+    public List<String> getNomRegs(List<Servitude> servitudes) {
+        HashSet<String> result = new HashSet<>(servitudes.size());
+        for (Servitude servitude : servitudes) {
+            if (StringUtils.isEmpty(servitude.nomreg)) {
+                continue;
+            }
+            result.add(servitude.nomreg);
         }
         return new ArrayList<>(result);
     }
@@ -445,4 +480,21 @@ public class DatabaseSUP {
         return result;
     }
 
+    /**
+     * Fetch existence of nomReg in SERVITUDE table
+     */
+    private void fetchNomRegExistence() {
+        String sql = "SELECT COUNT(*) AS count "
+            + " FROM pragma_table_info('servitude') "
+            + " WHERE name='NOMREG' ";
+        try {
+            PreparedStatement sth = getConnection().prepareStatement(sql);
+            ResultSet rs = sth.executeQuery();
+            while (rs.next()) {
+                this.nomRegExists = rs.getInt("count") > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

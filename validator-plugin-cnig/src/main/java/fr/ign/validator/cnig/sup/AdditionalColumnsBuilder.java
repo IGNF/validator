@@ -26,6 +26,7 @@ import fr.ign.validator.tools.TableReader;
  * <ul>
  * <li>"fichier" is reported from "acte_sup" table exploring relations</li>
  * <li>"nomsuplitt" is reported from "servitude" table exploring relations</li>
+ * <li>"nomreg" is reported from "servitude" table exploring relations</li>
  * </ul>
  *
  * @author MBorne
@@ -91,7 +92,7 @@ public class AdditionalColumnsBuilder {
      * @throws IOException
      */
     private void addColumnsToFile(FileType fileType, File file) throws Exception {
-        log.info(MARKER, "Add 'fichier' and 'nomsuplitt' columns to {} ...", file);
+        log.info(MARKER, "Add 'fichier', 'nomsuplitt' and 'nomreg' columns to {} ...", file);
         /*
          * lecture des métadonnées du fichier en entrée
          */
@@ -114,7 +115,7 @@ public class AdditionalColumnsBuilder {
         );
         CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
 
-        /* create output header adding "fichier","nomsuplitt" */
+        /* create output header adding "fichier","nomsuplitt","nomreg" */
         printer.printRecord(createOutputHeader(inputHeader));
 
         while (reader.hasNext()) {
@@ -129,12 +130,15 @@ public class AdditionalColumnsBuilder {
             /* retrieve "nomsuplitt" using joins */
             List<DatabaseSUP.Servitude> servitudes = getServitudesById(database, fileType, id);
             List<String> nomSupLitts = database.getNomSupLitts(servitudes);
+            /* retrive "nomreg" usin joins */
+            List<String> nomRegs = database.getNomRegs(servitudes);
 
             printer.printRecord(
                 createOutputRow(
                     inputRow,
                     fichiers,
-                    nomSupLitts
+                    nomSupLitts,
+                    nomRegs
                 )
             );
         }
@@ -157,6 +161,7 @@ public class AdditionalColumnsBuilder {
         List<String> outputHeader = new ArrayList<String>(Arrays.asList(inputHeader));
         outputHeader.add(DatabaseSUP.COLUMN_FICHIER);
         outputHeader.add(DatabaseSUP.COLUMN_NOMSUPLITT);
+        outputHeader.add(DatabaseSUP.COLUMN_NOMREG);
         return outputHeader;
     }
 
@@ -167,13 +172,16 @@ public class AdditionalColumnsBuilder {
      * @param fichiers
      * @return
      */
-    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts) {
+    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts,
+        List<String> nomRegs) {
         List<String> outputRow = new ArrayList<String>(Arrays.asList(inputRow));
 
         // COLUMN_FICHIER
         outputRow.add(concat(fichiers));
         // COLUMN_NOMSUPLITT
         outputRow.add(concat(nomSupLitts));
+        // COLUMN NOMREG
+        outputRow.add(concat(nomRegs));
 
         return outputRow;
     }
