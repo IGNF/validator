@@ -326,12 +326,11 @@ public class Document implements Validatable {
                 context.createError(errorCode)
                     .setMessageParam("FILEPATH", context.relativize(file))
             );
-
-            /*
-             * Adds the best remaining candidates.
-             */
-            addMisplacedDocumentFiles();
         }
+        /*
+         * Adds the best remaining candidates.
+         */
+        addMisplacedDocumentFiles();
 
         log.info(
             MARKER, "List files and directories : completed, {} document file(s) found.",
@@ -343,7 +342,6 @@ public class Document implements Validatable {
      * Adds a DocumentFile as the best candidate.
      */
     private void addDocumentFile(FileModel fileModel, File path) {
-        this.misplacedFiles.remove(fileModel);
         this.documentFiles.add(fileModel.createDocumentFile(path));
     }
 
@@ -368,7 +366,7 @@ public class Document implements Validatable {
     }
 
     /*
-     * Transfers misplaced files to DocumentFiels
+     * Transfers misplaced files to DocumentFiles
      */
     private void addMisplacedDocumentFiles() {
         for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()) {
