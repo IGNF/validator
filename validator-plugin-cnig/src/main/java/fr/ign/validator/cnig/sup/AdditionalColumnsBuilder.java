@@ -137,7 +137,7 @@ public class AdditionalColumnsBuilder {
                 createOutputRow(
                     inputRow,
                     fichiers,
-                    nomSupLitts //,
+                    nomSupLitts // ,
                     // nomRegs
                 )
             );
@@ -172,9 +172,9 @@ public class AdditionalColumnsBuilder {
      * @param fichiers
      * @return
      */
-    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts //,
-        // List<String> nomRegs
-        ) {
+    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts // ,
+    // List<String> nomRegs
+    ) {
         List<String> outputRow = new ArrayList<String>(Arrays.asList(inputRow));
 
         // COLUMN_FICHIER
