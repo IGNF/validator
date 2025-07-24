@@ -137,8 +137,8 @@ public class AdditionalColumnsBuilder {
                 createOutputRow(
                     inputRow,
                     fichiers,
-                    nomSupLitts,
-                    nomRegs
+                    nomSupLitts // ,
+                    // nomRegs
                 )
             );
         }
@@ -161,7 +161,7 @@ public class AdditionalColumnsBuilder {
         List<String> outputHeader = new ArrayList<String>(Arrays.asList(inputHeader));
         outputHeader.add(DatabaseSUP.COLUMN_FICHIER);
         outputHeader.add(DatabaseSUP.COLUMN_NOMSUPLITT);
-        outputHeader.add(DatabaseSUP.COLUMN_NOMREG);
+        // outputHeader.add(DatabaseSUP.COLUMN_NOMREG);
         return outputHeader;
     }
 
@@ -172,8 +172,9 @@ public class AdditionalColumnsBuilder {
      * @param fichiers
      * @return
      */
-    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts,
-        List<String> nomRegs) {
+    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts // ,
+    // List<String> nomRegs
+    ) {
         List<String> outputRow = new ArrayList<String>(Arrays.asList(inputRow));
 
         // COLUMN_FICHIER
@@ -181,7 +182,7 @@ public class AdditionalColumnsBuilder {
         // COLUMN_NOMSUPLITT
         outputRow.add(concat(nomSupLitts));
         // COLUMN NOMREG
-        outputRow.add(concat(nomRegs));
+        // outputRow.add(concat(nomRegs));
 
         return outputRow;
     }
