@@ -35,7 +35,7 @@ public class DocumentGeometryProcess {
     /**
      * Tolerance to fix small holes
      */
-    private static final double tolerance = 0.00001;
+    private static final double tolerance = 0.0001;
 
     /**
      * Files to process
