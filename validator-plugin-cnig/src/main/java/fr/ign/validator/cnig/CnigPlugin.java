@@ -54,8 +54,8 @@ public class CnigPlugin implements Plugin {
         context.addListener(new CustomizeIdurbaPreProcess());
 
         /*
-         * PostProcess - Join SUP files to add columns "fichiers", "nomsuplitt" and
-         * "nomreg" (must run before CreateShapefilesPostProcess)
+         * PostProcess - Join SUP files to add columns "fichiers", "nomsuplitt",
+         * "nomreg" and "urlreg" (must run before CreateShapefilesPostProcess)
          */
         context.addListener(new SupRelationsPostProcess());
         /*

@@ -41,7 +41,8 @@ public class DatabaseSUP {
     public static final Marker MARKER = MarkerManager.getMarker("DatabaseSUP");
 
     /**
-     * SERVITUDE / Servitude in CNIG standard ("idsup","nomsuplitt","nomreg")
+     * SERVITUDE / Servitude in CNIG standard
+     * ("idsup","nomsuplitt","nomreg","urlreg")
      */
     public static final String TABLE_SERVITUDE = "servitude";
 
@@ -77,6 +78,7 @@ public class DatabaseSUP {
     public static final String COLUMN_IDSUP = "idsup";
     public static final String COLUMN_NOMSUPLITT = "nomsuplitt";
     public static final String COLUMN_NOMREG = "nomreg";
+    public static final String COLUMN_URLREG = "urlreg";
 
     public static final String COLUMN_IDACTE = "idacte";
     public static final String COLUMN_FICHIER = "fichier";
@@ -100,6 +102,7 @@ public class DatabaseSUP {
         public String idsup;
         public String nomsuplitt;
         public String nomreg;
+        public String urlreg;
     }
 
     /**
@@ -121,6 +124,11 @@ public class DatabaseSUP {
     private boolean nomRegExists;
 
     /**
+     * COLUMN urlreg exists in SERVITUDE
+     */
+    private boolean urlRegExists;
+
+    /**
      * Create DatabaseSUP as an SQLite database.
      *
      * @param tempDirectory
@@ -129,7 +137,9 @@ public class DatabaseSUP {
     public DatabaseSUP(Database database) throws SQLException {
         this.database = database;
         this.nomRegExists = false;
+        this.urlRegExists = false;
         this.fetchNomRegExistence();
+        this.fetchUrlRegExistence();
     }
 
     /**
@@ -326,8 +336,10 @@ public class DatabaseSUP {
      */
     public List<Servitude> findServitudesByGenerateur(String idGen) {
         String nomRegString = this.nomRegExists ? ",s.nomreg" : "";
+        String urlRegString = this.urlRegExists ? ",s.urlreg" : "";
         String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt"
             + nomRegString
+            + urlRegString
             + " FROM generateur g "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE g.idgen = ?";
@@ -348,8 +360,10 @@ public class DatabaseSUP {
      */
     public List<Servitude> findServitudesByAssiette(String idAss) {
         String nomRegString = this.nomRegExists ? ",s.nomreg" : "";
+        String urlRegString = this.urlRegExists ? ",s.urlreg" : "";
         String sql = "SELECT DISTINCT s.idsup,s.nomsuplitt "
             + nomRegString
+            + urlRegString
             + " FROM assiette a "
             + " LEFT JOIN generateur g ON a.idgen = g.idgen "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
@@ -379,6 +393,9 @@ public class DatabaseSUP {
             if (this.nomRegExists) {
                 servitude.nomreg = rs.getString(COLUMN_NOMREG);
             }
+            if (this.urlRegExists) {
+                servitude.urlreg = rs.getString(COLUMN_URLREG);
+            }
             result.add(servitude);
         }
         return result;
@@ -404,7 +421,7 @@ public class DatabaseSUP {
     /**
      * Helper to extract "nomReg" values
      *
-     * @param actes
+     * @param servitudes
      * @return
      */
     public List<String> getNomRegs(List<Servitude> servitudes) {
@@ -414,6 +431,23 @@ public class DatabaseSUP {
                 continue;
             }
             result.add(servitude.nomreg);
+        }
+        return new ArrayList<>(result);
+    }
+
+    /**
+     * Helper to extract "urlReg" values
+     *
+     * @param servitudes
+     * @return
+     */
+    public List<String> getUrlRegs(List<Servitude> servitudes) {
+        HashSet<String> result = new HashSet<>(servitudes.size());
+        for (Servitude servitude : servitudes) {
+            if (StringUtils.isEmpty(servitude.urlreg)) {
+                continue;
+            }
+            result.add(servitude.urlreg);
         }
         return new ArrayList<>(result);
     }
@@ -492,6 +526,24 @@ public class DatabaseSUP {
             ResultSet rs = sth.executeQuery();
             while (rs.next()) {
                 this.nomRegExists = rs.getInt("count") > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Fetch existence of urlReg in SERVITUDE table
+     */
+    private void fetchUrlRegExistence() {
+        String sql = "SELECT COUNT(*) AS count "
+            + " FROM pragma_table_info('servitude') "
+            + " WHERE name='URLREG' ";
+        try {
+            PreparedStatement sth = getConnection().prepareStatement(sql);
+            ResultSet rs = sth.executeQuery();
+            while (rs.next()) {
+                this.urlRegExists = rs.getInt("count") > 0;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

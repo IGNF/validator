@@ -100,7 +100,7 @@ public class SupRelationsPostProcess implements ValidatorListener {
 
         log.info(
             MARKER,
-            "Perform joins to add columns 'fichier', 'nomsuplitt' and 'nomreg' to normalized GENERATEUR and ASSIETTE tables..."
+            "Perform joins to add columns 'fichier', 'nomsuplitt', 'nomreg' and 'urlreg' to normalized GENERATEUR and ASSIETTE tables..."
         );
         File tempDirectory = getTempDirectory(context);
         AdditionalColumnsBuilder builder = new AdditionalColumnsBuilder(
