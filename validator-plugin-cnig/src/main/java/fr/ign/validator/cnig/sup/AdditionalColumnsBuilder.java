@@ -27,7 +27,7 @@ import fr.ign.validator.tools.TableReader;
  * <li>"fichier" is reported from "acte_sup" table exploring relations</li>
  * <li>"nomsuplitt" is reported from "servitude" table exploring relations</li>
  * <li>"nomreg" is reported from "servitude" table exploring relations</li>
- *  <li>"urlreg" is reported from "servitude" table exploring relations</li>
+ * <li>"urlreg" is reported from "servitude" table exploring relations</li>
  * </ul>
  *
  * @author MBorne
@@ -177,9 +177,8 @@ public class AdditionalColumnsBuilder {
      * @param fichiers
      * @return
      */
-    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts, 
-        List<String> nomRegs, List<String> urlRegs
-    ) {
+    private List<String> createOutputRow(String[] inputRow, List<String> fichiers, List<String> nomSupLitts,
+        List<String> nomRegs, List<String> urlRegs) {
         List<String> outputRow = new ArrayList<String>(Arrays.asList(inputRow));
 
         // COLUMN_FICHIER

@@ -41,7 +41,8 @@ public class DatabaseSUP {
     public static final Marker MARKER = MarkerManager.getMarker("DatabaseSUP");
 
     /**
-     * SERVITUDE / Servitude in CNIG standard ("idsup","nomsuplitt","nomreg","urlreg")
+     * SERVITUDE / Servitude in CNIG standard
+     * ("idsup","nomsuplitt","nomreg","urlreg")
      */
     public static final String TABLE_SERVITUDE = "servitude";
 
@@ -136,7 +137,7 @@ public class DatabaseSUP {
     public DatabaseSUP(Database database) throws SQLException {
         this.database = database;
         this.nomRegExists = false;
-        this.urlRegExists=  false;
+        this.urlRegExists = false;
         this.fetchNomRegExistence();
         this.fetchUrlRegExistence();
     }
