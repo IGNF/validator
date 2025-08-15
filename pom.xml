@@ -43,7 +43,7 @@
 		<!-- Testing -->
 		<junit.version>4.13.2</junit.version>
 		<jsonassert.version>1.5.3</jsonassert.version>
-		<mockito.version>5.18.0</mockito.version>
+		<mockito.version>5.19.0</mockito.version>
 		<!-- Build and deploy -->
 		<maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
