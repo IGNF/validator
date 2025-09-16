@@ -36,7 +36,7 @@ public class IdurbaFormatFactory {
         String documentModelName = documentModel.getName();
 
         String documentType = DocumentModelName.getDocumentType(documentModelName);
-        if (documentType == null || documentType.equalsIgnoreCase("SUP")) {
+        if (documentType == null || documentType.equalsIgnoreCase("SUP") || documentType.equalsIgnoreCase("MEC")) {
             return null;
         }
 
