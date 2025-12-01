@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-import org.javatuples.Pair;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
@@ -354,12 +353,11 @@ public class Document implements Validatable {
     private void addMisplacedDocumentFiles(Context context) {
 
         for (MisplacedFile misplacedFile : this.misplacedFileManager.getMisplacedFiles()) {
-            if (misplacedFile.getStatus() == MisplacedFile.Status.FILE_MODEL_OVERLOAD)
-            {
+            if (misplacedFile.getStatus() == MisplacedFile.Status.FILE_MODEL_OVERLOAD) {
                 context.report(
-                context.createError(CoreErrorCodes.FILE_MODEL_OVERLOAD)
-                    .setMessageParam("FILEMODEL", misplacedFile.getFileModel().getName())
-            );
+                    context.createError(CoreErrorCodes.FILE_MODEL_OVERLOAD)
+                        .setMessageParam("FILEMODEL", misplacedFile.getFileModel().getName())
+                );
             }
             addDocumentFile(misplacedFile.getFileModel(), misplacedFile.getFile());
         }

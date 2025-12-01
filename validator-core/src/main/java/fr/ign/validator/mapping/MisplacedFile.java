@@ -4,7 +4,6 @@ import java.io.File;
 
 import fr.ign.validator.model.FileModel;
 
-
 /**
  * Maps header with attributes of a FeatureType
  *
@@ -37,7 +36,7 @@ public class MisplacedFile {
 
     /**
      * @param FileModel fileModel
-     * @param File path
+     * @param File      path
      */
     public MisplacedFile(FileModel fileModel, File file) {
         this.fileModel = fileModel;

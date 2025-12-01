@@ -11,7 +11,6 @@ import org.apache.logging.log4j.MarkerManager;
 
 import fr.ign.validator.model.FileModel;
 
-
 /**
  * Maps header with attributes of a FeatureType
  *
@@ -27,8 +26,8 @@ public class MisplacedFileManager {
      */
     private List<MisplacedFile> misplacedFiles = new ArrayList<>();
 
-    public MisplacedFileManager()
-    {}
+    public MisplacedFileManager() {
+    }
 
     /**
      * Adds a misplacedFile, checking if corresponding FileModel is overloaded
@@ -36,7 +35,7 @@ public class MisplacedFileManager {
      * @param fileModel
      * @param File
      */
-    public void addMisplacedFile (FileModel fileModel, File File) {
+    public void addMisplacedFile(FileModel fileModel, File File) {
         MisplacedFile misplacedFile = new MisplacedFile(fileModel, File);
 
         for (MisplacedFile otherFile : this.misplacedFiles) {
