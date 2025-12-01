@@ -41,6 +41,7 @@ public class CoreErrorCodes {
     public static final ErrorCode DIRECTORY_UNEXPECTED = ErrorCode.valueOf("DIRECTORY_UNEXPECTED");
 
     public static final ErrorCode FILE_MISPLACED = ErrorCode.valueOf("FILE_MISPLACED");
+    public static final ErrorCode FILE_MODEL_OVERLOAD = ErrorCode.valueOf("FILE_MODEL_OVERLOAD");
     public static final ErrorCode FILE_EMPTY = ErrorCode.valueOf("FILE_EMPTY");
 
     public static final ErrorCode XSD_SCHEMA_ERROR = ErrorCode.valueOf("XSD_SCHEMA_ERROR");
