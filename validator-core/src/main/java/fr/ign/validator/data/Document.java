@@ -11,12 +11,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.javatuples.Pair;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.mapping.MisplacedFile;
+import fr.ign.validator.mapping.MisplacedFileManager;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.tools.FileUtils;
@@ -59,7 +62,7 @@ public class Document implements Validatable {
     /**
      * Files misplaced from model expactations
      */
-    private Map<FileModel, File> misplacedFiles = new HashMap<>();
+    private MisplacedFileManager misplacedFileManager = new MisplacedFileManager();
 
     /**
      * Additional informations
@@ -303,7 +306,7 @@ public class Document implements Validatable {
 
                 log.info(MARKER, "Found {} by name for '{}' (FILE_MISPLACED)", fileModel, file);
                 if (context.isFlatValidation()) {
-                    addMisplacedFile(fileModel, file);
+                    this.misplacedFileManager.addMisplacedFile(fileModel, file);
                 } else {
                     context.beginModel(fileModel);
                     context.report(
@@ -330,7 +333,7 @@ public class Document implements Validatable {
         /*
          * Adds the best remaining candidates.
          */
-        addMisplacedDocumentFiles();
+        addMisplacedDocumentFiles(context);
 
         log.info(
             MARKER, "List files and directories : completed, {} document file(s) found.",
@@ -346,31 +349,19 @@ public class Document implements Validatable {
     }
 
     /*
-     * Adds a misplaced file only if a better candidate doesn't already exists.
-     */
-    private void addMisplacedFile(FileModel fileModel, File path) {
-        boolean fileModelExists = false;
-        for (DocumentFile documentFile : this.documentFiles) {
-            if (documentFile.getFileModel().equals(fileModel)) {
-                fileModelExists = true;
-            }
-        }
-        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()) {
-            if (misplacedFile.getKey().equals(fileModel)) {
-                fileModelExists = true;
-            }
-        }
-        if (!fileModelExists) {
-            this.misplacedFiles.put(fileModel, path);
-        }
-    }
-
-    /*
      * Transfers misplaced files to DocumentFiles
      */
-    private void addMisplacedDocumentFiles() {
-        for (Map.Entry<FileModel, File> misplacedFile : this.misplacedFiles.entrySet()) {
-            addDocumentFile(misplacedFile.getKey(), misplacedFile.getValue());
+    private void addMisplacedDocumentFiles(Context context) {
+
+        for (MisplacedFile misplacedFile : this.misplacedFileManager.getMisplacedFiles()) {
+            if (misplacedFile.getStatus() == MisplacedFile.Status.FILE_MODEL_OVERLOAD)
+            {
+                context.report(
+                context.createError(CoreErrorCodes.FILE_MODEL_OVERLOAD)
+                    .setMessageParam("FILEMODEL", misplacedFile.getFileModel().getName())
+            );
+            }
+            addDocumentFile(misplacedFile.getFileModel(), misplacedFile.getFile());
         }
     }
 

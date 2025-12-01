@@ -34,6 +34,12 @@
 		"documentation": "Cette erreur se produit lorsque le nom d'un fichier respecte partiellement le modèle. Le nom du fichier est correct,  mais pas son chemin complet"
 	},
 	{
+		"name": "FILE_MODEL_OVERLOAD",
+		"level": "INFO",
+		"message": "Le modèle '{FILEMODEL}' est consommé par plusieurs fichiers.",
+		"documentation": "Cette erreur se produit lorsque un modèle est consommé par plusieurs fichiers mal nommés ou avec un chemin incomplet."
+	},
+	{
 		"name": "FILE_UNEXPECTED",
 		"level": "WARNING",
 		"message": "Le fichier '{FILEPATH}' est mal nommé ou n'est pas prévu dans le standard.",
