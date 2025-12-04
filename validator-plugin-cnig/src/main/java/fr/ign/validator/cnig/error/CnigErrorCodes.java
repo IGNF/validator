@@ -18,6 +18,13 @@ public class CnigErrorCodes {
     public static final ErrorCode CNIG_FILE_EXTENSION_INVALID = ErrorCode.valueOf("CNIG_FILE_EXTENSION_INVALID");
 
     /**
+     * Overrides CORE_TABLE_MISSING_NULLABLE_ATTRIBUTE
+     */
+    public static final ErrorCode CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE = ErrorCode.valueOf(
+        "CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE"
+    );
+
+    /**
      * DU - Reported when ZONE_URBA.IDURBA doesn't match any format
      */
     public static final ErrorCode CNIG_IDURBA_INVALID = ErrorCode.valueOf("CNIG_IDURBA_INVALID");

@@ -16,6 +16,7 @@ import org.locationtech.jts.geom.Geometry;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.data.DocumentFile;
+import fr.ign.validator.data.Header;
 import fr.ign.validator.data.Row;
 import fr.ign.validator.data.Table;
 import fr.ign.validator.data.file.MetadataFile;
@@ -159,6 +160,11 @@ public class Context {
      * Allow validator to perform SQL conditions on FeatureType.
      */
     private boolean enableConditions = false;
+
+    /**
+     * Header class to use.
+     */
+    private Class<?> headerClass = Header.class;
 
     public Context() {
         registerDefaultListeners();
@@ -815,6 +821,16 @@ public class Context {
     public void setEnableConditions(boolean enableConditions) {
         log.info(MARKER, "set enable condition to {}", enableConditions);
         this.enableConditions = enableConditions;
+    }
+
+    public void setHeaderClass(Class<?> class1) {
+        if (Header.class.isAssignableFrom(class1)) {
+            this.headerClass = class1;
+        }
+    }
+
+    public Class<?> getHeaderClass() {
+        return this.headerClass;
     }
 
 }

@@ -1,5 +1,7 @@
 package fr.ign.validator.data;
 
+import java.lang.reflect.Constructor;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -71,8 +73,20 @@ public class Table implements Validatable {
          */
         String[] columns = reader.getHeader();
         FeatureTypeMapper mapping = new FeatureTypeMapper(columns, featureType);
-        Header header = new Header(relativePath, mapping);
-        header.validate(context);
+
+        try {
+            Class<?> headerClass = context.getHeaderClass();
+            log.info(MARKER, "headerClass: {}", headerClass.getName());
+            Constructor<?> headerConstructor = headerClass.getConstructor(String.class, FeatureTypeMapper.class);
+            Header header = (Header) headerConstructor.newInstance(relativePath, mapping);
+            log.info(MARKER, "header: {}", header.getClass().getName());
+            header.validate(context);
+        } catch (Exception e) {
+            log.error(MARKER, "FATAL ERROR. message: {} ; trace: {}", e.getMessage(), e.getStackTrace());
+            context.report(
+                context.createError(CoreErrorCodes.VALIDATOR_EXCEPTION)
+            );
+        }
 
         /*
          * feature validation

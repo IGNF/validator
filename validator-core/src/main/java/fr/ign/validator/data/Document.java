@@ -353,12 +353,6 @@ public class Document implements Validatable {
     private void addMisplacedDocumentFiles(Context context) {
 
         for (MisplacedFile misplacedFile : this.misplacedFileManager.getMisplacedFiles()) {
-            if (misplacedFile.getStatus() == MisplacedFile.Status.FILE_MODEL_OVERLOAD) {
-                context.report(
-                    context.createError(CoreErrorCodes.FILE_MODEL_OVERLOAD)
-                        .setMessageParam("FILEMODEL", misplacedFile.getFileModel().getName())
-                );
-            }
             addDocumentFile(misplacedFile.getFileModel(), misplacedFile.getFile());
         }
     }

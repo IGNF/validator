@@ -568,6 +568,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE",
+		"level": "ERROR",
+		"message": "Le fichier optionnel '{FILEMODEL_NAME}' est absent du document.",
+		"documentation": "Cette erreur se produit lorsqu'un fichier marqué comme mandatory=WARNING est absent dans le cadre d'une validation CNIG."
+	},
+	{
 		"name": "CNIG_IDURBA_INVALID",
 		"level": "ERROR",
 		"message": "La valeur du champ \"IDURBA\" ({VALUE}) ne respecte pas le format attendu.",

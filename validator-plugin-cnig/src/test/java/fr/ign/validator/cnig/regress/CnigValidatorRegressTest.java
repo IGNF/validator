@@ -210,7 +210,8 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
-        ReportAssert.assertCount(2, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
+        ReportAssert.assertCount(1 + 1 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
@@ -222,9 +223,10 @@ public class CnigValidatorRegressTest {
         /*
          * check some infos
          */
-        ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
+        ReportAssert.assertCount(0, CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
         {
-            ValidatorError error = report.getErrorsByCode(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE).get(0);
+            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE).get(0);
             assertEquals("DATECOG", error.getAttribute());
         }
 
@@ -325,7 +327,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(19, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR, report);
-        ReportAssert.assertCount(1 + 2 + 2 + 19 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
+        ReportAssert.assertCount(1 + 2 + 2 + 19 + 1 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
@@ -760,7 +763,10 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
         ReportAssert.assertCount(2, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
-        ReportAssert.assertCount(23, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND, report);
+        ReportAssert.assertCount(18 + 0 + 1 + 2 + 6 + 1 + 1, ErrorLevel.ERROR, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
@@ -825,7 +831,7 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
-        ReportAssert.assertCount(21, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(27, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
@@ -875,7 +881,8 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE, report);
+        ReportAssert.assertCount(4 + 1 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
