@@ -48,7 +48,7 @@
 		<maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
 		<maven-release-plugin.version>3.3.0</maven-release-plugin.version>
-		<jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
 
 		<!-- sonarqube -->
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
