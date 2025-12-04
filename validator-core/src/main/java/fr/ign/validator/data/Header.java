@@ -35,6 +35,10 @@ public class Header implements Validatable {
         this.mapping = mapping;
     }
 
+    public String getRelativePath() {
+        return this.relativePath;
+    }
+
     @Override
     public void validate(Context context) {
         context.beginData(this);
@@ -70,11 +74,7 @@ public class Header implements Validatable {
                         .setMessageParam("FILEPATH", relativePath)
                 );
             } else if (!missingAttribute.getConstraints().isRequired()) {
-                context.report(
-                    context.createError(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE)
-                        .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                        .setMessageParam("FILEPATH", relativePath)
-                );
+                this.reportTableMissingNullableAttribute(missingAttribute, context);
             } else {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_MISSING_ATTRIBUTE)
@@ -86,6 +86,20 @@ public class Header implements Validatable {
         }
 
         context.endData(this);
+    }
+
+    /**
+     * Create report when missing attribute is required
+     *
+     * @param missingAttribute
+     * @param context
+     */
+    public void reportTableMissingNullableAttribute(AttributeType<?> missingAttribute, Context context) {
+        context.report(
+            context.createError(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE)
+                .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
+                .setMessageParam("FILEPATH", relativePath)
+        );
     }
 
 }

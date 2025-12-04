@@ -1,6 +1,7 @@
 package fr.ign.validator.cnig;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.cnig.data.CnigHeader;
 import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.CustomizeIdurbaPreProcess;
 import fr.ign.validator.cnig.process.DocUrbaComPostProcess;
@@ -47,6 +48,11 @@ public class CnigPlugin implements Plugin {
     public void setup(Context context) {
         // --normalize is required with CNIG plugin
         context.setNormalizeEnabled(true);
+
+        /**
+         * Use CnigHeader class instead of Header
+         */
+        context.setHeaderClass(CnigHeader.class);
 
         /*
          * PreProcess - Customize idurba
