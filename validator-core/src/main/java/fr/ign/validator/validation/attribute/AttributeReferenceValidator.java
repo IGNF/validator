@@ -1,4 +1,4 @@
-package fr.ign.validator.validation.database;
+package fr.ign.validator.validation.attribute;
 
 import java.io.IOException;
 import java.sql.SQLException;

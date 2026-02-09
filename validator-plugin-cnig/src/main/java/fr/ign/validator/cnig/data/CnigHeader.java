@@ -17,11 +17,13 @@ public class CnigHeader extends Header {
     }
 
     @Override
-    public void reportTableMissingNullableAttribute(AttributeType<?> missingAttribute, Context context) {
-        context.report(
-            context.createError(CnigErrorCodes.CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE)
-                .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                .setMessageParam("FILEPATH", this.getRelativePath())
-        );
+    public void reportTableMissingPresenceOptionalAttribute(AttributeType<?> missingAttribute, Context context) {
+        if (!missingAttribute.getConstraints().isPresenceRequiredModified()) {
+            context.report(
+                context.createError(CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
+                    .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
+                    .setMessageParam("FILEPATH", this.getRelativePath())
+            );
+        }
     }
 }

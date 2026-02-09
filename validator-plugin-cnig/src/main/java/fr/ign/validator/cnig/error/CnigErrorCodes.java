@@ -20,8 +20,8 @@ public class CnigErrorCodes {
     /**
      * Overrides CORE_TABLE_MISSING_NULLABLE_ATTRIBUTE
      */
-    public static final ErrorCode CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE = ErrorCode.valueOf(
-        "CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE"
+    public static final ErrorCode CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE = ErrorCode.valueOf(
+        "CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE"
     );
 
     /**

@@ -179,8 +179,8 @@ public class CoreErrorCodes {
      * ErrorCode for error in Table (FileModel)
      */
     public static final ErrorCode TABLE_MISSING_ATTRIBUTE = ErrorCode.valueOf("TABLE_MISSING_ATTRIBUTE");
-    public static final ErrorCode TABLE_MISSING_NULLABLE_ATTRIBUTE = ErrorCode.valueOf(
-        "TABLE_MISSING_NULLABLE_ATTRIBUTE"
+    public static final ErrorCode TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE = ErrorCode.valueOf(
+        "TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE"
     );
     public static final ErrorCode TABLE_UNEXPECTED_ATTRIBUTE = ErrorCode.valueOf("TABLE_UNEXPECTED_ATTRIBUTE");
     public static final ErrorCode TABLE_UNEXPECTED_ENCODING = ErrorCode.valueOf("TABLE_UNEXPECTED_ENCODING");

@@ -90,13 +90,13 @@
 	{
 		"name": "TABLE_MISSING_ATTRIBUTE",
 		"level": "ERROR",
-		"message": "L'attribut obligatoire '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
+		"message": "L'attribut obligatoire '{ATTRIBUTE_NAME}' n'est pas présent dans le fichier '{FILEPATH}'.",
 		"documentation": "Cette erreur se produit lorsqu'un champ spécifié dans le modèle n'est pas présent dans la table"
 	},
 	{
-		"name": "TABLE_MISSING_NULLABLE_ATTRIBUTE",
+		"name": "TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE",
 		"level": "INFO",
-		"message": "L'attribut optionnel '{ATTRIBUTE_NAME}' n'est pas présent ou toujours vide dans le fichier '{FILEPATH}'.",
+		"message": "L'attribut optionnel '{ATTRIBUTE_NAME}' n'est pas présent dans le fichier '{FILEPATH}'.",
 		"documentation": "Cette erreur se produit lorsqu'un champ spécifié comme nullable dans le modèle n'est pas présent dans la table"
 	},
 	{
@@ -568,7 +568,7 @@
 		"documentation": ""
 	},
 	{
-		"name": "CNIG_TABLE_MISSING_NULLABLE_ATTRIBUTE",
+		"name": "CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE",
 		"level": "ERROR",
 		"message": "L'attribut optionnel '{ATTRIBUTE_NAME}' est absent du fichier {FILEPATH}. L'ajouter, même si il est toujours vide.",
 		"documentation": "Cette erreur se produit lorsqu'un attribut marqué comme mandatory=WARNING est absent dans le cadre d'une validation CNIG."
