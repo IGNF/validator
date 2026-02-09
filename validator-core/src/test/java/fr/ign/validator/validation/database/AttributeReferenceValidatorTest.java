@@ -23,6 +23,7 @@ import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.model.type.StringType;
 import fr.ign.validator.report.InMemoryReportBuilder;
+import fr.ign.validator.validation.attribute.AttributeReferenceValidator;
 
 public class AttributeReferenceValidatorTest {
 

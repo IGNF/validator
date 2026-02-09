@@ -25,6 +25,15 @@ public class AttributeConstraints {
     private boolean required;
 
     /**
+     * Indicates if attribute has to be present
+     *
+     *
+     * @see fr.ign.validator.validation.data.Header
+     * @see fr.ign.validator.error.CoreErrorCodes#TABLE_MISSING_ATTRIBUTE
+     */
+    private boolean presenceRequired;
+
+    /**
      * Indicates if the value is unique in the table
      *
      * @since 4.0 previously "identifier" supported only by dgpr plugin
@@ -79,9 +88,24 @@ public class AttributeConstraints {
      */
     private String reference;
 
+    // checks wheter presenceRequired has been modified
+    private boolean presenceRequiredModified;
+
     public AttributeConstraints() {
         this.required = true;
+        this.presenceRequired = true;
+        this.presenceRequiredModified = false;
         this.unique = false;
+    }
+
+    public boolean isPresenceRequired() {
+        return presenceRequired;
+    }
+
+    // Must be called after setRequired
+    public void setPresenceRequired(boolean presenceRequired) {
+        this.presenceRequired = presenceRequired;
+        this.presenceRequiredModified = true;
     }
 
     public boolean isRequired() {
@@ -90,6 +114,9 @@ public class AttributeConstraints {
 
     public void setRequired(boolean required) {
         this.required = required;
+        if (!this.presenceRequiredModified) {
+            this.presenceRequired = required;
+        }
     }
 
     public boolean isUnique() {
@@ -148,6 +175,10 @@ public class AttributeConstraints {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public boolean isPresenceRequiredModified() {
+        return this.presenceRequiredModified;
     }
 
 }

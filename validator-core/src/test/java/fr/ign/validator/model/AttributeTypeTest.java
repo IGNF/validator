@@ -49,7 +49,7 @@ public class AttributeTypeTest {
         ObjectMapper mapper = ObjectMapperFactory.createObjectMapper();
         String result = mapper.writeValueAsString(attribute);
         assertEquals(
-            "{\"type\":\"String\",\"name\":\"TEST\",\"description\":\"Test description\",\"constraints\":{\"required\":true,\"unique\":false}}",
+            "{\"type\":\"String\",\"name\":\"TEST\",\"description\":\"Test description\",\"constraints\":{\"required\":true,\"presenceRequired\":true,\"unique\":false,\"presenceRequiredModified\":false}}",
             result
         );
 

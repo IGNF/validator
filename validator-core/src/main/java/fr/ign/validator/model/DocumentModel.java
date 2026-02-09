@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.validation.Validator;
-import fr.ign.validator.validation.database.AttributeReferenceValidator;
+import fr.ign.validator.validation.attribute.AttributeReferenceValidator;
 import fr.ign.validator.validation.database.AttributeUniqueValidator;
 import fr.ign.validator.validation.database.FeatureTypeConditionsValidator;
 import fr.ign.validator.validation.database.ForeignKeyValidator;

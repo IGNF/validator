@@ -73,8 +73,8 @@ public class Header implements Validatable {
                     context.createError(CoreErrorCodes.TABLE_MISSING_GEOMETRY)
                         .setMessageParam("FILEPATH", relativePath)
                 );
-            } else if (!missingAttribute.getConstraints().isRequired()) {
-                this.reportTableMissingNullableAttribute(missingAttribute, context);
+            } else if (!missingAttribute.getConstraints().isPresenceRequired()) {
+                this.reportTableMissingPresenceOptionalAttribute(missingAttribute, context);
             } else {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_MISSING_ATTRIBUTE)
@@ -94,9 +94,9 @@ public class Header implements Validatable {
      * @param missingAttribute
      * @param context
      */
-    public void reportTableMissingNullableAttribute(AttributeType<?> missingAttribute, Context context) {
+    public void reportTableMissingPresenceOptionalAttribute(AttributeType<?> missingAttribute, Context context) {
         context.report(
-            context.createError(CoreErrorCodes.TABLE_MISSING_NULLABLE_ATTRIBUTE)
+            context.createError(CoreErrorCodes.TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
                 .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
                 .setMessageParam("FILEPATH", relativePath)
         );
