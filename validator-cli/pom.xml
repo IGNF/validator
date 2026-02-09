@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>fr.ign.validator</groupId>
 		<artifactId>validator</artifactId>
-		<version>4.4.17</version>
+		<version>4.4.18-SNAPSHOT</version>
 	</parent>
 	<name>validator-cli</name>
 	<artifactId>validator-cli</artifactId>
