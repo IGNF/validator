@@ -210,15 +210,15 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_SPECIFICATION_NOT_FOUND, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(1 + 1 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        ReportAssert.assertCount(6, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
+        ReportAssert.assertCount(3 + 3 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check some infos
@@ -328,15 +328,15 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(2, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(19, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_ERROR, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(1 + 2 + 2 + 19 + 1 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1 + 2 + 2 + 19 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
-        ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
+        ReportAssert.assertCount(3 + 0 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -764,10 +764,9 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
         ReportAssert.assertCount(1, CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND, report);
         ReportAssert.assertCount(2, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
-        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
         ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
         ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND, report);
-        ReportAssert.assertCount(18 + 0 + 1 + 2 + 6 + 1 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(18 + 0 + 1 + 2 + 1 + 1, ErrorLevel.ERROR, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GENERATEUR_SUP_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_ASSIETTE_SUP_NOT_FOUND, report);
 
@@ -792,7 +791,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
-        ReportAssert.assertCount(2, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
+        ReportAssert.assertCount(1 + 0 + 1 + 6, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -832,14 +832,15 @@ public class CnigValidatorRegressTest {
          * check errors
          */
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_PIECE_ECRITE_ONLY_PDF, report);
-        ReportAssert.assertCount(27, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(21, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
         ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
-        ReportAssert.assertCount(2 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
+        ReportAssert.assertCount(2 + 1 + 6, ErrorLevel.WARNING, report);
 
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         {
@@ -882,13 +883,13 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(4 + 1 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(4 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
-        ReportAssert.assertCount(0, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
+        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -933,7 +934,8 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_TXT_REGEXP_INVALID, report);
-        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(4, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
+        ReportAssert.assertCount(1 + 0 + 4, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
