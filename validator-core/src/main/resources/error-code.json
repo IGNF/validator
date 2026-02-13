@@ -569,8 +569,8 @@
 	},
 	{
 		"name": "CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE",
-		"level": "ERROR",
-		"message": "L'attribut optionnel '{ATTRIBUTE_NAME}' est absent du fichier {FILEPATH}. L'ajouter, même si il est toujours vide.",
+		"level": "WARNING",
+		"message": "L'attribut optionnel '{ATTRIBUTE_NAME}' est absent du fichier {FILEPATH}. L'ajouter, même si il est toujours vide. Cet avertissement se transformera en erreur prochainement.",
 		"documentation": "Cette erreur se produit lorsqu'un attribut marqué comme mandatory=WARNING est absent dans le cadre d'une validation CNIG."
 	},
 	{
