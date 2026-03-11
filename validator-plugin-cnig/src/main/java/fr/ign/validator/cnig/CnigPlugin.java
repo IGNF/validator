@@ -14,6 +14,7 @@ import fr.ign.validator.cnig.validation.attribute.InseeValidator;
 import fr.ign.validator.cnig.validation.attribute.RegexpTxtValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneAssietteValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneGenerateurValidator;
+import fr.ign.validator.cnig.validation.document.AtLeastOnePrescriptionValidator;
 import fr.ign.validator.cnig.validation.document.AtLeastOneWritingMaterialValidator;
 import fr.ign.validator.cnig.validation.document.DocumentNameValidator;
 import fr.ign.validator.cnig.validation.document.FileExtensionValidator;
@@ -73,10 +74,7 @@ public class CnigPlugin implements Plugin {
          * PostProcess - Compute document.tag.typeref (must run before
          * document-info.json generation)
          */
-        context.addListenerBefore(
-            new DocUrbaPostProcess(),
-            DocumentInfoExtractorPostProcess.class
-        );
+        context.addListenerBefore(new DocUrbaPostProcess(), DocumentInfoExtractorPostProcess.class);
 
         /*
          * PostProcess - DOC_URBA_COM validation for PLUi
@@ -95,6 +93,7 @@ public class CnigPlugin implements Plugin {
         context.addListener(new AtLeastOneWritingMaterialValidator());
         context.addListener(new AtLeastOneGenerateurValidator());
         context.addListener(new AtLeastOneAssietteValidator());
+        context.addListener(new AtLeastOnePrescriptionValidator());
         if (context.isFlatValidation()) {
             context.addListener(new FileExtensionValidator());
         } else {

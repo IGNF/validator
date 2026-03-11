@@ -147,14 +147,8 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
         {
             ValidatorError error = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP).get(0);
-            Assert.assertEquals(
-                "DOC_URBA.dbf",
-                error.getFile()
-            );
-            Assert.assertEquals(
-                "DATEREF",
-                error.getAttribute()
-            );
+            Assert.assertEquals("DOC_URBA.dbf", error.getFile());
+            Assert.assertEquals("DATEREF", error.getAttribute());
             Assert.assertEquals(
                 "La valeur (2011) ne correspond pas à l'expression régulière ([0-9]{8}).",
                 error.getMessage()
@@ -449,28 +443,20 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(104, CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT, report);
         {
             for (ValidatorError error : report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_INVALID_FORMAT)) {
-                Assert.assertEquals(
-                    "Donnees_geographiques/AC1_SERVITUDE.dbf",
-                    error.getFile()
-                );
-                Assert.assertEquals(
-                    "DATEMAJ",
-                    error.getAttribute()
-                );
+                Assert.assertEquals("Donnees_geographiques/AC1_SERVITUDE.dbf", error.getFile());
+                Assert.assertEquals("DATEMAJ", error.getAttribute());
             }
         }
         ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE, report);
         {
             List<ValidatorError> errors = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE);
             Assert.assertEquals(
-                2,
-                errors.stream().filter(error -> error.getAttribute().equals("IDACTE")).collect(Collectors.toList())
-                    .size()
+                2, errors.stream().filter(error -> error.getAttribute().equals("IDACTE"))
+                    .collect(Collectors.toList()).size()
             );
             Assert.assertEquals(
-                2,
-                errors.stream().filter(error -> error.getAttribute().equals("IDSUP")).collect(Collectors.toList())
-                    .size()
+                2, errors.stream().filter(error -> error.getAttribute().equals("IDSUP"))
+                    .collect(Collectors.toList()).size()
             );
         }
         ReportAssert.assertCount(2, CnigErrorCodes.CNIG_SUP_IDASS_NOT_UNIQUE, report);
@@ -528,27 +514,23 @@ public class CnigValidatorRegressTest {
             List<ValidatorError> errors = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP);
             // http://cnig.gouv.fr/wp-content/uploads/2019/04/190321_Standard_CNIG_SUP.pdf#page=27&zoom=auto,-260,407
             Assert.assertEquals(
-                206,
-                errors.stream().filter(error -> error.getAttribute().equals("IDASS")).collect(Collectors.toList())
-                    .size()
+                206, errors.stream().filter(error -> error.getAttribute().equals("IDASS"))
+                    .collect(Collectors.toList()).size()
             );
             // http://cnig.gouv.fr/wp-content/uploads/2019/04/190321_Standard_CNIG_SUP.pdf#page=27&zoom=auto,-260,407
             Assert.assertEquals(
-                310,
-                errors.stream().filter(error -> error.getAttribute().equals("IDGEN")).collect(Collectors.toList())
-                    .size()
+                310, errors.stream().filter(error -> error.getAttribute().equals("IDGEN"))
+                    .collect(Collectors.toList()).size()
             );
             // http://cnig.gouv.fr/wp-content/uploads/2019/04/190321_Standard_CNIG_SUP.pdf#page=30&zoom=auto,-260,406
             Assert.assertEquals(
-                206,
-                errors.stream().filter(error -> error.getAttribute().equals("NOMASS")).collect(Collectors.toList())
-                    .size()
+                206, errors.stream().filter(error -> error.getAttribute().equals("NOMASS"))
+                    .collect(Collectors.toList()).size()
             );
             // http://cnig.gouv.fr/wp-content/uploads/2019/04/190321_Standard_CNIG_SUP.pdf#page=30&zoom=auto,-260,406
             Assert.assertEquals(
-                104,
-                errors.stream().filter(error -> error.getAttribute().equals("NOMSUP")).collect(Collectors.toList())
-                    .size()
+                104, errors.stream().filter(error -> error.getAttribute().equals("NOMSUP"))
+                    .collect(Collectors.toList()).size()
             );
         }
         ReportAssert.assertCount(206 + 310 + 206 + 104, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
@@ -561,18 +543,16 @@ public class CnigValidatorRegressTest {
              * à une valeur autorisée (Égale au générateur, Zone tampon,[...])
              */
             Assert.assertEquals(
-                104,
-                errors.stream().filter(error -> error.getAttribute().equals("MODEGEOASS")).collect(Collectors.toList())
-                    .size()
+                104, errors.stream().filter(error -> error.getAttribute().equals("MODEGEOASS"))
+                    .collect(Collectors.toList()).size()
             );
             /*
              * ex : La valeur renseignée (Périmètre de protection) ne correspond pas à une
              * valeur autorisée (Périmètre des abords, Monument historique).
              */
             Assert.assertEquals(
-                206,
-                errors.stream().filter(error -> error.getAttribute().equals("TYPEASS")).collect(Collectors.toList())
-                    .size()
+                206, errors.stream().filter(error -> error.getAttribute().equals("TYPEASS"))
+                    .collect(Collectors.toList()).size()
             );
         }
         ReportAssert.assertCount(104 + 206, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
@@ -889,7 +869,9 @@ public class CnigValidatorRegressTest {
          * check warnings
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_PRESCRIPTION_NOT_FOUND, report);
+
+        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -1030,10 +1012,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
         {
             ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE).get(0);
-            assertEquals(
-                "Le code de territoire '88' est invalide dans le nom de dossier.",
-                error.getMessage()
-            );
+            assertEquals("Le code de territoire '88' est invalide dans le nom de dossier.", error.getMessage());
         }
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_KEYWORD_INVALID, report);
         // see https://github.com/IGNF/validator/issues/260 - inconsistency is reported
@@ -1109,21 +1088,13 @@ public class CnigValidatorRegressTest {
             );
             FileUtils.writeStringToFile(
                 new File(originalPath),
-                FileUtils.readFileToString(
-                    producedInfosCnigPath,
-                    StandardCharsets.UTF_8
-                ),
-                StandardCharsets.UTF_8
+                FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8), StandardCharsets.UTF_8
             );
             fail("restart test switching updateDocumentInfos to false in assertEqualsJsonFile");
         } else {
             String actual = FileUtils.readFileToString(producedInfosCnigPath, StandardCharsets.UTF_8).trim();
             String expected = FileUtils.readFileToString(expectedInfosCnigPath, StandardCharsets.UTF_8).trim();
-            JSONAssert.assertEquals(
-                expected,
-                actual,
-                JSONCompareMode.STRICT
-            );
+            JSONAssert.assertEquals(expected, actual, JSONCompareMode.STRICT);
         }
     }
 
