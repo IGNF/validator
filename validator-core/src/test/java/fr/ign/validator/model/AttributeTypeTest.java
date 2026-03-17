@@ -49,9 +49,8 @@ public class AttributeTypeTest {
         ObjectMapper mapper = ObjectMapperFactory.createObjectMapper();
         String result = mapper.writeValueAsString(attribute);
         assertEquals(
-            "{\"type\":\"String\",\"name\":\"TEST\",\"description\":\"Test description\",\"constraints\":{\"required\":true,\"presenceRequired\":true,\"unique\":false,\"presenceRequiredModified\":false}}",
-            result
-        );
+                "{\"type\":\"String\",\"name\":\"TEST\",\"description\":\"Test description\",\"constraints\":{\"required\":true,\"presenceRequired\":true,\"unique\":false}}",
+                result);
 
         // read from JSON
         AttributeType<?> newAttribute = mapper.readValue(result, AttributeType.class);
