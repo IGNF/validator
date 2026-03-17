@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -13,56 +14,64 @@
             "name": "commune",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "prefixe",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "section",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "numero",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "contenance",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "created",
             "type": "Date",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "updated",
             "type": "Date",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "WKT",
             "type": "MultiPolygon",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

@@ -8,6 +8,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 10
             }
@@ -19,6 +20,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
             }
@@ -29,6 +31,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -39,6 +42,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
             }

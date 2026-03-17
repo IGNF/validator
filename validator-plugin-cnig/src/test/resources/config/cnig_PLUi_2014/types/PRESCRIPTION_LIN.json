@@ -12,6 +12,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "enum": [
                     "01",
@@ -38,6 +39,7 @@
             "type": "MultiLineString",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -49,6 +51,7 @@
             "type": "Url",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 254
             }
@@ -61,6 +64,7 @@
             "type": "Date",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         },
@@ -72,6 +76,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 10
             }
@@ -84,6 +89,7 @@
             "type": "Date",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         },
@@ -95,6 +101,7 @@
             "type": "Filename",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 80
             }
@@ -107,6 +114,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 254
             }
@@ -119,6 +127,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 5
             }
@@ -131,6 +140,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "pattern": "L([0-9]+)?",
                 "maxLength": 10

@@ -5,14 +5,16 @@
             "name": "NATURE",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "WKT",
             "type": "LineString",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

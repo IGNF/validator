@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -13,28 +14,32 @@
             "name": "nom",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "created",
             "type": "Date",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "updated",
             "type": "Date",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "WKT",
             "type": "MultiPolygon",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

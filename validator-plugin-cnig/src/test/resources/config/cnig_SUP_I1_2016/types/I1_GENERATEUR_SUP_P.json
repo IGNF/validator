@@ -11,6 +11,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 50
             }
@@ -23,6 +24,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 30
             }
@@ -35,6 +37,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true,
                 "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+",
                 "maxLength": 40
@@ -48,6 +51,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+_gen([0-9]+)?",
                 "maxLength": 100
@@ -61,6 +65,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 50
             }
@@ -73,6 +78,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "pattern": "[0-9]{8}"
             }
@@ -85,6 +91,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "enum": [
                     "Digitalisation",
@@ -103,6 +110,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+",
                 "maxLength": 40
@@ -115,6 +123,7 @@
             "type": "MultiPoint",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -125,6 +134,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "enum": [
                     "Hydrocarbures",
@@ -141,6 +151,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "enum": [
                     "Canalisation (maîtrise urbanisation)"

@@ -11,6 +11,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true,
                 "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+-[0-9]+",
                 "maxLength": 40
@@ -24,6 +25,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "pattern": "[a-zA-Z0-9]+-[0-9]{9}-[0-9]+-[0-9]+",
                 "maxLength": 40
@@ -37,6 +39,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 30
             }
@@ -49,6 +52,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "pattern": "[0-9]{8}"
             }
@@ -61,6 +65,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "enum": [
                     "Égale au générateur",
@@ -84,6 +89,7 @@
             "type": "Integer",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         },
@@ -94,6 +100,7 @@
             "type": "MultiPolygon",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -104,6 +111,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "enum": [
                     "Zone d’atterrage",
@@ -119,6 +127,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "pattern": "[a-zA-Z0-9]+_[A-Za-z0-9_-]+(_gen[0-9]+)?_(zatt|zsur)",
                 "maxLength": 100

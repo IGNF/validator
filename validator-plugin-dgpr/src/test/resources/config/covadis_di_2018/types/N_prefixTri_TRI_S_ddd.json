@@ -8,6 +8,7 @@
             "type": "Integer",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -18,6 +19,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 254
             }
@@ -28,6 +30,7 @@
             "type": "Integer",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -37,6 +40,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -46,6 +50,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -56,6 +61,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": true,
                 "pattern": "^FR[A-Z0-9]{1,4}_TRI_[A-Z_0-9]{1,33}$",
                 "maxLength": 50
@@ -67,6 +73,7 @@
             "type": "MultiPolygon",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         },
@@ -76,6 +83,7 @@
             "type": "Integer",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         }

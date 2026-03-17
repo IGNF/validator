@@ -8,6 +8,7 @@
       "type": "Integer",
       "constraints": {
         "required": true,
+        "presenceRequired": true,
         "unique": true
       }
     },
@@ -17,6 +18,7 @@
       "type": "String",
       "constraints": {
         "required": false,
+        "presenceRequired": false,
         "minLength": 5,
         "maxLength": 254
       }
@@ -26,7 +28,8 @@
       "description": "Page de présentation",
       "type": "Url",
       "constraints": {
-        "required": false
+        "required": false,
+        "presenceRequired": false
       }
     }
   ]

@@ -12,6 +12,7 @@
             "type": "Integer",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "reference": "ACTE_SUP.IDACTE"
             }
@@ -24,6 +25,7 @@
             "type": "Integer",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "reference": "SERVITUDE.IDSUP"
             }

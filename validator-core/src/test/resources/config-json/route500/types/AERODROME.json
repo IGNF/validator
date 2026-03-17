@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -13,21 +14,24 @@
             "name": "TOPONYME",
             "type": "String",
             "constraints": {
-                "required": false
+                "required": false,
+                "presenceRequired": false
             }
         },
         {
             "name": "ID_TRONCON",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "WKT",
             "type": "Point",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

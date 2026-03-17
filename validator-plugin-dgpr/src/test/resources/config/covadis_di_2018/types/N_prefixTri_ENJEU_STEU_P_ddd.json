@@ -8,6 +8,7 @@
             "type": "Integer",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -17,6 +18,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 30
             }
@@ -27,6 +29,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -36,6 +39,7 @@
             "type": "Boolean",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -45,6 +49,7 @@
             "type": "MultiPoint",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         }

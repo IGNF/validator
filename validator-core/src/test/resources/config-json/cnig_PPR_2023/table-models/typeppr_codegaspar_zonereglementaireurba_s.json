@@ -8,6 +8,7 @@
       "type": "String",
       "constraints": {
         "required": true,
+        "presenceRequired": true,
         "unique": true,
         "maxLength": 8
       }
@@ -56,6 +57,7 @@
       "type": "Polygon",
       "constraints": {
         "required": true,
+        "presenceRequired": true,
         "unique": false
       }
     }

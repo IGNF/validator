@@ -18,9 +18,11 @@ public class CnigHeader extends Header {
 
     @Override
     public void reportTableMissingPresenceOptionalAttribute(AttributeType<?> missingAttribute, Context context) {
-        context.report(context.createError(CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
+        context.report(
+            context.createError(CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
                 .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                .setMessageParam("FILEPATH", this.getRelativePath()));
+                .setMessageParam("FILEPATH", this.getRelativePath())
+        );
 
     }
 }

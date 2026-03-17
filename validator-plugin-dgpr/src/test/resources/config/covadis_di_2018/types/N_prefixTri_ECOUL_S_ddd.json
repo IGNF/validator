@@ -9,6 +9,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "enum": [
                     "Fai",
@@ -24,6 +25,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": true,
                 "pattern": "ZE_[0-9]+$",
                 "maxLength": 30
@@ -36,6 +38,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
             }
@@ -46,6 +49,7 @@
             "type": "Boolean",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -56,6 +60,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "reference": "N_prefixTri_INONDABLE_suffixInond_S_ddd.ID_S_INOND"
             }
@@ -66,6 +71,7 @@
             "type": "MultiPolygon",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         },
@@ -75,6 +81,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -84,6 +91,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         }

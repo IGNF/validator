@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -14,6 +15,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "reference": "NOEUD_ROUTIER.ID_RTE500"
             }
         },
@@ -22,6 +24,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "reference": "TRONCON_ROUTE.ID_RTE500"
             }
         },
@@ -30,6 +33,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "reference": "TRONCON_ROUTE.ID_RTE500"
             }
         },
@@ -37,28 +41,32 @@
             "name": "INTERDIT",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "REST_POIDS",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "REST_HAUT",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "WKT",
             "type": "Point",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

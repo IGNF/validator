@@ -12,6 +12,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 254
             }
@@ -24,6 +25,7 @@
             "type": "Filename",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 80
             }
@@ -36,6 +38,7 @@
             "type": "Url",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 254
             }
@@ -48,6 +51,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "maxLength": 10
             }
@@ -60,6 +64,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "enum": [
                     "16",
@@ -78,6 +83,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "pattern": "POIN([0-9]+)?",
                 "maxLength": 10
@@ -91,6 +97,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 5
             }
@@ -103,6 +110,7 @@
             "type": "MultiPoint",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         }
