@@ -9,6 +9,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "enum": [
                     "04Fai_100",
@@ -29,6 +30,7 @@
             "type": "MultiPolygon",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false
             }
         },
@@ -38,6 +40,7 @@
             "type": "Boolean",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -48,6 +51,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "reference": "N_prefixTri_TRI_S_ddd.ID_TRI"
             }
@@ -58,6 +62,7 @@
             "type": "Boolean",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -68,6 +73,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": true,
                 "pattern": "ZPP?_[0-9]+$",
                 "maxLength": 30
@@ -79,6 +85,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -88,6 +95,7 @@
             "type": "Boolean",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         },
@@ -97,6 +105,7 @@
             "type": "Date",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         }

@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -13,7 +14,8 @@
             "name": "WKT",
             "type": "MultiPolygon",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

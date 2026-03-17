@@ -1,45 +1,47 @@
 {
-    "name": "typeppr_codegaspar_zonereglementairefoncier_s",
-    "description": "",
-    "columns": [
-      {
-        "name": "idzonereglementaire",
-        "description": "Identifiant unique",
-        "type": "Integer",
-        "constraints": {
-          "required": true,
-          "unique": true
-        }
-      },
-      {
-        "name": "codeprocedure",
-        "description": "",
-        "type": "String"
-      },
-      {
-        "name": "codezonereglement",
-        "description": "",
-        "type": "String"
-      },
-      {
-        "name": "libellezonereglement",
-        "description": "",
-        "type": "String"
-      },
-      {
-        "name": "typereglement",
-        "description": "",
-        "type": "String"
-      },
-      {
-        "name": "WKT",
-        "title": "Géométrie",
-        "description": "Geométrie associée",
-        "type": "Polygon",
-        "constraints": {
-          "required": true,
-          "unique": false
-        }
+  "name": "typeppr_codegaspar_zonereglementairefoncier_s",
+  "description": "",
+  "columns": [
+    {
+      "name": "idzonereglementaire",
+      "description": "Identifiant unique",
+      "type": "Integer",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "unique": true
       }
-    ]
-  }
+    },
+    {
+      "name": "codeprocedure",
+      "description": "",
+      "type": "String"
+    },
+    {
+      "name": "codezonereglement",
+      "description": "",
+      "type": "String"
+    },
+    {
+      "name": "libellezonereglement",
+      "description": "",
+      "type": "String"
+    },
+    {
+      "name": "typereglement",
+      "description": "",
+      "type": "String"
+    },
+    {
+      "name": "WKT",
+      "title": "Géométrie",
+      "description": "Geométrie associée",
+      "type": "Polygon",
+      "constraints": {
+        "required": true,
+        "presenceRequired": true,
+        "unique": false
+      }
+    }
+  ]
+}

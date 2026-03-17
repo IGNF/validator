@@ -5,35 +5,40 @@
             "name": "parcelle",
             "type": "String",
             "constraints": {
-                "required": false
+                "required": false,
+                "presenceRequired": false
             }
         },
         {
             "name": "lettre",
             "type": "String",
             "constraints": {
-                "required": false
+                "required": false,
+                "presenceRequired": false
             }
         },
         {
             "name": "created",
             "type": "Date",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "updated",
             "type": "Date",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "WKT",
             "type": "MultiPolygon",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

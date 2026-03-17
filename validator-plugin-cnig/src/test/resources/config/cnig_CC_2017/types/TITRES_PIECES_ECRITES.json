@@ -10,6 +10,7 @@
             "type": "Filename",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true,
                 "maxLength": 255
             }
@@ -21,6 +22,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 80
             }

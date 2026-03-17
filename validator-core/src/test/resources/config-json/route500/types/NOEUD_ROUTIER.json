@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -14,7 +15,8 @@
             "type": "String",
             "constraints": {
                 "required": true,
-                "enum":[
+                "presenceRequired": true,
+                "enum": [
                     "Petit rond-point",
                     "Grand rond-point",
                     "Carrefour simple",
@@ -37,6 +39,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "maxLength": 5
             }
         },
@@ -44,7 +47,8 @@
             "name": "WKT",
             "type": "Point",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

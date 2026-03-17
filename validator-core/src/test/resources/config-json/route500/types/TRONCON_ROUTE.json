@@ -6,6 +6,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": true
             }
         },
@@ -14,6 +15,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "Type autoroutier",
                     "Liaison régionale",
@@ -28,6 +30,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "1 chaussée",
                     "2 chaussées"
@@ -39,6 +42,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "Sans objet",
                     "1 voie",
@@ -55,6 +59,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "Revêtu"
                 ]
@@ -64,7 +69,8 @@
             "name": "ACCES",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
@@ -72,6 +78,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "Appartient",
                     "N'appartient pas"
@@ -83,6 +90,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "Double sens",
                     "Sens direct",
@@ -94,28 +102,32 @@
             "name": "COUNT",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
             "name": "NUM_ROUTE",
             "type": "String",
             "constraints": {
-                "required": false
+                "required": false,
+                "presenceRequired": false
             }
         },
         {
             "name": "RES_EUROPE",
             "type": "String",
             "constraints": {
-                "required": false
+                "required": false,
+                "presenceRequired": false
             }
         },
         {
             "name": "LONGUEUR",
             "type": "String",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         },
         {
@@ -123,6 +135,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "enum": [
                     "Sans objet",
                     "Départementale",
@@ -135,7 +148,8 @@
             "name": "WKT",
             "type": "LineString",
             "constraints": {
-                "required": true
+                "required": true,
+                "presenceRequired": true
             }
         }
     ]

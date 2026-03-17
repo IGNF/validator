@@ -12,6 +12,7 @@
             "type": "String",
             "constraints": {
                 "required": false,
+                "presenceRequired": false,
                 "unique": false,
                 "pattern": "HL([0-9]+)?",
                 "maxLength": 10
@@ -25,6 +26,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 5
             }
@@ -37,6 +39,7 @@
             "type": "String",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false,
                 "maxLength": 40
             }
@@ -49,6 +52,7 @@
             "type": "MultiLineString",
             "constraints": {
                 "required": true,
+                "presenceRequired": true,
                 "unique": false
             }
         }

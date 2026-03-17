@@ -88,13 +88,9 @@ public class AttributeConstraints {
      */
     private String reference;
 
-    // checks wheter presenceRequired has been modified
-    private boolean presenceRequiredModified;
-
     public AttributeConstraints() {
         this.required = true;
         this.presenceRequired = true;
-        this.presenceRequiredModified = false;
         this.unique = false;
     }
 
@@ -105,7 +101,6 @@ public class AttributeConstraints {
     // Must be called after setRequired
     public void setPresenceRequired(boolean presenceRequired) {
         this.presenceRequired = presenceRequired;
-        this.presenceRequiredModified = true;
     }
 
     public boolean isRequired() {
@@ -114,9 +109,6 @@ public class AttributeConstraints {
 
     public void setRequired(boolean required) {
         this.required = required;
-        if (!this.presenceRequiredModified) {
-            this.presenceRequired = required;
-        }
     }
 
     public boolean isUnique() {
@@ -175,10 +167,6 @@ public class AttributeConstraints {
 
     public void setReference(String reference) {
         this.reference = reference;
-    }
-
-    public boolean isPresenceRequiredModified() {
-        return this.presenceRequiredModified;
     }
 
 }
