@@ -196,6 +196,12 @@
 		"documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
 	},
 	{
+		"name": "ATTRIBUTE_GEOMETRY_LIMIT_VALID",
+		"level": "WARNING",
+		"message": "La géométrie de l'objet est très proche de ne pas être topologiquement correcte. {TYPE_ERROR}",
+		"documentation": "Voir la documentation de PostGIS : http://www.postgis.fr/chrome/site/docs/workshop-foss4g/doc/validity.html"
+	},
+	{
 		"name": "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT",
 		"level": "ERROR",
 		"message": "Les coordonnées de la géométrie de l'objet ne correspondent pas à la zone attendue.",

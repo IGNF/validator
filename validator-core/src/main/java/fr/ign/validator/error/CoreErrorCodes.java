@@ -28,14 +28,12 @@ public class CoreErrorCodes {
      * ErrorCode for error in FileModel
      */
     public static final ErrorCode FILE_MISSING_RECOMMANDED = ErrorCode.valueOf("FILE_MISSING_RECOMMANDED");
-    public static final ErrorCode FILE_MISSING_RECOMMANDED_DIRECTORY = ErrorCode.valueOf(
-        "FILE_MISSING_RECOMMANDED_DIRECTORY"
-    );
+    public static final ErrorCode FILE_MISSING_RECOMMANDED_DIRECTORY = ErrorCode
+            .valueOf("FILE_MISSING_RECOMMANDED_DIRECTORY");
 
     public static final ErrorCode FILE_MISSING_MANDATORY = ErrorCode.valueOf("FILE_MISSING_MANDATORY");
-    public static final ErrorCode FILE_MISSING_MANDATORY_DIRECTORY = ErrorCode.valueOf(
-        "FILE_MISSING_MANDATORY_DIRECTORY"
-    );
+    public static final ErrorCode FILE_MISSING_MANDATORY_DIRECTORY = ErrorCode
+            .valueOf("FILE_MISSING_MANDATORY_DIRECTORY");
 
     public static final ErrorCode FILE_UNEXPECTED = ErrorCode.valueOf("FILE_UNEXPECTED");
     public static final ErrorCode DIRECTORY_UNEXPECTED = ErrorCode.valueOf("DIRECTORY_UNEXPECTED");
@@ -56,12 +54,10 @@ public class CoreErrorCodes {
     /*
      * ErrorCode for error in Metadata Content
      */
-    public static final ErrorCode METADATA_FILEIDENTIFIER_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_FILEIDENTIFIER_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_FILEIDENTIFIER_INVALID = ErrorCode.valueOf(
-        "METADATA_FILEIDENTIFIER_INVALID"
-    );
+    public static final ErrorCode METADATA_FILEIDENTIFIER_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_FILEIDENTIFIER_NOT_FOUND");
+    public static final ErrorCode METADATA_FILEIDENTIFIER_INVALID = ErrorCode
+            .valueOf("METADATA_FILEIDENTIFIER_INVALID");
 
     public static final ErrorCode METADATA_IDENTIFIER_NOT_FOUND = ErrorCode.valueOf("METADATA_IDENTIFIER_NOT_FOUND");
 
@@ -72,12 +68,10 @@ public class CoreErrorCodes {
     public static final ErrorCode METADATA_TYPE_INVALID = ErrorCode.valueOf("METADATA_TYPE_INVALID");
 
     public static final ErrorCode METADATA_LOCATORS_EMPTY = ErrorCode.valueOf("METADATA_LOCATORS_EMPTY");
-    public static final ErrorCode METADATA_LOCATOR_NAME_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_LOCATOR_NAME_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_LOCATOR_PROTOCOL_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_LOCATOR_PROTOCOL_NOT_FOUND"
-    );
+    public static final ErrorCode METADATA_LOCATOR_NAME_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_LOCATOR_NAME_NOT_FOUND");
+    public static final ErrorCode METADATA_LOCATOR_PROTOCOL_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_LOCATOR_PROTOCOL_NOT_FOUND");
     public static final ErrorCode METADATA_LOCATOR_URL_NOT_FOUND = ErrorCode.valueOf("METADATA_LOCATOR_URL_NOT_FOUND");
 
     public static final ErrorCode METADATA_LANGUAGE_NOT_FOUND = ErrorCode.valueOf("METADATA_LANGUAGE_NOT_FOUND");
@@ -86,102 +80,77 @@ public class CoreErrorCodes {
     public static final ErrorCode METADATA_EXTENTS_EMPTY = ErrorCode.valueOf("METADATA_EXTENTS_EMPTY");
     public static final ErrorCode METADATA_EXTENT_INVALID = ErrorCode.valueOf("METADATA_EXTENT_INVALID");
 
-    public static final ErrorCode METADATA_TOPICCATEGORY_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_TOPICCATEGORY_NOT_FOUND"
-    );
+    public static final ErrorCode METADATA_TOPICCATEGORY_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_TOPICCATEGORY_NOT_FOUND");
     public static final ErrorCode METADATA_TOPICCATEGORY_INVALID = ErrorCode.valueOf("METADATA_TOPICCATEGORY_INVALID");
 
     public static final ErrorCode METADATA_DATES_NOT_FOUND = ErrorCode.valueOf("METADATA_DATES_NOT_FOUND");
-    public static final ErrorCode METADATA_DATEOFPUBLICATION_INVALID = ErrorCode.valueOf(
-        "METADATA_DATEOFPUBLICATION_INVALID"
-    );
-    public static final ErrorCode METADATA_DATEOFLASTREVISION_INVALID = ErrorCode.valueOf(
-        "METADATA_DATEOFLASTREVISION_INVALID"
-    );
-    public static final ErrorCode METADATA_DATEOFCREATION_INVALID = ErrorCode.valueOf(
-        "METADATA_DATEOFCREATION_INVALID"
-    );
+    public static final ErrorCode METADATA_DATEOFPUBLICATION_INVALID = ErrorCode
+            .valueOf("METADATA_DATEOFPUBLICATION_INVALID");
+    public static final ErrorCode METADATA_DATEOFLASTREVISION_INVALID = ErrorCode
+            .valueOf("METADATA_DATEOFLASTREVISION_INVALID");
+    public static final ErrorCode METADATA_DATEOFCREATION_INVALID = ErrorCode
+            .valueOf("METADATA_DATEOFCREATION_INVALID");
 
-    public static final ErrorCode METADATA_CHARACTERSET_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_CHARACTERSET_NOT_FOUND"
-    );
+    public static final ErrorCode METADATA_CHARACTERSET_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_CHARACTERSET_NOT_FOUND");
     public static final ErrorCode METADATA_CHARACTERSET_INVALID = ErrorCode.valueOf("METADATA_CHARACTERSET_INVALID");
 
-    public static final ErrorCode METADATA_DISTRIBUTIONFORMATS_EMPTY = ErrorCode.valueOf(
-        "METADATA_DISTRIBUTIONFORMATS_EMPTY"
-    );
-    public static final ErrorCode METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND"
-    );
+    public static final ErrorCode METADATA_DISTRIBUTIONFORMATS_EMPTY = ErrorCode
+            .valueOf("METADATA_DISTRIBUTIONFORMATS_EMPTY");
+    public static final ErrorCode METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_DISTRIBUTIONFORMAT_NAME_NOT_FOUND");
 
-    public static final ErrorCode METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_SPATIALREPRESENTATIONTYPE_INVALID = ErrorCode.valueOf(
-        "METADATA_SPATIALREPRESENTATIONTYPE_INVALID"
-    );
+    public static final ErrorCode METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_SPATIALREPRESENTATIONTYPE_NOT_FOUND");
+    public static final ErrorCode METADATA_SPATIALREPRESENTATIONTYPE_INVALID = ErrorCode
+            .valueOf("METADATA_SPATIALREPRESENTATIONTYPE_INVALID");
 
     public static final ErrorCode METADATA_LINEAGE_NOT_FOUND = ErrorCode.valueOf("METADATA_LINEAGE_NOT_FOUND");
 
-    public static final ErrorCode METADATA_SPATIALRESOLUTIONS_EMPTY = ErrorCode.valueOf(
-        "METADATA_SPATIALRESOLUTIONS_EMPTY"
-    );
-    public static final ErrorCode METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR = ErrorCode.valueOf(
-        "METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR"
-    );
-    public static final ErrorCode METADATA_SPATIALRESOLUTION_INVALID_DISTANCE = ErrorCode.valueOf(
-        "METADATA_SPATIALRESOLUTION_INVALID_DISTANCE"
-    );
+    public static final ErrorCode METADATA_SPATIALRESOLUTIONS_EMPTY = ErrorCode
+            .valueOf("METADATA_SPATIALRESOLUTIONS_EMPTY");
+    public static final ErrorCode METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR = ErrorCode
+            .valueOf("METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR");
+    public static final ErrorCode METADATA_SPATIALRESOLUTION_INVALID_DISTANCE = ErrorCode
+            .valueOf("METADATA_SPATIALRESOLUTION_INVALID_DISTANCE");
 
     public static final ErrorCode METADATA_SPECIFICATIONS_EMPTY = ErrorCode.valueOf("METADATA_SPECIFICATIONS_EMPTY");
-    public static final ErrorCode METADATA_SPECIFICATION_TITLE_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_SPECIFICATION_TITLE_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_SPECIFICATION_DATE_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_SPECIFICATION_DATE_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_SPECIFICATION_DATE_INVALID = ErrorCode.valueOf(
-        "METADATA_SPECIFICATION_DATE_INVALID"
-    );
-    public static final ErrorCode METADATA_SPECIFICATION_DEGREE_INVALID = ErrorCode.valueOf(
-        "METADATA_SPECIFICATION_DEGREE_INVALID"
-    );
+    public static final ErrorCode METADATA_SPECIFICATION_TITLE_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_SPECIFICATION_TITLE_NOT_FOUND");
+    public static final ErrorCode METADATA_SPECIFICATION_DATE_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_SPECIFICATION_DATE_NOT_FOUND");
+    public static final ErrorCode METADATA_SPECIFICATION_DATE_INVALID = ErrorCode
+            .valueOf("METADATA_SPECIFICATION_DATE_INVALID");
+    public static final ErrorCode METADATA_SPECIFICATION_DEGREE_INVALID = ErrorCode
+            .valueOf("METADATA_SPECIFICATION_DEGREE_INVALID");
 
     public static final ErrorCode METADATA_CONTACT_NOT_FOUND = ErrorCode.valueOf("METADATA_CONTACT_NOT_FOUND");
-    public static final ErrorCode METADATA_CONTACT_NAMEABSENT = ErrorCode.valueOf(
-        "METADATA_CONTACT_NAMEABSENT"
-    );
+    public static final ErrorCode METADATA_CONTACT_NAMEABSENT = ErrorCode.valueOf("METADATA_CONTACT_NAMEABSENT");
     public static final ErrorCode METADATA_CONTACT_MAILINVALID = ErrorCode.valueOf("METADATA_CONTACT_MAILINVALID");;
 
-    public static final ErrorCode METADATA_METADATACONTACT_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_METADATACONTACT_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_METADATACONTACT_NAMEABSENT = ErrorCode.valueOf(
-        "METADATA_METADATACONTACT_NAMEABSENT"
-    );
-    public static final ErrorCode METADATA_METADATACONTACT_MAILINVALID = ErrorCode.valueOf(
-        "METADATA_METADATACONTACT_MAILINVALID"
-    );
+    public static final ErrorCode METADATA_METADATACONTACT_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_METADATACONTACT_NOT_FOUND");
+    public static final ErrorCode METADATA_METADATACONTACT_NAMEABSENT = ErrorCode
+            .valueOf("METADATA_METADATACONTACT_NAMEABSENT");
+    public static final ErrorCode METADATA_METADATACONTACT_MAILINVALID = ErrorCode
+            .valueOf("METADATA_METADATACONTACT_MAILINVALID");
 
-    public static final ErrorCode METADATA_METADATADATE_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_METADATADATE_NOT_FOUND"
-    );
+    public static final ErrorCode METADATA_METADATADATE_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_METADATADATE_NOT_FOUND");
     public static final ErrorCode METADATA_METADATADATE_INVALID = ErrorCode.valueOf("METADATA_METADATADATE_INVALID");
 
-    public static final ErrorCode METADATA_METADATALANGUAGE_NOT_FOUND = ErrorCode.valueOf(
-        "METADATA_METADATALANGUAGE_NOT_FOUND"
-    );
-    public static final ErrorCode METADATA_METADATALANGUAGE_INVALID = ErrorCode.valueOf(
-        "METADATA_METADATALANGUAGE_INVALID"
-    );
+    public static final ErrorCode METADATA_METADATALANGUAGE_NOT_FOUND = ErrorCode
+            .valueOf("METADATA_METADATALANGUAGE_NOT_FOUND");
+    public static final ErrorCode METADATA_METADATALANGUAGE_INVALID = ErrorCode
+            .valueOf("METADATA_METADATALANGUAGE_INVALID");
 
     /*
      * ErrorCode for error in Table (FileModel)
      */
     public static final ErrorCode TABLE_MISSING_ATTRIBUTE = ErrorCode.valueOf("TABLE_MISSING_ATTRIBUTE");
-    public static final ErrorCode TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE = ErrorCode.valueOf(
-        "TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE"
-    );
+    public static final ErrorCode TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE = ErrorCode
+            .valueOf("TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE");
     public static final ErrorCode TABLE_UNEXPECTED_ATTRIBUTE = ErrorCode.valueOf("TABLE_UNEXPECTED_ATTRIBUTE");
     public static final ErrorCode TABLE_UNEXPECTED_ENCODING = ErrorCode.valueOf("TABLE_UNEXPECTED_ENCODING");
     public static final ErrorCode TABLE_MISSING_GEOMETRY = ErrorCode.valueOf("TABLE_MISSING_GEOMETRY");
@@ -213,19 +182,17 @@ public class CoreErrorCodes {
     /**
      * Fail to parse field as a JTS Geometry.
      */
-    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_FORMAT = ErrorCode.valueOf(
-        "ATTRIBUTE_GEOMETRY_INVALID_FORMAT"
-    );
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_FORMAT = ErrorCode
+            .valueOf("ATTRIBUTE_GEOMETRY_INVALID_FORMAT");
     /**
      * Topology problem for the geometry.
      */
     public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_INVALID");
-    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode.valueOf(
-        "ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT"
-    );
-    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_INTERNAL = ErrorCode.valueOf(
-        "ATTRIBUTE_GEOMETRY_INVALID_INTERNAL"
-    );
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_LIMIT_VALID = ErrorCode.valueOf("ATTRIBUTE_GEOMETRY_LIMIT_VALID");
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT = ErrorCode
+            .valueOf("ATTRIBUTE_GEOMETRY_INVALID_DATA_EXTENT");
+    public static final ErrorCode ATTRIBUTE_GEOMETRY_INVALID_INTERNAL = ErrorCode
+            .valueOf("ATTRIBUTE_GEOMETRY_INVALID_INTERNAL");
 
     public static final ErrorCode ATTRIBUTE_PATH_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_PATH_NOT_FOUND");
     public static final ErrorCode ATTRIBUTE_FILE_NOT_FOUND = ErrorCode.valueOf("ATTRIBUTE_FILE_NOT_FOUND");

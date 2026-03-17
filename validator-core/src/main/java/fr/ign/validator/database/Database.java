@@ -372,15 +372,39 @@ public class Database implements Closeable {
         for (AttributeType<?> attributeType : attributes) {
             // create index for unique values
             if (attributeType.getConstraints().isUnique()) {
-                createIndex(tableModel.getName(), attributeType.getName());
+                if (attributeType.isGeometry()) {
+                    createGeomIndex(tableModel.getName(), attributeType.getName());
+                } else {
+                    createIndex(tableModel.getName(), attributeType.getName());
+                }
             }
             // create index for referenced values
             if (!StringUtils.isEmpty(attributeType.getConstraints().getReference())) {
                 String targetTableName = attributeType.getTableReference();
                 String targetColumnName = attributeType.getAttributeReference();
-                createIndex(targetTableName, targetColumnName);
+                if (attributeType.isGeometry()) {
+                    createGeomIndex(targetTableName, targetColumnName);
+                } else {
+                    createIndex(targetTableName, targetColumnName);
+                }
             }
         }
+    }
+
+    /**
+     * Create geometry index idx_{tableName}_{columnName} on
+     * {tableName}({columnName}
+     *
+     * @param tableName
+     * @param columnName
+     */
+    public void createGeomIndex(String tableName, String columnName) throws SQLException {
+        log.info(MARKER, "Create geometry index on {}.{} ...", tableName, columnName);
+        String indexName = "idx_" + tableName + "_" + columnName;
+        String sql = "CREATE INDEX IF NOT EXISTS " + indexName + " ON " + tableName + " (md5(" + columnName + "))";
+
+        update(sql);
+        connection.commit();
     }
 
     /**
@@ -433,12 +457,8 @@ public class Database implements Closeable {
         for (String tableName : reader.getTableNames()) {
             TableModel tableModel = mutliTableModel.getTableModelByName(tableName);
             if (tableModel == null) {
-                log.warn(
-                    MARKER, "Loading {} from {} : Skipped (table not found in {})",
-                    tableName,
-                    documentFile.getPath(),
-                    mutliTableModel
-                );
+                log.warn(MARKER, "Loading {} from {} : Skipped (table not found in {})", tableName,
+                        documentFile.getPath(), mutliTableModel);
                 continue;
             }
             loadFile(tableModel.getName(), reader.getTablePath(tableName), StandardCharsets.UTF_8);
@@ -468,10 +488,8 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     void load(Context context, StaticTable staticTable) throws IOException, SQLException {
-        log.info(
-            MARKER, "Load table '{}' from stream '{}' (charset={})...",
-            staticTable.getName(), staticTable.getDataReference(), StandardCharsets.UTF_8
-        );
+        log.info(MARKER, "Load table '{}' from stream '{}' (charset={})...", staticTable.getName(),
+                staticTable.getDataReference(), StandardCharsets.UTF_8);
         TableReader reader = TableReader.createTableReader(staticTable.getData());
         loadTable(staticTable.getName(), staticTable.getDataReference(), reader, StandardCharsets.UTF_8);
     }
@@ -486,10 +504,7 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     void loadFile(String tableName, File path, Charset charset) throws IOException, SQLException {
-        log.info(
-            MARKER, "Load table '{}' from file '{}' (charset={})...",
-            tableName, path.getAbsolutePath(), charset
-        );
+        log.info(MARKER, "Load table '{}' from file '{}' (charset={})...", tableName, path.getAbsolutePath(), charset);
         TableReader reader = TableReader.createTableReader(path, charset);
         loadTable(tableName, path.getName(), reader, charset);
     }
@@ -504,8 +519,8 @@ public class Database implements Closeable {
      * @throws IOException
      * @throws SQLException
      */
-    void loadTable(String tableName, String sourceFile, TableReader reader, Charset charset) throws IOException,
-        SQLException {
+    void loadTable(String tableName, String sourceFile, TableReader reader, Charset charset)
+            throws IOException, SQLException {
 
         String[] inputColumns = reader.getHeader();
         String[] outputColumns = getTableSchema(tableName);
@@ -534,15 +549,13 @@ public class Database implements Closeable {
 
         /* no matching ? */
         if (inputIndexes.isEmpty()) {
-            log.warn(
-                MARKER, "No matching column found in {} for {} with {}",
-                tableName, sourceFile, String.join(",", inputColumns)
-            );
+            log.warn(MARKER, "No matching column found in {} for {} with {}", tableName, sourceFile,
+                    String.join(",", inputColumns));
             return;
         }
 
         String sql = "INSERT INTO " + tableName + " (" + String.join(", ", columnParts) + ") VALUES ("
-            + String.join(", ", valueParts) + ");";
+                + String.join(", ", valueParts) + ");";
 
         /* Create prepared statement... */
         log.debug(MARKER, sql);
@@ -577,11 +590,8 @@ public class Database implements Closeable {
         }
         connection.commit();
 
-        log.info(
-            MARKER,
-            "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded",
-            tableName, sourceFile, charset, count
-        );
+        log.info(MARKER, "Load table '{}' from '{}' (charset={}) : completed, {} row(s) loaded", tableName, sourceFile,
+                charset, count);
     }
 
     /**
@@ -646,10 +656,7 @@ public class Database implements Closeable {
     public int getCount(String tableName) throws SQLException {
         Statement stmt = connection.createStatement();
         try {
-            String query = String.format(
-                "SELECT count(*) FROM %s ",
-                stmt.enquoteIdentifier(tableName, false)
-            );
+            String query = String.format("SELECT count(*) FROM %s ", stmt.enquoteIdentifier(tableName, false));
             ResultSet rs = stmt.executeQuery(query);
             return rs.getInt(1);
         } finally {

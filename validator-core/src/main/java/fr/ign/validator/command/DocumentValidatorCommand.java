@@ -169,6 +169,12 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected boolean enableConditions;
 
+    /**
+     * Option - Uses PostGIS as validation source for geometry types S Be aware of
+     * SQL attack if your validator is connect to a sensible database.
+     */
+    protected boolean postGISValidation;
+
     @Override
     public String getName() {
         return NAME;
@@ -211,6 +217,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         StringFixerOptions.buildOptions(options);
         buildFlatOption(options);
         buildEnableConditions(options);
+        buildPostGISValidation(options);
         buildPluginsOption(options);
 
         /*
@@ -257,6 +264,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         parseDataExtent(commandLine);
         parseFlatOption(commandLine);
         parseEnableConditions(commandLine);
+        parsePostGISValidation(commandLine);
 
         /*
          * plugin-cnig options
@@ -314,6 +322,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         context.setNativeDataExtent(nativeDataExtent);
         context.setFlatValidation(flat);
         context.setEnableConditions(enableConditions);
+        context.setPostGISValidation(postGISValidation);
 
         /*
          * plugin-cnig options
@@ -342,27 +351,15 @@ public class DocumentValidatorCommand extends AbstractCommand {
         try {
             DocumentModel documentModel = loadDocumentModel();
 
-            context.report(
-                context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam(
-                    "MESSAGE",
-                    "Validation avec le modèle : " + documentModel.getName()
-                )
-            );
+            context.report(context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam("MESSAGE",
+                    "Validation avec le modèle : " + documentModel.getName()));
 
-            context.report(
-                context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam(
-                    "MESSAGE",
-                    "Version du validateur : " + Version.VERSION
-                )
-            );
+            context.report(context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam("MESSAGE",
+                    "Version du validateur : " + Version.VERSION));
 
             String ogrVersion = FileConverter.getInstance().getVersion().toString();
-            context.report(
-                context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam(
-                    "MESSAGE",
-                    "Version GDAL utilisée : " + ogrVersion
-                )
-            );
+            context.report(context.createError(CoreErrorCodes.VALIDATOR_INFO).setMessageParam("MESSAGE",
+                    "Version GDAL utilisée : " + ogrVersion));
 
             Document document = new Document(documentModel, documentPath);
             document.validate(context);
@@ -523,10 +520,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildReportBuilderOptions(Options options) {
         {
-            Option option = new Option(
-                null, "report-format", true,
-                "report format (DEPRECATED, jsonl default and required)"
-            );
+            Option option = new Option(null, "report-format", true,
+                    "report format (DEPRECATED, jsonl default and required)");
             option.setRequired(false);
             option.setArgName("FORMAT");
             options.addOption(option);
@@ -545,10 +540,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildErrorConfigOption(Options options) {
         {
-            Option option = new Option(
-                null, "error-config", true,
-                "Custom error-config.json file to overwrite some error code configuration (message, level,...)"
-            );
+            Option option = new Option(null, "error-config", true,
+                    "Custom error-config.json file to overwrite some error code configuration (message, level,...)");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -566,16 +559,14 @@ public class DocumentValidatorCommand extends AbstractCommand {
         }
         this.errorConfig = new File(commandLine.getOptionValue("error-config"));
         if (!documentPath.exists()) {
-            String message = String.format(
-                "Invalid parameter 'error-config' : '%1s' (file not found)", this.errorConfig
-            );
+            String message = String.format("Invalid parameter 'error-config' : '%1s' (file not found)",
+                    this.errorConfig);
             log.error(MARKER, message);
             throw new ParseException(message);
         }
         if (documentPath.isDirectory()) {
-            String message = String.format(
-                "Invalid parameter 'error-config' : '%1s' (file is a directory)", this.errorConfig
-            );
+            String message = String.format("Invalid parameter 'error-config' : '%1s' (file is a directory)",
+                    this.errorConfig);
             log.error(MARKER, message);
             throw new ParseException(message);
         }
@@ -588,10 +579,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildNormalizeOption(Options options) {
         {
-            Option option = new Option(
-                null, "normalize", false,
-                "Enable normalized data production in validation directory (required for validation/document-info.json)."
-            );
+            Option option = new Option(null, "normalize", false,
+                    "Enable normalized data production in validation directory (required for validation/document-info.json).");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -663,10 +652,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildDataExtentOption(Options options) {
         {
-            Option option = new Option(
-                null, "data-extent", true,
-                "Provide a geometry to control data extent (format : WKT, projection : same as data)"
-            );
+            Option option = new Option(null, "data-extent", true,
+                    "Provide a geometry to control data extent (format : WKT, projection : same as data)");
             option.setRequired(false);
             option.setArgName("WKT");
             options.addOption(option);
@@ -701,10 +688,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildEncodingOption(Options options) {
         {
-            Option option = new Option(
-                "W", "encoding", true,
-                "Data charset (default is UTF-8, value is overriden if metadata provides a definition)"
-            );
+            Option option = new Option("W", "encoding", true,
+                    "Data charset (default is UTF-8, value is overriden if metadata provides a definition)");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -731,10 +716,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildFlatOption(Options options) {
         {
-            Option option = new Option(
-                null, "flat", false,
-                "Allows to ignore file hierarchy in validation (match files to models using name instead of path)"
-            );
+            Option option = new Option(null, "flat", false,
+                    "Allows to ignore file hierarchy in validation (match files to models using name instead of path)");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -756,10 +739,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildEnableConditions(Options options) {
         {
-            Option option = new Option(
-                null, "enable-conditions", false,
-                "Allow SQL conditions to be performed. Be aware of SQL injection, disabled by default."
-            );
+            Option option = new Option(null, "enable-conditions", false,
+                    "Allow SQL conditions to be performed. Be aware of SQL injection, disabled by default.");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -773,6 +754,29 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void parseEnableConditions(CommandLine commandLine) {
         this.enableConditions = commandLine.hasOption("enable-conditions");
+    }
+
+    /**
+     *
+     * @param options
+     */
+    protected void buildPostGISValidation(Options options) {
+        {
+            Option option = new Option(null, "postgis-validation", false,
+                    "Uses PostGIS instead of JTS to validate Geometries.");
+            option.setRequired(false);
+            options.addOption(option);
+        }
+    }
+
+    /**
+     * Parse enable conditions option
+     *
+     * @param commandLine
+     * @return
+     */
+    protected void parsePostGISValidation(CommandLine commandLine) {
+        this.postGISValidation = commandLine.hasOption("postgis-validation");
     }
 
     /**
@@ -818,10 +822,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildDgprTolerance(Options options) {
         {
-            Option option = new Option(
-                null, "dgpr-tolerance", true,
-                "Tolerance express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison"
-            );
+            Option option = new Option(null, "dgpr-tolerance", true,
+                    "Tolerance express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -834,10 +836,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildDgprSimplifyDistance(Options options) {
         {
-            Option option = new Option(
-                null, "dgpr-simplify", true,
-                "Distance for geometric simplification express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison"
-            );
+            Option option = new Option(null, "dgpr-simplify", true,
+                    "Distance for geometric simplification express in the input CRS (ex: 1 for 1 meter in EPSG:2154), used in geometry comparison");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -850,10 +850,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
      */
     protected void buildDgprSimplifySafe(Options options) {
         {
-            Option option = new Option(
-                null, "dgpr-safe-simplify", false,
-                "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier"
-            );
+            Option option = new Option(null, "dgpr-safe-simplify", false,
+                    "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier");
             option.setRequired(false);
             options.addOption(option);
         }
@@ -872,10 +870,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
             Double tolerance = Double.valueOf(toleranceString);
             this.dgprTolerance = tolerance;
         } catch (NumberFormatException e) {
-            String message = String.format(
-                "Paramètre invalide 'dgpr-tolerance' : '%1s' n'est pas un double",
-                toleranceString
-            );
+            String message = String.format("Paramètre invalide 'dgpr-tolerance' : '%1s' n'est pas un double",
+                    toleranceString);
             throw new ParseException(message);
         }
     }

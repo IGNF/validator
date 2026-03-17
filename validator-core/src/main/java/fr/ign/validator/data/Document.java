@@ -39,9 +39,8 @@ public class Document implements Validatable {
     /**
      * Allowed file extensions used to perform file listing
      */
-    private String[] allowedExtensions = {
-        "dbf", "DBF", "tab", "TAB", "pdf", "PDF", "xml", "XML", "gml", "GML", "csv", "CSV", "gpkg", "GPKG"
-    };
+    private String[] allowedExtensions = { "dbf", "DBF", "tab", "TAB", "pdf", "PDF", "xml", "XML", "gml", "GML", "csv",
+            "CSV", "gpkg", "GPKG" };
 
     /**
      * The document model
@@ -151,11 +150,7 @@ public class Document implements Validatable {
 
     @Override
     public void validate(Context context) throws Exception {
-        log.info(
-            MARKER, "Validate '{}' according to {}...",
-            documentPath,
-            documentModel
-        );
+        log.info(MARKER, "Validate '{}' according to {}...", documentPath, documentModel);
 
         context.setCurrentDirectory(documentPath);
 
@@ -308,10 +303,8 @@ public class Document implements Validatable {
                     this.misplacedFileManager.addMisplacedFile(fileModel, file);
                 } else {
                     context.beginModel(fileModel);
-                    context.report(
-                        context.createError(CoreErrorCodes.FILE_MISPLACED)
-                            .setMessageParam("FILEPATH", context.relativize(file))
-                    );
+                    context.report(context.createError(CoreErrorCodes.FILE_MISPLACED).setMessageParam("FILEPATH",
+                            context.relativize(file)));
                     context.endModel(fileModel);
                 }
                 continue;
@@ -324,20 +317,14 @@ public class Document implements Validatable {
             if (file.isDirectory()) {
                 errorCode = CoreErrorCodes.DIRECTORY_UNEXPECTED;
             }
-            context.report(
-                context.createError(errorCode)
-                    .setMessageParam("FILEPATH", context.relativize(file))
-            );
+            context.report(context.createError(errorCode).setMessageParam("FILEPATH", context.relativize(file)));
         }
         /*
          * Adds the best remaining candidates.
          */
         addMisplacedDocumentFiles(context);
 
-        log.info(
-            MARKER, "List files and directories : completed, {} document file(s) found.",
-            documentFiles.size()
-        );
+        log.info(MARKER, "List files and directories : completed, {} document file(s) found.", documentFiles.size());
     }
 
     /*

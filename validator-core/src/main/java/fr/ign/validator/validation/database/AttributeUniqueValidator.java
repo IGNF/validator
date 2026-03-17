@@ -73,42 +73,28 @@ public class AttributeUniqueValidator implements Validator<Database> {
                 /*
                  * Retrieve duplicated values
                  */
-                log.info(
-                    MARKER, "Table {}.{} : Looking for duplicated values...",
-                    tableModel.getName(),
-                    attribute.getName()
-                );
-                List<DuplicatedValue> duplicatedValues = duplicatedValuesFinder.findDuplicatedValues(
-                    database,
-                    tableModel.getName(),
-                    attribute.getName()
-                );
+                log.info(MARKER, "Table {}.{} : Looking for duplicated values...", tableModel.getName(),
+                        attribute.getName());
+                List<DuplicatedValue> duplicatedValues = duplicatedValuesFinder.findDuplicatedValues(database,
+                        tableModel.getName(), attribute.getName());
 
                 /*
                  * Report errors for duplicated values
                  */
-                log.info(
-                    MARKER,
-                    "Table {}.{} : Found {} duplicated value(s) (max : {})",
-                    tableModel.getName(),
-                    attribute.getName(),
-                    duplicatedValues.size(),
-                    DuplicatedValuesFinder.LIMIT_PER_ATTRIBUTE
-                );
+                log.info(MARKER, "Table {}.{} : Found {} duplicated value(s) (max : {})", tableModel.getName(),
+                        attribute.getName(), duplicatedValues.size(), DuplicatedValuesFinder.LIMIT_PER_ATTRIBUTE);
                 for (DuplicatedValue duplicatedValue : duplicatedValues) {
                     context.report(
-                        /*
-                         * Note that scope DIRECTORY is mainly forced to ease integration in current
-                         * client.
-                         */
-                        context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE)
-                            .setScope(ErrorScope.DIRECTORY)
-                            .setFileModel(tableModel.getName())
-                            .setMessageParam("TABLE_NAME", tableModel.getName())
-                            .setMessageParam("COLUMN_NAME", attribute.getName())
-                            .setMessageParam("ID_NAME", duplicatedValue.value)
-                            .setMessageParam("ID_COUNT", "" + duplicatedValue.count)
-                    );
+                            /*
+                             * Note that scope DIRECTORY is mainly forced to ease integration in current
+                             * client.
+                             */
+                            context.createError(CoreErrorCodes.ATTRIBUTE_NOT_UNIQUE).setScope(ErrorScope.DIRECTORY)
+                                    .setFileModel(tableModel.getName())
+                                    .setMessageParam("TABLE_NAME", tableModel.getName())
+                                    .setMessageParam("COLUMN_NAME", attribute.getName())
+                                    .setMessageParam("ID_NAME", duplicatedValue.value)
+                                    .setMessageParam("ID_COUNT", "" + duplicatedValue.count));
                 }
 
                 context.endModel(attribute);

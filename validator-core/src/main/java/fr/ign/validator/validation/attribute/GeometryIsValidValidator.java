@@ -46,17 +46,21 @@ public class GeometryIsValidValidator implements Validator<Attribute<Geometry>> 
             TopologyValidationError topologyValidationError = isValidOp.getValidationError();
             Geometry point = new GeometryFactory().createPoint(topologyValidationError.getCoordinate());
             try {
-                Geometry transformPoint = new ProjectionTransform(context.getProjection()).transform(
-                    point
-                );
+                Geometry transformPoint = new ProjectionTransform(context.getProjection()).transform(point);
 
-                GeometryErrorCode geometryErrorCode = GeometryErrorCode.valueOfJTS(
-                    topologyValidationError.getErrorType()
-                );
-                ValidatorError validatorError = context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
-                    .setMessageParam("TYPE_ERROR", geometryErrorCode.getMessage())
-                    .setErrorGeometry(transformPoint.toText());
-                context.report(validatorError);
+                GeometryErrorCode geometryErrorCode = GeometryErrorCode
+                        .valueOfJTS(topologyValidationError.getErrorType());
+                if (context.isPostGISValidation()) {
+                    ValidatorError validatorError = context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_LIMIT_VALID)
+                            .setMessageParam("TYPE_ERROR", geometryErrorCode.getMessage())
+                            .setErrorGeometry(transformPoint.toText());
+                    context.report(validatorError);
+                } else {
+                    ValidatorError validatorError = context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
+                            .setMessageParam("TYPE_ERROR", geometryErrorCode.getMessage())
+                            .setErrorGeometry(transformPoint.toText());
+                    context.report(validatorError);
+                }
             } catch (Exception e) {
                 context.report(context.createError(CoreErrorCodes.VALIDATOR_EXCEPTION));
             }

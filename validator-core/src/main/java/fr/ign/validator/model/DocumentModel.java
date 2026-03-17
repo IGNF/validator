@@ -14,11 +14,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import fr.ign.validator.data.Document;
 import fr.ign.validator.database.Database;
+import fr.ign.validator.database.internal.InvalidGeometryFinder;
 import fr.ign.validator.validation.Validator;
 import fr.ign.validator.validation.attribute.AttributeReferenceValidator;
 import fr.ign.validator.validation.database.AttributeUniqueValidator;
 import fr.ign.validator.validation.database.FeatureTypeConditionsValidator;
 import fr.ign.validator.validation.database.ForeignKeyValidator;
+import fr.ign.validator.validation.database.GeometryIsValidPostGISValidator;
 import fr.ign.validator.validation.document.DocumentFolderNameValidator;
 import fr.ign.validator.validation.document.DocumentMandatoryFileValidator;
 
@@ -73,6 +75,7 @@ public class DocumentModel implements Model {
         addDatabaseValidator(new AttributeReferenceValidator());
         addDatabaseValidator(new FeatureTypeConditionsValidator());
         addDatabaseValidator(new ForeignKeyValidator());
+        addDatabaseValidator(new GeometryIsValidPostGISValidator());
     }
 
     /**

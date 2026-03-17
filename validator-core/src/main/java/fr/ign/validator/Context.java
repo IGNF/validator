@@ -166,6 +166,11 @@ public class Context {
      */
     private Class<?> headerClass = Header.class;
 
+    /**
+     * Option to validate geometries using PostGis
+     */
+    private boolean postGISValidation = false;
+
     public Context() {
         registerDefaultListeners();
     }
@@ -565,9 +570,7 @@ public class Context {
     public String relativize(File path) {
         DocumentModel documentModel = getDocumentModel();
         if (documentModel != null) {
-            return currentDirectory.toPath().relativize(
-                path.toPath()
-            ).toString();
+            return currentDirectory.toPath().relativize(path.toPath()).toString();
         } else {
             return path.getName();
         }
@@ -831,6 +834,14 @@ public class Context {
 
     public Class<?> getHeaderClass() {
         return this.headerClass;
+    }
+
+    public boolean isPostGISValidation() {
+        return this.postGISValidation;
+    }
+
+    public void setPostGISValidation(boolean postGISValidation) {
+        this.postGISValidation = postGISValidation;
     }
 
 }
