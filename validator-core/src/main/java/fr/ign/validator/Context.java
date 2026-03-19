@@ -841,6 +841,7 @@ public class Context {
     }
 
     public void setPostGISValidation(boolean postGISValidation) {
+        log.info(MARKER, "set postGIS validation to to {}", postGISValidation);
         this.postGISValidation = postGISValidation;
     }
 

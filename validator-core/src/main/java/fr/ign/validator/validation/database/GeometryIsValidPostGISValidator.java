@@ -15,6 +15,7 @@ import fr.ign.validator.database.Database;
 import fr.ign.validator.database.internal.InvalidGeometryFinder;
 import fr.ign.validator.database.internal.InvalidGeometryFinder.InvalidGeometry;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.type.GeometryType;
@@ -62,8 +63,8 @@ public class GeometryIsValidPostGISValidator implements Validator<Database> {
         if (!context.isPostGISValidation()) {
             return;
         }
-        if (!InvalidGeometryFinder.isPostGIS(database)) {
-            log.info(MARKER, "Database is not a PostGIS database, skipping.");
+        if (!database.hasGeometrySupport()) {
+            log.info(MARKER, "skipped for non postgis database");
             return;
         }
 
@@ -73,39 +74,41 @@ public class GeometryIsValidPostGISValidator implements Validator<Database> {
          * Validate each attribute with geometry Type
          */
         for (TableModel tableModel : ModelHelper.getTableModels(context.getDocumentModel())) {
-            GeometryType attribute = tableModel.getFeatureType().getDefaultGeometry();
-            if (attribute == null) {
-                return;
-            }
-
             context.beginModel(tableModel);
 
-            context.beginModel(attribute);
+            for (AttributeType<?> attribute : tableModel.getFeatureType().getAttributes()) {
+                if (!attribute.isGeometry()) {
+                    continue;
+                }
 
-            AttributeType<?> identifier = tableModel.getFeatureType().getIdentifier();
-            List<InvalidGeometry> invalidGeometries = new ArrayList<>();
-            /*
-             * Retrieve duplicated values
-             */
-            log.info(MARKER, "Table {}.{} : Validating Geometry...", tableModel.getName(), attribute.getName());
-            if (identifier == null) {
-                invalidGeometries = invalidGeometryFinder.findInvalidGeometries(database, tableModel.getName(),
-                        attribute.getName());
-            } else {
-                invalidGeometries = invalidGeometryFinder.findInvalidGeometries(database, tableModel.getName(),
-                        attribute.getName(), identifier.getName());
-            }
-            /*
-             * Report errors for duplicated values
-             */
-            log.info(MARKER, "Table {}.{} : Found {} invalid geometry(ies) (max : {})", tableModel.getName(),
-                    attribute.getName(), invalidGeometries.size(), InvalidGeometryFinder.LIMIT_PER_ATTRIBUTE);
-            for (InvalidGeometry invalidGeometry : invalidGeometries) {
-                context.report(context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
-                        .setMessageParam("TYPE_ERROR", invalidGeometry.id));
-            }
+                context.beginModel(attribute);
 
-            context.endModel(attribute);
+                AttributeType<?> identifier = tableModel.getFeatureType().getIdentifier();
+                List<InvalidGeometry> invalidGeometries = new ArrayList<>();
+                /*
+                 * Retrieve duplicated values
+                 */
+                log.info(MARKER, "Table {}.{} : Validating Geometry...", tableModel.getName(), attribute.getName());
+                if (identifier == null) {
+                    invalidGeometries = invalidGeometryFinder.findInvalidGeometries(database, tableModel.getName(),
+                            attribute.getName());
+                } else {
+                    invalidGeometries = invalidGeometryFinder.findInvalidGeometries(database, tableModel.getName(),
+                            attribute.getName(), identifier.getName());
+                }
+                /*
+                 * Report errors for duplicated values
+                 */
+                log.info(MARKER, "Table {}.{} : Found {} invalid geometry(ies) (max : {})", tableModel.getName(),
+                        attribute.getName(), invalidGeometries.size(), InvalidGeometryFinder.LIMIT_PER_ATTRIBUTE);
+                for (InvalidGeometry invalidGeometry : invalidGeometries) {
+                    context.report(context.createError(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID)
+                            .setMessageParam("TYPE_ERROR", invalidGeometry.type).setFileModel(tableModel.getName())
+                            .setAttribute(attribute.getName()).setId(invalidGeometry.id));
+                }
+
+                context.endModel(attribute);
+            }
 
             context.endModel(tableModel);
         }

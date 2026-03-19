@@ -60,6 +60,7 @@ public class Database implements Closeable {
     private static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
 
     public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
+    public static final String JDBC_POSTGRES_DRIVER = "PostgreSQL JDBC Driver";
 
     public static final String DEFAULT_SRID = "4326";
 
@@ -150,7 +151,8 @@ public class Database implements Closeable {
      */
     public boolean hasGeometrySupport() {
         try {
-            return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);
+            return (connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER)
+                    || connection.getMetaData().getDriverName().equals(Database.JDBC_POSTGRES_DRIVER));
         } catch (SQLException e) {
             return false;
         }

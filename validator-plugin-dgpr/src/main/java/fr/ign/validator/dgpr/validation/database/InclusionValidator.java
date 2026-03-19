@@ -92,25 +92,20 @@ public class InclusionValidator implements Validator<Database> {
 
         double distanceBuffer = context.getDgprTolerance();
 
-        String query = " SELECT "
-            + "   sc_fort.id_s_inond as id_fort"
-            + " FROM "
-            + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
-            + "   JOIN " + surfaceTablename + " AS sc_faible"
-            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For'"
-            + "     AND sc_faible.scenario LIKE '02Moy'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy'"
-            + "     AND sc_faible.scenario LIKE '04Fai'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct'"
-            + "     AND sc_faible.scenario LIKE '03Mcc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct'"
-            + "     AND sc_faible.scenario LIKE '04Faicc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100'"
-            + "     AND sc_faible.scenario LIKE '03Mcc'"
-            + " WHERE ST_Contains("
-            + "         ST_Buffer(sc_faible.source_geometry, " + distanceBuffer + "),"
-            + "         sc_fort.source_geometry"
-            + "     );";
+        String query = " SELECT " + "   sc_fort.id_s_inond as id_fort" + " FROM " + "   (SELECT * FROM "
+                + surfaceTablename + ") sc_fort" + "   JOIN " + surfaceTablename + " AS sc_faible"
+                + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For'"
+                + "     AND sc_faible.scenario LIKE '02Moy'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy'"
+                + "     AND sc_faible.scenario LIKE '04Fai'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct'"
+                + "     AND sc_faible.scenario LIKE '03Mcc_ct'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct'"
+                + "     AND sc_faible.scenario LIKE '04Faicc_ct'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100'"
+                + "     AND sc_faible.scenario LIKE '03Mcc'" + " WHERE ST_Contains("
+                + "         ST_Buffer(sc_faible.source_geometry, " + distanceBuffer + "),"
+                + "         sc_fort.source_geometry" + "     );";
 
         // TODO examiner la liste avec la liste complète des 'scenario fort'
         // chaque 'scenario fort' doit être inclus dans <au moin> un 'scenario faible
@@ -126,26 +121,20 @@ public class InclusionValidator implements Validator<Database> {
         }
         inclusionIterator.close();
 
-        String querySurface = " SELECT "
-            + "   sc_fort.id_s_inond as id_fort,"
-            + "   sc_fort.scenario as scenario,"
-            + "   sc_faible.scenario as scenario_faible,"
-            + "   string_agg(sc_faible.id_s_inond, ', ') as list_id"
-            + " FROM "
-            + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
-            + "   JOIN " + surfaceTablename + " AS sc_faible"
-            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For' "
-            + "      AND sc_faible.scenario LIKE '02Moy'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy' "
-            + "      AND sc_faible.scenario LIKE '04Fai'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct' "
-            + "      AND sc_faible.scenario LIKE '03Mcc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct' "
-            + "      AND sc_faible.scenario LIKE '04Faicc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100' "
-            + "      AND sc_faible.scenario LIKE '03Mcc'"
-            + " GROUP BY sc_fort.id_s_inond, sc_fort.scenario, sc_faible.scenario"
-            + " ;";
+        String querySurface = " SELECT " + "   sc_fort.id_s_inond as id_fort," + "   sc_fort.scenario as scenario,"
+                + "   sc_faible.scenario as scenario_faible," + "   string_agg(sc_faible.id_s_inond, ', ') as list_id"
+                + " FROM " + "   (SELECT * FROM " + surfaceTablename + ") sc_fort" + "   JOIN " + surfaceTablename
+                + " AS sc_faible" + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For' "
+                + "      AND sc_faible.scenario LIKE '02Moy'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy' "
+                + "      AND sc_faible.scenario LIKE '04Fai'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct' "
+                + "      AND sc_faible.scenario LIKE '03Mcc_ct'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct' "
+                + "      AND sc_faible.scenario LIKE '04Faicc_ct'"
+                + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100' "
+                + "      AND sc_faible.scenario LIKE '03Mcc'"
+                + " GROUP BY sc_fort.id_s_inond, sc_fort.scenario, sc_faible.scenario" + " ;";
 
         // TODO examiner la liste avec la liste complète des 'scenario fort'
         // chaque 'scenario fort' doit être inclus dans <au moin> un 'scenario faible
@@ -173,35 +162,23 @@ public class InclusionValidator implements Validator<Database> {
         // TODO retablir la BBOX ??
         // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
         // context.getCoordinateReferenceSystem()))
-        context.report(
-            context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
-                .setScope(ErrorScope.FEATURE)
-                .setFileModel("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD")
-                .setFeatureId(id)
-                .setAttribute("WKT")
-                .setMessageParam("ID_S_INOND", id)
-                .setMessageParam("SCENARIO_VALUE_FORT", scenarioFort)
-                .setMessageParam("SCENARIO_VALUE_FAIBLE", ScenarioFaible + " - " + listFaible)
-        );
+        context.report(context.createError(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).setScope(ErrorScope.FEATURE)
+                .setFileModel("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD").setFeatureId(id).setAttribute("WKT")
+                .setMessageParam("ID_S_INOND", id).setMessageParam("SCENARIO_VALUE_FORT", scenarioFort)
+                .setMessageParam("SCENARIO_VALUE_FAIBLE", ScenarioFaible + " - " + listFaible));
     }
 
     private void reportException(String errorMessage) {
         // TODO retablir la BBOX ??
         // .setFeatureBbox(DatabaseUtils.getEnveloppe(surface.getWkt(),
         // context.getCoordinateReferenceSystem()))
-        context.report(
-            context.createError(DgprErrorCodes.DGPR_ISO_HT_GEOM_ERROR)
-                .setScope(ErrorScope.FEATURE)
-                .setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd")
-                .setAttribute("WKT")
-                .setMessageParam("POSTGIS_ERROR", errorMessage)
-        );
+        context.report(context.createError(DgprErrorCodes.DGPR_ISO_HT_GEOM_ERROR).setScope(ErrorScope.FEATURE)
+                .setFileModel("N_prefixTri_INONDABLE_suffixInond_S_ddd").setAttribute("WKT")
+                .setMessageParam("POSTGIS_ERROR", errorMessage));
     }
 
     private void dropSourceGeometry(String tablename) throws SQLException {
-        String[] queries = new String[] {
-            "ALTER TABLE " + tablename + "  DROP COLUMN IF EXISTS source_geometry;",
-        };
+        String[] queries = new String[] { "ALTER TABLE " + tablename + "  DROP COLUMN IF EXISTS source_geometry;", };
 
         for (int i = 0; i < queries.length; i++) {
             String query = queries[i];

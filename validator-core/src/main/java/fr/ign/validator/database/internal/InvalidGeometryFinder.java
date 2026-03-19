@@ -21,23 +21,6 @@ public class InvalidGeometryFinder {
      */
     public static final int LIMIT_PER_ATTRIBUTE = 10;
 
-    public static boolean isPostGIS(Database database) throws SQLException, IOException {
-        try {
-            RowIterator it = database
-                    .query("SELECT COUNT(1) FROM information_schema.routines WHERE routine_name = 'postgis_version'");
-            boolean result = false;
-            if (it.hasNext()) {
-                String[] row = it.next();
-                result = row[0].equals("1");
-            }
-            it.close();
-            return result;
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-
     /**
      * A table with invalid geometries
      *
@@ -64,16 +47,7 @@ public class InvalidGeometryFinder {
      */
     public List<InvalidGeometry> findInvalidGeometries(Database database, String tableName, String columnName)
             throws SQLException, IOException {
-        RowIterator it = database.query(
-                "SELECT __id FROM " + tableName + " WHERE ST_IsValid(" + columnName + ") LIMIT " + LIMIT_PER_ATTRIBUTE);
-
-        List<InvalidGeometry> result = new ArrayList<>();
-        while (it.hasNext()) {
-            String[] row = it.next();
-            result.add(new InvalidGeometry(row[0]));
-        }
-        it.close();
-        return result;
+        return findInvalidGeometries(database, tableName, columnName, "__id");
     }
 
     /**
@@ -90,7 +64,7 @@ public class InvalidGeometryFinder {
      */
     public List<InvalidGeometry> findInvalidGeometries(Database database, String tableName, String columnName,
             String idColumnName) throws SQLException, IOException {
-        RowIterator it = database.query("SELECT " + idColumnName + " FROM " + tableName + " WHERE ST_IsValid("
+        RowIterator it = database.query("SELECT " + idColumnName + " FROM " + tableName + " WHERE NOT ST_IsValid("
                 + columnName + ") LIMIT " + LIMIT_PER_ATTRIBUTE);
 
         List<InvalidGeometry> result = new ArrayList<>();
