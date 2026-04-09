@@ -19,7 +19,7 @@ public class Header implements Validatable {
     /**
      * Relative path for the table in order to report errors.
      */
-    private String relativePath;
+    protected String relativePath;
 
     /**
      * mapping columns/FeatureType
@@ -73,14 +73,8 @@ public class Header implements Validatable {
                     context.createError(CoreErrorCodes.TABLE_MISSING_GEOMETRY)
                         .setMessageParam("FILEPATH", relativePath)
                 );
-            } else if (!missingAttribute.getConstraints().isPresenceRequired()) {
-                this.reportTableMissingPresenceOptionalAttribute(missingAttribute, context);
             } else {
-                context.report(
-                    context.createError(CoreErrorCodes.TABLE_MISSING_ATTRIBUTE)
-                        .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                        .setMessageParam("FILEPATH", relativePath)
-                );
+                this.reportMissingAttribute(context, missingAttribute);
             }
             context.endModel(missingAttribute);
         }
@@ -88,18 +82,20 @@ public class Header implements Validatable {
         context.endData(this);
     }
 
-    /**
-     * Create report when missing attribute is required
-     *
-     * @param missingAttribute
-     * @param context
-     */
-    public void reportTableMissingPresenceOptionalAttribute(AttributeType<?> missingAttribute, Context context) {
-        context.report(
-            context.createError(CoreErrorCodes.TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
-                .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
-                .setMessageParam("FILEPATH", relativePath)
-        );
+    protected void reportMissingAttribute(Context context, AttributeType<?> missingAttribute) {
+        if (missingAttribute.getConstraints().isPresenceRequired()) {
+            context.report(
+                context.createError(CoreErrorCodes.TABLE_MISSING_ATTRIBUTE)
+                    .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
+                    .setMessageParam("FILEPATH", relativePath)
+            );
+        } else {
+            context.report(
+                context.createError(CoreErrorCodes.TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
+                    .setMessageParam("ATTRIBUTE_NAME", missingAttribute.getName())
+                    .setMessageParam("FILEPATH", relativePath)
+            );
+        }
     }
 
 }

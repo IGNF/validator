@@ -211,19 +211,12 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_NAME_NOT_FOUND, report);
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(3 + 3 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 3, ErrorLevel.WARNING, report);
 
         /*
          * check some infos
          */
-        ReportAssert.assertCount(0, CoreErrorCodes.TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        {
-            ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE)
-                .get(0);
-            assertEquals("DATECOG", error.getAttribute());
-        }
+        ReportAssert.assertCount(1, CoreErrorCodes.TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
 
         /*
          * check document-info.json
@@ -329,8 +322,7 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(3 + 0 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -771,8 +763,7 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
-        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(1 + 0 + 1 + 6, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1 + 0 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -819,10 +810,9 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_IDURBA_MULTIPLE_FOUND, report);
         ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
-        ReportAssert.assertCount(6, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(2 + 1 + 6, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, CoreErrorCodes.FILE_UNEXPECTED, report);
+        ReportAssert.assertCount(1 + 1 + 1, ErrorLevel.WARNING, report);
 
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID, report);
         {
             List<ValidatorError> errors = report.getErrorsByCode(CnigErrorCodes.CNIG_FILE_EXTENSION_INVALID);
             for (ValidatorError error : errors) {
@@ -868,10 +858,9 @@ public class CnigValidatorRegressTest {
         /*
          * check warnings
          */
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_PRESCRIPTION_NOT_FOUND, report);
 
-        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -916,8 +905,12 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_DOC_URBA_COM_UNEXPECTED_SIZE, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_TXT_REGEXP_INVALID, report);
-        ReportAssert.assertCount(4, CnigErrorCodes.CNIG_TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
-        ReportAssert.assertCount(1 + 0 + 4, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1 + 0, ErrorLevel.WARNING, report);
+
+        /**
+         * check missing attributes
+         */
+        ReportAssert.assertCount(4, CoreErrorCodes.TABLE_MISSING_PRESENCE_OPTIONAL_ATTRIBUTE, report);
 
         /*
          * check document-info.json
