@@ -719,7 +719,7 @@
 	},
 	{
 		"name": "CNIG_SUP_BAD_TERRITORY_CODE",
-		"level": "WARNING",
+		"level": "ERROR",
 		"message": "Le code de territoire '{EMPRISE}' est invalide dans le nom de dossier.",
 		"documentation": "Les départements doivent être codés sur 3 caractères."
 	},
