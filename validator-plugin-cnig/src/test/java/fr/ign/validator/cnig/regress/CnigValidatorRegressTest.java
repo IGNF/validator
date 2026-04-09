@@ -322,7 +322,7 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
-        ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 0 , ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -550,14 +550,14 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(104 + 206, CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE, report);
 
         // check error sum
-        ReportAssert.assertCount(104 + 4 + 2 + 2 + 1 + 826 + 310, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
+        ReportAssert.assertCount(104 + 4 + 2 + 2 + 1 + 826 + 310 + 1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
-        ReportAssert.assertCount(1 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
@@ -996,13 +996,13 @@ public class CnigValidatorRegressTest {
         /*
          * check errors
          */
-        ReportAssert.assertCount(0, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
+        ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings
          */
         ReportAssert.assertCount(3, CoreErrorCodes.TABLE_UNEXPECTED_ATTRIBUTE, report);
-        ReportAssert.assertCount(1, CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE, report);
         {
             ValidatorError error = report.getErrorsByCode(CnigErrorCodes.CNIG_SUP_BAD_TERRITORY_CODE).get(0);
             assertEquals("Le code de territoire '88' est invalide dans le nom de dossier.", error.getMessage());
@@ -1016,7 +1016,7 @@ public class CnigValidatorRegressTest {
                 error.getMessage()
             );
         }
-        ReportAssert.assertCount(3 + 1 + 1, ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 1, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
