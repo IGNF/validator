@@ -322,7 +322,7 @@ public class CnigValidatorRegressTest {
          */
         ReportAssert.assertCount(3, CoreErrorCodes.METADATA_LOCATOR_PROTOCOL_NOT_FOUND, report);
         ReportAssert.assertCount(0, CnigErrorCodes.CNIG_GEOMETRY_COMPLEXITY_WARNING, report);
-        ReportAssert.assertCount(3 + 0 , ErrorLevel.WARNING, report);
+        ReportAssert.assertCount(3 + 0, ErrorLevel.WARNING, report);
 
         /*
          * check document-info.json
