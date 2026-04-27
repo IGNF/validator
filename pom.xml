@@ -27,7 +27,7 @@
 		<geotools.version>27.5</geotools.version>
 		<log4j.version>2.25.3</log4j.version>
 		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
-		<jackson.version>2.19.2</jackson.version>
+		<jackson.version>2.21.1</jackson.version>
 		<jackson.databind.version>2.19.2</jackson.databind.version>
 
 		<maven-formatter-plugin.version>2.29.0</maven-formatter-plugin.version>
