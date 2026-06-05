@@ -2,6 +2,7 @@ package fr.ign.validator.cnig.process;
 
 import java.io.File;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -34,6 +35,10 @@ public class DocUrbaPostProcess implements ValidatorListener {
      * Tag to store TYPEREF for the document
      */
     private static final String TAG_TYPEREF = "typeref";
+    /**
+     * Tag to store TYPEPROC for the document
+     */
+    private static final String TAG_TYPEPROC = "typeproc";
 
     @Override
     public void beforeMatching(Context context, Document document) throws Exception {
@@ -81,12 +86,16 @@ public class DocUrbaPostProcess implements ValidatorListener {
         }
 
         /*
-         * Add idurba and typeref to document tags.
+         * Add idurba, typeref and typeproc to document tags.
          */
         log.info(MARKER, "Found idurba={} in filtered DOC_URBA.", result.idurba);
         document.setTag(TAG_IDURBA, result.idurba);
         log.info(MARKER, "Found typeref={} in filtered DOC_URBA.", result.typeref);
         document.setTag(TAG_TYPEREF, result.typeref);
+        if (!StringUtils.isEmpty(result.typeproc)) {
+            log.info(MARKER, "Found typeproc={} in filtered DOC_URBA.", result.typeproc);
+            document.setTag(TAG_TYPEPROC, result.typeproc);
+        }
 
         log.info(
             MARKER,
