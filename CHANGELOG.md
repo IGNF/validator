@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 4.5.x
+
+* v4.5.3 - Improve deb/rpm build scripts (fallback without fpm/rpmbuild)
+* v4.5.2 - Add `typeproc` document tag from DOC_URBA (`TYPEPROC` for SCOT, `NOMPROC` for PLU, PLUi, CC and PSMV)
+* v4.5.2 - Bump log4j-core to 2.25.4 [SECURITY]
+* v4.5.2 - Bump postgresql to 42.7.11 [SECURITY]
+
 ## 4.3.x
 
 * v4.3.0 - Update Documentation; add Foreign Key constraints validation

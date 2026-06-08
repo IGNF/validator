@@ -88,7 +88,8 @@
   "documentExtent" : [ 2.4591245, 49.6799345, 3.2027693, 50.0784749 ],
   "tags" : {
     "idurba" : "200078244_SCOT_20180218",
-    "typeref" : "01"
+    "typeref" : "01",
+    "typeproc" : "01"
   },
   "metadata" : {
     "fileIdentifier" : "fr-200078244-scot20180218",

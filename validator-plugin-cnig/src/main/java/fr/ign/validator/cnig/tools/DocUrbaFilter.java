@@ -20,7 +20,8 @@ import fr.ign.validator.tools.TableReader;
 /**
  *
  * Filter table DOC_URBA to keep rows with the expected IDURBA and outputs the
- * number of rows, idurba and typeref (cadastral reference) if available.
+ * number of rows, idurba, typeref (cadastral reference) and typeproc
+ * (TYPEPROC or NOMPROC column) if available.
  *
  * @author MBorne
  *
@@ -34,6 +35,7 @@ public class DocUrbaFilter {
         public int count = 0;
         public String idurba;
         public String typeref = DEFAULT_TYPEREF;
+        public String typeproc;
     }
 
     /**
@@ -83,6 +85,16 @@ public class DocUrbaFilter {
                 log.warn(MARKER, "TYPEREF not found in DOC_URBA");
             }
 
+            int indexTypeproc = reader.findColumn("TYPEPROC");
+            if (indexTypeproc < 0) {
+                log.warn(MARKER, "TYPEPROC not found in DOC_URBA");
+            }
+
+            int indexNomproc = reader.findColumn("NOMPROC");
+            if (indexNomproc < 0) {
+                log.warn(MARKER, "NOMPROC not found in DOC_URBA");
+            }
+
             /*
              * Create writer for filtered file
              */
@@ -123,6 +135,20 @@ public class DocUrbaFilter {
                     log.info(MARKER, "Found TYPEREF={} for IDURBA={}", typeref, idurba);
                     if (!StringUtils.isEmpty(typeref)) {
                         result.typeref = typeref;
+                    }
+                }
+
+                if (indexTypeproc >= 0) {
+                    String typeproc = row[indexTypeproc];
+                    log.info(MARKER, "Found TYPEPROC={} for IDURBA={}", typeproc, idurba);
+                    if (!StringUtils.isEmpty(typeproc)) {
+                        result.typeproc = typeproc.trim();
+                    }
+                } else if (indexNomproc >= 0) {
+                    String nomproc = row[indexNomproc];
+                    log.info(MARKER, "Found NOMPROC={} for IDURBA={}", nomproc, idurba);
+                    if (!StringUtils.isEmpty(nomproc)) {
+                        result.typeproc = nomproc.trim();
                     }
                 }
 
