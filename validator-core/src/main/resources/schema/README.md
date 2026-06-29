@@ -39,14 +39,15 @@ Le concept de [Document.json](Document.json) est utilisé pour modéliser un dos
 
 Les fichiers d'un document peuvent correspondre à des tables, des sous-dossiers, des PDF ou des fichiers de métadonnées. Ils sont décrits par les propriétés suivantes :
 
-| Propriété          | Type                  | Description                                            | Obligatoire | Version |
-| ------------------ | --------------------- | ------------------------------------------------------ | :---------: | :-----: |
-| `file.name`        | `string`              | Le nom identifiant le fichier                          |      O      |   4.0   |
-| `file.title`       | `string`              | Le nom du fichier pour affichage                       |      N      |   4.0   |
-| `file.description` | `string`              | La description du fichier                              |      N      |   4.0   |
-| `file.type`        | [FileType](#filetype) | Le type de fichier                                     |      O      |   4.0   |
-| `file.path`        | `RegExp`              | Chemin relatif par rapport à la racine du document (1) |      N      |   4.0   |
-| `file.tableModel`  | `string`              | Liens vers le [modèle de table](#table)                |    N (2)    |   4.0   |
+| Propriété          | Type                              | Description                                            | Obligatoire | Version |
+| ------------------ | ---------------------             | ------------------------------------------------------ | :---------: | :-----: |
+| `file.name`        | `string`                          | Le nom identifiant le fichier                          |      O      |   4.0   |
+| `file.title`       | `string`                          | Le nom du fichier pour affichage                       |      N      |   4.0   |
+| `file.description` | `string`                          | La description du fichier                              |      N      |   4.0   |
+| `file.type`        | [FileType](#filetype)             | Le type de fichier                                     |      O      |   4.0   |
+| `file.path`        | `RegExp`                          | Chemin relatif par rapport à la racine du document (1) |      N      |   4.0   |
+| `file.tableModel`  | `string`                          | Liens vers le [modèle de table](#table)                |    N (2)    |   4.0   |
+| `file.constraints` | [FileConstraint](#fileconstraint) | Liens vers le [modèle de table](#table)                |      N      |   4.1   |
 
 Remarques :
 
@@ -77,8 +78,6 @@ Le concept de [Table.json](Table.json) est utilisé pour modéliser une table et
 | `table.title`       | `string`   | Le nom de la table pour affichage       |      N      |   4.0   |
 | `table.description` | `string`   | La description de la table              |      N      |   4.0   |
 | `table.columns`     | `Column[]` | La description des colonnes de la table |      O      |   4.0   |
-
-Remarque : L'ajout d'une propriété  `PrimaryKey`, définie sous forme d'une chaîne de caractère ("ID" ou "C1,C2"), est à l'étude.
 
 ### Column
 
@@ -127,27 +126,53 @@ L'ajout des types suivants est à l'étude pour les futures versions :
 
 ### ColumnConstraints
 
-| Propriété   | Type              | Description                                                                  | Version |
-| ----------- | ----------------- | ---------------------------------------------------------------------------- | :-----: |
-| `required`  | `boolean`         | Contrainte interdisant une valeur nulle ou vide                              |   4.0   |
-| `unique`    | `boolean`         | Contrainte d'unicité au sein de la table                                     |   4.0   |
-| `enum`      | `any[]`           | Contrainte d'appartenance à une liste de valeur                              |   4.0   |
-| `pattern`   | `string`          | Contrainte sous forme d'une expression régulière (syntaxe JAVA)              |   4.0   |
-| `maxLength` | `integer`         | Contrainte sur la longueur maximale d'une chaîne de caractère                |   4.0   |
-| `reference` | `ReferenceTarget` | Contrainte de correspondance entre la valeur et celle d'une table référencée |   4.0   |
+| Propriété          | Type              | Description                                                                  | Version |
+| -----------        | ----------------- | ---------------------------------------------------------------------------- | :-----: |
+| `required`         | `boolean`         | Contrainte interdisant une valeur nulle                                      |   4.0   |
+| `presenceRequired` | `boolean`         | Contrainte interdisant l'absence de la colonne                               |   4.4   |
+| `unique`           | `boolean`         | Contrainte d'unicité au sein de la table                                     |   4.0   |
+| `enum`             | `any[]`           | Contrainte d'appartenance à une liste de valeur                              |   4.0   |
+| `pattern`          | `string`          | Contrainte sous forme d'une expression régulière (syntaxe JAVA)              |   4.0   |
+| `minLength`        | `integer`         | Contrainte sur la longueur minimale d'une chaîne de caractère                |   4.1   |
+| `maxLength`        | `integer`         | Contrainte sur la longueur maximale d'une chaîne de caractère                |   4.0   |
+| `reference`        | `ReferenceTarget` | Contrainte de correspondance entre la valeur et celle d'une table référencée |   4.0   |
 
 Remarques :
 
+* La contrainte `unique` ne prend en compte que les valeurs non-nulles.
 * La cible d'une référence (`ReferenceTarget`) est définie sous forme d'une chaîne de caractère : `{TABLE_CIBLE}.{COLONNE_CIBLE}` ( (ex : "SERVITUDE.IDSUP")
+* Les gestions des énumérations de valeurs autorisées, et de clés étrangères sont réalisées dans la description de la table, et non de la colonne. ([FileConstraint](#fileconstraint))
 * Moyennant des références à des tables statiques, les références permettront de gérer plus proprement l'appartenance à des listes de valeur codifiée (`reference: doc_urba_type(code)`) que l'utilisation des énumérés.
 * Dans un premier temps, les clés étrangères ne sont pas supportées mais il sera possible d'étendre le modèle pour être en mesure de définir la clé étrangère `(TYPEPSC,STYPEPSC) REFERENCES prescription_urba_type(code,sous_code)` au niveau de `ZONE_URBA` dans les standards CNIG.
-* L'ajout des contraintes suivantes est à l'étude pour les futures versions :
 
-| Propriété | Type  | Description                                           |
-| --------- | ----- | ----------------------------------------------------- |
-| `minimum` | `any` | Contrainte sur la valeur minimale autorisée (incluse) |
-| `maximum` | `any` | Contrainte sur la valeur maximale autorisée (incluse) |
+### FileConstraint
 
+Le concept de `conditions` et `foreignKeys` est utilisé pour modéliser les contraintes sur un [FileType](#filetype) [Table](#table).
+
+| Propriété                 | Type                        | Description                               | Obligatoire | Version |
+| ------------------------- | ----------------------------| ------------------------------------------| :---------: | :-----: |
+| `constraints.conditions`  | [Condition](#condition)[]   | Conditions négatives sur des arguments    |      N      |   4.1   |
+| `constraints.foreignKeys` | [ForeignKey](#foreignkey)[] | Clés étrangères vers des fichiers `codes` |      N      |   4.1   |
+
+#### Condition
+
+Le type `Condition` est une chaine de charactères correspondant à un booléen SQL.
+
+Des exemples de `Condition` sont (avec `{ATTRIBUTE_NAME}` une valeur de `column.name`) :
+- `{ATTRIBUTE_NAME} IS NOT NULL`
+- `{ATTRIBUTE_NAME} NOT LIKE '%7'`
+
+#### ForeignKey
+
+Le type `ForeignKey` (Clé Étrangère en français) est une chaine de charactères avec la syntaxe regex suivante :
+
+```regex
+\({ATTRIBUTE_TABLE_1}(, {ATTRIBUTE_TABLE_n})*\) REFERENCES {CODE_NAME}\({ATTRIBUTE_CODE_1}(, {ATTRIBUTE_CODE_n})\)
+```
+
+où les `{ATTRIBUTE_TABLE}` correspondent à des valeurs de `columns.name`, `{ATTRIBUTE_CODE}` correspondent à des colonnes du fichier `codes/{CODE_NAME}.csv`.
+
+Les valeurs se référencent entre elles. Ainsi, `{ATTRIBUTE_TABLE_1}` doit correspondre à une valeur dans `{ATTRIBUTE_CODE_1}`, `{ATTRIBUTE_TABLE_2}` doit correspondre à une valeur dans `{ATTRIBUTE_CODE_2}`, etc...
 
 ## Modélisation des erreurs
 
@@ -169,7 +194,7 @@ Le concept de [ValidatorError](ValidatorError.json) est utilisé pour modéliser
 | `errorGeometry` | Localisation de l'erreur géométrique (format WKT, projection CRS:84) | `POINT (-2.1559630631294775 47.32809837488598)` |
 | `featureId`     | Identifiant de l'objet (si disponible)                               | `id-6b2bd0b0-c593-4e40-8e2e-2037e35b4685`       |
 
-Les propriétés suivantes sont spécifiques aux erreurs de validation XML sur la base de schémas XSD (`code=XSD_SCHEMA_ERROR`) : 
+Les propriétés suivantes sont spécifiques aux erreurs de validation XML sur la base de schémas XSD (`code=XSD_SCHEMA_ERROR`) :
 
 | Nom               | description                                      | Exemple                                                                                                      |
 | ----------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
@@ -184,4 +209,3 @@ Les niveaux de gravité des erreurs sont utilisés comme suit :
 * `WARNING` matérialise un problème non bloquant pour l'intégration des données dans une base de données est rencontré
 * `INFO` permet d'ajouter au rapport un message d'information visible par les utilisateurs du validateur (ex : projection lue dans une fiche de métadonnées)
 * `DEBUG` permet d'ajouter un rapport un message d'information non visible par les utilisateurs (ex : version de GDAL)
-
