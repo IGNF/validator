@@ -63,7 +63,7 @@ public class ValidationDirectoryOption {
 
         if (commandLine.hasOption(OPTION_NAME)) {
             validationDirectory = (File) commandLine.getParsedOptionValue(OPTION_NAME);
-            if (validationDirectory.getAbsolutePath().startsWith(documentPath.getAbsolutePath())) {
+            if (OptionsUtils.isParentOf(documentPath, validationDirectory)) {
                 throw new IllegalArgumentException("output validation directory is a child of the input directory");
             }
         } else {
