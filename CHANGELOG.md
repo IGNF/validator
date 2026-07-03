@@ -2,6 +2,10 @@
 
 ## 4.5.x
 
+* v4.5.4 - Bump Jackson (FasterXML) to 2.21.4 [SECURITY]
+* v4.5.4 - Bump commons-lang3 to 3.18.0 (override GeoTools transitive) [SECURITY]
+* v4.5.4 - Add `make trivy` target to scan Maven dependencies for vulnerabilities
+* v4.5.4 - Reduce build warnings (compiler, shade plugin, surefire)
 * v4.5.3 - Improve deb/rpm build scripts (fallback without fpm/rpmbuild)
 * v4.5.2 - Add `typeproc` document tag from DOC_URBA (`TYPEPROC` for SCOT, `NOMPROC` for PLU, PLUi, CC and PSMV)
 * v4.5.2 - Bump log4j-core to 2.25.4 [SECURITY]
