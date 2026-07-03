@@ -38,6 +38,7 @@
 		<apache-common-cli.version>1.11.0</apache-common-cli.version>
 		<apache-commons-csv.version>1.14.1</apache-commons-csv.version>
 		<apache-commons-lang.version>2.6</apache-commons-lang.version>
+		<apache-commons-lang3.version>3.18.0</apache-commons-lang3.version>
 		<!-- JDBC -->
 		<postgresql.version>42.7.11</postgresql.version>
 		<sqlite-jdbc.version>3.51.1.0</sqlite-jdbc.version>
@@ -144,6 +145,13 @@
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${apache-commons-lang.version}</version>
+		</dependency>
+
+		<!-- Override transitive commons-lang3 (GeoTools) for CVE-2025-48924 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${apache-commons-lang3.version}</version>
 		</dependency>
 
 		<!--
@@ -293,7 +301,7 @@
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
-					<argLine>@{argLine} --illegal-access=permit</argLine>
+					<argLine>@{argLine}</argLine>
 				</configuration>
 			</plugin>
 
@@ -312,6 +320,9 @@
 					<configuration>
 						<source>${java.version}</source>
 						<target>${java.version}</target>
+						<compilerArgs>
+							<arg>-Xlint:-options</arg>
+						</compilerArgs>
 					</configuration>
 				</plugin>
 

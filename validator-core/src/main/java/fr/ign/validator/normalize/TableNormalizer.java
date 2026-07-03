@@ -156,7 +156,7 @@ public class TableNormalizer implements Closeable {
                 outputValue = context.getStringFixer().transform(outputValue);
                 outputRow[position] = outputValue;
             }
-            printer.printRecord(outputRow);
+            printer.printRecord((Object[]) outputRow);
         }
     }
 

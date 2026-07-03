@@ -107,7 +107,7 @@ public class DocUrbaFilter {
             /*
              * Write header
              */
-            printer.printRecord(reader.getHeader());
+            printer.printRecord((Object[]) reader.getHeader());
 
             /*
              * Search of row corresponding to documentName
@@ -152,7 +152,7 @@ public class DocUrbaFilter {
                     }
                 }
 
-                printer.printRecord(row);
+                printer.printRecord((Object[]) row);
             }
 
             /*
