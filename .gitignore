@@ -8,3 +8,5 @@
 /validator.launch
 /*/.factorypath
 /.tools/
+release.properties
+*.releaseBackup
