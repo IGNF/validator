@@ -301,7 +301,8 @@
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
-					<argLine>@{argLine}</argLine>
+					<!-- VFORK: workaround JDK ProcessBuilder spawn-helper failures when launching ogr2ogr -->
+					<argLine>@{argLine} -Djdk.lang.Process.launchMechanism=VFORK</argLine>
 				</configuration>
 			</plugin>
 

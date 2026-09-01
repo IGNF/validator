@@ -2,6 +2,7 @@
 
 ## 4.5.x
 
+* v4.5.6 - Add `ORIGINAL_PATH` column to normalized `TITRES_PIECES_ECRITES.csv` (relative path under `Pieces_ecrites`)
 * v4.5.4 - Bump Jackson (FasterXML) to 2.21.4 [SECURITY]
 * v4.5.4 - Bump commons-lang3 to 3.18.0 (override GeoTools transitive) [SECURITY]
 * v4.5.4 - Add `make trivy` target to scan Maven dependencies for vulnerabilities

@@ -26,6 +26,18 @@
                 "unique": false,
                 "maxLength": 80
             }
+        },
+        {
+            "id": "d4e5f6789012345678abcdef01234567",
+            "name": "ORIGINAL_PATH",
+            "title": "ORIGINAL_PATH",
+            "type": "String",
+            "constraints": {
+                "required": false,
+                "presenceRequired": false,
+                "unique": false,
+                "maxLength": 1024
+            }
         }
     ]
 }

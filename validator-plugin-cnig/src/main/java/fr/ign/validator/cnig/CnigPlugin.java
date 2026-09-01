@@ -8,6 +8,7 @@ import fr.ign.validator.cnig.process.DocUrbaComPostProcess;
 import fr.ign.validator.cnig.process.DocUrbaPostProcess;
 import fr.ign.validator.cnig.process.PerimetreScotPostProcess;
 import fr.ign.validator.cnig.process.SupRelationsPostProcess;
+import fr.ign.validator.cnig.process.TitresPiecesEcritesPostProcess;
 import fr.ign.validator.cnig.validation.attribute.GeometryComplexityValidator;
 import fr.ign.validator.cnig.validation.attribute.GeometryInDocumentValidator;
 import fr.ign.validator.cnig.validation.attribute.InseeValidator;
@@ -65,6 +66,11 @@ public class CnigPlugin implements Plugin {
          * "nomreg" and "urlreg" (must run before CreateShapefilesPostProcess)
          */
         context.addListener(new SupRelationsPostProcess());
+        /*
+         * PostProcess - Add ORIGINAL_PATH to TITRES_PIECES_ECRITES.csv (must run after
+         * NormalizePostProcess)
+         */
+        context.addListener(new TitresPiecesEcritesPostProcess());
         /*
          * PostProcess- Converts DATA/*.csv to DATA/*.shp (must follow
          * ReferenceActeSupPostProcess)
