@@ -1,6 +1,6 @@
 package fr.ign.validator.cnig.tools;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import fr.ign.validator.cnig.model.DocumentName;
 

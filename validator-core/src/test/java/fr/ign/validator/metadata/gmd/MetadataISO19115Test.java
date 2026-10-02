@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.metadata.Constraint;

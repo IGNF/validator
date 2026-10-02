@@ -1,6 +1,6 @@
 package fr.ign.validator.validation.document;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Document;

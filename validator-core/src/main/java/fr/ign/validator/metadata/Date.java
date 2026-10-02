@@ -2,7 +2,7 @@ package fr.ign.validator.metadata;
 
 import javax.xml.datatype.DatatypeFactory;
 
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

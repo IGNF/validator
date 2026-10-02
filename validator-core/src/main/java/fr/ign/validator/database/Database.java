@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -59,6 +59,10 @@ public class Database implements Closeable {
     private static final String ENV_DATABASE_PASSWORD = "DB_PASSWORD";
     private static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
 
+    /**
+     * @deprecated driver name of the old PostgreSQL drivers, use {@link #isPostgresql()}
+     */
+    @Deprecated
     public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
 
     public static final String DEFAULT_SRID = "4326";
@@ -149,8 +153,20 @@ public class Database implements Closeable {
      * @return
      */
     public boolean hasGeometrySupport() {
+        return isPostgresql();
+    }
+
+    /**
+     * True for a PostgreSQL database (false for SQLITE).
+     *
+     * Note that the driver name can't be used ("PostgreSQL Native Driver" for old drivers, "PostgreSQL JDBC
+     * Driver" since 42.x).
+     *
+     * @return
+     */
+    public boolean isPostgresql() {
         try {
-            return connection.getMetaData().getDriverName().equals(Database.POSTGRESQL_DRIVER);
+            return connection.getMetaData().getURL().startsWith("jdbc:postgresql:");
         } catch (SQLException e) {
             return false;
         }
@@ -392,7 +408,13 @@ public class Database implements Closeable {
     public void createIndex(String tableName, String columnName) throws SQLException {
         log.info(MARKER, "Create index on {}.{} ...", tableName, columnName);
         String indexName = "idx_" + tableName + "_" + columnName;
-        String sql = "CREATE INDEX IF NOT EXISTS " + indexName + " ON " + tableName + " (" + columnName + ")";
+        /*
+         * PostgreSQL : btree indexes are limited to values of about 2700 bytes (ex : WKT of large polygons
+         * with "unique" constraints), hash indexes have no size limit and support the equality used by
+         * the database validators (unicity, references).
+         */
+        String method = isPostgresql() ? " USING hash" : "";
+        String sql = "CREATE INDEX IF NOT EXISTS " + indexName + " ON " + tableName + method + " (" + columnName + ")";
 
         update(sql);
         connection.commit();
@@ -651,6 +673,8 @@ public class Database implements Closeable {
                 stmt.enquoteIdentifier(tableName, false)
             );
             ResultSet rs = stmt.executeQuery(query);
+            // required by PostgreSQL (SQLITE tolerates reading the first row without next())
+            rs.next();
             return rs.getInt(1);
         } finally {
             stmt.close();

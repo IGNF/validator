@@ -3,7 +3,7 @@ package fr.ign.validator.cnig.tools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import fr.ign.validator.cnig.model.DocumentName;
 

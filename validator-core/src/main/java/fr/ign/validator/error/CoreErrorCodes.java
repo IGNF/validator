@@ -237,5 +237,6 @@ public class CoreErrorCodes {
      */
     public static final ErrorCode DATABASE_CONSTRAINT_MISMATCH = ErrorCode.valueOf("DATABASE_CONSTRAINT_MISMATCH");
     public static final ErrorCode TABLE_FOREIGN_KEY_NOT_FOUND = ErrorCode.valueOf("TABLE_FOREIGN_KEY_NOT_FOUND");
+    public static final ErrorCode MODEL_STATIC_TABLE_NOT_FOUND = ErrorCode.valueOf("MODEL_STATIC_TABLE_NOT_FOUND");
 
 }
