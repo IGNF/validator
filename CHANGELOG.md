@@ -1,26 +1,39 @@
 # CHANGELOG
 
+## 4.6.x
+
+### v4.6.0 - Behavior changes
+
+* v4.6.0 - Compare values with `=` instead of `LIKE` for foreign keys and DGPR controls (`_` and `%` were wildcards, case insensitive comparison with SQLITE)
+* v4.6.0 - Fail the validation when ogr2ogr fails (exit code, stderr reported) instead of validating a partial output, add `OGR2OGR_TIMEOUT` (seconds, default 3600)
+* v4.6.0 - DGPR : `DGPR_INOND_INCLUSION_ERROR` checks the inclusion in the union of the surfaces of each weaker scenario (Fort in Moyen and Faible, Moyen in Faible) instead of a single surface of the next scenario
+* v4.6.0 - `document_geometry` : return exit code 1 on failure
+* v4.6.0 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
+* v4.6.0 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
+
+### v4.6.0 - Fixes
+
+* v4.6.0 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
+* v4.6.0 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)
+* v4.6.0 - DGPR : rollback to a savepoint when a PostGIS error occurs (the following controls were failing with "current transaction is aborted")
+* v4.6.0 - Fix validation database support for PostgreSQL (driver detection, hash indexes for large values, `getCount`, SUP columns detection without `pragma_table_info`)
+* v4.6.0 - Fix rows with missing values (`ArrayIndexOutOfBoundsException` while validating and loading the validation database) and values shifted by columns without name (rows aligned on the header, invalid rows reported as `TABLE_INVALID_ROW`)
+* v4.6.0 - Fix JDBC leaks (statements of `Database.query()` and `DatabaseSUP`, connections not closed on failure and after `SupRelationsPostProcess`)
+* v4.6.0 - Close the files and HTTP connections opened by `TableReader`
+* v4.6.0 - Add network timeouts (30s to connect, 120s to read) for models and static tables (a server not responding was blocking the validation)
+* v4.6.0 - Download remote static tables once per validation (`static_tables/{name}.csv` in the validation directory, they were read 3 times)
+* v4.6.0 - Use `Locale.ROOT` for case conversions (ex : `IDURBA` was converted to `ıdurba` with a turkish locale)
+* v4.6.0 - DGPR : fix `NullPointerException` in inclusion control without `--dgpr-tolerance`
+
+### v4.6.0 - Dependencies and build
+
+* v4.6.0 - Bump dependencies (Jackson 2.22.3, commons-io 2.22.0, commons-lang3 3.21.0, PostgreSQL 42.7.13, sqlite-jdbc 3.53.4.0, Maven plugins) and replace `commons-lang` 2.6 by `commons-lang3` (CVE-2025-48924) [SECURITY]
+* v4.6.0 - Reduce `validator-cli.jar` size from 35.6 to 23.0 Mo (SQLite native libraries limited to Linux, Mac and Windows x86_64, unused GeoTools dependencies JAI and EMF excluded, `woodstox-core-asl` removed)
+* v4.6.0 - CI : test the DGPR controls with PostGIS
+* v4.6.0 - Remove unused files (obsolete `dependency-reduced-pom.xml` and `validator.sh`, unused classes and test resources)
+
 ## 4.5.x
 
-* v4.5.7 - Reduce `validator-cli.jar` size from 35.6 to 23.0 Mo (SQLite native libraries limited to Linux, Mac and Windows x86_64, unused GeoTools dependencies JAI and EMF excluded, `woodstox-core-asl` removed)
-* v4.5.7 - DGPR : `DGPR_INOND_INCLUSION_ERROR` checks the inclusion in the union of the surfaces of each weaker scenario (Fort in Moyen and Faible, Moyen in Faible) instead of a single surface of the next scenario
-* v4.5.7 - CI : test the DGPR controls with PostGIS
-* v4.5.7 - Download remote static tables once per validation (`static_tables/{name}.csv` in the validation directory, they were read 3 times)
-* v4.5.7 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
-* v4.5.7 - Use `Locale.ROOT` for case conversions (ex : `IDURBA` was converted to `ıdurba` with a turkish locale)
-* v4.5.7 - `document_geometry` : return exit code 1 on failure
-* v4.5.7 - DGPR : fix `NullPointerException` in inclusion control without `--dgpr-tolerance`
-* v4.5.7 - Remove unused files (obsolete `dependency-reduced-pom.xml` and `validator.sh`, unused classes and test resources)
-* v4.5.7 - Fix rows with missing values (`ArrayIndexOutOfBoundsException` while validating and loading the validation database) and values shifted by columns without name (rows aligned on the header, invalid rows reported as `TABLE_INVALID_ROW`)
-* v4.5.7 - Close the files and HTTP connections opened by `TableReader`
-* v4.5.7 - Add network timeouts (30s to connect, 120s to read) for models and static tables (a server not responding was blocking the validation)
-* v4.5.7 - Fix JDBC leaks (statements of `Database.query()` and `DatabaseSUP`, connections not closed on failure and after `SupRelationsPostProcess`)
-* v4.5.7 - DGPR : rollback to a savepoint when a PostGIS error occurs (the following controls were failing with "current transaction is aborted")
-* v4.5.7 - Fail the validation when ogr2ogr fails (exit code, stderr reported) instead of validating a partial output, add `OGR2OGR_TIMEOUT` (seconds, default 3600)
-* v4.5.7 - Compare values with `=` instead of `LIKE` for foreign keys and DGPR controls (`_` and `%` were wildcards, case insensitive comparison with SQLITE)
-* v4.5.7 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)
-* v4.5.7 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
-* v4.5.7 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
 * v4.5.6 - Add `ORIGINAL_PATH` column to normalized `TITRES_PIECES_ECRITES.csv` (relative path under `Pieces_ecrites`)
 * v4.5.4 - Bump Jackson (FasterXML) to 2.21.4 [SECURITY]
 * v4.5.4 - Bump commons-lang3 to 3.18.0 (override GeoTools transitive) [SECURITY]
