@@ -108,11 +108,12 @@ public class TableNormalizer implements Closeable {
      */
     public void append(File csvFile) throws IOException {
         log.info(MARKER, "Append data from {}...", csvFile);
-        TableReader reader = TableReader.createTableReader(
-            csvFile,
-            context.getEncoding()
-        );
+        try (TableReader reader = TableReader.createTableReader(csvFile, context.getEncoding())) {
+            append(csvFile, reader);
+        }
+    }
 
+    private void append(File csvFile, TableReader reader) throws IOException {
         /*
          * writing each feature
          */
@@ -120,7 +121,7 @@ public class TableNormalizer implements Closeable {
         while (reader.hasNext()) {
             String[] inputRow = reader.next();
             String[] outputRow = new String[featureType.getAttributeCount()];
-            if (inputRow.length != inputHeader.length) {
+            if (!reader.isLastRowValid()) {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_INVALID_ROW)
                         .setMessageParam("FILEPATH", csvFile.getPath())

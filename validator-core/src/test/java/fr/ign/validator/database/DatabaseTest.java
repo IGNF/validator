@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -150,6 +151,30 @@ public class DatabaseTest {
 
         Assert.assertEquals(1, database.getCount("test"));
 
+        database.close();
+    }
+
+    /**
+     * A row with missing values is loaded with null values (was failing with
+     * ArrayIndexOutOfBoundsException)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testLoadFileWithShortRow() throws Exception {
+        Database database = new Database(new File(folder.getRoot(), "test.sqlite"));
+        database.createTable("test", Arrays.asList("A", "B"));
+
+        File file = folder.newFile("short.csv");
+        FileUtils.writeStringToFile(file, "A,B\r\na1,b1\r\na2\r\n", StandardCharsets.UTF_8);
+        database.loadFile("test", file, StandardCharsets.UTF_8);
+
+        Assert.assertEquals(2, database.getCount("test"));
+        try (RowIterator it = database.query("SELECT a, b FROM test WHERE a = 'a2'")) {
+            String[] row = it.next();
+            Assert.assertEquals("a2", row[0]);
+            Assert.assertNull(row[1]);
+        }
         database.close();
     }
 

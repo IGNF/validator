@@ -12,7 +12,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import fr.ign.validator.exception.ColumnNotFoundException;
 
@@ -24,6 +27,56 @@ import fr.ign.validator.exception.ColumnNotFoundException;
  *
  */
 public class TableReaderCSVTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    private TableReader createReader(String content) throws IOException {
+        File file = folder.newFile("test.csv");
+        FileUtils.writeStringToFile(file, content, StandardCharsets.UTF_8);
+        return TableReader.createTableReader(file, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Rows are aligned on the header (values of columns without name were shifted)
+     */
+    @Test
+    public void testEmptyColumnName() throws IOException {
+        try (TableReader reader = createReader("A,,B\r\n1,x,2\r\n")) {
+            assertEquals(Arrays.asList("A", "B"), Arrays.asList(reader.getHeader()));
+            assertEquals(Arrays.asList("1", "2"), Arrays.asList(reader.next()));
+            assertTrue(reader.isLastRowValid());
+            assertFalse(reader.hasNext());
+        }
+    }
+
+    /**
+     * Trailing comma (rows were rejected as TABLE_INVALID_ROW by TableNormalizer)
+     */
+    @Test
+    public void testTrailingComma() throws IOException {
+        try (TableReader reader = createReader("A,B,\r\n1,2,\r\n")) {
+            assertEquals(Arrays.asList("A", "B"), Arrays.asList(reader.getHeader()));
+            assertEquals(Arrays.asList("1", "2"), Arrays.asList(reader.next()));
+            assertTrue(reader.isLastRowValid());
+        }
+    }
+
+    /**
+     * Missing values are null and the row is reported as invalid (was causing
+     * ArrayIndexOutOfBoundsException while reading values)
+     */
+    @Test
+    public void testShortAndLongRows() throws IOException {
+        try (TableReader reader = createReader("A,B,C\r\n1\r\n1,2,3,4\r\n1,2,3\r\n")) {
+            assertEquals(Arrays.asList("1", null, null), Arrays.asList(reader.next()));
+            assertFalse(reader.isLastRowValid());
+            assertEquals(Arrays.asList("1", "2", "3"), Arrays.asList(reader.next()));
+            assertFalse(reader.isLastRowValid());
+            assertEquals(Arrays.asList("1", "2", "3"), Arrays.asList(reader.next()));
+            assertTrue(reader.isLastRowValid());
+        }
+    }
 
     @Test
     public void testReadEmpty() {

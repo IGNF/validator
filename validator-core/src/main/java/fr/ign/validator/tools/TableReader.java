@@ -1,5 +1,6 @@
 package fr.ign.validator.tools;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,11 +33,12 @@ import fr.ign.validator.exception.ColumnNotFoundException;
  * <li>CSV files are read using apache-common-csv</li>
  * <li>Other formats are converted to CSV files (.vrows) using "ogr2ogr"</li>
  * <li>reader.charsetValid is set to false when charset is invalid</li>
+ * <li>rows are aligned on the header (see {@link #next()})</li>
  * </ul>
  *
  * @author MBorne
  */
-public class TableReader implements Iterator<String[]> {
+public class TableReader implements Iterator<String[]>, Closeable {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("TableReader");
@@ -47,6 +49,10 @@ public class TableReader implements Iterator<String[]> {
     public static final String TMP_EXTENSION = "vrows";
 
     /**
+     * CSV parser (closed with the TableReader)
+     */
+    private CSVParser parser;
+    /**
      * CSV file reader
      */
     private Iterator<CSVRecord> iterator;
@@ -54,6 +60,18 @@ public class TableReader implements Iterator<String[]> {
      * File header
      */
     private String[] header;
+    /**
+     * Number of fields in the header of the file (including empty names)
+     */
+    private int inputHeaderLength;
+    /**
+     * Position in the input rows of each column of the header
+     */
+    private int[] inputIndexes;
+    /**
+     * true if the last row has the same number of fields as the header
+     */
+    private boolean lastRowValid = true;
     /**
      * true if the charset is valid, false if detected
      */
@@ -74,7 +92,7 @@ public class TableReader implements Iterator<String[]> {
             charsetValid = false;
             charset = CharsetDetector.detectCharset(csvFile);
         }
-        CSVParser parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180);
+        this.parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180);
         this.iterator = parser.iterator();
         readHeader();
     }
@@ -89,7 +107,7 @@ public class TableReader implements Iterator<String[]> {
      * @throws IOException
      */
     TableReader(InputStream csvStream, Charset preferedCharset) throws IOException {
-        CSVParser parser = CSVParser.parse(csvStream, preferedCharset, CSVFormat.RFC4180);
+        this.parser = CSVParser.parse(csvStream, preferedCharset, CSVFormat.RFC4180);
         this.iterator = parser.iterator();
         readHeader();
     }
@@ -114,17 +132,23 @@ public class TableReader implements Iterator<String[]> {
      */
     private void readHeader() throws IOException {
         if (!hasNext()) {
+            close();
             throw new IOException("Fail to read header");
         }
-        String[] fields = next();
+        String[] fields = toArray(iterator.next());
         List<String> filteredFields = new ArrayList<String>();
-        for (String field : fields) {
+        List<Integer> filteredIndexes = new ArrayList<Integer>();
+        for (int i = 0; i < fields.length; i++) {
+            String field = fields[i];
             if (field == null || field.isEmpty()) {
                 continue;
             }
             filteredFields.add(field);
+            filteredIndexes.add(i);
         }
         header = filteredFields.toArray(new String[filteredFields.size()]);
+        inputHeaderLength = fields.length;
+        inputIndexes = filteredIndexes.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
@@ -139,10 +163,41 @@ public class TableReader implements Iterator<String[]> {
         return iterator.hasNext();
     }
 
+    /**
+     * Read the next row aligned on the header : the values of columns with an empty
+     * name are ignored and the missing values are null (see
+     * {@link #isLastRowValid()} to detect such rows).
+     *
+     * @return values with the same size as the header
+     */
     @Override
     public String[] next() {
-        CSVRecord row = iterator.next();
-        return toArray(row);
+        String[] row = toArray(iterator.next());
+        lastRowValid = row.length == inputHeaderLength;
+        if (lastRowValid && inputIndexes.length == row.length) {
+            return row;
+        }
+        String[] result = new String[inputIndexes.length];
+        for (int i = 0; i < inputIndexes.length; i++) {
+            int inputIndex = inputIndexes[i];
+            result[i] = inputIndex < row.length ? row[inputIndex] : null;
+        }
+        return result;
+    }
+
+    /**
+     * Indicates if the last row returned by {@link #next()} has the same number of
+     * fields as the header.
+     *
+     * @return
+     */
+    public boolean isLastRowValid() {
+        return lastRowValid;
+    }
+
+    @Override
+    public void close() throws IOException {
+        parser.close();
     }
 
     @Override
@@ -267,7 +322,7 @@ public class TableReader implements Iterator<String[]> {
             url,
             StandardCharsets.UTF_8
         );
-        return new TableReader(url.openStream(), StandardCharsets.UTF_8);
+        return new TableReader(Networking.openStream(url), StandardCharsets.UTF_8);
     }
 
 }
