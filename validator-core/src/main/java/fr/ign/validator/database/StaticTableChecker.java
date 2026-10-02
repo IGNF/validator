@@ -17,11 +17,12 @@ import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.StaticTable;
 
 /**
- * Ensures that the static tables (reference lists) of a DocumentModel can be read before creating the
- * validation database (ex : csv removed from the server publishing the model).
+ * Ensures that the static tables (reference lists) of a DocumentModel can be
+ * read before creating the validation database (ex : csv removed from the
+ * server publishing the model).
  *
- * An unavailable static table is reported as MODEL_STATIC_TABLE_NOT_FOUND instead of failing the whole
- * validation.
+ * An unavailable static table is reported as MODEL_STATIC_TABLE_NOT_FOUND
+ * instead of failing the whole validation.
  */
 public class StaticTableChecker {
 

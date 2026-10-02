@@ -213,17 +213,26 @@ public class Document implements Validatable {
      */
     private void runDatabaseValidators(Context context) {
         /*
-         * reference lists (static tables) are required by the database validators : the validation goes
-         * on without them if they can't be read (reported as MODEL_STATIC_TABLE_NOT_FOUND)
+         * reference lists (static tables) are required by the database validators : the
+         * validation goes on without them if they can't be read (reported as
+         * MODEL_STATIC_TABLE_NOT_FOUND)
          */
-        if (!StaticTableChecker.checkAvailability(context, getDocumentModel())) {
-            log.warn(MARKER, "Validation using database validators skipped (static table not found)");
-            return;
-        }
+        boolean staticTablesAvailable = StaticTableChecker.checkAvailability(context, getDocumentModel());
 
         try {
             log.info(MARKER, "Create validation Database...");
             Database database = Database.createDatabase(context, true);
+            if (!staticTablesAvailable) {
+                /*
+                 * the document tables are still loaded as the validation database is reused by
+                 * post-processes (ex : SupRelationsPostProcess)
+                 */
+                log.warn(MARKER, "Validation using database validators skipped (static table not found)");
+                database.createDocumentTables(getDocumentModel());
+                database.loadDocumentFiles(context, this);
+                database.close();
+                return;
+            }
             database.createTables(getDocumentModel());
             database.createIndexes(getDocumentModel());
             database.load(context, this);

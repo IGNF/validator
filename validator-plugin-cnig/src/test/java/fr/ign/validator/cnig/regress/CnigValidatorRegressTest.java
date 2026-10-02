@@ -44,6 +44,7 @@ import fr.ign.validator.geometry.GeometryThreshold;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
+import fr.ign.validator.model.StaticTable;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.model.file.SingleTableModel;
 import fr.ign.validator.plugin.PluginManager;
@@ -402,6 +403,46 @@ public class CnigValidatorRegressTest {
         File producedInfosCnigPath = getGeneratedDocumentInfos(documentPath);
         File expectedInfosCnigPath = CnigRegressHelper.getExpectedDocumentInfos("110068012_PM3_28_20161104");
         assertEqualsJsonFile(producedInfosCnigPath, expectedInfosCnigPath);
+    }
+
+    /**
+     * SUP with a static table that can't be read (ex : csv removed from the server)
+     *
+     * (was previously crashing in SupRelationsPostProcess as the validation
+     * database was not created)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSUP_PM3_28_StaticTableNotFound() throws Exception {
+        DocumentModel documentModel = CnigRegressHelper.getDocumentModel("cnig_SUP_PM3_2013");
+        StaticTable staticTable = new StaticTable();
+        staticTable.setName("ListeAbsente");
+        staticTable.setTitle("ListeAbsente");
+        staticTable.setDataReference("./codes/ListeAbsente.csv");
+        staticTable.setData(new File(folder.getRoot(), "ListeAbsente.csv").toURI().toURL());
+        documentModel.getStaticTables().add(staticTable);
+
+        File documentPath = CnigRegressHelper.getSampleDocument("110068012_PM3_28_20161104", folder);
+        Context context = createContext(documentPath);
+        context.setEnableConditions(true);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        /*
+         * database validators are skipped (no DATABASE_CONSTRAINT_MISMATCH)
+         */
+        ReportAssert.assertCount(1, CoreErrorCodes.MODEL_STATIC_TABLE_NOT_FOUND, report);
+        ReportAssert.assertCount(3, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
+        ReportAssert.assertCount(0, CoreErrorCodes.DATABASE_CONSTRAINT_MISMATCH, report);
+
+        /*
+         * SupRelationsPostProcess is performed using the validation database
+         */
+        File assietteFile = new File(context.getDataDirectory(), "PM3_ASSIETTE_SUP_S.csv");
+        TableReader reader = TableReader.createTableReader(assietteFile, StandardCharsets.UTF_8);
+        assertTrue("Column 'fichier' not found!", reader.findColumn("fichier") >= 0);
+        assertTrue("Column 'nomsuplitt' not found!", reader.findColumn("nomsuplitt") >= 0);
     }
 
     /**

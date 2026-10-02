@@ -532,8 +532,8 @@ public class DatabaseSUP {
     /**
      * True if the SERVITUDE table has the given column (case insensitive).
      *
-     * Note that pragma_table_info can't be used as it is specific to SQLITE (the validation database is
-     * PostgreSQL when DB_URL is defined).
+     * Note that pragma_table_info can't be used as it is specific to SQLITE (the
+     * validation database is PostgreSQL when DB_URL is defined).
      */
     private boolean servitudeHasColumn(String columnName) {
         String sql = "SELECT * FROM servitude LIMIT 0";

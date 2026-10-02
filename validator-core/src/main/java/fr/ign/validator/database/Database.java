@@ -60,7 +60,8 @@ public class Database implements Closeable {
     private static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
 
     /**
-     * @deprecated driver name of the old PostgreSQL drivers, use {@link #isPostgresql()}
+     * @deprecated driver name of the old PostgreSQL drivers, use
+     *             {@link #isPostgresql()}
      */
     @Deprecated
     public static final String POSTGRESQL_DRIVER = "PostgreSQL Native Driver";
@@ -159,8 +160,8 @@ public class Database implements Closeable {
     /**
      * True for a PostgreSQL database (false for SQLITE).
      *
-     * Note that the driver name can't be used ("PostgreSQL Native Driver" for old drivers, "PostgreSQL JDBC
-     * Driver" since 42.x).
+     * Note that the driver name can't be used ("PostgreSQL Native Driver" for old
+     * drivers, "PostgreSQL JDBC Driver" since 42.x).
      *
      * @return
      */
@@ -284,13 +285,23 @@ public class Database implements Closeable {
      * @throws IOException
      */
     public void createTables(DocumentModel documentModel) throws SQLException, IOException {
-        log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
-        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
-            createTable(tableModel);
-        }
+        createDocumentTables(documentModel);
         log.info(MARKER, "Create static table from DocumentModel '{}'...", documentModel.getName());
         for (StaticTable staticTable : documentModel.getStaticTables()) {
             createTable(staticTable);
+        }
+    }
+
+    /**
+     * Create tables according to the TableModels of the DocumentModel ignoring the
+     * static tables.
+     *
+     * @throws SQLException
+     */
+    public void createDocumentTables(DocumentModel documentModel) throws SQLException {
+        log.info(MARKER, "Create tables for the DocumentModel '{}' ...", documentModel.getName());
+        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
+            createTable(tableModel);
         }
     }
 
@@ -409,9 +420,10 @@ public class Database implements Closeable {
         log.info(MARKER, "Create index on {}.{} ...", tableName, columnName);
         String indexName = "idx_" + tableName + "_" + columnName;
         /*
-         * PostgreSQL : btree indexes are limited to values of about 2700 bytes (ex : WKT of large polygons
-         * with "unique" constraints), hash indexes have no size limit and support the equality used by
-         * the database validators (unicity, references).
+         * PostgreSQL : btree indexes are limited to values of about 2700 bytes (ex :
+         * WKT of large polygons with "unique" constraints), hash indexes have no size
+         * limit and support the equality used by the database validators (unicity,
+         * references).
          */
         String method = isPostgresql() ? " USING hash" : "";
         String sql = "CREATE INDEX IF NOT EXISTS " + indexName + " ON " + tableName + method + " (" + columnName + ")";
@@ -427,6 +439,20 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     public void load(Context context, Document document) throws IOException, SQLException {
+        loadDocumentFiles(context, document);
+        log.info(MARKER, "Loading static table from document model '{}'...", document.getDocumentModel().getName());
+        for (StaticTable staticTable : document.getDocumentModel().getStaticTables()) {
+            load(context, staticTable);
+        }
+    }
+
+    /**
+     * Load the data from the document files ignoring the static tables.
+     *
+     * @throws IOException
+     * @throws SQLException
+     */
+    public void loadDocumentFiles(Context context, Document document) throws IOException, SQLException {
         log.info(MARKER, "Loading data from document '{}'...", document.getDocumentPath());
         for (DocumentFile documentFile : document.getDocumentFiles()) {
             if (documentFile instanceof SingleTableFile) {
@@ -434,10 +460,6 @@ public class Database implements Closeable {
             } else if (documentFile instanceof MultiTableFile) {
                 load((MultiTableFile) documentFile);
             }
-        }
-        log.info(MARKER, "Loading static table from document model '{}'...", document.getDocumentModel().getName());
-        for (StaticTable staticTable : document.getDocumentModel().getStaticTables()) {
-            load(context, staticTable);
         }
     }
 
@@ -673,9 +695,14 @@ public class Database implements Closeable {
                 stmt.enquoteIdentifier(tableName, false)
             );
             ResultSet rs = stmt.executeQuery(query);
-            // required by PostgreSQL (SQLITE tolerates reading the first row without next())
+            // required by PostgreSQL (SQLITE tolerates reading the first row without
+            // next())
             rs.next();
-            return rs.getInt(1);
+            int count = rs.getInt(1);
+            // ends the transaction (autocommit is disabled) to release the lock on the
+            // table
+            connection.commit();
+            return count;
         } finally {
             stmt.close();
         }

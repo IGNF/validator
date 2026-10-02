@@ -54,7 +54,9 @@ public class StaticTableCheckerTest {
     }
 
     /**
-     * ex : https://www.geoportail-urbanisme.gouv.fr/standard/codes/ListeTypedocPLU.csv removed from the server
+     * ex :
+     * https://www.geoportail-urbanisme.gouv.fr/standard/codes/ListeTypedocPLU.csv
+     * removed from the server
      */
     @Test
     public void testNotFound() throws Exception {
@@ -70,7 +72,9 @@ public class StaticTableCheckerTest {
         List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.MODEL_STATIC_TABLE_NOT_FOUND);
         Assert.assertEquals(1, errors.size());
         String message = errors.get(0).getMessage();
-        Assert.assertTrue(message, message.startsWith("La table de référence ListeTypedocPLU du modèle est inaccessible"));
+        Assert.assertTrue(
+            message, message.startsWith("La table de référence ListeTypedocPLU du modèle est inaccessible")
+        );
         Assert.assertTrue(message, message.contains(missing.toURI().toURL().toString() + " : fichier introuvable"));
     }
 
