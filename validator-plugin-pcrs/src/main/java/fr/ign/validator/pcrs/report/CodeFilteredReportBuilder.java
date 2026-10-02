@@ -2,6 +2,7 @@ package fr.ign.validator.pcrs.report;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorCode;
@@ -48,7 +49,7 @@ public class CodeFilteredReportBuilder implements ReportBuilder {
         }
 
         if (errorCode.equals(CoreErrorCodes.MULTITABLE_UNEXPECTED)
-            && error.getMessage().toLowerCase().matches(getExpectedTableRegexp().toLowerCase())) {
+            && error.getMessage().toLowerCase(Locale.ROOT).matches(getExpectedTableRegexp().toLowerCase(Locale.ROOT))) {
             return;
         }
 

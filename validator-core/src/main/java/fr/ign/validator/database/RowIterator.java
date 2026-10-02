@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class RowIterator implements Iterator<String[]>, Closeable {
 
@@ -92,7 +93,7 @@ public class RowIterator implements Iterator<String[]>, Closeable {
     public int getColumn(String columnName) throws SQLException {
         for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
             String name = rs.getMetaData().getColumnName(i + 1);
-            if (name.toLowerCase().equals(columnName.toLowerCase())) {
+            if (name.toLowerCase(Locale.ROOT).equals(columnName.toLowerCase(Locale.ROOT))) {
                 return i;
             }
         }

@@ -2,6 +2,7 @@ package fr.ign.validator.cnig.validation.document;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -51,7 +52,7 @@ public class FileExtensionValidator implements Validator<Document>, ValidatorLis
     public void validate(Context context, Document document) {
         String documentType = DocumentModelName.getDocumentType(document.getDocumentModel().getName());
         String regepx = ".*(" + String.join("|", DOCUMENT_TYPES) + ").*";
-        if (!documentType.toLowerCase().matches(regepx)) {
+        if (!documentType.toLowerCase(Locale.ROOT).matches(regepx)) {
             log.info(
                 MARKER,
                 "Skipped - document is not a PLU, PLUi, a POS, a SCoT, a PSMV, a CC, therefore does not include piece ecrite directory"
@@ -70,7 +71,7 @@ public class FileExtensionValidator implements Validator<Document>, ValidatorLis
         for (File file : files) {
             // get extension
             String extension = FilenameUtils.getExtension(file.getName());
-            if (extension.toLowerCase().matches("(" + String.join("|", VALID_FILE_EXTENSION) + ")")) {
+            if (extension.toLowerCase(Locale.ROOT).matches("(" + String.join("|", VALID_FILE_EXTENSION) + ")")) {
                 continue;
             }
             // test if there is a dbf, or shp compagnion file

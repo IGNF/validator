@@ -1,6 +1,7 @@
 package fr.ign.validator.cnig.process;
 
 import java.io.File;
+import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,7 +62,7 @@ public class TitresPiecesEcritesPostProcess implements ValidatorListener {
             return false;
         }
         String regexp = ".*(" + String.join("|", DOCUMENT_TYPES) + ").*";
-        return documentType.toLowerCase().matches(regexp);
+        return documentType.toLowerCase(Locale.ROOT).matches(regexp);
     }
 
 }

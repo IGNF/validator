@@ -1,5 +1,7 @@
 package fr.ign.validator.cnig.model;
 
+import java.util.Locale;
+
 /**
  *
  * Parse document model name to extract informations according to naming
@@ -50,7 +52,7 @@ public class DocumentModelName {
      */
     public static boolean isDocumentModelSup(String documentModelName) {
         if (getDocumentType(documentModelName) != null) {
-            return getDocumentType(documentModelName).toUpperCase().equals(TYPE_SUP);
+            return getDocumentType(documentModelName).toUpperCase(Locale.ROOT).equals(TYPE_SUP);
         }
         return false;
     }

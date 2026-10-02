@@ -66,12 +66,8 @@ public class DocumentGeometryCommand extends AbstractCommand {
     public void execute() throws Exception {
         File targetFile = new File(outputFile.getAbsolutePath());
         log.info(MARKER, "Processing ...");
-        try {
-            process(inputFiles, targetFile);
-        } catch (Exception e) {
-            log.error(MARKER, "Failure during processing");
-            e.printStackTrace(System.err);
-        }
+        // failures are reported with exit code 1 by AbstractCommand
+        process(inputFiles, targetFile);
         log.info(MARKER, "complete");
         // dans gpu-site, lancement commande + lecture WKT
     }

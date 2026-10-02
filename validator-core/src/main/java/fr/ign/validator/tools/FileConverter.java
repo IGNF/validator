@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -215,7 +216,7 @@ public class FileConverter {
          * Configure charset for shapefiles
          */
         Map<String, String> envs = new HashMap<>();
-        String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase();
+        String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase(Locale.ROOT);
         if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
             envs.put("SHAPE_ENCODING", toEncoding(options.getSourceCharset()));
         }

@@ -1,5 +1,7 @@
 package fr.ign.validator.cnig.tools;
 
+import java.util.Locale;
+
 import org.apache.commons.lang3.StringUtils;
 
 import fr.ign.validator.cnig.model.DocumentName;
@@ -38,7 +40,7 @@ public class IdurbaFormatV2 implements IdurbaFormat {
 
     @Override
     public String getRegexpHelp(String documentName) {
-        return documentName.toUpperCase();
+        return documentName.toUpperCase(Locale.ROOT);
     }
 
 }

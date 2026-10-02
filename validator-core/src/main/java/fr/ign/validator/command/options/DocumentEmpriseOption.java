@@ -3,6 +3,7 @@ package fr.ign.validator.command.options;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -87,7 +88,7 @@ public class DocumentEmpriseOption {
 
     private static Geometry parseGeoJSONFileOption(String parsedOption) throws ParseException {
         File file = new File(parsedOption);
-        String filename = file.getName().toLowerCase();
+        String filename = file.getName().toLowerCase(Locale.ROOT);
 
         if (!filename.endsWith(".json")) {
             DocumentEmpriseOption.throwParseErrorException(parsedOption, "Ensure the input file has .json extension");

@@ -3,6 +3,7 @@ package fr.ign.validator.cnig.validation.document;
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -52,7 +53,7 @@ public class PieceEcriteOnlyPdfValidator implements Validator<Document>, Validat
     public void validate(Context context, Document document) {
         String documentType = DocumentModelName.getDocumentType(document.getDocumentModel().getName());
         String regepx = ".*(" + String.join("|", DOCUMENT_TYPES) + ").*";
-        if (!documentType.toLowerCase().matches(regepx)) {
+        if (!documentType.toLowerCase(Locale.ROOT).matches(regepx)) {
             log.info(
                 MARKER,
                 "Skipped - document is not a PLU, PLUi, a POS, a SCoT, a PSMV, a CC, therefore does not include piece ecrite directory"

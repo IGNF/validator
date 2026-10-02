@@ -114,7 +114,8 @@ public class InclusionValidator implements Validator<Database> {
     private void validInclusion() throws SQLException, IOException {
         String surfaceTablename = "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD";
 
-        double distanceBuffer = context.getDgprTolerance();
+        // same default as GraphTopologyValidator when the tolerance is not defined
+        double distanceBuffer = context.getDgprTolerance() != null ? context.getDgprTolerance() : 0.0;
 
         String query = " SELECT "
             + "   sc_fort.id_s_inond as id_fort"

@@ -2,6 +2,10 @@
 
 ## 4.5.x
 
+* v4.5.7 - Use `Locale.ROOT` for case conversions (ex : `IDURBA` was converted to `ıdurba` with a turkish locale)
+* v4.5.7 - `document_geometry` : return exit code 1 on failure
+* v4.5.7 - DGPR : fix `NullPointerException` in inclusion control without `--dgpr-tolerance`
+* v4.5.7 - Remove unused files (obsolete `dependency-reduced-pom.xml` and `validator.sh`, unused classes and test resources)
 * v4.5.7 - Fix rows with missing values (`ArrayIndexOutOfBoundsException` while validating and loading the validation database) and values shifted by columns without name (rows aligned on the header, invalid rows reported as `TABLE_INVALID_ROW`)
 * v4.5.7 - Close the files and HTTP connections opened by `TableReader`
 * v4.5.7 - Add network timeouts (30s to connect, 120s to read) for models and static tables (a server not responding was blocking the validation)

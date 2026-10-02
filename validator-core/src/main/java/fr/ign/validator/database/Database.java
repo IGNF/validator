@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -575,7 +576,7 @@ public class Database implements Closeable {
                 if (outputColumn.equalsIgnoreCase(inputColumn)) {
                     // inputColumn exists
                     inputIndexes.add(i);
-                    columnParts.add(outputColumn.toLowerCase());
+                    columnParts.add(outputColumn.toLowerCase(Locale.ROOT));
                     valueParts.add("?");
                 }
             }

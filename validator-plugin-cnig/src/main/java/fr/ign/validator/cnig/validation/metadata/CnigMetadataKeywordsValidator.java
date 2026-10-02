@@ -2,6 +2,7 @@ package fr.ign.validator.cnig.validation.metadata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -72,7 +73,7 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
                 new RequiredKeyword(
                     "TYPE_DOC",
                     THESAURUS_TYPE_DOC,
-                    documentType.toString().toUpperCase()
+                    documentType.toString().toUpperCase(Locale.ROOT)
                 )
             );
         }

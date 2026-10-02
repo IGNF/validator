@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -111,8 +112,8 @@ public class Networking {
     private static String getEnvCaseInsensitive(String lowerCaseName) {
         if (System.getenv(lowerCaseName) != null) {
             return System.getenv(lowerCaseName);
-        } else if (System.getenv(lowerCaseName.toUpperCase()) != null) {
-            return System.getenv(lowerCaseName.toUpperCase());
+        } else if (System.getenv(lowerCaseName.toUpperCase(Locale.ROOT)) != null) {
+            return System.getenv(lowerCaseName.toUpperCase(Locale.ROOT));
         } else {
             return null;
         }
