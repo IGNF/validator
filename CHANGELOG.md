@@ -2,6 +2,9 @@
 
 ## 4.5.x
 
+* v4.5.7 - Fail the validation when ogr2ogr fails (exit code, stderr reported) instead of validating a partial output, add `OGR2OGR_TIMEOUT` (seconds, default 3600)
+* v4.5.7 - Compare values with `=` instead of `LIKE` for foreign keys and DGPR controls (`_` and `%` were wildcards, case insensitive comparison with SQLITE)
+* v4.5.7 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)
 * v4.5.7 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
 * v4.5.7 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
 * v4.5.6 - Add `ORIGINAL_PATH` column to normalized `TITRES_PIECES_ECRITES.csv` (relative path under `Pieces_ecrites`)

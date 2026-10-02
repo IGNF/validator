@@ -152,10 +152,14 @@ public class FileConverterTest {
     public void testConvertGmlInvalid() throws IOException {
         File source = ResourceHelper.getResourceFile(getClass(), "/gml/INVALID.gml");
         File target = folder.newFile("INVALID.csv");
-        assertThrows(ValidatorFatalError.class, () -> {
+        ValidatorFatalError e = assertThrows(ValidatorFatalError.class, () -> {
             fileConverter.convertToCSV(source, target, StandardCharsets.UTF_8);
         });
         Assert.assertFalse(target.exists());
+        // the cause is reported without the list of the tried drivers
+        Assert.assertTrue(e.getMessage(), e.getMessage().contains("exit code 1"));
+        Assert.assertTrue(e.getMessage(), e.getMessage().contains("Unable to open datasource"));
+        Assert.assertFalse(e.getMessage(), e.getMessage().contains("-> `"));
     }
 
     /**

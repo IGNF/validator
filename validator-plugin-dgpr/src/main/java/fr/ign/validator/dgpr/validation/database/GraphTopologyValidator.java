@@ -170,7 +170,7 @@ public class GraphTopologyValidator implements Validator<Database> {
             + "     )), " + this.getDistanceBuffer() + ") AS the_geom_buffer_union"
             + "     FROM " + tablename + " AS feature"
             + "     JOIN " + surfaceTablename + " AS inond"
-            + "     ON feature.ID_S_INOND LIKE inond.ID_S_INOND"
+            + "     ON feature.ID_S_INOND = inond.ID_S_INOND"
             + "     GROUP BY inond.ID_S_INOND, inond.source_geometry"
             + " ) query"
             + " WHERE NOT ST_Contains(query.the_geom_buffer_union, query.the_geom_zone)"

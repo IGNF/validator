@@ -53,7 +53,7 @@ public class ForeignKeyFinder {
         List<String> conditions = new ArrayList<String>();
         for (int i = 0; i < foreignKey.getSourceColumnNames().size(); i++) {
             String condition = "src." + foreignKey.getSourceColumnNames().get(i)
-                + " LIKE "
+                + " = "
                 + " target." + foreignKey.getTargetColumnNames().get(i);
             if (i == 0) {
                 conditions.add("WHERE " + condition);

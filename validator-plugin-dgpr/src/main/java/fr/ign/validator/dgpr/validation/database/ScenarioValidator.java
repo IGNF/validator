@@ -49,10 +49,10 @@ public class ScenarioValidator implements Validator<Database> {
                 + " surface.SCENARIO as S_INOND_SCN"
                 + " FROM " + tablename + " as iso "
                 + " JOIN N_prefixTri_INONDABLE_suffixInond_S_ddd as surface "
-                + " ON surface.ID_S_INOND LIKE iso.ID_S_INOND "
-                + " AND surface.SCENARIO NOT LIKE iso.SCENARIO "
-                + " WHERE iso.SCENARIO NOT LIKE '' "
-                + " AND surface.SCENARIO NOT LIKE '' "
+                + " ON surface.ID_S_INOND = iso.ID_S_INOND "
+                + " AND surface.SCENARIO <> iso.SCENARIO "
+                + " WHERE iso.SCENARIO <> '' "
+                + " AND surface.SCENARIO <> '' "
         );
 
         // Indexes

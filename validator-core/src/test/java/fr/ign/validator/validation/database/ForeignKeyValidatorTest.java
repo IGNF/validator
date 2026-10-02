@@ -133,6 +133,32 @@ public class ForeignKeyValidatorTest {
         Assert.assertEquals(0, reportBuilder.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND).size());
     }
 
+    /**
+     * Values are compared with "=" ("_" and "%" are not wildcards, case sensitive
+     * comparison as for PostgreSQL)
+     */
+    @Test
+    public void testNotValidWildcardsAndCase() throws Exception {
+        File path = new File(folder.getRoot(), "document_database.db");
+        Database database = new Database(path);
+
+        database.query("CREATE TABLE MY_TABLE(__id TEXT, __file TEXT, id TEXT, value TEXT, sub_value TEXT);");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id1', 'type1', 'subXtype1');");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id2', 'TYPE1', 'sub_type1');");
+        database.query("INSERT INTO MY_TABLE(id, value, sub_value) VALUES ('id3', 'type1', 'sub_type1');");
+
+        database.query("CREATE TABLE MY_REFERENCE(__id TEXT, __file TEXT, type TEXT, sub_type TEXT);");
+        database.query("INSERT INTO MY_REFERENCE(type, sub_type) VALUES ('type1', 'sub_type1');");
+
+        ForeignKeyValidator validator = new ForeignKeyValidator();
+        validator.validate(context, database);
+
+        List<ValidatorError> errors = reportBuilder.getErrorsByCode(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND);
+        Assert.assertEquals(2, errors.size());
+        Assert.assertTrue(errors.get(0).getMessage().contains("(type1, subXtype1)"));
+        Assert.assertTrue(errors.get(1).getMessage().contains("(TYPE1, sub_type1)"));
+    }
+
     @Test
     public void testNotValid() throws Exception {
         // creates an empty database

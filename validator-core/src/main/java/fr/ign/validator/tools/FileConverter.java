@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -64,6 +65,19 @@ public class FileConverter {
     private File gmlasConfig;
 
     /**
+     * Maximum duration of an ogr2ogr command in seconds (OGR2OGR_TIMEOUT
+     * environment variable)
+     */
+    private long timeout;
+
+    public static final long DEFAULT_TIMEOUT = 3600;
+
+    /**
+     * Max length of stderr reported in error messages
+     */
+    private static final int MAX_STDERR_LENGTH = 2000;
+
+    /**
      * Default constructor
      */
     private FileConverter() {
@@ -71,6 +85,7 @@ public class FileConverter {
         this.ogr2ogrPath = retrieveOgr2ogrPath();
         this.version = retrieveAndValidateOgrVersion();
         this.gmlasConfig = retrieveAndValidateGmlasConfig();
+        this.timeout = retrieveTimeout();
     }
 
     /**
@@ -312,6 +327,25 @@ public class FileConverter {
     }
 
     /**
+     * Get ogr2ogr timeout in seconds from OGR2OGR_TIMEOUT (default to 3600)
+     *
+     * @return
+     */
+    private long retrieveTimeout() {
+        String value = System.getenv("OGR2OGR_TIMEOUT");
+        if (StringUtils.isEmpty(value)) {
+            return DEFAULT_TIMEOUT;
+        }
+        try {
+            long result = Long.parseLong(value);
+            log.info(MARKER, "Found env OGR2OGR_TIMEOUT={}", result);
+            return result;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid OGR2OGR_TIMEOUT='" + value + "' (number of seconds expected)");
+        }
+    }
+
+    /**
      * Get ogr2ogr version
      *
      * @return
@@ -422,32 +456,66 @@ public class FileConverter {
      * @throws IOException
      */
     private void runCommand(List<String> args, Map<String, String> envs) throws IOException {
-        Process process = null;
-        try {
-            /* output command line to logs */
-            String commandLine = commandToString(args);
-            log.info(MARKER, commandLine);
+        /* output command line to logs */
+        String commandLine = commandToString(args);
+        log.info(MARKER, commandLine);
 
-            /* create process */
-            ProcessBuilder builder = new ProcessBuilder(args);
-            for (String envName : envs.keySet()) {
-                builder.environment().put(envName, envs.get(envName));
-            }
-
-            /*
-             * Run process ignoring outputs (previous method seams to cause deadlocks).
-             */
-            builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
-            builder.redirectError(ProcessBuilder.Redirect.DISCARD);
-            process = builder.start();
-            process.waitFor();
-
-            if (process.exitValue() != 0) {
-                log.error(MARKER, "command fail!");
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new ValidatorFatalError("ogr2ogr command fails", e);
+        /* create process */
+        ProcessBuilder builder = new ProcessBuilder(args);
+        for (String envName : envs.keySet()) {
+            builder.environment().put(envName, envs.get(envName));
         }
+
+        /*
+         * Run process ignoring stdout (previous method seams to cause deadlocks),
+         * stderr is written to a file to report the cause of failures.
+         */
+        File stderrFile = File.createTempFile("ogr2ogr", ".stderr");
+        try {
+            builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
+            builder.redirectError(stderrFile);
+            Process process = builder.start();
+            if (!process.waitFor(timeout, TimeUnit.SECONDS)) {
+                process.destroyForcibly();
+                throw new ValidatorFatalError(
+                    String.format("ogr2ogr command timeout (%1s seconds) : %2s", timeout, commandLine)
+                );
+            }
+            /*
+             * a partial output must not be validated (ex : corrupted GML or shapefile)
+             */
+            if (process.exitValue() != 0) {
+                String stderr = readStderr(stderrFile);
+                log.error(MARKER, "command fail (exit code {}) : {}", process.exitValue(), stderr);
+                throw new ValidatorFatalError(
+                    String.format("ogr2ogr command fails (exit code %1s) : %2s", process.exitValue(), stderr)
+                );
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new ValidatorFatalError("ogr2ogr command interrupted", e);
+        } catch (IOException e) {
+            throw new ValidatorFatalError("ogr2ogr command fails", e);
+        } finally {
+            FileUtils.deleteQuietly(stderrFile);
+        }
+    }
+
+    /**
+     * Read ogr2ogr stderr ignoring the list of the tried drivers (" -> `FITS'")
+     *
+     * @param stderrFile
+     * @return
+     * @throws IOException
+     */
+    private String readStderr(File stderrFile) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for (String line : FileUtils.readLines(stderrFile, StandardCharsets.UTF_8)) {
+            if (!line.trim().isEmpty() && !line.startsWith("  -> ")) {
+                lines.add(line.trim());
+            }
+        }
+        return StringUtils.abbreviate(String.join(" ", lines), MAX_STDERR_LENGTH);
     }
 
     /**

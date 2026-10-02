@@ -2,6 +2,8 @@ package fr.ign.validator.dgpr.validation.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,16 +99,16 @@ public class InclusionValidator implements Validator<Database> {
             + " FROM "
             + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
             + "   JOIN " + surfaceTablename + " AS sc_faible"
-            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For'"
-            + "     AND sc_faible.scenario LIKE '02Moy'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy'"
-            + "     AND sc_faible.scenario LIKE '04Fai'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct'"
-            + "     AND sc_faible.scenario LIKE '03Mcc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct'"
-            + "     AND sc_faible.scenario LIKE '04Faicc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100'"
-            + "     AND sc_faible.scenario LIKE '03Mcc'"
+            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01For'"
+            + "     AND sc_faible.scenario = '02Moy'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '02Moy'"
+            + "     AND sc_faible.scenario = '04Fai'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_ct'"
+            + "     AND sc_faible.scenario = '03Mcc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '03Mcc_ct'"
+            + "     AND sc_faible.scenario = '04Faicc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_100'"
+            + "     AND sc_faible.scenario = '03Mcc'"
             + " WHERE ST_Contains("
             + "         ST_Buffer(sc_faible.source_geometry, " + distanceBuffer + "),"
             + "         sc_fort.source_geometry"
@@ -119,10 +121,11 @@ public class InclusionValidator implements Validator<Database> {
 
         int inclusionId = inclusionIterator.getColumn("id_fort");
 
-        String candidate = "";
+        // ids are compared exactly (ex : SIN_1 must not match SIN_10)
+        Set<String> candidates = new HashSet<>();
         while (inclusionIterator.hasNext()) {
             String[] row = inclusionIterator.next();
-            candidate += row[inclusionId] + ", ";
+            candidates.add(row[inclusionId]);
         }
         inclusionIterator.close();
 
@@ -134,16 +137,16 @@ public class InclusionValidator implements Validator<Database> {
             + " FROM "
             + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
             + "   JOIN " + surfaceTablename + " AS sc_faible"
-            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01For' "
-            + "      AND sc_faible.scenario LIKE '02Moy'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '02Moy' "
-            + "      AND sc_faible.scenario LIKE '04Fai'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_ct' "
-            + "      AND sc_faible.scenario LIKE '03Mcc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '03Mcc_ct' "
-            + "      AND sc_faible.scenario LIKE '04Faicc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario LIKE '01Forcc_100' "
-            + "      AND sc_faible.scenario LIKE '03Mcc'"
+            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01For' "
+            + "      AND sc_faible.scenario = '02Moy'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '02Moy' "
+            + "      AND sc_faible.scenario = '04Fai'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_ct' "
+            + "      AND sc_faible.scenario = '03Mcc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '03Mcc_ct' "
+            + "      AND sc_faible.scenario = '04Faicc_ct'"
+            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_100' "
+            + "      AND sc_faible.scenario = '03Mcc'"
             + " GROUP BY sc_fort.id_s_inond, sc_fort.scenario, sc_faible.scenario"
             + " ;";
 
@@ -161,7 +164,7 @@ public class InclusionValidator implements Validator<Database> {
             String[] row = inondableIterator.next();
             // if list of candidate contains the current id
             // then the surface is good to go
-            if (candidate.contains(row[inondableId])) {
+            if (candidates.contains(row[inondableId])) {
                 continue;
             }
             report(row[inondableId], row[inondableFort], row[inondableFaible], row[inondableListe]);

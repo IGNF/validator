@@ -19,6 +19,7 @@ Les paramètres sont gérés sous forme de variables d'environnement :
 | Nom            | Description                              | Valeur par défaut |
 | -------------- | ---------------------------------------- | ----------------- |
 | `OGR2OGR_PATH` | Chemin vers l'exécutable ogr2ogr de GDAL | "ogr2ogr"         |
+| `OGR2OGR_TIMEOUT` | Durée maximale d'une conversion ogr2ogr (en secondes) | 3600 |
 | `HTTP_PROXY`   | ex : http://proxy:3128                   |                   |
 | `HTTPS_PROXY`  | ex : http://proxy:3128                   |                   |
 | `NO_PROXY`     | localhost,demo.localhost                 |                   |
