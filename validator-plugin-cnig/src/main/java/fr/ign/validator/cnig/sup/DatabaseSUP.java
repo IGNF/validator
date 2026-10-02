@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -518,33 +519,32 @@ public class DatabaseSUP {
      * Fetch existence of nomReg in SERVITUDE table
      */
     private void fetchNomRegExistence() {
-        String sql = "SELECT COUNT(*) AS count "
-            + " FROM pragma_table_info('servitude') "
-            + " WHERE name='NOMREG' ";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
-            ResultSet rs = sth.executeQuery();
-            while (rs.next()) {
-                this.nomRegExists = rs.getInt("count") > 0;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        this.nomRegExists = servitudeHasColumn("NOMREG");
     }
 
     /**
      * Fetch existence of urlReg in SERVITUDE table
      */
     private void fetchUrlRegExistence() {
-        String sql = "SELECT COUNT(*) AS count "
-            + " FROM pragma_table_info('servitude') "
-            + " WHERE name='URLREG' ";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
-            ResultSet rs = sth.executeQuery();
-            while (rs.next()) {
-                this.urlRegExists = rs.getInt("count") > 0;
+        this.urlRegExists = servitudeHasColumn("URLREG");
+    }
+
+    /**
+     * True if the SERVITUDE table has the given column (case insensitive).
+     *
+     * Note that pragma_table_info can't be used as it is specific to SQLITE (the validation database is
+     * PostgreSQL when DB_URL is defined).
+     */
+    private boolean servitudeHasColumn(String columnName) {
+        String sql = "SELECT * FROM servitude LIMIT 0";
+        try (PreparedStatement sth = getConnection().prepareStatement(sql); ResultSet rs = sth.executeQuery()) {
+            ResultSetMetaData metadata = rs.getMetaData();
+            for (int i = 1; i <= metadata.getColumnCount(); i++) {
+                if (metadata.getColumnName(i).equalsIgnoreCase(columnName)) {
+                    return true;
+                }
             }
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
