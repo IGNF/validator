@@ -225,13 +225,8 @@ public class DgprApplicationTest {
 
         Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_GEOM_ERROR).size());
         Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
-        // TODO to be confirmed (document expected to be valid)
-        Assert.assertEquals(
-            Arrays.asList(
-                "Les ISO_DEB ZCD_1, ZCD_2 ne constituent pas une partition de SIN_1 à laquelle elles se rapportent. Il y a un trou ou un dépassement de la surface inondable."
-            ),
-            getMessages(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND)
-        );
+        // ZCD_1 includes the second part of SIN_1 (as ZCH_1)
+        Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
         // SIN_1 (01For) is included in the union of SIN_2 and SIN_5 (02Moy)
         Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR).size());
     }
