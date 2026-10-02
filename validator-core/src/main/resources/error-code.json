@@ -538,6 +538,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "MODEL_STATIC_TABLE_NOT_FOUND",
+		"level": "ERROR",
+		"message": "La table de référence {TABLE} du modèle est inaccessible ({URL} : {CAUSE}). Les contrôles réalisés en base de données (unicité, références aux listes de valeurs, règles conditionnelles) n'ont pas été effectués.",
+		"documentation": "Cette erreur se produit lorsqu'une table de référence (staticTables) du modèle de données ne peut pas être lue (fichier absent du serveur, réseau indisponible...). Elle ne remet pas en cause les données validées : les autres contrôles sont réalisés."
+	},
+	{
 		"name": "CNIG_INSEE_INVALID",
 		"level": "ERROR",
 		"message": "La valeur du champ \"INSEE\" ({VALUE}) ne respecte pas le format \"DDCCC\" où \"DD\" est le numéro du département et \"CCC\" le numéro de la commune.",

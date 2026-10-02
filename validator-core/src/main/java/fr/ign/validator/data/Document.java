@@ -15,6 +15,7 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.database.Database;
+import fr.ign.validator.database.StaticTableChecker;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorCode;
 import fr.ign.validator.mapping.MisplacedFile;
@@ -211,6 +212,15 @@ public class Document implements Validatable {
      * @param context
      */
     private void runDatabaseValidators(Context context) {
+        /*
+         * reference lists (static tables) are required by the database validators : the validation goes
+         * on without them if they can't be read (reported as MODEL_STATIC_TABLE_NOT_FOUND)
+         */
+        if (!StaticTableChecker.checkAvailability(context, getDocumentModel())) {
+            log.warn(MARKER, "Validation using database validators skipped (static table not found)");
+            return;
+        }
+
         try {
             log.info(MARKER, "Create validation Database...");
             Database database = Database.createDatabase(context, true);
