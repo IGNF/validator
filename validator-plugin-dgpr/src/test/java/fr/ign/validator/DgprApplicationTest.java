@@ -47,7 +47,6 @@ public class DgprApplicationTest {
         context.setProjection("EPSG:2154");
         context.setDgprTolerance(1.0);
         context.setDgprSimplification(null);
-        context.setDgprSafeMode(true);
         File validationDirectory = new File(documentPath.getParentFile(), "validation");
         context.setValidationDirectory(validationDirectory);
         PluginManager pluginManager = new PluginManager();
@@ -111,7 +110,6 @@ public class DgprApplicationTest {
         Context context = createContext(documentPath);
         context.setDgprTolerance(10.0);
         context.setDgprSimplification(5.0);
-        context.setDgprSafeMode(true);
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
         Assert.assertEquals("TRI_JTEST_TOPO_error_SIG_DI", document.getDocumentName());

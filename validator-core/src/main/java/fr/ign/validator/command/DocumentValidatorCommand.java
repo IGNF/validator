@@ -326,7 +326,6 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         context.setDgprTolerance(dgprTolerance);
         context.setDgprSimplification(dgprSimplification);
-        context.setDgprSafeMode(dgprSafeMode);
 
         /*
          * load plugins
@@ -844,7 +843,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
     }
 
     /**
-     * Add option "--dgpr-safe-simplify"
+     * Add option "--dgpr-safe-simplify" (deprecated, no effect :
+     * ST_SimplifyPreserveTopology is always used)
      *
      * @param options
      */
@@ -852,7 +852,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         {
             Option option = new Option(
                 null, "dgpr-safe-simplify", false,
-                "Force the use of TopologyPreservingSimplifier over DouglasPeuckerSimplifier"
+                "[deprecated]No effect (topology preserving simplification is always used)"
             );
             option.setRequired(false);
             options.addOption(option);
@@ -912,9 +912,10 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected void parseSafeSimplificationOption(CommandLine commandLine) {
         this.dgprSafeMode = commandLine.hasOption("dgpr-safe-simplify");
         if (this.dgprSafeMode) {
-            log.info(MARKER, "validator command running whith Safe Simplifier");
-        } else {
-            log.info(MARKER, "validator command running whith unsafe Simplifier");
+            log.warn(
+                MARKER,
+                "option --dgpr-safe-simplify is deprecated and has no effect (topology preserving simplification is always used)"
+            );
         }
     }
 

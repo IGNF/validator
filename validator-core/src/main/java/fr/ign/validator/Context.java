@@ -142,7 +142,7 @@ public class Context {
     private Double dgprSimplification;
 
     /**
-     * Allow using faster simplification against topologicaly safe simplification
+     * Deprecated, no effect (topology preserving simplification is always used)
      */
     private Boolean dgprSafeMode;
 
@@ -783,8 +783,10 @@ public class Context {
     /**
      * safe simplification option
      *
+     * @deprecated no effect (topology preserving simplification is always used)
      * @return safe simplication allowed
      */
+    @Deprecated
     public Boolean isDgprSafeMode() {
         return dgprSafeMode;
     }
@@ -792,8 +794,10 @@ public class Context {
     /**
      * safe simplification option
      *
+     * @deprecated no effect (topology preserving simplification is always used)
      * @param safeSimplification
      */
+    @Deprecated
     public void setDgprSafeMode(boolean safeSimplification) {
         this.dgprSafeMode = safeSimplification;
     }

@@ -83,10 +83,6 @@ public class GraphTopologyValidator implements Validator<Database> {
         return context.getDgprSimplification();
     }
 
-    private Boolean isSafeSimplification() {
-        return context.isDgprSafeMode();
-    }
-
     /**
      * Run a task reporting PSQLException (ex : invalid geometry) as
      * DGPR_ISO_HT_GEOM_ERROR. The transaction is rolled back to a savepoint so that

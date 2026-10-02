@@ -2,6 +2,8 @@
 
 ## 4.5.x
 
+* v4.5.7 - Download remote static tables once per validation (`static_tables/{name}.csv` in the validation directory, they were read 3 times)
+* v4.5.7 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
 * v4.5.7 - Use `Locale.ROOT` for case conversions (ex : `IDURBA` was converted to `ıdurba` with a turkish locale)
 * v4.5.7 - `document_geometry` : return exit code 1 on failure
 * v4.5.7 - DGPR : fix `NullPointerException` in inclusion control without `--dgpr-tolerance`
