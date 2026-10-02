@@ -16,9 +16,9 @@ It relies on [.github/workflows/main.yml](.github/workflows/main.yml) which :
 
 * Install Java and maven
 * Install ogr2ogr
-* Run tests through [.ci/build-openjdk11.sh](.ci/build-openjdk11.sh)
+* Run tests through [.ci/build.sh](.ci/build.sh)
 
-You may run `bash .ci/build-openjdk11.sh` to ensure that source code is formatted, build code and run tests.
+You may run `bash .ci/build.sh` to ensure that source code is formatted, build code and run tests.
 
 ## Create releases
 

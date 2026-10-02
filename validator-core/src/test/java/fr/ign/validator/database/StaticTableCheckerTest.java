@@ -1,7 +1,12 @@
 package fr.ign.validator.database;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -9,6 +14,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import com.sun.net.httpserver.HttpServer;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.error.CoreErrorCodes;
@@ -89,6 +96,50 @@ public class StaticTableCheckerTest {
 
         Assert.assertFalse(StaticTableChecker.checkAvailability(context, documentModel));
         Assert.assertEquals(1, reportBuilder.getErrorsByCode(CoreErrorCodes.MODEL_STATIC_TABLE_NOT_FOUND).size());
+    }
+
+    /**
+     * Remote static tables are downloaded once (they were read 3 times : check,
+     * table creation and loading)
+     */
+    @Test
+    public void testRemoteDownloadedOnce() throws Exception {
+        AtomicInteger requests = new AtomicInteger();
+        byte[] content = "TYPEDOC\r\nPLU\r\nPOS\r\n".getBytes(StandardCharsets.UTF_8);
+        HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
+        server.createContext("/codes/DocUrbaType.csv", exchange -> {
+            requests.incrementAndGet();
+            exchange.sendResponseHeaders(200, content.length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(content);
+            }
+        });
+        server.start();
+        try {
+            context.setValidationDirectory(folder.newFolder("validation"));
+            StaticTable staticTable = new StaticTable();
+            staticTable.setName("DocUrbaType");
+            staticTable.setDataReference("./codes/DocUrbaType.csv");
+            staticTable.setData(
+                new URL("http://127.0.0.1:" + server.getAddress().getPort() + "/codes/DocUrbaType.csv")
+            );
+            DocumentModel documentModel = new DocumentModel();
+            documentModel.getStaticTables().add(staticTable);
+
+            Assert.assertTrue(StaticTableChecker.checkAvailability(context, documentModel));
+            File localCopy = new File(context.getValidationDirectory(), "static_tables/DocUrbaType.csv");
+            Assert.assertTrue(localCopy.exists());
+            Assert.assertEquals(localCopy.toURI().toURL(), staticTable.getData());
+
+            try (Database database = new Database(new File(folder.getRoot(), "test.db"))) {
+                database.createTables(documentModel);
+                database.load(context, staticTable);
+                Assert.assertEquals(2, database.getCount("DocUrbaType"));
+            }
+            Assert.assertEquals(1, requests.get());
+        } finally {
+            server.stop(0);
+        }
     }
 
 }

@@ -27,5 +27,5 @@ jobs:
         which ogr2ogr
 
     - name: Build and test
-      run: bash .ci/build-openjdk11.sh
+      run: bash .ci/build.sh
 

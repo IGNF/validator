@@ -1,11 +1,14 @@
 package fr.ign.validator.database;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.net.UnknownHostException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -25,6 +28,10 @@ import fr.ign.validator.tools.Networking;
  *
  * An unavailable static table is reported as MODEL_STATIC_TABLE_NOT_FOUND
  * instead of failing the whole validation.
+ *
+ * Remote static tables (http/https) are downloaded once in the validation
+ * directory (static_tables/{name}.csv) to avoid downloading them for each read
+ * (table creation and loading).
  */
 public class StaticTableChecker {
 
@@ -36,7 +43,8 @@ public class StaticTableChecker {
     }
 
     /**
-     * Reports the static tables of the documentModel that can't be read.
+     * Reports the static tables of the documentModel that can't be read and
+     * replaces the remote ones by a local copy.
      *
      * @param context
      * @param documentModel
@@ -45,8 +53,17 @@ public class StaticTableChecker {
     public static boolean checkAvailability(Context context, DocumentModel documentModel) {
         boolean available = true;
         for (StaticTable staticTable : documentModel.getStaticTables()) {
-            String cause = getUnavailabilityCause(staticTable);
+            File localCopy = getLocalCopyPath(context, staticTable);
+            String cause = getUnavailabilityCause(staticTable, localCopy);
+            if (cause != null && localCopy != null) {
+                // remove partial download
+                FileUtils.deleteQuietly(localCopy);
+            }
             if (cause == null) {
+                if (localCopy != null) {
+                    log.info(MARKER, "Static table '{}' downloaded to '{}'", staticTable.getName(), localCopy);
+                    staticTable.setData(toURL(localCopy));
+                }
                 continue;
             }
             available = false;
@@ -69,10 +86,22 @@ public class StaticTableChecker {
      * @return null if the static table can be read, the reason otherwise
      */
     static String getUnavailabilityCause(StaticTable staticTable) {
+        return getUnavailabilityCause(staticTable, null);
+    }
+
+    /**
+     * @param staticTable
+     * @param localCopy   optional file where the data is copied
+     * @return null if the static table can be read, the reason otherwise
+     */
+    static String getUnavailabilityCause(StaticTable staticTable, File localCopy) {
         if (staticTable.getData() == null) {
             return "URL non résolue";
         }
         try (InputStream is = Networking.openStream(staticTable.getData())) {
+            if (localCopy != null) {
+                FileUtils.copyInputStreamToFile(is, localCopy);
+            }
             return null;
         } catch (FileNotFoundException e) {
             // HTTP 404 or missing local file
@@ -83,6 +112,30 @@ public class StaticTableChecker {
             return "délai dépassé";
         } catch (IOException e) {
             return e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
+        }
+    }
+
+    /**
+     * Path of the local copy for remote static tables (null for local files or
+     * without validation directory)
+     */
+    private static File getLocalCopyPath(Context context, StaticTable staticTable) {
+        URL data = staticTable.getData();
+        if (data == null || context.getValidationDirectory() == null) {
+            return null;
+        }
+        String protocol = data.getProtocol();
+        if (!protocol.equals("http") && !protocol.equals("https")) {
+            return null;
+        }
+        return new File(context.getValidationDirectory(), "static_tables/" + staticTable.getName() + ".csv");
+    }
+
+    private static URL toURL(File file) {
+        try {
+            return file.toURI().toURL();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
         }
     }
 

@@ -125,7 +125,7 @@ mvn formatter:format
 La CI vérifie le formatage via :
 
 ```bash
-bash .ci/build-openjdk11.sh
+bash .ci/build.sh
 ```
 
 Ce script exécute `mvn formatter:validate` puis `mvn clean package` (avec tests).
