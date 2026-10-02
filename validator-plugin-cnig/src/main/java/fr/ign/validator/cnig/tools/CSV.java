@@ -22,13 +22,14 @@ public class CSV {
      * @throws IOException
      */
     public static int countRows(File csvFile) throws IOException {
-        TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
-        int numRows = 0;
-        while (reader.hasNext()) {
-            numRows++;
-            reader.next();
+        try (TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
+            int numRows = 0;
+            while (reader.hasNext()) {
+                numRows++;
+                reader.next();
+            }
+            return numRows;
         }
-        return numRows;
     }
 
     /**
@@ -40,14 +41,15 @@ public class CSV {
      * @throws IOException
      */
     public static int getGeometryColumn(File csvFile, List<String> geometryColumnNames) throws IOException {
-        TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
-        String[] header = reader.getHeader();
-        for (String geometryColumnName : geometryColumnNames) {
-            if (Arrays.asList(header).contains(geometryColumnName)) {
-                return reader.findColumn(geometryColumnName);
+        try (TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
+            String[] header = reader.getHeader();
+            for (String geometryColumnName : geometryColumnNames) {
+                if (Arrays.asList(header).contains(geometryColumnName)) {
+                    return reader.findColumn(geometryColumnName);
+                }
             }
+            return -1;
         }
-        return -1;
     }
 
     public static List<Geometry> getGeometriesFromFile(File csvFile, int geometryColumn) throws IOException {
@@ -56,11 +58,10 @@ public class CSV {
                 csvFile.getAbsolutePath() + ": Geometry column cant be found. Please check arguments."
             );
         }
-        TableReader tableReader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
         GeometryReader geometryReader = new GeometryReader();
         List<Geometry> geometries = new ArrayList<Geometry>();
 
-        try {
+        try (TableReader tableReader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
             while (tableReader.hasNext()) {
                 String wkt = tableReader.next()[geometryColumn];
                 Geometry geometry = geometryReader.read(wkt);

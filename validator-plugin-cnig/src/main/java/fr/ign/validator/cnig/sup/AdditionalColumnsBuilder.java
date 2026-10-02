@@ -94,60 +94,61 @@ public class AdditionalColumnsBuilder {
      */
     private void addColumnsToFile(FileType fileType, File file) throws Exception {
         log.info(MARKER, "Add 'fichier', 'nomsuplitt', 'nomreg' and 'urlreg' columns to {} ...", file);
+        /* create output file in a tmp directory */
+        File newFile = new File(tempDirectory, file.getName());
         /*
          * lecture des métadonnées du fichier en entrée
          */
-        TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8);
-        String[] inputHeader = reader.getHeader();
+        try (TableReader reader = TableReader.createTableReader(file, StandardCharsets.UTF_8)) {
+            String[] inputHeader = reader.getHeader();
 
-        /* idAss or idGen */
-        String idColumnName = getIdColumnName(fileType);
-        int idColumnIndex = reader.findColumn(idColumnName);
-        if (idColumnIndex < 0) {
-            log.error(MARKER, "Impossible de trouver la colonne identifiant dans {}...", file);
-            return;
-        }
+            /* idAss or idGen */
+            String idColumnName = getIdColumnName(fileType);
+            int idColumnIndex = reader.findColumn(idColumnName);
+            if (idColumnIndex < 0) {
+                log.error(MARKER, "Impossible de trouver la colonne identifiant dans {}...", file);
+                return;
+            }
 
-        /* create output file in a tmp directory */
-        File newFile = new File(tempDirectory, file.getName());
-        log.debug(MARKER, "Create file {} ...", newFile);
-        BufferedWriter fileWriter = new BufferedWriter(
-            new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8)
-        );
-        CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
-
-        /* create output header adding "fichier","nomsuplitt","nomreg","urlreg" */
-        printer.printRecord(createOutputHeader(inputHeader));
-
-        while (reader.hasNext()) {
-            String[] inputRow = reader.next();
-
-            String id = inputRow[idColumnIndex];
-
-            /* retrieve "fichier" using joins */
-            List<DatabaseSUP.ActeServitude> actes = getActesById(database, fileType, id);
-            List<String> fichiers = database.getFichiers(actes);
-
-            /* retrieve "nomsuplitt" using joins */
-            List<DatabaseSUP.Servitude> servitudes = getServitudesById(database, fileType, id);
-            List<String> nomSupLitts = database.getNomSupLitts(servitudes);
-            /* retrive "nomreg" usin joins */
-            List<String> nomRegs = database.getNomRegs(servitudes);
-            /* retrive "urlreg" usin joins */
-            List<String> urlRegs = database.getUrlRegs(servitudes);
-
-            printer.printRecord(
-                createOutputRow(
-                    inputRow,
-                    fichiers,
-                    nomSupLitts,
-                    nomRegs,
-                    urlRegs
-                )
+            log.debug(MARKER, "Create file {} ...", newFile);
+            BufferedWriter fileWriter = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8)
             );
-        }
+            CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
 
-        printer.close();
+            /* create output header adding "fichier","nomsuplitt","nomreg","urlreg" */
+            printer.printRecord(createOutputHeader(inputHeader));
+
+            while (reader.hasNext()) {
+                String[] inputRow = reader.next();
+
+                String id = inputRow[idColumnIndex];
+
+                /* retrieve "fichier" using joins */
+                List<DatabaseSUP.ActeServitude> actes = getActesById(database, fileType, id);
+                List<String> fichiers = database.getFichiers(actes);
+
+                /* retrieve "nomsuplitt" using joins */
+                List<DatabaseSUP.Servitude> servitudes = getServitudesById(database, fileType, id);
+                List<String> nomSupLitts = database.getNomSupLitts(servitudes);
+                /* retrive "nomreg" usin joins */
+                List<String> nomRegs = database.getNomRegs(servitudes);
+                /* retrive "urlreg" usin joins */
+                List<String> urlRegs = database.getUrlRegs(servitudes);
+
+                printer.printRecord(
+                    createOutputRow(
+                        inputRow,
+                        fichiers,
+                        nomSupLitts,
+                        nomRegs,
+                        urlRegs
+                    )
+                );
+            }
+
+            printer.close();
+        }
 
         // replace file
         log.debug(MARKER, "rename {} to {}...", newFile, file);

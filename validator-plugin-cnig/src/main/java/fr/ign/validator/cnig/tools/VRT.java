@@ -116,8 +116,10 @@ public class VRT {
      */
     private static List<String> getFieldNamesFromCSV(File csvFile) throws Exception {
         List<String> result = new ArrayList<String>();
-        TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
-        String[] header = reader.getHeader();
+        String[] header;
+        try (TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
+            header = reader.getHeader();
+        }
         for (String name : header) {
             if (name.equals("WKT")) {
                 continue;

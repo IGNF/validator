@@ -342,9 +342,10 @@ public class Database implements Closeable {
      * @throws SQLException
      */
     private void createTable(StaticTable staticTable) throws IOException, SQLException {
-        TableReader reader = TableReader.createTableReader(staticTable.getData());
-        String[] inputColumns = reader.getHeader();
-        createTable(staticTable.getName(), Arrays.asList(inputColumns));
+        try (TableReader reader = TableReader.createTableReader(staticTable.getData())) {
+            String[] inputColumns = reader.getHeader();
+            createTable(staticTable.getName(), Arrays.asList(inputColumns));
+        }
     }
 
     /**
@@ -500,8 +501,9 @@ public class Database implements Closeable {
      */
     void load(Context context, SingleTableFile tableFile) throws IOException, SQLException {
         FileModel fileModel = tableFile.getFileModel();
-        TableReader reader = TableReader.createTableReader(tableFile.getPath(), context.getEncoding());
-        loadTable(fileModel.getName(), context.relativize(tableFile.getPath()), reader, context.getEncoding());
+        try (TableReader reader = TableReader.createTableReader(tableFile.getPath(), context.getEncoding())) {
+            loadTable(fileModel.getName(), context.relativize(tableFile.getPath()), reader, context.getEncoding());
+        }
     }
 
     /**
@@ -517,8 +519,9 @@ public class Database implements Closeable {
             MARKER, "Load table '{}' from stream '{}' (charset={})...",
             staticTable.getName(), staticTable.getDataReference(), StandardCharsets.UTF_8
         );
-        TableReader reader = TableReader.createTableReader(staticTable.getData());
-        loadTable(staticTable.getName(), staticTable.getDataReference(), reader, StandardCharsets.UTF_8);
+        try (TableReader reader = TableReader.createTableReader(staticTable.getData())) {
+            loadTable(staticTable.getName(), staticTable.getDataReference(), reader, StandardCharsets.UTF_8);
+        }
     }
 
     /**
@@ -535,8 +538,9 @@ public class Database implements Closeable {
             MARKER, "Load table '{}' from file '{}' (charset={})...",
             tableName, path.getAbsolutePath(), charset
         );
-        TableReader reader = TableReader.createTableReader(path, charset);
-        loadTable(tableName, path.getName(), reader, charset);
+        try (TableReader reader = TableReader.createTableReader(path, charset)) {
+            loadTable(tableName, path.getName(), reader, charset);
+        }
     }
 
     /**

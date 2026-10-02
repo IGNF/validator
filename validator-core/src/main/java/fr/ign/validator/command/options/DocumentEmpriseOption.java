@@ -106,9 +106,8 @@ public class DocumentEmpriseOption {
         GeometryReader geometryReader = new GeometryReader();
         Geometry union = null;
 
-        try {
-            // read CSV file
-            TableReader tableReader = TableReader.createTableReader(transformedFile, StandardCharsets.UTF_8);
+        // read CSV file
+        try (TableReader tableReader = TableReader.createTableReader(transformedFile, StandardCharsets.UTF_8)) {
 
             int column = tableReader.findColumn("WKT");
             while (tableReader.hasNext()) {

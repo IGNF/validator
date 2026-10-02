@@ -69,8 +69,7 @@ public class DocUrbaFilter {
             return result;
         }
 
-        try {
-            TableReader reader = TableReader.createTableReader(docUrbaFile, StandardCharsets.UTF_8);
+        try (TableReader reader = TableReader.createTableReader(docUrbaFile, StandardCharsets.UTF_8)) {
             /*
              * Find required columns in DOC_URBA.csv
              */

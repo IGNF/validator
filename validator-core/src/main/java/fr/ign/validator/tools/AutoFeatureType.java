@@ -48,8 +48,11 @@ public class AutoFeatureType {
         FeatureType result = new FeatureType();
         result.setName(FilenameUtils.getBaseName(path.getName()));
 
-        TableReader reader = TableReader.createTableReader(path, StandardCharsets.UTF_8);
-        for (String attributeName : reader.getHeader()) {
+        String[] header;
+        try (TableReader reader = TableReader.createTableReader(path, StandardCharsets.UTF_8)) {
+            header = reader.getHeader();
+        }
+        for (String attributeName : header) {
             AttributeType<?> attribute = attributeName.equalsIgnoreCase("WKT") ? new GeometryType() : new StringType();
             attribute.setName(attributeName);
             if (attributeName.equalsIgnoreCase("gml_id") || attributeName.equalsIgnoreCase("id")) {

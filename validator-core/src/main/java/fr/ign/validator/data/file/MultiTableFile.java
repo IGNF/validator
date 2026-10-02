@@ -10,6 +10,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MultiTableModel;
 import fr.ign.validator.tools.MultiTableReader;
+import fr.ign.validator.tools.TableReader;
 import fr.ign.validator.tools.TableReaderOptions;
 
 /**
@@ -69,12 +70,14 @@ public class MultiTableFile extends DocumentFile {
                     );
                     continue;
                 }
-                Table table = new Table(
-                    tableModel.getFeatureType(),
-                    reader.getTableReader(tableName),
-                    relativePath
-                );
-                table.validate(context);
+                try (TableReader tableReader = reader.getTableReader(tableName)) {
+                    Table table = new Table(
+                        tableModel.getFeatureType(),
+                        tableReader,
+                        relativePath
+                    );
+                    table.validate(context);
+                }
             }
 
         } catch (IOException e) {

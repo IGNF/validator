@@ -44,9 +44,8 @@ public class SingleTableFile extends DocumentFile {
      * @param matchingFile
      */
     protected void validateTable(Context context, TableModel tableModel, File matchingFile) {
-        try {
-            log.info(MARKER, "Validate '{}' according to {}...", matchingFile, tableModel);
-            TableReader reader = TableReader.createTableReader(matchingFile, context.getEncoding());
+        log.info(MARKER, "Validate '{}' according to {}...", matchingFile, tableModel);
+        try (TableReader reader = TableReader.createTableReader(matchingFile, context.getEncoding())) {
             Table table = new Table(
                 tableModel.getFeatureType(),
                 reader,

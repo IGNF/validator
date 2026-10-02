@@ -146,9 +146,7 @@ public class DocumentInfoExtractor {
      */
     private TableStats getTableStatsFromNormalizedCSV(File csvFile) {
         TableStats result = new TableStats();
-        try {
-            TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8);
-
+        try (TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
             int indexWktColumn = reader.findColumn("WKT");
             while (reader.hasNext()) {
                 String[] row = reader.next();

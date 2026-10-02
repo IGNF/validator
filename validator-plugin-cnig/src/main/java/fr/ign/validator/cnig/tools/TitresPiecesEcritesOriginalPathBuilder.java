@@ -77,34 +77,35 @@ public class TitresPiecesEcritesOriginalPathBuilder {
     }
 
     private void enrichFile(File titresFile, File piecesEcritesDirectory) throws IOException {
-        TableReader reader = TableReader.createTableReader(titresFile, StandardCharsets.UTF_8);
-        String[] inputHeader = reader.getHeader();
-
-        int fichierIndex = reader.findColumn(COLUMN_FICHIER);
-        if (fichierIndex < 0) {
-            log.error(MARKER, "Column '{}' not found in {}", COLUMN_FICHIER, titresFile);
-            return;
-        }
-
-        int originalPathIndex = reader.findColumn(COLUMN_ORIGINAL_PATH);
-        boolean appendColumn = originalPathIndex < 0;
-
-        if (!tempDirectory.exists()) {
-            tempDirectory.mkdirs();
-        }
         File newFile = new File(tempDirectory, titresFile.getName());
-        try (
-            BufferedWriter fileWriter = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8)
-            );
-            CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180)) {
-            printer.printRecord(createOutputHeader(inputHeader, appendColumn));
+        try (TableReader reader = TableReader.createTableReader(titresFile, StandardCharsets.UTF_8)) {
+            String[] inputHeader = reader.getHeader();
 
-            while (reader.hasNext()) {
-                String[] inputRow = reader.next();
-                String fichier = fichierIndex < inputRow.length ? inputRow[fichierIndex] : null;
-                String originalPath = resolveOriginalPath(piecesEcritesDirectory, fichier);
-                printer.printRecord(createOutputRow(inputRow, originalPath, originalPathIndex, appendColumn));
+            int fichierIndex = reader.findColumn(COLUMN_FICHIER);
+            if (fichierIndex < 0) {
+                log.error(MARKER, "Column '{}' not found in {}", COLUMN_FICHIER, titresFile);
+                return;
+            }
+
+            int originalPathIndex = reader.findColumn(COLUMN_ORIGINAL_PATH);
+            boolean appendColumn = originalPathIndex < 0;
+
+            if (!tempDirectory.exists()) {
+                tempDirectory.mkdirs();
+            }
+            try (
+                BufferedWriter fileWriter = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8)
+                );
+                CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180)) {
+                printer.printRecord(createOutputHeader(inputHeader, appendColumn));
+
+                while (reader.hasNext()) {
+                    String[] inputRow = reader.next();
+                    String fichier = fichierIndex < inputRow.length ? inputRow[fichierIndex] : null;
+                    String originalPath = resolveOriginalPath(piecesEcritesDirectory, fichier);
+                    printer.printRecord(createOutputRow(inputRow, originalPath, originalPathIndex, appendColumn));
+                }
             }
         }
 

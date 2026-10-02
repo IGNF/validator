@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -44,26 +46,30 @@ public class IdgestExtractor {
             return null;
         }
 
-        /*
-         * Reading csv
-         */
-        int index = reader.findColumn(IDGEST_COLUMN_NAME);
-        if (index < 0) {
-            log.error(MARKER, "No attribute idGest");
-            return null;
-        }
-
-        /*
-         * Finding first not-empty idGest
-         */
         String idGest = null;
-        while (reader.hasNext()) {
-            String[] inputRow = reader.next();
-            String candidate = inputRow[index];
-            if (!candidate.isEmpty()) {
-                idGest = candidate;
-                break;
+        try {
+            /*
+             * Reading csv
+             */
+            int index = reader.findColumn(IDGEST_COLUMN_NAME);
+            if (index < 0) {
+                log.error(MARKER, "No attribute idGest");
+                return null;
             }
+
+            /*
+             * Finding first not-empty idGest
+             */
+            while (reader.hasNext()) {
+                String[] inputRow = reader.next();
+                String candidate = inputRow[index];
+                if (!StringUtils.isEmpty(candidate)) {
+                    idGest = candidate;
+                    break;
+                }
+            }
+        } finally {
+            IOUtils.closeQuietly(reader);
         }
 
         /*
