@@ -4,11 +4,17 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 
 public class RowIterator implements Iterator<String[]>, Closeable {
 
     private ResultSet rs;
+
+    /**
+     * Statement producing the ResultSet (closed with the RowIterator)
+     */
+    private Statement statement;
 
     private String[] current;
 
@@ -20,6 +26,19 @@ public class RowIterator implements Iterator<String[]>, Closeable {
      */
     public RowIterator(ResultSet rs) throws SQLException {
         this.rs = rs;
+        readOne();
+    }
+
+    /**
+     * RowIterator from a statement executed with a ResultSet (SELECT query),
+     * closing the statement with the RowIterator.
+     *
+     * @param statement
+     * @throws SQLException
+     */
+    public RowIterator(Statement statement) throws SQLException {
+        this.statement = statement;
+        this.rs = statement.getResultSet();
         readOne();
     }
 
@@ -50,7 +69,12 @@ public class RowIterator implements Iterator<String[]>, Closeable {
     @Override
     public void close() throws IOException {
         try {
-            rs.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

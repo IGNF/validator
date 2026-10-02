@@ -1,5 +1,6 @@
 package fr.ign.validator.cnig.sup;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +39,7 @@ import fr.ign.validator.model.FileModel;
  * @author MBorne
  *
  */
-public class DatabaseSUP {
+public class DatabaseSUP implements Closeable {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("DatabaseSUP");
 
@@ -151,11 +153,12 @@ public class DatabaseSUP {
      * @return
      */
     public static DatabaseSUP createFromValidationDatabase(Context context) {
+        Database validationDatabase = null;
         try {
             /*
              * open previously created validation database
              */
-            Database validationDatabase = Database.createDatabase(context, false);
+            validationDatabase = Database.createDatabase(context, false);
             DatabaseSUP database = new DatabaseSUP(validationDatabase);
             /* create merged tables */
             database.createTableGenerateur();
@@ -172,8 +175,17 @@ public class DatabaseSUP {
             return database;
         } catch (SQLException e) {
             log.error(MARKER, "Fail to create DatabaseSUP from ValidationDatabase", e);
+            IOUtils.closeQuietly(validationDatabase);
             return null;
         }
+    }
+
+    /**
+     * Close the underlying database connection.
+     */
+    @Override
+    public void close() throws IOException {
+        database.close();
     }
 
     /**
@@ -264,8 +276,7 @@ public class DatabaseSUP {
             + " LEFT JOIN servitude_acte_sup sa ON a.idacte = sa.idacte "
             + " LEFT JOIN generateur ON generateur.idsup = sa.idsup "
             + " WHERE generateur.idgen = ?";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
+        try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setString(1, idGen);
             return fetchActes(sth.executeQuery());
         } catch (SQLException e) {
@@ -285,8 +296,7 @@ public class DatabaseSUP {
             + " LEFT JOIN generateur ON generateur.idsup = sa.idsup "
             + " LEFT JOIN assiette ON assiette.idgen = generateur.idgen "
             + " WHERE assiette.idass = ?";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
+        try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setString(1, idAss);
             return fetchActes(sth.executeQuery());
         } catch (SQLException e) {
@@ -344,8 +354,7 @@ public class DatabaseSUP {
             + " FROM generateur g "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE g.idgen = ?";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
+        try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setString(1, idGen);
             return fetchServitudes(sth.executeQuery());
         } catch (SQLException e) {
@@ -369,8 +378,7 @@ public class DatabaseSUP {
             + " LEFT JOIN generateur g ON a.idgen = g.idgen "
             + " LEFT JOIN servitude s ON s.idsup = g.idsup "
             + " WHERE a.idass = ?";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
+        try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setString(1, idAss);
             return fetchServitudes(sth.executeQuery());
         } catch (SQLException e) {
@@ -488,8 +496,7 @@ public class DatabaseSUP {
     public List<AssietteSup> findAssiettesWithInvalidIDGEN(int limit) throws SQLException, IOException {
         String sql = "SELECT a.idass,a.idgen FROM assiette a ";
         sql += " WHERE NOT EXISTS (SELECT * FROM generateur g WHERE g.idgen = a.idgen ) LIMIT ?";
-        try {
-            PreparedStatement sth = getConnection().prepareStatement(sql);
+        try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setInt(1, limit);
             return fetchAssietteSup(sth.executeQuery());
         } catch (SQLException e) {

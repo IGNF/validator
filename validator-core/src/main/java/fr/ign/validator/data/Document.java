@@ -219,9 +219,8 @@ public class Document implements Validatable {
          */
         boolean staticTablesAvailable = StaticTableChecker.checkAvailability(context, getDocumentModel());
 
-        try {
-            log.info(MARKER, "Create validation Database...");
-            Database database = Database.createDatabase(context, true);
+        log.info(MARKER, "Create validation Database...");
+        try (Database database = Database.createDatabase(context, true)) {
             if (!staticTablesAvailable) {
                 /*
                  * the document tables are still loaded as the validation database is reused by
@@ -230,7 +229,6 @@ public class Document implements Validatable {
                 log.warn(MARKER, "Validation using database validators skipped (static table not found)");
                 database.createDocumentTables(getDocumentModel());
                 database.loadDocumentFiles(context, this);
-                database.close();
                 return;
             }
             database.createTables(getDocumentModel());
@@ -241,8 +239,6 @@ public class Document implements Validatable {
             for (Validator<Database> validator : context.getDocumentModel().getDatabaseValidators()) {
                 validator.validate(context, database);
             }
-
-            database.close();
         } catch (Exception e) {
             log.error(MARKER, "Fail to create validation database");
             throw new RuntimeException(e);

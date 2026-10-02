@@ -45,12 +45,30 @@ public class InclusionValidator implements Validator<Database> {
         // context
         this.context = context;
         this.database = database;
+        if (!database.hasGeometrySupport()) {
+            log.info(MARKER, "skipped for non postgis database");
+            return;
+        }
         try {
-            runValidation();
-        } catch (PSQLException e) {
-            // org.postgresql.util.PSQLException:
-            // psql exception throw if a geometry is invalid
-            reportException(e.toString());
+            if (!hasSourceGeometry()) {
+                // GraphTopologyValidator failed to create source geometries (already reported)
+                log.warn(MARKER, "skipped (source_geometry not found)");
+                return;
+            }
+            try {
+                /*
+                 * rollback to a savepoint so that the source geometries can be removed
+                 */
+                database.runInSavepoint(this::runValidation);
+            } catch (PSQLException e) {
+                // org.postgresql.util.PSQLException:
+                // psql exception throw if a geometry is invalid
+                reportException(e.toString());
+            }
+            // suppressions des geometries dans le systeme source
+            dropSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
+            dropSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
+            dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -61,13 +79,22 @@ public class InclusionValidator implements Validator<Database> {
         }
     }
 
-    private void runValidation() throws Exception {
-        if (!database.hasGeometrySupport()) {
-            log.info(MARKER, "skipped for non postgis database");
-            database.close();
-            return;
+    /**
+     * True if source_geometry has been created by GraphTopologyValidator
+     *
+     * @return
+     */
+    private boolean hasSourceGeometry() throws SQLException, IOException {
+        String query = "SELECT count(*) FROM information_schema.columns"
+            + " WHERE table_schema = current_schema()"
+            + " AND table_name = 'n_prefixtri_inondable_suffixinond_s_ddd'"
+            + " AND column_name = 'source_geometry'";
+        try (RowIterator it = database.query(query)) {
+            return it.hasNext() && Integer.parseInt(it.next()[0]) > 0;
         }
+    }
 
+    private void runValidation() throws SQLException, IOException {
         // force geom gist usage
         // SET enable_seqscan TO off;
         toggleGistScanMode(false);
@@ -82,11 +109,6 @@ public class InclusionValidator implements Validator<Database> {
 
         // validation des surfaces de N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD
         validInclusion();
-
-        // suppressions des geometries dans le systeme source
-        dropSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
-        dropSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
-        dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
     }
 
     private void validInclusion() throws SQLException, IOException {

@@ -43,12 +43,18 @@ public class GraphTopologyValidator implements Validator<Database> {
         // context
         this.context = context;
         this.database = database;
+        if (!database.hasGeometrySupport()) {
+            log.info(MARKER, "skipped for non postgis database");
+            return;
+        }
         try {
-            runValidation();
-        } catch (PSQLException e) {
-            // org.postgresql.util.PSQLException:
-            // psql exception throw if a geometry is invalid
-            reportException(e.toString());
+            /*
+             * source geometries are kept for InclusionValidator when the topology controls
+             * fail
+             */
+            if (runInSavepoint(this::createSourceGeometries)) {
+                runInSavepoint(this::runValidation);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -81,18 +87,33 @@ public class GraphTopologyValidator implements Validator<Database> {
         return context.isDgprSafeMode();
     }
 
-    private void runValidation() throws Exception {
-        if (!database.hasGeometrySupport()) {
-            log.info(MARKER, "skipped for non postgis database");
-            database.close();
-            return;
+    /**
+     * Run a task reporting PSQLException (ex : invalid geometry) as
+     * DGPR_ISO_HT_GEOM_ERROR. The transaction is rolled back to a savepoint so that
+     * the following requests can be performed.
+     *
+     * @param task
+     * @return false if the task failed
+     */
+    private boolean runInSavepoint(Database.SqlTask task) throws SQLException, IOException {
+        try {
+            database.runInSavepoint(task);
+            return true;
+        } catch (PSQLException e) {
+            // psql exception throw if a geometry is invalid
+            reportException(e.toString());
+            return false;
         }
+    }
 
-        // creation des geometries dans le systeme sources
+    // creation des geometries dans le systeme sources
+    private void createSourceGeometries() throws SQLException {
         createSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
         createSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
         createSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
+    }
 
+    private void runValidation() throws SQLException, IOException {
         // force geom gist usage
         // SET enable_seqscan TO off;
         toggleGistScanMode(false);

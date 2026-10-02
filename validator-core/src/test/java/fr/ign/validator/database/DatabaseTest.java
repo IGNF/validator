@@ -65,6 +65,48 @@ public class DatabaseTest {
     }
 
     /**
+     * query() without results returns an empty RowIterator (statement already
+     * closed, close() was failing with a NullPointerException)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testQueryWithoutResults() throws Exception {
+        Database database = new Database(new File(folder.getRoot(), "sample.db"));
+        RowIterator it = database.query("CREATE TABLE TEST(id TEXT);");
+        assertFalse(it.hasNext());
+        it.close();
+        database.close();
+    }
+
+    /**
+     * runInSavepoint rolls back the changes of a failing task and the following
+     * requests are performed
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRunInSavepointRollback() throws Exception {
+        Database database = new Database(new File(folder.getRoot(), "sample.db"));
+        database.update("CREATE TABLE TEST(id TEXT);");
+        database.update("INSERT INTO TEST(id) VALUES ('1');");
+
+        Assert.assertThrows(SQLException.class, () -> {
+            database.runInSavepoint(() -> {
+                database.update("INSERT INTO TEST(id) VALUES ('2');");
+                database.update("UPDATE NOT_FOUND SET test='meuh'");
+            });
+        });
+        assertEquals(1, database.getCount("TEST"));
+
+        database.runInSavepoint(() -> {
+            database.update("INSERT INTO TEST(id) VALUES ('3');");
+        });
+        assertEquals(2, database.getCount("TEST"));
+        database.close();
+    }
+
+    /**
      * Performs basic test with some queries
      *
      * @throws Exception

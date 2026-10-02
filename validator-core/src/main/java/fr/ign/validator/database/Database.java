@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -629,6 +630,34 @@ public class Database implements Closeable {
     }
 
     /**
+     * Task performing SQL requests
+     */
+    public interface SqlTask {
+        void run() throws SQLException, IOException;
+    }
+
+    /**
+     * Run a task in a savepoint, rolling back to the savepoint if the task fails.
+     *
+     * Note that PostgreSQL rejects any request in an aborted transaction ("current
+     * transaction is aborted") until a rollback.
+     *
+     * @param task
+     * @throws SQLException the error of the task
+     * @throws IOException
+     */
+    public void runInSavepoint(SqlTask task) throws SQLException, IOException {
+        Savepoint savepoint = connection.setSavepoint();
+        try {
+            task.run();
+        } catch (SQLException | IOException | RuntimeException e) {
+            connection.rollback(savepoint);
+            throw e;
+        }
+        connection.releaseSavepoint(savepoint);
+    }
+
+    /**
      * Perform any SQL request returning results
      *
      * @param sql
@@ -638,10 +667,16 @@ public class Database implements Closeable {
     public RowIterator query(String sql) throws SQLException {
         log.debug(MARKER, sql);
         PreparedStatement sth = connection.prepareStatement(sql);
-        boolean hasResultSet = sth.execute();
-        if (hasResultSet) {
-            return new RowIterator(sth.getResultSet());
+        try {
+            if (sth.execute()) {
+                // the statement is closed with the RowIterator
+                return new RowIterator(sth);
+            }
+        } catch (SQLException e) {
+            sth.close();
+            throw e;
         }
+        sth.close();
         return new RowIterator();
     }
 

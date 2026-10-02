@@ -2,6 +2,8 @@
 
 ## 4.5.x
 
+* v4.5.7 - Fix JDBC leaks (statements of `Database.query()` and `DatabaseSUP`, connections not closed on failure and after `SupRelationsPostProcess`)
+* v4.5.7 - DGPR : rollback to a savepoint when a PostGIS error occurs (the following controls were failing with "current transaction is aborted")
 * v4.5.7 - Fail the validation when ogr2ogr fails (exit code, stderr reported) instead of validating a partial output, add `OGR2OGR_TIMEOUT` (seconds, default 3600)
 * v4.5.7 - Compare values with `=` instead of `LIKE` for foreign keys and DGPR controls (`_` and `%` were wildcards, case insensitive comparison with SQLITE)
 * v4.5.7 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)

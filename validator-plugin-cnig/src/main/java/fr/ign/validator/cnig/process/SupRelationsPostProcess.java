@@ -98,20 +98,24 @@ public class SupRelationsPostProcess implements ValidatorListener {
             return;
         }
 
-        log.info(
-            MARKER,
-            "Perform joins to add columns 'fichier', 'nomsuplitt', 'nomreg' and 'urlreg' to normalized GENERATEUR and ASSIETTE tables..."
-        );
-        File tempDirectory = getTempDirectory(context);
-        AdditionalColumnsBuilder builder = new AdditionalColumnsBuilder(
-            database,
-            tempDirectory
-        );
-        builder.addColumnsToGenerateurAndAssietteFiles(context.getDataDirectory());
+        try {
+            log.info(
+                MARKER,
+                "Perform joins to add columns 'fichier', 'nomsuplitt', 'nomreg' and 'urlreg' to normalized GENERATEUR and ASSIETTE tables..."
+            );
+            File tempDirectory = getTempDirectory(context);
+            AdditionalColumnsBuilder builder = new AdditionalColumnsBuilder(
+                database,
+                tempDirectory
+            );
+            builder.addColumnsToGenerateurAndAssietteFiles(context.getDataDirectory());
 
-        log.info(MARKER, "Validate IDGEN and IDASS on merged GENERATEUR and ASSIETTE tables...");
-        for (Validator<DatabaseSUP> validator : validators) {
-            validator.validate(context, database);
+            log.info(MARKER, "Validate IDGEN and IDASS on merged GENERATEUR and ASSIETTE tables...");
+            for (Validator<DatabaseSUP> validator : validators) {
+                validator.validate(context, database);
+            }
+        } finally {
+            database.close();
         }
 
         log.info(MARKER, "Post-process GENERATEUR and ASSIETTE tables : completed.");

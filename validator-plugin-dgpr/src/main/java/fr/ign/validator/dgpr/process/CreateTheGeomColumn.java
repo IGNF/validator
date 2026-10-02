@@ -41,42 +41,41 @@ public class CreateTheGeomColumn implements ValidatorListener {
     @Override
     public void afterValidate(Context context, Document document) throws Exception {
         String sourceSrid = context.getProjection().getSrid();
-        Database database = Database.createDatabase(context, false);
-        if (!database.hasGeometrySupport()) {
-            log.info(MARKER, "skipped for non postgis database");
-            database.close();
-            return;
-        }
-
-        log.info(MARKER, "Create the_geom column for all tables with a geometry...");
-        for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
-            if (!(fileModel instanceof SingleTableModel)) {
-                continue;
-            }
-            String tableName = fileModel.getName();
-            GeometryType geometryAttribute = ((TableModel) fileModel).getFeatureType().getDefaultGeometry();
-            if (geometryAttribute == null) {
-                log.info(MARKER, "skip {} (not spatial)", tableName);
-                continue;
+        try (Database database = Database.createDatabase(context, false)) {
+            if (!database.hasGeometrySupport()) {
+                log.info(MARKER, "skipped for non postgis database");
+                return;
             }
 
-            log.info(MARKER, "Add column the_geom to {}...", tableName);
-            database.query(
-                "ALTER TABLE " + tableName + " ADD COLUMN "
-                    + "the_geom geometry(" + geometryAttribute.getTypeName() + "," + DEFAULT_SRID + ")"
-            );
+            log.info(MARKER, "Create the_geom column for all tables with a geometry...");
+            for (FileModel fileModel : document.getDocumentModel().getFileModels()) {
+                if (!(fileModel instanceof SingleTableModel)) {
+                    continue;
+                }
+                String tableName = fileModel.getName();
+                GeometryType geometryAttribute = ((TableModel) fileModel).getFeatureType().getDefaultGeometry();
+                if (geometryAttribute == null) {
+                    log.info(MARKER, "skip {} (not spatial)", tableName);
+                    continue;
+                }
 
-            log.info(MARKER, "Update values for the_geom of {}...", tableName);
-            database.query(
-                "UPDATE " + tableName + " SET the_geom = "
-                    + "ST_Multi(ST_Transform("
-                    + "ST_SetSRID(wkt, " + sourceSrid + ")"
-                    + ", 4326))"
-            );
+                log.info(MARKER, "Add column the_geom to {}...", tableName);
+                database.query(
+                    "ALTER TABLE " + tableName + " ADD COLUMN "
+                        + "the_geom geometry(" + geometryAttribute.getTypeName() + "," + DEFAULT_SRID + ")"
+                );
+
+                log.info(MARKER, "Update values for the_geom of {}...", tableName);
+                database.query(
+                    "UPDATE " + tableName + " SET the_geom = "
+                        + "ST_Multi(ST_Transform("
+                        + "ST_SetSRID(wkt, " + sourceSrid + ")"
+                        + ", 4326))"
+                );
+            }
+
+            database.getConnection().commit();
         }
-
-        database.getConnection().commit();
-        database.close();
     }
 
 }
