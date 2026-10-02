@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.tools.Networking;
+
 /**
  *
  * Read URL to check proxy configuration
@@ -42,7 +44,7 @@ public class ReadUrlCommand extends AbstractCommand {
     @Override
     public void execute() throws Exception {
         URL url = new URL(this.url);
-        InputStream in = url.openStream();
+        InputStream in = Networking.openStream(url);
         try {
             InputStreamReader inR = new InputStreamReader(in);
             BufferedReader buf = new BufferedReader(inR);

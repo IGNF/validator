@@ -3,6 +3,7 @@ package fr.ign.validator.database;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.StaticTable;
+import fr.ign.validator.tools.Networking;
 
 /**
  * Ensures that the static tables (reference lists) of a DocumentModel can be
@@ -70,13 +72,15 @@ public class StaticTableChecker {
         if (staticTable.getData() == null) {
             return "URL non résolue";
         }
-        try (InputStream is = staticTable.getData().openStream()) {
+        try (InputStream is = Networking.openStream(staticTable.getData())) {
             return null;
         } catch (FileNotFoundException e) {
             // HTTP 404 or missing local file
             return "fichier introuvable";
         } catch (UnknownHostException e) {
             return "serveur inconnu";
+        } catch (SocketTimeoutException e) {
+            return "délai dépassé";
         } catch (IOException e) {
             return e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
         }

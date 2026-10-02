@@ -19,6 +19,7 @@ import fr.ign.validator.model.FeatureTypeRef;
 import fr.ign.validator.model.StaticTable;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.ModelHelper;
+import fr.ign.validator.tools.Networking;
 
 /**
  * Common implementation for JSON and XML ModelReader (removed).
@@ -181,7 +182,7 @@ abstract class AbstractModelReader implements ModelReader {
      */
     protected InputStream getInputStream(URL url) throws ModelNotFoundException {
         try {
-            return url.openStream();
+            return Networking.openStream(url);
         } catch (IOException e) {
             throw new ModelNotFoundException(url, e);
         }

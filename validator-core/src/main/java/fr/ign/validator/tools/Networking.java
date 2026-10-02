@@ -1,5 +1,9 @@
 package fr.ign.validator.tools;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Map;
 import java.util.Properties;
 
@@ -19,6 +23,16 @@ import org.apache.logging.log4j.MarkerManager;
 public class Networking {
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("Networking");
+
+    /**
+     * Timeout to establish a connection (ms)
+     */
+    public static final int CONNECT_TIMEOUT = 30 * 1000;
+
+    /**
+     * Timeout while waiting for data (ms)
+     */
+    public static final int READ_TIMEOUT = 120 * 1000;
 
     private Networking() {
         // disabled, class with static helpers
@@ -103,4 +117,20 @@ public class Networking {
             return null;
         }
     }
+
+    /**
+     * Same as url.openStream() with timeouts (default timeouts are infinite, a
+     * server that doesn't respond would block the validation)
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public static InputStream openStream(URL url) throws IOException {
+        URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(CONNECT_TIMEOUT);
+        connection.setReadTimeout(READ_TIMEOUT);
+        return connection.getInputStream();
+    }
+
 }
