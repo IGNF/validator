@@ -11,6 +11,22 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # PostGIS for the DGPR controls (skipped with SQLITE)
+    services:
+      postgis:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: postgis
+          POSTGRES_PASSWORD: postgis
+          POSTGRES_DB: validator
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - uses: actions/checkout@v4
 
@@ -29,3 +45,9 @@ jobs:
     - name: Build and test
       run: bash .ci/build.sh
 
+    - name: Test DGPR controls with PostGIS
+      env:
+        DB_URL: jdbc:postgresql://localhost:5432/validator
+        DB_USER: postgis
+        DB_PASSWORD: postgis
+      run: mvn -B install -Dmaven.test.skip=true -q && mvn -B test -pl validator-plugin-dgpr -Dtest=DgprApplicationTest

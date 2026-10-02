@@ -2,6 +2,8 @@
 
 ## 4.5.x
 
+* v4.5.7 - DGPR : `DGPR_INOND_INCLUSION_ERROR` checks the inclusion in the union of the surfaces of each weaker scenario (Fort in Moyen and Faible, Moyen in Faible) instead of a single surface of the next scenario
+* v4.5.7 - CI : test the DGPR controls with PostGIS
 * v4.5.7 - Download remote static tables once per validation (`static_tables/{name}.csv` in the validation directory, they were read 3 times)
 * v4.5.7 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
 * v4.5.7 - Use `Locale.ROOT` for case conversions (ex : `IDURBA` was converted to `ıdurba` with a turkish locale)

@@ -2,8 +2,8 @@ package fr.ign.validator.dgpr.validation.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -111,88 +111,69 @@ public class InclusionValidator implements Validator<Database> {
         validInclusion();
     }
 
+    /**
+     * Pairs of scenarios (stronger, weaker) : the surfaces of the stronger scenario
+     * must be included in the union of the surfaces of each weaker scenario (Fort
+     * in Moyen, Moyen in Faible and so Fort in Faible).
+     */
+    private static final String[][] SCENARIO_PAIRS = {
+        {
+            "01For", "02Moy"
+        }, {
+            "01For", "04Fai"
+        }, {
+            "02Moy", "04Fai"
+        }, {
+            "01Forcc_ct", "03Mcc_ct"
+        }, {
+            "01Forcc_ct", "04Faicc_ct"
+        }, {
+            "03Mcc_ct", "04Faicc_ct"
+        }, {
+            "01Forcc_100", "03Mcc"
+        }
+    };
+
     private void validInclusion() throws SQLException, IOException {
         String surfaceTablename = "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD";
 
         // same default as GraphTopologyValidator when the tolerance is not defined
         double distanceBuffer = context.getDgprTolerance() != null ? context.getDgprTolerance() : 0.0;
 
-        String query = " SELECT "
-            + "   sc_fort.id_s_inond as id_fort"
-            + " FROM "
-            + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
-            + "   JOIN " + surfaceTablename + " AS sc_faible"
-            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01For'"
-            + "     AND sc_faible.scenario = '02Moy'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '02Moy'"
-            + "     AND sc_faible.scenario = '04Fai'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_ct'"
-            + "     AND sc_faible.scenario = '03Mcc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '03Mcc_ct'"
-            + "     AND sc_faible.scenario = '04Faicc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_100'"
-            + "     AND sc_faible.scenario = '03Mcc'"
-            + " WHERE ST_Contains("
-            + "         ST_Buffer(sc_faible.source_geometry, " + distanceBuffer + "),"
-            + "         sc_fort.source_geometry"
-            + "     );";
-
-        // TODO examiner la liste avec la liste complète des 'scenario fort'
-        // chaque 'scenario fort' doit être inclus dans <au moin> un 'scenario faible
-        // correpondant'
-        RowIterator inclusionIterator = database.query(query);
-
-        int inclusionId = inclusionIterator.getColumn("id_fort");
-
-        // ids are compared exactly (ex : SIN_1 must not match SIN_10)
-        Set<String> candidates = new HashSet<>();
-        while (inclusionIterator.hasNext()) {
-            String[] row = inclusionIterator.next();
-            candidates.add(row[inclusionId]);
+        List<String> pairs = new ArrayList<>();
+        for (String[] pair : SCENARIO_PAIRS) {
+            pairs.add("('" + pair[0] + "', '" + pair[1] + "')");
         }
-        inclusionIterator.close();
 
-        String querySurface = " SELECT "
-            + "   sc_fort.id_s_inond as id_fort,"
-            + "   sc_fort.scenario as scenario,"
-            + "   sc_faible.scenario as scenario_faible,"
-            + "   string_agg(sc_faible.id_s_inond, ', ') as list_id"
-            + " FROM "
-            + "   (SELECT * FROM " + surfaceTablename + ") sc_fort"
-            + "   JOIN " + surfaceTablename + " AS sc_faible"
-            + "   ON sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01For' "
-            + "      AND sc_faible.scenario = '02Moy'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '02Moy' "
-            + "      AND sc_faible.scenario = '04Fai'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_ct' "
-            + "      AND sc_faible.scenario = '03Mcc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '03Mcc_ct' "
-            + "      AND sc_faible.scenario = '04Faicc_ct'"
-            + "   OR sc_fort.scenario < sc_faible.scenario AND sc_fort.scenario = '01Forcc_100' "
-            + "      AND sc_faible.scenario = '03Mcc'"
-            + " GROUP BY sc_fort.id_s_inond, sc_fort.scenario, sc_faible.scenario"
-            + " ;";
+        /*
+         * a surface may be covered by several surfaces of the weaker scenario (union)
+         */
+        String query = "WITH pairs(scenario_fort, scenario_faible) AS (VALUES " + String.join(", ", pairs) + "),"
+            + " faible AS ("
+            + "   SELECT pairs.scenario_fort, sc_faible.scenario AS scenario_faible,"
+            + "     ST_Buffer(ST_Union(sc_faible.source_geometry), " + distanceBuffer + ") AS geom,"
+            + "     string_agg(sc_faible.id_s_inond, ', ' ORDER BY sc_faible.id_s_inond) AS list_id"
+            + "   FROM pairs JOIN " + surfaceTablename + " AS sc_faible"
+            + "     ON sc_faible.scenario = pairs.scenario_faible"
+            + "   GROUP BY pairs.scenario_fort, sc_faible.scenario"
+            + " )"
+            + " SELECT sc_fort.id_s_inond AS id_fort, sc_fort.scenario AS scenario,"
+            + "   faible.scenario_faible, faible.list_id"
+            + " FROM " + surfaceTablename + " AS sc_fort"
+            + " JOIN faible ON faible.scenario_fort = sc_fort.scenario"
+            + " WHERE NOT ST_Contains(faible.geom, sc_fort.source_geometry)"
+            + " ORDER BY sc_fort.id_s_inond, faible.scenario_faible";
 
-        // TODO examiner la liste avec la liste complète des 'scenario fort'
-        // chaque 'scenario fort' doit être inclus dans <au moin> un 'scenario faible
-        // correpondant'
-        RowIterator inondableIterator = database.query(querySurface);
-
-        int inondableId = inondableIterator.getColumn("id_fort");
-        int inondableFort = inondableIterator.getColumn("scenario");
-        int inondableFaible = inondableIterator.getColumn("scenario_faible");
-        int inondableListe = inondableIterator.getColumn("list_id");
-
-        while (inondableIterator.hasNext()) {
-            String[] row = inondableIterator.next();
-            // if list of candidate contains the current id
-            // then the surface is good to go
-            if (candidates.contains(row[inondableId])) {
-                continue;
+        try (RowIterator it = database.query(query)) {
+            int indexId = it.getColumn("id_fort");
+            int indexFort = it.getColumn("scenario");
+            int indexFaible = it.getColumn("scenario_faible");
+            int indexListe = it.getColumn("list_id");
+            while (it.hasNext()) {
+                String[] row = it.next();
+                report(row[indexId], row[indexFort], row[indexFaible], row[indexListe]);
             }
-            report(row[inondableId], row[inondableFort], row[inondableFaible], row[inondableListe]);
         }
-        inondableIterator.close();
     }
 
     private void report(String id, String scenarioFort, String ScenarioFaible, String listFaible) {
