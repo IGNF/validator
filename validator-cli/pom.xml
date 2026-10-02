@@ -59,7 +59,31 @@
 						</goals>
 						<configuration>
 							<!-- Invalid signature file digest for Manifest main attributes -->
+							<!-- GeoTools transitive dependencies not used by the validator (image processing, OGC XML models) -->
+							<artifactSet>
+								<excludes>
+									<exclude>javax.media:jai_core</exclude>
+									<exclude>org.eclipse.emf:*</exclude>
+									<exclude>org.geotools.ogc:*</exclude>
+								</excludes>
+							</artifactSet>
 							<filters>
+								<!-- keep SQLite native libraries for Linux (glibc and musl), Mac and Windows x86_64 -->
+								<filter>
+									<artifact>org.xerial:sqlite-jdbc</artifact>
+									<excludes>
+										<exclude>org/sqlite/native/FreeBSD/**</exclude>
+										<exclude>org/sqlite/native/Linux/arm*/**</exclude>
+										<exclude>org/sqlite/native/Linux/ppc64/**</exclude>
+										<exclude>org/sqlite/native/Linux/riscv64/**</exclude>
+										<exclude>org/sqlite/native/Linux/x86/**</exclude>
+										<exclude>org/sqlite/native/Linux-Musl/x86/**</exclude>
+										<exclude>org/sqlite/native/Linux-Musl/aarch64/**</exclude>
+										<exclude>org/sqlite/native/Windows/x86/**</exclude>
+										<exclude>org/sqlite/native/Windows/arm*/**</exclude>
+										<exclude>org/sqlite/native/Windows/aarch64/**</exclude>
+									</excludes>
+								</filter>
 								<filter>
 									<artifact>*:*</artifact>
 									<excludes>

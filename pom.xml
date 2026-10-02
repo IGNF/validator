@@ -26,7 +26,6 @@
 		 -->
 		<geotools.version>27.5</geotools.version>
 		<log4j.version>2.26.1</log4j.version>
-		<woodstox-core-asl.version>4.4.1</woodstox-core-asl.version>
 		<jackson.version>2.22.3</jackson.version>
 		<jackson.annotations.version>2.22</jackson.annotations.version>
 		<jackson.databind.version>2.22.3</jackson.databind.version>
@@ -104,12 +103,6 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>${log4j.version}</version>
-		</dependency>
-		<!-- log4j2 dependency-->
-		<dependency>
-			<groupId>org.codehaus.woodstox</groupId>
-			<artifactId>woodstox-core-asl</artifactId>
-			<version>${woodstox-core-asl.version}</version>
 		</dependency>
 
 		<!--

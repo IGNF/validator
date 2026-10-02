@@ -2,6 +2,7 @@
 
 ## 4.5.x
 
+* v4.5.7 - Reduce `validator-cli.jar` size from 35.6 to 23.0 Mo (SQLite native libraries limited to Linux, Mac and Windows x86_64, unused GeoTools dependencies JAI and EMF excluded, `woodstox-core-asl` removed)
 * v4.5.7 - DGPR : `DGPR_INOND_INCLUSION_ERROR` checks the inclusion in the union of the surfaces of each weaker scenario (Fort in Moyen and Faible, Moyen in Faible) instead of a single surface of the next scenario
 * v4.5.7 - CI : test the DGPR controls with PostGIS
 * v4.5.7 - Download remote static tables once per validation (`static_tables/{name}.csv` in the validation directory, they were read 3 times)
