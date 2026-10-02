@@ -114,15 +114,30 @@ public class GraphTopologyValidator implements Validator<Database> {
         // dropSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
     }
 
+    /**
+     * SQL expression computing source_geometry from wkt (simplified if a distance
+     * is provided)
+     *
+     * @param srid
+     * @param simplify
+     * @return
+     */
+    static String getSourceGeometryExpression(String srid, Double simplify) {
+        String geometry = "ST_SetSRID(wkt, " + srid + ")";
+        if (simplify != null) {
+            // ST_SimplifyPreserveTopology(geom, NULL) returns NULL
+            geometry = "ST_SimplifyPreserveTopology(" + geometry + ", " + simplify + ")";
+        }
+        return "ST_Multi(ST_SnapToGrid(ST_Buffer(" + geometry + ", 0), 0.01))";
+    }
+
     private void createSourceGeometry(String tablename) throws SQLException {
         String srid = this.getSrid();
         Double simplify = this.getDistanceSimplification();
         String[] queries = new String[] {
             "ALTER TABLE " + tablename + " ADD COLUMN source_geometry geometry(MultiPolygon, " + srid + ");",
             "CREATE INDEX " + tablename + "_geom_idx ON " + tablename + " USING GIST (source_geometry);",
-            "UPDATE " + tablename + " SET source_geometry = ST_Multi(ST_SnapToGrid(ST_Buffer("
-                + " ST_SimplifyPreserveTopology("
-                + " ST_SetSRID(wkt, " + srid + "), " + simplify + "), 0), 0.01));",
+            "UPDATE " + tablename + " SET source_geometry = " + getSourceGeometryExpression(srid, simplify) + ";",
             "UPDATE " + tablename + " SET source_geometry = ST_Multi("
                 + " ST_CollectionExtract(ST_makevalid(source_geometry),3))"
                 + " WHERE NOT ST_isValid(source_geometry);"

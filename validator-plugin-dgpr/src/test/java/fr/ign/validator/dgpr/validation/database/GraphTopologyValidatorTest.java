@@ -3,8 +3,10 @@ package fr.ign.validator.dgpr.validation.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
@@ -61,6 +63,26 @@ public class GraphTopologyValidatorTest {
         GeometryCollection geometryCollection = (GeometryCollection) geometryFactory.buildGeometry(geometries);
         Geometry union = geometryCollection.union();
         return union;
+    }
+
+    /**
+     * ST_SimplifyPreserveTopology(geom, NULL) returns NULL (topology controls
+     * disabled without --dgpr-simplify)
+     */
+    @Test
+    public void testSourceGeometryExpressionWithoutSimplification() {
+        Assert.assertEquals(
+            "ST_Multi(ST_SnapToGrid(ST_Buffer(ST_SetSRID(wkt, 2154), 0), 0.01))",
+            GraphTopologyValidator.getSourceGeometryExpression("2154", null)
+        );
+    }
+
+    @Test
+    public void testSourceGeometryExpressionWithSimplification() {
+        Assert.assertEquals(
+            "ST_Multi(ST_SnapToGrid(ST_Buffer(ST_SimplifyPreserveTopology(ST_SetSRID(wkt, 2154), 5.0), 0), 0.01))",
+            GraphTopologyValidator.getSourceGeometryExpression("2154", 5.0)
+        );
     }
 
     // @Test

@@ -2,6 +2,7 @@
 
 ## 4.5.x
 
+* v4.5.7 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
 * v4.5.7 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
 * v4.5.6 - Add `ORIGINAL_PATH` column to normalized `TITRES_PIECES_ECRITES.csv` (relative path under `Pieces_ecrites`)
 * v4.5.4 - Bump Jackson (FasterXML) to 2.21.4 [SECURITY]
