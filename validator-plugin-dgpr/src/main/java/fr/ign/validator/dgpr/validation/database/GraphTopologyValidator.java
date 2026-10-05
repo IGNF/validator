@@ -166,32 +166,37 @@ public class GraphTopologyValidator implements Validator<Database> {
         }
     }
 
+    /**
+     * The union of the zones of a surface must be the surface (with the tolerance
+     * distanceBuffer, in both directions).
+     *
+     * Performance (large datasets, ex : 19 290 zones for a surface) :
+     * <ul>
+     * <li>the union is computed once per surface, grouped by ID_S_INOND (not by
+     * the geometry of the surface)</li>
+     * <li>the inclusion is tested without buffer first, the costly buffer is only
+     * computed when it fails (same result as the buffer contains the geometry)</li>
+     * </ul>
+     */
     private void validSurfaceTopology(String tablename) throws SQLException, IOException {
         String surfaceTablename = "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD";
+        double distanceBuffer = this.getDistanceBuffer();
 
-        String query = " SELECT query.ID_S_INOND,"
-            + "    query.list_zones"
-            + " FROM"
-            + " ("
-            + " SELECT inond.ID_S_INOND,"
-            + "     inond.source_geometry AS the_geom_zone,"
-            + "     ST_Buffer("
-            + "         inond.source_geometry"
-            + "     , " + this.getDistanceBuffer() + ") AS the_geom_buffer_zone,"
-            + "     string_agg(feature.ID_ZONE, ', ') as list_zones,"
-            + "     ST_Multi(ST_Union("
-            + "         feature.source_geometry"
-            + "     )) AS the_geom_union,"
-            + "     ST_Buffer(ST_Multi(ST_Union("
-            + "         feature.source_geometry"
-            + "     )), " + this.getDistanceBuffer() + ") AS the_geom_buffer_union"
-            + "     FROM " + tablename + " AS feature"
-            + "     JOIN " + surfaceTablename + " AS inond"
-            + "     ON feature.ID_S_INOND = inond.ID_S_INOND"
-            + "     GROUP BY inond.ID_S_INOND, inond.source_geometry"
-            + " ) query"
-            + " WHERE NOT ST_Contains(query.the_geom_buffer_union, query.the_geom_zone)"
-            + " OR NOT ST_Contains(query.the_geom_buffer_zone, query.the_geom_union)"
+        String query = "WITH unions AS MATERIALIZED ("
+            + "   SELECT feature.ID_S_INOND,"
+            + "     string_agg(feature.ID_ZONE, ', ') AS list_zones,"
+            + "     ST_Multi(ST_Union(feature.source_geometry)) AS the_geom_union"
+            + "   FROM " + tablename + " AS feature"
+            + "   WHERE feature.ID_S_INOND IN (SELECT ID_S_INOND FROM " + surfaceTablename + ")"
+            + "   GROUP BY feature.ID_S_INOND"
+            + " )"
+            + " SELECT inond.ID_S_INOND, unions.list_zones"
+            + " FROM " + surfaceTablename + " AS inond"
+            + " JOIN unions ON unions.ID_S_INOND = inond.ID_S_INOND"
+            + " WHERE NOT (CASE WHEN ST_Contains(unions.the_geom_union, inond.source_geometry) THEN true"
+            + "   ELSE ST_Contains(ST_Buffer(unions.the_geom_union, " + distanceBuffer + "), inond.source_geometry) END)"
+            + " OR NOT (CASE WHEN ST_Contains(inond.source_geometry, unions.the_geom_union) THEN true"
+            + "   ELSE ST_Contains(ST_Buffer(inond.source_geometry, " + distanceBuffer + "), unions.the_geom_union) END)"
             + " ;";
 
         RowIterator errorIterator = database.query(query);
@@ -206,21 +211,26 @@ public class GraphTopologyValidator implements Validator<Database> {
         errorIterator.close();
     }
 
+    /**
+     * The zones of a surface must not intersect (with the tolerance distanceBuffer).
+     *
+     * Performance (large datasets) : the negative buffer is computed once per zone
+     * (not for each pair of zones) and the pairs are filtered with the spatial index
+     * (&&).
+     */
     private void validNoIntersection(String tablename) throws SQLException, IOException {
-        String query = " SELECT "
-            + "   query.id_s_inond, query.id_zone, query.id_compare"
-            + " FROM ("
-            + "   SELECT "
-            + "     f.id_s_inond, f.id_zone, c.id_zone as id_compare,"
-            + "     ST_Buffer(f.source_geometry, -" + this.getDistanceBuffer() + ") as geom,"
-            + "     c.source_geometry as geom_compare"
-            + "   FROM " + tablename + " AS f"
-            + "   LEFT JOIN " + tablename + " as c"
-            + "   ON f.id_s_inond = c.id_s_inond"
-            + "   WHERE f.id_zone > c.id_zone"
-            + "   ORDER BY f.id_s_inond, f.id_zone"
-            + " ) query"
-            + " WHERE ST_Intersects(query.geom, query.geom_compare)"
+        String query = "WITH f AS MATERIALIZED ("
+            + "   SELECT id_s_inond, id_zone, ST_Buffer(source_geometry, -" + this.getDistanceBuffer() + ") AS geom"
+            + "   FROM " + tablename
+            + " )"
+            + " SELECT f.id_s_inond, f.id_zone, c.id_zone AS id_compare"
+            + " FROM f"
+            + " JOIN " + tablename + " AS c"
+            + "   ON c.id_s_inond = f.id_s_inond"
+            + "   AND f.id_zone > c.id_zone"
+            + "   AND c.source_geometry && f.geom"
+            + " WHERE ST_Intersects(f.geom, c.source_geometry)"
+            + " ORDER BY f.id_s_inond, f.id_zone"
             + " ;";
 
         RowIterator errorIterator = database.query(query);

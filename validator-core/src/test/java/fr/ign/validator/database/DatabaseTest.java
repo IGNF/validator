@@ -6,8 +6,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -137,6 +142,68 @@ public class DatabaseTest {
      *
      * @throws Exception
      */
+    @Test
+    public void testHasGeometrySupportRequiresPostgisExtension() throws Exception {
+        Database database = new Database(new File(folder.getRoot(), "sample.db"));
+
+        DatabaseMetaData metadata = (DatabaseMetaData) Proxy.newProxyInstance(
+            DatabaseMetaData.class.getClassLoader(),
+            new Class<?>[] { DatabaseMetaData.class },
+            (proxy, method, args) -> {
+                if ("getURL".equals(method.getName())) {
+                    return "jdbc:postgresql://example.com:5432/validator";
+                }
+                return null;
+            }
+        );
+
+        ResultSet emptyResultSet = (ResultSet) Proxy.newProxyInstance(
+            ResultSet.class.getClassLoader(),
+            new Class<?>[] { ResultSet.class },
+            (proxy, method, args) -> {
+                if ("next".equals(method.getName())) {
+                    return false;
+                }
+                return null;
+            }
+        );
+
+        Statement statement = (Statement) Proxy.newProxyInstance(
+            Statement.class.getClassLoader(),
+            new Class<?>[] { Statement.class },
+            (proxy, method, args) -> {
+                if ("executeQuery".equals(method.getName())) {
+                    return emptyResultSet;
+                }
+                return null;
+            }
+        );
+
+        Connection pgConnection = (Connection) Proxy.newProxyInstance(
+            Connection.class.getClassLoader(),
+            new Class<?>[] { Connection.class },
+            (proxy, method, args) -> {
+                switch (method.getName()) {
+                    case "getMetaData":
+                        return metadata;
+                    case "createStatement":
+                        return statement;
+                    case "close":
+                        return null;
+                    default:
+                        return null;
+                }
+            }
+        );
+
+        java.lang.reflect.Field connectionField = Database.class.getDeclaredField("connection");
+        connectionField.setAccessible(true);
+        connectionField.set(database, pgConnection);
+
+        assertFalse(database.hasGeometrySupport());
+        database.close();
+    }
+
     @Test
     public void testLoadSimpleFileWithColumnsAandB() throws Exception {
         Database database = new Database(new File(folder.getRoot(), "test.sqlite"));

@@ -146,12 +146,16 @@ public class InclusionValidator implements Validator<Database> {
         }
 
         /*
-         * a surface may be covered by several surfaces of the weaker scenario (union)
+         * a surface may be covered by several surfaces of the weaker scenario (union).
+         *
+         * Performance (large datasets) : only the surfaces of the weaker scenario within
+         * distanceBuffer of the surface are merged (instead of all the surfaces of the
+         * scenario), same result as only them can cover it. The inclusion is tested
+         * without buffer first.
          */
         String query = "WITH pairs(scenario_fort, scenario_faible) AS (VALUES " + String.join(", ", pairs) + "),"
             + " faible AS ("
             + "   SELECT pairs.scenario_fort, sc_faible.scenario AS scenario_faible,"
-            + "     ST_Buffer(ST_Union(sc_faible.source_geometry), " + distanceBuffer + ") AS geom,"
             + "     string_agg(sc_faible.id_s_inond, ', ' ORDER BY sc_faible.id_s_inond) AS list_id"
             + "   FROM pairs JOIN " + surfaceTablename + " AS sc_faible"
             + "     ON sc_faible.scenario = pairs.scenario_faible"
@@ -161,7 +165,15 @@ public class InclusionValidator implements Validator<Database> {
             + "   faible.scenario_faible, faible.list_id"
             + " FROM " + surfaceTablename + " AS sc_fort"
             + " JOIN faible ON faible.scenario_fort = sc_fort.scenario"
-            + " WHERE NOT ST_Contains(faible.geom, sc_fort.source_geometry)"
+            + " CROSS JOIN LATERAL ("
+            + "   SELECT ST_Union(sc_faible.source_geometry) AS geom"
+            + "   FROM " + surfaceTablename + " AS sc_faible"
+            + "   WHERE sc_faible.scenario = faible.scenario_faible"
+            + "     AND ST_DWithin(sc_faible.source_geometry, sc_fort.source_geometry, " + distanceBuffer + ")"
+            + " ) AS near"
+            + " WHERE near.geom IS NULL"
+            + "   OR NOT (CASE WHEN ST_Contains(near.geom, sc_fort.source_geometry) THEN true"
+            + "     ELSE ST_Contains(ST_Buffer(near.geom, " + distanceBuffer + "), sc_fort.source_geometry) END)"
             + " ORDER BY sc_fort.id_s_inond, faible.scenario_faible";
 
         try (RowIterator it = database.query(query)) {

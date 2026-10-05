@@ -148,15 +148,22 @@ public class Database implements Closeable {
     }
 
     /**
-     * Returns true the database supports geometry type.
-     *
-     * Note that it currently assume that postgis is always enabled for postgresql
-     * database.
+     * Returns true when the connected PostgreSQL database actually has the PostGIS
+     * extension installed and can create geometry columns.
      *
      * @return
      */
     public boolean hasGeometrySupport() {
-        return isPostgresql();
+        if (!isPostgresql()) {
+            return false;
+        }
+        try (Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT 1 FROM pg_extension WHERE extname = 'postgis'")) {
+            return resultSet.next();
+        } catch (SQLException e) {
+            log.debug(MARKER, "PostGIS extension check failed: {}", e.getMessage());
+            return false;
+        }
     }
 
     /**
