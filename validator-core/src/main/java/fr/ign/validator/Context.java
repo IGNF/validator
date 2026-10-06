@@ -147,6 +147,17 @@ public class Context {
     private Boolean dgprSafeMode;
 
     /**
+     * Skip the inclusion control of the flood surfaces between scenarios (dgpr
+     * plugin)
+     */
+    private boolean dgprSkipInclusion = false;
+
+    /**
+     * Skip the graph topology control of the flood surfaces (dgpr plugin)
+     */
+    private boolean dgprSkipGraphTopology = false;
+
+    /**
      * List of threshold to detect overdescribed geometries
      */
     private GeometryComplexityThreshold complexityThreshold;
@@ -800,6 +811,42 @@ public class Context {
     @Deprecated
     public void setDgprSafeMode(boolean safeSimplification) {
         this.dgprSafeMode = safeSimplification;
+    }
+
+    /**
+     * skip inclusion control option (dgpr plugin)
+     *
+     * @return
+     */
+    public boolean isDgprSkipInclusion() {
+        return dgprSkipInclusion;
+    }
+
+    /**
+     * skip inclusion control option (dgpr plugin)
+     *
+     * @param dgprSkipInclusion
+     */
+    public void setDgprSkipInclusion(boolean dgprSkipInclusion) {
+        this.dgprSkipInclusion = dgprSkipInclusion;
+    }
+
+    /**
+     * skip graph topology control option (dgpr plugin)
+     *
+     * @return
+     */
+    public boolean isDgprSkipGraphTopology() {
+        return dgprSkipGraphTopology;
+    }
+
+    /**
+     * skip graph topology control option (dgpr plugin)
+     *
+     * @param dgprSkipGraphTopology
+     */
+    public void setDgprSkipGraphTopology(boolean dgprSkipGraphTopology) {
+        this.dgprSkipGraphTopology = dgprSkipGraphTopology;
     }
 
     public GeometryComplexityThreshold getComplexityThreshold() {

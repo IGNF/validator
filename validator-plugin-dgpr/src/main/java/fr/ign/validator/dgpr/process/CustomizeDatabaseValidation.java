@@ -30,8 +30,16 @@ public class CustomizeDatabaseValidation implements ValidatorListener {
          */
         log.info(MARKER, "Register custom database validator for DGPR plugin...");
         documentModel.addDatabaseValidator(new ScenarioValidator());
-        documentModel.addDatabaseValidator(new GraphTopologyValidator());
-        documentModel.addDatabaseValidator(new InclusionValidator());
+        if (context.isDgprSkipGraphTopology()) {
+            log.info(MARKER, "Graph topology control skipped (--dgpr-skip-graph-topology)");
+        } else {
+            documentModel.addDatabaseValidator(new GraphTopologyValidator());
+        }
+        if (context.isDgprSkipInclusion()) {
+            log.info(MARKER, "Inclusion control skipped (--dgpr-skip-inclusion)");
+        } else {
+            documentModel.addDatabaseValidator(new InclusionValidator());
+        }
     }
 
     @Override

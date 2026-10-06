@@ -24,6 +24,11 @@ public class InclusionValidator implements Validator<Database> {
     public static final Marker MARKER = MarkerManager.getMarker("InclusionValidator");
 
     /**
+     * Temporary table with the buffered surfaces of the weaker scenarios.
+     */
+    private static final String WEAK_BUFFER_TABLENAME = "dgpr_inclusion_weak_buffer";
+
+    /**
      * Context
      */
     private Context context;
@@ -148,11 +153,33 @@ public class InclusionValidator implements Validator<Database> {
         /*
          * a surface may be covered by several surfaces of the weaker scenario (union).
          *
-         * Performance (large datasets) : only the surfaces of the weaker scenario within
-         * distanceBuffer of the surface are merged (instead of all the surfaces of the
-         * scenario), same result as only them can cover it. The inclusion is tested
-         * without buffer first.
+         * Performance (large datasets, ex : surfaces with 150 000 vertices and 5 000
+         * holes), same result as ST_Contains(ST_Buffer(ST_Union(weaker surfaces)), surface) :
+         * - the weaker surfaces are buffered once (temporary table with a spatial index)
+         * - most of the surfaces are contained in a single buffered weaker surface : they
+         * are found with the buffered surface in the outer loop (OFFSET 0 prevents the
+         * planner from flattening the LATERAL subquery) so that PostGIS reuses the
+         * prepared geometry
+         * - otherwise, the buffered weaker surfaces are clipped to the extent of the
+         * surface before the union.
          */
+        List<String> weakerScenarios = new ArrayList<>();
+        for (String[] pair : SCENARIO_PAIRS) {
+            String weaker = "'" + pair[1] + "'";
+            if (!weakerScenarios.contains(weaker)) {
+                weakerScenarios.add(weaker);
+            }
+        }
+        database.update("DROP TABLE IF EXISTS " + WEAK_BUFFER_TABLENAME);
+        database.update(
+            "CREATE TEMPORARY TABLE " + WEAK_BUFFER_TABLENAME + " AS"
+                + " SELECT scenario, ST_Buffer(source_geometry, " + distanceBuffer + ") AS geom"
+                + " FROM " + surfaceTablename
+                + " WHERE scenario IN (" + String.join(", ", weakerScenarios) + ")"
+        );
+        database.update("CREATE INDEX ON " + WEAK_BUFFER_TABLENAME + " USING GIST (geom)");
+        database.update("ANALYZE " + WEAK_BUFFER_TABLENAME);
+
         String query = "WITH pairs(scenario_fort, scenario_faible) AS (VALUES " + String.join(", ", pairs) + "),"
             + " faible AS ("
             + "   SELECT pairs.scenario_fort, sc_faible.scenario AS scenario_faible,"
@@ -160,20 +187,36 @@ public class InclusionValidator implements Validator<Database> {
             + "   FROM pairs JOIN " + surfaceTablename + " AS sc_faible"
             + "     ON sc_faible.scenario = pairs.scenario_faible"
             + "   GROUP BY pairs.scenario_fort, sc_faible.scenario"
+            + " ),"
+            + " covered AS MATERIALIZED ("
+            + "   SELECT DISTINCT pairs.scenario_faible, f.__file, f.__id"
+            + "   FROM " + WEAK_BUFFER_TABLENAME + " AS w"
+            + "   JOIN pairs ON pairs.scenario_faible = w.scenario"
+            + "   CROSS JOIN LATERAL ("
+            + "     SELECT x.__file, x.__id FROM " + surfaceTablename + " AS x"
+            + "     WHERE x.scenario = pairs.scenario_fort"
+            + "       AND x.source_geometry && w.geom"
+            + "       AND ST_Contains(w.geom, x.source_geometry)"
+            + "     OFFSET 0"
+            + "   ) AS f"
             + " )"
             + " SELECT sc_fort.id_s_inond AS id_fort, sc_fort.scenario AS scenario,"
             + "   faible.scenario_faible, faible.list_id"
             + " FROM " + surfaceTablename + " AS sc_fort"
             + " JOIN faible ON faible.scenario_fort = sc_fort.scenario"
-            + " CROSS JOIN LATERAL ("
-            + "   SELECT ST_Union(sc_faible.source_geometry) AS geom"
-            + "   FROM " + surfaceTablename + " AS sc_faible"
-            + "   WHERE sc_faible.scenario = faible.scenario_faible"
-            + "     AND ST_DWithin(sc_faible.source_geometry, sc_fort.source_geometry, " + distanceBuffer + ")"
-            + " ) AS near"
-            + " WHERE near.geom IS NULL"
-            + "   OR NOT (CASE WHEN ST_Contains(near.geom, sc_fort.source_geometry) THEN true"
-            + "     ELSE ST_Contains(ST_Buffer(near.geom, " + distanceBuffer + "), sc_fort.source_geometry) END)"
+            + " WHERE NOT EXISTS ("
+            + "   SELECT 1 FROM covered"
+            + "   WHERE covered.scenario_faible = faible.scenario_faible"
+            + "     AND covered.__file = sc_fort.__file AND covered.__id = sc_fort.__id"
+            + " )"
+            + " AND NOT COALESCE(("
+            + "   SELECT ST_Contains("
+            + "     ST_Union(ST_Intersection(w.geom, ST_Expand(ST_Envelope(sc_fort.source_geometry), 1.0))),"
+            + "     sc_fort.source_geometry"
+            + "   )"
+            + "   FROM " + WEAK_BUFFER_TABLENAME + " AS w"
+            + "   WHERE w.scenario = faible.scenario_faible AND w.geom && sc_fort.source_geometry"
+            + " ), false)"
             + " ORDER BY sc_fort.id_s_inond, faible.scenario_faible";
 
         try (RowIterator it = database.query(query)) {
@@ -186,6 +229,7 @@ public class InclusionValidator implements Validator<Database> {
                 report(row[indexId], row[indexFort], row[indexFaible], row[indexListe]);
             }
         }
+        database.update("DROP TABLE IF EXISTS " + WEAK_BUFFER_TABLENAME);
     }
 
     private void report(String id, String scenarioFort, String ScenarioFaible, String listFaible) {

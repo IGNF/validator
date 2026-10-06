@@ -151,6 +151,18 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected boolean dgprSafeMode;
 
     /**
+     * option - switch (boolean) Default value is false : skip the inclusion
+     * control between scenarios (DGPR_INOND_INCLUSION_*)
+     */
+    protected boolean dgprSkipInclusion;
+
+    /**
+     * option - switch (boolean) Default value is false : skip the graph topology
+     * control (DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND,...)
+     */
+    protected boolean dgprSkipGraphTopology;
+
+    /**
      * option - array (numerics) List of threshold to detect overdescribed
      * geometries
      */
@@ -225,6 +237,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         buildDgprTolerance(options);
         buildDgprSimplifyDistance(options);
         buildDgprSimplifySafe(options);
+        buildDgprSkipControls(options);
     }
 
     @Override
@@ -270,6 +283,7 @@ public class DocumentValidatorCommand extends AbstractCommand {
         parseTopologicalToleranceOption(commandLine);
         parseDistanceSimplificationOption(commandLine);
         parseSafeSimplificationOption(commandLine);
+        parseSkipControlsOptions(commandLine);
 
         // plugins...
         parsePluginsOption(commandLine);
@@ -326,6 +340,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
          */
         context.setDgprTolerance(dgprTolerance);
         context.setDgprSimplification(dgprSimplification);
+        context.setDgprSkipInclusion(dgprSkipInclusion);
+        context.setDgprSkipGraphTopology(dgprSkipGraphTopology);
 
         /*
          * load plugins
@@ -860,6 +876,30 @@ public class DocumentValidatorCommand extends AbstractCommand {
     }
 
     /**
+     * Add options "--dgpr-skip-inclusion" and "--dgpr-skip-graph-topology"
+     *
+     * @param options
+     */
+    protected void buildDgprSkipControls(Options options) {
+        {
+            Option option = new Option(
+                null, "dgpr-skip-inclusion", false,
+                "Skip the inclusion control of the flood surfaces between scenarios (DGPR_INOND_INCLUSION_*)"
+            );
+            option.setRequired(false);
+            options.addOption(option);
+        }
+        {
+            Option option = new Option(
+                null, "dgpr-skip-graph-topology", false,
+                "Skip the graph topology control (partition of the flood surfaces by ISO_HT and ISO_DEB, DGPR_ISO_HT_*)"
+            );
+            option.setRequired(false);
+            options.addOption(option);
+        }
+    }
+
+    /**
      * Parse tolerance option
      *
      * @param commandLine
@@ -917,6 +957,16 @@ public class DocumentValidatorCommand extends AbstractCommand {
                 "option --dgpr-safe-simplify is deprecated and has no effect (topology preserving simplification is always used)"
             );
         }
+    }
+
+    /**
+     * Parse options "--dgpr-skip-inclusion" and "--dgpr-skip-graph-topology"
+     *
+     * @param commandLine
+     */
+    protected void parseSkipControlsOptions(CommandLine commandLine) {
+        this.dgprSkipInclusion = commandLine.hasOption("dgpr-skip-inclusion");
+        this.dgprSkipGraphTopology = commandLine.hasOption("dgpr-skip-graph-topology");
     }
 
 }

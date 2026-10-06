@@ -9,6 +9,7 @@
 * v4.6.0 - DGPR : `DGPR_INOND_INCLUSION_ERROR` checks the inclusion in the union of the surfaces of each weaker scenario (Fort in Moyen and Faible, Moyen in Faible) instead of a single surface of the next scenario
 * v4.6.0 - `document_geometry` : return exit code 1 on failure
 * v4.6.0 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
+* v4.6.2 - DGPR : add `--dgpr-skip-inclusion` (skip `DGPR_INOND_INCLUSION_*`) and `--dgpr-skip-graph-topology` (skip `DGPR_ISO_HT_*`, ex : `DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND`) to disable these controls
 * v4.6.0 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
 
 ### v4.6.0 - Fixes
