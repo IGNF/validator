@@ -45,7 +45,7 @@ public class TableReaderGMLTest {
 
             String[] row = reader.next();
             // WKT (regression in ogr2ogr between 1.x and 2.x, >= 2.3 is now required)
-            assertEquals("POINT (225499.742202533 6755725.59042703)", row[wktIndex]);
+            assertEquals("POINT (225499.74220253283 6755725.5904270317)", row[wktIndex]);
 
             assertTrue(Arrays.asList(row).contains("DOC_URBA_COM.13")); // gml_id
             assertTrue(Arrays.asList(row).contains("5611820140612")); // IDURBA

@@ -892,9 +892,10 @@ public class CnigValidatorRegressTest {
         /*
          * check errors
          */
-        ReportAssert.assertCount(4, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
+        // geometries are valid (4 false positives with WKT rounded to 15 digits)
+        ReportAssert.assertCount(0, CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID, report);
         ReportAssert.assertCount(1, CoreErrorCodes.ATTRIBUTE_INVALID_REGEXP, report);
-        ReportAssert.assertCount(4 + 1, ErrorLevel.ERROR, report);
+        ReportAssert.assertCount(1, ErrorLevel.ERROR, report);
 
         /*
          * check warnings

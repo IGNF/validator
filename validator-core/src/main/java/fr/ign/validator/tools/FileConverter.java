@@ -133,6 +133,12 @@ public class FileConverter {
         args.add("OGR2OGR_USE_ARROW_API");
         args.add("NO");
 
+        // avoid coordinate truncation (default is 15 significant digits which may
+        // turn valid geometries into invalid ones, 17 ensures exact double round-trip)
+        args.add("--config");
+        args.add("OGR_WKT_PRECISION");
+        args.add("17");
+
         // Otherwise, some ogr2ogr versions transforms 01 to 1...
         boolean sourceIsGML = FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gml");
         if (sourceIsGML) {
