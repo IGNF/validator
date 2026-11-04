@@ -41,6 +41,20 @@ public class GeometryType extends AttributeType<Geometry> {
         return true;
     }
 
+    /**
+     * Parse a WKT string (null for an empty string).
+     *
+     * Allows to read the geometry once and to provide the result to
+     * {@link #newAttribute(Object, Object)}.
+     *
+     * @param wkt
+     * @return
+     * @throws ParseException
+     */
+    public static Geometry parse(String wkt) throws ParseException {
+        return format.read(wkt);
+    }
+
     @Override
     public Geometry bind(Object value) {
         if (value == null || value instanceof Geometry) {

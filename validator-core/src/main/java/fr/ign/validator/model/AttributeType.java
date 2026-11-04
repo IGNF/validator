@@ -97,6 +97,18 @@ public abstract class AttributeType<T> implements Model, Cloneable {
         return new Attribute<T>(this, value);
     }
 
+    /**
+     * Create an Attribute with a given value and a pre-parsed representation of
+     * this value (ex : Geometry read from a WKT) used for the binding.
+     *
+     * @param value       the original value (ex : WKT)
+     * @param valueToBind the value to bind (ex : Geometry)
+     * @return
+     */
+    public Attribute<T> newAttribute(Object value, Object valueToBind) {
+        return new Attribute<T>(this, value, valueToBind);
+    }
+
     public String getName() {
         return name;
     }

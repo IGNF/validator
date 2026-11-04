@@ -47,10 +47,24 @@ public class Attribute<T> implements Validatable {
      * @param value
      */
     public Attribute(AttributeType<T> type, Object value) {
+        this(type, value, value);
+    }
+
+    /**
+     * Construction of an attribute with type and value, the binding being
+     * performed on a pre-parsed representation of the value (ex : Geometry read
+     * from the WKT). The original value is kept for the validators working on
+     * the raw value (ex : CharactersValidator).
+     *
+     * @param type
+     * @param value
+     * @param valueToBind
+     */
+    public Attribute(AttributeType<T> type, Object value, Object valueToBind) {
         this.type = type;
         this.value = value;
         try {
-            this.bindedValue = type.bind(value);
+            this.bindedValue = type.bind(valueToBind);
             this.bindingStatus = BindingStatus.SUCCESS;
         } catch (IllegalArgumentException e) {
             this.bindingStatus = BindingStatus.FAILURE;
