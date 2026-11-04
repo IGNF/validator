@@ -9,6 +9,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
+import fr.ign.validator.geometry.internal.FastWktFormat;
 import fr.ign.validator.geometry.internal.GeometryFormat;
 import fr.ign.validator.geometry.internal.LegacyWktFormat;
 import fr.ign.validator.geometry.internal.WktWithCurveFormat;
@@ -29,11 +30,14 @@ public class GeometryReader {
      * A list of formats to try to read a Geometry with {@link WKTReader},
      * {@link WKTReader2},...
      */
-    private List<GeometryFormat> formats = new ArrayList<>(2);
+    private List<GeometryFormat> formats = new ArrayList<>(3);
 
     public GeometryReader() {
+        WktWithCurveFormat wktWithCurveFormat = new WktWithCurveFormat();
+        // fast path for 2D linear geometries (same GeometryFactory as WKTReader2)
+        this.formats.add(new FastWktFormat(wktWithCurveFormat.getFactory()));
         // note that WKTReader doesn't supports curved geometries
-        this.formats.add(new WktWithCurveFormat());
+        this.formats.add(wktWithCurveFormat);
         // note that WKTReader2 doesn't support "POINT Z (809848 6322607 8)"
         this.formats.add(new LegacyWktFormat());
         // Note that it might be extended with other formats like GeoJSON, WKB,...

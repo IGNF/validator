@@ -19,12 +19,23 @@ public class WktWithCurveFormat implements GeometryFormat {
 
     private WKTReader2 reader;
 
+    private CurvedGeometryFactory factory;
+
     public WktWithCurveFormat() {
-        CurvedGeometryFactory gf = new CurvedGeometryFactory(
+        this.factory = new CurvedGeometryFactory(
             JTSFactoryFinder.getGeometryFactory(),
             Double.MAX_VALUE
         );
-        this.reader = new WKTReader2(gf);
+        this.reader = new WKTReader2(factory);
+    }
+
+    /**
+     * GeometryFactory used to build the geometries
+     *
+     * @return
+     */
+    public CurvedGeometryFactory getFactory() {
+        return factory;
     }
 
     @Override

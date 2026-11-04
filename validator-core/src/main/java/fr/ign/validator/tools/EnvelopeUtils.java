@@ -20,6 +20,12 @@ import fr.ign.validator.model.Projection;
 public class EnvelopeUtils {
 
     /**
+     * Shared reader (avoid the creation of the GeometryFactory and the readers for
+     * each geometry)
+     */
+    private static GeometryReader reader = new GeometryReader();
+
+    /**
      * Get bounding box from WKT string.
      *
      * @param wkt
@@ -30,7 +36,6 @@ public class EnvelopeUtils {
             return new Envelope();
         }
         try {
-            GeometryReader reader = new GeometryReader();
             Geometry geometry = reader.read(wkt);
             return geometry.getEnvelopeInternal();
         } catch (ParseException e) {

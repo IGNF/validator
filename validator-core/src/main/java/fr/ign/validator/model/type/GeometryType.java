@@ -7,6 +7,7 @@ import org.locationtech.jts.io.ParseException;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import fr.ign.validator.geometry.GeometryReader;
+import fr.ign.validator.geometry.internal.FastWktWriter;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.validation.attribute.GeometryDataExtentValidator;
 import fr.ign.validator.validation.attribute.GeometryIsValidValidator;
@@ -78,7 +79,7 @@ public class GeometryType extends AttributeType<Geometry> {
         if (null == value) {
             return null;
         }
-        return value.toText();
+        return FastWktWriter.write(value);
     }
 
     /**
