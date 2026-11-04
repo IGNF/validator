@@ -27,6 +27,7 @@ import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.exception.ValidatorFatalError;
 import fr.ign.validator.geometry.GeometryComplexityThreshold;
 import fr.ign.validator.geometry.ProjectionList;
+import fr.ign.validator.info.TableStatsCache;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FileModel;
@@ -82,6 +83,11 @@ public class Context {
      * Configures deep character validation
      */
     private StringFixer stringFixer = new StringFixer();
+
+    /**
+     * Stats of the normalized tables computed while they are written
+     */
+    private TableStatsCache tableStatsCache = new TableStatsCache();
 
     /**
      * Input - Current data directory (equivalent to documentPath)
@@ -753,6 +759,15 @@ public class Context {
      */
     public void setStringFixer(StringFixer stringFixer) {
         this.stringFixer = stringFixer;
+    }
+
+    /**
+     * Stats of the normalized tables computed while they are written
+     *
+     * @return
+     */
+    public TableStatsCache getTableStatsCache() {
+        return tableStatsCache;
     }
 
     /**

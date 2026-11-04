@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
@@ -22,8 +23,12 @@ import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.geometry.GeometryTransform;
 import fr.ign.validator.geometry.NullTransform;
 import fr.ign.validator.geometry.ProjectionTransform;
+import fr.ign.validator.geometry.internal.FastWktWriter;
+import fr.ign.validator.info.model.TableStats;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
+import fr.ign.validator.tools.EnvelopeUtils;
+import fr.ign.validator.tools.HeaderHelper;
 import fr.ign.validator.tools.TableReader;
 
 /**
@@ -58,6 +63,27 @@ public class TableNormalizer implements Closeable {
     private CSVPrinter printer;
 
     /**
+     * Normalized file
+     */
+    private File targetFile;
+
+    /**
+     * Stats of the normalized file (same as reading it with TableReader, see
+     * DocumentInfoExtractor)
+     */
+    private TableStats stats = new TableStats();
+
+    /**
+     * False if the stats can't be ensured (the file will be read to get them)
+     */
+    private boolean statsValid = true;
+
+    /**
+     * Position of the column "WKT" used for the bounding box (-1 if not found)
+     */
+    private int wktIndex = -1;
+
+    /**
      * Create table normalizer with a given FeatureType.
      *
      * @param context
@@ -90,6 +116,8 @@ public class TableNormalizer implements Closeable {
          * Create CSV file with an header given by the model.
          */
         List<String> outputHeader = featureType.getAttributeNames();
+        this.targetFile = targetFile;
+        initStats(outputHeader);
         log.info(MARKER, "Create CSV file {}...", targetFile);
         printer = new CSVPrinter(
             new BufferedWriter(
@@ -110,7 +138,66 @@ public class TableNormalizer implements Closeable {
         log.info(MARKER, "Append data from {}...", csvFile);
         try (TableReader reader = TableReader.createTableReader(csvFile, context.getEncoding())) {
             append(csvFile, reader);
+        } catch (IOException | RuntimeException e) {
+            statsValid = false;
+            throw e;
         }
+    }
+
+    /**
+     * Stats are only computed for simple headers (otherwise, TableReader may skip
+     * columns or lines)
+     *
+     * @param outputHeader
+     */
+    private void initStats(List<String> outputHeader) {
+        if (outputHeader.size() < 2) {
+            statsValid = false;
+            return;
+        }
+        for (String name : outputHeader) {
+            if (name == null || name.trim().isEmpty() || !name.equals(name.trim())) {
+                statsValid = false;
+                return;
+            }
+        }
+        wktIndex = HeaderHelper.findColumn(outputHeader.toArray(new String[outputHeader.size()]), "WKT");
+    }
+
+    /**
+     * Update stats with a written row (same result as
+     * DocumentInfoExtractor reading the normalized file)
+     *
+     * @param outputRow
+     * @param wktGeometry  geometry of the column WKT
+     * @param wktFormatted formatted value of the geometry before the StringFixer
+     */
+    private void updateStats(String[] outputRow, Geometry wktGeometry, String wktFormatted) {
+        if (!statsValid) {
+            return;
+        }
+        stats.incrementTotalFeatures();
+        if (wktIndex < 0 || outputRow[wktIndex] == null) {
+            return;
+        }
+        String value = outputRow[wktIndex];
+        String wkt = value.trim();
+        if (wkt.isEmpty()) {
+            return;
+        }
+        Envelope envelope = null;
+        if (wktGeometry != null && value.equals(wktFormatted) && wkt.length() == value.length()) {
+            envelope = FastWktWriter.getWrittenEnvelope(wktGeometry);
+        }
+        if (envelope == null) {
+            try {
+                envelope = EnvelopeUtils.getEnvelope(wkt);
+            } catch (RuntimeException e) {
+                statsValid = false;
+                return;
+            }
+        }
+        stats.getBoundingBox().expandToInclude(envelope);
     }
 
     private void append(File csvFile, TableReader reader) throws IOException {
@@ -121,6 +208,8 @@ public class TableNormalizer implements Closeable {
         while (reader.hasNext()) {
             String[] inputRow = reader.next();
             String[] outputRow = new String[featureType.getAttributeCount()];
+            Geometry wktGeometry = null;
+            String wktFormatted = null;
             if (!reader.isLastRowValid()) {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_INVALID_ROW)
@@ -153,11 +242,17 @@ public class TableNormalizer implements Closeable {
                 }
                 // format binded value to get normalized output.
                 String outputValue = attribute.formatObject(bindedValue);
+                if (position == wktIndex) {
+                    // the last value written in the column is kept
+                    wktGeometry = bindedValue instanceof Geometry ? (Geometry) bindedValue : null;
+                    wktFormatted = outputValue;
+                }
                 // apply string fixer to remove bad chars.
                 outputValue = context.getStringFixer().transform(outputValue);
                 outputRow[position] = outputValue;
             }
             printer.printRecord((Object[]) outputRow);
+            updateStats(outputRow, wktGeometry, wktFormatted);
         }
     }
 
@@ -167,6 +262,10 @@ public class TableNormalizer implements Closeable {
             printer.close();
         } catch (IOException e) {
             log.error(MARKER, "fail to close CSV printer!");
+            statsValid = false;
+        }
+        if (statsValid) {
+            context.getTableStatsCache().put(targetFile, stats);
         }
     }
 

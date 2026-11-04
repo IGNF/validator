@@ -3,7 +3,9 @@ package fr.ign.validator.geometry.internal;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
+import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.MultiLineString;
@@ -110,6 +112,63 @@ public class FastWktWriter {
         return sb.toString();
     }
 
+    /**
+     * Bounding box of the geometry read from the WKT produced by
+     * {@link #write(Geometry)} without writing and reading it.
+     *
+     * The ordinates are rounded when they are written. As the rounding preserves
+     * the order (x &lt;= y implies round(x) &lt;= round(y)), the bounds of the
+     * envelope read from the WKT are the rounded bounds of the envelope.
+     *
+     * @param geometry
+     * @return null if it can't be ensured (unsupported geometry or ordinate, zero
+     *         bound for which the sign may depend on the order of the
+     *         coordinates)
+     */
+    public static Envelope getWrittenEnvelope(Geometry geometry) {
+        if (!isSupported(geometry) || !hasSupportedOrdinates(geometry)) {
+            return null;
+        }
+        Envelope envelope = geometry.getEnvelopeInternal();
+        double minX = roundTrip(envelope.getMinX());
+        double maxX = roundTrip(envelope.getMaxX());
+        double minY = roundTrip(envelope.getMinY());
+        double maxY = roundTrip(envelope.getMaxY());
+        if (Double.isNaN(minX) || Double.isNaN(maxX) || Double.isNaN(minY) || Double.isNaN(maxY)) {
+            return null;
+        }
+        return new Envelope(minX, maxX, minY, maxY);
+    }
+
+    /**
+     * Value read from the written ordinate (NaN if not supported or zero)
+     */
+    private static double roundTrip(double value) {
+        StringBuilder sb = new StringBuilder(32);
+        if (!appendOrdinate(sb, value)) {
+            return Double.NaN;
+        }
+        double result = Double.parseDouble(sb.toString());
+        return result == 0.0 ? Double.NaN : result;
+    }
+
+    /**
+     * True if all the ordinates can be written by appendOrdinate (otherwise,
+     * {@link #write(Geometry)} uses Geometry#toText())
+     */
+    private static boolean hasSupportedOrdinates(Geometry geometry) {
+        for (Coordinate coordinate : geometry.getCoordinates()) {
+            if (!isSupportedOrdinate(coordinate.getX()) || !isSupportedOrdinate(coordinate.getY())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isSupportedOrdinate(double value) {
+        return !Double.isNaN(value) && !Double.isInfinite(value) && Math.abs(value) < MAX_ABS_VALUE;
+    }
+
     private static boolean isSupported(Geometry geometry) {
         if (geometry == null || geometry.isEmpty()) {
             return false;
@@ -176,7 +235,7 @@ public class FastWktWriter {
      * fraction digits
      */
     static boolean appendOrdinate(StringBuilder sb, double value) {
-        if (Double.isNaN(value) || Double.isInfinite(value) || Math.abs(value) >= MAX_ABS_VALUE) {
+        if (!isSupportedOrdinate(value)) {
             return false;
         }
         if (value == 0.0) {

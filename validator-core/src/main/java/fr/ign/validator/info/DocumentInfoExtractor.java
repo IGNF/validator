@@ -102,7 +102,7 @@ public class DocumentInfoExtractor {
      */
     private void parseTable(Context context, TableModel fileModel, DocumentFileInfo documentFileInfo) {
         File csvFile = new File(context.getDataDirectory(), fileModel.getName() + ".csv");
-        TableStats stats = getTableStatsFromNormalizedCSV(csvFile);
+        TableStats stats = getTableStatsFromNormalizedCSV(context, csvFile);
         if (stats != null) {
             documentFileInfo.setTotalFeatures(stats.getTotalFeatures());
             documentFileInfo.setBoundingBox(stats.getBoundingBox());
@@ -122,7 +122,7 @@ public class DocumentInfoExtractor {
 
         for (TableModel tableModel : fileModel.getTableModels()) {
             File csvFile = new File(context.getDataDirectory(), tableModel.getName() + ".csv");
-            TableStats tableStats = getTableStatsFromNormalizedCSV(csvFile);
+            TableStats tableStats = getTableStatsFromNormalizedCSV(context, csvFile);
             if (tableStats == null) {
                 continue;
             }
@@ -144,7 +144,28 @@ public class DocumentInfoExtractor {
      * @param csvFile
      * @return
      */
-    private TableStats getTableStatsFromNormalizedCSV(File csvFile) {
+    private TableStats getTableStatsFromNormalizedCSV(Context context, File csvFile) {
+        TableStatsCache cache = context.getTableStatsCache();
+        TableStats result = cache.get(csvFile);
+        if (result != null) {
+            log.debug(MARKER, "stats for {} retrieved from normalization", csvFile);
+            return result;
+        }
+        result = readTableStats(csvFile);
+        if (result != null) {
+            // the same file is read for each DocumentFile of a FileModel
+            cache.put(csvFile, result);
+        }
+        return result;
+    }
+
+    /**
+     * Read {@link TableStats} from a normalized CSV file.
+     *
+     * @param csvFile
+     * @return null if the file can't be read
+     */
+    public static TableStats readTableStats(File csvFile) {
         TableStats result = new TableStats();
         try (TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
             int indexWktColumn = reader.findColumn("WKT");
