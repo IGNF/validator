@@ -82,6 +82,23 @@ public class DocumentGeometryProcessTest {
         assertEquals(expected, polygons);
     }
 
+    /**
+     * A polygon fixed as a MultiPolygon (ex : bowtie) must not be lost
+     */
+    @Test
+    public void testGeometryToPolygonArrayFixedAsMultiPolygon() throws Exception {
+        WKTReader wktReader = new WKTReader();
+        Geometry bowtie = wktReader.read("POLYGON ((0 0, 2 2, 2 0, 0 2, 0 0))");
+        List<Polygon> polygons = new ArrayList<Polygon>();
+        DocumentGeometryProcess.geometryToPolygonArray(bowtie, polygons);
+        assertEquals(2, polygons.size());
+        double area = 0.0;
+        for (Polygon polygon : polygons) {
+            area += polygon.getArea();
+        }
+        assertEquals(2.0, area, 1e-9);
+    }
+
     @Test
     public void testGeometryToMultiPolygon() throws Exception {
         WKTReader wktReader = new WKTReader();

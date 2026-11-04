@@ -135,7 +135,7 @@ public class DocumentGeometryProcess {
         Geometry valid = GeometryFixer.fix(geometry);
         if (valid instanceof Polygon) {
             polygons.add((Polygon) valid);
-        } else if (geometry instanceof GeometryCollection) {
+        } else if (valid instanceof GeometryCollection) {
             for (int i = 0; i < valid.getNumGeometries(); i++) {
                 Geometry subGeometry = valid.getGeometryN(i);
                 geometryToPolygonArray(subGeometry, polygons);
