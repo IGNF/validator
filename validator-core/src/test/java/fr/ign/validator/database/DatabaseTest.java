@@ -148,7 +148,9 @@ public class DatabaseTest {
 
         DatabaseMetaData metadata = (DatabaseMetaData) Proxy.newProxyInstance(
             DatabaseMetaData.class.getClassLoader(),
-            new Class<?>[] { DatabaseMetaData.class },
+            new Class<?>[] {
+                DatabaseMetaData.class
+            },
             (proxy, method, args) -> {
                 if ("getURL".equals(method.getName())) {
                     return "jdbc:postgresql://example.com:5432/validator";
@@ -159,7 +161,9 @@ public class DatabaseTest {
 
         ResultSet emptyResultSet = (ResultSet) Proxy.newProxyInstance(
             ResultSet.class.getClassLoader(),
-            new Class<?>[] { ResultSet.class },
+            new Class<?>[] {
+                ResultSet.class
+            },
             (proxy, method, args) -> {
                 if ("next".equals(method.getName())) {
                     return false;
@@ -170,7 +174,9 @@ public class DatabaseTest {
 
         Statement statement = (Statement) Proxy.newProxyInstance(
             Statement.class.getClassLoader(),
-            new Class<?>[] { Statement.class },
+            new Class<?>[] {
+                Statement.class
+            },
             (proxy, method, args) -> {
                 if ("executeQuery".equals(method.getName())) {
                     return emptyResultSet;
@@ -181,17 +187,19 @@ public class DatabaseTest {
 
         Connection pgConnection = (Connection) Proxy.newProxyInstance(
             Connection.class.getClassLoader(),
-            new Class<?>[] { Connection.class },
+            new Class<?>[] {
+                Connection.class
+            },
             (proxy, method, args) -> {
                 switch (method.getName()) {
-                    case "getMetaData":
-                        return metadata;
-                    case "createStatement":
-                        return statement;
-                    case "close":
-                        return null;
-                    default:
-                        return null;
+                case "getMetaData":
+                    return metadata;
+                case "createStatement":
+                    return statement;
+                case "close":
+                    return null;
+                default:
+                    return null;
                 }
             }
         );

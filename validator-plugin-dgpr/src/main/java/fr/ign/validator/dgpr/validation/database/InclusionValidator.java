@@ -184,14 +184,13 @@ public class InclusionValidator implements Validator<Database> {
          * a surface may be covered by several surfaces of the weaker scenario (union).
          *
          * Performance (large datasets, ex : surfaces with 150 000 vertices and 5 000
-         * holes), same result as ST_Contains(ST_Buffer(ST_Union(weaker surfaces)), surface) :
-         * - the weaker surfaces are buffered once (temporary table with a spatial index)
-         * - most of the surfaces are contained in a single buffered weaker surface : they
-         * are found with the buffered surface in the outer loop (OFFSET 0 prevents the
-         * planner from flattening the LATERAL subquery) so that PostGIS reuses the
-         * prepared geometry
-         * - otherwise, the buffered weaker surfaces are clipped to the extent of the
-         * surface before the union.
+         * holes), same result as ST_Contains(ST_Buffer(ST_Union(weaker surfaces)),
+         * surface) : - the weaker surfaces are buffered once (temporary table with a
+         * spatial index) - most of the surfaces are contained in a single buffered
+         * weaker surface : they are found with the buffered surface in the outer loop
+         * (OFFSET 0 prevents the planner from flattening the LATERAL subquery) so that
+         * PostGIS reuses the prepared geometry - otherwise, the buffered weaker
+         * surfaces are clipped to the extent of the surface before the union.
          */
         List<String> weakerScenarios = new ArrayList<>();
         for (String[] pair : SCENARIO_PAIRS) {

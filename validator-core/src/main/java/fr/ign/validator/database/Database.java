@@ -158,7 +158,7 @@ public class Database implements Closeable {
             return false;
         }
         try (Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT 1 FROM pg_extension WHERE extname = 'postgis'")) {
+            ResultSet resultSet = statement.executeQuery("SELECT 1 FROM pg_extension WHERE extname = 'postgis'")) {
             return resultSet.next();
         } catch (SQLException e) {
             log.debug(MARKER, "PostGIS extension check failed: {}", e.getMessage());

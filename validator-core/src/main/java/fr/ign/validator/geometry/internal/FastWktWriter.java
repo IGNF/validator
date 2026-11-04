@@ -30,8 +30,8 @@ import org.locationtech.jts.geom.PrecisionModel;
 public class FastWktWriter {
 
     /**
-     * Maximum number of fraction digits used by WKTWriter for a floating
-     * precision model.
+     * Maximum number of fraction digits used by WKTWriter for a floating precision
+     * model.
      */
     private static final int MAX_FRACTION_DIGITS = 16;
 
@@ -122,8 +122,7 @@ public class FastWktWriter {
      *
      * @param geometry
      * @return null if it can't be ensured (unsupported geometry or ordinate, zero
-     *         bound for which the sign may depend on the order of the
-     *         coordinates)
+     *         bound for which the sign may depend on the order of the coordinates)
      */
     public static Envelope getWrittenEnvelope(Geometry geometry) {
         if (!isSupported(geometry) || !hasSupportedOrdinates(geometry)) {

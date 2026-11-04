@@ -132,7 +132,9 @@ public class FileConverterTest {
         List<String> lines = FileUtils.readLines(target, StandardCharsets.UTF_8);
         Assert.assertEquals(60, lines.size());
         Assert.assertEquals("WKT,LIBELLE,TXT,TYPEPSC,NOMFIC,URLFIC,INSEE,DATAPPRO,DATVALID", lines.get(0));
-        Assert.assertEquals("\"POINT (557311.17000000004 6742836.5999999996)\",Bâtiment agricole,,16,,,41269,2013/09/26,", lines.get(1));
+        Assert.assertEquals(
+            "\"POINT (557311.17000000004 6742836.5999999996)\",Bâtiment agricole,,16,,,41269,2013/09/26,", lines.get(1)
+        );
     }
 
     @Test

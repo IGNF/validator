@@ -51,10 +51,10 @@ public class Attribute<T> implements Validatable {
     }
 
     /**
-     * Construction of an attribute with type and value, the binding being
-     * performed on a pre-parsed representation of the value (ex : Geometry read
-     * from the WKT). The original value is kept for the validators working on
-     * the raw value (ex : CharactersValidator).
+     * Construction of an attribute with type and value, the binding being performed
+     * on a pre-parsed representation of the value (ex : Geometry read from the
+     * WKT). The original value is kept for the validators working on the raw value
+     * (ex : CharactersValidator).
      *
      * @param type
      * @param value

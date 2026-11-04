@@ -79,7 +79,6 @@ public class GraphTopologyValidator implements Validator<Database> {
         return context.getDgprTolerance();
     }
 
-
     /**
      * Run a task reporting PSQLException (ex : invalid geometry) as
      * DGPR_ISO_HT_GEOM_ERROR. The transaction is rolled back to a savepoint so that
@@ -147,8 +146,8 @@ public class GraphTopologyValidator implements Validator<Database> {
 
     /**
      * Add the column source_geometry (geometry computed from wkt, simplified if
-     * required) to a table (also used by InclusionValidator when the graph
-     * topology control is skipped)
+     * required) to a table (also used by InclusionValidator when the graph topology
+     * control is skipped)
      *
      * @param database
      * @param context
@@ -179,8 +178,8 @@ public class GraphTopologyValidator implements Validator<Database> {
      *
      * Performance (large datasets, ex : 19 290 zones for a surface) :
      * <ul>
-     * <li>the union is computed once per surface, grouped by ID_S_INOND (not by
-     * the geometry of the surface)</li>
+     * <li>the union is computed once per surface, grouped by ID_S_INOND (not by the
+     * geometry of the surface)</li>
      * <li>the inclusion is tested without buffer first, the costly buffer is only
      * computed when it fails (same result as the buffer contains the geometry)</li>
      * </ul>
@@ -201,9 +200,11 @@ public class GraphTopologyValidator implements Validator<Database> {
             + " FROM " + surfaceTablename + " AS inond"
             + " JOIN unions ON unions.ID_S_INOND = inond.ID_S_INOND"
             + " WHERE NOT (CASE WHEN ST_Contains(unions.the_geom_union, inond.source_geometry) THEN true"
-            + "   ELSE ST_Contains(ST_Buffer(unions.the_geom_union, " + distanceBuffer + "), inond.source_geometry) END)"
+            + "   ELSE ST_Contains(ST_Buffer(unions.the_geom_union, " + distanceBuffer
+            + "), inond.source_geometry) END)"
             + " OR NOT (CASE WHEN ST_Contains(inond.source_geometry, unions.the_geom_union) THEN true"
-            + "   ELSE ST_Contains(ST_Buffer(inond.source_geometry, " + distanceBuffer + "), unions.the_geom_union) END)"
+            + "   ELSE ST_Contains(ST_Buffer(inond.source_geometry, " + distanceBuffer
+            + "), unions.the_geom_union) END)"
             + " ;";
 
         RowIterator errorIterator = database.query(query);
@@ -219,11 +220,12 @@ public class GraphTopologyValidator implements Validator<Database> {
     }
 
     /**
-     * The zones of a surface must not intersect (with the tolerance distanceBuffer).
+     * The zones of a surface must not intersect (with the tolerance
+     * distanceBuffer).
      *
      * Performance (large datasets) : the negative buffer is computed once per zone
-     * (not for each pair of zones) and the pairs are filtered with the spatial index
-     * (&&).
+     * (not for each pair of zones) and the pairs are filtered with the spatial
+     * index (&&).
      */
     private void validNoIntersection(String tablename) throws SQLException, IOException {
         String query = "WITH f AS MATERIALIZED ("

@@ -151,8 +151,8 @@ public class DocumentValidatorCommand extends AbstractCommand {
     protected boolean dgprSafeMode;
 
     /**
-     * option - switch (boolean) Default value is false : skip the inclusion
-     * control between scenarios (DGPR_INOND_INCLUSION_*)
+     * option - switch (boolean) Default value is false : skip the inclusion control
+     * between scenarios (DGPR_INOND_INCLUSION_*)
      */
     protected boolean dgprSkipInclusion;
 

@@ -298,8 +298,8 @@ public class TableReader implements Iterator<String[]>, Closeable {
         File tempFile = CompanionFileUtils.getCompanionFile(file, TMP_EXTENSION);
         if (!tempFile.exists()) {
             /*
-             * The CSV is produced in a temporary directory so that a CSV file provided
-             * with the same name (ex : DOC_URBA.dbf and DOC_URBA.csv) is not overwritten.
+             * The CSV is produced in a temporary directory so that a CSV file provided with
+             * the same name (ex : DOC_URBA.dbf and DOC_URBA.csv) is not overwritten.
              */
             File workDirectory = Files.createTempDirectory(
                 file.getAbsoluteFile().getParentFile().toPath(), ".validator-ogr2ogr-"

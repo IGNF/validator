@@ -165,8 +165,8 @@ public class TableNormalizer implements Closeable {
     }
 
     /**
-     * Update stats with a written row (same result as
-     * DocumentInfoExtractor reading the normalized file)
+     * Update stats with a written row (same result as DocumentInfoExtractor reading
+     * the normalized file)
      *
      * @param outputRow
      * @param wktGeometry  geometry of the column WKT

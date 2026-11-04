@@ -27,8 +27,8 @@ import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
 /**
- * Ensure that the stats computed by {@link TableNormalizer} are the same as
- * the stats read from the normalized file.
+ * Ensure that the stats computed by {@link TableNormalizer} are the same as the
+ * stats read from the normalized file.
  */
 public class TableNormalizerStatsTest {
 

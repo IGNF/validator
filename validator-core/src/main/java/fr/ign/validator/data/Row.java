@@ -51,9 +51,9 @@ public class Row implements Validatable {
     private boolean featureBboxComputed = false;
 
     /**
-     * Geometries of the row (in source projection) from which featureBbox is
-     * lazily computed (the costly reprojection is only performed when an error is
-     * reported for the row)
+     * Geometries of the row (in source projection) from which featureBbox is lazily
+     * computed (the costly reprojection is only performed when an error is reported
+     * for the row)
      */
     private List<Geometry> featureGeometries = new ArrayList<>();
 
