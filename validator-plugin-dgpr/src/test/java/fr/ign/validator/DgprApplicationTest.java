@@ -276,6 +276,33 @@ public class DgprApplicationTest {
         );
     }
 
+    /**
+     * The inclusion control must be performed when the graph topology control is
+     * skipped (the source geometries were only created by GraphTopologyValidator)
+     */
+    @Test
+    public void testDocumentNotOkSkipGraphTopologyPostgis() throws Exception {
+        assumePostgis();
+        DocumentModel documentModel = getDocumentModel("covadis_di_2018");
+        File documentPath = getSampleDocument("TRI_JTEST_TOPO_error_SIG_DI");
+
+        Context context = createContext(documentPath);
+        context.setDgprSkipGraphTopology(true);
+        Document document = new Document(documentModel, documentPath);
+        document.validate(context);
+
+        Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_GEOM_ERROR).size());
+        Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_INTERSECTS).size());
+        Assert.assertEquals(0, report.getErrorsByCode(DgprErrorCodes.DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND).size());
+        Assert.assertEquals(
+            Arrays.asList(
+                "La surface SIN_4 du scénario 01For n'est pas incluse dans le scénario 04Fai - SIN_3, SIN_6.",
+                "La surface SIN_5 du scénario 02Moy n'est pas incluse dans le scénario 04Fai - SIN_3, SIN_6."
+            ),
+            getMessages(DgprErrorCodes.DGPR_INOND_INCLUSION_ERROR)
+        );
+    }
+
     @Test
     public void testDocumentNotOkTolerance10Postgis() throws Exception {
         assumePostgis();

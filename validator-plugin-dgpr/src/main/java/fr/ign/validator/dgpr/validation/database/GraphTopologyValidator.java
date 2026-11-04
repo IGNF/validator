@@ -65,7 +65,7 @@ public class GraphTopologyValidator implements Validator<Database> {
         }
     }
 
-    private String getSrid() {
+    private static String getSrid(Context context) {
         if (context.getProjection() == null) {
             return "2154";
         }
@@ -79,9 +79,6 @@ public class GraphTopologyValidator implements Validator<Database> {
         return context.getDgprTolerance();
     }
 
-    private Double getDistanceSimplification() {
-        return context.getDgprSimplification();
-    }
 
     /**
      * Run a task reporting PSQLException (ex : invalid geometry) as
@@ -104,9 +101,9 @@ public class GraphTopologyValidator implements Validator<Database> {
 
     // creation des geometries dans le systeme sources
     private void createSourceGeometries() throws SQLException {
-        createSourceGeometry("N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
-        createSourceGeometry("N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
-        createSourceGeometry("N_PREFIXTRI_ISO_DEB_S_DDD");
+        createSourceGeometry(database, context, "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD");
+        createSourceGeometry(database, context, "N_PREFIXTRI_ISO_HT_SUFFIXISOHT_S_DDD");
+        createSourceGeometry(database, context, "N_PREFIXTRI_ISO_DEB_S_DDD");
     }
 
     private void runValidation() throws SQLException, IOException {
@@ -148,9 +145,19 @@ public class GraphTopologyValidator implements Validator<Database> {
         return "ST_Multi(ST_SnapToGrid(ST_Buffer(" + geometry + ", 0), 0.01))";
     }
 
-    private void createSourceGeometry(String tablename) throws SQLException {
-        String srid = this.getSrid();
-        Double simplify = this.getDistanceSimplification();
+    /**
+     * Add the column source_geometry (geometry computed from wkt, simplified if
+     * required) to a table (also used by InclusionValidator when the graph
+     * topology control is skipped)
+     *
+     * @param database
+     * @param context
+     * @param tablename
+     * @throws SQLException
+     */
+    static void createSourceGeometry(Database database, Context context, String tablename) throws SQLException {
+        String srid = getSrid(context);
+        Double simplify = context.getDgprSimplification();
         String[] queries = new String[] {
             "ALTER TABLE " + tablename + " ADD COLUMN source_geometry geometry(MultiPolygon, " + srid + ");",
             "CREATE INDEX " + tablename + "_geom_idx ON " + tablename + " USING GIST (source_geometry);",

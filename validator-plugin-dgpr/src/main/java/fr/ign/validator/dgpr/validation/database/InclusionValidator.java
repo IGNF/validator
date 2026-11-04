@@ -56,9 +56,18 @@ public class InclusionValidator implements Validator<Database> {
         }
         try {
             if (!hasSourceGeometry()) {
-                // GraphTopologyValidator failed to create source geometries (already reported)
-                log.warn(MARKER, "skipped (source_geometry not found)");
-                return;
+                if (!context.isDgprSkipGraphTopology()) {
+                    // GraphTopologyValidator failed to create source geometries (already reported)
+                    log.warn(MARKER, "skipped (source_geometry not found)");
+                    return;
+                }
+                /*
+                 * GraphTopologyValidator is skipped (--dgpr-skip-graph-topology) : the source
+                 * geometries required by the inclusion control are created here
+                 */
+                if (!createSourceGeometry()) {
+                    return;
+                }
             }
             try {
                 /*
@@ -96,6 +105,27 @@ public class InclusionValidator implements Validator<Database> {
             + " AND column_name = 'source_geometry'";
         try (RowIterator it = database.query(query)) {
             return it.hasNext() && Integer.parseInt(it.next()[0]) > 0;
+        }
+    }
+
+    /**
+     * Create source_geometry for the flood surfaces, reporting PSQLException (ex :
+     * invalid geometry) as GraphTopologyValidator.
+     *
+     * @return false if the creation failed
+     */
+    private boolean createSourceGeometry() throws SQLException, IOException {
+        log.info(MARKER, "Create source_geometry (graph topology control skipped)...");
+        try {
+            database.runInSavepoint(
+                () -> GraphTopologyValidator.createSourceGeometry(
+                    database, context, "N_PREFIXTRI_INONDABLE_SUFFIXINOND_S_DDD"
+                )
+            );
+            return true;
+        } catch (PSQLException e) {
+            reportException(e.toString());
+            return false;
         }
     }
 
