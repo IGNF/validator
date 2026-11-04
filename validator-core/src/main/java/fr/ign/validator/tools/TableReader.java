@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -294,16 +297,27 @@ public class TableReader implements Iterator<String[]>, Closeable {
          */
         File tempFile = CompanionFileUtils.getCompanionFile(file, TMP_EXTENSION);
         if (!tempFile.exists()) {
-            File csvFile = CompanionFileUtils.getCompanionFile(file, "csv");
-            FileConverter converter = FileConverter.getInstance();
-            converter.convertToCSV(file, csvFile, preferedCharset);
-            if (!csvFile.exists()) {
-                String message = String.format("Fail to convert %1s to CSV", file.getAbsolutePath());
-                log.error(MARKER, message);
-                throw new IOException(message);
+            /*
+             * The CSV is produced in a temporary directory so that a CSV file provided
+             * with the same name (ex : DOC_URBA.dbf and DOC_URBA.csv) is not overwritten.
+             */
+            File workDirectory = Files.createTempDirectory(
+                file.getAbsoluteFile().getParentFile().toPath(), ".validator-ogr2ogr-"
+            ).toFile();
+            try {
+                File csvFile = new File(workDirectory, FilenameUtils.getBaseName(file.getName()) + ".csv");
+                FileConverter converter = FileConverter.getInstance();
+                converter.convertToCSV(file, csvFile, preferedCharset);
+                if (!csvFile.exists()) {
+                    String message = String.format("Fail to convert %1s to CSV", file.getAbsolutePath());
+                    log.error(MARKER, message);
+                    throw new IOException(message);
+                }
+                log.info(MARKER, "{} -> {}", csvFile.getAbsolutePath(), tempFile.getAbsolutePath());
+                Files.move(csvFile.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } finally {
+                FileUtils.deleteQuietly(workDirectory);
             }
-            log.info(MARKER, "{} -> {}", csvFile.getAbsolutePath(), tempFile.getAbsolutePath());
-            csvFile.renameTo(tempFile);
         }
         // ogr2ogr is supposed to always produced UTF-8 encoded CSV file
         return new TableReader(tempFile, StandardCharsets.UTF_8);

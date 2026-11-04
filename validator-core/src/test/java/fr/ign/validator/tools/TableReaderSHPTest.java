@@ -8,7 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test TableReader with ESRI Shapefiles
@@ -16,6 +19,38 @@ import org.junit.Test;
  * @author mborne
  */
 public class TableReaderSHPTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    /**
+     * The conversion must not remove or overwrite a CSV file provided with the same
+     * name as the shapefile.
+     */
+    @Test
+    public void testConversionKeepsCsvWithSameName() throws IOException {
+        File source = ResourceHelper.getResourceFile(getClass(), "/data/shp_utf8/PRESCRIPTION_PCT.shp");
+        File directory = folder.newFolder("input");
+        for (String extension : new String[] {
+            "shp", "shx", "dbf", "prj"
+        }) {
+            File companion = CompanionFileUtils.getCompanionFile(source, extension);
+            if (companion.exists()) {
+                FileUtils.copyFileToDirectory(companion, directory);
+            }
+        }
+        File shp = new File(directory, "PRESCRIPTION_PCT.shp");
+        File csv = new File(directory, "PRESCRIPTION_PCT.csv");
+        FileUtils.writeStringToFile(csv, "ID,NAME\n1,user data\n", StandardCharsets.UTF_8);
+
+        try (TableReader reader = TableReader.createTableReader(shp, StandardCharsets.UTF_8)) {
+            assertEquals("WKT", reader.getHeader()[0]);
+        }
+        assertTrue(csv.exists());
+        assertEquals("ID,NAME\n1,user data\n", FileUtils.readFileToString(csv, StandardCharsets.UTF_8));
+        // only the input files, the CSV and the converted file (.vrows)
+        assertEquals(6, directory.listFiles().length);
+    }
 
     @Test
     public void testReadShpLatin1() {
