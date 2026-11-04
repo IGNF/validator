@@ -165,9 +165,12 @@ public class Row implements Validatable {
             String wkt = values[mapping.getAttributeIndex(i)];
             try {
                 parsedGeometries[i] = GeometryType.parse(wkt);
-            } catch (ParseException e) {
-                // the binding fails with the WKT (reported as
-                // ATTRIBUTE_GEOMETRY_INVALID_FORMAT)
+            } catch (ParseException | RuntimeException e) {
+                /*
+                 * the binding fails with the WKT (reported as
+                 * ATTRIBUTE_GEOMETRY_INVALID_FORMAT). Note that JTS throws
+                 * IllegalArgumentException for unclosed rings,...
+                 */
                 continue;
             }
             if (parsedGeometries[i] != null) {

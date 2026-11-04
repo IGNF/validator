@@ -117,6 +117,19 @@ public class RowTest {
     }
 
     @Test
+    public void testInvalidStructureReportedWithoutBbox() {
+        String[] wkts = {
+            "POLYGON((700000 6600000,700100 6600000,700100 6600100,700000 6600100))",
+            "LINESTRING(700000 6600000)"
+        };
+        for (String wkt : wkts) {
+            Row row = validate(wkt);
+            assertNull(row.getFeatureBbox());
+        }
+        assertEquals(2, report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_GEOMETRY_INVALID_FORMAT).size());
+    }
+
+    @Test
     public void testExplicitBbox() {
         Row row = new Row(1, new String[] {
             "test", POLYGON
