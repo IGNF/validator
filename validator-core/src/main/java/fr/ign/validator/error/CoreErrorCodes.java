@@ -14,6 +14,7 @@ public class CoreErrorCodes {
     public static final ErrorCode VALIDATOR_INFO = ErrorCode.valueOf("VALIDATOR_INFO");
     public static final ErrorCode VALIDATOR_EXCEPTION = ErrorCode.valueOf("VALIDATOR_EXCEPTION");
 
+    public static final ErrorCode VALIDATOR_ERROR_LIMIT_REACHED = ErrorCode.valueOf("VALIDATOR_ERROR_LIMIT_REACHED");
     public static final ErrorCode VALIDATOR_PROJECTION_INFO = ErrorCode.valueOf("VALIDATOR_PROJECTION_INFO");
     public static final ErrorCode VALIDATOR_PROJECTION_LATLON = ErrorCode.valueOf("VALIDATOR_PROJECTION_LATLON");
 

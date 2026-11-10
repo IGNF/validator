@@ -6,6 +6,12 @@
 		"documentation": "Message d'information générique"
 	},
 	{
+		"name": "VALIDATOR_ERROR_LIMIT_REACHED",
+		"level": "INFO",
+		"message": "La limite de {MAX} erreurs reportées pour {CODE} a été atteinte : les erreurs suivantes de ce type ne sont pas détaillées dans le rapport",
+		"documentation": "Le nombre maximum d'erreurs reportées (option --max-errors) a été atteint pour ce code d'erreur. Les erreurs supplémentaires de ce type sont ignorées. Cette information est reportée une seule fois par code."
+	},
+	{
 		"name": "VALIDATOR_PROJECTION_INFO",
 		"level": "INFO",
 		"message": "La projection {CODE_PROJECTION} ({URI_PROJECTION}) est utilisée pour la validation"

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorCode;
+import fr.ign.validator.error.ErrorFactory;
+import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.error.ValidatorError;
 
 /**
@@ -28,6 +30,10 @@ public class FilteredReportBuilder implements ReportBuilder {
      * Count map
      */
     private Map<String, Integer> countMap = new HashMap<>();
+    /**
+     * Factory used to create the information reported when a limit is reached
+     */
+    private ErrorFactory errorFactory = new ErrorFactory();
 
     /**
      * Constructor with an existing reportBuilder
@@ -38,6 +44,16 @@ public class FilteredReportBuilder implements ReportBuilder {
     public FilteredReportBuilder(ReportBuilder original, int maxError) {
         this.original = original;
         this.maxError = maxError;
+    }
+
+    /**
+     * Set the factory used to create the "limit reached" information (allows to
+     * use customized error messages).
+     *
+     * @param errorFactory
+     */
+    public void setErrorFactory(ErrorFactory errorFactory) {
+        this.errorFactory = errorFactory;
     }
 
     @Override
@@ -51,6 +67,17 @@ public class FilteredReportBuilder implements ReportBuilder {
 
         countMap.put(countKey, count);
         if (count > this.maxError) {
+            if (count == this.maxError + 1) {
+                /*
+                 * first ignored error : warn once that the limit is reached
+                 */
+                original.addError(
+                    errorFactory.newError(CoreErrorCodes.VALIDATOR_ERROR_LIMIT_REACHED)
+                        .setScope(ErrorScope.DIRECTORY)
+                        .setMessageParam("CODE", countKey)
+                        .setMessageParam("MAX", String.valueOf(this.maxError))
+                );
+            }
             return;
         }
 

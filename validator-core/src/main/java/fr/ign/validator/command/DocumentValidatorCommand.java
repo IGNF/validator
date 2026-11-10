@@ -313,6 +313,9 @@ public class DocumentValidatorCommand extends AbstractCommand {
         if (this.errorConfig != null) {
             context.getErrorFactory().loadErrorCodes(this.errorConfig);
         }
+        if (reportBuilder instanceof FilteredReportBuilder) {
+            ((FilteredReportBuilder) reportBuilder).setErrorFactory(context.getErrorFactory());
+        }
 
         /*
          * configure output mode
