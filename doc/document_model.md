@@ -108,9 +108,10 @@ La description du fichier.
 
 ##### `path` (obligatoire)
 
-Chemin relatif par rapport à la racine du document. Ce champ fait correspondre le nom du fichier à un regex.
+Chemin relatif par rapport à la racine du document. Ce champ fait correspondre le fichier à une expression régulière (syntaxe JAVA, insensible à la casse).
 
-Attention ! Ne pas inclure l'extension du fichier dans le regex !
+- Le `path` contient le chemin complet, **dossiers inclus** (ex : `Pieces_ecrites/3_Reglement/[AB0-9]{5}_reglement_[0-9]{8}`). Il ne contient pas le `name`, qui n'est qu'un identifiant technique du modèle.
+- Attention ! Ne pas inclure l'extension du fichier dans le regex ! Elle est ajoutée automatiquement selon le `type` (ex : `.pdf`, `.csv`/`.dbf`/`.shp`... pour une `table`, `.gml`/`.gpkg` pour une `multi_table`).
 
 ##### `mandatory` (obligatoire)
 
@@ -137,9 +138,9 @@ Chemin vers le modèle correspondant à la table. On fait appel ici au dossier `
 Si le type du fichier est une multitable, nous allons décrire chacune des tables que le fichier contient dans une seule liste.
 
 Ainsi, `tables` est une liste de tables, et chacun des éléments de la liste est un objet avec les propriétés suivantes :
-- `name` : le nom technique du modèle de la couche.
+- `name` : le nom technique du modèle de la couche. Une couche du fichier est associée à ce modèle si son nom est égal à `name` (sans tenir compte de la casse).
 - `mandatory` : quel est l'impact de l'absence de la couche sur la validaté du document testé (voir plus haut).
-- `path` : regex permettant de faire correspondre le nom de la couche du document testé avec le modèle.
+- `path` : regex (insensible à la casse, sans extension) permettant de faire correspondre le nom de la couche à l'intérieur du fichier avec le modèle, lorsque `name` ne suffit pas. Contrairement au `path` du fichier, il ne désigne pas un chemin dans le document mais une couche dans le fichier.
 - `tableModel` : Chemin vers le modèle correspondant à la table.
 
 ### Énumération des codes
@@ -318,6 +319,20 @@ Exemple (qui n'existe pas dans cnig_PLU_2025) :
 ```sql
 URLREG LIKE '%.ru'
 ```
+
+Une condition peut aussi être décrite sous forme d'objet, avec un `message` lisible qui remplace l'expression SQL dans les messages d'erreur (les deux formes peuvent être mélangées dans la même liste) :
+
+```json
+"conditions": [
+    "DATAPPRO IS NOT NULL OR ETAT NOT LIKE '03'",
+    {
+        "sql": "ETAT NOT LIKE '03' OR (SELECT COUNT(*) FROM DOC_URBA d WHERE d.ETAT LIKE '03') = 1",
+        "message": "Un seul document en vigueur (ETAT = 03) est autorisé"
+    }
+]
+```
+
+L'erreur `DATABASE_CONSTRAINT_MISMATCH` affiche alors : `Une règle de remplissage conditionnelle n'est pas respectée. (Un seul document en vigueur (ETAT = 03) est autorisé)`.
 
 #### `foreighKeys`
 

@@ -12,6 +12,7 @@ Cette documentation décrit schématiquement les modèles JSON de validation du 
 | [File](#file)                      | Modélisation d'un fichier du document (chemin, type, présence obligatoire,...). | `FileModel`      |
 | [Table](#table)                    | Modélisation d'une table matérialisée dans un fichier.                          | `FeatureType`    |
 | [Column](#column)                  | Modélisation d'une colonne d'une table.                                         | `AttributeType`  |
+| [TableConstraints](#tableconstraints) | Contraintes d'une table : conditions SQL et clés étrangères.                 | `FeatureTypeConstraints` |
 | [ValidatorError](#validationerror) | Modélisation des erreurs (résultat de la validation)                            | `ValidatorError` |
 
 ## Modélisation des données
@@ -39,19 +40,40 @@ Le concept de [Document.json](Document.json) est utilisé pour modéliser un dos
 
 Les fichiers d'un document peuvent correspondre à des tables, des sous-dossiers, des PDF ou des fichiers de métadonnées. Ils sont décrits par les propriétés suivantes :
 
-| Propriété          | Type                  | Description                                            | Obligatoire | Version |
-| ------------------ | --------------------- | ------------------------------------------------------ | :---------: | :-----: |
-| `file.name`        | `string`              | Le nom identifiant le fichier                          |      O      |   4.0   |
-| `file.title`       | `string`              | Le nom du fichier pour affichage                       |      N      |   4.0   |
-| `file.description` | `string`              | La description du fichier                              |      N      |   4.0   |
-| `file.type`        | [FileType](#filetype) | Le type de fichier                                     |      O      |   4.0   |
-| `file.path`        | `RegExp`              | Chemin relatif par rapport à la racine du document (1) |      N      |   4.0   |
-| `file.tableModel`  | `string`              | Liens vers le [modèle de table](#table)                |    N (2)    |   4.0   |
+| Propriété          | Type                       | Description                                                  | Obligatoire | Version |
+| ------------------ | -------------------------- | ------------------------------------------------------------ | :---------: | :-----: |
+| `file.name`        | `string`                   | Le nom technique identifiant le fichier (1)                  |      O      |   4.0   |
+| `file.title`       | `string`                   | Le nom du fichier pour affichage                             |      N      |   4.0   |
+| `file.description` | `string`                   | La description du fichier                                    |      N      |   4.0   |
+| `file.type`        | [FileType](#filetype)      | Le type de fichier                                           |      O      |   4.0   |
+| `file.path`        | `RegExp`                   | Chemin relatif par rapport à la racine du document (2)       |      O      |   4.0   |
+| `file.mandatory`   | `ERROR`, `WARN`, `OPTIONAL`| Impact de l'absence du fichier sur la validité du document   |      O      |   4.0   |
+| `file.tableModel`  | `string`                   | Lien vers le [modèle de table](#table) (3)                   |    N (3)    |   4.0   |
+| `file.tables`      | [`EmbeddedTable[]`](#embeddedtable) | Tables contenues dans le fichier (4)                |    N (4)    |   4.2   |
 
 Remarques :
 
-* (1) Les extensions ne sont pas spécifiées dans les modèles. L'expression régulière est complétée automatiquement en fonction du `type`, ce qui simplifie le support de plusieurs formats pour les tables (c.f. [FileType](#filetype) )
-* (2) Il est conseillé de spécifier l'URL du modèle de table qui sera par défaut `./types/{file.name}.json`
+* (1) `name` est un identifiant technique, utilisé pour désigner le modèle (ex : dans les rapports d'erreurs). Il n'est pas utilisé pour retrouver le fichier : c'est le rôle de `path`.
+* (2) `path` est une expression régulière (syntaxe JAVA, insensible à la casse) qui décrit le chemin complet **dossiers inclus** (ex : `Pieces_ecrites/3_Reglement/[AB0-9]{5}_reglement_[0-9]{8}`). Le nom du fichier n'a pas besoin d'être répété dans `name`, et `path` ne contient pas de `name`. Les extensions ne sont **pas** spécifiées : l'expression régulière est complétée automatiquement en fonction du `type`, ce qui simplifie le support de plusieurs formats pour les tables (c.f. [FileType](#filetype)).
+* (3) Pour un fichier de type `table`. Il est conseillé de spécifier l'URL du modèle de table qui sera par défaut `./types/{file.name}.json`
+* (4) Pour un fichier de type `multi_table` uniquement (voir ci-dessous).
+
+### EmbeddedTable
+
+Un fichier de type `multi_table` (ex : un GML ou un GeoPackage) contient plusieurs tables (couches). La propriété `file.tables` contient alors un tableau décrivant chacune d'elles :
+
+| Propriété              | Type                        | Description                                                              | Obligatoire | Version |
+| ---------------------- | --------------------------- | ------------------------------------------------------------------------ | :---------: | :-----: |
+| `table.name`           | `string`                    | Le nom de la couche dans le fichier (comparé sans tenir compte de la casse) |      O      |   4.2   |
+| `table.path`           | `RegExp`                    | Expression régulière alternative sur le nom de la couche (insensible à la casse, sans extension) |      N      |   4.2   |
+| `table.mandatory`      | `ERROR`, `WARN`, `OPTIONAL` | Impact de l'absence de la couche sur la validité du document             |      O      |   4.2   |
+| `table.tableModel`     | `string`                    | Lien vers le [modèle de table](#table)                                   |      O      |   4.2   |
+
+Remarques :
+
+* Une couche du fichier est associée à une table du modèle si son nom est égal à `table.name` ou s'il correspond à l'expression régulière `table.path`.
+* `file.path` et `table.path` ne désignent pas la même chose : `file.path` désigne le fichier dans le document (dossiers + nom), `table.path` désigne une couche **à l'intérieur** du fichier.
+* Le `file.path` d'une `multi_table` suit les règles des autres fichiers : pas d'extension (celle-ci est complétée selon le type, `.gml` ou `.gpkg`).
 
 ### FileType
 
@@ -138,15 +160,33 @@ L'ajout des types suivants est à l'étude pour les futures versions :
 
 Remarques :
 
-* La cible d'une référence (`ReferenceTarget`) est définie sous forme d'une chaîne de caractère : `{TABLE_CIBLE}.{COLONNE_CIBLE}` ( (ex : "SERVITUDE.IDSUP")
-* Moyennant des références à des tables statiques, les références permettront de gérer plus proprement l'appartenance à des listes de valeur codifiée (`reference: doc_urba_type(code)`) que l'utilisation des énumérés.
-* Dans un premier temps, les clés étrangères ne sont pas supportées mais il sera possible d'étendre le modèle pour être en mesure de définir la clé étrangère `(TYPEPSC,STYPEPSC) REFERENCES prescription_urba_type(code,sous_code)` au niveau de `ZONE_URBA` dans les standards CNIG.
+* La cible d'une référence (`ReferenceTarget`) est définie sous forme d'une chaîne de caractère : `{TABLE_CIBLE}.{COLONNE_CIBLE}` (ex : "SERVITUDE.IDSUP"). La table cible peut être une table du document ou une [table statique](#tables-statiques).
+* Les références à des tables statiques permettent de gérer plus proprement l'appartenance à des listes de valeur codifiée (`reference: doc_urba_type.code`) que l'utilisation des énumérés.
+* Les clés étrangères **sur plusieurs colonnes** (ex : le couple `TYPEPSC`/`STYPEPSC`) ne sont pas exprimables sur une colonne : elles sont définies au niveau de la table (voir [TableConstraints](#tableconstraints)).
 * L'ajout des contraintes suivantes est à l'étude pour les futures versions :
 
 | Propriété | Type  | Description                                           |
 | --------- | ----- | ----------------------------------------------------- |
 | `minimum` | `any` | Contrainte sur la valeur minimale autorisée (incluse) |
 | `maximum` | `any` | Contrainte sur la valeur maximale autorisée (incluse) |
+
+### TableConstraints
+
+La propriété `constraints` d'une table permet de contrôler des données à partir d'autres colonnes ou d'autres tables.
+
+| Propriété     | Type                                       | Description                                                                       | Version |
+| ------------- | ------------------------------------------ | --------------------------------------------------------------------------------- | :-----: |
+| `conditions`  | `(string \| {sql, message})[]`             | Conditions SQL que doit respecter chaque ligne de la table (1)                    |  4.2.6  |
+| `foreignKeys` | `string[]`                                 | Clés étrangères vers une autre table ou une table statique, sur une ou plusieurs colonnes (2) |  4.3.0  |
+
+Remarques :
+
+* (1) Une condition est une expression SQL portant sur les colonnes de la table (ex : `DATAPPRO IS NOT NULL OR ETAT NOT LIKE '03'`). Elle peut s'écrire sous forme d'un objet `{"sql": "...", "message": "..."}` : le `message` (disponible à partir de 4.6.4) remplace alors l'expression SQL dans le rapport d'erreur (`DATABASE_CONSTRAINT_MISMATCH`). Ces contrôles ne sont réalisés qu'avec l'option `--enable-conditions`.
+* (2) Syntaxe : `(COL1,COL2) REFERENCES TABLE_CIBLE(COL_A,COL_B)`, qui doit contenir autant de colonnes de chaque côté. Exemple : `(TYPEPSC,STYPEPSC) REFERENCES prescription_urba_type(code,sous_code)`.
+
+### Tables statiques
+
+Une table statique est une liste de valeurs codifiées, fournie sous forme d'un fichier CSV (avec un en-tête) dans le dossier `codes` du modèle et déclarée dans la propriété `codes` du `files.json`. Une fois déclarée, elle est utilisable comme cible d'une `reference` ou d'une clé étrangère, comme n'importe quelle table du document. C'est ce qui est utilisé pour contrôler les couples `TYPEPSC`/`STYPEPSC` autorisés dans les standards CNIG. Voir aussi [document_model.md](../../../../../../doc/document_model.md).
 
 
 ## Modélisation des erreurs
