@@ -1,6 +1,7 @@
 package fr.ign.validator.command.options;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -24,6 +25,7 @@ import fr.ign.validator.exception.ValidatorFatalError;
 public class ValidationDirectoryOption {
 
     private static final String OPTION_NAME = "output";
+    private static final String OPTION_NO_OVERWRITE = "no-overwrite";
     public static final String VALIDATION_DIRECTORY_NAME = "validation";
 
     public static final Logger log = LogManager.getRootLogger();
@@ -49,6 +51,14 @@ public class ValidationDirectoryOption {
             option.setRequired(false);
             options.addOption(option);
         }
+        {
+            Option option = new Option(
+                null, OPTION_NO_OVERWRITE, false,
+                "Fail if the output validation directory already exists and is not empty (default is to remove it)"
+            );
+            option.setRequired(false);
+            options.addOption(option);
+        }
     }
 
     /**
@@ -63,14 +73,42 @@ public class ValidationDirectoryOption {
 
         if (commandLine.hasOption(OPTION_NAME)) {
             validationDirectory = (File) commandLine.getParsedOptionValue(OPTION_NAME);
-            if (validationDirectory.getAbsolutePath().startsWith(documentPath.getAbsolutePath())) {
+            if (isChildOf(validationDirectory, documentPath)) {
                 throw new IllegalArgumentException("output validation directory is a child of the input directory");
             }
         } else {
             validationDirectory = new File(documentPath.getParentFile(), VALIDATION_DIRECTORY_NAME);
         }
+        if (commandLine.hasOption(OPTION_NO_OVERWRITE) && isNotEmptyDirectory(validationDirectory)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "output validation directory '%s' already exists and is not empty (--%s)",
+                    validationDirectory.getAbsolutePath(),
+                    OPTION_NO_OVERWRITE
+                )
+            );
+        }
         prepareValidationDirectory(validationDirectory);
         return validationDirectory;
+    }
+
+    /**
+     * Check if a directory is the given parent or one of its descendants. Path
+     * elements are compared (not strings) so that "/data/ERP_SORTIE" is not
+     * considered as a child of "/data/ERP".
+     */
+    private static boolean isChildOf(File directory, File parent) {
+        Path directoryPath = directory.toPath().toAbsolutePath().normalize();
+        Path parentPath = parent.toPath().toAbsolutePath().normalize();
+        return directoryPath.startsWith(parentPath);
+    }
+
+    private static boolean isNotEmptyDirectory(File directory) {
+        if (!directory.exists()) {
+            return false;
+        }
+        String[] children = directory.list();
+        return !directory.isDirectory() || children == null || children.length > 0;
     }
 
     /**

@@ -69,6 +69,77 @@ public class ValidationDirectoryOptionTest {
         ValidationDirectoryOption.parseCommandLine(commandLine, documentPath);
     }
 
+    @Test
+    public void testSiblingWithSamePrefixIsAllowed() throws ParseException {
+        File documentPath = getFakeDocumentPath();
+        File expectedOutputDir = new File(folder.getRoot(), documentPath.getName() + "_SORTIE");
+        String[] args = {
+            "--output", expectedOutputDir.getAbsolutePath()
+        };
+        CommandLine commandLine = parser.parse(options, args);
+        File result = ValidationDirectoryOption.parseCommandLine(commandLine, documentPath);
+        assertEquals(expectedOutputDir.getAbsolutePath(), result.getAbsolutePath());
+        assertTrue(result.exists());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDotDotPathInsideDocumentIsForbidden() throws ParseException {
+        File documentPath = getFakeDocumentPath();
+        File expectedOutputDir = new File(documentPath, "a/../child-directory");
+        String[] args = {
+            "--output", expectedOutputDir.getAbsolutePath()
+        };
+        CommandLine commandLine = parser.parse(options, args);
+        ValidationDirectoryOption.parseCommandLine(commandLine, documentPath);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNoOverwriteFailsOnNonEmptyDirectory() throws Exception {
+        File outputDir = folder.newFolder("existing-output");
+        File existing = new File(outputDir, "keep-me.txt");
+        assertTrue(existing.createNewFile());
+        String[] args = {
+            "--output", outputDir.getAbsolutePath(), "--no-overwrite"
+        };
+        CommandLine commandLine = parser.parse(options, args);
+        try {
+            ValidationDirectoryOption.parseCommandLine(commandLine, getFakeDocumentPath());
+        } finally {
+            // nothing has been deleted
+            assertTrue(existing.exists());
+        }
+    }
+
+    @Test
+    public void testNoOverwriteAcceptsMissingOrEmptyDirectory() throws Exception {
+        File missing = new File(folder.getRoot(), "missing-output");
+        File empty = folder.newFolder("empty-output");
+        for (File dir : new File[] {
+            missing, empty
+        }) {
+            String[] args = {
+                "--output", dir.getAbsolutePath(), "--no-overwrite"
+            };
+            CommandLine commandLine = parser.parse(options, args);
+            File result = ValidationDirectoryOption.parseCommandLine(commandLine, getFakeDocumentPath());
+            assertTrue(result.isDirectory());
+        }
+    }
+
+    @Test
+    public void testDefaultStillCleansExistingDirectory() throws Exception {
+        File outputDir = folder.newFolder("existing-output");
+        File existing = new File(outputDir, "old.txt");
+        assertTrue(existing.createNewFile());
+        String[] args = {
+            "--output", outputDir.getAbsolutePath()
+        };
+        CommandLine commandLine = parser.parse(options, args);
+        ValidationDirectoryOption.parseCommandLine(commandLine, getFakeDocumentPath());
+        assertTrue(!existing.exists());
+        assertTrue(outputDir.isDirectory());
+    }
+
     public File getFakeDocumentPath() {
         return new File(folder.getRoot(), "document-path");
     }
