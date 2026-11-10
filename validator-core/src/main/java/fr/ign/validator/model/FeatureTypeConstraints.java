@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import fr.ign.validator.model.constraint.ConditionConstraint;
 import fr.ign.validator.model.constraint.ForeignKeyConstraint;
 
 /**
@@ -18,7 +19,7 @@ public class FeatureTypeConstraints {
 
     private List<ForeignKeyConstraint> foreignKeys = new ArrayList<ForeignKeyConstraint>();
 
-    private List<String> conditions = new ArrayList<String>();
+    private List<ConditionConstraint> conditions = new ArrayList<ConditionConstraint>();
 
     public FeatureTypeConstraints() {
     }
@@ -31,11 +32,11 @@ public class FeatureTypeConstraints {
         }
     }
 
-    public List<String> getConditions() {
+    public List<ConditionConstraint> getConditions() {
         return conditions;
     }
 
-    public void setConditions(List<String> conditions) {
+    public void setConditions(List<ConditionConstraint> conditions) {
         this.conditions = conditions;
     }
 

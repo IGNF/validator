@@ -331,12 +331,12 @@ public class JsonModelReaderTest {
         Assert.assertEquals(2, featureType.getConstraints().getConditions().size());
 
         {
-            String condition = featureType.getConstraints().getConditions().get(0);
+            String condition = featureType.getConstraints().getConditions().get(0).getSql();
             Assert.assertEquals("quiProd NOT NULL AND modeProd LIKE 'numérisation'", condition);
         }
 
         {
-            String condition = featureType.getConstraints().getConditions().get(1);
+            String condition = featureType.getConstraints().getConditions().get(1).getSql();
             Assert.assertEquals("docSource NOT NULL AND modeProd LIKE 'numérisation'", condition);
         }
 

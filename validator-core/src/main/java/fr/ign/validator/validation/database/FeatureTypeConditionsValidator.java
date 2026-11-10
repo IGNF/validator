@@ -16,6 +16,7 @@ import fr.ign.validator.database.internal.ConditionMismatchFinder.ConditionMisma
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.FeatureTypeConstraints;
+import fr.ign.validator.model.constraint.ConditionConstraint;
 import fr.ign.validator.model.TableModel;
 import fr.ign.validator.tools.ModelHelper;
 import fr.ign.validator.validation.Validator;
@@ -70,7 +71,8 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
         for (TableModel tableModel : ModelHelper.getTableModels(context.getDocumentModel())) {
             context.beginModel(tableModel);
             FeatureTypeConstraints constraints = tableModel.getFeatureType().getConstraints();
-            for (String condition : constraints.getConditions()) {
+            for (ConditionConstraint conditionConstraint : constraints.getConditions()) {
+                String condition = conditionConstraint.getSql();
 
                 log.info(
                     MARKER, "Table {} : checking '{}' condition.",
@@ -103,7 +105,7 @@ public class FeatureTypeConditionsValidator implements Validator<Database> {
                             .setFileModel(tableModel.getName())
                             .setAttribute("--")
                             .setId(conditionMismatch.id)
-                            .setMessageParam("CONDITION", condition)
+                            .setMessageParam("CONDITION", conditionConstraint.getLabel())
                     );
                 }
             }
