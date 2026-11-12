@@ -1,0 +1,6 @@
+target/
+.git/
+*.log
+doc/
+release.properties
+*.releaseBackup

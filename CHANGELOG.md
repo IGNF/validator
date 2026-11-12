@@ -12,6 +12,10 @@
 * v4.6.2 - DGPR : add `--dgpr-skip-inclusion` (skip `DGPR_INOND_INCLUSION_*`) and `--dgpr-skip-graph-topology` (skip `DGPR_ISO_HT_*`, ex : `DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND`) to disable these controls
 * v4.6.0 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
 
+### v4.6.x - Features
+
+* v4.6.x - Docker : `Dockerfile` (ubuntu 24.04, Java 21, GDAL, GMLAS config, `fr_FR.UTF-8` locale for XML validation messages, non-root user), see `doc/docker.md` (#349)
+
 ### v4.6.0 - Fixes
 
 * v4.6.x - Metadata : `gmd:useLimitation` with `gmx:Anchor` : the `xlink:href` is exposed in the optional `useLimitationUrls` property (aligned with `useLimitations`, `useLimitations` is unchanged) (#22)
