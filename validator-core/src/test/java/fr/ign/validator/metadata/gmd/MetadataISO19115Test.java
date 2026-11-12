@@ -781,6 +781,19 @@ public class MetadataISO19115Test {
         List<OnlineResource> locators = metadata.getLocators();
         assertEquals(3, locators.size());
 
+        // useLimitation with gmx:Anchor (#22)
+        {
+            Constraint constraint = metadata.getConstraints().get(0);
+            assertEquals(2, constraint.getUseLimitations().size());
+            assertEquals("Licence Ouverte 2.0", constraint.getUseLimitations().get(1));
+            assertEquals(2, constraint.getUseLimitationUrls().size());
+            assertNull(constraint.getUseLimitationUrls().get(0));
+            assertEquals(
+                "https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf",
+                constraint.getUseLimitationUrls().get(1)
+            );
+        }
+
         {
             OnlineResource locator = locators.get(0);
             assertEquals(

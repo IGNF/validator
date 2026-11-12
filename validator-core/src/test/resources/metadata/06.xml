@@ -192,7 +192,7 @@
                         <gco:CharacterString>Aucune condition ne s'applique</gco:CharacterString>
                     </gmd:useLimitation>
                     <gmd:useLimitation>
-                        <gco:CharacterString>Licence Ouverte 2.0</gco:CharacterString>
+                        <gmx:Anchor xlink:href="https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf">Licence Ouverte 2.0</gmx:Anchor>
                     </gmd:useLimitation>
                     <gmd:accessConstraints>
                         <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>

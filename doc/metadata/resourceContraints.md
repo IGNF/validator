@@ -28,6 +28,18 @@ Implementation notes about `gmd:resourceConstraints` parsing.
 | classificationSystem | String                | 0              | 0                   | [0..1]                 |
 | handlingDescription  | String                | 0              | 0                   | [0..1]                 |
 
+## useLimitation and gmx:Anchor
+
+`useLimitation` may be a `gco:CharacterString` or a `gmx:Anchor` (INSPIRE) :
+
+```xml
+<gmd:useLimitation>
+    <gmx:Anchor xlink:href="https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf">Licence Ouverte 2.0</gmx:Anchor>
+</gmd:useLimitation>
+```
+
+The text is always stored in `useLimitations`. The optional `useLimitationUrls` property (omitted when no anchor has an `xlink:href`) contains the `xlink:href` of each limitation, at the same index (`null` when absent).
+
 ## MD_RestrictionCode
 
 * copyright

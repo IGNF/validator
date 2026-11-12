@@ -418,7 +418,16 @@ public class MetadataISO19115 implements Metadata {
      */
     private Constraint parseResourceConstraint(Element resourceConstraintElement) {
         // useLimitations (common to Constraint, SecurityConstraint and LegalConstraint)
-        List<String> useLimitations = findValues("./*/gmd:useLimitation/*", resourceConstraintElement);
+        List<String> useLimitations = new ArrayList<>();
+        // URLs of gmx:Anchor (aligned with useLimitations, null if not defined)
+        List<String> useLimitationUrls = new ArrayList<>();
+        for (Element useLimitationElement : findElements("./*/gmd:useLimitation/*", resourceConstraintElement)) {
+            useLimitations.add(extractNodeValue(useLimitationElement));
+            useLimitationUrls.add(findValue("./@xlink:href", useLimitationElement));
+        }
+        if (useLimitationUrls.stream().allMatch(url -> url == null)) {
+            useLimitationUrls.clear();
+        }
 
         /*
          * SecurityConstraint
@@ -446,11 +455,13 @@ public class MetadataISO19115 implements Metadata {
         if (classification != null) {
             SecurityConstraint constraint = new SecurityConstraint();
             constraint.setUseLimitations(useLimitations);
+            constraint.setUseLimitationUrls(useLimitationUrls);
             constraint.setClassification(classification);
             return constraint;
         } else if (!accessConstraints.isEmpty() || !useConstraints.isEmpty() || !otherConstraints.isEmpty()) {
             LegalConstraint constraint = new LegalConstraint();
             constraint.setUseLimitations(useLimitations);
+            constraint.setUseLimitationUrls(useLimitationUrls);
             constraint.setAccessConstraints(accessConstraints);
             constraint.setUseConstraints(useConstraints);
             constraint.setOtherConstraints(otherConstraints);
@@ -458,6 +469,7 @@ public class MetadataISO19115 implements Metadata {
         } else {
             Constraint constraint = new Constraint();
             constraint.setUseLimitations(useLimitations);
+            constraint.setUseLimitationUrls(useLimitationUrls);
             return constraint;
         }
     }

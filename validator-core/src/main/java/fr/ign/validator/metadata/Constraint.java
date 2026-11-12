@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  *
  */
 @JsonPropertyOrder({
-    "type", "useLimitations"
+    "type", "useLimitations", "useLimitationUrls"
 })
 public class Constraint {
 
@@ -31,6 +31,14 @@ public class Constraint {
      */
     @JsonInclude(Include.NON_EMPTY)
     private List<String> useLimitations = new ArrayList<>();
+
+    /**
+     * URLs (xlink:href) of gmx:Anchor elements found in gmd:useLimitation, in
+     * the same order as useLimitations (null when the limitation is not an
+     * anchor or has no href)
+     */
+    @JsonInclude(Include.NON_EMPTY)
+    private List<String> useLimitationUrls = new ArrayList<>();
 
     /**
      * Get GMD class name to simplify inspection
@@ -47,6 +55,14 @@ public class Constraint {
 
     public void setUseLimitations(List<String> useLimitations) {
         this.useLimitations = useLimitations;
+    }
+
+    public List<String> getUseLimitationUrls() {
+        return useLimitationUrls;
+    }
+
+    public void setUseLimitationUrls(List<String> useLimitationUrls) {
+        this.useLimitationUrls = useLimitationUrls;
     }
 
 }
