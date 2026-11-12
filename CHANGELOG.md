@@ -14,6 +14,8 @@
 
 ### v4.6.0 - Fixes
 
+* v4.6.x - Metadata : `gmd:useLimitation` with `gmx:Anchor` : the `xlink:href` is exposed in the optional `useLimitationUrls` property (aligned with `useLimitations`, `useLimitations` is unchanged) (#22)
+* v4.6.x - Code lists : `.properties` files replaced by JSON arrays `[{"code":..., "description":...}]` in `codes/[NAME].json` (#124)
 * v4.6.x - Metadata : `METADATA_EXTENT_INVALID` also reported for longitudes outside [-180,180], latitudes outside [-90,90] and south latitude greater than north latitude (#34)
 * v4.6.0 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
 * v4.6.0 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)
