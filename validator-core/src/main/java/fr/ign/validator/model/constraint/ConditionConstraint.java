@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * A SQL condition that each row of a FeatureType must respect, with an
- * optional human readable message used in error reports.
+ * A SQL condition that each row of a FeatureType must respect, with an optional
+ * human readable message used in error reports.
  *
  * In JSON, a condition is either a plain SQL string, or an object :
  *
@@ -56,8 +56,8 @@ public class ConditionConstraint {
     }
 
     /**
-     * @return the text to show in error reports : the message if defined,
-     *         the SQL expression otherwise
+     * @return the text to show in error reports : the message if defined, the SQL
+     *         expression otherwise
      */
     public String getLabel() {
         return message != null && !message.trim().isEmpty() ? message : sql;

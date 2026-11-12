@@ -33,9 +33,9 @@ public class Constraint {
     private List<String> useLimitations = new ArrayList<>();
 
     /**
-     * URLs (xlink:href) of gmx:Anchor elements found in gmd:useLimitation, in
-     * the same order as useLimitations (null when the limitation is not an
-     * anchor or has no href)
+     * URLs (xlink:href) of gmx:Anchor elements found in gmd:useLimitation, in the
+     * same order as useLimitations (null when the limitation is not an anchor or
+     * has no href)
      */
     @JsonInclude(Include.NON_EMPTY)
     private List<String> useLimitationUrls = new ArrayList<>();

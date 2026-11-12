@@ -47,8 +47,8 @@ public class FilteredReportBuilder implements ReportBuilder {
     }
 
     /**
-     * Set the factory used to create the "limit reached" information (allows to
-     * use customized error messages).
+     * Set the factory used to create the "limit reached" information (allows to use
+     * customized error messages).
      *
      * @param errorFactory
      */
