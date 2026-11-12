@@ -11,17 +11,17 @@
 * v4.6.0 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
 * v4.6.2 - DGPR : add `--dgpr-skip-inclusion` (skip `DGPR_INOND_INCLUSION_*`) and `--dgpr-skip-graph-topology` (skip `DGPR_ISO_HT_*`, ex : `DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND`) to disable these controls
 * v4.6.0 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
-* v4.6.x - **Breaking change** : the conversion of the normalized CSV files to shapefile (`DATA/*.shp`, `DATA/*.dbf`, `DATA/*.vrt`, `DATA/*.cpg`) is removed (`CreateShapefilesPostProcess`, `VRT`, `FileConverter.convertToShapefile`), only `DATA/*.csv` is produced (#360)
+* v4.6.4 - **Breaking change** : the conversion of the normalized CSV files to shapefile (`DATA/*.shp`, `DATA/*.dbf`, `DATA/*.vrt`, `DATA/*.cpg`) is removed (`CreateShapefilesPostProcess`, `VRT`, `FileConverter.convertToShapefile`), only `DATA/*.csv` is produced (#360)
 
-### v4.6.x - Features
+### v4.6.4 - Features
 
-* v4.6.x - Docker : `Dockerfile` (ubuntu 24.04, Java 21, GDAL, GMLAS config, `fr_FR.UTF-8` locale for XML validation messages, non-root user), see `doc/docker.md` (#349)
+* v4.6.4 - Docker : `Dockerfile` (ubuntu 24.04, Java 21, GDAL, GMLAS config, `fr_FR.UTF-8` locale for XML validation messages, non-root user), see `doc/docker.md` (#349)
 
 ### v4.6.0 - Fixes
 
-* v4.6.x - Metadata : `gmd:useLimitation` with `gmx:Anchor` : the `xlink:href` is exposed in the optional `useLimitationUrls` property (aligned with `useLimitations`, `useLimitations` is unchanged) (#22)
-* v4.6.x - Code lists : `.properties` files replaced by JSON arrays `[{"code":..., "description":...}]` in `codes/[NAME].json` (#124)
-* v4.6.x - Metadata : `METADATA_EXTENT_INVALID` also reported for longitudes outside [-180,180], latitudes outside [-90,90] and south latitude greater than north latitude (#34)
+* v4.6.4 - Metadata : `gmd:useLimitation` with `gmx:Anchor` : the `xlink:href` is exposed in the optional `useLimitationUrls` property (aligned with `useLimitations`, `useLimitations` is unchanged) (#22)
+* v4.6.4 - Code lists : `.properties` files replaced by JSON arrays `[{"code":..., "description":...}]` in `codes/[NAME].json` (#124)
+* v4.6.4 - Metadata : `METADATA_EXTENT_INVALID` also reported for longitudes outside [-180,180], latitudes outside [-90,90] and south latitude greater than north latitude (#34)
 * v4.6.0 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
 * v4.6.0 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)
 * v4.6.0 - DGPR : rollback to a savepoint when a PostGIS error occurs (the following controls were failing with "current transaction is aborted")
