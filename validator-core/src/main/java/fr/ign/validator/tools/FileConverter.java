@@ -39,7 +39,6 @@ public class FileConverter {
     public static final Logger log = LogManager.getRootLogger();
 
     private static final String DRIVER_CSV = "CSV";
-    private static final String DRIVER_SHAPEFILE = "ESRI Shapefile";
 
     public static final String ENCODING_UTF8 = "UTF-8";
     public static final String ENCODING_LATIN1 = "ISO-8859-1";
@@ -253,60 +252,6 @@ public class FileConverter {
     public void convertToCSV(File source, File target, Charset sourceCharset) throws IOException {
         TableReaderOptions options = new TableReaderOptions(sourceCharset);
         convertToCSV(source, target, options);
-    }
-
-    /**
-     * Converts a VRT file to a LATIN1 encoded shapefile.
-     *
-     * @deprecated related to a legacy datastore (EaaS / mongeoportail), used only
-     *             by plugin-cnig
-     *
-     * @param files
-     * @throws IOException
-     */
-    public void convertToShapefile(File source, File target) throws IOException {
-        if (!FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("vrt")) {
-            throw new ValidatorFatalError(
-                "convertToShapefile is deprecated and source file is not a vrt file " + source.getAbsolutePath()
-            );
-        }
-        log.info(MARKER, "{} => {} (gdal {})...", source, target, version);
-
-        List<String> args = new ArrayList<>();
-        args.add(ogr2ogrPath);
-
-        args.add("-f");
-        args.add(DRIVER_SHAPEFILE);
-
-        /*
-         * Getting input/output files
-         */
-        args.add(target.getAbsolutePath());
-        args.add(source.getAbsolutePath());
-
-        // force 2d output (to be removed, related to old JTS versions)
-        args.add("-dim");
-        args.add("2");
-
-        Map<String, String> envs = new HashMap<>();
-        envs.put("SHAPE_ENCODING", ENCODING_LATIN1);
-        runCommand(args, envs);
-        /*
-         * Controls that output file is created
-         */
-        if (!target.exists()) {
-            String message = String.format(
-                "Fail to convert '%1s' to shapefile at '%2s'",
-                source.getAbsolutePath(),
-                target.getAbsolutePath()
-            );
-            throw new ValidatorFatalError(message);
-        }
-        /*
-         * Generating cgp file
-         */
-        File cpgFile = CompanionFileUtils.getCompanionFile(target, "cpg");
-        FileUtils.writeStringToFile(cpgFile, ENCODING_LATIN1, StandardCharsets.UTF_8);
     }
 
     /**

@@ -11,6 +11,7 @@
 * v4.6.0 - Deprecate `--dgpr-safe-simplify` (no effect, topology preserving simplification is always used)
 * v4.6.2 - DGPR : add `--dgpr-skip-inclusion` (skip `DGPR_INOND_INCLUSION_*`) and `--dgpr-skip-graph-topology` (skip `DGPR_ISO_HT_*`, ex : `DGPR_ISO_HT_FUSION_NOT_SURFACE_INOND`) to disable these controls
 * v4.6.0 - Report unavailable static tables (reference lists of the model, ex : csv removed from the server) as `MODEL_STATIC_TABLE_NOT_FOUND` instead of failing the validation (database validators are skipped)
+* v4.6.x - **Breaking change** : the conversion of the normalized CSV files to shapefile (`DATA/*.shp`, `DATA/*.dbf`, `DATA/*.vrt`, `DATA/*.cpg`) is removed (`CreateShapefilesPostProcess`, `VRT`, `FileConverter.convertToShapefile`), only `DATA/*.csv` is produced (#360)
 
 ### v4.6.x - Features
 

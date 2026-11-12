@@ -2,7 +2,6 @@ package fr.ign.validator.cnig;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.cnig.data.CnigHeader;
-import fr.ign.validator.cnig.process.CreateShapefilesPostProcess;
 import fr.ign.validator.cnig.process.CustomizeIdurbaPreProcess;
 import fr.ign.validator.cnig.process.DocUrbaComPostProcess;
 import fr.ign.validator.cnig.process.DocUrbaPostProcess;
@@ -63,7 +62,7 @@ public class CnigPlugin implements Plugin {
 
         /*
          * PostProcess - Join SUP files to add columns "fichiers", "nomsuplitt",
-         * "nomreg" and "urlreg" (must run before CreateShapefilesPostProcess)
+         * "nomreg" and "urlreg"
          */
         context.addListener(new SupRelationsPostProcess());
         /*
@@ -71,11 +70,6 @@ public class CnigPlugin implements Plugin {
          * NormalizePostProcess)
          */
         context.addListener(new TitresPiecesEcritesPostProcess());
-        /*
-         * PostProcess- Converts DATA/*.csv to DATA/*.shp (must follow
-         * ReferenceActeSupPostProcess)
-         */
-        context.addListener(new CreateShapefilesPostProcess());
         /*
          * PostProcess - Compute document.tag.typeref (must run before
          * document-info.json generation)
