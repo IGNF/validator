@@ -60,15 +60,28 @@ public class BoundingBox {
     }
 
     /**
-     * Test if bounding box is valid
+     * Test if bounding box is valid : coordinates are numbers, longitudes are in
+     * [-180,180], latitudes are in [-90,90] and south is not greater than north.
      *
      * @return
      */
     public boolean isValid() {
-        return !Double.isNaN(safeStringToDouble(westBoundLongitude))
-            && !Double.isNaN(safeStringToDouble(eastBoundLongitude))
-            && !Double.isNaN(safeStringToDouble(southBoundLatitude))
-            && !Double.isNaN(safeStringToDouble(northBoundLatitude));
+        double west = safeStringToDouble(westBoundLongitude);
+        double east = safeStringToDouble(eastBoundLongitude);
+        double south = safeStringToDouble(southBoundLatitude);
+        double north = safeStringToDouble(northBoundLatitude);
+        if (Double.isNaN(west) || Double.isNaN(east) || Double.isNaN(south) || Double.isNaN(north)) {
+            return false;
+        }
+        return isBetween(west, -180.0, 180.0)
+            && isBetween(east, -180.0, 180.0)
+            && isBetween(south, -90.0, 90.0)
+            && isBetween(north, -90.0, 90.0)
+            && south <= north;
+    }
+
+    private static boolean isBetween(double value, double min, double max) {
+        return value >= min && value <= max;
     }
 
     @Override

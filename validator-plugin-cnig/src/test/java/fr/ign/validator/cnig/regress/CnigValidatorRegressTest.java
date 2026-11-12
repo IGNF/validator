@@ -158,7 +158,9 @@ public class CnigValidatorRegressTest {
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_SPATIALRESOLUTION_INVALID_DENOMINATOR, report);
         ReportAssert.assertCount(1, CoreErrorCodes.METADATA_CHARACTERSET_INVALID, report);
         ReportAssert.assertCount(1, CnigErrorCodes.CNIG_METADATA_REFERENCESYSTEMIDENTIFIER_URI_NOT_FOUND, report);
-        ReportAssert.assertCount(4, ErrorLevel.ERROR, report);
+        // the metadata bounding box is expressed in Lambert-93 (not in lon/lat degrees)
+        ReportAssert.assertCount(1, CoreErrorCodes.METADATA_EXTENT_INVALID, report);
+        ReportAssert.assertCount(5, ErrorLevel.ERROR, report);
 
         /*
          * check warnings

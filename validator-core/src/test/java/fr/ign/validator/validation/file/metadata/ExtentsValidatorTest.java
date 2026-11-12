@@ -86,4 +86,43 @@ public class ExtentsValidatorTest extends MetadataValidatorTestBase {
         );
     }
 
+    private int countErrors(String west, String south, String east, String north) {
+        report.getErrors().clear();
+        Extent extent = new Extent();
+        BoundingBox boundingBox = new BoundingBox();
+        boundingBox.setWestBoundLongitude(west);
+        boundingBox.setSouthBoundLatitude(south);
+        boundingBox.setEastBoundLongitude(east);
+        boundingBox.setNorthBoundLatitude(north);
+        extent.setBoundingBox(boundingBox);
+        List<Extent> extents = new ArrayList<>();
+        extents.add(extent);
+        Metadata metadata = mock(Metadata.class);
+        when(metadata.getExtents()).thenReturn(extents);
+        new ExtentsValidator().validate(context, metadata);
+        return report.getErrors().size();
+    }
+
+    @Test
+    public void testBoundsIncluded() {
+        assertEquals(0, countErrors("-180", "-90", "180", "90"));
+    }
+
+    @Test
+    public void testLongitudeOutOfRange() {
+        assertEquals(1, countErrors("-180.1", "0", "1", "1"));
+        assertEquals(1, countErrors("0", "0", "180.1", "1"));
+    }
+
+    @Test
+    public void testLatitudeOutOfRange() {
+        assertEquals(1, countErrors("0", "-90.1", "1", "1"));
+        assertEquals(1, countErrors("0", "0", "1", "90.1"));
+    }
+
+    @Test
+    public void testSouthGreaterThanNorth() {
+        assertEquals(1, countErrors("0", "10", "1", "5"));
+    }
+
 }

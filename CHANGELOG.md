@@ -14,6 +14,7 @@
 
 ### v4.6.0 - Fixes
 
+* v4.6.x - Metadata : `METADATA_EXTENT_INVALID` also reported for longitudes outside [-180,180], latitudes outside [-90,90] and south latitude greater than north latitude (#34)
 * v4.6.0 - DGPR : fix topology and inclusion controls (PostgreSQL) disabled without `--dgpr-simplify` (`ST_SimplifyPreserveTopology(geom, NULL)` returns NULL)
 * v4.6.0 - DGPR : fix inclusion control matching ids by substring (ex : `SIN_1` considered as included when `SIN_10` is)
 * v4.6.0 - DGPR : rollback to a savepoint when a PostGIS error occurs (the following controls were failing with "current transaction is aborted")
