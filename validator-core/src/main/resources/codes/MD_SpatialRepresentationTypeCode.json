@@ -1,0 +1,26 @@
+[
+  {
+    "code": "grid",
+    "description": "grid data is used to represent geographic data"
+  },
+  {
+    "code": "stereoModel",
+    "description": "three-dimensional view formed by the intersecting homologous rays of an overlapping pair of images"
+  },
+  {
+    "code": "textTable",
+    "description": "textual or tabular data is used to represent geographic data"
+  },
+  {
+    "code": "tin",
+    "description": "triangulated irregular network"
+  },
+  {
+    "code": "vector",
+    "description": "vector data is used to represent geographic data"
+  },
+  {
+    "code": "video",
+    "description": "scene from a video recording"
+  }
+]

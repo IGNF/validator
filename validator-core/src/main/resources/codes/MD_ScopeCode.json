@@ -1,0 +1,106 @@
+[
+  {
+    "code": "aggregate",
+    "description": "information applies to an aggregate resource"
+  },
+  {
+    "code": "application",
+    "description": "information resource hosted on a specific set of hardware and accessible over a network"
+  },
+  {
+    "code": "attribute",
+    "description": "information applies to the attribute value"
+  },
+  {
+    "code": "attributeType",
+    "description": "information applies to the characteristic of a feature"
+  },
+  {
+    "code": "collection",
+    "description": "information applies to an unstructured set"
+  },
+  {
+    "code": "collectionHardware",
+    "description": "information applies to the collection hardware class"
+  },
+  {
+    "code": "collectionSession",
+    "description": "information applies to the collection session"
+  },
+  {
+    "code": "coverage",
+    "description": "information applies to a coverage"
+  },
+  {
+    "code": "dataset",
+    "description": "information applies to the dataset"
+  },
+  {
+    "code": "dimensionGroup",
+    "description": "information applies to a dimension group"
+  },
+  {
+    "code": "document",
+    "description": "information applies to a document"
+  },
+  {
+    "code": "feature",
+    "description": "information applies to a feature"
+  },
+  {
+    "code": "featureType",
+    "description": "information applies to a feature type"
+  },
+  {
+    "code": "fieldSession",
+    "description": "information applies to a field session"
+  },
+  {
+    "code": "initiative",
+    "description": "information applies to an initiative"
+  },
+  {
+    "code": "metadata",
+    "description": "information applies to metadata"
+  },
+  {
+    "code": "model",
+    "description": "information applies to a copy or imitation of an existing or hypothetical object"
+  },
+  {
+    "code": "nonGeographicDataset",
+    "description": "information applies to non-geographic data"
+  },
+  {
+    "code": "product",
+    "description": "metadata describing an ISO 19131 data product specification"
+  },
+  {
+    "code": "propertyType",
+    "description": "information applies to a property type"
+  },
+  {
+    "code": "repository",
+    "description": "information applies to a repository"
+  },
+  {
+    "code": "sample",
+    "description": "information applies to a sample"
+  },
+  {
+    "code": "series",
+    "description": "information applies to the series"
+  },
+  {
+    "code": "service",
+    "description": "information applies to a capability which a service provider entity makes available to a service user entity through a set of interfaces that define a behaviour, such as a use case"
+  },
+  {
+    "code": "software",
+    "description": "information applies to a computer program or routine"
+  },
+  {
+    "code": "tile",
+    "description": "information applies to a tile, a spatial subset of geographic data"
+  }
+]

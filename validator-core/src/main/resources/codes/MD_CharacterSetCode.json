@@ -1,0 +1,118 @@
+[
+  {
+    "code": "8859part1",
+    "description": "ISO-8859-1"
+  },
+  {
+    "code": "8859part10",
+    "description": "ISO-8859-10"
+  },
+  {
+    "code": "8859part11",
+    "description": "ISO-8859-11"
+  },
+  {
+    "code": "8859part12",
+    "description": "ISO-8859-12"
+  },
+  {
+    "code": "8859part13",
+    "description": "ISO-8859-13"
+  },
+  {
+    "code": "8859part14",
+    "description": "ISO-8859-14"
+  },
+  {
+    "code": "8859part15",
+    "description": "ISO-8859-15"
+  },
+  {
+    "code": "8859part16",
+    "description": "ISO-8859-16"
+  },
+  {
+    "code": "8859part2",
+    "description": "ISO-8859-2"
+  },
+  {
+    "code": "8859part3",
+    "description": "ISO-8859-3"
+  },
+  {
+    "code": "8859part4",
+    "description": "ISO-8859-4"
+  },
+  {
+    "code": "8859part5",
+    "description": "ISO-8859-5"
+  },
+  {
+    "code": "8859part6",
+    "description": "ISO-8859-6"
+  },
+  {
+    "code": "8859part7",
+    "description": "ISO-8859-7"
+  },
+  {
+    "code": "8859part8",
+    "description": "ISO-8859-8"
+  },
+  {
+    "code": "8859part9",
+    "description": "ISO-8859-9"
+  },
+  {
+    "code": "GB2312",
+    "description": "GB2312"
+  },
+  {
+    "code": "big5",
+    "description": "Big5"
+  },
+  {
+    "code": "ebcdic",
+    "description": "EBCDIC"
+  },
+  {
+    "code": "eucJP",
+    "description": "EUC-JP"
+  },
+  {
+    "code": "eucKR",
+    "description": "EUC-KR"
+  },
+  {
+    "code": "jis",
+    "description": "JIS_X0201"
+  },
+  {
+    "code": "shiftJIS",
+    "description": "Shift_JIS"
+  },
+  {
+    "code": "ucs2",
+    "description": "UCS-2"
+  },
+  {
+    "code": "ucs4",
+    "description": "UCS-4"
+  },
+  {
+    "code": "usAscii",
+    "description": "US-ASCII"
+  },
+  {
+    "code": "utf16",
+    "description": "UTF-16"
+  },
+  {
+    "code": "utf7",
+    "description": "UTF-7"
+  },
+  {
+    "code": "utf8",
+    "description": "UTF-8"
+  }
+]

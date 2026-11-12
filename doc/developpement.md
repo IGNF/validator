@@ -297,3 +297,7 @@ gh release create vX.Y.Z --title "vX.Y.Z" --notes "..." validator-cli/target/*
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — formatage du code et CI
 - [cli.md](cli.md) — utilisation du validateur en ligne de commande
 - [ogr2ogr.md](dependencies/ogr2ogr.md) — installation de GDAL
+
+## Listes de codes
+
+Les listes de codes (langues, charsets, scopes, types géométriques d'erreur, etc.) sont des fichiers JSON `src/main/resources/codes/[NOM].json` : un tableau d'objets ayant au moins une propriété `code` (et optionnellement `description`). Elles sont chargées par `CodeList.getCodeList("NOM")`.

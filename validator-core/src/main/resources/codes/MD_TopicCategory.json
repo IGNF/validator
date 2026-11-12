@@ -1,0 +1,86 @@
+[
+  {
+    "code": "biota",
+    "description": "flora and/or fauna in natural environment. Examples: wildlife, vegetation, biological sciences, ecology, wilderness, sealife, wetlands, habitat"
+  },
+  {
+    "code": "boundaries",
+    "description": "legal land descriptions. Examples: political and administrative boundaries"
+  },
+  {
+    "code": "climatologyMeteorologyAtmosphere",
+    "description": "processes and phenomena of the atmosphere. Examples: cloud cover, weather, climate, atmospheric conditions, climate change, precipitation"
+  },
+  {
+    "code": "disaster",
+    "description": "Information related to disasters. Examples: site of the disaster, evacuation zone, disaster-prevention facility, disaster relief activities"
+  },
+  {
+    "code": "economy",
+    "description": "economic activities, conditions and employment. Examples: production, labour, revenue, commerce, industry, tourism and ecotourism, forestry, fisheries, commercial or subsistence hunting, exploration and exploitation of resources such as minerals, oil and gas"
+  },
+  {
+    "code": "elevation",
+    "description": "height above or below sea level. Examples: altitude, bathymetry, digital elevation models, slope, derived products"
+  },
+  {
+    "code": "environment",
+    "description": "environmental resources, protection and conservation. Examples: environmental pollution, waste storage and treatment, environmental impact assessment, monitoring environmental risk, nature reserves, landscape"
+  },
+  {
+    "code": "extraTerrestrial",
+    "description": "region more than 100 km above the surface of the Earth"
+  },
+  {
+    "code": "farming",
+    "description": "rearing of animals and/or cultivation of plants. Examples: agriculture, irrigation, aquaculture, plantations, herding, pests and diseases affecting crops and livestock"
+  },
+  {
+    "code": "geoscientificInformation",
+    "description": "information pertaining to earth sciences. Examples: geophysical features and processes, geology, minerals, sciences dealing with the composition, structure and origin of the earth s rocks, risks of earthquakes, volcanic activity, landslides, gravity information, soils, permafrost, hydrogeology, erosion"
+  },
+  {
+    "code": "health",
+    "description": "health, health services, human ecology, and safety. Examples: disease and illness, factors affecting health, hygiene, substance abuse, mental and physical health, health services"
+  },
+  {
+    "code": "imageryBaseMapsEarthCover",
+    "description": "base maps. Examples: land cover, topographic maps, imagery, unclassified images, annotations"
+  },
+  {
+    "code": "inlandWaters",
+    "description": "inland water features, drainage systems and their characteristics. Examples: rivers and glaciers, salt lakes, water utilization plans, dams, currents, floods, water quality, hydrographic charts"
+  },
+  {
+    "code": "intelligenceMilitary",
+    "description": "military bases, structures, activities. Examples: barracks, training grounds, military transportation, information collection"
+  },
+  {
+    "code": "location",
+    "description": "positional information and services. Examples: addresses, geodetic networks, control points, postal zones and services, place names"
+  },
+  {
+    "code": "oceans",
+    "description": "features and characteristics of salt water bodies (excluding inland waters). Examples: tides, tidal waves, coastal information, reefs"
+  },
+  {
+    "code": "planningCadastre",
+    "description": "information used for appropriate actions for future use of the land. Examples: land use maps, zoning maps, cadastral surveys, land ownership"
+  },
+  {
+    "code": "society",
+    "description": "characteristics of society and cultures. Examples: settlements, anthropology, archaeology, education, traditional beliefs, manners and customs, demographic data, recreational areas and activities, social impact assessments, crime and justice, census information"
+  },
+  {
+    "code": "structure",
+    "description": "man-made construction. Examples: buildings, museums, churches, factories, housing, monuments, shops, towers"
+  },
+  {
+    "code": "transportation",
+    "description": "means and aids for conveying persons and/or goods. Examples: roads, airports/airstrips, shipping routes, tunnels, nautical charts, vehicle or vessel location, aeronautical charts, railways"
+  },
+  {
+    "code": "utilitiesCommunication",
+    "description": "energy, water and waste systems and communications infrastructure and services. Examples: hydroelectricity, geothermal, solar and nuclear sources of energy, water purification and distribution, sewage collection and disposal, electricity and gas distribution, data communication, telecommunication, radio, communication networks"
+  }
+]

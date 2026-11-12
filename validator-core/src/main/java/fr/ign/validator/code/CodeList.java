@@ -1,18 +1,21 @@
 package fr.ign.validator.code;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.TreeMap;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
  * Represents a list of values associated to translation. Values are loaded as a
- * ResourceBundle from src/main/resources/metadata/codes/[NAME].properties
+ * JSON array from src/main/resources/codes/[NAME].json. Each item is an object
+ * with a mandatory "code" property and an optional "description" property.
  *
  * @author MBorne
  *
@@ -63,24 +66,33 @@ public class CodeList {
     /**
      * Gets a code list by a given name
      *
-     * TODO Read JSON file where objects contains at least a name
-     *
      * @param name
      * @return
      */
     public static CodeList getCodeList(String name) {
-        /* load bundle file */
-        ResourceBundle bundle = ResourceBundle.getBundle("codes/" + name);
-
-        /* retreive code descriptions */
-        Map<String, String> codes = new LinkedHashMap<>();
-        List<String> keys = new ArrayList<>(bundle.keySet());
-        Collections.sort(keys);
-        for (String key : keys) {
-            codes.put(key, bundle.getString(key));
+        String resource = "codes/" + name + ".json";
+        try (InputStream is = CodeList.class.getClassLoader().getResourceAsStream(resource)) {
+            if (is == null) {
+                throw new IllegalArgumentException("Code list '" + name + "' not found (" + resource + ")");
+            }
+            JsonNode root = new ObjectMapper().readTree(is);
+            if (!root.isArray()) {
+                throw new IllegalArgumentException("Code list '" + name + "' must be a JSON array");
+            }
+            /* codes are sorted to get a stable order */
+            Map<String, String> sorted = new TreeMap<>();
+            for (JsonNode item : root) {
+                JsonNode code = item.get("code");
+                if (code == null || !code.isTextual()) {
+                    throw new IllegalArgumentException("Code list '" + name + "' : missing 'code' property");
+                }
+                JsonNode description = item.get("description");
+                sorted.put(code.asText(), description != null ? description.asText() : null);
+            }
+            return new CodeList(name, new LinkedHashMap<>(sorted));
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Fail to read code list '" + name + "' : " + e.getMessage(), e);
         }
-
-        return new CodeList(name, codes);
     }
 
 }

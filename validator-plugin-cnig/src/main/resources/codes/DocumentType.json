@@ -1,0 +1,26 @@
+[
+  {
+    "code": "CC",
+    "description": "Carte communale"
+  },
+  {
+    "code": "PLU",
+    "description": "Document d'urbanisme"
+  },
+  {
+    "code": "POS",
+    "description": "Plan d'occupation des sols"
+  },
+  {
+    "code": "PSMV",
+    "description": "Plan de sauvegarde et de mise en valeur"
+  },
+  {
+    "code": "SCoT",
+    "description": "Schéma de cohérence territoriale"
+  },
+  {
+    "code": "SUP",
+    "description": "Servitude d'utilité publique"
+  }
+]

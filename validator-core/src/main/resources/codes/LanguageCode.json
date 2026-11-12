@@ -1,0 +1,94 @@
+[
+  {
+    "code": "bul",
+    "description": "Bulgarian"
+  },
+  {
+    "code": "cze",
+    "description": "Czech"
+  },
+  {
+    "code": "dan",
+    "description": "Danish"
+  },
+  {
+    "code": "dut",
+    "description": "Dutch"
+  },
+  {
+    "code": "eng",
+    "description": "English"
+  },
+  {
+    "code": "est",
+    "description": "Estonian"
+  },
+  {
+    "code": "fin",
+    "description": "Finnish"
+  },
+  {
+    "code": "fre",
+    "description": "French"
+  },
+  {
+    "code": "ger",
+    "description": "German"
+  },
+  {
+    "code": "gle",
+    "description": "Irish"
+  },
+  {
+    "code": "gre",
+    "description": "Greek"
+  },
+  {
+    "code": "hun",
+    "description": "Hungarian"
+  },
+  {
+    "code": "ita",
+    "description": "Italian"
+  },
+  {
+    "code": "lav",
+    "description": "Latvian"
+  },
+  {
+    "code": "lit",
+    "description": "Lithuanian"
+  },
+  {
+    "code": "mlt",
+    "description": "Maltese"
+  },
+  {
+    "code": "pol",
+    "description": "Polish"
+  },
+  {
+    "code": "por",
+    "description": "Portuguese"
+  },
+  {
+    "code": "rum",
+    "description": "Romanian"
+  },
+  {
+    "code": "slo",
+    "description": "Slovak"
+  },
+  {
+    "code": "slv",
+    "description": "Slovenian"
+  },
+  {
+    "code": "spa",
+    "description": "Spanish"
+  },
+  {
+    "code": "swe",
+    "description": "Swedish"
+  }
+]
