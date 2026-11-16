@@ -60,7 +60,11 @@ public class Table implements Validatable {
 
     public void doValidate(Context context) {
         log.info(MARKER, "Validate '{}' according to {}...", relativePath, featureType);
-        if (!reader.isCharsetValid()) {
+        /*
+         * Note that a few invalid byte sequences in a table using the expected
+         * charset are reported row by row (ATTRIBUTE_INVALID_BYTE_SEQUENCE)
+         */
+        if (!reader.isCharsetValid() && !reader.getCharset().equals(context.getEncoding())) {
             log.error(MARKER, "Invalid charset '{}' for '{}'", context.getEncoding(), relativePath);
             context.report(
                 context.createError(CoreErrorCodes.TABLE_UNEXPECTED_ENCODING)
@@ -96,6 +100,7 @@ public class Table implements Validatable {
             count++;
 
             Row row = new Row(count, reader.next(), mapping);
+            row.setInvalidCharacterColumns(reader.getLastRowInvalidCharacterColumns());
             row.validate(context);
             if (count % 10000 == 0) {
                 log.debug(MARKER, "'{}' : {} rows processed...", relativePath, count);

@@ -1,6 +1,16 @@
-target/
+# build outputs (patterns are relative to the context root, hence **/)
+**/target/
+**/dependency-reduced-pom.xml
+# dev tools / CI / docs (not used by the Dockerfile)
 .git/
-*.log
+.tools/
+.vscode/
+.github/
+.ci/
+eclipse/
+assets/
 doc/
+# release & logs
 release.properties
-*.releaseBackup
+**/*.releaseBackup
+**/*.log

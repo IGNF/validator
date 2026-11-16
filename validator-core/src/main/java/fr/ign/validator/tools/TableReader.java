@@ -52,6 +52,11 @@ public class TableReader implements Iterator<String[]>, Closeable {
     public static final String TMP_EXTENSION = "vrows";
 
     /**
+     * Character produced by the decoding of invalid byte sequences.
+     */
+    private static final char REPLACEMENT_CHARACTER = '\uFFFD';
+
+    /**
      * CSV parser (closed with the TableReader)
      */
     private CSVParser parser;
@@ -79,6 +84,21 @@ public class TableReader implements Iterator<String[]>, Closeable {
      * true if the charset is valid, false if detected
      */
     private boolean charsetValid = true;
+    /**
+     * Charset used to read the file (preferedCharset or detected charset)
+     */
+    private Charset charset;
+    /**
+     * true if the file is read as UTF-8 while it contains invalid byte sequences
+     * (decoded as U+FFFD and removed from the values, see
+     * {@link #getLastRowInvalidCharacterColumns()})
+     */
+    private boolean removeReplacementCharacters = false;
+    /**
+     * Columns of the last row returned by {@link #next()} from which invalid byte
+     * sequences have been removed
+     */
+    private List<Integer> lastRowInvalidCharacterColumns = new ArrayList<>();
 
     /**
      *
@@ -94,7 +114,13 @@ public class TableReader implements Iterator<String[]>, Closeable {
         if (!CharsetDetector.isValidCharset(csvFile, preferedCharset)) {
             charsetValid = false;
             charset = CharsetDetector.detectCharset(csvFile);
+            /*
+             * mostly valid UTF-8 file with a few invalid byte sequences (ex : text
+             * truncated in the middle of a multi-byte character to fit a DBF field length)
+             */
+            removeReplacementCharacters = charset.equals(StandardCharsets.UTF_8);
         }
+        this.charset = charset;
         this.parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180);
         this.iterator = parser.iterator();
         readHeader();
@@ -110,6 +136,7 @@ public class TableReader implements Iterator<String[]>, Closeable {
      * @throws IOException
      */
     TableReader(InputStream csvStream, Charset preferedCharset) throws IOException {
+        this.charset = preferedCharset;
         this.parser = CSVParser.parse(csvStream, preferedCharset, CSVFormat.RFC4180);
         this.iterator = parser.iterator();
         readHeader();
@@ -122,6 +149,26 @@ public class TableReader implements Iterator<String[]>, Closeable {
      */
     public boolean isCharsetValid() {
         return charsetValid;
+    }
+
+    /**
+     * Charset used to read the file (preferedCharset or detected charset).
+     *
+     * @return
+     */
+    public Charset getCharset() {
+        return charset;
+    }
+
+    /**
+     * Columns (positions in the header) of the last row returned by
+     * {@link #next()} containing invalid byte sequences for the charset. These
+     * invalid sequences are removed from the values.
+     *
+     * @return
+     */
+    public List<Integer> getLastRowInvalidCharacterColumns() {
+        return lastRowInvalidCharacterColumns;
     }
 
     /**
@@ -177,15 +224,39 @@ public class TableReader implements Iterator<String[]>, Closeable {
     public String[] next() {
         String[] row = toArray(iterator.next());
         lastRowValid = row.length == inputHeaderLength;
+        String[] result;
         if (lastRowValid && inputIndexes.length == row.length) {
-            return row;
+            result = row;
+        } else {
+            result = new String[inputIndexes.length];
+            for (int i = 0; i < inputIndexes.length; i++) {
+                int inputIndex = inputIndexes[i];
+                result[i] = inputIndex < row.length ? row[inputIndex] : null;
+            }
         }
-        String[] result = new String[inputIndexes.length];
-        for (int i = 0; i < inputIndexes.length; i++) {
-            int inputIndex = inputIndexes[i];
-            result[i] = inputIndex < row.length ? row[inputIndex] : null;
-        }
+        removeReplacementCharacters(result);
         return result;
+    }
+
+    /**
+     * Removes the replacement characters (U+FFFD) produced by the decoding of
+     * invalid byte sequences and keeps track of the corresponding columns.
+     *
+     * @param values
+     */
+    private void removeReplacementCharacters(String[] values) {
+        lastRowInvalidCharacterColumns = new ArrayList<>();
+        if (!removeReplacementCharacters) {
+            return;
+        }
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] != null && values[i].indexOf(REPLACEMENT_CHARACTER) >= 0) {
+                values[i] = nullifyEmptyString(
+                    trimString(StringUtils.remove(values[i], REPLACEMENT_CHARACTER))
+                );
+                lastRowInvalidCharacterColumns.add(i);
+            }
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package fr.ign.validator.tools;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +43,19 @@ public class CharsetDetectorTest {
     @Test
     public void testGenerateurDetectUTF8() throws IOException {
         File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/AC2_GENERATEUR_SUP_S_014_utf8.csv");
+        Charset charset = CharsetDetector.detectCharset(srcFile);
+        assertEquals(StandardCharsets.UTF_8, charset);
+    }
+
+
+    /**
+     * A UTF-8 file with a character truncated in the middle (ex : DBF field
+     * length limit) must still be detected as UTF-8.
+     */
+    @Test
+    public void testDetectUTF8WithTruncatedChar() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8-truncated.csv");
+        assertFalse(CharsetDetector.isValidUTF8(srcFile));
         Charset charset = CharsetDetector.detectCharset(srcFile);
         assertEquals(StandardCharsets.UTF_8, charset);
     }

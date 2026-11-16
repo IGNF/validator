@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.locationtech.jts.geom.Geometry;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.error.ErrorLevel;
 import fr.ign.validator.error.ValidatorError;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.mapping.FeatureTypeMapper;
@@ -149,6 +151,27 @@ public class RowTest {
         assertEquals(POLYGON, attribute.getValue());
         // binding without parsing again
         assertSame(geometry, attribute.getBindedValue());
+    }
+
+
+    @Test
+    public void testInvalidByteSequenceReportedAsWarning() {
+        Row row = new Row(3, new String[] {
+            "les décors des él", POLYGON
+        }, mapping);
+        row.setInvalidCharacterColumns(Arrays.asList(0));
+        context.beginModel(mapping.getFeatureType());
+        row.validate(context);
+        context.endModel(mapping.getFeatureType());
+
+        List<ValidatorError> errors = report.getErrorsByCode(CoreErrorCodes.ATTRIBUTE_INVALID_BYTE_SEQUENCE);
+        assertEquals(1, errors.size());
+        ValidatorError error = errors.get(0);
+        assertEquals(ErrorLevel.WARNING, error.getLevel());
+        assertEquals("nom", error.getAttribute());
+        assertEquals("3", error.getId());
+        assertTrue(error.getMessage().contains("les décors des él"));
+        assertEquals(1, report.getErrors().size());
     }
 
 }

@@ -240,4 +240,26 @@ public class TableReaderCSVTest {
         }
     }
 
+
+    /**
+     * A UTF-8 file with a character truncated in the middle must not be read as
+     * LATIN1 (double encoding of every accented character).
+     */
+    @Test
+    public void testReadCsvUtf8WithTruncatedChar() throws IOException {
+        File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8-truncated.csv");
+        try (TableReader reader = TableReader.createTableReader(srcFile, StandardCharsets.UTF_8)) {
+            assertFalse(reader.isCharsetValid());
+            assertEquals(StandardCharsets.UTF_8, reader.getCharset());
+            assertEquals("Château de Menou", reader.next()[1]);
+            assertTrue(reader.getLastRowInvalidCharacterColumns().isEmpty());
+            assertEquals("Eglise Saint Siméon", reader.next()[1]);
+            String[] row = reader.next();
+            assertEquals("Villa Mauguière", row[1]);
+            // invalid byte sequence removed
+            assertEquals("les décors (à l'exception des", row[2]);
+            assertEquals(Arrays.asList(2), reader.getLastRowInvalidCharacterColumns());
+        }
+    }
+
 }

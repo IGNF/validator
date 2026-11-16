@@ -160,6 +160,12 @@
 		"documentation": ""
 	},
 	{
+		"name": "ATTRIBUTE_INVALID_BYTE_SEQUENCE",
+		"level": "WARNING",
+		"message": "La valeur (‘{VALUE}’) contenait une séquence d'octets invalide pour l'encodage '{ENCODING}' (caractère tronqué ?) qui a été supprimée.",
+		"documentation": "Cette erreur se produit lorsqu'une valeur contient une séquence d'octets invalide pour l'encodage des données, par exemple un texte tronqué au milieu d'un caractère accentué pour respecter la longueur d'un champ DBF. Le reste de la table est lu avec l'encodage déclaré et la séquence invalide est supprimée."
+	},
+	{
 		"name": "ATTRIBUTE_CHARACTERS_REPLACED",
 		"level": "INFO",
 		"message": "La valeur (‘{VALUE}’) sera remplacée par (‘{FIXED_VALUE}’) pour l’intégration des données.",

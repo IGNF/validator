@@ -210,6 +210,9 @@ public class CoreErrorCodes {
 
     public static final ErrorCode ATTRIBUTE_CHARACTERS_REPLACED = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_REPLACED");
     public static final ErrorCode ATTRIBUTE_CHARACTERS_ILLEGAL = ErrorCode.valueOf("ATTRIBUTE_CHARACTERS_ILLEGAL");
+    public static final ErrorCode ATTRIBUTE_INVALID_BYTE_SEQUENCE = ErrorCode.valueOf(
+        "ATTRIBUTE_INVALID_BYTE_SEQUENCE"
+    );
 
     /**
      * Fail to parse field as a JTS Geometry.

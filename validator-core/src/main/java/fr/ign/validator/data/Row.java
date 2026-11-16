@@ -8,12 +8,14 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 
 import fr.ign.validator.Context;
+import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.geometry.ProjectionTransform;
 import fr.ign.validator.mapping.FeatureTypeMapper;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.Projection;
 import fr.ign.validator.model.type.GeometryType;
+import fr.ign.validator.string.transform.IsoControlEscaper;
 import fr.ign.validator.validation.Validatable;
 
 /**
@@ -66,6 +68,12 @@ public class Row implements Validatable {
      * The value of the feature identifier (retrieved to create error)
      */
     private String featureId;
+
+    /**
+     * Columns from which invalid byte sequences have been removed (see
+     * {@link fr.ign.validator.tools.TableReader#getLastRowInvalidCharacterColumns()})
+     */
+    private List<Integer> invalidCharacterColumns = new ArrayList<>();
 
     /**
      *
@@ -133,6 +141,14 @@ public class Row implements Validatable {
 
     public void setFeatureId(String featureId) {
         this.featureId = featureId;
+    }
+
+    public List<Integer> getInvalidCharacterColumns() {
+        return invalidCharacterColumns;
+    }
+
+    public void setInvalidCharacterColumns(List<Integer> invalidCharacterColumns) {
+        this.invalidCharacterColumns = invalidCharacterColumns;
     }
 
     @Override
@@ -213,6 +229,9 @@ public class Row implements Validatable {
              * columns if all values are null/empty)
              */
             if (columnIsAvailable) {
+                if (invalidCharacterColumns.contains(mapping.getAttributeIndex(index))) {
+                    reportInvalidByteSequence(context, attribute, inputValue);
+                }
                 attribute.validate(context);
             }
             context.endModel(attributeType);
@@ -221,4 +240,22 @@ public class Row implements Validatable {
         context.endData(this);
     }
 
+
+    /**
+     * Reports a value from which invalid byte sequences have been removed (ex : text
+     * truncated in the middle of a multi-byte character to fit a DBF field length).
+     *
+     * @param context
+     * @param attribute
+     * @param value
+     */
+    private void reportInvalidByteSequence(Context context, Attribute<?> attribute, String value) {
+        context.beginData(attribute);
+        context.report(
+            context.createError(CoreErrorCodes.ATTRIBUTE_INVALID_BYTE_SEQUENCE)
+                .setMessageParam("VALUE", value == null ? "" : new IsoControlEscaper(false).transform(value))
+                .setMessageParam("ENCODING", context.getEncoding().toString())
+        );
+        context.endData(attribute);
+    }
 }

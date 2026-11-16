@@ -1,12 +1,14 @@
 package fr.ign.validator.tools;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Rule;
@@ -187,6 +189,32 @@ public class TableReaderSHPTest {
             assertEquals("IDSUP", header[0]);
 
         } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
+
+
+    /**
+     * UTF-8 DBF with a value truncated in the middle of a character to fit the
+     * field length (as in AC1_SERVITUDE.dbf from the "SUP AC1" flow).
+     */
+    @Test
+    public void testReadDbfUtf8WithTruncatedChar() throws IOException {
+        File source = ResourceHelper.getResourceFile(getClass(), "/data/dbf_utf8_truncated/SERVITUDE.dbf");
+        File dbf = new File(folder.newFolder("input"), "SERVITUDE.dbf");
+        FileUtils.copyFile(source, dbf);
+        try (TableReader reader = TableReader.createTableReader(dbf, StandardCharsets.UTF_8)) {
+            assertFalse(reader.isCharsetValid());
+            int index = reader.findColumnRequired("NOMSUPLITT");
+            assertEquals("Château de Menou", reader.next()[index]);
+            assertEquals("Eglise Saint Siméon", reader.next()[index]);
+            String[] row = reader.next();
+            assertEquals("Villa Mauguière", row[index]);
+            int indexDescription = reader.findColumnRequired("DESCRIPTIO");
+            // invalid byte sequence removed
+            assertEquals("les décors des él", row[indexDescription]);
+            assertEquals(Arrays.asList(indexDescription), reader.getLastRowInvalidCharacterColumns());
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }

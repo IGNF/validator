@@ -19,6 +19,8 @@
 
 ### v4.6.0 - Fixes
 
+* v4.6.5 - Charset : a few invalid UTF-8 byte sequences (ex : text truncated in the middle of an accented character to fit a DBF field length) no longer lead to read the whole table as LATIN1 (double encoding of every accented character, ex : `ChÃ¢teau` for `Château`, propagated to `nomsuplitt` by `SupRelationsPostProcess`). `CharsetDetector.detectCharset` returns UTF-8 when valid multi-byte sequences are more frequent than invalid ones
+* v4.6.5 - Charset : invalid byte sequences are removed from the values and reported as `ATTRIBUTE_INVALID_BYTE_SEQUENCE` (WARNING, with line and attribute) instead of `ATTRIBUTE_CHARACTERS_ILLEGAL` (ERROR with `--string-all LATIN1`). `TABLE_UNEXPECTED_ENCODING` is no longer reported when the detected charset is the declared one
 * v4.6.4 - Metadata : `gmd:useLimitation` with `gmx:Anchor` : the `xlink:href` is exposed in the optional `useLimitationUrls` property (aligned with `useLimitations`, `useLimitations` is unchanged) (#22)
 * v4.6.4 - Code lists : `.properties` files replaced by JSON arrays `[{"code":..., "description":...}]` in `codes/[NAME].json` (#124)
 * v4.6.4 - Metadata : `METADATA_EXTENT_INVALID` also reported for longitudes outside [-180,180], latitudes outside [-90,90] and south latitude greater than north latitude (#34)
