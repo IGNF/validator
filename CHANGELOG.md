@@ -39,6 +39,7 @@
 ### v4.6.0 - Dependencies and build
 
 * v4.6.0 - Bump dependencies (Jackson 2.22.3, commons-io 2.22.0, commons-lang3 3.21.0, PostgreSQL 42.7.13, sqlite-jdbc 3.53.4.0, Maven plugins) and replace `commons-lang` 2.6 by `commons-lang3` (CVE-2025-48924) [SECURITY]
+* v4.6.5 - Bump dependencies (Jackson 2.23.0, commons-lang3 3.22.0, PostgreSQL 42.7.14, sqlite-jdbc 3.54.1.0, maven-surefire-plugin 3.6.1, jacoco-maven-plugin 0.8.16)
 * v4.6.0 - Reduce `validator-cli.jar` size from 35.6 to 23.0 Mo (SQLite native libraries limited to Linux, Mac and Windows x86_64, unused GeoTools dependencies JAI and EMF excluded, `woodstox-core-asl` removed)
 * v4.6.0 - CI : test the DGPR controls with PostGIS
 * v4.6.0 - Remove unused files (obsolete `dependency-reduced-pom.xml` and `validator.sh`, unused classes and test resources)
