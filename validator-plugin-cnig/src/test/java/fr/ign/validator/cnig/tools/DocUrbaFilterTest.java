@@ -1,6 +1,7 @@
 package fr.ign.validator.cnig.tools;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -40,13 +41,16 @@ public class DocUrbaFilterTest {
     }
 
     @Test
-    public void testIdUrbaFileNotFound() {
+    public void testIdUrbaFileNotFound() throws IOException {
         DocUrbaFilter filter = new DocUrbaFilter(new IdurbaFormatV1(), "test");
         DocUrbaFilter.Result result = filter.process(docUrbaFile);
         assertNotNull(result);
         assertEquals(0, result.count);
         // default value for typeref
         assertEquals("01", result.typeref);
+        // invalid document name : DOC_URBA is filtered (header only)
+        assertEquals(1, FileUtils.readLines(docUrbaFile, StandardCharsets.UTF_8).size());
+        assertFalse(new File(docUrbaFile.getParentFile(), "DOC_URBA.new.csv").exists());
     }
 
     @Test

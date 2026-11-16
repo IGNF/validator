@@ -69,6 +69,7 @@ public class DocUrbaFilter {
             return result;
         }
 
+        File newIdUrbaFile = null;
         try (TableReader reader = TableReader.createTableReader(docUrbaFile, StandardCharsets.UTF_8)) {
             /*
              * Find required columns in DOC_URBA.csv
@@ -97,71 +98,76 @@ public class DocUrbaFilter {
             /*
              * Create writer for filtered file
              */
-            File newIdUrbaFile = new File(docUrbaFile.getParentFile(), "DOC_URBA.new.csv");
-            BufferedWriter fileWriter = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(newIdUrbaFile), StandardCharsets.UTF_8)
-            );
-            CSVPrinter printer = new CSVPrinter(fileWriter, CSVFormat.RFC4180);
+            newIdUrbaFile = new File(docUrbaFile.getParentFile(), "DOC_URBA.new.csv");
+            try (CSVPrinter printer = new CSVPrinter(
+                new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(newIdUrbaFile), StandardCharsets.UTF_8)
+                ),
+                CSVFormat.RFC4180
+            )) {
+                /*
+                 * Write header
+                 */
+                printer.printRecord((Object[]) reader.getHeader());
 
-            /*
-             * Write header
-             */
-            printer.printRecord((Object[]) reader.getHeader());
+                /*
+                 * Search of row corresponding to documentName
+                 */
 
-            /*
-             * Search of row corresponding to documentName
-             */
+                while (reader.hasNext()) {
+                    String[] row = reader.next();
+                    String idurba = row[indexIdurba];
 
-            while (reader.hasNext()) {
-                String[] row = reader.next();
-                String idurba = row[indexIdurba];
-
-                if (StringUtils.isEmpty(idurba)) {
-                    continue;
-                }
-
-                if (!idurbaFormat.isValid(idurba, documentName)) {
-                    continue;
-                }
-
-                result.count++;
-                // retrieve IDURBA
-                log.info(MARKER, "Found IDURBA={}", idurba);
-                result.idurba = idurba;
-                // retreive TYPEREF if available
-                if (indexTyperef >= 0) {
-                    String typeref = row[indexTyperef];
-                    log.info(MARKER, "Found TYPEREF={} for IDURBA={}", typeref, idurba);
-                    if (!StringUtils.isEmpty(typeref)) {
-                        result.typeref = typeref;
+                    if (StringUtils.isEmpty(idurba)) {
+                        continue;
                     }
-                }
 
-                if (indexTypeproc >= 0) {
-                    String typeproc = row[indexTypeproc];
-                    log.info(MARKER, "Found TYPEPROC={} for IDURBA={}", typeproc, idurba);
-                    if (!StringUtils.isEmpty(typeproc)) {
-                        result.typeproc = typeproc.trim();
+                    if (!idurbaFormat.isValid(idurba, documentName)) {
+                        continue;
                     }
-                } else if (indexNomproc >= 0) {
-                    String nomproc = row[indexNomproc];
-                    log.info(MARKER, "Found NOMPROC={} for IDURBA={}", nomproc, idurba);
-                    if (!StringUtils.isEmpty(nomproc)) {
-                        result.typeproc = nomproc.trim();
-                    }
-                }
 
-                printer.printRecord((Object[]) row);
+                    result.count++;
+                    // retrieve IDURBA
+                    log.info(MARKER, "Found IDURBA={}", idurba);
+                    result.idurba = idurba;
+                    // retreive TYPEREF if available
+                    if (indexTyperef >= 0) {
+                        String typeref = row[indexTyperef];
+                        log.info(MARKER, "Found TYPEREF={} for IDURBA={}", typeref, idurba);
+                        if (!StringUtils.isEmpty(typeref)) {
+                            result.typeref = typeref;
+                        }
+                    }
+
+                    if (indexTypeproc >= 0) {
+                        String typeproc = row[indexTypeproc];
+                        log.info(MARKER, "Found TYPEPROC={} for IDURBA={}", typeproc, idurba);
+                        if (!StringUtils.isEmpty(typeproc)) {
+                            result.typeproc = typeproc.trim();
+                        }
+                    } else if (indexNomproc >= 0) {
+                        String nomproc = row[indexNomproc];
+                        log.info(MARKER, "Found NOMPROC={} for IDURBA={}", nomproc, idurba);
+                        if (!StringUtils.isEmpty(nomproc)) {
+                            result.typeproc = nomproc.trim();
+                        }
+                    }
+
+                    printer.printRecord((Object[]) row);
+                }
             }
 
             /*
-             * close writer and replace original file
+             * replace original file (writer is closed)
              */
-            printer.close();
             docUrbaFile.delete();
             FileUtils.moveFile(newIdUrbaFile, docUrbaFile);
         } catch (Exception e) {
-            log.error(MARKER, "Erreur dans la lecture de DOC_URBA.csv");
+            log.error(MARKER, "Erreur dans la lecture de DOC_URBA.csv : {}", e.getMessage(), e);
+            // do not leave a partial DOC_URBA.new.csv in the DATA directory
+            if (newIdUrbaFile != null) {
+                FileUtils.deleteQuietly(newIdUrbaFile);
+            }
         }
 
         return result;

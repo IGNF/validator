@@ -43,7 +43,12 @@ public class IdurbaFormatV1 implements IdurbaFormat {
         if (StringUtils.isEmpty(idurba)) {
             return false;
         }
-        return idurba.matches(getRegexp(documentName));
+        String regexp = getRegexp(documentName);
+        if (regexp == null) {
+            // documentName is not a valid DU name
+            return false;
+        }
+        return idurba.matches(regexp);
     }
 
     /**
