@@ -165,6 +165,17 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-main</artifactId>
 			<version>${geotools.version}</version>
+			<!-- OGC XML models (EMF) not used by the validator (EMF poms declare version ranges : slow resolution) -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.geotools.ogc</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.emf</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- geotools epsg references -->
@@ -172,6 +183,17 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-referencing</artifactId>
 			<version>${geotools.version}</version>
+			<!-- OGC XML models (EMF) not used by the validator (EMF poms declare version ranges : slow resolution) -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.geotools.ogc</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.emf</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!--
 			Embedded database for common CRS
@@ -181,6 +203,17 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-epsg-hsql</artifactId>
 			<version>${geotools.version}</version>
+			<!-- OGC XML models (EMF) not used by the validator (EMF poms declare version ranges : slow resolution) -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.geotools.ogc</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.emf</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!--

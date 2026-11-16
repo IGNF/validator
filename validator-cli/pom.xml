@@ -59,12 +59,10 @@
 						</goals>
 						<configuration>
 							<!-- Invalid signature file digest for Manifest main attributes -->
-							<!-- GeoTools transitive dependencies not used by the validator (image processing, OGC XML models) -->
+							<!-- GeoTools transitive dependencies not used by the validator (image processing, OGC XML models are excluded in the parent pom) -->
 							<artifactSet>
 								<excludes>
 									<exclude>javax.media:jai_core</exclude>
-									<exclude>org.eclipse.emf:*</exclude>
-									<exclude>org.geotools.ogc:*</exclude>
 								</excludes>
 							</artifactSet>
 							<filters>
