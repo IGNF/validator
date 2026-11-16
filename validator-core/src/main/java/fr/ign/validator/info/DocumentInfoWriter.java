@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.jdom.JDOMException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -23,7 +21,6 @@ public class DocumentInfoWriter {
      *
      * @param documentInfo
      * @param output
-     * @throws JDOMException
      * @throws IOException
      */
     public void write(DocumentInfo documentInfo, File outputFile) {

@@ -31,8 +31,8 @@
 		<jackson.databind.version>2.23.0</jackson.databind.version>
 
 		<maven-formatter-plugin.version>2.29.0</maven-formatter-plugin.version>
-		<jaxen.version>1.2.0</jaxen.version>
-		<jdom.version>1.0</jdom.version>
+		<jaxen.version>2.0.6</jaxen.version>
+		<jdom.version>2.0.6.1</jdom.version>
 		<apache-common-io.version>2.22.0</apache-common-io.version>
 		<apache-common-cli.version>1.11.0</apache-common-cli.version>
 		<apache-commons-csv.version>1.14.1</apache-commons-csv.version>
@@ -189,10 +189,10 @@
 		################################################################
 		-->
 
-		<!-- jdom and jaxen (XPath) are required to parse metadata -->
+		<!-- jdom2 and jaxen (XPath, optional dependency of jdom2) are required to parse metadata -->
 		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom2</artifactId>
 			<version>${jdom.version}</version>
 		</dependency>
 		<dependency>

@@ -6,11 +6,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.metadata.Constraint;
 import fr.ign.validator.metadata.Extent;
@@ -36,6 +41,9 @@ import fr.ign.validator.tools.ResourceHelper;
  *
  */
 public class MetadataISO19115Test {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     protected Metadata getMetadataFromResource(String path) {
         File file = ResourceHelper.getResourceFile(getClass(), path);
@@ -813,6 +821,33 @@ public class MetadataISO19115Test {
                 locator.getDescription()
             );
         }
+    }
+
+    /**
+     * External entities must not be resolved (XXE : user provided metadata could
+     * read local files of the server)
+     */
+    @Test
+    public void testExternalEntitiesAreRejected() throws IOException {
+        File secretFile = folder.newFile("secret.txt");
+        Files.write(secretFile.toPath(), "SECRET-CONTENT".getBytes(StandardCharsets.UTF_8));
+
+        File metadataFile = folder.newFile("xxe.xml");
+        String xml = "<?xml version=\"1.0\"?>\n"
+            + "<!DOCTYPE gmd:MD_Metadata [<!ENTITY xxe SYSTEM \"" + secretFile.toURI() + "\">]>\n"
+            + "<gmd:MD_Metadata xmlns:gmd=\"http://www.isotc211.org/2005/gmd\""
+            + " xmlns:gco=\"http://www.isotc211.org/2005/gco\">\n"
+            + "  <gmd:fileIdentifier><gco:CharacterString>&xxe;</gco:CharacterString></gmd:fileIdentifier>\n"
+            + "</gmd:MD_Metadata>\n";
+        Files.write(metadataFile.toPath(), xml.getBytes(StandardCharsets.UTF_8));
+
+        try {
+            Metadata metadata = MetadataISO19115.readFile(metadataFile);
+            fail("DOCTYPE should be rejected (fileIdentifier : " + metadata.getFileIdentifier() + ")");
+        } catch (InvalidMetadataException e) {
+            // expected
+        }
+        assertFalse(MetadataISO19115.isMetadataFile(metadataFile));
     }
 
 }

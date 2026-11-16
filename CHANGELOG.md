@@ -19,6 +19,7 @@
 
 ### v4.6.0 - Fixes
 
+* v4.6.5 - Metadata : reject DOCTYPE declarations in XML metadata files (XXE : external entities could read local files of the server and expose them in the metadata properties, CVE-2021-33813) [SECURITY]
 * v4.6.5 - Charset : a few invalid UTF-8 byte sequences (ex : text truncated in the middle of an accented character to fit a DBF field length) no longer lead to read the whole table as LATIN1 (double encoding of every accented character, ex : `ChÃ¢teau` for `Château`, propagated to `nomsuplitt` by `SupRelationsPostProcess`). `CharsetDetector.detectCharset` returns UTF-8 when valid multi-byte sequences are more frequent than invalid ones
 * v4.6.5 - Charset : invalid byte sequences are removed from the values and reported as `ATTRIBUTE_INVALID_BYTE_SEQUENCE` (WARNING, with line and attribute) instead of `ATTRIBUTE_CHARACTERS_ILLEGAL` (ERROR with `--string-all LATIN1`). `TABLE_UNEXPECTED_ENCODING` is no longer reported when the detected charset is the declared one
 * v4.6.4 - Metadata : `gmd:useLimitation` with `gmx:Anchor` : the `xlink:href` is exposed in the optional `useLimitationUrls` property (aligned with `useLimitations`, `useLimitations` is unchanged) (#22)
@@ -40,6 +41,7 @@
 
 * v4.6.0 - Bump dependencies (Jackson 2.22.3, commons-io 2.22.0, commons-lang3 3.21.0, PostgreSQL 42.7.13, sqlite-jdbc 3.53.4.0, Maven plugins) and replace `commons-lang` 2.6 by `commons-lang3` (CVE-2025-48924) [SECURITY]
 * v4.6.5 - Bump dependencies (Jackson 2.23.0, commons-lang3 3.22.0, PostgreSQL 42.7.14, sqlite-jdbc 3.54.1.0, maven-surefire-plugin 3.6.1, jacoco-maven-plugin 0.8.16)
+* v4.6.5 - Replace `jdom` 1.0 by `jdom2` 2.0.6.1 and bump `jaxen` to 2.0.6 (metadata parsing)
 * v4.6.0 - Reduce `validator-cli.jar` size from 35.6 to 23.0 Mo (SQLite native libraries limited to Linux, Mac and Windows x86_64, unused GeoTools dependencies JAI and EMF excluded, `woodstox-core-asl` removed)
 * v4.6.0 - CI : test the DGPR controls with PostGIS
 * v4.6.0 - Remove unused files (obsolete `dependency-reduced-pom.xml` and `validator.sh`, unused classes and test resources)

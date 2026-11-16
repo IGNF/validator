@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom.Attribute;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Text;
-import org.jdom.input.SAXBuilder;
-import org.jdom.xpath.XPath;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
+import org.jdom2.Text;
+import org.jdom2.filter.Filter;
+import org.jdom2.filter.Filters;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 
 import fr.ign.validator.exception.InvalidMetadataException;
 import fr.ign.validator.metadata.BoundingBox;
@@ -46,6 +50,16 @@ import fr.ign.validator.metadata.code.TopicCategoryCode;
  */
 public class MetadataISO19115 implements Metadata {
     /**
+     * Namespaces used in XPath queries
+     */
+    private static final Namespace[] NAMESPACES = {
+        Namespace.getNamespace("gmd", "http://www.isotc211.org/2005/gmd"),
+        Namespace.getNamespace("gco", "http://www.isotc211.org/2005/gco"),
+        Namespace.getNamespace("gmx", "http://www.isotc211.org/2005/gmx"),
+        Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink")
+    };
+
+    /**
      * XML Document
      */
     private Element metadataElement;
@@ -54,8 +68,6 @@ public class MetadataISO19115 implements Metadata {
      * Create reader from file
      *
      * @param file
-     * @throws JDOMException
-     * @throws IOException
      */
     public MetadataISO19115(Element metadataElement) throws InvalidMetadataException {
         this.metadataElement = metadataElement;
@@ -69,13 +81,29 @@ public class MetadataISO19115 implements Metadata {
      * @throws InvalidMetadataException
      */
     public static MetadataISO19115 readFile(File file) throws InvalidMetadataException {
-        SAXBuilder saxBuilder = new SAXBuilder();
+        SAXBuilder saxBuilder = createSAXBuilder();
         try {
             Document document = saxBuilder.build(file);
             return new MetadataISO19115(document.getRootElement());
         } catch (JDOMException | IOException e) {
             throw new InvalidMetadataException("invalid metadata exception", e);
         }
+    }
+
+    /**
+     * Create a {@link SAXBuilder} rejecting DOCTYPE declarations to prevent XXE
+     * (external entities reading local files or URLs) and entity expansion attacks
+     * on user provided files.
+     *
+     * @return
+     */
+    static SAXBuilder createSAXBuilder() {
+        SAXBuilder saxBuilder = new SAXBuilder();
+        saxBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+        saxBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        saxBuilder.setExpandEntities(false);
+        return saxBuilder;
     }
 
     /**
@@ -642,33 +670,23 @@ public class MetadataISO19115 implements Metadata {
      * Create an xpath query
      *
      * @param path
+     * @param filter
      * @return
-     * @throws JDOMException
      */
-    private XPath createXPath(String path) throws JDOMException {
-        XPath xpath = XPath.newInstance(path);
-        xpath.addNamespace("gmd", "http://www.isotc211.org/2005/gmd");
-        xpath.addNamespace("gco", "http://www.isotc211.org/2005/gco");
-        xpath.addNamespace("gmx", "http://www.isotc211.org/2005/gmx");
-        xpath.addNamespace("xlink", "http://www.w3.org/1999/xlink");
-        return xpath;
+    private <T> XPathExpression<T> createXPath(String path, Filter<T> filter) {
+        return XPathFactory.instance().compile(path, filter, null, NAMESPACES);
     }
 
     /**
-     * Finds text value for a given path (selectSingleNode converted to string)
+     * Finds text value for a given path (first node converted to string)
      *
      * @param path
      * @param context
      * @return
      */
     private String findValue(String path, Object context) {
-        try {
-            XPath xpath = createXPath(path);
-            Object node = xpath.selectSingleNode(context);
-            return extractNodeValue(node);
-        } catch (JDOMException e) {
-            throw new RuntimeException(e);
-        }
+        Object node = createXPath(path, Filters.fpassthrough()).evaluateFirst(context);
+        return extractNodeValue(node);
     }
 
     /**
@@ -689,7 +707,7 @@ public class MetadataISO19115 implements Metadata {
     }
 
     /**
-     * Finds text values for a given path (selectSingleNodes converted to strings)
+     * Finds text values for a given path (nodes converted to strings)
      *
      * @param path
      * @param context
@@ -697,23 +715,16 @@ public class MetadataISO19115 implements Metadata {
      */
     private List<String> findValues(String path, Object context) {
         List<String> result = new ArrayList<>();
-        try {
-            XPath xpath = createXPath(path);
-            @SuppressWarnings("unchecked")
-            List<Object> nodes = xpath.selectNodes(context);
-            for (Object node : nodes) {
-                result.add(extractNodeValue(node));
-            }
-            return result;
-        } catch (JDOMException e) {
-            throw new RuntimeException(e);
+        for (Object node : createXPath(path, Filters.fpassthrough()).evaluate(context)) {
+            result.add(extractNodeValue(node));
         }
+        return result;
     }
 
     /**
      * Extracts text value from XML node
      *
-     * @see {@link XPath.selectSingleNode} for types
+     * @see {@link XPathExpression#evaluateFirst(Object)} for types
      *
      * @param node
      * @return
@@ -736,34 +747,23 @@ public class MetadataISO19115 implements Metadata {
     }
 
     /**
-     * Finds a single node
+     * Finds a single element
      *
      * @param path
      * @return
      */
     private Element findSingleElement(String path, Object context) {
-        try {
-            XPath xpath = createXPath(path);
-            return (Element) xpath.selectSingleNode(context);
-        } catch (JDOMException e) {
-            throw new RuntimeException(e);
-        }
+        return createXPath(path, Filters.element()).evaluateFirst(context);
     }
 
     /**
-     * Finds multiple nodes
+     * Finds multiple elements
      *
      * @param path
      * @return
      */
-    @SuppressWarnings("unchecked")
     private List<Element> findElements(String path, Object context) {
-        try {
-            XPath xpath = createXPath(path);
-            return xpath.selectNodes(context);
-        } catch (JDOMException e) {
-            throw new RuntimeException(e);
-        }
+        return createXPath(path, Filters.element()).evaluate(context);
     }
 
     /**
