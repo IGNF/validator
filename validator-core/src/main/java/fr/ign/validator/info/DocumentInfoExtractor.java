@@ -166,6 +166,11 @@ public class DocumentInfoExtractor {
      * @return null if the file can't be read
      */
     public static TableStats readTableStats(File csvFile) {
+        if (!csvFile.exists()) {
+            // ex : table of a MultiTableModel not found in the GML file (not normalized)
+            log.debug(MARKER, "skip stats for {} (file not found)", csvFile);
+            return null;
+        }
         TableStats result = new TableStats();
         try (TableReader reader = TableReader.createTableReader(csvFile, StandardCharsets.UTF_8)) {
             int indexWktColumn = reader.findColumn("WKT");
@@ -181,7 +186,7 @@ public class DocumentInfoExtractor {
             }
 
         } catch (IOException e) {
-            log.error(MARKER, "fail to compute stats for {}", csvFile);
+            log.error(MARKER, "fail to compute stats for {} : {}", csvFile, e.getMessage());
             return null;
         }
         return result;

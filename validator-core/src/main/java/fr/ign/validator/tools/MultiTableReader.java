@@ -112,8 +112,10 @@ public class MultiTableReader {
             }
             return new File(csvDirectory, candidate + ".csv");
         }
+        // not an error for a multi-table file containing only some of the tables of
+        // the model (ex : PCRS), the callers handle the exception
         String message = String.format("Table '%1s' not found in '%2s'", tableName, csvDirectory);
-        log.error(MARKER, message);
+        log.debug(MARKER, message);
         throw new IOException(message);
     }
 

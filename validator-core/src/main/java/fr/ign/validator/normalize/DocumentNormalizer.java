@@ -17,6 +17,7 @@ import fr.ign.validator.data.file.MultiTableFile;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FileModel;
 import fr.ign.validator.model.TableModel;
+import fr.ign.validator.model.file.DirectoryModel;
 import fr.ign.validator.model.file.EmbeddedTableModel;
 import fr.ign.validator.model.file.MetadataModel;
 import fr.ign.validator.model.file.MultiTableModel;
@@ -77,6 +78,10 @@ public class DocumentNormalizer {
                 createFlatCopyInTargetDirectory(fileModel, documentFiles, context.getDataDirectory());
             } else if (fileModel instanceof MetadataModel) {
                 createFlatCopyInTargetDirectory(fileModel, documentFiles, context.getMetadataDirectory());
+            } else if (fileModel instanceof DirectoryModel) {
+                // directories are ignored (their files are normalized according to their own
+                // FileModel)
+                log.debug(MARKER, "Skip normalization for {} (directory)", fileModel);
             } else {
                 log.error(MARKER, "Normalization is not supported for {}!", fileModel);
             }

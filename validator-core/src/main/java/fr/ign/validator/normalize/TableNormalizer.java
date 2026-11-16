@@ -234,10 +234,10 @@ public class TableNormalizer implements Closeable {
                     }
                 } catch (IllegalArgumentException e) {
                     log.warn(
-                        MARKER, "{}.{} : {} converted to null (bad type).",
-                        inputRow[i],
+                        MARKER, "{}.{} : '{}' converted to null (bad type).",
                         featureType.getName(),
-                        attribute.getName()
+                        attribute.getName(),
+                        inputRow[i]
                     );
                 }
                 // format binded value to get normalized output.
