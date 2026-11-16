@@ -2,9 +2,12 @@ package fr.ign.validator.cnig.command;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
@@ -28,7 +31,16 @@ public class CnigExtractIdgestCommandTest {
         String[] args = new String[] {
             "--in", "notValid"
         };
-        assertEquals(1, command.run(args));
+        // expected error output is captured (clean test output)
+        PrintStream stderr = System.err;
+        ByteArrayOutputStream captured = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(captured, true, StandardCharsets.UTF_8));
+        try {
+            assertEquals(1, command.run(args));
+        } finally {
+            System.setErr(stderr);
+        }
+        assertTrue(captured.toString(StandardCharsets.UTF_8).contains("fail to read IdGest from notValid"));
     }
 
     @Test

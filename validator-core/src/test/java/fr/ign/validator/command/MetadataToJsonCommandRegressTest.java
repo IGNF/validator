@@ -1,7 +1,9 @@
 package fr.ign.validator.command;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
@@ -30,7 +32,16 @@ public class MetadataToJsonCommandRegressTest {
         String[] args = new String[] {
             "--in", "notValid"
         };
-        Assert.assertEquals(1, command.run(args));
+        // expected error output is captured (clean test output)
+        PrintStream stderr = System.err;
+        ByteArrayOutputStream captured = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(captured, true, StandardCharsets.UTF_8));
+        try {
+            Assert.assertEquals(1, command.run(args));
+        } finally {
+            System.setErr(stderr);
+        }
+        Assert.assertTrue(captured.toString(StandardCharsets.UTF_8).contains("notValid"));
     }
 
     @Test
