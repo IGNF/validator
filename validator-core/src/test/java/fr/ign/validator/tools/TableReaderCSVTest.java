@@ -240,7 +240,6 @@ public class TableReaderCSVTest {
         }
     }
 
-
     /**
      * A UTF-8 file with a character truncated in the middle must not be read as
      * LATIN1 (double encoding of every accented character).

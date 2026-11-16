@@ -47,10 +47,9 @@ public class CharsetDetectorTest {
         assertEquals(StandardCharsets.UTF_8, charset);
     }
 
-
     /**
-     * A UTF-8 file with a character truncated in the middle (ex : DBF field
-     * length limit) must still be detected as UTF-8.
+     * A UTF-8 file with a character truncated in the middle (ex : DBF field length
+     * limit) must still be detected as UTF-8.
      */
     @Test
     public void testDetectUTF8WithTruncatedChar() throws IOException {

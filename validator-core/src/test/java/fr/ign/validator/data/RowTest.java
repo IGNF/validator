@@ -153,7 +153,6 @@ public class RowTest {
         assertSame(geometry, attribute.getBindedValue());
     }
 
-
     @Test
     public void testInvalidByteSequenceReportedAsWarning() {
         Row row = new Row(3, new String[] {

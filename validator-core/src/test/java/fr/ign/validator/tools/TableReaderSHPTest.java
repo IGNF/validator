@@ -193,7 +193,6 @@ public class TableReaderSHPTest {
         }
     }
 
-
     /**
      * UTF-8 DBF with a value truncated in the middle of a character to fit the
      * field length (as in AC1_SERVITUDE.dbf from the "SUP AC1" flow).

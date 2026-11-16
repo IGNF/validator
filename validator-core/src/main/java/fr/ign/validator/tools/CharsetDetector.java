@@ -31,9 +31,9 @@ public class CharsetDetector {
      * <li>Returns UTF-8 first if characters are valid by UTF-8</li>
      * <li>Consequently, can return UTF-8 if text is ISO_8859_1 without accent</li>
      * <li>Returns UTF-8 if the file is mostly valid UTF-8 (more valid multi-byte
-     * sequences than invalid ones). A few invalid sequences (ex : text truncated
-     * in the middle of a multi-byte character to fit a DBF field length) must not
-     * lead to read the whole file as LATIN1 (double encoding of every accented
+     * sequences than invalid ones). A few invalid sequences (ex : text truncated in
+     * the middle of a multi-byte character to fit a DBF field length) must not lead
+     * to read the whole file as LATIN1 (double encoding of every accented
      * character).</li>
      * </ul>
      *
@@ -72,8 +72,7 @@ public class CharsetDetector {
          * more frequent than invalid ones.
          *
          * Note that a LATIN1 text with accents contains almost no valid UTF-8
-         * multi-byte sequence (an accented char followed by an ASCII char is
-         * invalid).
+         * multi-byte sequence (an accented char followed by an ASCII char is invalid).
          */
         boolean isMostlyValid() {
             return invalidSequences == 0 || validSequences > invalidSequences;

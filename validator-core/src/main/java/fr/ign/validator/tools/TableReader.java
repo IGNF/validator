@@ -161,9 +161,9 @@ public class TableReader implements Iterator<String[]>, Closeable {
     }
 
     /**
-     * Columns (positions in the header) of the last row returned by
-     * {@link #next()} containing invalid byte sequences for the charset. These
-     * invalid sequences are removed from the values.
+     * Columns (positions in the header) of the last row returned by {@link #next()}
+     * containing invalid byte sequences for the charset. These invalid sequences
+     * are removed from the values.
      *
      * @return
      */

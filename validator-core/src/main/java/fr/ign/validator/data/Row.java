@@ -240,10 +240,10 @@ public class Row implements Validatable {
         context.endData(this);
     }
 
-
     /**
-     * Reports a value from which invalid byte sequences have been removed (ex : text
-     * truncated in the middle of a multi-byte character to fit a DBF field length).
+     * Reports a value from which invalid byte sequences have been removed (ex :
+     * text truncated in the middle of a multi-byte character to fit a DBF field
+     * length).
      *
      * @param context
      * @param attribute

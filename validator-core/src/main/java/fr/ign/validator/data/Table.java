@@ -61,8 +61,8 @@ public class Table implements Validatable {
     public void doValidate(Context context) {
         log.info(MARKER, "Validate '{}' according to {}...", relativePath, featureType);
         /*
-         * Note that a few invalid byte sequences in a table using the expected
-         * charset are reported row by row (ATTRIBUTE_INVALID_BYTE_SEQUENCE)
+         * Note that a few invalid byte sequences in a table using the expected charset
+         * are reported row by row (ATTRIBUTE_INVALID_BYTE_SEQUENCE)
          */
         if (!reader.isCharsetValid() && !reader.getCharset().equals(context.getEncoding())) {
             log.error(MARKER, "Invalid charset '{}' for '{}'", context.getEncoding(), relativePath);
