@@ -47,6 +47,7 @@
 		<!-- Build and deploy -->
 		<maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
 		<maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
+		<maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
 		<maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 		<jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
 
@@ -306,6 +307,19 @@
 
 	<build>
 		<plugins>
+			<!-- defines the ${org.mockito:mockito-core:jar} property (path to the jar) used by surefire -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${maven-dependency-plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>properties</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -313,7 +327,8 @@
 				<configuration>
 					<useSystemClassLoader>false</useSystemClassLoader>
 					<!-- VFORK: workaround JDK ProcessBuilder spawn-helper failures when launching ogr2ogr -->
-					<argLine>@{argLine} -Djdk.lang.Process.launchMechanism=VFORK</argLine>
+					<!-- javaagent: Mockito inline mock maker loaded as an agent (self-attaching will be disallowed by the JDK), Xshare:off avoids the CDS warning ("bootstrap classpath has been appended") -->
+					<argLine>@{argLine} -Djdk.lang.Process.launchMechanism=VFORK -javaagent:${org.mockito:mockito-core:jar} -Xshare:off</argLine>
 				</configuration>
 			</plugin>
 
