@@ -8,6 +8,10 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - Database : the column names of the FeatureTypes created from the data (`auto` table models, ex : PCRS) are no longer concatenated as is in `CREATE TABLE` (SQL injection with a crafted column name, ex : PostgreSQL validation database of validator-api) : invalid names are ignored with a warning, `Database.createTable` / `createIndex` reject them [SECURITY]
+* v4.7.1 - Model : the names of the tables, attributes and static tables must be valid identifiers (letters, digits and `_`, used in SQL queries and in paths such as `DATA/{TABLE}.csv`), a remote model can only reference http(s) types and static tables (no `file:` URL) [SECURITY]
+* v4.7.1 - No regex built from the attribute names (`FeatureType.indexOf`) nor polynomial regex on the SUP table names (CodeQL alerts), CI workflow with read only `permissions`
+* v4.7.1 - Build : bump `maven-dependency-plugin` to 3.11.0, GitHub actions (`actions/checkout` v7, `actions/setup-java` v6, `docker/*` actions : Node 24), Renovate configuration migrated to `config:recommended` (`commons-cli` 2.0 pre-releases ignored)
 * v4.7.0 - Bump GeoTools from 27.5 to 35.2 : `org.opengis` replaced by `org.geotools.api`, `DirectPosition` by `Position`. No output change on the CNIG / PCRS / DGPR test datasets (`document-info.json`, `validation.jsonl`, normalized data, reprojections in the 26 supported projections, with Java 17 and Java 21)
 * v4.7.0 - CI : build and tests with Java 17 (minimum supported version) and Java 25 (Docker image)
 * v4.7.0 - `validator-cli.jar` : 24.4 Mo to 26.3 Mo (newer EPSG database, `tools.jackson.core` required by GeoTools), Eclipse ImageN (image processing, replaces JAI in GeoTools) excluded from the jar

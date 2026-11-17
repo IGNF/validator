@@ -2,20 +2,26 @@ package fr.ign.validator.io;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
@@ -67,6 +73,47 @@ public class JsonModelReaderTest {
     public void testLoadDocumentModelUrlNotFound() throws MalformedURLException {
         URL documentModelUrl = new URL("https://example.local/not-found/files.json");
         modelLoader.loadDocumentModel(documentModelUrl);
+    }
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    /**
+     * The names of the tables are used in SQL queries and file paths.
+     */
+    @Test
+    public void testLoadDocumentModelInvalidTableName() throws Exception {
+        File documentModelPath = folder.newFile("document.json");
+        FileUtils.writeStringToFile(
+            documentModelPath,
+            "{\"name\": \"invalid\", \"files\": [{\"type\": \"table\", \"name\": \"../../ZONE_URBA\","
+                + " \"path\": \"ZONE_URBA\", \"tableModel\": \"auto\"}]}",
+            StandardCharsets.UTF_8
+        );
+        InvalidModelException e = assertThrows(
+            InvalidModelException.class,
+            () -> modelLoader.loadDocumentModel(documentModelPath)
+        );
+        assertTrue(e.getMessage(), e.getMessage().contains("'../../ZONE_URBA'"));
+    }
+
+    /**
+     * A remote model can't reference local files.
+     */
+    @Test
+    public void testCheckRemoteReference() throws Exception {
+        URL remoteModel = new URL("https://example.org/standard/cnig_PLU_2017.json");
+        URL localModel = new URL("file:/opt/config/cnig_PLU_2017/files.json");
+        URL remoteType = new URL("https://example.org/standard/cnig_PLU_2017/types/ZONE_URBA.json");
+        URL localFile = new URL("file:/etc/passwd");
+
+        assertEquals(remoteType, AbstractModelReader.checkRemoteReference(remoteModel, remoteType));
+        assertEquals(localFile, AbstractModelReader.checkRemoteReference(localModel, localFile));
+        assertEquals(null, AbstractModelReader.checkRemoteReference(remoteModel, null));
+        assertThrows(
+            InvalidModelException.class,
+            () -> AbstractModelReader.checkRemoteReference(remoteModel, localFile)
+        );
     }
 
     /**

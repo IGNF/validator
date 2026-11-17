@@ -11,8 +11,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.database.SqlIdentifier;
 import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.exception.ModelNotFoundException;
+import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.DocumentModel;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.FeatureTypeRef;
@@ -58,7 +60,9 @@ abstract class AbstractModelReader implements ModelReader {
         log.info(MARKER, "Loading FeatureTypes for {} ...", documentModel);
         for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
             log.info(MARKER, "Loading FeatureType for {} ...", tableModel);
-            URL featureTypeUrl = resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel);
+            URL featureTypeUrl = checkRemoteReference(
+                documentModelUrl, resolveFeatureTypeUrl(documentModelUrl, documentModel, tableModel)
+            );
             if (featureTypeUrl == null) {
                 log.info(MARKER, "Loading FeatureType for {} : skipped (tableModel declared as auto)", tableModel);
                 continue;
@@ -80,9 +84,72 @@ abstract class AbstractModelReader implements ModelReader {
         log.info(MARKER, "Loading StaticFiles for {} ...", documentModel);
         for (StaticTable staticTable : documentModel.getStaticTables()) {
             log.info(MARKER, "Loading StaticFile for {} ...", staticTable.getName());
-            URL staticTypeURL = resolveStaticTypeUrl(documentModelUrl, documentModel, staticTable);
+            URL staticTypeURL = checkRemoteReference(
+                documentModelUrl, resolveStaticTypeUrl(documentModelUrl, documentModel, staticTable)
+            );
             staticTable.setData(staticTypeURL);
         }
+    }
+
+    /**
+     * Ensure that the names of the tables, attributes and static tables are valid
+     * identifiers (they are used in SQL queries and file paths, ex :
+     * DATA/{TABLE}.csv).
+     *
+     * @param documentModel
+     * @throws InvalidModelException
+     */
+    protected void validateNames(DocumentModel documentModel) throws InvalidModelException {
+        for (TableModel tableModel : ModelHelper.getTableModels(documentModel)) {
+            checkName(documentModel, "table", tableModel.getName());
+            FeatureType featureType = tableModel.getFeatureType();
+            if (featureType == null) {
+                continue;
+            }
+            for (AttributeType<?> attribute : featureType.getAttributes()) {
+                checkName(documentModel, "attribute of " + tableModel.getName(), attribute.getName());
+            }
+        }
+        for (StaticTable staticTable : documentModel.getStaticTables()) {
+            checkName(documentModel, "static table", staticTable.getName());
+        }
+    }
+
+    private void checkName(DocumentModel documentModel, String kind, String name) throws InvalidModelException {
+        if (!SqlIdentifier.isValid(name)) {
+            throw new InvalidModelException(
+                String.format(
+                    "Invalid %1s name '%2s' in %3s (letters, digits and _ expected, not starting with a digit)",
+                    kind, name, documentModel.getName()
+                )
+            );
+        }
+    }
+
+    /**
+     * A remote document model can only reference remote resources (a "file:" URL
+     * would allow to read the files of the server).
+     *
+     * @param documentModelUrl
+     * @param url              resolved FeatureType or static table URL (may be
+     *                         null)
+     * @return url
+     * @throws InvalidModelException
+     */
+    static URL checkRemoteReference(URL documentModelUrl, URL url) throws InvalidModelException {
+        if (url == null || !isHttp(documentModelUrl) || isHttp(url)) {
+            return url;
+        }
+        throw new InvalidModelException(
+            String.format(
+                "Invalid reference '%1s' in %2s (only http and https URLs are allowed for a remote model)",
+                url, documentModelUrl
+            )
+        );
+    }
+
+    private static boolean isHttp(URL url) {
+        return url.getProtocol().equals("http") || url.getProtocol().equals("https");
     }
 
     /**

@@ -245,9 +245,10 @@ public class FeatureType implements Model {
      * @return -1 si undefined
      */
     public int indexOf(String name) {
+        // case insensitive, ignoring an UTF-8 BOM (first column of a CSV file)
+        String cleanName = name.startsWith("\ufeff") ? name.substring(1) : name;
         for (int i = 0; i < attributes.size(); i++) {
-            String regexp = "(?i)\ufeff?" + attributes.get(i).getName();
-            if (name.matches(regexp)) {
+            if (cleanName.equalsIgnoreCase(attributes.get(i).getName())) {
                 return getParentAttributeCount() + i;
             }
         }

@@ -367,6 +367,12 @@ public class Database implements Closeable {
     public void createTable(String tableName, List<String> columnNames) throws SQLException {
         log.info(MARKER, "Create table for the TableModel '{}' with text columns...", tableName);
 
+        /* names are concatenated in the query (they may come from the user data) */
+        SqlIdentifier.check(tableName);
+        for (String columnName : columnNames) {
+            SqlIdentifier.check(columnName);
+        }
+
         StringBuilder query = new StringBuilder();
         query.append("CREATE TABLE " + tableName + " (");
         query.append(" __id INTEGER,");
@@ -430,6 +436,8 @@ public class Database implements Closeable {
      */
     public void createIndex(String tableName, String columnName) throws SQLException {
         log.info(MARKER, "Create index on {}.{} ...", tableName, columnName);
+        SqlIdentifier.check(tableName);
+        SqlIdentifier.check(columnName);
         String indexName = "idx_" + tableName + "_" + columnName;
         /*
          * PostgreSQL : btree indexes are limited to values of about 2700 bytes (ex :
@@ -723,6 +731,7 @@ public class Database implements Closeable {
      * @throws IOException
      */
     private String[] getTableSchema(String tablename) throws SQLException, IOException {
+        SqlIdentifier.check(tablename);
         RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1");
         String[] header = query.getHeader();
         query.close();

@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "packageRules": [
     {
@@ -13,6 +13,11 @@
     {
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "commons-cli 2.0 is only available as pre-releases (ex : 2.0-gt2-pre1)",
+      "matchPackageNames": ["commons-cli:commons-cli"],
+      "allowedVersions": "!/-pre/"
     }
   ]
 }

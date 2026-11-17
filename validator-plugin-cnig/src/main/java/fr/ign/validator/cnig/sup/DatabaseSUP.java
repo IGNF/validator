@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -166,9 +167,12 @@ public class DatabaseSUP implements Closeable {
             /* fill merged tables */
             for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
                 String tableName = fileModel.getName();
-                if (tableName.matches(DatabaseSUP.REGEX_TABLE_ASSIETTE)) {
+                // equivalent to REGEX_TABLE_ASSIETTE and REGEX_TABLE_GENERATEUR without
+                // a polynomial regex on the names of the model
+                String upperName = tableName.toUpperCase(Locale.ROOT);
+                if (upperName.contains("_ASSIETTE_SUP_")) {
                     database.loadAssiettesFromTable(tableName);
-                } else if (tableName.matches(DatabaseSUP.REGEX_TABLE_GENERATEUR)) {
+                } else if (upperName.contains("_GENERATEUR_SUP_")) {
                     database.loadGenerateursFromTable(tableName);
                 }
             }

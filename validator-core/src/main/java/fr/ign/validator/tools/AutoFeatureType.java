@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.database.SqlIdentifier;
 import fr.ign.validator.model.AttributeType;
 import fr.ign.validator.model.FeatureType;
 import fr.ign.validator.model.type.GeometryType;
@@ -53,6 +54,11 @@ public class AutoFeatureType {
             header = reader.getHeader();
         }
         for (String attributeName : header) {
+            // the names of the columns are used in SQL queries (CREATE TABLE...)
+            if (!SqlIdentifier.isValid(attributeName)) {
+                log.warn(MARKER, "Column '{}' of {} ignored (invalid name)", attributeName, path);
+                continue;
+            }
             AttributeType<?> attribute = attributeName.equalsIgnoreCase("WKT") ? new GeometryType() : new StringType();
             attribute.setName(attributeName);
             if (attributeName.equalsIgnoreCase("gml_id") || attributeName.equalsIgnoreCase("id")) {

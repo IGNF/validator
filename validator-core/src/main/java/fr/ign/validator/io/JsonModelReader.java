@@ -39,6 +39,7 @@ public class JsonModelReader extends AbstractModelReader {
             DocumentModel documentModel = objectMapper.readValue(is, DocumentModel.class);
             loadFeatureTypes(documentModel, documentModelUrl);
             loadStaticFiles(documentModel, documentModelUrl);
+            validateNames(documentModel);
             return documentModel;
         } catch (IOException e) {
             String message = String.format(
