@@ -3,15 +3,24 @@ package fr.ign.validator.tools;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.sqlite.SQLiteConfig;
+
+import fr.ign.validator.exception.ValidatorFatalError;
 
 /**
  * Helper class to read data from {@link MultiTableFile}.
@@ -142,9 +151,60 @@ public class MultiTableReader {
          */
         File csvDirectory = CompanionFileUtils.getCompanionFile(file, TMP_EXTENSION);
         if (!csvDirectory.exists()) {
+            checkGeopackageTableNames(file);
             FileConverter.getInstance().convertToCSV(file, csvDirectory, options);
         }
 
         return new MultiTableReader(file, csvDirectory);
+    }
+
+    /**
+     * Allowed table names in a GeoPackage converted to a CSV directory (ogr2ogr
+     * builds the name of the CSV files from the table names : "../../x" would be
+     * written outside the directory)
+     */
+    private static final Pattern SAFE_TABLE_NAME = Pattern.compile("[A-Za-z0-9_][A-Za-z0-9_.-]*");
+
+    /**
+     * Ensure that the table names of a GeoPackage can't be used to write files
+     * outside the CSV directory.
+     *
+     * @param file
+     * @throws ValidatorFatalError
+     */
+    static void checkGeopackageTableNames(File file) throws ValidatorFatalError {
+        if (!FilenameUtils.getExtension(file.getName()).toLowerCase(Locale.ROOT).equals("gpkg")) {
+            return;
+        }
+        SQLiteConfig config = new SQLiteConfig();
+        config.setReadOnly(true);
+        String url = "jdbc:sqlite:" + file.getAbsolutePath();
+        List<String> names = new ArrayList<>();
+        try (Connection connection = config.createConnection(url); Statement statement = connection.createStatement()) {
+            try (ResultSet rs = statement.executeQuery(
+                "SELECT name FROM sqlite_master WHERE type IN ('table','view')"
+            )) {
+                while (rs.next()) {
+                    names.add(rs.getString(1));
+                }
+            }
+            try (ResultSet rs = statement.executeQuery("SELECT table_name FROM gpkg_contents")) {
+                while (rs.next()) {
+                    names.add(rs.getString(1));
+                }
+            } catch (SQLException e) {
+                // not a GeoPackage (ogr2ogr will fail)
+                log.debug(MARKER, "gpkg_contents not found in {}", file);
+            }
+        } catch (SQLException e) {
+            throw new ValidatorFatalError(String.format("Fail to read GeoPackage %1s", file.getName()), e);
+        }
+        for (String name : names) {
+            if (name == null || !SAFE_TABLE_NAME.matcher(name).matches() || name.contains("..")) {
+                throw new ValidatorFatalError(
+                    String.format("Invalid table name '%1s' in %2s", name, file.getName())
+                );
+            }
+        }
     }
 }

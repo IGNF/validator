@@ -9,6 +9,7 @@
 ### v4.7.0 - Dependencies and build
 
 * v4.7.1 - ogr2ogr : the input driver is forced according to the extension (`-if`, GDAL >= 3.2) and the OGR VRT driver is disabled (`GDAL_SKIP=OGR_VRT`) : a ".gml", ".dbf" or ".gpkg" file containing an OGR VRT could read the files of the server or internal URLs (exposed in `DATA/*.csv` and the report). A file whose content doesn't match its extension (ex : CSV named ".dbf") is now rejected [SECURITY]
+* v4.7.1 - GeoPackage multi-table files : table names are checked before the conversion (a table named `../../x` was written by ogr2ogr outside the conversion directory) [SECURITY]
 * v4.7.1 - GML : no download of the WFS schema referenced by the user file (`GML_DOWNLOAD_WFS_SCHEMA=NO`, SSRF), the validation database credentials (`DB_*`, `PG*`) are not given to ogr2ogr [SECURITY]
 * v4.7.1 - Database : the column names of the FeatureTypes created from the data (`auto` table models, ex : PCRS) are no longer concatenated as is in `CREATE TABLE` (SQL injection with a crafted column name, ex : PostgreSQL validation database of validator-api) : invalid names are ignored with a warning, `Database.createTable` / `createIndex` reject them [SECURITY]
 * v4.7.1 - Model : the names of the tables, attributes and static tables must be valid identifiers (letters, digits and `_`, used in SQL queries and in paths such as `DATA/{TABLE}.csv`), a remote model can only reference http(s) types and static tables (no `file:` URL) [SECURITY]

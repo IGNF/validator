@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assume;
@@ -57,6 +60,28 @@ public class FileConverterSecurityTest {
         if (target.exists()) {
             assertFalse(FileUtils.readFileToString(target, StandardCharsets.UTF_8).contains("SERVER-SECRET-123"));
         }
+    }
+
+    /**
+     * A GeoPackage with a table named "../../pwned" (CSV file written outside the
+     * conversion directory by ogr2ogr).
+     */
+    @Test
+    public void testGeopackageTableNameTraversal() throws Exception {
+        File documentDir = folder.newFolder("doc", "sub");
+        File source = new File(documentDir, "LAYERS.gpkg");
+        try (
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:" + source.getAbsolutePath());
+            Statement statement = connection.createStatement()) {
+            statement.execute("CREATE TABLE \"../../pwned\" (fid INTEGER PRIMARY KEY, x TEXT)");
+            statement.execute("INSERT INTO \"../../pwned\" (x) VALUES ('1')");
+        }
+        assertThrows(
+            ValidatorFatalError.class,
+            () -> MultiTableReader.createMultiTableReader(source, new TableReaderOptions(StandardCharsets.UTF_8))
+        );
+        assertFalse(new File(folder.getRoot(), "doc/pwned.csv").exists());
+        assertFalse(new File(folder.getRoot(), "pwned.csv").exists());
     }
 
     @Test
