@@ -2,7 +2,9 @@
 
 ## Description
 
-Cette documentation décrit schématiquement les modèles JSON de validation du validateur `IGNF/validator` pour ses versions `4.0` et supérieures.
+Cette documentation décrit schématiquement les modèles JSON de validation du validateur `IGNF/validator` pour ses versions `4.0` et supérieures. C'est la **référence** des propriétés ; pour écrire un modèle pas à pas, voir le guide [document_model.md](../../../../../doc/document_model.md).
+
+Les propriétés inconnues sont ignorées. Les propriétés `id` et `abstract` présentes dans les modèles du Géoportail de l'Urbanisme sont utilisées par les outils de gestion des modèles et ignorées par le validateur.
 
 ## Vue d'ensemble des concepts
 
@@ -191,7 +193,13 @@ Remarques :
 
 ### Tables statiques
 
-Une table statique est une liste de valeurs codifiées, fournie sous forme d'un fichier CSV (avec un en-tête) dans le dossier `codes` du modèle et déclarée dans la propriété `codes` du `files.json`. Une fois déclarée, elle est utilisable comme cible d'une `reference` ou d'une clé étrangère, comme n'importe quelle table du document. C'est ce qui est utilisé pour contrôler les couples `TYPEPSC`/`STYPEPSC` autorisés dans les standards CNIG. Voir aussi [document_model.md](../../../../../doc/document_model.md).
+Une table statique est une liste de valeurs codifiées, fournie sous forme d'un fichier CSV (avec un en-tête) dans le dossier `codes` du modèle et déclarée dans la propriété `codes` du `files.json`. Une fois déclarée, elle est utilisable comme cible d'une `reference` ou d'une clé étrangère, comme n'importe quelle table du document. C'est ce qui est utilisé pour contrôler les couples `TYPEPSC`/`STYPEPSC` autorisés dans les standards CNIG.
+
+| Propriété | Type     | Description                                                                                                  | Obligatoire |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------ | :---------: |
+| `name`    | `string` | Nom de la table statique dans la base de validation (`[A-Za-z_][A-Za-z0-9_]*`)                               |      O      |
+| `title`   | `string` | Nom pour l'affichage                                                                                         |      N      |
+| `data`    | `string` | Chemin ou URL du CSV. Par défaut `./codes/{name}.csv` (modèle local) ou `./{document.name}/codes/{name}.csv` (modèle distant) |      N      |
 
 
 ## Modélisation des erreurs
