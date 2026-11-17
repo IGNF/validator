@@ -9,15 +9,15 @@ Une géométrie modélise une forme géométrique ponctuelle, linéaire ou surfa
 Les formats supportés par ogr2ogr de GDAL sont supportés par le validateur pour les géométries. Globalement, le validateur supporte les formats :
 
 * `Shapefile`
-* `MapInfo`
+* `MapInfo` (TAB)
 * `GML`
-* `GeoJSON`
+* `GeoPackage`
 * `WKT` (dans CSV)
 
 ## Mapping
 
 | Langage    | Type                                                         |
 | ---------- | ------------------------------------------------------------ |
-| Java       | `com.vividsolutions.jts.geom.Geometry`                       |
+| Java       | `org.locationtech.jts.geom.Geometry`                         |
 | JSON       | [GeoJSON Geometry](https://geojson.org/schema/Geometry.json) |
 | PostgreSQL | `geometry(Geometry)`                                         |

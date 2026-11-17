@@ -2,7 +2,9 @@
 
 ## Description
 
-Le type `JSON` permet d'indiquer que la valeur est une chaîne de caractère correspondant à un JSON valide.
+**Ce type n'est pas encore implémenté** (à l'étude, voir [README](../README.md#columntype)).
+
+Le type `JSON` permettrait d'indiquer que la valeur est une chaîne de caractère correspondant à un JSON valide.
 
 ## Format
 
@@ -17,7 +19,7 @@ Toute valeur respectant le format JSON, par exemple :
 
 | Langage    | Type           |
 | ---------- | -------------- |
-| Java       | `java.net.URL` |
+| Java       | (à définir)    |
 | JSON       | `any`          |
 | PostgreSQL | `jsonb`        |
 

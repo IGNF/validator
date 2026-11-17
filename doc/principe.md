@@ -9,7 +9,8 @@ Le modèle de document (`DocumentModel`) est chargé à partir de son URL rensei
 Le validateur prépare un répertoire de travail pour la validation où il écrira :
 
 * Le rapport de validation (`validation/validation.jsonl`) avec une erreur au format JSON par ligne (voir [JSON Lines](http://jsonlines.org/))
-* Un répertoire contenant les fichiers normalisés (`validation/DATA`)
+* Les informations sur le document (`validation/document-info.json` : emprise, fichiers, statistiques des tables, métadonnées)
+* Un répertoire contenant les fichiers normalisés (`validation/{DOCUMENT}/DATA`, avec l'option `--normalize`)
 
 ## 3) Énumération des fichiers avec des extensions supportées
 
@@ -37,5 +38,5 @@ Les contraintes d'ensemble (unicité, référence,...) sont validées à l'aide 
 
 ## 8) Normalisation des données
 
-Le validateur génère un dossier `validation/DATA` contenant "à plat" tous les fichiers validés et normalisés.
+Le validateur génère un dossier `validation/{DOCUMENT}/DATA` contenant "à plat" tous les fichiers validés et normalisés : les tables au format CSV (UTF-8, géométries en WKT, `CRS:84` par défaut ; plus de shapefile depuis la 4.6.4) et les fichiers PDF. Les fiches de métadonnées sont copiées dans `validation/{DOCUMENT}/METADATA`.
 

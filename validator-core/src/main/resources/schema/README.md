@@ -13,7 +13,7 @@ Cette documentation décrit schématiquement les modèles JSON de validation du 
 | [Table](#table)                    | Modélisation d'une table matérialisée dans un fichier.                          | `FeatureType`    |
 | [Column](#column)                  | Modélisation d'une colonne d'une table.                                         | `AttributeType`  |
 | [TableConstraints](#tableconstraints) | Contraintes d'une table : conditions SQL et clés étrangères.                 | `FeatureTypeConstraints` |
-| [ValidatorError](#validationerror) | Modélisation des erreurs (résultat de la validation)                            | `ValidatorError` |
+| [ValidatorError](#validatorerror) | Modélisation des erreurs (résultat de la validation)                            | `ValidatorError` |
 
 ## Modélisation des données
 
@@ -28,13 +28,14 @@ Le concept de [Document.json](Document.json) est utilisé pour modéliser un dos
 | `document.description` | `string`              | La description du modèle                                |      N      |   4.0   |
 | `document.files`       | `File[]`              | La liste des fichiers attendus dans le dossier          |      O      |   4.0   |
 | `document.constraints` | `DocumentConstraints` | Contraintes au niveau du document                       |      N      |   4.0   |
+| `document.codes`       | `StaticTable[]`       | Les [tables statiques](#tables-statiques) (listes de codes) : `name`, `title`, `data` |      N      |   4.0   |
 
 ### DocumentConstraints
 
 | Propriété                        | Type     | Description                                 | Obligatoire | Version |
 | -------------------------------- | -------- | ------------------------------------------- | :---------: | :-----: |
-| `document.folderName`            | `RegExp` | Nom de dossier attendu pour le document     |      N      |   4.0   |
-| `document.metadataSpecification` | `string` | Valeur attendue dans la fiche de métadonnée |      N      |   4.0   |
+| `document.constraints.folderName`            | `RegExp` | Nom de dossier attendu pour le document     |      N      |   4.0   |
+| `document.constraints.metadataSpecification` | `string` | Valeur attendue dans la fiche de métadonnée |      N      |   4.0   |
 
 ### File
 
@@ -47,15 +48,16 @@ Les fichiers d'un document peuvent correspondre à des tables, des sous-dossiers
 | `file.description` | `string`                   | La description du fichier                                    |      N      |   4.0   |
 | `file.type`        | [FileType](#filetype)      | Le type de fichier                                           |      O      |   4.0   |
 | `file.path`        | `RegExp`                   | Chemin relatif par rapport à la racine du document (2)       |      O      |   4.0   |
-| `file.mandatory`   | `ERROR`, `WARN`, `OPTIONAL`| Impact de l'absence du fichier sur la validité du document   |      O      |   4.0   |
+| `file.mandatory`   | `ERROR`, `WARN`, `OPTIONAL`| Impact de l'absence du fichier sur la validité du document (`WARN` par défaut) |      N      |   4.0   |
 | `file.tableModel`  | `string`                   | Lien vers le [modèle de table](#table) (3)                   |    N (3)    |   4.0   |
 | `file.tables`      | [`EmbeddedTable[]`](#embeddedtable) | Tables contenues dans le fichier (4)                |    N (4)    |   4.2   |
+| `file.xsdSchema`   | `string`                   | URL du schéma XSD pour la validation XML (GML, ex : PCRS)    |      N      |   4.2   |
 
 Remarques :
 
-* (1) `name` est un identifiant technique, utilisé pour désigner le modèle (ex : dans les rapports d'erreurs). Il n'est pas utilisé pour retrouver le fichier : c'est le rôle de `path`.
+* (1) `name` est un identifiant technique, utilisé pour désigner le modèle (ex : dans les rapports d'erreurs). Il n'est pas utilisé pour retrouver le fichier : c'est le rôle de `path`. Pour une `table`, c'est aussi le nom de la table dans la base de validation et des fichiers normalisés : il doit respecter `[A-Za-z_][A-Za-z0-9_]*`, sinon le modèle est rejeté.
 * (2) `path` est une expression régulière (syntaxe JAVA, insensible à la casse) qui décrit le chemin complet **dossiers inclus** (ex : `Pieces_ecrites/3_Reglement/[AB0-9]{5}_reglement_[0-9]{8}`). Le nom du fichier n'a pas besoin d'être répété dans `name`, et `path` ne contient pas de `name`. Les extensions ne sont **pas** spécifiées : l'expression régulière est complétée automatiquement en fonction du `type`, ce qui simplifie le support de plusieurs formats pour les tables (c.f. [FileType](#filetype)).
-* (3) Pour un fichier de type `table`. Il est conseillé de spécifier l'URL du modèle de table qui sera par défaut `./types/{file.name}.json`
+* (3) Pour un fichier de type `table`. Par défaut `./types/{file.name}.json` (pour un modèle distant dont l'URL ne se termine pas par `files.json` : `./{document.name}/types/{file.name}.json`). La valeur `auto` indique que la structure de la table est déduite des données. Un modèle chargé en http(s) ne peut référencer que des URL http(s).
 * (4) Pour un fichier de type `multi_table` uniquement (voir ci-dessous).
 
 ### EmbeddedTable
@@ -66,8 +68,8 @@ Un fichier de type `multi_table` (ex : un GML ou un GeoPackage) contient plusieu
 | ---------------------- | --------------------------- | ------------------------------------------------------------------------ | :---------: | :-----: |
 | `table.name`           | `string`                    | Le nom de la couche dans le fichier (comparé sans tenir compte de la casse) |      O      |   4.2   |
 | `table.path`           | `RegExp`                    | Expression régulière alternative sur le nom de la couche (insensible à la casse, sans extension) |      N      |   4.2   |
-| `table.mandatory`      | `ERROR`, `WARN`, `OPTIONAL` | Impact de l'absence de la couche sur la validité du document             |      O      |   4.2   |
-| `table.tableModel`     | `string`                    | Lien vers le [modèle de table](#table)                                   |      O      |   4.2   |
+| `table.mandatory`      | `ERROR`, `WARN`, `OPTIONAL` | Non pris en charge actuellement (ignoré)                                 |      N      |   4.2   |
+| `table.tableModel`     | `string`                    | Lien vers le [modèle de table](#table) (mêmes règles par défaut que `file.tableModel`) |      N      |   4.2   |
 
 Remarques :
 
@@ -84,7 +86,7 @@ Les types de fichiers supportés sont les suivants :
 | `directory`   | Dossier permettant d'en valider l'existence                                       |   4.0   |
 | `metadata`    | Fiche de métadonnées XML au format ISO 19115 (`.xml`)                             |   4.0   |
 | `pdf`         | Fichier PDF (`.pdf`)                                                              |   4.0   |
-| `table`       | Table de données géographique ou non (`.csv`, `.dbf`, `.shp`, `.geojson`, `.gml`) |   4.0   |
+| `table`       | Table de données géographique ou non (`.csv`, `.dbf` pour un shapefile, `.tab`, `.gml`, `.gpkg`) |   4.0   |
 | `multi_table` | Un ensemble de tables stockées dans un seul fichier (`.gml`, `.gpkg`)             |   4.2   |
 
 Remarque : L'ajout du concept `multi_table` est lié à la validation des données [PCRS vecteur](https://github.com/cnigfr/PCRS) où un même fichier GML contient plusieurs collections. Il est étendu au format GeoPackage pour le [Géostandards Risques](https://github.com/cnigfr/Geostandards-Risques).
@@ -96,7 +98,7 @@ Le concept de [Table.json](Table.json) est utilisé pour modéliser une table et
 | Propriété           | Type       | Description                             | Obligatoire | Version |
 | ------------------- | ---------- | --------------------------------------- | :---------: | :-----: |
 | `table.name`        | `string`   | Le nom de la table au niveau système    |      O      |   4.0   |
-| `table.title`       | `string`   | Le nom de la table pour affichage       |      N      |   4.0   |
+| `table.title`       | `string`   | Le nom de la table pour affichage (ignoré par le validateur) |      N      |   4.0   |
 | `table.description` | `string`   | La description de la table              |      N      |   4.0   |
 | `table.columns`     | `Column[]` | La description des colonnes de la table |      O      |   4.0   |
 
@@ -104,14 +106,14 @@ Remarque : L'ajout d'une propriété  `PrimaryKey`, définie sous forme d'une ch
 
 ### Column
 
-Le concept de [Column.json](Column.json) est utilisé pour modéliser une table et ses colonnes.
+Les colonnes sont décrites dans [Table.json](Table.json).
 
 | Propriété            | Type                   | Description                          | Obligatoire | Version |
 | -------------------- | ---------------------- | ------------------------------------ | :---------: | :-----: |
-| `column.name`        | `string`               | Le nom de la table au niveau système |      O      |   4.0   |
-| `column.title`       | `string`               | Le nom de la table pour affichage    |      N      |   4.0   |
-| `column.description` | `string`               | La description de la table           |      N      |   4.0   |
-| `column.type`        | [Type](types/index.md) | Le type de la colonne                |      O      |   4.0   |
+| `column.name`        | `string`               | Le nom de la colonne au niveau système (`[A-Za-z_][A-Za-z0-9_]*`) |      O      |   4.0   |
+| `column.title`       | `string`               | Le nom de la colonne pour affichage    |      N      |   4.0   |
+| `column.description` | `string`               | La description de la colonne           |      N      |   4.0   |
+| `column.type`        | [ColumnType](#columntype) | Le type de la colonne                |      O      |   4.0   |
 | `column.constraints` | `ColumnConstraints`    | Les contraintes sur la colonne       |      N      |   4.0   |
 
 ### ColumnType
@@ -134,6 +136,7 @@ Le validateur supporte une liste finie de types :
 | [MultiPolygon](types/Geometry.md)       | Géométrie de type multi-polygone                     |   4.0   |
 | [GeometryCollection](types/Geometry.md) | Géométrie de type hétérogène                         |   4.0   |
 | [Path](types/Path.md)                   | Chemin vers un fichier dans le [document](#document) |   4.0   |
+| `Filename`                              | Nom d'un fichier qui doit exister dans le document   |   4.0   |
 | [Url](types/Url.md)                     | URL                                                  |   4.0   |
 
 
@@ -141,9 +144,9 @@ L'ajout des types suivants est à l'étude pour les futures versions :
 
 | Nom                             | Description                 |
 | ------------------------------- | --------------------------- |
-| [DateTime](types/DateTime.md)   | Jour, mois, année et heures |
-| [Year](types/Year.md)           | Année uniquement            |
-| [YearMonth](types/YearMonth.md) | Année et mois               |
+| DateTime                        | Jour, mois, année et heures |
+| Year                            | Année uniquement            |
+| YearMonth                       | Année et mois               |
 | [JSON](types/JSON.md)           | Valeur JSON valide          |
 
 
@@ -151,10 +154,12 @@ L'ajout des types suivants est à l'étude pour les futures versions :
 
 | Propriété   | Type              | Description                                                                  | Version |
 | ----------- | ----------------- | ---------------------------------------------------------------------------- | :-----: |
-| `required`  | `boolean`         | Contrainte interdisant une valeur nulle ou vide                              |   4.0   |
+| `required`  | `boolean`         | Contrainte interdisant une valeur nulle ou vide (`true` par défaut)          |   4.0   |
+| `presenceRequired` | `boolean`  | Contrainte de présence de la colonne dans la table (`true` par défaut)       |   4.0   |
 | `unique`    | `boolean`         | Contrainte d'unicité au sein de la table                                     |   4.0   |
-| `enum`      | `any[]`           | Contrainte d'appartenance à une liste de valeur                              |   4.0   |
-| `pattern`   | `string`          | Contrainte sous forme d'une expression régulière (syntaxe JAVA)              |   4.0   |
+| `enum`      | `string[]`        | Contrainte d'appartenance à une liste de valeur (type `String`)              |   4.0   |
+| `pattern`   | `string`          | Contrainte sous forme d'une expression régulière (syntaxe JAVA, type `String`) |   4.0   |
+| `minLength` | `integer`         | Contrainte sur la longueur minimale d'une chaîne de caractère                |   4.0   |
 | `maxLength` | `integer`         | Contrainte sur la longueur maximale d'une chaîne de caractère                |   4.0   |
 | `reference` | `ReferenceTarget` | Contrainte de correspondance entre la valeur et celle d'une table référencée |   4.0   |
 
@@ -186,7 +191,7 @@ Remarques :
 
 ### Tables statiques
 
-Une table statique est une liste de valeurs codifiées, fournie sous forme d'un fichier CSV (avec un en-tête) dans le dossier `codes` du modèle et déclarée dans la propriété `codes` du `files.json`. Une fois déclarée, elle est utilisable comme cible d'une `reference` ou d'une clé étrangère, comme n'importe quelle table du document. C'est ce qui est utilisé pour contrôler les couples `TYPEPSC`/`STYPEPSC` autorisés dans les standards CNIG. Voir aussi [document_model.md](../../../../../../doc/document_model.md).
+Une table statique est une liste de valeurs codifiées, fournie sous forme d'un fichier CSV (avec un en-tête) dans le dossier `codes` du modèle et déclarée dans la propriété `codes` du `files.json`. Une fois déclarée, elle est utilisable comme cible d'une `reference` ou d'une clé étrangère, comme n'importe quelle table du document. C'est ce qui est utilisé pour contrôler les couples `TYPEPSC`/`STYPEPSC` autorisés dans les standards CNIG. Voir aussi [document_model.md](../../../../../doc/document_model.md).
 
 
 ## Modélisation des erreurs

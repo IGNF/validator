@@ -6,7 +6,7 @@ Le type `Url` permet d'indiquer que la valeur doit correspondre à une URL valid
 
 ## Format
 
-Les URL relatives et absolues sont autorisées dès lors qu'elles sont valides.
+Seules les URL absolues (avec un protocole, ex : `https://...`) sont acceptées.
 
 Remarque : L'existence de la resource pointée par l'URL n'est pas validée.
 

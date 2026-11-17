@@ -6,7 +6,7 @@ The following Metadata model is dedicated to validation according to INSPIRE and
 
 The following profile is used to store metadata parsed from ISO 19915. Metadata attributes are based on INSPIRE requirements.
 
-![Class diagram](uml/metadata.png)
+![Class diagram](img/metadata.drawio.png)
 
 ## Metadata properties
 
@@ -24,9 +24,9 @@ Metadata "attributes" with INSPIRE multiplicity for datasets according to INSPIR
 | topicCategory             | `TopicCategoryCode`             | Topic category                       | [1..*] (1)   |
 | keywords                  | `Keywords`                      | Keyword                              | [1..*]       |
 | referenceSystemIdentifier | `ReferenceSystemIdentifier`     | Coordinate Reference System          | [0..*] (1)   |
-| dateOfPublication         | `Date`                          | Date of publication                  | [0..*] (1)   |
-| dateOfLastRevision        | `Date`                          | Date of last revision                | [0..1]       |
-| dateOfCreation            | `Date`                          | Date of creation                     | [0..1]       |
+| dateOfPublication         | `Date`                          | Date of publication                  | [0..*] (2)   |
+| dateOfLastRevision        | `Date`                          | Date of last revision                | [0..1] (2)   |
+| dateOfCreation            | `Date`                          | Date of creation                     | [0..1] (2)   |
 | characterSet              | `CharacterSetCode`              | Character Encoding                   | [1..*] (1)   |
 | spatialRepresentationType | `SpatialRepresentationTypeCode` | Spatial representation type          | [1..*] (1)   |
 | lineage                   | `String`                        | Lineage                              | [1]          |
@@ -41,6 +41,8 @@ Metadata "attributes" with INSPIRE multiplicity for datasets according to INSPIR
 | distributionFormats       | `Format`                        | Encoding                             | [0..*]       |
 
 > (1) multiplicity is adapted, only the first element is parsed
+>
+> (2) the most recent date of the given type is kept
 
 ## fileIdentifier
 
@@ -237,7 +239,7 @@ Source : INSPIRE_GUIDELINE_2017
 
 ```(xpath)
 identificationInfo[1]/*/descriptiveKeywords/*/keyword
-identificationInfo[1]/*/descriptiveKeywords/*/thesaurusName
+identificationInfo[1]/*/descriptiveKeywords/*/thesaurusName/*/title
 ```
 
 ### References
@@ -304,7 +306,7 @@ Source : INSPIRE_GUIDELINE_2017
 ### XPath
 
 ```(xpath)
-identificationInfo[1]/*/citation/*/date[./*/dateType/*/text()='publication’/*/date
+identificationInfo[1]/*/citation/*/date[./*/dateType/*/text()='publication']/*/date
 ```
 
 ### References
@@ -389,7 +391,7 @@ identificationInfo[1]/*/characterSet
 
 Source : INSPIRE_GUIDELINE_2017
 
-[details about constraints](./metadata/resourceContraints.md)
+[details about constraints](./metadata/resourceConstraints.md)
 
 ### XPath
 
@@ -553,7 +555,7 @@ Source : INSPIRE_GUIDELINE_2017
 ### XPath
 
 ```(xpath)
-contact*/organisationName
+contact/*/organisationName
 contact/*/address/*/electronicMailAddress
 contact/*/role
 ```
@@ -641,7 +643,7 @@ servitudes d’utilité publique](http://cnig.gouv.fr/wp-content/uploads/2017/09
 * [http://www.isotc211.org/2005/](http://www.isotc211.org/2005/)
 * [http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml](http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml)
 
-* [http://inspire.ec.europa.eu/metadata-codelist/](INSPIRE metadata code list register)
+* [INSPIRE metadata code list register](http://inspire.ec.europa.eu/metadata-codelist/)
 * [ISO 19115 and 19115-2 CodeList Dictionaries](https://geo-ide.noaa.gov/wiki/index.php?title=ISO_19115_and_19115-2_CodeList_Dictionaries)
 
 ### Third part tools

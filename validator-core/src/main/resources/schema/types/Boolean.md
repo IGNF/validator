@@ -13,7 +13,8 @@ Les formats suivants sont supportés implicitement lors de la validation :
 * t, f
 * Y, N
 * y, n
-* true, false
+
+Remarque : `true` et `false` ne sont **pas** acceptés.
 
 ## Mapping
 

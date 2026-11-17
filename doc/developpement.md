@@ -18,7 +18,7 @@ Sous Debian/Ubuntu :
 sudo apt-get install openjdk-17-jdk
 ```
 
-La CI GitHub Actions utilise actuellement **Java 21**.
+La CI GitHub Actions (ubuntu-26.04) teste **Java 17** (version minimale) et **Java 25** (version de l'image Docker).
 
 ### Maven
 
@@ -152,14 +152,15 @@ java -jar validator-cli/target/validator-cli.jar version
 2. Vérifier que le dépôt est propre : `git status`.
 3. Mettre à jour [CHANGELOG.md](../CHANGELOG.md) avec les changements de la version à publier.
 4. S'assurer que les tests passent : `make test`.
+5. Supprimer les fichiers laissés par une release précédente : `rm -f release.properties pom.xml.releaseBackup` (sinon `release:prepare` reprend la release précédente au lieu d'en préparer une nouvelle).
 
 ### Convention de versionnement
 
 Le projet suit le versionnement sémantique Maven :
 
-- En développement : `X.Y.Z-SNAPSHOT` (ex. `4.5.4-SNAPSHOT`)
-- En release : `X.Y.Z` (ex. `4.5.4`)
-- Tags Git : `vX.Y.Z` (ex. `v4.5.4`)
+- En développement : `X.Y.Z-SNAPSHOT` (ex. `4.7.1-SNAPSHOT`)
+- En release : `X.Y.Z` (ex. `4.7.1`)
+- Tags Git : `vX.Y.Z` (ex. `v4.7.1`)
 
 ### Méthode recommandée : `mvn release:prepare`
 
@@ -171,16 +172,16 @@ mvn release:prepare
 
 Le plugin demande interactivement :
 
-1. La version de release (ex. `4.5.4`)
-2. Le nom du tag (par défaut `v4.5.4`, format configuré dans `pom.xml`)
-3. La version de développement suivante (ex. `4.5.5-SNAPSHOT`)
+1. La version de release (ex. `4.7.1`)
+2. Le nom du tag (par défaut `v4.7.1`, format configuré dans `pom.xml`)
+3. La version de développement suivante (ex. `4.7.2-SNAPSHOT`)
 
 Il crée ensuite **deux commits** :
 
 1. `[maven-release-plugin] prepare release vX.Y.Z` — passe les POM en version release et met à jour `<scm><tag>`
 2. `[maven-release-plugin] prepare for next development iteration` — passe les POM en `X.Y.(Z+1)-SNAPSHOT`
 
-Et le tag Git `vX.Y.Z` sur le premier commit.
+Et le tag Git `vX.Y.Z` sur le premier commit. Rien n'est poussé (`pushChanges=false` dans `pom.xml`).
 
 #### Pousser les commits et le tag
 
@@ -189,13 +190,7 @@ git push origin master
 git push origin vX.Y.Z
 ```
 
-> **Attention SSH** : le `pom.xml` référence `scm:git:git@github.com:IGNF/validator.git`. Si la clé SSH n'est pas configurée, utiliser `-DpushChanges=false` lors du `release:prepare` et pousser manuellement en HTTPS :
->
-> ```bash
-> mvn release:prepare -DpushChanges=false
-> git push origin master
-> git push origin vX.Y.Z
-> ```
+Le push du tag `vX.Y.Z` déclenche [.github/workflows/docker.yml](../.github/workflows/docker.yml) qui publie l'image `ghcr.io/ignf/validator` (tags `X.Y.Z`, `X.Y` et `latest`).
 
 #### Reprendre une release interrompue
 
@@ -203,12 +198,12 @@ Si `release:prepare` échoue en cours de route (ex. tag déjà existant), ne pas
 
 ```bash
 git log --oneline -5
-git tag -l 'v4.5.*'
+git tag -l 'v4.7.*'
 grep '<version>' pom.xml
 ```
 
 - Si le commit `prepare release` et le tag existent déjà : terminer manuellement l'itération suivante (passer en `SNAPSHOT`, committer, supprimer `release.properties` et `*.releaseBackup`).
-- Ou reprendre avec `mvn release:prepare -Dresume=true -DpushChanges=false` si `release.properties` est cohérent.
+- Ou reprendre avec `mvn release:prepare -Dresume=true` si `release.properties` est cohérent.
 
 ### Méthode manuelle
 
@@ -216,25 +211,25 @@ Si le plugin Maven Release pose problème, la release peut être faite à la mai
 
 ```bash
 # 1. Passer en version release
-mvn versions:set -DnewVersion=4.5.4 -DgenerateBackupPoms=false
+mvn versions:set -DnewVersion=4.7.1 -DgenerateBackupPoms=false
 
-# 2. Mettre à jour <scm><tag>v4.5.4</scm><tag> dans pom.xml
+# 2. Mettre à jour <scm><tag>v4.7.1</tag></scm> dans pom.xml
 
 # 3. Committer et tagger
 git add pom.xml validator-*/pom.xml CHANGELOG.md
-git commit -m "[maven-release-plugin] prepare release v4.5.4"
-git tag -a v4.5.4 -m "[maven-release-plugin] copy for tag v4.5.4"
+git commit -m "[maven-release-plugin] prepare release v4.7.1"
+git tag -a v4.7.1 -m "[maven-release-plugin] copy for tag v4.7.1"
 
 # 4. Passer à la version SNAPSHOT suivante
-mvn versions:set -DnewVersion=4.5.5-SNAPSHOT -DgenerateBackupPoms=false
-# Remettre <scm><tag>4.4.20</scm><tag> dans pom.xml (convention du projet)
+mvn versions:set -DnewVersion=4.7.2-SNAPSHOT -DgenerateBackupPoms=false
+# Remettre <scm><tag>v4.6.1</tag></scm> dans pom.xml (valeur conservée entre les releases)
 
 git add pom.xml validator-*/pom.xml
 git commit -m "[maven-release-plugin] prepare for next development iteration"
 
 # 5. Pousser
 git push origin master
-git push origin v4.5.4
+git push origin v4.7.1
 ```
 
 ### Construire les binaires depuis le tag
@@ -242,7 +237,7 @@ git push origin v4.5.4
 Les binaires doivent être construits **depuis le tag**, pas depuis `master` :
 
 ```bash
-git checkout v4.5.4
+git checkout v4.7.1
 make package
 git checkout master
 ```
@@ -250,8 +245,8 @@ git checkout master
 Fichiers à publier :
 
 - `validator-cli/target/validator-cli.jar`
-- `validator-cli/target/ign-validator_4.5.4_all.deb`
-- `validator-cli/target/ign-validator-4.5.4-1.noarch.rpm`
+- `validator-cli/target/ign-validator_4.7.1_all.deb`
+- `validator-cli/target/ign-validator-4.7.1-1.noarch.rpm`
 
 ### Créer la release GitHub
 
@@ -266,12 +261,12 @@ Fichiers à publier :
 #### Via GitHub CLI
 
 ```bash
-gh release create v4.5.4 \
-  --title "v4.5.4" \
+gh release create v4.7.1 \
+  --title "v4.7.1" \
   --notes "Notes de la release..." \
   validator-cli/target/validator-cli.jar \
-  validator-cli/target/ign-validator_4.5.4_all.deb \
-  validator-cli/target/ign-validator-4.5.4-1.noarch.rpm
+  validator-cli/target/ign-validator_4.7.1_all.deb \
+  validator-cli/target/ign-validator-4.7.1-1.noarch.rpm
 ```
 
 ## Récapitulatif rapide
@@ -285,11 +280,13 @@ mvn formatter:format
 make test
 
 # Release
-mvn release:prepare -DpushChanges=false
+rm -f release.properties pom.xml.releaseBackup
+mvn release:prepare
 git push origin master
 git push origin vX.Y.Z
 git checkout vX.Y.Z && make package && git checkout master
-gh release create vX.Y.Z --title "vX.Y.Z" --notes "..." validator-cli/target/*
+gh release create vX.Y.Z --title "vX.Y.Z" --notes "..." \
+  validator-cli/target/validator-cli.jar validator-cli/target/*.deb validator-cli/target/*.rpm
 ```
 
 ## Voir aussi
@@ -300,4 +297,4 @@ gh release create vX.Y.Z --title "vX.Y.Z" --notes "..." validator-cli/target/*
 
 ## Listes de codes
 
-Les listes de codes (langues, charsets, scopes, types géométriques d'erreur, etc.) sont des fichiers JSON `src/main/resources/codes/[NOM].json` : un tableau d'objets ayant au moins une propriété `code` (et optionnellement `description`). Elles sont chargées par `CodeList.getCodeList("NOM")`.
+Les listes de codes (langues, charsets, scopes, types géométriques d'erreur, etc.) sont des fichiers JSON `validator-core/src/main/resources/codes/[NOM].json` : un tableau d'objets ayant au moins une propriété `code` (et optionnellement `description`). Elles sont chargées par `CodeList.getCodeList("NOM")`.

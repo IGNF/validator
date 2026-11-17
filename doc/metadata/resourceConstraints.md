@@ -28,6 +28,16 @@ Implementation notes about `gmd:resourceConstraints` parsing.
 | classificationSystem | String                | 0              | 0                   | [0..1]                 |
 | handlingDescription  | String                | 0              | 0                   | [0..1]                 |
 
+## Parsing by the validator
+
+The class of a constraint is deduced from its content (not from the element name) :
+
+* a `classification` gives a security constraint (`classification`) ;
+* `accessConstraints`, `useConstraints` or `otherConstraints` give a legal constraint ;
+* otherwise, a constraint with only `useLimitation`.
+
+`userNote`, `classificationSystem` and `handlingDescription` are not parsed.
+
 ## useLimitation and gmx:Anchor
 
 `useLimitation` may be a `gco:CharacterString` or a `gmx:Anchor` (INSPIRE) :

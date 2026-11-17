@@ -4,11 +4,14 @@
 
 [ogr2ogr](https://gdal.org/programs/ogr2ogr.html) from [GDAL](https://gdal.org/index.html) is used to convert input data to UTF-8 encoded CSV with WKT geometries.
 
-Version **2.3.0** or more is required as it allows uniform charset handling for input data.
+Version **2.3.0** or more is required as it allows uniform charset handling for input data. Version **3.2** or more is recommended : the input driver is then forced according to the file extension (`-if`), a file whose content doesn't match its extension is rejected.
+
+The GMLAS driver is used for the GML files validated with an XSD schema (ex : PCRS), see [validator-core/src/main/resources/gdal](../../validator-core/src/main/resources/gdal/README.md).
 
 ## Tested versions
 
-* 2.4.2
+* 3.8.4 (ubuntu 24.04)
+* 3.12.2 (ubuntu 26.04 : CI and Docker image)
 
 ## Notes
 

@@ -32,9 +32,9 @@ Puisque c'est un document json, il comporte évidement `{` et `}` en début et e
 
 Chaque entrée dans l'objet principale est présentée ci dessous. Les propriétés doivent toutes être renseignées, sauf si elles sont indiquées comme optionnelles.
 
-##### `id` (obligatoire)
+##### `id` (optionnel)
 
-Comme la plupart des objets présents dans un modèle de standards, l'objet principal de `files.json` comporte un `id`. Les `id` sont des suites de 32 charactères alphanumériques. Chaque `id` doit être unique pour l'ensemble du modèle.
+Comme la plupart des objets présents dans un modèle de standards, l'objet principal de `files.json` peut comporter un `id` (suite de 32 caractères alphanumériques, unique pour l'ensemble du modèle). Il est utilisé par les outils de gestion des modèles et **ignoré par le validateur**.
 
 ##### `name` (obligatoire)
 
@@ -50,7 +50,7 @@ Description du modèle.
 
 ##### `abstract` (optionnel)
 
-Dans la plupart des cas, la valeur `false` est appropriée. Cette propriété est assignée à `true` dans des modèles de modèles utilisés par le Géoportail de l'Urbanisme.
+Dans la plupart des cas, la valeur `false` est appropriée. Cette propriété est assignée à `true` dans des modèles de modèles utilisés par le Géoportail de l'Urbanisme. Elle est ignorée par le validateur.
 
 ##### `constraints` (optionnel)
 
@@ -58,9 +58,11 @@ La propriété `constraints` est un objet composé de deux propriétés :
 - `folderName` permet de valider le nom des dossiers des documents testés. On valide le nom du dossier si il vérifie le regex indiqué.
 - `metadataSpecification` est la valeur attendue dans la fiche de métadonnée des documents testés.
 
-##### `files` et `codes` (obligatoires)
+##### `files` (obligatoire) et `codes` (optionnel)
 
-Ces deux entrées sont des listes (donc introduites par `[` et `]`), qui définissent les fichiers du modèles et les listes de valeurs respectivement. Ces objets sont décrits dans les parties subséquentes.
+Ces deux entrées sont des listes (donc introduites par `[` et `]`), qui définissent les fichiers du modèles et les listes de valeurs respectivement (`codes` vaut une liste vide par défaut). Ces objets sont décrits dans les parties subséquentes.
+
+Un modèle chargé en http(s) ne peut référencer que des URL http(s) (modèles de tables et listes de codes) : une URL `file:` y est refusée.
 
 ### Exemple de `files.json`
 
@@ -96,7 +98,7 @@ Suit les mêmes règles que l'`id` présenté précédement.
 
 ##### `name` (obligatoire)
 
-Le nom technique du fichier.
+Le nom technique du fichier. Pour une `table`, il est aussi le nom de la table dans la base de validation et des fichiers normalisés : il doit être composé de lettres, de chiffres et de `_`, sans commencer par un chiffre (`[A-Za-z_][A-Za-z0-9_]*`), sinon le modèle est rejeté.
 
 ##### `title` (optionnel)
 
@@ -113,7 +115,7 @@ Chemin relatif par rapport à la racine du document. Ce champ fait correspondre 
 - Le `path` contient le chemin complet, **dossiers inclus** (ex : `Pieces_ecrites/3_Reglement/[AB0-9]{5}_reglement_[0-9]{8}`). Il ne contient pas le `name`, qui n'est qu'un identifiant technique du modèle.
 - Attention ! Ne pas inclure l'extension du fichier dans le regex ! Elle est ajoutée automatiquement selon le `type` (ex : `.pdf`, `.csv`/`.dbf`/`.shp`... pour une `table`, `.gml`/`.gpkg` pour une `multi_table`).
 
-##### `mandatory` (obligatoire)
+##### `mandatory` (optionnel, `WARN` par défaut)
 
 Indique si la présence du fichier en question est rédhibitoire à sa validation. Les valeurs possibles sont :
 - `ERROR` : l'absence du fichier dans le document va renvoyer une erreur, ce qui rend le document invalide.
@@ -126,28 +128,29 @@ Le type du fichier. Les valeurs autorisées sont les suivantes :
 - `directory` : Dossier.
 - `metadata` : Fiche de métadonnées XML au format ISO 19115 (`.xml`).
 - `pdf` : Fichier PDF (`.pdf`).
-- `table` : Table de données géographique ou non (`.csv`, `.dbf`, `.shp`, `.geojson`, `.gml`).
+- `table` : Table de données géographique ou non (`.csv`, `.dbf` pour un shapefile, `.tab`, `.gml`, `.gpkg`).
 - `multi_table` : Un ensemble de tables stockées dans un seul fichier (`.gml`, `.gpkg`).
 
-##### `tableModel` (obligatoire si et seulement si `type` est une `table`)
+##### `tableModel` (optionnel, uniquement si `type` est une `table`)
 
-Chemin vers le modèle correspondant à la table. On fait appel ici au dossier `types` du modèle.
+Chemin vers le modèle correspondant à la table. Par défaut, le modèle de table est cherché dans le dossier `types` du modèle (`./types/{name}.json` ; pour un modèle distant dont l'URL ne se termine pas par `files.json` : `./{nom du modèle}/types/{name}.json`). La valeur `auto` indique que la structure de la table est déduite des données (pas de modèle de table).
 
-##### `tables` (obligatoires si et seulement si `type` est une `mutli_table`)
+##### `tables` (obligatoires si et seulement si `type` est une `multi_table`)
 
 Si le type du fichier est une multitable, nous allons décrire chacune des tables que le fichier contient dans une seule liste.
 
 Ainsi, `tables` est une liste de tables, et chacun des éléments de la liste est un objet avec les propriétés suivantes :
-- `name` : le nom technique du modèle de la couche. Une couche du fichier est associée à ce modèle si son nom est égal à `name` (sans tenir compte de la casse).
-- `mandatory` : quel est l'impact de l'absence de la couche sur la validaté du document testé (voir plus haut).
+- `name` : le nom technique du modèle de la couche (mêmes règles de nommage que le `name` d'une `table`). Une couche du fichier est associée à ce modèle si son nom est égal à `name` (sans tenir compte de la casse).
+- `mandatory` : non pris en charge actuellement (ignoré : l'absence d'une couche ne produit pas d'erreur).
 - `path` : regex (insensible à la casse, sans extension) permettant de faire correspondre le nom de la couche à l'intérieur du fichier avec le modèle, lorsque `name` ne suffit pas. Contrairement au `path` du fichier, il ne désigne pas un chemin dans le document mais une couche dans le fichier.
-- `tableModel` : Chemin vers le modèle correspondant à la table.
+- `tableModel` : Chemin vers le modèle correspondant à la table (optionnel, mêmes règles par défaut et valeur `auto` que pour une `table`).
 
 ### Énumération des codes
 
-Dans l'objet `codes` de `files.json`, on va énumérer tous les codes des modèles.
-
-Nous completerons cette partie dans la partie sur les codes.
+Dans l'objet `codes` de `files.json`, on va énumérer toutes les listes de codes du modèle (voir l'exemple de la partie `foreignKeys`). Chaque élément est un objet avec les propriétés suivantes :
+- `name` : le nom de la liste de codes, utilisé comme nom de table dans la base de validation (lettres, chiffres et `_`, sans commencer par un chiffre).
+- `title` (optionnel) : le nom général de la liste.
+- `data` (optionnel) : chemin ou URL du fichier CSV. Par défaut `./codes/{name}.csv` pour un modèle local (`file:`), `./{nom du modèle}/codes/{name}.csv` pour un modèle distant (http(s)).
 
 ### Exemple complet de files.json
 
@@ -209,13 +212,13 @@ Dans le dossier `types`, on va renseigner quelles sont les caractéristiques des
 
 Chaque fichier du dossier est un json mais le contenu varie si c'est une `table` ou une `multi_table`.
 
-Nous allons décrire ici comment définir un modèle d'une table simple. Si le type est une `multi_table`, le fichier est un 
+Nous allons décrire ici comment définir un modèle d'une table simple. Le format est le même pour les tables d'une `multi_table` (un fichier par élément de `tables`).
 
 ### Propriétés classiques
 
-##### `id` (obligatoire)
+##### `id` (optionnel)
 
-Encore une fois, chaque modèle de table à un `id`. Attention, ce n'est **pas** le même que celui renseigné dans `files` de `files.json`.
+Encore une fois, chaque modèle de table peut avoir un `id` (ignoré par le validateur). Attention, ce n'est **pas** le même que celui renseigné dans `files` de `files.json`.
 
 ##### `name` (obligatoire)
 
@@ -241,7 +244,7 @@ C'est une liste d'attributs, ou chacun des élément de la liste correspond à u
 
 ##### `name` (obligatoire)
 
-Le nom technique de l'attribut.
+Le nom technique de l'attribut. Il est utilisé comme nom de colonne dans la base de validation : il doit être composé de lettres, de chiffres et de `_`, sans commencer par un chiffre (`[A-Za-z_][A-Za-z0-9_]*`), sinon le modèle est rejeté.
 
 ##### `title` (optionnel)
 
@@ -274,14 +277,16 @@ Le type de l'attribut peut prendre les valeurs suivantes :
 
 Liste de contraintes associées à la colonne.
 
-Attention ! Les contraintes de clé étrangère, ou de liste de valeurs, ne sont pas à renseigner ici.
+Attention ! Les contraintes de clé étrangère portant sur plusieurs colonnes sont à renseigner dans les `constraints` de la table (voir plus bas).
 
 Chaque contrainte peut prendre les valeurs suivantes :
-- `presenceRequired` : `true` si la colonne doit être présente dans la table.
-- `required` : `true` si toutes les valeurs de la colonne doivent être remplies. Ainsi, 'false' permet l'intégration de valeurs nulles dans la colonne.
-- `unique` : `true` si toutes les valeurs non-nulles de la colonne doivent être uniques.
-- `maxLength` : entier indiquant la longueur maximale du champ.
-- `pattern` : contrainte sous forme d'une expression régulière.
+- `presenceRequired` : `true` (par défaut) si la colonne doit être présente dans la table.
+- `required` : `true` (par défaut) si toutes les valeurs de la colonne doivent être remplies. Ainsi, `false` permet l'intégration de valeurs nulles dans la colonne.
+- `unique` : `true` si toutes les valeurs non-nulles de la colonne doivent être uniques (`false` par défaut).
+- `minLength` et `maxLength` : entiers indiquant la longueur minimale et maximale du champ.
+- `pattern` : contrainte sous forme d'une expression régulière (type `String`).
+- `enum` : liste des valeurs autorisées (type `String`).
+- `reference` : référence à une colonne d'une autre table ou liste de codes, au format `TABLE.COLONNE`.
 
 ### Exemple de `columns` :
 
@@ -312,7 +317,7 @@ Deux types de contraintes de tables existent : les `conditions` et les `foreignK
 
 #### `conditions`
 
-La propriété condition est une liste de valeurs textuelles, chacune ayant le format d'une condition SQL. Le nom des colonnes à utiliser dans ces expressions sont les noms des colonnes précédement décrites.
+La propriété condition est une liste de valeurs textuelles, chacune ayant le format d'une condition SQL. Le nom des colonnes à utiliser dans ces expressions sont les noms des colonnes précédement décrites. Les conditions ne sont contrôlées qu'avec l'option `--enable-conditions` (SQL exécuté tel quel : à réserver aux modèles de confiance).
 
 Exemple (qui n'existe pas dans cnig_PLU_2025) :
 
@@ -334,7 +339,7 @@ Une condition peut aussi être décrite sous forme d'objet, avec un `message` li
 
 L'erreur `DATABASE_CONSTRAINT_MISMATCH` affiche alors : `Une règle de remplissage conditionnelle n'est pas respectée. (Un seul document en vigueur (ETAT = 03) est autorisé)`.
 
-#### `foreighKeys`
+#### `foreignKeys`
 
 Comme son nom l'indique, cette liste de valeur permet de réaliser des clés étrangères vers d'autres tables ou listes de valeurs. On utilise la aussi une syntaxe SQL, en particulier en utilisant le terme `REFERENCES`.
 

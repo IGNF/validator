@@ -7,11 +7,11 @@
 
 > This program validates a dataset (a folder containing geodata files and other documents) according to a schema describing the folder structure and the feature catalog. It outputs a report containing validation errors and warnings, and normalized data ready for database integration.
 
-> It has been originally developed for the [Géoportail de l'Urbanisme]((https://www.geoportail-urbanisme.gouv.fr)) to check urban planning documents against CNIG standards in order to produce a nationwide database.
+> It has been originally developed for the [Géoportail de l'Urbanisme](https://www.geoportail-urbanisme.gouv.fr) to check urban planning documents against CNIG standards in order to produce a nationwide database.
 
 Ce programme permet de valider et de normaliser les données présentes dans une arborescence de fichiers. Ces données peuvent être :
 
-* Des tables, géographiques ou non, aux formats CSV, GML, Shapefile ou MapInfo
+* Des tables, géographiques ou non, aux formats CSV, GML, GeoPackage, Shapefile (.dbf) ou MapInfo (.tab)
 * Des fiches de métadonnées
 * Des fichiers PDF
 * Des dossiers (principalement pour contrôle de présence)
@@ -49,7 +49,7 @@ Les techniciens peuvent se référer à la documentation [utilisation du validat
 Les exécutables systèmes ci-après sont requis pour l'exécution du programme :
 
 * [java >= 17](https://docs.geotools.org/latest/userguide/build/install/jdk.html)
-* [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
+* [ogr2ogr >= v2.3.0](doc/dependencies/ogr2ogr.md) (>= v3.2 recommandé : le pilote d'entrée est alors imposé selon l'extension des fichiers) : Utilisé pour lire et convertir les données en entrée dans un format pivot avant validation (CSV)
 
 Les dépendances java telle [GeoTools](doc/dependencies/geotools.md) sont décrites dans les fichiers [pom.xml](pom.xml) et intégrées dans l'exécutable JAVA.
 
@@ -63,7 +63,9 @@ Les principaux documents sont les suivants :
 * [Utilisation du validateur en ligne de commande](doc/cli.md) pour une utilisation directe.
 * [Principe de fonctionnement du validateur](doc/principe.md)
 * [Principe de fonctionnement des plugins](doc/plugins.md)
-* [Projection supportées (JSON)](validator-core/src/main/resources/projection.json)
+* [Projections supportées (JSON)](validator-core/src/main/resources/projection.json)
+* [Image Docker](doc/docker.md)
+* [Développement, build et publication d'une version](doc/developpement.md)
 
 Les documents ci-après traitent des problématiques particulières :
 

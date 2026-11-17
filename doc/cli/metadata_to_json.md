@@ -17,5 +17,5 @@ java -jar validator-cli.jar metadata_to_json \
 
 ## Remarques
 
-* Le modèle pivot est une simplification du modèle ISO 19915 se concentrant sur les éléments utilisés dans les profiles INSPIRE et CNIG.
+* Le modèle pivot est une simplification du modèle ISO 19115 se concentrant sur les éléments utilisés dans les profiles INSPIRE et CNIG.
 * **ATTENTION : Ce modèle pivot JSON n'est pas standardisé et est susceptible d'évoluer**

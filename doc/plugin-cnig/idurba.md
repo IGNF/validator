@@ -2,7 +2,7 @@
 
 ## Contexte
 
-La validation des champs IDURBA est assurée pour les PLU, POS, CC, PLUi et PSMV à l'aide du plugin CNIG du validateur. Des retours sur cette validation sont pris en compte dans la version 4.0.x du validateur pour GpU 4.1.
+La validation des champs IDURBA est assurée pour les PLU, POS, CC, PLUi, PSMV et SCoT à l'aide du plugin CNIG du validateur (pas de validation pour les SUP, les MEC et le standard `cnig_SCOT_2013`). Des retours sur cette validation sont pris en compte dans la version 4.0.x du validateur pour GpU 4.1.
 
 ## Formats de IDURBA
 
@@ -14,7 +14,9 @@ Le format de IDURBA a évolué dans la version 2017 des standards CNIG.
 
 * Version supérieures (IdurbaFormatV2) : "{INSEE_OR_SIREN}_(PLU|PLUi|PLUI|POS|CC|PSMV)_{YYYYMMDD}(_{CodeDU})"
 
-> PLUI est la forme officielle, PLUi est toléré puisqu'il a longtemps été accepté par GpU. Dans le nom de dossier, la forme officielle est bien "PLUi".
+> PLUI est la forme officielle, PLUi est toléré puisqu'il a longtemps été accepté par GpU. Dans le nom de dossier, la forme officielle est bien "PLUi". La comparaison ne tient pas compte de la casse.
+
+* SCoT (IdurbaFormatSCOT) : "{SIREN}_SCOT(_{YYYYMMDD})(_{CodeDU})"
 
 ## Codes d'erreur associés à la validation des IDURBA.
 
@@ -37,7 +39,7 @@ En fonction de la version du standard et du nom de dossier du document, on conna
 
 En version 3.3 et 4.1 de GpU, si aucune ligne ne correspond à l'IDURBA attendu dans DOC_URBA, le validateur renvoie une erreur CNIG_IDURBA_NOT_FOUND :
 
-> Aucune ligne correspondant au document n’a été trouvée dans la table (IDURBA={EXPECTED_IDURBA})
+> Aucune ligne correspondant au document n’a été trouvée dans la table DOC_URBA (IDURBA={EXPECTED_IDURBA})
 
 ### CNIG_IDURBA_MULTIPLE_FOUND : Validation de l'unicité de la ligne avec IDURBA correspondant au nom de dossier dans DOC_URBA
 
@@ -51,7 +53,7 @@ En version 4.1 de GpU, si plusieurs lignes correspondent à l'IDURBA attendu dan
 
 A partir de la version 4.1, pour les tables autre que DOC_URBA, on vérifie que IDURBA correspond bien à l'IDURBA attendu en fonction du nom de dossier. Dans le cas contraire, on renvoie une erreur CNIG_IDURBA_UNEXPECTED avec le message suivant :
 
-> La valeur du champ "IDURBA" ({VALUE}) ne correspondant pas à la valeur attendue ({EXPECTED_VALUE})
+> La valeur du champ "IDURBA" ({VALUE}) ne correspond pas à la valeur attendue ({EXPECTED_VALUE}).
 
 Remarque : Ce contrôle est fait avec une tolérance sur la présence d'un "_" pour IdurbaFormatV1 et une tolérance entre PLUi et PLUI pour IdurbaFormatV2.
 
@@ -66,7 +68,7 @@ Remarque : Ce contrôle est fait avec une tolérance sur la présence d'un "_" p
 ### Validation des valeurs lignes par lignes
 
 * Validation des champs `DOC_URBA.IDURBA` : On vérifie que IDURBA correspond à un format connu (v1 ou v2) dans les tables, si ce n'est pas le cas : CNIG_IDURBA_INVALID
-* Validation des champs {AUTRE_TABLE}.IDURBA : On vérifie que IDURBA correspond à la valeur attendue (document.tags.idurba), si ce n'est pas le cas : CNIG_IDURBA_UNEXPECTED
+* Validation des champs {AUTRE_TABLE}.IDURBA : On vérifie que IDURBA correspond à la valeur attendue en fonction du nom du dossier du document, si ce n'est pas le cas : CNIG_IDURBA_UNEXPECTED
 
 ### Post-validation
 
@@ -79,6 +81,7 @@ Après la normalisation standard des données pour diffusion, on filtre `DATA/DO
     * On conserve la ligne
     * On stocke l'idurba correspondant dans `document.tags.idurba`
     * On stocke le typeref correspondant dans `document.tags.typeref`
+    * On stocke le type de procédure dans `document.tags.typeproc` (colonne `TYPEPROC`, à défaut `NOMPROC`), si elle est renseignée
 
 * Si on trouve plusieurs lignes :
 

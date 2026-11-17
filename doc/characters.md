@@ -18,7 +18,7 @@ For now, value provided in companion file such as .cpg for shapefile is ignored 
 
 ## Deep character validation
 
-Deep character validation is based on the attempt to apply the following transforms. A validation error is triggered if the string is modified.
+Deep character validation is based on the attempt to apply the following transforms. A message is reported if the string is modified : `ATTRIBUTE_CHARACTERS_REPLACED` (INFO), or `ATTRIBUTE_CHARACTERS_ILLEGAL` (ERROR) if characters are escaped.
 
 ### Double UTF-8 encoding
 
@@ -46,6 +46,8 @@ Command line option : `--string-simplify-common`
 The file [validator-core/src/main/resources/simplify/ISO-8859-1.csv](../validator-core/src/main/resources/simplify/ISO-8859-1.csv) defines this replacements for LATIN1.
 
 Command line option : `--string-simplify-charset <CHARSET>`
+
+Command line option `--string-all <CHARSET>` applies `--string-fix-utf8`, `--string-simplify-common` and `--string-simplify-charset <CHARSET>`.
 
 ### Character escaping
 

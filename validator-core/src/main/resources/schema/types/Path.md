@@ -8,6 +8,7 @@ Le type `Path` permet d'indiquer que la valeur correspond à un chemin vers un f
 
 * Les chemins doivent être définis en utilisant des `/` (pas de `\`)
 * L'utilisation de référence dans les fichiers est autorisée (`annexe/fichier.pdf#chapitre-8`)
+* L'existence du fichier dans le document est contrôlée (sans tenir compte de la référence `#...`) : `ATTRIBUTE_PATH_NOT_FOUND` sinon
 
 ## Mapping
 

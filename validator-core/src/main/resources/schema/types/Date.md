@@ -12,6 +12,9 @@ Les formats suivants sont supportés implicitement lors de la validation :
 * `dd/MM/yyyy`
 * `yyyy-MM-dd`
 * `yyyy/MM/dd`
+* `yyyy` (année seule)
+
+La lecture est stricte : une date inexistante (ex : `20151717`) est refusée.
 
 ## Mapping
 

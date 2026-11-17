@@ -20,10 +20,20 @@ Le validateur procède comme suit :
 
 > Par exemple, pour 25349_PLU_20010101_B, on attend un mot clé "PLU" pour le type de document, un mot clé "25349" pour l'emprise, un mot clé "B" pour le code DU.
 
+Mots clés attendus selon le type de document :
+
+| Mot clé              | Thésaurus                                                  | Documents                         |
+| -------------------- | ---------------------------------------------------------- | --------------------------------- |
+| `TYPE_DOC`           | Types de documents d’urbanisme                             | tous sauf SUP                     |
+| `CATEGORIE_SUP`      | nomenclature nationale des SUP                             | SUP                               |
+| `SIREN_GESTIONNAIRE` | Répertoire SIRENE                                          | SCoT et SUP                       |
+| `EMPRISE`            | Code officiel géographique au 1er janvier AAAA (SIRENE pour un PLUi) | tous sauf SCoT          |
+| `CodeDU`             | Sous-code de documents d’urbanisme                         | si le nom de dossier a un code DU |
+
 * Pour chaque mot clé attendu
 
-  * Recherche du mot clé en fonction du nom de thesaurus spécifié dans les CSMD (erreur CNIG_METADATA_KEYWORD_NOT_FOUND si non trouvé).
-  * Contrôle de cohérence de la valeur avec le nom de dossier (erreur  CNIG_METADATA_KEYWORD_INVALID en cas d'incohérence)
+  * Recherche du mot clé en fonction du nom de thesaurus spécifié dans les CSMD (avertissement CNIG_METADATA_KEYWORD_NOT_FOUND si non trouvé).
+  * Contrôle de cohérence de la valeur avec le nom de dossier (avertissement CNIG_METADATA_KEYWORD_INVALID en cas d'incohérence). Seul le premier mot clé du thésaurus est comparé, sans tenir compte de la casse.
 
 ## Ressources
 
