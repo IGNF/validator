@@ -65,6 +65,11 @@ public class Database implements Closeable {
     private static final String ENV_DATABASE_USER = "DB_USER";
     private static final String ENV_DATABASE_PASSWORD = "DB_PASSWORD";
     private static final String ENV_DATABASE_SCHEMA = "DB_SCHEMA";
+    /**
+     * Maximum duration of a PostgreSQL query in seconds (0 : no limit)
+     */
+    private static final String ENV_DATABASE_STATEMENT_TIMEOUT = "DB_STATEMENT_TIMEOUT";
+    public static final long DEFAULT_STATEMENT_TIMEOUT = 3600;
 
     /**
      * @deprecated driver name of the old PostgreSQL drivers, use
@@ -114,6 +119,44 @@ public class Database implements Closeable {
     }
 
     /**
+     * Get the maximum duration of a query in seconds from DB_STATEMENT_TIMEOUT
+     * (default to 3600, 0 for no limit)
+     *
+     * @param value DB_STATEMENT_TIMEOUT
+     * @return
+     */
+    static long getStatementTimeout(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return DEFAULT_STATEMENT_TIMEOUT;
+        }
+        try {
+            long result = Long.parseLong(value.trim());
+            if (result < 0) {
+                throw new NumberFormatException();
+            }
+            return result;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(
+                "Invalid DB_STATEMENT_TIMEOUT='" + value + "' (number of seconds expected)"
+            );
+        }
+    }
+
+    /**
+     * Limit the duration of the queries (PostgreSQL) : a query keeps running on the
+     * server when validator-cli is killed (ex : timeout of validator-api).
+     *
+     * @param seconds 0 for no limit
+     * @throws SQLException
+     */
+    private void setStatementTimeout(long seconds) throws SQLException {
+        log.info(MARKER, "Set statement_timeout to {} seconds (DB_STATEMENT_TIMEOUT)...", seconds);
+        update("SET statement_timeout = " + (seconds * 1000));
+        // a rollback would cancel the SET
+        connection.commit();
+    }
+
+    /**
      * Get the schema name from DB_SCHEMA ("validation" by default)
      *
      * @param value DB_SCHEMA
@@ -157,6 +200,7 @@ public class Database implements Closeable {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
             connection.setAutoCommit(false);
+            setStatementTimeout(getStatementTimeout(System.getenv(ENV_DATABASE_STATEMENT_TIMEOUT)));
             this.schema = schema;
             updateCurrentSchema(false);
         } catch (ClassNotFoundException e) {

@@ -20,6 +20,7 @@ Les paramètres sont gérés sous forme de variables d'environnement :
 | -------------- | ---------------------------------------- | ----------------- |
 | `OGR2OGR_PATH` | Chemin vers l'exécutable ogr2ogr de GDAL | "ogr2ogr"         |
 | `OGR2OGR_TIMEOUT` | Durée maximale d'une conversion ogr2ogr (en secondes) | 3600 |
+| `DB_STATEMENT_TIMEOUT` | Durée maximale d'une requête SQL sur la base PostgreSQL (`DB_URL`), en secondes (`0` : sans limite) | 3600 |
 | `HTTP_PROXY`   | ex : http://proxy:3128                   |                   |
 | `HTTPS_PROXY`  | ex : http://proxy:3128                   |                   |
 | `NO_PROXY`     | localhost,demo.localhost                 |                   |

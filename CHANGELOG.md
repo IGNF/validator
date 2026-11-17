@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - PostgreSQL : maximum duration of a query with `DB_STATEMENT_TIMEOUT` (seconds, default 3600, `0` for no limit) : a query kept running on the server when validator-cli was killed (ex : timeout of validator-api)
 * v4.7.1 - PostgreSQL : `DB_SCHEMA` must be a valid identifier and can't be a system schema (`DB_SCHEMA=PUBLIC` was accepted : unquoted names are case insensitive and the schema is dropped with `CASCADE` on restart), warning when `DB_SCHEMA` is not defined (shared schema `validation`)
 * v4.7.1 - Logs : `DB_URL` is no longer written in `validator-debug.log` (returned to the users by validator-api) [SECURITY]
 * v4.7.1 - ogr2ogr : the input driver is forced according to the extension (`-if`, GDAL >= 3.2) and the OGR VRT driver is disabled (`GDAL_SKIP=OGR_VRT`) : a ".gml", ".dbf" or ".gpkg" file containing an OGR VRT could read the files of the server or internal URLs (exposed in `DATA/*.csv` and the report). A file whose content doesn't match its extension (ex : CSV named ".dbf") is now rejected [SECURITY]
