@@ -258,7 +258,8 @@ public class FileConverterTest {
     @Test
     public void testRegressBugBackslash02() throws IOException {
         File source = ResourceHelper.getResourceFile(getClass(), "/data/bug-backslash/source.csv");
-        File targetDbf = folder.newFile("output.dbf");
+        // the intermediate file is a CSV (the input driver is forced by the extension)
+        File targetDbf = folder.newFile("intermediate.csv");
         File targetCsv = folder.newFile("output.csv");
         try {
             /* csv -> dbf */

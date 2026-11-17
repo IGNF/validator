@@ -145,6 +145,12 @@ public class FileConverter {
             args.add("GML_FIELDTYPES");
             args.add("ALWAYS_STRING");
 
+            // no request to the DescribeFeatureType URL of the user file
+            // (xsi:schemaLocation)
+            args.add("--config");
+            args.add("GML_DOWNLOAD_WFS_SCHEMA");
+            args.add("NO");
+
             File gfsFile = CompanionFileUtils.getCompanionFile(source, "gfs");
             if (gfsFile.exists()) {
                 log.warn(MARKER, "remove gfs file {}...", gfsFile);
@@ -156,6 +162,17 @@ public class FileConverter {
         boolean sourceIsGeopackage = FilenameUtils.getExtension(source.getName()).equalsIgnoreCase("gpkg");
         if (sourceIsGeopackage) {
             log.warn(MARKER, "detect Geopackage format");
+        }
+
+        /*
+         * Input driver forced according to the extension : GDAL detects the format from
+         * the content otherwise (ex : a ".gml" file containing an OGR VRT would read
+         * server files or URLs)
+         */
+        boolean sourceIsGMLAS = sourceIsGML && options.hasXsdSchema();
+        if (!sourceIsGMLAS && supportsInputDriverOption()) {
+            args.add("-if");
+            args.add(getInputDriver(source));
         }
 
         args.add("-f");
@@ -221,6 +238,8 @@ public class FileConverter {
          * Configure charset for shapefiles
          */
         Map<String, String> envs = new HashMap<>();
+        // OGR VRT driver disabled (reads files and URLs referenced in the user file)
+        envs.put("GDAL_SKIP", "OGR_VRT");
         String sourceExtension = FilenameUtils.getExtension(source.getName()).toLowerCase(Locale.ROOT);
         if (sourceExtension.equals("dbf") || sourceExtension.equals("shp")) {
             envs.put("SHAPE_ENCODING", toEncoding(options.getSourceCharset()));
@@ -414,6 +433,8 @@ public class FileConverter {
 
         /* create process */
         ProcessBuilder builder = new ProcessBuilder(args);
+        // credentials of the validation database are not required by ogr2ogr
+        builder.environment().keySet().removeIf(FileConverter::isSensitiveEnvironmentVariable);
         for (String envName : envs.keySet()) {
             builder.environment().put(envName, envs.get(envName));
         }
@@ -450,6 +471,58 @@ public class FileConverter {
             throw new ValidatorFatalError("ogr2ogr command fails", e);
         } finally {
             FileUtils.deleteQuietly(stderrFile);
+        }
+    }
+
+    /**
+     * Environment variables not transmitted to ogr2ogr (validation database
+     * credentials, libpq variables).
+     *
+     * @param name
+     * @return
+     */
+    static boolean isSensitiveEnvironmentVariable(String name) {
+        return name.startsWith("DB_") || name.startsWith("PG");
+    }
+
+    /**
+     * The input driver option (-if) is available since GDAL 3.2
+     */
+    private boolean supportsInputDriverOption() {
+        if (version == null) {
+            return false;
+        }
+        return version.getMajor() > 3 || (version.getMajor() == 3 && version.getMinor() >= 2);
+    }
+
+    /**
+     * GDAL driver expected for a given input file (the format is not detected from
+     * the content).
+     *
+     * @param source
+     * @return
+     * @throws IOException if the extension is not supported
+     */
+    static String getInputDriver(File source) throws IOException {
+        String extension = FilenameUtils.getExtension(source.getName()).toLowerCase(Locale.ROOT);
+        switch (extension) {
+        case "shp":
+        case "dbf":
+            return "ESRI Shapefile";
+        case "tab":
+        case "mif":
+            return "MapInfo File";
+        case "gml":
+            return "GML";
+        case "gpkg":
+            return "GPKG";
+        case "csv":
+            return "CSV";
+        case "json":
+        case "geojson":
+            return "GeoJSON";
+        default:
+            throw new IOException(String.format("Unsupported input format : '%1s'", source.getName()));
         }
     }
 
