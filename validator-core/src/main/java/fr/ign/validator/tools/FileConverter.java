@@ -447,7 +447,30 @@ public class FileConverter {
         try {
             builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
             builder.redirectError(stderrFile);
-            Process process = builder.start();
+            Process process;
+            try {
+                process = builder.start();
+            } catch (IOException e) {
+                throw new ValidatorFatalError("ogr2ogr command fails", e);
+            }
+            // ogr2ogr must not survive the JVM (ex : validator-cli killed on timeout)
+            Thread killer = new Thread(process::destroyForcibly, "ogr2ogr-killer");
+            Runtime.getRuntime().addShutdownHook(killer);
+            try {
+                waitForProcess(process, commandLine, stderrFile);
+            } finally {
+                removeShutdownHook(killer);
+                if (process.isAlive()) {
+                    process.destroyForcibly();
+                }
+            }
+        } finally {
+            FileUtils.deleteQuietly(stderrFile);
+        }
+    }
+
+    private void waitForProcess(Process process, String commandLine, File stderrFile) {
+        try {
             if (!process.waitFor(timeout, TimeUnit.SECONDS)) {
                 process.destroyForcibly();
                 throw new ValidatorFatalError(
@@ -469,8 +492,14 @@ public class FileConverter {
             throw new ValidatorFatalError("ogr2ogr command interrupted", e);
         } catch (IOException e) {
             throw new ValidatorFatalError("ogr2ogr command fails", e);
-        } finally {
-            FileUtils.deleteQuietly(stderrFile);
+        }
+    }
+
+    private static void removeShutdownHook(Thread hook) {
+        try {
+            Runtime.getRuntime().removeShutdownHook(hook);
+        } catch (IllegalStateException e) {
+            // JVM shutting down : the hook destroys the process
         }
     }
 
