@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - XML validation : the XSD schemas (and their imports) are downloaded with timeouts (the JDK defaults are infinite : a validation could hang on a remote schema) and compiled once per URL instead of once per XML file, XML file closed after the validation
 * v4.7.1 - PostgreSQL : maximum duration of a query with `DB_STATEMENT_TIMEOUT` (seconds, default 3600, `0` for no limit) : a query kept running on the server when validator-cli was killed (ex : timeout of validator-api)
 * v4.7.1 - PostgreSQL : `DB_SCHEMA` must be a valid identifier and can't be a system schema (`DB_SCHEMA=PUBLIC` was accepted : unquoted names are case insensitive and the schema is dropped with `CASCADE` on restart), warning when `DB_SCHEMA` is not defined (shared schema `validation`)
 * v4.7.1 - Logs : `DB_URL` is no longer written in `validator-debug.log` (returned to the users by validator-api) [SECURITY]
