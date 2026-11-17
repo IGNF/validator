@@ -1,28 +1,34 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Modèle de document IGNF/validator",
-  "description": "Représente la structure d'un document qui peut par exemple être un dossier ou une archive au format ZIP (ex : PLU au standard CNIG 2017, voir https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json)",
+  "title": "Modèle de document IGNF/validator (files.json)",
+  "description": "Représente la structure d'un document qui peut par exemple être un dossier ou une archive au format ZIP (ex : PLU au standard CNIG 2017, voir https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017.json). Les propriétés inconnues sont ignorées par le validateur.",
   "type": "object",
   "required": [
     "name",
-    "description",
     "files"
   ],
   "properties": {
+    "id": {
+      "$ref": "#/definitions/Id"
+    },
     "name": {
       "type": "string",
+      "minLength": 1,
       "title": "Nom",
-      "description": "Nom du modèle (ex: cnig_PLU_2017)"
+      "description": "Nom du modèle (ex : cnig_PLU_2017)"
+    },
+    "title": {
+      "type": "string",
+      "title": "Titre",
+      "description": "Nom du modèle pour l'affichage"
     },
     "description": {
       "type": "string",
       "title": "Description",
       "description": "Description du modèle (ex : Standard CNIG PLU 2017)"
     },
-    "regexp": {
-      "type": "string",
-      "title": "Nom du document",
-      "description": "Nom attendu pour le dossier racine du document (expression régulière, par ex : .*_PLU_[0-9]{8}"
+    "constraints": {
+      "$ref": "#/definitions/DocumentConstraints"
     },
     "files": {
       "type": "array",
@@ -31,9 +37,44 @@
       "items": {
         "$ref": "#/definitions/FileModel"
       }
+    },
+    "codes": {
+      "type": "array",
+      "title": "Listes de codes",
+      "description": "Tables statiques (listes de valeurs au format CSV) utilisables dans les références et les clés étrangères",
+      "items": {
+        "$ref": "#/definitions/StaticTable"
+      }
     }
   },
   "definitions": {
+    "Id": {
+      "type": "string",
+      "pattern": "^([0-9A-Za-z]{32})?$",
+      "title": "Identifiant",
+      "description": "Identifiant (32 caractères alphanumériques) utilisé par les outils de gestion des modèles, ignoré par le validateur"
+    },
+    "Identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "description": "Nom utilisé dans la base de validation et pour les fichiers normalisés (lettres, chiffres et _, sans commencer par un chiffre)"
+    },
+    "DocumentConstraints": {
+      "type": "object",
+      "title": "Contraintes du document",
+      "properties": {
+        "folderName": {
+          "type": "string",
+          "title": "Nom du dossier",
+          "description": "Nom attendu pour le dossier racine du document (expression régulière, par ex : [a-zA-Z0-9]+_PLU_[0-9]{8})"
+        },
+        "metadataSpecification": {
+          "type": "string",
+          "title": "Spécification des métadonnées",
+          "description": "Spécification attendue dans la fiche de métadonnées (ex : CNIG PLU v2017)"
+        }
+      }
+    },
     "FileModel": {
       "type": "object",
       "title": "Fichier",
@@ -44,10 +85,22 @@
         "path"
       ],
       "properties": {
+        "id": {
+          "$ref": "#/definitions/Id"
+        },
         "name": {
           "type": "string",
+          "minLength": 1,
           "title": "Nom",
-          "description": "Nom court/identifiant du fichier (ex : ZONE_URBA)"
+          "description": "Nom court/identifiant du fichier (ex : ZONE_URBA). Pour une table, nom de la table (voir Identifier)."
+        },
+        "title": {
+          "type": "string",
+          "title": "Titre"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
         },
         "type": {
           "$ref": "#/definitions/FileType"
@@ -55,22 +108,106 @@
         "path": {
           "type": "string",
           "title": "Chemin",
-          "description": "Chemin relatif à partir de la racine du document (ex : \"Donnees_geographiques/(2A|2B|[0-9]{2})[0-9]{3}_ZONE_URBA_[0-9]{8}\")"
+          "description": "Expression régulière (insensible à la casse) du chemin relatif à partir de la racine du document, sans extension (ex : \"Donnees_geographiques/(2A|2B|[0-9]{2})[0-9]{3}_ZONE_URBA_[0-9]{8}\")"
         },
         "mandatory": {
           "$ref": "#/definitions/MandatoryMode"
         },
         "tableModel": {
+          "$ref": "#/definitions/TableModelRef"
+        },
+        "tables": {
+          "type": "array",
+          "title": "Tables",
+          "description": "Tables (couches) d'un fichier de type multi_table",
+          "items": {
+            "$ref": "#/definitions/EmbeddedTable"
+          }
+        },
+        "xsdSchema": {
           "type": "string",
-          "title": "Modèle de table",
-          "description": "Lien vers un modèle de table (ex : types/ZONE_URBA.json)"
+          "title": "Schéma XSD",
+          "description": "URL du schéma XSD pour la validation XML d'un fichier GML (ex : PCRS)"
+        }
+      },
+      "if": {
+        "properties": {
+          "type": {
+            "const": "table"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "name": {
+            "$ref": "#/definitions/Identifier"
+          }
         }
       }
     },
-    "MandatoryMode":{
+    "EmbeddedTable": {
+      "type": "object",
+      "title": "Table d'un fichier multi_table",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/Identifier",
+          "title": "Nom",
+          "description": "Nom de la couche dans le fichier (comparé sans tenir compte de la casse)"
+        },
+        "path": {
+          "type": "string",
+          "title": "Chemin",
+          "description": "Expression régulière alternative sur le nom de la couche (insensible à la casse, sans extension)"
+        },
+        "mandatory": {
+          "$ref": "#/definitions/MandatoryMode",
+          "description": "Non pris en charge actuellement (ignoré par le validateur)"
+        },
+        "tableModel": {
+          "$ref": "#/definitions/TableModelRef"
+        }
+      }
+    },
+    "TableModelRef": {
+      "type": "string",
+      "minLength": 1,
+      "title": "Modèle de table",
+      "description": "Lien vers un modèle de table (ex : ./types/ZONE_URBA.json, par défaut ./types/{name}.json) ou \"auto\" pour déduire les colonnes des données"
+    },
+    "StaticTable": {
+      "type": "object",
+      "title": "Liste de codes",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/Id"
+        },
+        "name": {
+          "$ref": "#/definitions/Identifier",
+          "title": "Nom",
+          "description": "Nom de la table statique dans la base de validation (ex : ListeEtatPLUi)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Titre"
+        },
+        "data": {
+          "type": "string",
+          "minLength": 1,
+          "title": "Données",
+          "description": "Chemin ou URL du fichier CSV (par défaut ./codes/{name}.csv)"
+        }
+      }
+    },
+    "MandatoryMode": {
       "type": "string",
       "title": "Fichier obligatoire?",
-      "description": "ERROR : Fichier obligatoire, WARN : Fichier recommandé, OPTIONAL : Fichier optionnel dont l'absence n'entraîne pas d'avertissement",
+      "description": "ERROR : Fichier obligatoire, WARN : Fichier recommandé (par défaut), OPTIONAL : Fichier optionnel dont l'absence n'entraîne pas d'avertissement",
       "enum": [
         "OPTIONAL",
         "WARN",

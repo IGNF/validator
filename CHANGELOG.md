@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - JSON schemas `schema/Document.json` and `schema/Table.json` aligned with the code : `constraints` (`folderName`, `metadataSpecification`) instead of `regexp`, `codes`, `tables` of the `multi_table` files, `xsdSchema`, table constraints (`conditions`, `foreignKeys`), `presenceRequired`, type `Url` (not `URL`), naming rules of the tables and columns (checked against the CNIG / PCRS / DGPR / validator-config-gpu configurations)
 * v4.7.1 - `--help` : `OGR2OGR_TIMEOUT`, `GMLAS_CONFIG` and `DB_*` environment variables listed, order of the error thresholds of `--cnig-complexity-tolerance` fixed (point, part, ring) and expected format
 * v4.7.1 - CNIG : a metadata thesaurus without keyword (ex : `Types de documents d’urbanisme`) is reported as `CNIG_METADATA_KEYWORD_NOT_FOUND` instead of stopping the validation (`NullPointerException`)
 * v4.7.1 - Build : the code formatter configuration is moved from `eclipse/formatter-config.xml` to `.mvn/formatter-config.xml`

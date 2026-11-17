@@ -1,18 +1,25 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Modèle de table IGNF/validator",
-  "description": "Modélisation d'une table de données (géographique ou non) avec ses attributs (ex : ZONE_URBA dans cnig_PLU_2017, voir https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.json)",
+  "title": "Modèle de table IGNF/validator (types/*.json)",
+  "description": "Modélisation d'une table de données (géographique ou non) avec ses attributs (ex : ZONE_URBA dans cnig_PLU_2017, voir https://www.geoportail-urbanisme.gouv.fr/standard/cnig_PLU_2017/types/ZONE_URBA.json). Les propriétés inconnues sont ignorées par le validateur.",
   "type": "object",
   "required": [
     "name",
-    "description",
     "columns"
   ],
   "properties": {
+    "id": {
+      "$ref": "#/definitions/Id"
+    },
     "name": {
       "type": "string",
+      "minLength": 1,
       "title": "Nom",
       "description": "Nom du modèle de table (ex : ZONE_URBA)"
+    },
+    "title": {
+      "type": "string",
+      "title": "Titre"
     },
     "description": {
       "type": "string",
@@ -25,30 +32,46 @@
       "items": {
         "$ref": "#/definitions/AttributeType"
       }
+    },
+    "constraints": {
+      "$ref": "#/definitions/TableConstraints"
     }
   },
   "definitions": {
+    "Id": {
+      "type": "string",
+      "pattern": "^([0-9A-Za-z]{32})?$",
+      "title": "Identifiant",
+      "description": "Identifiant (32 caractères alphanumériques) utilisé par les outils de gestion des modèles, ignoré par le validateur"
+    },
     "AttributeType": {
       "type": "object",
       "title": "Attribut",
       "description": "Modélisation d'un attribut d'une table",
       "required": [
         "name",
-        "type",
-        "description"
+        "type"
       ],
       "properties": {
+        "id": {
+          "$ref": "#/definitions/Id"
+        },
         "name": {
           "type": "string",
-          "title":"Nom",
-          "description": "Nom de l'attribut (ex : IDURBA)"
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "title": "Nom",
+          "description": "Nom de l'attribut (ex : IDURBA), utilisé comme nom de colonne dans la base de validation (lettres, chiffres et _, sans commencer par un chiffre)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Titre"
         },
         "type": {
           "$ref": "#/definitions/CoreType"
         },
         "description": {
           "type": "string",
-          "title":"Description",
+          "title": "Description",
           "description": "Description sémantique de l'attribut (ex : Identifiant du document d'urbanisme)"
         },
         "constraints": {
@@ -59,45 +82,100 @@
     "AttributeConstraints": {
       "type": "object",
       "title": "Contrainte sur la colonne",
-      "properties":{
+      "properties": {
         "required": {
           "type": "boolean",
-          "title":"Valeur nulle interdite?",
-          "description": "Contrainte permettant de contrôler l'absence de valeur nulle (ou vide) dans une table"
+          "title": "Valeur nulle interdite?",
+          "description": "Contrainte permettant de contrôler l'absence de valeur nulle (ou vide) dans une table (true par défaut)"
+        },
+        "presenceRequired": {
+          "type": "boolean",
+          "title": "Colonne obligatoire?",
+          "description": "Contrainte permettant de contrôler la présence de la colonne dans la table (true par défaut)"
         },
         "unique": {
           "type": "boolean",
-          "title":"Valeur unique?",
-          "description": "Contrainte permettant de contrôler l'unicité des valeurs dans la table"
+          "title": "Valeur unique?",
+          "description": "Contrainte permettant de contrôler l'unicité des valeurs dans la table (false par défaut)"
         },
         "pattern": {
           "type": "string",
-          "title":"Expression régulière",
-          "description": "Contrainte définie sous forme d'une expression régulière (ex : [0-9]{9} pour un SIREN)"
+          "title": "Expression régulière",
+          "description": "Contrainte définie sous forme d'une expression régulière (ex : [0-9]{9} pour un SIREN), type String"
         },
         "minLength": {
           "type": "integer",
-          "title":"Longueur minimale?",
-          "description": "Contrainte permettant de vérifier que la longueur d'une chaîne de caractères est supérieure une valeur minimale incluse."
+          "minimum": 0,
+          "title": "Longueur minimale?",
+          "description": "Contrainte permettant de vérifier que la longueur d'une chaîne de caractères est supérieure ou égale à une valeur minimale."
         },
         "maxLength": {
           "type": "integer",
-          "title":"Longueur maximale?",
-          "description": "Contrainte permettant de vérifier que la longueur d'une chaîne de caractères est inférieure une valeur minimale incluse."
+          "minimum": -1,
+          "title": "Longueur maximale?",
+          "description": "Contrainte permettant de vérifier que la longueur d'une chaîne de caractères est inférieure ou égale à une valeur maximale (-1 : pas de limite)."
         },
         "enum": {
-          "type": "array",
+          "type": [
+            "array",
+            "null"
+          ],
           "title": "Valeurs autorisées",
-          "description": "Contrainte d'appartenance à une liste de valeur (ex : un code)",
+          "description": "Contrainte d'appartenance à une liste de valeur (ex : un code), type String",
           "items": {
-            "type": "string",
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ],
             "title": "Valeur"
           }
         },
         "reference": {
           "type": "string",
           "title": "Référence",
-          "description": "Contrainte indiquant une référence à un identifiant (ex : AUTRE_TABLE.ID)"
+          "description": "Contrainte indiquant une référence à une colonne d'une autre table ou d'une liste de codes (ex : AUTRE_TABLE.ID)"
+        }
+      }
+    },
+    "TableConstraints": {
+      "type": "object",
+      "title": "Contraintes de la table",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "title": "Conditions SQL",
+          "description": "Conditions SQL que doit respecter chaque ligne (contrôlées avec l'option --enable-conditions)",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "sql"
+                ],
+                "properties": {
+                  "sql": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "Message remplaçant l'expression SQL dans le rapport d'erreur"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "foreignKeys": {
+          "type": "array",
+          "title": "Clés étrangères",
+          "description": "Clés étrangères vers une table ou une liste de codes (ex : (TYPEPSC,STYPEPSC) REFERENCES prescription_urba_type(code,sous_code))",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -111,8 +189,7 @@
         "Date",
         "Integer",
         "Double",
-        "URL",
-
+        "Url",
         "Point",
         "LineString",
         "Polygon",
@@ -121,7 +198,6 @@
         "MultiPolygon",
         "GeometryCollection",
         "Geometry",
-
         "Filename",
         "Path"
       ]
