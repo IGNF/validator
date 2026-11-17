@@ -2,6 +2,7 @@ package fr.ign.validator.validation.file;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -25,6 +26,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.error.CoreErrorCodes;
+import fr.ign.validator.exception.InvalidModelException;
 import fr.ign.validator.report.InMemoryReportBuilder;
 
 /**
@@ -100,6 +102,44 @@ public class XsdSchemaValidatorRemoteTest {
         assertEquals(1, requests.get("/xsd/main.xsd").get());
         assertEquals(1, requests.get("/xsd/types.xsd").get());
         assertSame(XsdSchemaValidator.getSchema(xsdUrl), XsdSchemaValidator.getSchema(xsdUrl));
+    }
+
+    /**
+     * Local schema including a local schema (file: URLs are read by the resolver,
+     * the parser itself can't access external schemas)
+     */
+    @Test
+    public void testLocalSchemaWithInclude() throws IOException {
+        File xsdDirectory = folder.newFolder("xsd");
+        FileUtils.writeStringToFile(new File(xsdDirectory, "main.xsd"), MAIN_XSD, StandardCharsets.UTF_8);
+        FileUtils.writeStringToFile(new File(xsdDirectory, "types.xsd"), TYPES_XSD, StandardCharsets.UTF_8);
+        URL xsdUrl = new File(xsdDirectory, "main.xsd").toURI().toURL();
+
+        assertEquals(0, validate(xsdUrl, "<root><code>AB</code></root>"));
+        assertTrue(validate(xsdUrl, "<root><code>abc</code></root>") > 0);
+    }
+
+    /**
+     * Only http(s) and file URLs are allowed for the imported schemas
+     */
+    @Test
+    public void testUnsupportedProtocol() throws IOException {
+        File xsdFile = folder.newFile("ftp.xsd");
+        FileUtils.writeStringToFile(
+            xsdFile,
+            MAIN_XSD.replace("types.xsd", "ftp://127.0.0.1/types.xsd"),
+            StandardCharsets.UTF_8
+        );
+        URL xsdUrl = xsdFile.toURI().toURL();
+        InvalidModelException e = assertThrows(
+            InvalidModelException.class, () -> XsdSchemaValidator.getSchema(xsdUrl)
+        );
+        // rejected by the resolver (not a connection failure)
+        String causes = "";
+        for (Throwable t = e; t != null; t = t.getCause()) {
+            causes += t.getMessage() + " / ";
+        }
+        assertTrue(causes, causes.contains("unsupported protocol"));
     }
 
 }

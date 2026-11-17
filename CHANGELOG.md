@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - XML validation : the XML parser can't access external schemas itself (`ACCESS_EXTERNAL_SCHEMA`), the imported and included schemas are only read by the validator (http(s) with timeouts, local files, other protocols rejected) [SECURITY]
 * v4.7.1 - CNIG : `--cnig-document-emprise` check (`CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR`) with the emprise prepared once (`PreparedGeometry`, indexed segments) instead of a full `contains` per feature : same result, ~1000 times faster with a detailed municipality boundary (128 s to 0.12 s for 20 000 zones and a 100 000 vertices emprise)
 * v4.7.1 - Memory : the foreign key mismatches (`TABLE_FOREIGN_KEY_NOT_FOUND`) are reported while reading the query results instead of being all kept in a list (millions of objects for a massively invalid table), same report
 * v4.7.1 - HTTPS : TLSv1.3 allowed for the downloads (models, static tables, XSD), `https.protocols=TLSv1,TLSv1.1,TLSv1.2` was forcing TLSv1.2 as TLSv1 and TLSv1.1 are disabled by the JDK

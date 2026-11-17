@@ -238,6 +238,9 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             schemaFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            // imported and included schemas are only read by RemoteResourceResolver
+            // (http(s) with timeouts, local files), never directly by the parser
+            schemaFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             schemaFactory.setResourceResolver(new RemoteResourceResolver());
             if (!isHttp(xsdSchemaUrl)) {
                 return schemaFactory.newSchema(xsdSchemaUrl);
@@ -255,9 +258,9 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
     }
 
     /**
-     * Reads the remote imported or included schemas with
-     * {@link Networking#openStream(URL)} (local files are left to the default
-     * resolution).
+     * Reads the imported or included schemas : http(s) with
+     * {@link Networking#openStream(URL)} (timeouts), local files, other protocols
+     * are rejected (the parser itself can't access external schemas).
      */
     private static class RemoteResourceResolver implements LSResourceResolver {
 
@@ -280,15 +283,16 @@ public class XsdSchemaValidator implements Validator<DocumentFile> {
             }
             try {
                 URL url = baseURI == null ? new URL(systemId) : new URL(new URL(baseURI), systemId);
-                if (!isHttp(url)) {
-                    return null;
+                boolean isFile = url.getProtocol().equals("file");
+                if (!isHttp(url) && !isFile) {
+                    throw new IOException("unsupported protocol for an XSD schema : " + url);
                 }
                 log.debug(MARKER, "Load XSD schema {} ...", url);
                 LSInput input = domImplementation.createLSInput();
                 input.setSystemId(url.toString());
                 input.setPublicId(publicId);
                 // read in memory (the stream is not always closed by the parser)
-                try (InputStream is = Networking.openStream(url)) {
+                try (InputStream is = isFile ? url.openStream() : Networking.openStream(url)) {
                     input.setByteStream(new ByteArrayInputStream(is.readAllBytes()));
                 }
                 return input;
