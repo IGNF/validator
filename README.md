@@ -36,7 +36,7 @@ Le schéma suivant illustre le [Principe de fonctionnement du validateur](doc/pr
 * Validation des fiches de métadonnées.
 * Production d'un rapport d'erreur au format JSON.
 * Production de données normalisées (pour agrégation et diffusion).
-* Validation métier à l'aide de [plugins](doc/plugins.md) (CNIG pour GpU, DGPR pour TRI,...) pour les contrôles qui sont pas formalisés dans le modèle de validation.
+* Validation métier à l'aide de [plugins](doc/principe.md#plugins) (CNIG pour GpU, DGPR pour TRI,...) pour les contrôles qui sont pas formalisés dans le modèle de validation.
 
 ## Utilisation
 
@@ -55,22 +55,22 @@ Les dépendances java telle [GeoTools](doc/dependencies/geotools.md) sont décri
 
 ## Documentation technique
 
-Les principaux documents sont les suivants :
+Utiliser le validateur :
 
-* [Modélisation des données et des erreurs](validator-core/src/main/resources/schema/README.md)
-* [Liste des codes d'erreurs (JSON)](validator-core/src/main/resources/error-code.json)
-* [Exemples de modèles de document](validator-core/src/test/resources/config-json/README.md)
-* [Utilisation du validateur en ligne de commande](doc/cli.md) pour une utilisation directe.
-* [Principe de fonctionnement du validateur](doc/principe.md)
-* [Principe de fonctionnement des plugins](doc/plugins.md)
-* [Projections supportées (JSON)](validator-core/src/main/resources/projection.json)
+* [Utilisation en ligne de commande](doc/cli.md) (options, variables d'environnement, commandes)
 * [Image Docker](doc/docker.md)
+* [Principe de fonctionnement et plugins](doc/principe.md)
+* [Liste des codes d'erreurs (JSON)](validator-core/src/main/resources/error-code.json) et [projections supportées (JSON)](validator-core/src/main/resources/projection.json)
+* Problématiques particulières : [métadonnées (english)](doc/metadata.md), [encodage et caractères (english)](doc/characters.md), plugin CNIG : [champs IDURBA](doc/plugin-cnig/idurba.md) et [mots clés des métadonnées](doc/plugin-cnig/keywords.md)
+
+Écrire un modèle de document :
+
+* [Guide : écrire un modèle de document](doc/document_model.md)
+* [Référence : modélisation des données et des erreurs](validator-core/src/main/resources/schema/README.md)
+* [Exemples de modèles de document](validator-core/src/test/resources/config-json/README.md)
+
+Développer :
+
 * [Développement, build et publication d'une version](doc/developpement.md)
-
-Les documents ci-après traitent des problématiques particulières :
-
-* [Metadata (english)](doc/metadata.md)
-* [Characters validation (english)](doc/characters.md)
-* [plugin-cnig - validation des champs IDURBA](doc/plugin-cnig/idurba.md)
-* [plugin-cnig - Validation des mots clés en fonction des CSMD CNIG](doc/plugin-cnig/keywords.md)
+* [Contribuer (formatage, CI)](CONTRIBUTING.md)
 

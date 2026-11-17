@@ -200,7 +200,7 @@
 	* Classify characters validation errors (WARNING or ERROR)?
 
 
-* Metadata validation (see [doc/metadata/index.md](doc/metadata/index.md))
+* Metadata validation (see [doc/metadata.md](doc/metadata.md))
 
     * Improve metadata parsing 
     * Validate INSPIRE constraints (most of them)

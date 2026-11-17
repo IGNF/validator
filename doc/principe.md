@@ -40,3 +40,18 @@ Les contraintes d'ensemble (unicité, référence,...) sont validées à l'aide 
 
 Le validateur génère un dossier `validation/{DOCUMENT}/DATA` contenant "à plat" tous les fichiers validés et normalisés : les tables au format CSV (UTF-8, géométries en WKT, `CRS:84` par défaut ; plus de shapefile depuis la 4.6.4) et les fichiers PDF. Les fiches de métadonnées sont copiées dans `validation/{DOCUMENT}/METADATA`.
 
+## Plugins
+
+Les plugins exécutent des traitements métier à différentes étapes de la validation :
+
+* avant la mise en correspondance des fichiers et du modèle (ex : ajout de contraintes métier au modèle) ;
+* avant la validation (ex : détection de l'encodage des fichiers à partir des métadonnées) ;
+* après la validation (ex : informations sur le document validé, contrôles supplémentaires).
+
+Ils sont activés avec l'option `--plugins` (ex : `--plugins CNIG`) :
+
+| Plugin | Usage                                                                                              |
+| ------ | -------------------------------------------------------------------------------------------------- |
+| `CNIG` | Standards CNIG (PLU, CC, SCoT, SUP...) du [Géoportail de l'Urbanisme](https://www.geoportail-urbanisme.gouv.fr), voir [plugin-cnig](plugin-cnig/idurba.md) |
+| `DGPR` | Données des territoires à risque important d'inondation (TRI, standard COVADIS Directive Inondation) |
+| `PCRS` | Plan Corps de Rue Simplifié (GML validé avec son schéma XSD)                                        |
