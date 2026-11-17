@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -123,6 +124,18 @@ public class PprRegressTest {
          */
         Assert.assertEquals(StandardCharsets.UTF_8, context.getEncoding());
         Assert.assertEquals("pprt_69dreal20090005", document.getDocumentName());
+
+        /*
+         * the CSV conversions (.vtabs of the GeoPackage) are removed at the end of the
+         * validation
+         */
+        for (File file : FileUtils.listFilesAndDirs(documentPath, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+            String name = file.getName();
+            Assert.assertFalse(
+                file.toString(),
+                name.endsWith(".vtabs") || name.endsWith(".vrows") || name.startsWith(".validator-ogr2ogr-")
+            );
+        }
 
         /*
          * check errors

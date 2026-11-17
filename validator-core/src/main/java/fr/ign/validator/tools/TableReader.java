@@ -52,6 +52,11 @@ public class TableReader implements Iterator<String[]>, Closeable {
     public static final String TMP_EXTENSION = "vrows";
 
     /**
+     * Prefix of the temporary directories where ogr2ogr writes the CSV
+     */
+    public static final String WORK_DIRECTORY_PREFIX = ".validator-ogr2ogr-";
+
+    /**
      * Character produced by the decoding of invalid byte sequences.
      */
     private static final char REPLACEMENT_CHARACTER = '\uFFFD';
@@ -373,7 +378,7 @@ public class TableReader implements Iterator<String[]>, Closeable {
              * the same name (ex : DOC_URBA.dbf and DOC_URBA.csv) is not overwritten.
              */
             File workDirectory = Files.createTempDirectory(
-                file.getAbsoluteFile().getParentFile().toPath(), ".validator-ogr2ogr-"
+                file.getAbsoluteFile().getParentFile().toPath(), WORK_DIRECTORY_PREFIX
             ).toFile();
             try {
                 File csvFile = new File(workDirectory, FilenameUtils.getBaseName(file.getName()) + ".csv");

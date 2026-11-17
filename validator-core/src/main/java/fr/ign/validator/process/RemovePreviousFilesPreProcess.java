@@ -34,7 +34,18 @@ public class RemovePreviousFilesPreProcess implements ValidatorListener {
      */
     public void run(File documentPath) {
         log.info(MARKER, "Remove temp files from previous run ...");
+        removeTemporaryFiles(documentPath);
+        log.info(MARKER, "Remove temp files from previous run : completed.");
+    }
 
+    /**
+     * Remove the files created next to the data by the validator (CSV conversions
+     * of {@link TableReader} and {@link MultiTableReader}, ogr2ogr work directories
+     * left by a killed process).
+     *
+     * @param documentPath
+     */
+    public static void removeTemporaryFiles(File documentPath) {
         Collection<File> files = FileUtils.listFilesAndDirs(documentPath, null);
         for (File file : files) {
             if (isMultiTableReaderFile(file)) {
@@ -43,10 +54,21 @@ public class RemovePreviousFilesPreProcess implements ValidatorListener {
             } else if (isTableReaderFile(file)) {
                 log.info(MARKER, "Remove TableReader file {}...", file);
                 org.apache.commons.io.FileUtils.deleteQuietly(file);
+            } else if (isOgr2ogrWorkDirectory(file)) {
+                log.info(MARKER, "Remove ogr2ogr work directory {}...", file);
+                org.apache.commons.io.FileUtils.deleteQuietly(file);
             }
         }
+    }
 
-        log.info(MARKER, "Remove temp files from previous run : completed.");
+    /**
+     * Is a work directory of {@link TableReader} (ogr2ogr conversion)?
+     *
+     * @param file
+     * @return
+     */
+    private static boolean isOgr2ogrWorkDirectory(File file) {
+        return file.isDirectory() && file.getName().startsWith(TableReader.WORK_DIRECTORY_PREFIX);
     }
 
     /**
@@ -55,7 +77,7 @@ public class RemovePreviousFilesPreProcess implements ValidatorListener {
      * @param file
      * @return
      */
-    private boolean isMultiTableReaderFile(File file) {
+    private static boolean isMultiTableReaderFile(File file) {
         return file.isDirectory() && file.getName().endsWith(MultiTableReader.TMP_EXTENSION);
     }
 
@@ -65,7 +87,7 @@ public class RemovePreviousFilesPreProcess implements ValidatorListener {
      * @param file
      * @return
      */
-    private boolean isTableReaderFile(File file) {
+    private static boolean isTableReaderFile(File file) {
         return (!file.isDirectory()) && file.getName().endsWith(TableReader.TMP_EXTENSION);
     }
 

@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import fr.ign.validator.process.RemovePreviousFilesPreProcess;
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
 import fr.ign.validator.database.Database;
@@ -159,7 +160,16 @@ public class Document implements Validatable {
         );
 
         context.setCurrentDirectory(documentPath);
+        try {
+            validateDocument(context);
+        } finally {
+            // CSV conversions (.vrows, .vtabs) next to the data are no longer required
+            log.info(MARKER, "Remove temporary files...");
+            RemovePreviousFilesPreProcess.removeTemporaryFiles(documentPath);
+        }
+    }
 
+    private void validateDocument(Context context) throws Exception {
         context.beginModel(documentModel);
         context.beginData(this);
 

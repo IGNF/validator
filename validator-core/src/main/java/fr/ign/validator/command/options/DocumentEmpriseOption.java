@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -94,7 +95,23 @@ public class DocumentEmpriseOption {
             DocumentEmpriseOption.throwParseErrorException(parsedOption, "Ensure the input file has .json extension");
         }
         FileConverter fileConverter = FileConverter.getInstance();
-        File transformedFile = new File(file.getParentFile().getPath() + "/cnig_document_emprise_wkt.csv");
+        // unique temporary file (the GeoJSON directory may be shared by concurrent
+        // validations), removed after reading
+        File transformedFile;
+        try {
+            transformedFile = File.createTempFile("cnig_document_emprise_wkt", ".csv");
+        } catch (IOException e) {
+            throw new IllegalStateException("Fail to create a temporary file", e);
+        }
+        try {
+            return readEmprise(parsedOption, file, fileConverter, transformedFile);
+        } finally {
+            FileUtils.deleteQuietly(transformedFile);
+        }
+    }
+
+    private static Geometry readEmprise(String parsedOption, File file, FileConverter fileConverter,
+        File transformedFile) throws ParseException {
         try {
             fileConverter.convertToCSV(file, transformedFile, StandardCharsets.UTF_8);
         } catch (IOException e) {
