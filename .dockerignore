@@ -7,7 +7,7 @@
 .vscode/
 .github/
 .ci/
-eclipse/
+.mvn/formatter-config.xml
 assets/
 doc/
 # release & logs

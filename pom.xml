@@ -370,7 +370,7 @@
 					<artifactId>formatter-maven-plugin</artifactId>
 					<version>${maven-formatter-plugin.version}</version>
 					<configuration>
-						<configFile>${project.parent.basedir}/eclipse/formatter-config.xml</configFile>
+						<configFile>${project.parent.basedir}/.mvn/formatter-config.xml</configFile>
 					</configuration>
 				</plugin>
 
