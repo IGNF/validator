@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.prep.PreparedGeometryFactory;
 import org.locationtech.jts.io.ParseException;
 
 import fr.ign.validator.Context;
@@ -36,6 +37,38 @@ public class GeometryInDocumentValidatorTest extends CnigValidatorTestBase {
         ProjectionList projectionRepository = ProjectionList.getInstance();
         Projection projection = projectionRepository.findByCode("EPSG:2154");
         context.setProjection(projection);
+    }
+
+    /**
+     * Same result with the emprise prepared once (indexed segments) as with
+     * Geometry.contains
+     */
+    @Test
+    public void testPreparedEmprise() throws ParseException {
+        WKTReader2 reader = new WKTReader2();
+        Geometry documentEmprise = reader.read("POLYGON((0 0, 0 4, 4 4, 4 0, 0 0))");
+        context.setDocumentEmprise(documentEmprise);
+        GeometryInDocumentValidator preparedValidator = new GeometryInDocumentValidator(
+            PreparedGeometryFactory.prepare(documentEmprise)
+        );
+
+        String[] inside = {
+            "POLYGON((1 1, 1 2, 2 2, 2 1, 1 1))", "POINT(2 2)", "LINESTRING(1 1, 3 3)"
+        };
+        String[] outside = {
+            "POLYGON((5 5, 5 7, 7 7, 7 5, 5 5))", "POLYGON((3 3, 3 5, 5 5, 5 3, 3 3))", "POINT(4 2)",
+            "LINESTRING(1 1, 6 6)"
+        };
+        for (String wkt : inside) {
+            preparedValidator.validate(context, new Attribute<Geometry>(new GeometryType(), wkt));
+        }
+        assertEquals(0, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR));
+        for (String wkt : outside) {
+            preparedValidator.validate(context, new Attribute<Geometry>(new GeometryType(), wkt));
+        }
+        assertEquals(
+            outside.length, report.countErrors(CnigErrorCodes.CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR)
+        );
     }
 
     @Test

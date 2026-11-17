@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.prep.PreparedGeometry;
+import org.locationtech.jts.geom.prep.PreparedGeometryFactory;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.ValidatorListener;
@@ -33,6 +35,20 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("GeometryInDocumentValidator");
 
+    /**
+     * Document emprise prepared once for all the features (indexed segments, same
+     * result as Geometry.contains), null for the listener instance.
+     */
+    private final PreparedGeometry preparedEmprise;
+
+    public GeometryInDocumentValidator() {
+        this(null);
+    }
+
+    GeometryInDocumentValidator(PreparedGeometry preparedEmprise) {
+        this.preparedEmprise = preparedEmprise;
+    }
+
     @Override
     public void validate(Context context, Attribute<Geometry> attribute) {
 
@@ -55,7 +71,10 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
 
     }
 
-    private Boolean isInsideDocumentEmprise(Geometry geometry, Geometry emprise) {
+    private boolean isInsideDocumentEmprise(Geometry geometry, Geometry emprise) {
+        if (preparedEmprise != null && preparedEmprise.getGeometry() == emprise) {
+            return preparedEmprise.contains(geometry);
+        }
         return emprise.contains(geometry);
     }
 
@@ -80,6 +99,7 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
         Geometry projectedGeometry = projectionTransform.transform(context.getDocumentEmprise());
         Geometry bufferedGeometry = projectedGeometry.buffer(10);
         context.setDocumentEmprise(bufferedGeometry);
+        PreparedGeometry preparedEmprise = PreparedGeometryFactory.prepare(bufferedGeometry);
 
         List<TableModel> tableModels = ModelHelper.getTableModels(document.getDocumentModel());
         for (TableModel tableModel : tableModels) {
@@ -98,7 +118,7 @@ public class GeometryInDocumentValidator implements Validator<Attribute<Geometry
                 MARKER, "Add validator to featureType {}:{}", featureType.getName(),
                 geometryType.getName()
             );
-            geometryType.addValidator(new GeometryInDocumentValidator());
+            geometryType.addValidator(new GeometryInDocumentValidator(preparedEmprise));
         }
 
     }
