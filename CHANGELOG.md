@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - CNIG : a metadata thesaurus without keyword (ex : `Types de documents d’urbanisme`) is reported as `CNIG_METADATA_KEYWORD_NOT_FOUND` instead of stopping the validation (`NullPointerException`)
 * v4.7.1 - Build : the code formatter configuration is moved from `eclipse/formatter-config.xml` to `.mvn/formatter-config.xml`
 * v4.7.1 - XML validation : the XML parser can't access external schemas itself (`ACCESS_EXTERNAL_SCHEMA`), the imported and included schemas are only read by the validator (http(s) with timeouts, local files, other protocols rejected) [SECURITY]
 * v4.7.1 - CNIG : `--cnig-document-emprise` check (`CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR`) with the emprise prepared once (`PreparedGeometry`, indexed segments) instead of a full `contains` per feature : same result, ~1000 times faster with a detailed municipality boundary (128 s to 0.12 s for 20 000 zones and a 100 000 vertices emprise)

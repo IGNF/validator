@@ -164,6 +164,19 @@ public class CnigMetadataKeywordsValidator extends AbstractCnigMetadataValidator
             }
 
             String value = getFirstValue(keywords);
+            if (value == null) {
+                // thesaurus without keyword
+                log.error(
+                    MARKER, "keyword {} with thesaurusName : {} is empty!", requiredKeyword.name,
+                    requiredKeyword.thesaurusName
+                );
+                context.report(
+                    context.createError(CnigErrorCodes.CNIG_METADATA_KEYWORD_NOT_FOUND)
+                        .setMessageParam("NAME", requiredKeyword.name)
+                        .setMessageParam("THESAURUS_NAME", requiredKeyword.thesaurusName)
+                );
+                continue;
+            }
             if (!value.equalsIgnoreCase(requiredKeyword.expectedValue)) {
                 log.error(
                     MARKER, "Invalid value for keyword {} : {} (expected : {})",
