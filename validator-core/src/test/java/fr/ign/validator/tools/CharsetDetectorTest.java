@@ -2,15 +2,45 @@ package fr.ign.validator.tools;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Arrays;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class CharsetDetectorTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    /**
+     * A file without line breaks is read by blocks (not as a single line in
+     * memory), until its end.
+     */
+    @Test
+    public void testIsValidUTF8WithoutLineBreak() throws IOException {
+        byte[] content = new byte[5 * 1024 * 1024];
+        Arrays.fill(content, (byte) 'a');
+        // "é" in UTF-8
+        content[1000] = (byte) 0xC3;
+        content[1001] = (byte) 0xA9;
+        File valid = folder.newFile("valid.csv");
+        Files.write(valid.toPath(), content);
+        assertTrue(CharsetDetector.isValidUTF8(valid));
+
+        // invalid byte at the end of the file
+        content[content.length - 1] = (byte) 0xFF;
+        File invalid = folder.newFile("invalid.csv");
+        Files.write(invalid.toPath(), content);
+        assertFalse(CharsetDetector.isValidUTF8(invalid));
+    }
 
     @Test
     public void testDetectUTF8() throws IOException {

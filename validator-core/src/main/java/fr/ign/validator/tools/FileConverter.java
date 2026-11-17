@@ -2,6 +2,7 @@ package fr.ign.validator.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -76,6 +77,11 @@ public class FileConverter {
      * Max length of stderr reported in error messages
      */
     private static final int MAX_STDERR_LENGTH = 2000;
+
+    /**
+     * Number of bytes read at the beginning of ogr2ogr stderr
+     */
+    private static final int MAX_STDERR_READ = 64 * 1024;
 
     /**
      * Default constructor
@@ -562,9 +568,14 @@ public class FileConverter {
      * @return
      * @throws IOException
      */
-    private String readStderr(File stderrFile) throws IOException {
+    static String readStderr(File stderrFile) throws IOException {
+        // only the beginning is reported (ogr2ogr may write millions of warnings)
+        byte[] head;
+        try (InputStream is = new FileInputStream(stderrFile)) {
+            head = is.readNBytes(MAX_STDERR_READ);
+        }
         List<String> lines = new ArrayList<>();
-        for (String line : FileUtils.readLines(stderrFile, StandardCharsets.UTF_8)) {
+        for (String line : new String(head, StandardCharsets.UTF_8).split("\\R")) {
             if (!line.trim().isEmpty() && !line.startsWith("  -> ")) {
                 lines.add(line.trim());
             }

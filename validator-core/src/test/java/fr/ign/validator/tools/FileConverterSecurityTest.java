@@ -84,6 +84,33 @@ public class FileConverterSecurityTest {
         assertFalse(new File(folder.getRoot(), "pwned.csv").exists());
     }
 
+    /**
+     * Only the beginning of a huge stderr is read, the list of the tried drivers is
+     * ignored.
+     */
+    @Test
+    public void testReadStderrHead() throws IOException {
+        File stderr = folder.newFile("ogr2ogr.stderr");
+        StringBuilder content = new StringBuilder(
+            "FAILURE:\nUnable to open datasource `x.gml' with the following drivers.\n"
+        );
+        content.append("  -> `FITS'\n");
+        for (int i = 0; i < 200000; i++) {
+            content.append("Warning 1: Value 'x' of field y parsed incompletely to real 0.\n");
+        }
+        FileUtils.writeStringToFile(stderr, content.toString(), StandardCharsets.UTF_8);
+        assertTrue(stderr.length() > 10 * 1024 * 1024);
+
+        String message = FileConverter.readStderr(stderr);
+        assertTrue(
+            message, message.startsWith(
+                "FAILURE: Unable to open datasource `x.gml' with the following drivers. Warning 1"
+            )
+        );
+        assertFalse(message.contains("FITS"));
+        assertTrue(message.length() <= 2000);
+    }
+
     @Test
     public void testGetInputDriver() throws IOException {
         assertEquals("ESRI Shapefile", FileConverter.getInputDriver(new File("a.SHP")));

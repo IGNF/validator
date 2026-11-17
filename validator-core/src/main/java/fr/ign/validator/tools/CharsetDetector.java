@@ -158,8 +158,11 @@ public class CharsetDetector {
                     cs
                 )
             );
-            while (in.readLine() != null) {
-
+            // read by blocks (readLine would keep a whole file without line breaks in
+            // memory)
+            char[] buffer = new char[8192];
+            while (in.read(buffer) != -1) {
+                // decoding errors are thrown by the decoder
             }
         } catch (Exception e) {
             log.debug(MARKER, "isValidCharset('{}','{}') : false", file.getAbsolutePath(), charset);
