@@ -20,6 +20,7 @@
 ### v4.6.0 - Fixes
 
 * v4.6.5 - Metadata : reject DOCTYPE declarations in XML metadata files (XXE : external entities could read local files of the server and expose them in the metadata properties, CVE-2021-33813) [SECURITY]
+* v4.6.5 - Logs : the tables of a multi-table file (ex : PCRS GML) missing from the data are logged as INFO instead of WARN (~25 WARN less per PCRS dataset, read errors still logged as WARN)
 * v4.6.5 - `document-info.json` : no more `fail to compute stats` errors for the tables of a multi-table file (ex : PCRS GML) not found in the data
 * v4.6.5 - CNIG : fix `DOC_URBA.csv` not filtered when the document name is not a valid DU name with CNIG v1 models (`NullPointerException` in `IdurbaFormatV1`, a partial `DOC_URBA.new.csv` was left in `DATA`)
 * v4.6.5 - Logs : directories are skipped by the normalization without `ERROR` (`Normalization is not supported for ... (DirectoryModel)`), no more `ERROR` for the tables of a multi-table file not found in the data (`MultiTableReader`, ex : PCRS), clearer `converted to null (bad type)` warnings (`TABLE.ATTRIBUTE : 'value'`)

@@ -336,7 +336,9 @@ public class Database implements Closeable {
      */
     private void createTable(String tableName, FeatureType featureType) throws SQLException {
         if (featureType.isEmpty()) {
-            log.warn(MARKER, "Create table {} skipped (empty FeatureType)", tableName);
+            // a table missing from a multi-table file is not an anomaly (the other causes
+            // of an empty FeatureType are logged as WARN by CheckFeatureTypesPreProcess)
+            log.info(MARKER, "Create table {} skipped (empty FeatureType)", tableName);
             return;
         }
         createTable(tableName, featureType.getAttributeNames());

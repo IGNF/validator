@@ -155,6 +155,20 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
                 continue;
             }
             String tableName = tableModel.getName();
+            /*
+             * not an anomaly : a multi-table file may contain only some of the tables of
+             * the model (ex : PCRS)
+             */
+            if (!containsTable(reader, tableName)) {
+                log.info(
+                    MARKER, "Process {} : table '{}' not found in {}, create empty FeatureType",
+                    tableModel,
+                    tableName,
+                    documentFile.getPath()
+                );
+                tableModel.setFeatureType(createEmptyFeatureType(tableModel.getName()));
+                continue;
+            }
             try {
                 File path = reader.getTablePath(tableName);
                 FeatureType featureType = AutoFeatureType.createFeatureTypeFromTable(path);
@@ -168,10 +182,11 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
                 tableModel.setFeatureType(featureType);
             } catch (IOException e) {
                 log.warn(
-                    MARKER, "Process {} : Create empty FeatureType for {} ('{}' not found)",
+                    MARKER, "Process {} : Create empty FeatureType for {} ('{}' can't be read : {})",
                     tableModel,
                     tableModel.getName(),
-                    tableName
+                    tableName,
+                    e.getMessage()
                 );
                 tableModel.setFeatureType(createEmptyFeatureType(tableModel.getName()));
             }
@@ -215,6 +230,23 @@ public class CheckFeatureTypesPreProcess implements ValidatorListener {
             }
         }
         return true;
+    }
+
+    /**
+     * True if the multi-table file contains the table (case insensitive, as
+     * {@link MultiTableReader#getTablePath(String)}).
+     *
+     * @param reader
+     * @param tableName
+     * @return
+     */
+    private boolean containsTable(MultiTableReader reader, String tableName) {
+        for (String candidate : reader.getTableNames()) {
+            if (candidate.equalsIgnoreCase(tableName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
