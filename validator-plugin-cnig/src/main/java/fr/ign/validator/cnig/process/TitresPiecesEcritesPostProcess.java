@@ -3,6 +3,7 @@ package fr.ign.validator.cnig.process;
 import java.io.File;
 import java.util.Locale;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -49,11 +50,16 @@ public class TitresPiecesEcritesPostProcess implements ValidatorListener {
         }
 
         File tempDirectory = new File(context.getDataDirectory(), "tmp");
-        TitresPiecesEcritesOriginalPathBuilder builder = new TitresPiecesEcritesOriginalPathBuilder(
-            context.getCurrentDirectory(),
-            tempDirectory
-        );
-        builder.addOriginalPathColumn(context.getDataDirectory());
+        try {
+            TitresPiecesEcritesOriginalPathBuilder builder = new TitresPiecesEcritesOriginalPathBuilder(
+                context.getCurrentDirectory(),
+                tempDirectory
+            );
+            builder.addOriginalPathColumn(context.getDataDirectory());
+        } finally {
+            // not part of the normalized data
+            FileUtils.deleteQuietly(tempDirectory);
+        }
     }
 
     private boolean isDocumentWithPiecesEcrites(Document document) {

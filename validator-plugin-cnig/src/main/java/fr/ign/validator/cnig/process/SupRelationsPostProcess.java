@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -98,12 +99,12 @@ public class SupRelationsPostProcess implements ValidatorListener {
             return;
         }
 
+        File tempDirectory = getTempDirectory(context);
         try {
             log.info(
                 MARKER,
                 "Perform joins to add columns 'fichier', 'nomsuplitt', 'nomreg' and 'urlreg' to normalized GENERATEUR and ASSIETTE tables..."
             );
-            File tempDirectory = getTempDirectory(context);
             AdditionalColumnsBuilder builder = new AdditionalColumnsBuilder(
                 database,
                 tempDirectory
@@ -116,6 +117,8 @@ public class SupRelationsPostProcess implements ValidatorListener {
             }
         } finally {
             database.close();
+            // not part of the normalized data
+            FileUtils.deleteQuietly(tempDirectory);
         }
 
         log.info(MARKER, "Post-process GENERATEUR and ASSIETTE tables : completed.");

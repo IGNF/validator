@@ -466,6 +466,9 @@ public class CnigValidatorRegressTest {
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
 
+        // no temporary directory of the post-processes in the normalized data
+        assertFalse(new File(context.getDataDirectory(), "tmp").exists());
+
         /*
          * check basic points
          */
@@ -762,6 +765,9 @@ public class CnigValidatorRegressTest {
 
         Document document = new Document(documentModel, documentPath);
         document.validate(context);
+
+        // no temporary directory of the post-processes in the normalized data
+        assertFalse(new File(context.getDataDirectory(), "tmp").exists());
 
         /*
          * check basic points
