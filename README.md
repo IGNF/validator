@@ -27,7 +27,7 @@ Le paramétrage s'effectue à l'aide de [fichiers JSON décrivant des arborescen
 
 Le schéma suivant illustre le [Principe de fonctionnement du validateur](doc/principe.md) :
 
-![Working principle](doc/img/principe.jpg)
+![Working principle](doc/img/principe.drawio.png)
 
 ## Principales fonctionnalités
 

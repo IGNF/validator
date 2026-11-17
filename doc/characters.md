@@ -8,11 +8,13 @@ The charset used to read data is either :
 * The value provided as a command line argument (`--encoding`)
 * The value provided in a metadata file (`identificationInfo[1]/*/characterSet`)
 
+The value provided in a metadata file overrides the command line argument.
+
 For now, value provided in companion file such as .cpg for shapefile is ignored because it may contains value such as "system".
 
 ## Data charset validation
 
-![Characters validation](img/characters-validation.png)
+![Characters validation](img/characters-validation.drawio.png)
 
 ## Deep character validation
 
