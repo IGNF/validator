@@ -12,6 +12,13 @@ jobs:
     # pinned : gdal-bin comes from the distribution (GDAL 3.12.2 on ubuntu 26.04, as in the Dockerfile)
     runs-on: ubuntu-26.04
 
+    # 17 : minimum supported version (gpu-site), 25 : version of the Docker image
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ '17', '25' ]
+    name: build (java ${{ matrix.java }})
+
     # PostGIS for the DGPR controls (skipped with SQLITE)
     services:
       postgis:
@@ -34,7 +41,7 @@ jobs:
     - name: Set up java
       uses: actions/setup-java@v5
       with:
-        java-version: '25'
+        java-version: ${{ matrix.java }}
         distribution: 'temurin'
         cache: maven
 

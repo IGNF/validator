@@ -3,8 +3,8 @@ package fr.ign.validator.model.type;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
+import org.geotools.api.referencing.FactoryException;
+import org.geotools.api.referencing.NoSuchAuthorityCodeException;
 
 import org.locationtech.jts.geom.Geometry;
 
