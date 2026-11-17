@@ -57,8 +57,10 @@ public class Networking {
     public static void configureHttpClient(String proxy) {
         Properties systemSettings = System.getProperties();
 
-        /* configure SSL */
-        systemSettings.put("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+        /*
+         * SSL : the JDK defaults are used (TLSv1.3 and TLSv1.2, "https.protocols" was
+         * forcing TLSv1.2 as TLSv1 and TLSv1.1 are disabled by the JDK)
+         */
 
         /* retreive proxy configuration from environment */
         String httpProxy = Networking.getEnvCaseInsensitive("http_proxy");

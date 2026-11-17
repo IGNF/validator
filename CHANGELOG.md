@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - HTTPS : TLSv1.3 allowed for the downloads (models, static tables, XSD), `https.protocols=TLSv1,TLSv1.1,TLSv1.2` was forcing TLSv1.2 as TLSv1 and TLSv1.1 are disabled by the JDK
 * v4.7.1 - Memory : charset detection reads the files by blocks (a file without line breaks was loaded as a single line), only the first 64 KB of ogr2ogr stderr are read to report a conversion failure
 * v4.7.1 - Temporary files : the CSV conversions next to the data (`*.vrows`, `*.vtabs`) are removed at the end of the validation (also on failure) instead of the next run, ogr2ogr work directories (`.validator-ogr2ogr-*`) left by a killed process are removed, `--cnig-document-emprise` uses a unique temporary file instead of `cnig_document_emprise_wkt.csv` next to the GeoJSON (shared by concurrent validations)
 * v4.7.1 - XML validation : the XSD schemas (and their imports) are downloaded with timeouts (the JDK defaults are infinite : a validation could hang on a remote schema) and compiled once per URL instead of once per XML file, XML file closed after the validation
