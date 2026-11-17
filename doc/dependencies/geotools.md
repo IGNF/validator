@@ -14,7 +14,9 @@ So, `gt-epsg-hsql` is used as `java -Dorg.geotools.referencing.forceXY=true` may
 
 ## Relation to java version
 
-As the validator requires Java 11, GeoTools 21.x and above is supported.
+The validator requires Java 17, as GeoTools 34 and above (GeoTools 33.x is the last series supporting Java 11).
+
+Since GeoTools 30, the `org.opengis` packages are replaced by `org.geotools.api` (ex : `org.geotools.api.referencing.crs.CoordinateReferenceSystem`), see [upgrade guide](https://docs.geotools.org/latest/userguide/welcome/upgrade.html).
 
 See [Geotools - Java Install](http://docs.geotools.org/latest/userguide/build/install/jdk.html#) for more details.
 

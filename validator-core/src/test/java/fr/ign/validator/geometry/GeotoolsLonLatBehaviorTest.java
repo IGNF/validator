@@ -1,12 +1,12 @@
 package fr.ign.validator.geometry;
 
-import org.geotools.geometry.DirectPosition2D;
+import org.geotools.geometry.Position2D;
 import org.geotools.referencing.CRS;
 import org.junit.Assert;
 import org.junit.Test;
-import org.opengis.geometry.DirectPosition;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.operation.MathTransform;
+import org.geotools.api.geometry.Position;
+import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
+import org.geotools.api.referencing.operation.MathTransform;
 
 /**
  * Test geotools behavior with lat,lon order for EPSG codes.
@@ -26,8 +26,8 @@ public class GeotoolsLonLatBehaviorTest {
         CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326");
 
         MathTransform transform = CRS.findMathTransform(sourceCRS, targetCRS);
-        DirectPosition position = new DirectPosition2D(5.0, 45.0);
-        DirectPosition result = new DirectPosition2D();
+        Position position = new Position2D(5.0, 45.0);
+        Position result = new Position2D();
         transform.transform(position, result);
         Assert.assertEquals(45.0, result.getOrdinate(0), 0.1);
         Assert.assertEquals(5.0, result.getOrdinate(1), 0.1);

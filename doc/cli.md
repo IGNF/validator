@@ -3,7 +3,7 @@
 
 ## Pré-requis
 
-* Exécutable java de OpenJDK 11 (`java --version` doit fonctionner et mentionner une version java 11 ou supérieure)
+* Exécutable java de OpenJDK 17 (`java --version` doit fonctionner et mentionner une version java 17 ou supérieure)
 * Exécutable [ogr2ogr de GDAL](dependencies/ogr2ogr.md) (`ogr2ogr --version` doit fonctionner et mentionner une version supportée)
 
 ## Installation du validateur

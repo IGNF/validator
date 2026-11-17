@@ -6,7 +6,7 @@ Ce document décrit l'installation des dépendances, la compilation du projet et
 
 ### Java
 
-Le projet compile avec **Java 11** (voir `java.version` dans `pom.xml`). L'exécution du validateur requiert **Java 17 ou supérieur** (voir [README.md](../README.md)).
+Le projet compile pour **Java 17** (voir `java.version` dans `pom.xml`) et requiert **Java 17 ou supérieur** pour l'exécution (voir [README.md](../README.md)). Un JDK (et non un JRE) est nécessaire pour compiler (paquet `openjdk-17-jdk-headless` ou supérieur).
 
 ```bash
 java -version
