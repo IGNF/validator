@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.RowIterator;
@@ -46,6 +47,28 @@ public class ForeignKeyFinder {
         Database database,
         TableModel tableModel,
         ForeignKeyConstraint foreignKey) throws SQLException, IOException {
+        List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();
+        foreignKeyNotFound(database, tableModel, foreignKey, result::add);
+        return result;
+    }
+
+    /**
+     * Retrieve the Foreign Key Mismatches one by one (they are not kept in memory :
+     * a massively invalid table may have millions of mismatches).
+     *
+     * @param database
+     * @param tableModel
+     * @param foreignKey
+     * @param consumer   called for each mismatch, in the order of the query
+     * @return the number of mismatches
+     * @throws SQLException
+     * @throws IOException
+     */
+    public int foreignKeyNotFound(
+        Database database,
+        TableModel tableModel,
+        ForeignKeyConstraint foreignKey,
+        Consumer<ForeignKeyMismatch> consumer) throws SQLException, IOException {
 
         // TODO validate condition to avoid SQL injection and crashes
         // grammar validation with ANTLR v4
@@ -86,17 +109,17 @@ public class ForeignKeyFinder {
             + String.join(" ", nullableClause);
 
         try (RowIterator it = database.query(query)) {
-
-            List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();
+            int count = 0;
             while (it.hasNext()) {
                 String[] row = it.next();
                 String values = "";
                 if (row.length > 2) {
                     values = String.join(", ", Arrays.copyOfRange(row, 2, row.length));
                 }
-                result.add(new ForeignKeyMismatch(row[0], row[1], values));
+                consumer.accept(new ForeignKeyMismatch(row[0], row[1], values));
+                count++;
             }
-            return result;
+            return count;
         }
     }
 

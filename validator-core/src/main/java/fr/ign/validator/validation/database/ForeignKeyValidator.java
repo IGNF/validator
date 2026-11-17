@@ -2,7 +2,6 @@ package fr.ign.validator.validation.database;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +11,6 @@ import org.apache.logging.log4j.MarkerManager;
 import fr.ign.validator.Context;
 import fr.ign.validator.database.Database;
 import fr.ign.validator.database.internal.ForeignKeyFinder;
-import fr.ign.validator.database.internal.ForeignKeyFinder.ForeignKeyMismatch;
 import fr.ign.validator.error.CoreErrorCodes;
 import fr.ign.validator.error.ErrorScope;
 import fr.ign.validator.model.FeatureTypeConstraints;
@@ -66,24 +64,14 @@ public class ForeignKeyValidator implements Validator<Database> {
                     tableModel.getName(), foreignKey
                 );
 
-                List<ForeignKeyMismatch> mismatchs = foreignKeyFinder.foreignKeyNotFound(
+                /*
+                 * report errors while reading the query results (not kept in memory)
+                 */
+                int count = foreignKeyFinder.foreignKeyNotFound(
                     database,
                     tableModel,
-                    foreignKey
-                );
-
-                /*
-                 * report errors
-                 */
-                log.info(
-                    MARKER,
-                    "Table {} : foreignKey {} found {} conflicts",
-                    tableModel.getName(),
                     foreignKey,
-                    mismatchs.size()
-                );
-                for (ForeignKeyMismatch mismatch : mismatchs) {
-                    context.report(
+                    mismatch -> context.report(
                         context.createError(CoreErrorCodes.TABLE_FOREIGN_KEY_NOT_FOUND)
                             .setScope(ErrorScope.FEATURE)
                             .setFile(mismatch.file)
@@ -93,8 +81,15 @@ public class ForeignKeyValidator implements Validator<Database> {
                             .setMessageParam("SOURCE_COL", String.join(", ", foreignKey.getSourceColumnNames()))
                             .setMessageParam("SOURCE_VALUE", mismatch.values)
                             .setMessageParam("TARGET_TABLE", foreignKey.getTargetTableName())
-                    );
-                }
+                    )
+                );
+                log.info(
+                    MARKER,
+                    "Table {} : foreignKey {} found {} conflicts",
+                    tableModel.getName(),
+                    foreignKey,
+                    count
+                );
             }
             context.endModel(tableModel);
 
