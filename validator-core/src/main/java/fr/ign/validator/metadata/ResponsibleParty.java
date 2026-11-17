@@ -1,8 +1,5 @@
 package fr.ign.validator.metadata;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * Partial implementation of gmd:CI_ResponsibleParty
  *
@@ -115,19 +112,20 @@ public class ResponsibleParty {
     }
 
     public boolean mailIsValid() {
-        // pattern is <non empty>@<non-empty>.<non-empty>
-        Pattern pattern = Pattern.compile(".+@.+\\..+");
-        Matcher matcher = pattern.matcher(this.electronicMailAddress);
-
         if (this.electronicMailAddress == null) {
             return false;
         } else if (this.electronicMailAddress.equals("non_renseigne@exemple.fr")) {
             return false;
-        } else if (matcher.find()) {
-            return true;
-        } else {
+        }
+        // <non empty>@<non-empty>.<non-empty> (".+@.+\\..+" with find() is
+        // polynomial on long values)
+        int at = this.electronicMailAddress.indexOf('@', 1);
+        if (at < 0) {
             return false;
         }
+        // last '.' followed by at least one character
+        int dot = this.electronicMailAddress.lastIndexOf('.', this.electronicMailAddress.length() - 2);
+        return dot > at + 1;
     }
 
     public boolean hasName() {
