@@ -40,6 +40,8 @@ public class CommandApplicationTest {
         assertTrue("help should display command list", output.contains("Commands:"));
         assertTrue("help should display env vars list", output.contains("Environment variables:"));
         assertTrue("help should display env var for ogr2ogr", output.contains("OGR2OGR_PATH"));
+        assertTrue("help should display env var for ogr2ogr timeout", output.contains("OGR2OGR_TIMEOUT"));
+        assertTrue("help should display env vars for the database", output.contains("DB_STATEMENT_TIMEOUT"));
     }
 
     @Test

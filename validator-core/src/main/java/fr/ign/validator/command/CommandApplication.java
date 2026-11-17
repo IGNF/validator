@@ -81,6 +81,29 @@ public class CommandApplication {
         stdout.println("Environment variables:");
         stdout.println("");
         stdout.println(formatHelpItem("OGR2OGR_PATH", "Path to ogr2ogr executable from GDAL (default is 'ogr2ogr')"));
+        stdout.println(
+            formatHelpItem("OGR2OGR_TIMEOUT", "Maximum duration of an ogr2ogr conversion in seconds (default is 3600)")
+        );
+        stdout.println(
+            formatHelpItem("GMLAS_CONFIG", "Path to a GMLAS driver configuration (XML validation of GML files)")
+        );
+        stdout.println(
+            formatHelpItem(
+                "DB_URL", "JDBC URL of a PostgreSQL validation database (default : SQLite in the output directory)"
+            )
+        );
+        stdout.println(formatHelpItem("DB_USER, DB_PASSWORD", "Credentials of the PostgreSQL validation database"));
+        stdout.println(
+            formatHelpItem(
+                "DB_SCHEMA", "PostgreSQL schema of the validation, dropped and created again (default is 'validation')"
+            )
+        );
+        stdout.println(
+            formatHelpItem(
+                "DB_STATEMENT_TIMEOUT",
+                "Maximum duration of a PostgreSQL query in seconds (default is 3600, 0 for no limit)"
+            )
+        );
         stdout.println(formatHelpItem("HTTP_PROXY", "ex : http://proxy:3128"));
         stdout.println(formatHelpItem("HTTPS_PROXY", "ex : http://proxy:3128"));
         stdout.println(formatHelpItem("NO_PROXY", "localhost,demo.localhost"));

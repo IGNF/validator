@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - `--help` : `OGR2OGR_TIMEOUT`, `GMLAS_CONFIG` and `DB_*` environment variables listed, order of the error thresholds of `--cnig-complexity-tolerance` fixed (point, part, ring) and expected format
 * v4.7.1 - CNIG : a metadata thesaurus without keyword (ex : `Types de documents d’urbanisme`) is reported as `CNIG_METADATA_KEYWORD_NOT_FOUND` instead of stopping the validation (`NullPointerException`)
 * v4.7.1 - Build : the code formatter configuration is moved from `eclipse/formatter-config.xml` to `.mvn/formatter-config.xml`
 * v4.7.1 - XML validation : the XML parser can't access external schemas itself (`ACCESS_EXTERNAL_SCHEMA`), the imported and included schemas are only read by the validator (http(s) with timeouts, local files, other protocols rejected) [SECURITY]

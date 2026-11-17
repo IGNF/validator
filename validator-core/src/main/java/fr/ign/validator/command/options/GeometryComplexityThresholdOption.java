@@ -36,7 +36,7 @@ public class GeometryComplexityThresholdOption {
         {
             Option option = new Option(
                 null, OPTION_NAME, true,
-                "List of threshold to survey geometry complexity : [[warnPoint, warnPart, warnRing, warnDensity, warnRingPoint], [errPoint, errRing, errPart, errDensity, errRingPoint]]"
+                "Thresholds of geometry complexity (warning, then error) : \"[[warnPoint,warnPart,warnRing,warnDensity,warnRingPoint], [errPoint,errPart,errRing,errDensity,errRingPoint]]\" (comma and space between the two groups)"
             );
             option.setRequired(false);
             options.addOption(option);
