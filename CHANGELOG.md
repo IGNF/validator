@@ -8,6 +8,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.1 - Logs : `DB_URL` is no longer written in `validator-debug.log` (returned to the users by validator-api) [SECURITY]
 * v4.7.1 - ogr2ogr : the input driver is forced according to the extension (`-if`, GDAL >= 3.2) and the OGR VRT driver is disabled (`GDAL_SKIP=OGR_VRT`) : a ".gml", ".dbf" or ".gpkg" file containing an OGR VRT could read the files of the server or internal URLs (exposed in `DATA/*.csv` and the report). A file whose content doesn't match its extension (ex : CSV named ".dbf") is now rejected [SECURITY]
 * v4.7.1 - GeoPackage multi-table files : table names are checked before the conversion (a table named `../../x` was written by ogr2ogr outside the conversion directory) [SECURITY]
 * v4.7.1 - GML : no download of the WFS schema referenced by the user file (`GML_DOWNLOAD_WFS_SCHEMA=NO`, SSRF), the validation database credentials (`DB_*`, `PG*`) are not given to ogr2ogr [SECURITY]

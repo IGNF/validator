@@ -122,7 +122,9 @@ public class Database implements Closeable {
      * @param schema
      */
     private Database(String url, String user, String password, String schema) {
-        log.info(MARKER, "Create PostgreSQL database {} using schema={}...", url, schema);
+        // DB_URL is not logged : validator-debug.log is returned to the users (internal
+        // host and database name, credentials may be given as URL parameters)
+        log.info(MARKER, "Create PostgreSQL database using schema={}...", schema);
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
