@@ -14,6 +14,7 @@
 * v4.7.1 - Metadata : linear check of the contact email (the regex took minutes on a long `gmd:electronicMailAddress`, `NullPointerException` when missing) [SECURITY]
 * v4.7.1 - ogr2ogr is killed when validator-cli is stopped (ex : timeout of validator-api) instead of running up to `OGR2OGR_TIMEOUT`
 * v4.7.1 - PostgreSQL : query results are fetched by batches of 1000 rows (`setFetchSize`) instead of being loaded in memory, SQL result iterators closed on errors (try-with-resources)
+* v4.7.1 - Report : relative path instead of the absolute one in `TABLE_INVALID_ROW`
 * v4.7.1 - Database : the column names of the FeatureTypes created from the data (`auto` table models, ex : PCRS) are no longer concatenated as is in `CREATE TABLE` (SQL injection with a crafted column name, ex : PostgreSQL validation database of validator-api) : invalid names are ignored with a warning, `Database.createTable` / `createIndex` reject them [SECURITY]
 * v4.7.1 - Model : the names of the tables, attributes and static tables must be valid identifiers (letters, digits and `_`, used in SQL queries and in paths such as `DATA/{TABLE}.csv`), a remote model can only reference http(s) types and static tables (no `file:` URL) [SECURITY]
 * v4.7.1 - No regex built from the attribute names (`FeatureType.indexOf`) nor polynomial regex on the SUP table names (CodeQL alerts), CI workflow with read only `permissions`

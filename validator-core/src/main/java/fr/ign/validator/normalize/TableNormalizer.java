@@ -213,7 +213,7 @@ public class TableNormalizer implements Closeable {
             if (!reader.isLastRowValid()) {
                 context.report(
                     context.createError(CoreErrorCodes.TABLE_INVALID_ROW)
-                        .setMessageParam("FILEPATH", csvFile.getPath())
+                        .setMessageParam("FILEPATH", context.relativize(csvFile))
                 );
                 continue;
             }
