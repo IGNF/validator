@@ -9,8 +9,8 @@ on:
 jobs:
   build:
 
-    # pinned : gdal-bin comes from the distribution (GDAL 3.8.4 on ubuntu 24.04)
-    runs-on: ubuntu-24.04
+    # pinned : gdal-bin comes from the distribution (GDAL 3.12.2 on ubuntu 26.04, as in the Dockerfile)
+    runs-on: ubuntu-26.04
 
     # PostGIS for the DGPR controls (skipped with SQLITE)
     services:
@@ -34,12 +34,13 @@ jobs:
     - name: Set up java
       uses: actions/setup-java@v5
       with:
-        java-version: '21'
+        java-version: '25'
         distribution: 'temurin'
         cache: maven
 
     - name: Install ogr2ogr
       run: |
+        sudo apt-get update -qq
         sudo apt-get -y install gdal-bin
         which ogr2ogr
 

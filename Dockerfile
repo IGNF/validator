@@ -1,6 +1,6 @@
 ARG REGISTRY=docker.io
-ARG UBUNTU_IMAGE_VERSION=24.04
-ARG OPENJDK_VERSION=21
+ARG UBUNTU_IMAGE_VERSION=26.04
+ARG OPENJDK_VERSION=25
 
 #----------------------------------------------------------------------
 # Build stage - validator-cli.jar
@@ -23,9 +23,23 @@ COPY validator-plugin-cnig/ validator-plugin-cnig/
 COPY validator-plugin-dgpr/ validator-plugin-dgpr/
 COPY validator-plugin-pcrs/ validator-plugin-pcrs/
 
-# Behind a proxy : --build-arg MAVEN_OPTS="-DskipTests -Dhttp.proxyHost=proxy -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=3128"
+# Behind a proxy : --build-arg https_proxy=http://proxy:3128 (or "proxies" in ~/.docker/config.json, see doc/docker.md).
+# The predefined proxy build args (http_proxy, https_proxy, no_proxy) are used by apt and converted
+# to java system properties for maven (maven ignores these environment variables).
 ARG MAVEN_OPTS="-DskipTests"
-RUN mvn clean package ${MAVEN_OPTS}
+RUN set -f; \
+    proxy="${https_proxy:-${HTTPS_PROXY:-${http_proxy:-${HTTP_PROXY:-}}}}"; \
+    PROXY_OPTS=""; \
+    if [ -n "$proxy" ]; then \
+      hostport="${proxy#*://}"; hostport="${hostport#*@}"; hostport="${hostport%%/*}"; \
+      host="${hostport%:*}"; port="${hostport##*:}"; \
+      if [ "$port" = "$hostport" ]; then port=80; fi; \
+      PROXY_OPTS="-Dhttp.proxyHost=$host -Dhttp.proxyPort=$port -Dhttps.proxyHost=$host -Dhttps.proxyPort=$port"; \
+      nonproxy="$(echo "${no_proxy:-${NO_PROXY:-}}" | tr ',' '|')"; \
+      if [ -n "$nonproxy" ]; then PROXY_OPTS="$PROXY_OPTS -Dhttp.nonProxyHosts=$nonproxy"; fi; \
+      echo "maven proxy : $PROXY_OPTS"; \
+    fi; \
+    mvn clean package ${MAVEN_OPTS} ${PROXY_OPTS}
 
 #----------------------------------------------------------------------
 # Runtime stage

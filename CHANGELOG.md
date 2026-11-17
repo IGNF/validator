@@ -47,6 +47,7 @@
 * v4.6.5 - Replace `jdom` 1.0 by `jdom2` 2.0.6.1 and bump `jaxen` to 2.0.6 (metadata parsing)
 * v4.6.5 - Build : exclude the unused GeoTools OGC XML models (EMF) from the Maven dependencies (EMF poms declare version ranges : metadata downloaded from every repository, slow builds and warnings behind a proxy)
 * v4.6.5 - Tests : Mockito loaded as a Java agent by surefire (`maven-dependency-plugin:properties`, self-attaching will be disallowed by the JDK)
+* v4.6.5 - Build : no more `maven-shade-plugin` overlapping resources warnings (dependencies manifests excluded, `LICENSE` texts concatenated, `NOTICE` files merged : the licenses of all the dependencies are kept in `validator-cli.jar`)
 * v4.6.0 - Reduce `validator-cli.jar` size from 35.6 to 23.0 Mo (SQLite native libraries limited to Linux, Mac and Windows x86_64, unused GeoTools dependencies JAI and EMF excluded, `woodstox-core-asl` removed)
 * v4.6.0 - CI : test the DGPR controls with PostGIS
 * v4.6.0 - Remove unused files (obsolete `dependency-reduced-pom.xml` and `validator.sh`, unused classes and test resources)

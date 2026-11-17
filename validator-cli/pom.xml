@@ -90,6 +90,8 @@
 										<exclude>META-INF/*.SF</exclude>
 										<exclude>META-INF/*.DSA</exclude>
 										<exclude>META-INF/*.RSA</exclude>
+										<!-- the manifest of validator-cli.jar is created by ManifestResourceTransformer -->
+										<exclude>META-INF/MANIFEST.MF</exclude>
 									</excludes>
 								</filter>
 							</filters>
@@ -102,6 +104,19 @@
 									</manifestEntries>
 								</transformer>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<!-- overlapping resources of the dependencies : license texts concatenated (Apache, BSD, MIT...), NOTICE files merged -->
+								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/LICENSE</resource>
+								</transformer>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/LICENSE.txt</resource>
+								</transformer>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+									<addHeader>false</addHeader>
+								</transformer>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>META-INF/DEPENDENCIES</resource>
+								</transformer>
 							</transformers>
 						</configuration>
 					</execution>
