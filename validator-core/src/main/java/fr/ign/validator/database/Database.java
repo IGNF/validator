@@ -114,6 +114,34 @@ public class Database implements Closeable {
     }
 
     /**
+     * Get the schema name from DB_SCHEMA ("validation" by default)
+     *
+     * @param value DB_SCHEMA
+     * @return
+     * @throws RuntimeException if the schema is not allowed (it is dropped with
+     *                          CASCADE when the validation is restarted)
+     */
+    static String getSchemaName(String value) {
+        if (StringUtils.isEmpty(value)) {
+            log.warn(
+                MARKER,
+                "DB_SCHEMA is not defined, using the schema 'validation' (concurrent validations would conflict)"
+            );
+            return "validation";
+        }
+        // the name is concatenated in DROP SCHEMA, CREATE SCHEMA and SET search_path
+        if (!SqlIdentifier.isValid(value)) {
+            throw new RuntimeException("Invalid DB_SCHEMA='" + value + "' (letters, digits and _ expected)");
+        }
+        // unquoted names are case insensitive (DB_SCHEMA=PUBLIC is the schema public)
+        String lowerName = value.toLowerCase(Locale.ROOT);
+        if (lowerName.equals("public") || lowerName.equals("information_schema") || lowerName.startsWith("pg_")) {
+            throw new RuntimeException("The use of DB_SCHEMA=" + value + " is forbidden");
+        }
+        return value;
+    }
+
+    /**
      * Create or open a PostgreSQL database with a given schema
      *
      * @param url
@@ -281,12 +309,7 @@ public class Database implements Closeable {
         String url = System.getenv(Database.ENV_DATABASE_URL);
         String user = System.getenv(Database.ENV_DATABASE_USER);
         String password = System.getenv(Database.ENV_DATABASE_PASSWORD);
-        String schema = System.getenv(Database.ENV_DATABASE_SCHEMA);
-        if (StringUtils.isEmpty(schema)) {
-            schema = "validation";
-        } else if (schema.equals("public")) {
-            throw new RuntimeException("The use of DB_SCHEMA=public is forbidden");
-        }
+        String schema = getSchemaName(System.getenv(Database.ENV_DATABASE_SCHEMA));
         Database database = new Database(url, user, password, schema);
         if (reset) {
             database.updateCurrentSchema(true);
