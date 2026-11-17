@@ -56,15 +56,15 @@ public class ConditionMismatchFinder {
             + " WHERE NOT (" + condition + ")"
             + " LIMIT " + LIMIT_ERROR_COUNT;
 
-        RowIterator it = database.query(query);
+        try (RowIterator it = database.query(query)) {
 
-        List<ConditionMismatch> result = new ArrayList<ConditionMismatch>();
-        while (it.hasNext()) {
-            String[] row = it.next();
-            result.add(new ConditionMismatch(row[0], row[1]));
+            List<ConditionMismatch> result = new ArrayList<ConditionMismatch>();
+            while (it.hasNext()) {
+                String[] row = it.next();
+                result.add(new ConditionMismatch(row[0], row[1]));
+            }
+            return result;
         }
-        it.close();
-        return result;
     }
 
 }

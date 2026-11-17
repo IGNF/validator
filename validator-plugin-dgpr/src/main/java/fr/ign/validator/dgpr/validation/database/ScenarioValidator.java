@@ -41,7 +41,7 @@ public class ScenarioValidator implements Validator<Database> {
 
     private void validateTable(String tablename, String attributeId) throws Exception {
         // select / join
-        RowIterator inondTable = database.query(
+        try (RowIterator inondTable = database.query(
             "SELECT iso." + attributeId + ","
                 + " iso.SCENARIO,"
                 + " iso.WKT,"
@@ -53,51 +53,51 @@ public class ScenarioValidator implements Validator<Database> {
                 + " AND surface.SCENARIO <> iso.SCENARIO "
                 + " WHERE iso.SCENARIO <> '' "
                 + " AND surface.SCENARIO <> '' "
-        );
+        )) {
 
-        // Indexes
-        int indexIsoId = inondTable.getColumn(attributeId);
-        int indexIsoScenario = inondTable.getColumn("SCENARIO");
-        int indexIsoSinondScenario = inondTable.getColumn("ID_S_INOND");
-        int indexSurfaceScenario = inondTable.getColumn("S_INOND_SCN");
-        int indexWtk = inondTable.getColumn("WKT");
+            // Indexes
+            int indexIsoId = inondTable.getColumn(attributeId);
+            int indexIsoScenario = inondTable.getColumn("SCENARIO");
+            int indexIsoSinondScenario = inondTable.getColumn("ID_S_INOND");
+            int indexSurfaceScenario = inondTable.getColumn("S_INOND_SCN");
+            int indexWtk = inondTable.getColumn("WKT");
 
-        if (indexIsoId == -1
-            || indexIsoScenario == -1
-            || indexIsoSinondScenario == -1
-            || indexSurfaceScenario == -1) {
-            log.error(MARKER, "Some mandatory attibrute id missing");
-            return;
-        }
-
-        while (inondTable.hasNext()) {
-            String[] row = inondTable.next();
-
-            // test de la validité des liens entre les 2 tables
-            if (validateScenario(row[indexIsoScenario], row[indexSurfaceScenario])) {
-                continue;
+            if (indexIsoId == -1
+                || indexIsoScenario == -1
+                || indexIsoSinondScenario == -1
+                || indexSurfaceScenario == -1) {
+                log.error(MARKER, "Some mandatory attibrute id missing");
+                return;
             }
 
-            Envelope envelope = null;
-            if (indexWtk != -1) {
-                envelope = DatabaseUtils.getEnveloppe(row[indexWtk], context.getProjection());
-            }
+            while (inondTable.hasNext()) {
+                String[] row = inondTable.next();
 
-            context.report(
-                context.createError(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO)
-                    .setScope(ErrorScope.FEATURE)
-                    .setFileModel(tablename)
-                    .setAttribute("SCENARIO")
-                    .setFeatureId(row[indexIsoId])
-                    .setFeatureBbox(envelope)
-                    .setMessageParam("ID", row[indexIsoId])
-                    .setMessageParam("TABLE_NAME", tablename)
-                    .setMessageParam("VALUE_SCENARIO", row[indexIsoScenario])
-                    .setMessageParam("ID_S_INOND", row[indexIsoSinondScenario])
-                    .setMessageParam("EXPECTED_SCENARIO", row[indexSurfaceScenario])
-            );
+                // test de la validité des liens entre les 2 tables
+                if (validateScenario(row[indexIsoScenario], row[indexSurfaceScenario])) {
+                    continue;
+                }
+
+                Envelope envelope = null;
+                if (indexWtk != -1) {
+                    envelope = DatabaseUtils.getEnveloppe(row[indexWtk], context.getProjection());
+                }
+
+                context.report(
+                    context.createError(DgprErrorCodes.DGPR_UNMATCHED_SCENARIO)
+                        .setScope(ErrorScope.FEATURE)
+                        .setFileModel(tablename)
+                        .setAttribute("SCENARIO")
+                        .setFeatureId(row[indexIsoId])
+                        .setFeatureBbox(envelope)
+                        .setMessageParam("ID", row[indexIsoId])
+                        .setMessageParam("TABLE_NAME", tablename)
+                        .setMessageParam("VALUE_SCENARIO", row[indexIsoScenario])
+                        .setMessageParam("ID_S_INOND", row[indexIsoSinondScenario])
+                        .setMessageParam("EXPECTED_SCENARIO", row[indexSurfaceScenario])
+                );
+            }
         }
-        inondTable.close();
     }
 
     /**

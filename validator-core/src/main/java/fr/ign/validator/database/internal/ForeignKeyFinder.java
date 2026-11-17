@@ -85,19 +85,19 @@ public class ForeignKeyFinder {
             + ") "
             + String.join(" ", nullableClause);
 
-        RowIterator it = database.query(query);
+        try (RowIterator it = database.query(query)) {
 
-        List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();
-        while (it.hasNext()) {
-            String[] row = it.next();
-            String values = "";
-            if (row.length > 2) {
-                values = String.join(", ", Arrays.copyOfRange(row, 2, row.length));
+            List<ForeignKeyMismatch> result = new ArrayList<ForeignKeyMismatch>();
+            while (it.hasNext()) {
+                String[] row = it.next();
+                String values = "";
+                if (row.length > 2) {
+                    values = String.join(", ", Arrays.copyOfRange(row, 2, row.length));
+                }
+                result.add(new ForeignKeyMismatch(row[0], row[1], values));
             }
-            result.add(new ForeignKeyMismatch(row[0], row[1], values));
+            return result;
         }
-        it.close();
-        return result;
     }
 
 }

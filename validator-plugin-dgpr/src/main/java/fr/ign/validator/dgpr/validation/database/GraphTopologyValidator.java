@@ -207,16 +207,16 @@ public class GraphTopologyValidator implements Validator<Database> {
             + "), unions.the_geom_union) END)"
             + " ;";
 
-        RowIterator errorIterator = database.query(query);
+        try (RowIterator errorIterator = database.query(query)) {
 
-        int indexId = errorIterator.getColumn("ID_S_INOND");
-        int indexZones = errorIterator.getColumn("list_zones");
+            int indexId = errorIterator.getColumn("ID_S_INOND");
+            int indexZones = errorIterator.getColumn("list_zones");
 
-        while (errorIterator.hasNext()) {
-            String[] row = errorIterator.next();
-            report(tablename, row[indexId], row[indexZones]);
+            while (errorIterator.hasNext()) {
+                String[] row = errorIterator.next();
+                report(tablename, row[indexId], row[indexZones]);
+            }
         }
-        errorIterator.close();
     }
 
     /**
@@ -242,18 +242,18 @@ public class GraphTopologyValidator implements Validator<Database> {
             + " ORDER BY f.id_s_inond, f.id_zone"
             + " ;";
 
-        RowIterator errorIterator = database.query(query);
+        try (RowIterator errorIterator = database.query(query)) {
 
-        int indexId = errorIterator.getColumn("ID_S_INOND");
-        int indexZone = errorIterator.getColumn("id_zone");
-        int indexCompare = errorIterator.getColumn("id_compare");
+            int indexId = errorIterator.getColumn("ID_S_INOND");
+            int indexZone = errorIterator.getColumn("id_zone");
+            int indexCompare = errorIterator.getColumn("id_compare");
 
-        while (errorIterator.hasNext()) {
-            String[] row = errorIterator.next();
-            String zones = row[indexZone] + " " + row[indexCompare];
-            reportIntersection(tablename, row[indexId], zones);
+            while (errorIterator.hasNext()) {
+                String[] row = errorIterator.next();
+                String zones = row[indexZone] + " " + row[indexCompare];
+                reportIntersection(tablename, row[indexId], zones);
+            }
         }
-        errorIterator.close();
     }
 
     private void report(String tablename, String surfaceId, String zones) {

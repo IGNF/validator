@@ -51,6 +51,11 @@ import fr.ign.validator.tools.TableReader;
  */
 public class Database implements Closeable {
 
+    /**
+     * Number of rows fetched at once by {@link #query(String)}
+     */
+    private static final int FETCH_SIZE = 1000;
+
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("Database");
 
@@ -690,6 +695,9 @@ public class Database implements Closeable {
         log.debug(MARKER, sql);
         PreparedStatement sth = connection.prepareStatement(sql);
         try {
+            // PostgreSQL : rows fetched by batches instead of the whole result in memory
+            // (autocommit is disabled), ignored by SQLite
+            sth.setFetchSize(FETCH_SIZE);
             if (sth.execute()) {
                 // the statement is closed with the RowIterator
                 return new RowIterator(sth);
@@ -732,10 +740,9 @@ public class Database implements Closeable {
      */
     private String[] getTableSchema(String tablename) throws SQLException, IOException {
         SqlIdentifier.check(tablename);
-        RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1");
-        String[] header = query.getHeader();
-        query.close();
-        return header;
+        try (RowIterator query = query("SELECT * FROM " + tablename + " LIMIT 1")) {
+            return query.getHeader();
+        }
     }
 
     /**

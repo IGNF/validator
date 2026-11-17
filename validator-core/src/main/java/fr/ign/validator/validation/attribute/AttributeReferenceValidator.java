@@ -90,72 +90,72 @@ public class AttributeReferenceValidator implements Validator<Database> {
                 String sql = getSqlFindInvalidRows(
                     sourceTableName, sourceColumnName, targetTableName, targetColumnName
                 );
-                RowIterator it = database.query(sql);
-
-                /*
-                 * Prepare reporting
-                 */
-                int count = 0;
-                int indexValue = it.getColumn(sourceColumnName);
-                AttributeType<?> attributeFeatureId = featureType.getIdentifier();
-                int indexFeatureId = attributeFeatureId != null ? it.getColumn(attributeFeatureId.getName()) : -1;
-                // TODO add support for different column name (kept for validator-plugin-dgpr)
-                int indexGeom = it.getColumn("WKT");
-
-                while (it.hasNext()) {
-                    count++;
-                    String[] row = it.next();
+                try (RowIterator it = database.query(sql)) {
 
                     /*
-                     * retrieve the id of the feature (kept for validator-plugin-dgpr)
+                     * Prepare reporting
                      */
-                    String featureId = "";
-                    if (indexFeatureId >= 0) {
-                        featureId = row[indexFeatureId];
-                    }
+                    int count = 0;
+                    int indexValue = it.getColumn(sourceColumnName);
+                    AttributeType<?> attributeFeatureId = featureType.getIdentifier();
+                    int indexFeatureId = attributeFeatureId != null ? it.getColumn(attributeFeatureId.getName()) : -1;
+                    // TODO add support for different column name (kept for validator-plugin-dgpr)
+                    int indexGeom = it.getColumn("WKT");
 
-                    /*
-                     * retrieve the bounding box of the feature (kept for validator-plugin-dgpr)
-                     */
-                    Envelope featureBoundingBox = null;
-                    if (indexGeom >= 0 && !StringUtils.isEmpty(row[indexGeom])) {
-                        featureBoundingBox = EnvelopeUtils.getEnvelope(row[indexGeom], context.getProjection());
-                    }
+                    while (it.hasNext()) {
+                        count++;
+                        String[] row = it.next();
 
-                    context.report(
                         /*
-                         * Note that scope DIRECTORY is mainly forced to ease integration in current
-                         * client.
+                         * retrieve the id of the feature (kept for validator-plugin-dgpr)
                          */
-                        context.createError(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND)
-                            .setScope(ErrorScope.DIRECTORY)
-                            .setFileModel(tableModel.getName())
-                            .setAttribute(attribute.getName())
-                            .setFeatureId(featureId)
-                            .setFeatureBbox(featureBoundingBox)
-                            .setMessageParam("REF_VALUE", row[indexValue])
-                            .setMessageParam("SOURCE_TABLE", sourceTableName)
-                            .setMessageParam("SOURCE_COLUMN", sourceColumnName)
-                            .setMessageParam("TARGET_TABLE", targetTableName)
-                            .setMessageParam("TARGET_COLUMN", targetColumnName)
+                        String featureId = "";
+                        if (indexFeatureId >= 0) {
+                            featureId = row[indexFeatureId];
+                        }
+
+                        /*
+                         * retrieve the bounding box of the feature (kept for validator-plugin-dgpr)
+                         */
+                        Envelope featureBoundingBox = null;
+                        if (indexGeom >= 0 && !StringUtils.isEmpty(row[indexGeom])) {
+                            featureBoundingBox = EnvelopeUtils.getEnvelope(row[indexGeom], context.getProjection());
+                        }
+
+                        context.report(
+                            /*
+                             * Note that scope DIRECTORY is mainly forced to ease integration in current
+                             * client.
+                             */
+                            context.createError(CoreErrorCodes.ATTRIBUTE_REFERENCE_NOT_FOUND)
+                                .setScope(ErrorScope.DIRECTORY)
+                                .setFileModel(tableModel.getName())
+                                .setAttribute(attribute.getName())
+                                .setFeatureId(featureId)
+                                .setFeatureBbox(featureBoundingBox)
+                                .setMessageParam("REF_VALUE", row[indexValue])
+                                .setMessageParam("SOURCE_TABLE", sourceTableName)
+                                .setMessageParam("SOURCE_COLUMN", sourceColumnName)
+                                .setMessageParam("TARGET_TABLE", targetTableName)
+                                .setMessageParam("TARGET_COLUMN", targetColumnName)
+                        );
+
+                    }
+
+                    /*
+                     * Report the number of errors for duplicated values
+                     */
+                    log.info(
+                        MARKER,
+                        "Found {} invalid reference(s) from {}.{} to {}.{} (max : 10)",
+                        count,
+                        sourceTableName,
+                        sourceColumnName,
+                        targetTableName,
+                        targetColumnName
                     );
 
                 }
-
-                /*
-                 * Report the number of errors for duplicated values
-                 */
-                log.info(
-                    MARKER,
-                    "Found {} invalid reference(s) from {}.{} to {}.{} (max : 10)",
-                    count,
-                    sourceTableName,
-                    sourceColumnName,
-                    targetTableName,
-                    targetColumnName
-                );
-
-                it.close();
                 context.endModel(attribute);
             }
             context.endModel(tableModel);

@@ -48,26 +48,26 @@ public class DuplicatedValuesFinder {
      */
     public List<DuplicatedValue> findDuplicatedValues(Database database, String tableName, String columnName)
         throws SQLException, IOException {
-        RowIterator it = database.query(
+        try (RowIterator it = database.query(
             "SELECT " + columnName + " AS id, count(*) AS count"
                 + " FROM " + tableName
                 + " WHERE " + columnName + " IS NOT NULL"
                 + " GROUP BY " + columnName
                 + " HAVING count(*) > 1 ORDER BY count(*) DESC"
                 + " LIMIT " + LIMIT_PER_ATTRIBUTE
-        );
+        )) {
 
-        List<DuplicatedValue> result = new ArrayList<>();
-        while (it.hasNext()) {
-            String[] row = it.next();
-            result.add(
-                new DuplicatedValue(
-                    row[0],
-                    Integer.parseInt(row[1])
-                )
-            );
+            List<DuplicatedValue> result = new ArrayList<>();
+            while (it.hasNext()) {
+                String[] row = it.next();
+                result.add(
+                    new DuplicatedValue(
+                        row[0],
+                        Integer.parseInt(row[1])
+                    )
+                );
+            }
+            return result;
         }
-        it.close();
-        return result;
     }
 }
