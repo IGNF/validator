@@ -1,0 +1,31 @@
+name: OSV
+
+# Checks the dependencies against the OSV database (https://osv.dev) : fails on a known vulnerability.
+# Weekly (a new vulnerability can be published without any change in the project),
+# and when the dependencies change.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+  pull_request:
+    branches: [ master ]
+    paths: [ '**/pom.xml', '.ci/osv-check.sh', '.github/workflows/osv.yml' ]
+
+permissions:
+  contents: read
+
+jobs:
+  osv:
+    runs-on: ubuntu-26.04
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Set up java
+      uses: actions/setup-java@v6
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Check the dependencies
+      run: bash .ci/osv-check.sh

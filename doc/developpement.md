@@ -20,6 +20,8 @@ sudo apt-get install openjdk-17-jdk
 
 La CI GitHub Actions (ubuntu-26.04) teste **Java 17** (version minimale) et **Java 25** (version de l'image Docker).
 
+Les dépendances sont aussi contrôlées contre la base de vulnérabilités [OSV](https://osv.dev) par [.github/workflows/osv.yml](../.github/workflows/osv.yml) (chaque lundi, et quand un `pom.xml` change). En local : `bash .ci/osv-check.sh`. Renovate propose les mises à jour de versions.
+
 ### Maven
 
 Maven 3.6+ est requis pour compiler le projet.
