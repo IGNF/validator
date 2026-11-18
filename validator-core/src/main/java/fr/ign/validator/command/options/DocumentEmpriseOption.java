@@ -3,6 +3,8 @@ package fr.ign.validator.command.options;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
@@ -11,6 +13,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.operation.union.UnaryUnionOp;
 
 import fr.ign.validator.geometry.GeometryReader;
 import fr.ign.validator.tools.FileConverter;
@@ -122,7 +125,7 @@ public class DocumentEmpriseOption {
         }
 
         GeometryReader geometryReader = new GeometryReader();
-        Geometry union = null;
+        List<Geometry> geometries = new ArrayList<>();
 
         // read CSV file
         try (TableReader tableReader = TableReader.createTableReader(transformedFile, StandardCharsets.UTF_8)) {
@@ -130,13 +133,7 @@ public class DocumentEmpriseOption {
             int column = tableReader.findColumn("WKT");
             while (tableReader.hasNext()) {
                 String wkt = tableReader.next()[column];
-                Geometry geometry = geometryReader.read(wkt);
-                if (union == null) {
-                    union = geometry;
-                } else {
-                    // merge featureCollection
-                    union = union.union(geometry);
-                }
+                geometries.add(geometryReader.read(wkt));
             }
         } catch (IOException e) {
             DocumentEmpriseOption.throwParseErrorException(parsedOption, "Parsed geometry is empty");
@@ -144,7 +141,14 @@ public class DocumentEmpriseOption {
             DocumentEmpriseOption.throwParseErrorException(parsedOption, "Parsed geometry is empty");
         }
 
-        return union;
+        if (geometries.isEmpty()) {
+            return null;
+        }
+        if (geometries.size() == 1) {
+            return geometries.get(0);
+        }
+        // merge featureCollection in a single pass (a pairwise union is quadratic)
+        return UnaryUnionOp.union(geometries);
     }
 
     private static void throwParseErrorException(String parsedOption, String reason) throws ParseException {
