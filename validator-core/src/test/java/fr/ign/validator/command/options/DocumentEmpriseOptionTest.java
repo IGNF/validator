@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.cli.CommandLine;
@@ -18,9 +20,13 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.WKTReader;
 
+import fr.ign.validator.geometry.GeometryReader;
+import fr.ign.validator.tools.FileConverter;
 import fr.ign.validator.tools.ResourceHelper;
+import fr.ign.validator.tools.TableReader;
 
 public class DocumentEmpriseOptionTest {
 
@@ -168,6 +174,121 @@ public class DocumentEmpriseOptionTest {
         } finally {
             FileUtils.deleteQuietly(file);
         }
+    }
+
+    /**
+     * Municipalities of an EPCI (200093201), as written by gpu-site (WFS GetFeature
+     * of 95 municipalities, 63 158 points): the single pass union must give the same
+     * emprise as the pairwise union (same exterior ring and envelope, without the sliver holes).
+     */
+    @Test
+    public void testGeoJSONFileMunicipalitiesOfEpci() throws Exception {
+        File file = ResourceHelper.getResourceFile(
+            getClass(), "/emprise-command-options/municipalities-features-200093201.json"
+        );
+        CommandLine commandLine = parser.parse(
+            options, new String[] {
+                "--cnig-document-emprise", file.getAbsolutePath()
+            }
+        );
+        Geometry result = DocumentEmpriseOption.parseCustomOptions(commandLine);
+
+        assertNotNull(result);
+        assertEquals("Polygon", result.getGeometryType());
+        assertTrue(result.isValid());
+
+        File csv = File.createTempFile("emprise-epci", ".csv");
+        try {
+            FileConverter.getInstance().convertToCSV(file, csv, StandardCharsets.UTF_8);
+            GeometryReader geometryReader = new GeometryReader();
+            List<Geometry> municipalities = new ArrayList<>();
+            try (TableReader reader = TableReader.createTableReader(csv, StandardCharsets.UTF_8)) {
+                int column = reader.findColumn("WKT");
+                while (reader.hasNext()) {
+                    municipalities.add(geometryReader.read(reader.next()[column]));
+                }
+            }
+            assertEquals(95, municipalities.size());
+
+            Geometry pairwise = null;
+            for (Geometry municipality : municipalities) {
+                pairwise = (pairwise == null) ? municipality : pairwise.union(municipality);
+            }
+            // the removed holes represent 4.4e-5 deg2
+            assertEquals(pairwise.getArea(), result.getArea(), 5e-5);
+            // the municipality borders do not fit exactly: the pairwise union contains
+            // ~2 280 sliver holes, which are removed from the emprise
+            assertEquals(2280, ((Polygon) pairwise).getNumInteriorRing(), 10);
+            assertEquals(0, ((Polygon) result).getNumInteriorRing());
+            assertEquals(
+                ((Polygon) pairwise).getExteriorRing().getLength(),
+                ((Polygon) result).getExteriorRing().getLength(), 1e-9
+            );
+            assertTrue(pairwise.getEnvelopeInternal().equals(result.getEnvelopeInternal()));
+        } finally {
+            FileUtils.deleteQuietly(csv);
+        }
+    }
+
+    /**
+     * Four rectangles around a small hole (1e-6 deg2): the hole is removed.
+     */
+    @Test
+    public void testSmallHolesRemovedFromUnion() throws Exception {
+        assertEquals(0, readFrameWithSmallHole("{\"code_insee\":\"59350\"}").getNumInteriorRing());
+    }
+
+    private Polygon readFrameWithSmallHole(String properties) throws Exception {
+        String[] rectangles = {
+            "[[0,0],[2,0],[2,1],[0,1],[0,0]]",
+            "[[0,1.001],[2,1.001],[2,2],[0,2],[0,1.001]]",
+            "[[0,1],[1,1],[1,1.001],[0,1.001],[0,1]]",
+            "[[1.001,1],[2,1],[2,1.001],[1.001,1.001],[1.001,1]]"
+        };
+        StringBuilder json = new StringBuilder("{\"type\":\"FeatureCollection\",\"features\":[");
+        for (int i = 0; i < rectangles.length; i++) {
+            json.append(i > 0 ? "," : "")
+                .append("{\"type\":\"Feature\",\"properties\":").append(properties)
+                .append(",\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[")
+                .append(rectangles[i]).append("]}}");
+        }
+        json.append("]}");
+
+        File file = File.createTempFile("emprise-frame", ".json");
+        try {
+            FileUtils.writeStringToFile(file, json.toString(), StandardCharsets.UTF_8);
+            CommandLine commandLine = parser.parse(
+                options, new String[] {
+                    "--cnig-document-emprise", file.getAbsolutePath()
+                }
+            );
+            return (Polygon) DocumentEmpriseOption.parseCustomOptions(commandLine);
+        } finally {
+            FileUtils.deleteQuietly(file);
+        }
+    }
+
+    @Test
+    public void testRemoveSmallHoles() throws Exception {
+        WKTReader reader = new WKTReader();
+        // 10x10 square with a 1x1 hole (area 1) and a 3x3 hole (area 9)
+        Geometry polygon = reader.read(
+            "POLYGON((0 0,10 0,10 10,0 10,0 0),(1 1,2 1,2 2,1 2,1 1),(5 5,8 5,8 8,5 8,5 5))"
+        );
+
+        Polygon result = (Polygon) DocumentEmpriseOption.removeSmallHoles(polygon, 2.0);
+        assertEquals(1, result.getNumInteriorRing());
+        assertEquals(91.0, result.getArea(), 1e-9);
+
+        Geometry multi = reader.read(
+            "MULTIPOLYGON(((0 0,10 0,10 10,0 10,0 0),(1 1,2 1,2 2,1 2,1 1)),((20 20,21 20,21 21,20 21,20 20)))"
+        );
+        Geometry multiResult = DocumentEmpriseOption.removeSmallHoles(multi, 2.0);
+        assertEquals(2, multiResult.getNumGeometries());
+        assertEquals(101.0, multiResult.getArea(), 1e-9);
+
+        // nothing to remove: same instance
+        assertTrue(DocumentEmpriseOption.removeSmallHoles(result, 2.0).equalsExact(result));
     }
 
     @Test(expected = ParseException.class)

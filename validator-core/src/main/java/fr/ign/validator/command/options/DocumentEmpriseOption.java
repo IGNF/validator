@@ -13,6 +13,9 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.operation.union.UnaryUnionOp;
 
 import fr.ign.validator.geometry.GeometryReader;
@@ -27,6 +30,13 @@ import fr.ign.validator.tools.TableReader;
 public class DocumentEmpriseOption {
 
     private static final String OPTION_NAME = "cnig-document-emprise";
+
+    /**
+     * Holes of the union smaller than this area (in square degrees, about 8 ha) are
+     * removed: they are gaps between the borders of adjacent features (municipalities
+     * of gpu-site), not part of the emprise.
+     */
+    static final double MIN_HOLE_AREA = 1e-5;
 
     private DocumentEmpriseOption() {
         // disabled
@@ -148,7 +158,42 @@ public class DocumentEmpriseOption {
             return geometries.get(0);
         }
         // merge featureCollection in a single pass (a pairwise union is quadratic)
-        return UnaryUnionOp.union(geometries);
+        return removeSmallHoles(UnaryUnionOp.union(geometries), MIN_HOLE_AREA);
+    }
+
+    /**
+     * Remove the interior rings with an area lower than the given threshold.
+     *
+     * @param geometry
+     * @param minHoleArea
+     * @return
+     */
+    static Geometry removeSmallHoles(Geometry geometry, double minHoleArea) {
+        if (geometry instanceof Polygon) {
+            return removeSmallHoles((Polygon) geometry, minHoleArea);
+        }
+        if (geometry instanceof MultiPolygon) {
+            Polygon[] polygons = new Polygon[geometry.getNumGeometries()];
+            for (int i = 0; i < polygons.length; i++) {
+                polygons[i] = removeSmallHoles((Polygon) geometry.getGeometryN(i), minHoleArea);
+            }
+            return geometry.getFactory().createMultiPolygon(polygons);
+        }
+        return geometry;
+    }
+
+    private static Polygon removeSmallHoles(Polygon polygon, double minHoleArea) {
+        List<LinearRing> holes = new ArrayList<>();
+        for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
+            LinearRing hole = polygon.getInteriorRingN(i);
+            if (polygon.getFactory().createPolygon(hole).getArea() >= minHoleArea) {
+                holes.add(hole);
+            }
+        }
+        if (holes.size() == polygon.getNumInteriorRing()) {
+            return polygon;
+        }
+        return polygon.getFactory().createPolygon(polygon.getExteriorRing(), holes.toArray(new LinearRing[0]));
     }
 
     private static void throwParseErrorException(String parsedOption, String reason) throws ParseException {
