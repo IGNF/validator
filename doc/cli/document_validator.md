@@ -97,7 +97,7 @@ Les fichiers produits seront les suivants :
 | `./validation/document_database.db`             | La base de données temporaire de validation (pour contrôle d'unicité, de référence,...), en SQLite, uniquement si `DB_URL` n'est pas défini (sinon : schéma PostgreSQL, voir [cli.md](../cli.md)) |
 | `./validation/document-test/DATA/{NomType}.csv` | Les données normalisées pour une éventuelle livraison à un entrepot de diffusion (`--normalize`), avec les copies des autres fichiers (PDF...) |
 | `./validation/document-test/METADATA/`          | Les copies des fiches de métadonnées (`--normalize`)                                    |
-| `./validator-debug.log`                         | Les logs du validateur java                                                             |
+| `./validator-debug.log`                         | Les logs du validateur java, niveau debug (requêtes SQL incluses). Les chemins absolus du serveur y sont réduits à `.../nom-du-fichier` |
 
 ## Normalisation et conversion
 

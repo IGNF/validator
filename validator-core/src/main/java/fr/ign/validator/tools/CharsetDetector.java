@@ -33,8 +33,8 @@ public class CharsetDetector {
 
     /**
      * Results of {@link #isValidCharset(File, Charset)} : a file is read several
-     * times during a validation (validation, normalization, statistics, plugins) and
-     * each reader would decode it entirely to check the charset.
+     * times during a validation (validation, normalization, statistics, plugins)
+     * and each reader would decode it entirely to check the charset.
      *
      * The key contains the path, the last modification date and the size of the
      * file, a modified file is detected again.

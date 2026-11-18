@@ -8,10 +8,16 @@
 			<PatternLayout pattern="[%p][%marker] - %m%n" />
 		</Console>
 
-		<!-- writes detailed log -->
+		<!--
+			writes detailed log (SQL queries included).
+			validator-debug.log is returned to the users (validator-api) : the absolute paths of the server
+			(message and exception) are reduced to ".../filename". Unix paths with at least two segments
+			which are not preceded by a letter, digit, ".", ":" or "/" (to keep URLs like https://host/path),
+			except after "file:" (URI of a local file).
+		-->
 		<File name="FILE" fileName="validator-debug.log" append="false">
 			<PatternLayout charset="UTF-8">
-				<Pattern>%d %p %c{1.} [%marker] %m%n</Pattern>
+				<Pattern>%d %p %c{1.} [%marker] %replace{%m%n%ex}{(?:(?&lt;=file:)|(?&lt;=file://)|(?&lt;![\w.:/]))/(?:[^/\s'"():;,\[\]]+/)+([^/\s'"():;,\[\]]+)}{.../$1}</Pattern>
 			</PatternLayout>
 		</File>
 

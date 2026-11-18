@@ -33,8 +33,8 @@ public class DocumentEmpriseOption {
 
     /**
      * Holes of the union smaller than this area (in square degrees, about 8 ha) are
-     * removed: they are gaps between the borders of adjacent features (municipalities
-     * of gpu-site), not part of the emprise.
+     * removed: they are gaps between the borders of adjacent features
+     * (municipalities of gpu-site), not part of the emprise.
      */
     static final double MIN_HOLE_AREA = 1e-5;
 

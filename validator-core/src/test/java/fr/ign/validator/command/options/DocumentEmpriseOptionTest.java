@@ -178,8 +178,9 @@ public class DocumentEmpriseOptionTest {
 
     /**
      * Municipalities of an EPCI (200093201), as written by gpu-site (WFS GetFeature
-     * of 95 municipalities, 63 158 points): the single pass union must give the same
-     * emprise as the pairwise union (same exterior ring and envelope, without the sliver holes).
+     * of 95 municipalities, 63 158 points): the single pass union must give the
+     * same emprise as the pairwise union (same exterior ring and envelope, without
+     * the sliver holes).
      */
     @Test
     public void testGeoJSONFileMunicipalitiesOfEpci() throws Exception {
