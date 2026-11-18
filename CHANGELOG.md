@@ -5,6 +5,7 @@
 ### v4.7.0 - Behavior changes
 
 * v4.7.0 - **Breaking change** : Java 17 or above is required to run `validator-cli.jar` (compiled for Java 17 instead of Java 11, `UnsupportedClassVersionError` with Java 11). Docker image and CI already use Java 25.
+* v4.7.1 - `--cnig-document-emprise` with a GeoJSON file of several features (ex : municipalities of gpu-site) : the holes of the union smaller than 1e-5 square degrees (about 8 ha, gaps between the borders of adjacent features, 2 280 holes for the 95 municipalities of an EPCI) are removed, so that a geometry inside such a gap is no longer reported by `CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR`. A WKT or a GeoJSON of a single feature is unchanged
 
 ### v4.7.0 - Dependencies and build
 
@@ -34,6 +35,16 @@
 * v4.7.1 - Model : the names of the tables, attributes and static tables must be valid identifiers (letters, digits and `_`, used in SQL queries and in paths such as `DATA/{TABLE}.csv`), a remote model can only reference http(s) types and static tables (no `file:` URL) [SECURITY]
 * v4.7.1 - No regex built from the attribute names (`FeatureType.indexOf`) nor polynomial regex on the SUP table names (CodeQL alerts), CI workflow with read only `permissions`
 * v4.7.1 - Build : bump `maven-dependency-plugin` to 3.11.0, GitHub actions (`actions/checkout` v7, `actions/setup-java` v6, `docker/*` actions : Node 24), Renovate configuration migrated to `config:recommended` (`commons-cli` 2.0 pre-releases ignored)
+* v4.7.1 - Build : `log4j-bom` and `jackson-bom` imported in `dependencyManagement` (one version property per library), the dependencies are declared in `validator-core` instead of being inherited by all the modules, `pom.xml` reorganized
+* v4.7.1 - CI : `.ci/osv-check.sh` and the `OSV` workflow (every monday and when a `pom.xml` changes) check the dependencies against the OSV database and fail on a known vulnerability [SECURITY]
+* v4.7.1 - Docker : `JAVA_TOOL_OPTIONS=-XX:MaxRAMPercentage=75` in the image (a JVM in a container only used 25 % of the available memory : 2 GB on a machine of 8 GB), an explicit `-Xmx` still takes precedence
+* v4.7.1 - Logs : the absolute paths of the server are reduced to `.../filename` in `validator-debug.log` (messages and exceptions, returned to the users by validator-api), the SQL queries are kept [SECURITY]
+* v4.7.1 - CNIG : document emprise built from a GeoJSON of several features with a single `UnaryUnionOp` instead of one union per feature (quadratic : 2.5 s to 0.3 s for the 95 municipalities of an EPCI), same result up to floating point noise
+* v4.7.1 - Performance : the file names of a document are listed once per validation (`Context.getFilenamesInCurrentDirectory()`) instead of a walk of the directory for each validated file name (`FilenameExistsValidator`)
+* v4.7.1 - Performance : the charset checks (`CharsetDetector`) are cached per file (path, last modification date and size), each reader of a file decoded it entirely before
+* v4.7.1 - Performance : CNIG SUP, the `fichier` joins of the normalized GENERATEUR and ASSIETTE tables start from the generateur (inner joins) instead of scanning `acte_sup` for each row, and use an index on `servitude_acte_sup(idsup)` (SQLite built a temporary index for each query : 430 s to 0.1 s for 20 000 assiettes, same normalized data)
+* v4.7.1 - Report : a write error of `validation.jsonl` (ex : disk full) fails the validation instead of leaving a truncated report with a successful validation (`PrintStream` swallowed the error)
+* v4.7.1 - Resources : the `CSVParser` is closed when the header of a CSV can't be read, the validation database of the CNIG SUP post-process is closed on any error, `ogr2ogr --version` waits 30 seconds at most, the failure of the PostgreSQL `SET enable_seqscan` of the DGPR validators is logged
 * v4.7.0 - Bump GeoTools from 27.5 to 35.2 : `org.opengis` replaced by `org.geotools.api`, `DirectPosition` by `Position`. No output change on the CNIG / PCRS / DGPR test datasets (`document-info.json`, `validation.jsonl`, normalized data, reprojections in the 26 supported projections, with Java 17 and Java 21)
 * v4.7.0 - CI : build and tests with Java 17 (minimum supported version) and Java 25 (Docker image)
 * v4.7.0 - `validator-cli.jar` : 24.4 Mo to 26.3 Mo (newer EPSG database, `tools.jackson.core` required by GeoTools), Eclipse ImageN (image processing, replaces JAI in GeoTools) excluded from the jar
