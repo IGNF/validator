@@ -11,6 +11,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +25,42 @@ public class CharsetDetector {
 
     public static final Logger log = LogManager.getRootLogger();
     public static final Marker MARKER = MarkerManager.getMarker("CharsetDetector");
+
+    /**
+     * Maximum number of results kept in the caches.
+     */
+    private static final int CACHE_SIZE = 256;
+
+    /**
+     * Results of {@link #isValidCharset(File, Charset)} : a file is read several
+     * times during a validation (validation, normalization, statistics, plugins) and
+     * each reader would decode it entirely to check the charset.
+     *
+     * The key contains the path, the last modification date and the size of the
+     * file, a modified file is detected again.
+     */
+    private static final Map<String, Boolean> VALID_CACHE = newCache();
+
+    /**
+     * Results of {@link #detectCharset(File)}.
+     */
+    private static final Map<String, Charset> DETECT_CACHE = newCache();
+
+    private static <V> Map<String, V> newCache() {
+        return Collections.synchronizedMap(new LinkedHashMap<String, V>(16, 0.75f, true) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<String, V> eldest) {
+                return size() > CACHE_SIZE;
+            }
+        });
+    }
+
+    private static String cacheKey(File file, Charset charset) {
+        return file.getAbsolutePath() + '|' + file.lastModified() + '|' + file.length() + '|'
+            + (charset == null ? "" : charset.name());
+    }
 
     /**
      * Detects character encoding from data source between UTF-8 and LATIN1.
@@ -43,6 +82,17 @@ public class CharsetDetector {
      * @throws IOException
      */
     public static Charset detectCharset(File file) throws IOException {
+        String key = cacheKey(file, null);
+        Charset cached = DETECT_CACHE.get(key);
+        if (cached != null) {
+            return cached;
+        }
+        Charset charset = doDetectCharset(file);
+        DETECT_CACHE.put(key, charset);
+        return charset;
+    }
+
+    private static Charset doDetectCharset(File file) throws IOException {
         log.debug(MARKER, "detectCharset('{}')...", file.getAbsolutePath());
         Utf8Stats stats = computeUtf8Stats(file);
         if (stats.isMostlyValid()) {
@@ -148,6 +198,17 @@ public class CharsetDetector {
      * @return
      */
     public static boolean isValidCharset(File file, Charset charset) {
+        String key = cacheKey(file, charset);
+        Boolean cached = VALID_CACHE.get(key);
+        if (cached != null) {
+            return cached;
+        }
+        boolean valid = doIsValidCharset(file, charset);
+        VALID_CACHE.put(key, valid);
+        return valid;
+    }
+
+    private static boolean doIsValidCharset(File file, Charset charset) {
         log.trace(MARKER, "isValidCharset('{}','{}')...", file.getAbsolutePath(), charset);
         CharsetDecoder cs = charset.newDecoder();
         BufferedReader in = null;

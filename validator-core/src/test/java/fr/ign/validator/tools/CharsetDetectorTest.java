@@ -42,6 +42,25 @@ public class CharsetDetectorTest {
         assertFalse(CharsetDetector.isValidUTF8(invalid));
     }
 
+    /**
+     * Results are cached, but a file modified afterwards is analysed again.
+     */
+    @Test
+    public void testResultsAreNotStaleWhenFileIsModified() throws IOException {
+        File file = folder.newFile("rewritten.csv");
+        Files.write(file.toPath(), "id;nom\n1;caf\u00e9\n".getBytes(StandardCharsets.UTF_8));
+        assertEquals(StandardCharsets.UTF_8, CharsetDetector.detectCharset(file));
+        assertTrue(CharsetDetector.isValidUTF8(file));
+        // same call again (from the cache)
+        assertEquals(StandardCharsets.UTF_8, CharsetDetector.detectCharset(file));
+        assertTrue(CharsetDetector.isValidUTF8(file));
+
+        // same path, other content and size
+        Files.write(file.toPath(), "id;nom\n1;caf\u00e9 cr\u00e8me\n".getBytes(StandardCharsets.ISO_8859_1));
+        assertEquals(StandardCharsets.ISO_8859_1, CharsetDetector.detectCharset(file));
+        assertFalse(CharsetDetector.isValidUTF8(file));
+    }
+
     @Test
     public void testDetectUTF8() throws IOException {
         File srcFile = ResourceHelper.getResourceFile(getClass(), "/csv/sample-utf8.csv");
