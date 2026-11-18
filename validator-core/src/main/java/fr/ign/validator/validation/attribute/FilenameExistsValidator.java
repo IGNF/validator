@@ -1,11 +1,6 @@
 package fr.ign.validator.validation.attribute;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
 
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
@@ -30,38 +25,15 @@ public class FilenameExistsValidator implements Validator<Attribute<File>> {
         }
 
         /*
-         * Search of corresponding file
+         * Search of corresponding file (the directory is walked once per document)
          */
-        File root = context.getCurrentDirectory();
         String filename = filterFragment(path.toString());
-
-        List<File> correspondingFiles = findFilesByFilename(root, filename);
-        if (correspondingFiles.isEmpty()) {
+        if (!context.getFilenamesInCurrentDirectory().contains(filename)) {
             context.report(
                 context.createError(CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND)
                     .setMessageParam("VALUE", path.toString())
             );
         }
-    }
-
-    /**
-     * Recursive search of a file in a directory
-     *
-     * @param root
-     * @param filename
-     * @return
-     */
-    private List<File> findFilesByFilename(File root, String filename) {
-        List<File> result = new ArrayList<File>();
-
-        Collection<File> files = FileUtils.listFiles(root, null, true);
-        for (File file : files) {
-            if (file.getName().equals(filename)) {
-                result.add(file);
-            }
-        }
-
-        return result;
     }
 
     /**

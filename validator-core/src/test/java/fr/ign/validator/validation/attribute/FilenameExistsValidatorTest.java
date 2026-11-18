@@ -81,4 +81,15 @@ public class FilenameExistsValidatorTest {
         Assert.assertEquals(1, report.countErrors());
     }
 
+    @Test
+    public void testFilenamesAreListedOnceAndResetWithCurrentDirectory() {
+        java.util.Set<String> filenames = context.getFilenamesInCurrentDirectory();
+        Assert.assertTrue(filenames.contains("commune.csv"));
+        Assert.assertTrue(filenames.contains("a_file.pdf"));
+        Assert.assertSame(filenames, context.getFilenamesInCurrentDirectory());
+
+        context.setCurrentDirectory(ResourceHelper.getResourceFile(getClass(), "/documents/commune-sample"));
+        Assert.assertNotSame(filenames, context.getFilenamesInCurrentDirectory());
+    }
+
 }

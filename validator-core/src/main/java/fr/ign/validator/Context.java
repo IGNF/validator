@@ -4,7 +4,11 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -93,6 +97,12 @@ public class Context {
      * Input - Current data directory (equivalent to documentPath)
      */
     private File currentDirectory;
+
+    /**
+     * Names of the files in the current directory and its subdirectories (lazily
+     * computed, see {@link #getFilenamesInCurrentDirectory()}).
+     */
+    private Set<String> filenamesInCurrentDirectory;
 
     /**
      * Output - validation directory containing validation and normalization results
@@ -336,6 +346,26 @@ public class Context {
     public void setCurrentDirectory(File currentDirectory) {
         log.info(MARKER, "Set current directory to {}", currentDirectory);
         this.currentDirectory = currentDirectory;
+        this.filenamesInCurrentDirectory = null;
+    }
+
+    /**
+     * Names of the files found in the current directory and its subdirectories.
+     *
+     * The directory is walked once, on the first call, instead of once per
+     * validated value.
+     *
+     * @return
+     */
+    public Set<String> getFilenamesInCurrentDirectory() {
+        if (filenamesInCurrentDirectory == null) {
+            Set<String> filenames = new HashSet<>();
+            for (File file : FileUtils.listFiles(currentDirectory, null, true)) {
+                filenames.add(file.getName());
+            }
+            filenamesInCurrentDirectory = filenames;
+        }
+        return filenamesInCurrentDirectory;
     }
 
     /**
