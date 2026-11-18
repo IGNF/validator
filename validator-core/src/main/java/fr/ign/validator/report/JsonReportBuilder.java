@@ -18,11 +18,14 @@ import fr.ign.validator.error.ValidatorError;
  */
 public class JsonReportBuilder implements ReportBuilder, Closeable {
 
+    private File file;
+
     private PrintStream out;
 
     private ObjectMapper mapper = new ObjectMapper();
 
     public JsonReportBuilder(File file) {
+        this.file = file;
         if (file.exists()) {
             file.delete();
         }
@@ -42,9 +45,22 @@ public class JsonReportBuilder implements ReportBuilder, Closeable {
         }
     }
 
+    /**
+     * Close the report.
+     *
+     * A PrintStream never throws an exception on a write error (ex : disk full) :
+     * the error is checked here to avoid a truncated report with a successful
+     * validation.
+     *
+     * @throws IOException if the report is incomplete
+     */
     @Override
     public void close() throws IOException {
+        boolean error = out.checkError();
         out.close();
+        if (error || out.checkError()) {
+            throw new IOException("Fail to write the validation report " + file + " (disk full?)");
+        }
     }
 
 }

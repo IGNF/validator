@@ -155,6 +155,7 @@ public class DatabaseSUP implements Closeable {
      */
     public static DatabaseSUP createFromValidationDatabase(Context context) {
         Database validationDatabase = null;
+        boolean success = false;
         try {
             /*
              * open previously created validation database
@@ -178,11 +179,16 @@ public class DatabaseSUP implements Closeable {
                     database.loadGenerateursFromTable(tableName);
                 }
             }
+            success = true;
             return database;
         } catch (SQLException e) {
             log.error(MARKER, "Fail to create DatabaseSUP from ValidationDatabase", e);
-            IOUtils.closeQuietly(validationDatabase);
             return null;
+        } finally {
+            if (!success) {
+                // also for a runtime exception : the connection must not stay open
+                IOUtils.closeQuietly(validationDatabase);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package fr.ign.validator.command;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -357,6 +358,16 @@ public class DocumentValidatorCommand extends AbstractCommand {
         /*
          * Validate document
          */
+        boolean failed = true;
+        try {
+            validateDocument(context);
+            failed = false;
+        } finally {
+            closeReportBuilder(failed);
+        }
+    }
+
+    private void validateDocument(Context context) throws Exception {
         try {
             DocumentModel documentModel = loadDocumentModel();
 
@@ -389,6 +400,27 @@ public class DocumentValidatorCommand extends AbstractCommand {
             log.fatal(MARKER, e.getMessage());
             context.report(CoreErrorCodes.VALIDATOR_EXCEPTION);
             throw e;
+        }
+    }
+
+    /**
+     * Close the report (the end of a truncated report is detected here, ex : disk
+     * full). The exception of the validation, if any, is not masked.
+     *
+     * @param failed true if the validation failed
+     * @throws IOException if the report is incomplete
+     */
+    private void closeReportBuilder(boolean failed) throws IOException {
+        if (!(reportBuilder instanceof Closeable)) {
+            return;
+        }
+        try {
+            ((Closeable) reportBuilder).close();
+        } catch (IOException e) {
+            if (!failed) {
+                throw e;
+            }
+            log.error(MARKER, e.getMessage());
         }
     }
 

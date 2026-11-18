@@ -307,9 +307,10 @@ public class InclusionValidator implements Validator<Database> {
             query = "SET enable_seqscan TO on;";
         }
         try {
-            RowIterator result = database.query(query);
-        } catch (Exception e) {
-            //
+            database.update(query);
+        } catch (SQLException e) {
+            // only a performance setting : the validation goes on
+            log.warn(MARKER, "Fail to execute '{}' : {}", query, e.getMessage());
         }
     }
 

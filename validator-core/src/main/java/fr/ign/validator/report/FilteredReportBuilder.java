@@ -1,5 +1,7 @@
 package fr.ign.validator.report;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ import fr.ign.validator.error.ValidatorError;
  * @author FCerizay
  *
  */
-public class FilteredReportBuilder implements ReportBuilder {
+public class FilteredReportBuilder implements ReportBuilder, Closeable {
     /**
      * Original report builder
      */
@@ -96,6 +98,16 @@ public class FilteredReportBuilder implements ReportBuilder {
             return errorCode.toString();
         }
         return errorCode.toString() + "." + error.getXsdErrorCode();
+    }
+
+    /**
+     * Close the original report builder (if it is closeable).
+     */
+    @Override
+    public void close() throws IOException {
+        if (original instanceof Closeable) {
+            ((Closeable) original).close();
+        }
     }
 
 }

@@ -74,6 +74,11 @@ public class FileConverter {
     public static final long DEFAULT_TIMEOUT = 3600;
 
     /**
+     * Maximum duration of 'ogr2ogr --version' in seconds
+     */
+    private static final long VERSION_TIMEOUT_SECONDS = 30;
+
+    /**
      * Max length of stderr reported in error messages
      */
     private static final int MAX_STDERR_LENGTH = 2000;
@@ -377,18 +382,28 @@ public class FileConverter {
             ogr2ogrPath, "--version"
         };
         ProcessBuilder builder = new ProcessBuilder(args);
+        builder.redirectError(ProcessBuilder.Redirect.DISCARD);
+        Process process = null;
         try {
-            Process process = builder.start();
-
-            process.waitFor();
-
-            InputStream stdout = process.getInputStream();
-            BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(stdout));
-            String result = stdoutReader.readLine();
-            stdoutReader.close();
-            return result;
-        } catch (IOException | InterruptedException e) {
+            process = builder.start();
+            // the version is a single short line : read before waiting (a blocked
+            // process must not block the startup)
+            if (!process.waitFor(VERSION_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+                log.error(MARKER, "'ogr2ogr --version' : no answer after {} seconds", VERSION_TIMEOUT_SECONDS);
+                return null;
+            }
+            try (BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                return stdoutReader.readLine();
+            }
+        } catch (IOException e) {
             return null;
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return null;
+        } finally {
+            if (process != null && process.isAlive()) {
+                process.destroyForcibly();
+            }
         }
     }
 

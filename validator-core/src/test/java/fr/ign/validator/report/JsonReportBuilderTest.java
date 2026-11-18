@@ -1,6 +1,7 @@
 package fr.ign.validator.report;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -53,6 +55,48 @@ public class JsonReportBuilderTest {
             FileUtils.readLines(expectedFile, StandardCharsets.UTF_8),
             lines
         );
+    }
+
+    private ValidatorError newError() {
+        ValidatorError error = new ValidatorError(CoreErrorCodes.ATTRIBUTE_FILE_NOT_FOUND);
+        error.setLevel(ErrorLevel.ERROR);
+        error.setScope(ErrorScope.DIRECTORY);
+        error.setMessage("message");
+        return error;
+    }
+
+    /**
+     * A write error (disk full) must not give a truncated report with a successful
+     * validation : /dev/full fails every write with ENOSPC.
+     */
+    @Test
+    public void testCloseFailsWhenTheReportCannotBeWritten() throws IOException {
+        File devFull = new File("/dev/full");
+        Assume.assumeTrue(devFull.exists());
+
+        JsonReportBuilder report = new JsonReportBuilder(devFull);
+        report.addError(newError());
+        try {
+            report.close();
+            fail("IOException expected");
+        } catch (IOException e) {
+            assertEquals(true, e.getMessage().contains("/dev/full"));
+        }
+    }
+
+    @Test
+    public void testFilteredReportBuilderClosesTheOriginal() throws IOException {
+        File devFull = new File("/dev/full");
+        Assume.assumeTrue(devFull.exists());
+
+        FilteredReportBuilder report = new FilteredReportBuilder(new JsonReportBuilder(devFull), 10);
+        report.addError(newError());
+        try {
+            report.close();
+            fail("IOException expected");
+        } catch (IOException e) {
+            // the error of the original report is forwarded
+        }
     }
 
 }

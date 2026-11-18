@@ -18,6 +18,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -127,8 +128,14 @@ public class TableReader implements Iterator<String[]>, Closeable {
         }
         this.charset = charset;
         this.parser = CSVParser.parse(csvFile, charset, CSVFormat.RFC4180);
-        this.iterator = parser.iterator();
-        readHeader();
+        try {
+            this.iterator = parser.iterator();
+            readHeader();
+        } catch (IOException | RuntimeException e) {
+            // invalid CSV (ex : invalid header) : the file must not stay open
+            IOUtils.closeQuietly(parser);
+            throw e;
+        }
     }
 
     /**
