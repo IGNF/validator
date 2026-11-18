@@ -164,6 +164,8 @@ public class DatabaseSUP implements Closeable {
             /* create merged tables */
             database.createTableGenerateur();
             database.createTableAssiete();
+            /* index used by the joins between acte_sup and generateur */
+            database.createIndexServitudeActe();
             /* fill merged tables */
             for (FileModel fileModel : context.getDocumentModel().getFileModels()) {
                 String tableName = fileModel.getName();
@@ -232,6 +234,17 @@ public class DatabaseSUP implements Closeable {
     }
 
     /**
+     * Create an index on servitude_acte_sup(idsup) : the joins start from a
+     * generateur (or an assiette) and look for its actes, without this index SQLite
+     * builds a temporary one for each query.
+     *
+     * @throws SQLException
+     */
+    void createIndexServitudeActe() throws SQLException {
+        database.createIndex(TABLE_SERVITUDE_ACTE, COLUMN_IDSUP);
+    }
+
+    /**
      * Insert rows from tableName into TABLE_GENERATEUR.
      *
      * @param tableName
@@ -276,10 +289,12 @@ public class DatabaseSUP implements Closeable {
      * @return
      */
     public List<ActeServitude> findActesByGenerateur(String idGen) {
-        String sql = "SELECT DISTINCT a.idacte,a.fichier FROM acte_sup a "
-            + " LEFT JOIN servitude_acte_sup sa ON a.idacte = sa.idacte "
-            + " LEFT JOIN generateur ON generateur.idsup = sa.idsup "
-            + " WHERE generateur.idgen = ?";
+        // inner joins starting from generateur (the condition on generateur made the
+        // previous left joins inner joins, but forced a scan of acte_sup for each row)
+        String sql = "SELECT DISTINCT a.idacte,a.fichier FROM generateur g "
+            + " JOIN servitude_acte_sup sa ON sa.idsup = g.idsup "
+            + " JOIN acte_sup a ON a.idacte = sa.idacte "
+            + " WHERE g.idgen = ?";
         try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setString(1, idGen);
             return fetchActes(sth.executeQuery());
@@ -295,11 +310,11 @@ public class DatabaseSUP implements Closeable {
      * @return
      */
     public List<ActeServitude> findActesByAssiette(String idAss) {
-        String sql = "SELECT DISTINCT a.idacte,a.fichier FROM acte_sup a "
-            + " LEFT JOIN servitude_acte_sup sa ON a.idacte = sa.idacte "
-            + " LEFT JOIN generateur ON generateur.idsup = sa.idsup "
-            + " LEFT JOIN assiette ON assiette.idgen = generateur.idgen "
-            + " WHERE assiette.idass = ?";
+        String sql = "SELECT DISTINCT a.idacte,a.fichier FROM assiette s "
+            + " JOIN generateur g ON g.idgen = s.idgen "
+            + " JOIN servitude_acte_sup sa ON sa.idsup = g.idsup "
+            + " JOIN acte_sup a ON a.idacte = sa.idacte "
+            + " WHERE s.idass = ?";
         try (PreparedStatement sth = getConnection().prepareStatement(sql)) {
             sth.setString(1, idAss);
             return fetchActes(sth.executeQuery());
