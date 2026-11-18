@@ -51,13 +51,16 @@ ARG OPENJDK_VERSION
 LABEL description="validator-cli - validate and normalize datasets according to a document model." \
       org.opencontainers.image.source="https://github.com/IGNF/validator"
 
+# JAVA_TOOL_OPTIONS : in a container the JVM only uses 25 % of the available memory by default
+# (an explicit -Xmx, ex: -Xmx2g, takes precedence). Override with `-e JAVA_TOOL_OPTIONS=...`.
 # The French locale (as in IGNF/validator-api) is used by the JVM to translate
 # XML validation messages (PCRS). Override with `-e LANG=C.UTF-8 -e LC_ALL=C.UTF-8` for english messages.
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=fr_FR.UTF-8 LC_ALL=fr_FR.UTF-8 LANGUAGE=fr_FR.UTF-8 \
     TZ=Europe/Paris \
     VALIDATOR_PATH=/opt/validator/validator-cli.jar \
-    GMLAS_CONFIG=/opt/validator/gmlasconf-validator.xml
+    GMLAS_CONFIG=/opt/validator/gmlasconf-validator.xml \
+    JAVA_TOOL_OPTIONS=-XX:MaxRAMPercentage=75
 
 # locale, trust store, java and ogr2ogr (required by validator-cli.jar)
 RUN apt-get update -qq \

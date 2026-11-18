@@ -34,5 +34,6 @@ Pour ne pas passer le proxy à chaque build, il peut être déclaré une fois po
 * `VALIDATOR_PATH` : chemin du jar dans l'image
 * `GMLAS_CONFIG` : configuration GMLAS pour la validation XML (PCRS). Les autres variables du validateur (`OGR2OGR_TIMEOUT`, `DB_*`...) sont décrites dans [cli.md](cli.md#paramétrage).
 * `LANG`, `LC_ALL` : `fr_FR.UTF-8` (comme [IGNF/validator-api](https://github.com/IGNF/validator-api)), pour des messages de validation XML (`cvc-...`) en français. Pour l'anglais : `-e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 -e LANGUAGE=`. Le fuseau horaire est `TZ=Europe/Paris`.
+* `JAVA_TOOL_OPTIONS` : `-XX:MaxRAMPercentage=75`. Dans un conteneur, la JVM n'utilise par défaut que 25 % de la mémoire disponible (ex : 2 Go sur une machine de 8 Go). Un `-Xmx` explicite reste prioritaire ; pour une autre valeur : `-e JAVA_TOOL_OPTIONS=-XX:MaxRAMPercentage=50`. La JVM écrit `Picked up JAVA_TOOL_OPTIONS: ...` sur la sortie d'erreur à chaque démarrage.
 * L'image s'exécute avec l'utilisateur `ubuntu` (uid 1000), le répertoire de travail est `/data`.
 * Arguments de build : `REGISTRY`, `UBUNTU_IMAGE_VERSION` (26.04), `OPENJDK_VERSION` (25), `MAVEN_OPTS` (`-DskipTests`), `http_proxy`, `https_proxy`, `no_proxy`.
