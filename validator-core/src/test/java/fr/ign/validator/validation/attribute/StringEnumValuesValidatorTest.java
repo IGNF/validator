@@ -80,13 +80,28 @@ public class StringEnumValuesValidatorTest {
     @Test
     public void testSeparatorSeveralValues() {
         validate(createType(","), "PROPANE,BUTANE");
-        validate(createType(","), "PROPANE, BUTANE , OXYDE D’ETHYLENE");
+        validate(createType(","), "PROPANE,BUTANE,OXYDE D’ETHYLENE");
         Assert.assertEquals(0, report.countErrors());
+    }
+
+    /**
+     * Spaces around the values are not tolerated
+     */
+    @Test
+    public void testSeparatorSpacesRejected() {
+        validate(createType(","), "PROPANE, BUTANE");
+        validate(createType(","), "PROPANE ,BUTANE");
+        validate(createType(","), " PROPANE");
+        Assert.assertEquals(3, report.countErrors());
+        Assert.assertEquals(
+            "La valeur renseignée ( BUTANE) ne correspond pas à une valeur autorisée (PROPANE, BUTANE, OXYDE D’ETHYLENE).",
+            report.getErrors().get(0).getMessage()
+        );
     }
 
     @Test
     public void testSeparatorInvalidValue() {
-        validate(createType(","), "PROPANE, ESSENCE");
+        validate(createType(","), "PROPANE,ESSENCE");
         Assert.assertEquals(1, report.countErrors());
         Assert.assertEquals(
             "La valeur renseignée (ESSENCE) ne correspond pas à une valeur autorisée (PROPANE, BUTANE, OXYDE D’ETHYLENE).",

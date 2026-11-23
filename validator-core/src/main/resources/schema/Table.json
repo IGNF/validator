@@ -135,7 +135,7 @@
           "type": "string",
           "minLength": 1,
           "title": "Séparateur de valeurs multiples",
-          "description": "Séparateur permettant de renseigner plusieurs valeurs de la liste \"enum\" dans un même attribut (ex : \",\" pour \"PROPANE,BUTANE\"), les espaces autour de chaque valeur sont ignorés"
+          "description": "Séparateur permettant de renseigner plusieurs valeurs de la liste \"enum\" dans un même attribut (ex : \",\" pour \"PROPANE,BUTANE\"), les espaces autour de chaque valeur ne sont pas tolérés (\"PROPANE, BUTANE\" est rejeté)"
         },
         "reference": {
           "type": "string",

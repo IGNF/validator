@@ -86,7 +86,8 @@ public class AttributeConstraints {
     /**
      * Separator allowing several values from {@link #enumValues} in the same
      * attribute (ex : "," for "PROPANE,BUTANE"). Spaces around each value are
-     * ignored. Ignored when no enum values are defined.
+     * not ignored ("PROPANE, BUTANE" is rejected). Ignored when no enum values
+     * are defined.
      *
      * @since 4.7.2
      *
