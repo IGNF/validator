@@ -42,8 +42,8 @@ public class StringEnumValuesValidator implements Validator<Attribute<String>> {
         }
 
         /*
-         * several values separated by the separator, each one must be allowed as is
-         * (no trim : "10 - 20" is rejected with "-" as separator)
+         * several values separated by the separator, each one must be allowed as is (no
+         * trim : "10 - 20" is rejected with "-" as separator)
          */
         for (String part : StringUtils.splitByWholeSeparatorPreserveAllTokens(value, separator)) {
             if (!enumValues.contains(part)) {
