@@ -26,7 +26,7 @@ jobs:
     # PostGIS for the DGPR controls (skipped with SQLITE)
     services:
       postgis:
-        image: postgis/postgis:16-3.4
+        image: postgis/postgis:17-3.4
         env:
           POSTGRES_USER: postgis
           POSTGRES_PASSWORD: postgis
