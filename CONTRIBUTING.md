@@ -14,7 +14,7 @@ Note that CI is configured through [GitHub Actions](https://github.com/IGNF/vali
 
 It relies on [.github/workflows/main.yml](.github/workflows/main.yml) which :
 
-* Install Java (matrix : Java 17, the minimum supported version, and Java 25, the version of the Docker image)
+* Install Java (matrix : Java 21, the minimum supported version, and Java 25, the version of the Docker image)
 * Install ogr2ogr (GDAL from the distribution, ubuntu 26.04)
 * Run tests through [.ci/build.sh](.ci/build.sh)
 * Run the DGPR tests with a PostGIS service
@@ -23,4 +23,4 @@ You may run `bash .ci/build.sh` to ensure that source code is formatted, build c
 
 ## Create releases
 
-See [doc/developpement.md](doc/developpement.md#publication-dune-version) (release with `mvn release:prepare`, binaries, GitHub release, Docker image).
+See [doc/release.md](doc/release.md) (release with `mvn release:prepare`, binaries, GitHub release, Docker image).

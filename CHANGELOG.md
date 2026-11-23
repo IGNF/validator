@@ -12,6 +12,7 @@
 
 ### v4.7.0 - Dependencies and build
 
+* v4.7.2 - CI : PostGIS 17 for the DGPR tests
 * v4.7.1 - CNIG : no more empty `DATA/tmp` directory in the normalized data (temporary directory of the `TITRES_PIECES_ECRITES` and SUP post-processes removed)
 * v4.7.1 - JSON schemas `schema/Document.json` and `schema/Table.json` aligned with the code : `constraints` (`folderName`, `metadataSpecification`) instead of `regexp`, `codes`, `tables` of the `multi_table` files, `xsdSchema`, table constraints (`conditions`, `foreignKeys`), `presenceRequired`, type `Url` (not `URL`), naming rules of the tables and columns (checked against the CNIG / PCRS / DGPR / validator-config-gpu configurations)
 * v4.7.1 - `--help` : `OGR2OGR_TIMEOUT`, `GMLAS_CONFIG` and `DB_*` environment variables listed, order of the error thresholds of `--cnig-complexity-tolerance` fixed (point, part, ring) and expected format

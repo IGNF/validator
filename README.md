@@ -71,6 +71,7 @@ Utiliser le validateur :
 
 Développer :
 
-* [Développement, build et publication d'une version](doc/developpement.md)
+* [Développement et build](doc/developpement.md)
+* [Publication d'une version](doc/release.md)
 * [Contribuer (formatage, CI)](CONTRIBUTING.md)
 
