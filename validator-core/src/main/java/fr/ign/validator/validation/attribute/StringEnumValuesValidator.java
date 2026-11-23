@@ -2,6 +2,8 @@ package fr.ign.validator.validation.attribute;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import fr.ign.validator.Context;
 import fr.ign.validator.data.Attribute;
 import fr.ign.validator.error.CoreErrorCodes;
@@ -30,23 +32,31 @@ public class StringEnumValuesValidator implements Validator<Attribute<String>> {
             return;
         }
 
-        /*
-         * search of corresponding value
-         */
-        for (String string : attributeType.getConstraints().getEnumValues()) {
-            if (string.equals(value)) {
-                return;
+        List<String> enumValues = attributeType.getConstraints().getEnumValues();
+        String separator = attributeType.getConstraints().getEnumSeparator();
+        if (StringUtils.isEmpty(separator)) {
+            if (!enumValues.contains(value)) {
+                reportUnexpectedValue(context, value, enumValues);
             }
+            return;
         }
 
+        /*
+         * several values separated by the separator, each one must be allowed
+         */
+        for (String part : StringUtils.splitByWholeSeparatorPreserveAllTokens(value, separator)) {
+            String trimmed = part.trim();
+            if (!enumValues.contains(trimmed)) {
+                reportUnexpectedValue(context, trimmed, enumValues);
+            }
+        }
+    }
+
+    private void reportUnexpectedValue(Context context, String value, List<String> enumValues) {
         context.report(
             context.createError(CoreErrorCodes.ATTRIBUTE_UNEXPECTED_VALUE)
                 .setMessageParam("VALUE", value)
-                .setMessageParam(
-                    "EXPECTED_VALUES", formatListOfValues(
-                        attributeType.getConstraints().getEnumValues()
-                    )
-                )
+                .setMessageParam("EXPECTED_VALUES", formatListOfValues(enumValues))
         );
     }
 

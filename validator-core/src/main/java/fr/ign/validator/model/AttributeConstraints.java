@@ -84,6 +84,17 @@ public class AttributeConstraints {
     private List<String> enumValues;
 
     /**
+     * Separator allowing several values from {@link #enumValues} in the same
+     * attribute (ex : "," for "PROPANE,BUTANE"). Spaces around each value are
+     * ignored. Ignored when no enum values are defined.
+     *
+     * @since 4.7.2
+     *
+     * @see fr.ign.validator.validation.attribute.StringEnumValuesValidator
+     */
+    private String enumSeparator;
+
+    /**
      * Reference to another table attribute. Format TABLE_NAME.ATTRIBUTE_NAME
      */
     private String reference;
@@ -159,6 +170,14 @@ public class AttributeConstraints {
 
     public void getEnumValues(List<String> enumValues) {
         this.enumValues = enumValues;
+    }
+
+    public String getEnumSeparator() {
+        return enumSeparator;
+    }
+
+    public void setEnumSeparator(String enumSeparator) {
+        this.enumSeparator = enumSeparator;
     }
 
     public String getReference() {
