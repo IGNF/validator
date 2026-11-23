@@ -45,7 +45,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- Required java version: http://docs.geotools.org/latest/userguide/build/install/jdk.html -->
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 
 		<!-- Dependencies -->
 		<geotools.version>35.2</geotools.version>
@@ -239,8 +239,7 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
+						<release>${java.version}</release>
 						<compilerArgs>
 							<arg>-Xlint:-options</arg>
 						</compilerArgs>

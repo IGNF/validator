@@ -4,6 +4,7 @@
 
 ### v4.7.0 - Behavior changes
 
+* v4.7.2 - **Breaking change** : Java 21 or above is required to run `validator-cli.jar` (compiled for Java 21 instead of Java 17, `UnsupportedClassVersionError` with Java 17), as gpu-site. CI tests Java 21 and 25
 * v4.7.2 - Constraint `enumSeparator` (ex : `","`) allowing several values of the `enum` list in a String attribute (ex : `PROPANE,BUTANE`), each value is checked as is (no trim : `PROPANE, BUTANE` is rejected), `ATTRIBUTE_UNEXPECTED_VALUE` reports the invalid value only
 * v4.7.0 - **Breaking change** : Java 17 or above is required to run `validator-cli.jar` (compiled for Java 17 instead of Java 11, `UnsupportedClassVersionError` with Java 11). Docker image and CI already use Java 25.
 * v4.7.1 - `--cnig-document-emprise` with a GeoJSON file of several features (ex : municipalities of gpu-site) : the holes of the union smaller than 1e-5 square degrees (about 8 ha, gaps between the borders of adjacent features, 2 280 holes for the 95 municipalities of an EPCI) are removed, so that a geometry inside such a gap is no longer reported by `CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR`. A WKT or a GeoJSON of a single feature is unchanged
