@@ -10,7 +10,7 @@ tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
 echo "Listing the runtime dependencies..."
-mvn -B -q dependency:list -DincludeScope=runtime -DappendOutput=true -DoutputFile="$tmp/deps.txt"
+mvn -B -q compile dependency:list -DincludeScope=runtime -DappendOutput=true -DoutputFile="$tmp/deps.txt"
 
 python3 -I - "$tmp/deps.txt" <<'PY'
 import json
