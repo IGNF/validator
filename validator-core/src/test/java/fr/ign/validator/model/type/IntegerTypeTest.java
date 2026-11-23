@@ -39,6 +39,31 @@ public class IntegerTypeTest extends AbstractTypeTest<Integer> {
         assertBindThrow("false");
     }
 
+    @Test
+    public void testBindLimits() {
+        assertEquals(Integer.MAX_VALUE, type.bind("2147483647").intValue());
+        assertEquals(Integer.MIN_VALUE, type.bind("-2147483648").intValue());
+        assertEquals(Integer.MAX_VALUE, type.bind("2147483647.0").intValue());
+        assertEquals(Integer.MIN_VALUE, type.bind("-2147483648.0").intValue());
+    }
+
+    /**
+     * Values outside the int range were silently clamped to 2147483647 (ex :
+     * IDASS=130010408211 in a SUP 2013 document)
+     */
+    @Test
+    public void testBindOverflowThrow() {
+        assertBindThrow("2147483648");
+        assertBindThrow("-2147483649");
+        assertBindThrow("2147483648.0");
+        assertBindThrow("130010408211");
+        assertBindThrow("1300104081011");
+        assertBindThrow("1e10");
+        assertBindThrow("NaN");
+        assertBindThrow("Infinity");
+        assertBindThrow("-Infinity");
+    }
+
     private void assertBindThrow(String input) {
         boolean thrown = false;
         try {
@@ -46,7 +71,7 @@ public class IntegerTypeTest extends AbstractTypeTest<Integer> {
         } catch (IllegalArgumentException e) {
             thrown = true;
         }
-        assertTrue(thrown);
+        assertTrue("'" + input + "' should be rejected", thrown);
     }
 
 }

@@ -35,16 +35,26 @@ public class IntegerType extends AttributeType<Integer> {
     }
 
     /**
+     * Tries to parse a double with an integer value (e.g. 4.0)
      *
      * @param value
-     * @return
+     * @return null if the value is not an integer or is outside the int range
+     *         (casting would silently clamp it to Integer.MAX_VALUE or
+     *         Integer.MIN_VALUE)
      */
     private Integer tryParseDoubleAndRound(String value) {
         try {
             Double dValue = Double.parseDouble(value);
+            if (dValue.isNaN() || dValue.isInfinite()) {
+                return null;
+            }
             double rValue = Math.round(dValue.doubleValue());
 
             if (Math.abs(rValue - dValue) >= 1.0e-7) {
+                return null;
+            }
+
+            if (rValue > Integer.MAX_VALUE || rValue < Integer.MIN_VALUE) {
                 return null;
             }
 

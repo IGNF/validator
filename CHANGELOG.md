@@ -6,6 +6,7 @@
 
 * v4.7.0 - **Breaking change** : Java 17 or above is required to run `validator-cli.jar` (compiled for Java 17 instead of Java 11, `UnsupportedClassVersionError` with Java 11). Docker image and CI already use Java 25.
 * v4.7.1 - `--cnig-document-emprise` with a GeoJSON file of several features (ex : municipalities of gpu-site) : the holes of the union smaller than 1e-5 square degrees (about 8 ha, gaps between the borders of adjacent features, 2 280 holes for the 95 municipalities of an EPCI) are removed, so that a geometry inside such a gap is no longer reported by `CNIG_GEOMETRY_OUTSIDE_DOCUMENT_EMPRISE_ERROR`. A WKT or a GeoJSON of a single feature is unchanged
+* v4.7.2 - Type `Integer` : a value outside the int range (ex : `130010408211`), `NaN` or `Infinity` is reported as an invalid format and normalized to null, instead of being silently converted to `2147483647` / `-2147483648` (or `0` for `NaN`) in the validation and in the normalized data
 
 ### v4.7.0 - Dependencies and build
 
